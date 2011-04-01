@@ -25,53 +25,57 @@
     <div id="mainbox">
         <h1 class="firstHeading">Inspector</h1>
 
-        <p>The Inspector is used to edit a site in Sandvox. It allows you to set various properties for the current site, <a href="Page.html" title="Page">page</a> and selection.</p>
+        <div class="floatright">
+            <img alt="" src="img/e/e3/InspectorFromDan.jp2" width="244" height="50" border="0" />
+        </div>
+
+        <p>The Inspector is used to edit a site in Sandvox. It allows you to set various properties for the current site, page and selection. The Inspector uses 6 segments they are: Document, Page, Wrap, Metrics, Link, and Object.<br />
+        <br /></p>
 
         <div class="instructions">
             <p><b>Ways to show or hide the Inspector:</b></p>
 
             <ul>
-                <li>
-                    <p>Click the "Inspector" item in the <a href="Toolbar.html" title="Toolbar">toolbar</a>.</p>
+                <li>Click the "Inspector" item in the <a href="Toolbar.html" title="Toolbar">toolbar</a>.</li>
 
-                    <div class="bordimg">
-                        <img alt="InspectorToolbarIcon" src="img/8/80/InspectorToolbarIcon.png" width="184" height="100" border="0" />
-                    </div>
-                </li>
-
-                <li>Choose "Show Inspector" or "Hide Inspector" from the <a href="Sandvox_Menu_Guide.html#Window" title="Sandvox Menu Guide">Window menu</a>.</li>
-
-                <li>Double-click a <a href="Pagelet.html" title="Pagelet">pagelet</a>.</li>
+                <li>Choose "Show Inspector" or "Hide Inspector" from the <a href="Sandvox_Menu_Guide.html#View" title="Sandvox Menu Guide">View menu</a>.</li>
             </ul>
         </div>
 
-        <p>The Inspector is split into three segments; The Site Inspector, Page Inspector and Selection Inspector.</p>
+        <p><br />
+        There are shortcut keys to select each segment:<br />
+        Command+1 for <a href="Document_Inspector.html" title="Document Inspector">Document</a><br />
+        Command+2 for <a href="Page_Inspector.html" title="Page Inspector">Page</a><br />
+        Command+3 for <a href="Object_Placements_and_Wrap.html" title="Object Placements and Wrap">Wrap</a><br />
+        Command+4 for <a href="Metrics_Inspector.html" title="Metrics Inspector">Metrics</a><br />
+        Command+5 for <a href="Link.html" title="Link">Link</a><br />
+        Command+6 for <a href="Object_Inspector.html" title="Object Inspector">Object</a><br /></p>
 
-        <div class="center">
-            <div class="floatnone">
-                <img alt="" src="img/7/70/Inspector_segments.jp2" width="192" height="68" border="0" />
-            </div>
-        </div><a name="Site_Inspector" id="Site_Inspector"></a>
+        <dl>
+            <dt>Document segment</dt>
 
-        <h3><span class="mw-headline">Site Inspector</span></h3>
+            <dd>Contains settings that affect the entire site</dd>
 
-        <p>The <a href="Site_Inspector.html" title="Site Inspector">Site Inspector</a> contains settings that affect the entire site.</p><a name="Page_Inspector" id="Page_Inspector"></a>
+            <dt>Page segment</dt>
 
-        <h3><span class="mw-headline">Page Inspector</span></h3>
+            <dd>Contains setting that affect the page you have selected in the site outline</dd>
 
-        <p>The Page Inspector contains settings that affect the <a href="Page.html" title="Page">page</a> selected in the <a href="Site_Outline.html" title="Site Outline">Site Outline</a>. The top of the Inspector houses <a href="General_Page_Attributes.html" title="General Page Attributes">general page attributes</a>. The bottom contains attributes specific to the type of <a href="Page.html" title="Page">page</a> selected.</p><a name="Selection_Inspector" id="Selection_Inspector"></a>
+            <dt>Wrap segment</dt>
 
-        <h3><span class="mw-headline">Selection Inspector</span></h3>
+            <dd>Has Object Placement for placing objects as Inline, Callout, or in the Sidebar. There are options for the Layout, you can also specify a Border for your objects (if allowed by the design)</dd>
 
-        <p>When you select an object on a <a href="Page.html" title="Page">page</a> that has its own set of attributes (such as a <a href="Pagelet.html" title="Pagelet">pagelet</a>), the Selection Inspector becomes available. The contents of the Inspector are completely dependent upon what is selected.</p>
+            <dt>Metrics segment</dt>
 
-        <ul>
-            <li>When a <a href="Pagelet.html" title="Pagelet">pagelet</a> is selected, the Selection Inspector is used to set the properties of the <a href="Pagelet.html" title="Pagelet">pagelet</a>.</li>
+            <dd>Used to adjust Width and Height of an image to the pixel</dd>
 
-            <li>When editing a <a href="Photo.html" title="Photo">Photo</a> page, the Selection Inspector is used to set the <a href="Page.html" title="Page">page</a>'s photo and other properties.</li>
+            <dt>Link segment</dt>
 
-            <li>When an <a href="Embedded_Image.html" title="Embedded Image">Embedded Image</a> is selected, the Selection Inspector is used to set its description and position.</li>
-        </ul>
+            <dd>Use the Link To to create links to internal pages, full size images, or external URL's</dd>
+
+            <dt>Object segment</dt>
+
+            <dd>Use this segments to setup the setting specific to the object you have selected</dd>
+        </dl>
 
         <div class="related">
             <a name="Related_Articles" id="Related_Articles"></a>
@@ -79,17 +83,21 @@
             <h2><span class="mw-headline">Related Articles</span></h2>
 
             <ul>
-                <li><a href="Site_Inspector.html" title="Site Inspector">Site Inspector</a></li>
+                <li><a href="Document_Inspector.html" title="Site Inspector">Site Inspector</a></li>
 
                 <li><a href="General_Page_Attributes.html" title="General Page Attributes">General Page Attributes</a></li>
 
-                <li><a href="General_Pagelet_Attributes.html" title="General Pagelet Attributes">General Pagelet Attributes</a></li>
+                <li><a href="General_Object_Attributes.html" title="General Object Attributes">General Object Attributes</a></li>
+
+                <li><a href="Contact_Form.html" title="Contact Form">Contact Form</a></li>
+
+                <li><a href="IM_Status.html" title="IM Status">IM Status</a></li>
             </ul>
         </div>
     </div>
 
     <div id='feedback'>
-        How can we improve this page? <a href="http://docs.karelia.com/feedback/?h=Sandvox&amp;p=Inspector.html">Let us know.</a>
+        How can we improve this page? <a href="http://www.karelia.com/sandvox/help/feedback/?h=Sandvox&amp;p=Inspector.html">Let us know.</a>
     </div>
 </body>
 </html>

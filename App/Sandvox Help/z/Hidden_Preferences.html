@@ -109,6 +109,8 @@ defaults delete com.karelia.Sandvox metaRobots
             <dd>The folder to store <a href="Media.html" title="Media">media</a> files in. Normally <tt>_Media</tt>.</dd>
         </dl>
 
+        <p>Note: If you change this value for a website that you have already published with a different setting, you <i>must</i> go through the <a href="Host_Setup_Assistant.html" title="Host Setup Assistant">Host Setup Assistant</a> and edit your site configuration, so that Sandvox will clear out its memory of the previous publication locations. Also, this must be done in a version of Sandvox that is 1.6.7 or higher.</p>
+
         <dl>
             <dt>Default file extension</dt>
 
@@ -175,7 +177,7 @@ defaults delete com.karelia.Sandvox metaRobots
 
                 <dd><code>defaults write com.karelia.Sandvox LoadLocalFonts -bool <span class="prefValue">NO</span></code></dd>
 
-                <dd>This should be used when the loading of fonts stored in design bundles, used for <a href="Graphical_Text.html" title="Graphical Text">graphical text</a>, needs to be turned off. (This is when you have major <a href="Diagnosing_Keychain_Problems.html" title="Diagnosing Keychain Problems">keychain issues</a> in Leopard.) If you wish to use fonts embedded in a design, and you have turned this option off, you can dig into the actual design packages inside the Sandvox application package. Control-click (or right-click) on the Sandvox application and choose "Show Package Contents," then open the "Contents" and then "Designs" folder. Choose the desired design and choose "Show Package Contents" on <i>that</i>. Any special font files will be in that folder. Just double-click a font file to launch Font Book to install it.</dd>
+                <dd>This should be used when the loading of fonts stored in design bundles, used for <a href="Graphical_Titles.html" title="Graphical Titles">Graphical Titles</a>, needs to be turned off. (This is when you have major <a href="Diagnosing_Keychain_Problems.html" title="Diagnosing Keychain Problems">keychain issues</a> in Leopard.) If you wish to use fonts embedded in a design, and you have turned this option off, you can dig into the actual design packages inside the Sandvox application package. Control-click (or right-click) on the Sandvox application and choose "Show Package Contents," then open the "Contents" and then "Designs" folder. Choose the desired design and choose "Show Package Contents" on <i>that</i>. Any special font files will be in that folder. Just double-click a font file to launch Font Book to install it.</dd>
             </dl>
         </div><a name="Connections" id="Connections"></a>
 
@@ -246,7 +248,7 @@ defaults delete com.karelia.Sandvox metaRobots
 
             <dd><code>defaults write com.karelia.Sandvox MaximumTitlesInCollectionSummary "<span class="prefValue">5</span>"</code></dd>
 
-            <dd>The maximum number of <a href="Page.html" title="Page">page</a> titles to show in an <a href="Index_.html" title="Index">index</a> when a <a href="Collection.html" title="Child">child</a> <a href="Collection.html" title="Collection">collection</a> has its <a href="Show_in_Parent.html" title="Show in Parent">show in parent</a> attribute set to be a list.</dd>
+            <dd>The maximum number of <a href="Page.html" title="Page">page</a> titles to show in an <a href="Index_.html" title="Index">index</a> when a <a href="Collection.html" title="Child">child</a> <a href="Collection.html" title="Collection">collection</a> has its <a href="Delete5.html" title="Show in Parent">show in parent</a> attribute set to be a list.</dd>
         </dl>
 
         <dl>
@@ -283,32 +285,20 @@ defaults delete com.karelia.Sandvox metaRobots
 
         <h2><span class="mw-headline">Comments</span></h2>
 
-        <p>To accommodate some of the many options available for <a href="http://www.js-kit.com/comments" class="external text" title="http://www.js-kit.com/comments">JS-Kit</a>, we have provided access using hidden preferences.</p>
+        <p>Facebook comments</p>
 
         <dl>
-            <dt>Whether lists comments in reverse chronological order</dt>
+            <dt>Number of comments that Facebook will display before breaking them up into "pages of comments"</dt>
 
-            <dd><code>defaults write com.karelia.Sandvox JSKitReverseOrder -bool <span class="prefValue">YES</span></code></dd>
+            <dd><code>defaults write com.karelia.Sandvox FacebookCommentsNumberOfPosts -int <span class="prefValue">10</span></code></dd>
+
+            <dd>This should be a number between 1 and 500. If you set a number outside of the bounds it will just use its default which is 10</dd>
         </dl>
 
         <dl>
-            <dt>Whether to hide avatars from comment postings</dt>
+            <dt>Whether the checkbox to also post your comment to your Facebook feed is checked or not by default</dt>
 
-            <dd><code>defaults write com.karelia.Sandvox JSKitDisableAvatars -bool <span class="prefValue">YES</span></code></dd>
-        </dl>
-
-        <dl>
-            <dt>Whether to disable threading of comments</dt>
-
-            <dd><code>defaults write com.karelia.Sandvox JSKitDisableThreading -bool <span class="prefValue">YES</span></code></dd>
-        </dl>
-
-        <dl>
-            <dt>Whether to ask JS-Kit to send a confirmation email to the moderator address chosen in the Site Inspector</dt>
-
-            <dd><code>defaults write com.karelia.Sandvox JSKitConfirmModeratorViaEmail -bool <span class="prefValue">YES</span></code></dd>
-
-            <dd>Requests a moderator confirmation email from <a href="http://www.js-kit.com/comments" class="external text" title="http://www.js-kit.com/comments">JS-Kit</a> after each successful publishing of a site. You typically only want to turn this on temporarily until any problems with moderation are resolved and then turn it off again.</dd>
+            <dd><code>defaults write com.karelia.Sandvox FacebookCommentsPublishFeed -bool <span class="prefValue">YES</span></code></dd>
         </dl><a name="Images" id="Images"></a>
 
         <h2><span class="mw-headline">Images</span></h2>
@@ -349,6 +339,14 @@ defaults delete com.karelia.Sandvox metaRobots
             <dd><code>defaults write com.karelia.Sandvox AutosaveFrequency -int <span class="prefValue">60</span></code></dd>
 
             <dd>Sets the frequency, in seconds, between automatic document saves. If outside of the range of 5 seconds to 300 seconds (5 minutes), the default value of 60 seconds will be used.</dd>
+        </dl>
+
+        <dl>
+            <dt>QuickLook thumbnail</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox DisableQuickLookThumbnail -bool <span class="prefValue">YES</span></code></dd>
+
+            <dd>Disables generation of QuickLook thumbnails for all Sandvox documents. Disabling QuickLook thumbnails may improve issues with Sandvox hanging during document save. (Note that Mac OS X 10.4 "Tiger" does not save QuickLook thumbnails.)</dd>
         </dl>
 
         <dl>
@@ -408,7 +406,7 @@ defaults delete com.karelia.Sandvox metaRobots
 
             <dd><code>defaults write com.karelia.Sandvox shutUpQuartzExtreme -bool <span class="prefValue">NO</span></code></dd>
 
-            <dd>Sandvox is being run on a non-Quartz Extreme equipped Mac. Please see "<a href="Graphical_Text.html" title="Graphical Text">Graphical Text</a>" for more information.</dd>
+            <dd>Sandvox is being run on a non-Quartz Extreme equipped Mac. Please see "Graphical Titles" for more information.</dd>
         </dl>
 
         <dl>
@@ -424,7 +422,7 @@ defaults delete com.karelia.Sandvox metaRobots
 
             <dd><code>defaults write com.karelia.Sandvox shutUpDownloadWarn -bool <span class="prefValue">NO</span></code></dd>
 
-            <dd>When a Sandvox update is available, a badge also appears in the <a href="Status_Bar.html" title="Status Bar">Status Bar</a> to indicate it. This alert appears when you click it.</dd>
+            <dd>When a Sandvox update is available, a badge also appears in the <a href="Delete7.html" title="Status Bar">Status Bar</a> to indicate it. This alert appears when you click it.</dd>
         </dl>
 
         <dl>
@@ -448,7 +446,7 @@ defaults delete com.karelia.Sandvox metaRobots
 
             <dd><code>defaults write com.karelia.Sandvox SilenceSaveDocumentSnapshot -bool <span class="prefValue">NO</span></code></dd>
 
-            <dd>Warning when saving a new <a href="Autosaving_and_Snapshots.html" title="Snapshot">snapshot</a>.</dd>
+            <dd>Warning when saving a new <a href="Autosaving.html" title="Snapshot">snapshot</a>.</dd>
         </dl>
 
         <dl>
@@ -480,7 +478,7 @@ defaults delete com.karelia.Sandvox metaRobots
 
             <dd><code>defaults write com.karelia.Sandvox ShutUpCantSelect -bool <span class="prefValue">NO</span></code></dd>
 
-            <dd>You have clicked on a <a href="Pagelet.html" title="Pagelet">pagelet</a> that cannot be selected since its main location is on another <a href="Page.html" title="Page">page</a>. You can choose to go to that <a href="Page.html" title="Page">page</a> or cancel.</dd>
+            <dd>You have clicked on a <a href="Object.html" title="Pagelet">pagelet</a> that cannot be selected since its main location is on another <a href="Page.html" title="Page">page</a>. You can choose to go to that <a href="Page.html" title="Page">page</a> or cancel.</dd>
         </dl><a name="New_Documents" id="New_Documents"></a>
 
         <h2><span class="mw-headline">New Documents</span></h2>
@@ -508,7 +506,7 @@ defaults delete com.karelia.Sandvox metaRobots
 
             <dd><code>defaults write com.karelia.Sandvox DefaultBadgeBundleIdentifier "<span class="prefValue">sandvox.BadgePagelet</span>"</code></dd>
 
-            <dd>The identifier of the <a href="Pagelet.html" title="Pagelet">pagelet</a> type that should be placed in the new <a href="Home_Page.html" title="Home Page">Home Pages</a> <a href="Sidebar.html" title="Sidebar">Sidebar</a>. You can see the list of available <a href="Pagelet.html" title="Pagelet">pagelet</a> types using the "Available Components" item in the Debug menu. Entering a blank string will result in no <a href="Pagelet.html" title="Pagelet">pagelet</a> being added to the <a href="Home_Page.html" title="Home Page">Home Page</a>.</dd>
+            <dd>The identifier of the <a href="Object.html" title="Pagelet">pagelet</a> type that should be placed in the new <a href="Home_Page.html" title="Home Page">Home Pages</a> <a href="Sidebar.html" title="Sidebar">Sidebar</a>. You can see the list of available <a href="Object.html" title="Pagelet">pagelet</a> types using the "Available Components" item in the Debug menu. Entering a blank string will result in no <a href="Object.html" title="Pagelet">pagelet</a> being added to the <a href="Home_Page.html" title="Home Page">Home Page</a>.</dd>
         </dl><a name="Sandvox_Interface" id="Sandvox_Interface"></a>
 
         <h2><span class="mw-headline">Sandvox Interface</span></h2>
@@ -853,7 +851,7 @@ defaults delete com.karelia.Sandvox metaRobots
     </div>
 
     <div id='feedback'>
-        How can we improve this page? <a href="http://docs.karelia.com/feedback/?h=Sandvox&amp;p=Hidden_Preferences.html">Let us know.</a>
+        How can we improve this page? <a href="http://www.karelia.com/sandvox/help/feedback/?h=Sandvox&amp;p=Hidden_Preferences.html">Let us know.</a>
     </div>
 </body>
 </html>
