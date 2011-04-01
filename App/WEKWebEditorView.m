@@ -518,9 +518,18 @@ typedef enum {  // this copied from WebPreferences+Private.h
                 /*  Generally, repost equivalent events (unless a link or object) so they go to their correct target.
                  */
                 
+                // Don't send event to links
                 if ([elementInfo objectForKey:WebElementLinkURLKey]) return;
                 
-                // don't send event through to video-like things as they would misinterpret it
+                // Don't send event to buttons
+                DOMNode *aNode = element;
+                while (aNode)
+                {
+                    if ([aNode isKindOfClass:[DOMHTMLButtonElement class]]) return;
+                    aNode = [aNode parentNode];
+                }
+                
+                // Don't send event through to video-like things as they would misinterpret it
                 item = [self selectableItemForDOMNode:element];
                 if ([items lastObject] == item &&
                     [element isKindOfClass:[DOMElement class]]) // could actually be any DOMNode subclass
