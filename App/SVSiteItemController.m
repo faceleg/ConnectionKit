@@ -108,6 +108,7 @@
     }
     else
     {
+        [self unbind:@"thumbnailType"];
         [self setThumbnailType:SVThumbnailTypeNone];
     }
     
