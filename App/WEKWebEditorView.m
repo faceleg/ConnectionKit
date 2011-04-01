@@ -1861,7 +1861,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 - (void)deselectDOMRange
 {
-	LOG((@"%s",__FUNCTION__));
+	VALIDATION((@"%s",__FUNCTION__));
     [self setEditingItems:nil];
 	//[self setSelectedDOMRange:nil affinity:NSSelectionAffinityUpstream];
 	//[[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeSelectionNotification object:self.webView];
