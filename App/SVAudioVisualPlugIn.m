@@ -83,7 +83,9 @@
 
 - (void)awakeFromSourceProperties:(NSDictionary *)properties
 {
-	NSLog(@"%@", properties);
+	self.autoplay = [[properties objectForKey:@"autoplay"] boolValue];
+	self.loop = [[properties objectForKey:@"loop"] boolValue];
+	self.controller = [[properties objectForKey:@"controller"] boolValue];
 }
 
 @end
