@@ -609,18 +609,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [self publishData:mainCSSData toPath:cssUploadPath];
 }
 
-- (NSURL *)addBannerWithURL:(NSURL *)sourceURL;
-{
-    // Publish source
-    NSString *bannerPath = [[self designDirectoryPath] stringByAppendingPathComponent:@"banner.jpeg"];
-    [self publishContentsOfURL:sourceURL toPath:bannerPath];
-    
-    // Where will it be published to?
-    NSURL *designURL = [[[[self site] rootPage] master] designDirectoryURL];
-    NSURL *result = [designURL ks_URLByAppendingPathComponent:@"banner.jpeg" isDirectory:NO];
-    return result;
-}
-
 - (void)addDependencyOnObject:(NSObject *)object keyPath:(NSString *)keyPath { }
 
 #pragma mark Media
