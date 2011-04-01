@@ -147,6 +147,14 @@
     // write HTML
     if ( self.indexedCollection )
     {
+        // Write placeholder and be done with it
+        if (![[self indexedCollection] hasFeed])
+        {
+            NSAssert(![context startAnchorElementWithFeedForPage:[self indexedCollection] attributes:nil], @"weird, I expected to write placeholder");
+            return;
+        }
+        
+        
         [context startElement:@"div" attributes:[NSDictionary dictionaryWithObject:@"rssBadge" forKey:@"class"]];
         if ( [self useLargeIconLayout] )
         {

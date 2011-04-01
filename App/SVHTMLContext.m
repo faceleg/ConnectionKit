@@ -63,6 +63,9 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 - (void)pushAttributes:(NSDictionary *)attributes;
 
 - (SVHTMLIterator *)currentIterator;
+
+- (void)startPlaceholder;
+- (void)endPlaceholder;
 @end
 
 
@@ -603,18 +606,6 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 #pragma mark Placeholder
 
-- (void)startPlaceholder;
-{
-    [self startElement:@"div" className:@"svx-placeholder"];
-    [self startElement:@"div"];
-}
-
-- (void)endPlaceholder;
-{
-    [self endElement];
-    [self endElement];
-}
-
 - (void)startInvisibleBadge;
 {
     [self startElement:@"span" className:@"svx-invisibadge"];
@@ -652,6 +643,18 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 - (void)writePlaceholderWithText:(NSString *)text;
 {
     [self writePlaceholderWithText:text options:0];
+}
+
+- (void)startPlaceholder;
+{
+    [self startElement:@"div" className:@"svx-placeholder"];
+    [self startElement:@"div"];
+}
+
+- (void)endPlaceholder;
+{
+    [self endElement];
+    [self endElement];
 }
 
 #pragma mark Metrics
@@ -1443,12 +1446,14 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 - (BOOL)startAnchorElementWithFeedForPage:(id <SVPage>)page attributes:(NSDictionary *)attributes
 {
     OBPRECONDITION(page);
+    
+    [self addDependencyOnObject:page keyPath:@"hasFeed"];
     if ( [page hasFeed] )
     {
         NSString *href = [self relativeStringFromURL:[(KTPage *)page feedURL]];
         if ( href ) [self pushAttribute:@"href" value:href];
         
-        NSString *title = NSLocalizedString(@"To subscribe to this feed, drag or copy/paste this link to an RSS reader application.", "RSS badge tooltip");
+        NSString *title = NSLocalizedString(@"To subscribe to this feed, drag or copy/paste this link to an RSS reader application", "RSS badge tooltip");
         if ( title ) [self pushAttribute:@"title" value:href];
         
         for ( NSString *attribute in [attributes allKeys] )
@@ -1466,15 +1471,32 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     else
     {
         // write out placeholder with button to turn on feed for page
-        NSString *text = NSLocalizedString(@"The chosen collection has no RSS feed. ", "RSS badge feed placeholder");
-        [self writePlaceholderWithText:text];
-        
-        NSDictionary *attrs = [NSDictionary dictionaryWithObject:@"svx-placeholder" forKey:@"class"];
-        [self startElement:@"div" attributes:attrs];
-        
-        NSString *buttonTitle = NSLocalizedString(@"Generate Feed", "");
-        [self writeHTMLFormat:@"<center><button onclick=\"window.location = 'x-sandvox-rssfeed-activate:%@';\">%@</button></center>", [(SVSiteItem *)page identifier], buttonTitle];
-        [self endElement]; // </div>
+        [self startPlaceholder];
+        {
+            [self startElement:@"p"];
+            {
+                NSString *title = [page title];
+                if (title)
+                {
+                    [self writeCharacters:@"“"];
+                    [self writeCharacters:title];
+                    [self writeCharacters:@"”"];
+                    [self writeCharacters:NSLocalizedString(@" has no RSS feed", "RSS badge feed placeholder")];
+                }
+                else
+                {
+                    [self writeCharacters:NSLocalizedString(@"No RSS feed", "RSS badge feed placeholder")];
+                }
+            }
+            [self endElement];
+            
+            
+            NSString *buttonTitle = NSLocalizedString(@"Generate Feed", "");
+            [self writeHTMLFormat:@"<p><button onclick=\"window.location = 'x-sandvox-rssfeed-activate:%@';\">%@</button></p>", [(SVSiteItem *)page identifier], buttonTitle];
+            
+            [self writeElement:@"p" text:NSLocalizedString(@"Or select a different collection in the Inspector", "placeholder")];
+        }
+        [self endPlaceholder];
         
         return NO;
     }

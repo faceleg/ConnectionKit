@@ -49,13 +49,13 @@ img[width="0"], img[height="0"] { display:none; }
     background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #AEAEAE), color-stop(1, #CBCBCB));
     padding:5px !important;
     border:1px solid #404040;
+    text-align: center !important;  /* used to be in .svx-placeholder > div only. no idea why */
 }
 .svx-placeholder > div
 {
     margin:0px;
     padding: 12px;
     font-weight: bold;
-    text-align: center !important;
     font-family: "Lucida Grande";
     font-size: 13px;
 }
