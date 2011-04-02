@@ -2,17 +2,17 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10J567</string>
-		<string key="IBDocument.InterfaceBuilderVersion">851</string>
+		<string key="IBDocument.SystemVersion">10J869</string>
+		<string key="IBDocument.InterfaceBuilderVersion">823</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
-		<string key="IBDocument.HIToolboxVersion">462.00</string>
+		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">851</string>
+			<string key="NS.object.0">823</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="5"/>
+			<integer value="151"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -40,7 +40,7 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="NSCustomView" id="698237050">
 						<reference key="NSNextResponder" ref="1045780912"/>
-						<int key="NSvFlags">292</int>
+						<int key="NSvFlags">276</int>
 						<object class="NSMutableArray" key="NSSubviews">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="NSTextField" id="851150889">
@@ -145,7 +145,7 @@
 							</object>
 							<object class="NSTextField" id="287223776">
 								<reference key="NSNextResponder" ref="698237050"/>
-								<int key="NSvFlags">265</int>
+								<int key="NSvFlags">289</int>
 								<string key="NSFrame">{{2, 5}, {80, 14}}</string>
 								<reference key="NSSuperview" ref="698237050"/>
 								<bool key="NSEnabled">YES</bool>
@@ -166,7 +166,7 @@
 					</object>
 					<object class="NSCustomView" id="1029353455">
 						<reference key="NSNextResponder" ref="1045780912"/>
-						<int key="NSvFlags">292</int>
+						<int key="NSvFlags">274</int>
 						<object class="NSMutableArray" key="NSSubviews">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="NSTextField" id="725772426">
@@ -533,7 +533,7 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 							</object>
 							<object class="NSButton" id="797238795">
 								<reference key="NSNextResponder" ref="1029353455"/>
-								<int key="NSvFlags">264</int>
+								<int key="NSvFlags">288</int>
 								<string key="NSFrame">{{2, 3}, {76, 18}}</string>
 								<reference key="NSSuperview" ref="1029353455"/>
 								<bool key="NSEnabled">YES</bool>
@@ -1396,7 +1396,6 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 					<string>49.ImportedFromIB2</string>
 					<string>5.IBEditorWindowLastContentRect</string>
 					<string>5.IBPluginDependency</string>
-					<string>5.IBViewEditorWindowController.showingBoundsRectangles</string>
 					<string>5.ImportedFromIB2</string>
 					<string>50.IBPluginDependency</string>
 					<string>50.ImportedFromIB2</string>
@@ -1480,9 +1479,8 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{81, 382}, {230, 340}}</string>
+					<string>{{790, 662}, {230, 340}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<boolean value="YES"/>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
