@@ -87,6 +87,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 // Event handling
 - (void)forwardMouseEvent:(NSEvent *)theEvent selector:(SEL)selector cachedTargetView:(NSView *)targetView;
+- (void)moveItemForEvent:(NSEvent *)event;
 - (void)dragImageForEvent:(NSEvent *)event;
 
 #pragma mark Resizing
@@ -473,7 +474,14 @@ typedef enum {  // this copied from WebPreferences+Private.h
         // Should start a move/drag?
         if ([[[item HTMLElement] documentView] _web_dragShouldBeginFromMouseDown:event withExpiration:[NSDate distantFuture]])
         {
-            return [self dragImageForEvent:event];
+            if (selectableRange)
+            {
+                [self dragImageForEvent:event];
+            }
+            else
+            {
+                [self moveItemForEvent:event];
+            }
         }
 
         
@@ -1372,7 +1380,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 #pragma mark Tracking the Mouse
 
-- (void)dragImageForEvent:(NSEvent *)event;
+- (void)moveItemForEvent:(NSEvent *)event;
 {
     NSPoint eventLocation = [event locationInWindow];
     WEKWebEditorItem *item = [self selectedItemAtPoint:[self convertPoint:eventLocation fromView:nil]
@@ -1402,10 +1410,14 @@ typedef enum {  // this copied from WebPreferences+Private.h
     // Reset position/appearance
     [item moveEnded];
     [self setXGuide:nil yGuide:nil];
-        
-    return;
-    
-    
+}
+
+- (void)dragImageForEvent:(NSEvent *)event;
+{    
+    NSPoint eventLocation = [event locationInWindow];
+    WEKWebEditorItem *item = [self selectedItemAtPoint:[self convertPoint:eventLocation fromView:nil]
+                                                handle:NULL];
+    if (!item) return;
     
     
     //  Ideally, we'd place onto the pasteboard:
