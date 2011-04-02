@@ -28,7 +28,7 @@ typedef enum { kPosterFrameTypeUndefined = 0, kPosterFrameTypeNone, kPosterFrame
 @property (retain) QTMovie *dimensionCalculationMovie;
 @property (retain) KSSimpleURLConnection *dimensionCalculationConnection;
 
-@property (atomic) PosterFrameType posterFrameType;
+@property PosterFrameType posterFrameType;
 
 #pragma mark Publishing
 
