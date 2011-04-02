@@ -105,7 +105,7 @@
 - (void)writePlaceholder
 {
     id <SVPlugInContext> context = [self currentContext];
-    [context writePlaceholderWithText:SVLocalizedString(@"Enter your Delicious username in the Inspector.", "String_On_Page_Template")
+    [context writePlaceholderWithText:SVLocalizedString(@"Enter Delicious username in the Inspector", "String_On_Page_Template")
                               options:0];
 }
 
