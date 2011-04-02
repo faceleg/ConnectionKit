@@ -73,17 +73,24 @@
 
 #pragma mark Dragging Destination
 
-- (void)willUpdateDrag:(id <NSDraggingInfo>)sender result:(NSDragOperation)result;
+- (NSDragOperation)willUpdateDrag:(id <NSDraggingInfo>)sender result:(NSDragOperation)result;
 {
-    if (_delegateWillHandleDraggingInfo) return;
-    
     // Once we know the drag is supported, draw it. Can't do this from delegate methods as they are called even when an editing drag won't be allowed.
-    if (result)
+    if (!_delegateWillHandleDraggingInfo && result)
     {
+        if (result == NSDragOperationCopy &&
+            [sender draggingSource] == [self webEditor] &&
+            [sender draggingSourceOperationMask] & NSDragOperationGeneric)
+        {
+            result = NSDragOperationGeneric;
+        }
+        
         NSPoint point = [self convertPointFromBase:[sender draggingLocation]];
         DOMRange *editingRange = [self editableDOMRangeForPoint:point];
         [[self webEditor] moveDragHighlightToDOMNode:[editingRange commonAncestorContainer]];
     }
+    
+    return result;
 }
 
 /*  Our aim here is to extend WebView to support some extra drag & drop methods that we'd prefer. Override everything to be sure we don't collide with WebKit in an unexpected manner.
@@ -113,9 +120,7 @@
     }
     
     
-    [self willUpdateDrag:sender result:result];
-    
-    
+    result = [self willUpdateDrag:sender result:result];
     return result;
 }
 
@@ -137,16 +142,15 @@
     {
         _delegateWillHandleDraggingInfo = NO;
         
-        [[self webEditor] performSelector:@selector(removeDragCaretFromDOMNodes)];
-        [[self webEditor] moveDragHighlightToDOMNode:nil];
+        WEKWebEditorView *webEditor = [self webEditor];
+        [webEditor performSelector:@selector(removeDragCaretFromDOMNodes)];
+        [webEditor moveDragHighlightToDOMNode:nil];
     
         result = [super draggingUpdated:sender];
     }
     
     
-    [self willUpdateDrag:sender result:result];
-    
-    
+    result = [self willUpdateDrag:sender result:result];
     return result;
     
     
