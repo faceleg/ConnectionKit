@@ -91,12 +91,26 @@
                                 insertAttachmentsIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
     NSData *data = [pasteboard dataForType:@"com.karelia.html+graphics"];
-    if (!data) return nil;
+    if (data)
+    {
+        return [self attributedHTMLStringWithPropertyList:data
+                insertAttachmentsIntoManagedObjectContext:context];
+    }
+    else
+    {
+        NSDictionary *graphicProps = [pasteboard propertyListForType:@"com.karelia.sandvox.graphic"];
+        if (graphicProps && [graphicProps isKindOfClass:[NSDictionary class]])
+        {
+            SVGraphic *graphic = [SVGraphic graphicWithSerializedProperties:graphicProps
+                                             insertIntoManagedObjectContext:context];
+            
+            NSAttributedString *result = [self attributedHTMLStringWithGraphic:graphic];
+            [[graphic textAttachment] setCausesWrap:NSBOOL(NO)];
+            return result;
+        }
+    }
     
-    
-    NSAttributedString *result = [self attributedHTMLStringWithPropertyList:data
-                                  insertAttachmentsIntoManagedObjectContext:context];
-    return result;
+    return nil;
 }
 
 + (NSAttributedString *)attributedHTMLStringWithPropertyList:(NSData *)data

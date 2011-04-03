@@ -217,7 +217,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
                                              baseURL:nil];
             
             [[node mutableChildDOMNodes] removeAllObjects];
-            [node appendChildNodes:[fragment childNodes]];
+            [node appendChild:fragment];
             
             
             // Remove source dragged items if they came from us. No need to call -didChangeText as the insertion will do that
