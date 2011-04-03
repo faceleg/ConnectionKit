@@ -27,8 +27,16 @@ div.text-navigation div { display:inline; margin:0px 0.5em; }
 
 /* 2.0 wrap compatibility. 2.0-compatible designs can further adjust these if they need */
 .wide { display:block; }
-img.narrow.left { float:left!important; }   /* Some designs won't respect without !important */
-img.narrow.right { float:right!important; }
+
+img.narrow.left {   /* Some designs won't respect without !important */
+    float:left!important;
+    clear:left;
+}
+img.narrow.right {
+    float:right!important;
+    clear:right;
+}
+
 .wide.left .graphic, img.wide.left { margin-left:0px; margin-right:auto; }
 .wide.center .graphic, img.wide.center { margin-left:auto; margin-right:auto; }
 .wide.right .graphic, img.wide.right { margin-left:auto; margin-right:0px; }
