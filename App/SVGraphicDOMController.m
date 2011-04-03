@@ -942,6 +942,20 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     return [super shouldTrySelectingInline];
 }
 
+- (BOOL)allowsDirectAccessToWebViewWhenSelected;
+{
+    // Generally, no. EXCEPT for inline, non-wrap-causing images
+    BOOL result = NO;
+    
+    SVGraphic *image = [self representedObject];
+    if ([image shouldWriteHTMLInline])
+    {
+        result = YES;
+    }
+    
+    return result;
+}
+
 #pragma mark Drag & Drop
 
 - (void) setRepresentedObject:(id)object;

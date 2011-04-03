@@ -1413,7 +1413,10 @@ typedef enum {  // this copied from WebPreferences+Private.h
 }
 
 - (void)dragImageForEvent:(NSEvent *)event;
-{    
+{
+    return;
+    
+    
     NSPoint eventLocation = [event locationInWindow];
     WEKWebEditorItem *item = [self selectedItemAtPoint:[self convertPoint:eventLocation fromView:nil]
                                                 handle:NULL];
