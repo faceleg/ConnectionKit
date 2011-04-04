@@ -141,10 +141,13 @@
 	NSTextView *aTextView;
 	for (aTextView in textViews)
 	{
+		OBASSERT([aTextView isKindOfClass:[NSTextView class]]);
+		NSTextStorage *textStorage = [aTextView textStorage];
+		OBASSERT([textStorage isKindOfClass:[NSTextStorage class]]);
 		[[NSNotificationCenter defaultCenter] addObserver:self 
 												 selector:@selector(textViewDidProcessEditing:)
 													 name:NSTextStorageDidProcessEditingNotification
-												   object:[aTextView textStorage]];
+												   object:textStorage];
 	}
 	
 	
