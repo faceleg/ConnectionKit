@@ -599,6 +599,12 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 - (void)writeCalloutWithGraphics:(NSArray *)pagelets;
 {
+    // register before callout begins
+    for (SVGraphic *aGraphic in pagelets)
+    {
+        [self addDependencyForKeyPath:@"textAttachment.placement" ofObject:aGraphic];
+    }
+    
     SVCallout *callout = [[SVCallout alloc] init];
     [callout write:self pagelets:pagelets];
     [callout release];
@@ -1320,11 +1326,6 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
             
             SVGraphic *graphic = [attachment graphic];
             
-            
-            
-            // If the placement changes, want whole Text Area to update
-            [self addDependencyForKeyPath:@"textAttachment.placement" ofObject:graphic];
-            // Used to register title, intro etc. as dependencies here, but that shouldn't be necessary any more
             
             
             // Possible callout.
