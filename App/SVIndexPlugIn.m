@@ -159,9 +159,11 @@
 - (void)awakeFromSourceProperties:(NSDictionary *)properties
 {
 	NSInteger maxItems = 0;
-	if (nil != [properties objectForKey:@"collectionMaxIndexItems"])
+    
+    id collectionMaxIndexItems = [properties objectForKey:@"collectionMaxIndexItems"];
+	if (collectionMaxIndexItems)
 	{
-		maxItems = [[properties objectForKey:@"collectionMaxIndexItems"] intValue];
+		maxItems = (collectionMaxIndexItems == [NSNull null] ? 0 : [collectionMaxIndexItems intValue]);
 	}
 	else if (nil != [properties objectForKey:@"maxItems"])
 	{
