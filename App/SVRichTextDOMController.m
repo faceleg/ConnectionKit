@@ -245,6 +245,16 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     @try
     {
         [super webEditorTextDidChange];
+        
+        // Ditch any orphaned content
+        for (WEKWebEditorItem *anItem in [self childWebEditorItems])
+        {
+            if (![[anItem HTMLElement] parentNode])
+            {
+                [anItem setHTMLElement:nil];
+                [anItem removeFromParentWebEditorItem];
+            }
+        }
     }
     @finally
     {
