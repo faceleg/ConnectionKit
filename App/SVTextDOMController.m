@@ -70,7 +70,7 @@
 - (void)setTextHTMLElement:(DOMHTMLElement *)element;
 {
     // If there's an old element stop it being editable 
-    [[self textHTMLElement] removeAttribute:@"contentEditable"];
+    if ([self isTextHTMLElementLoaded]) [[self textHTMLElement] removeAttribute:@"contentEditable"];
     
     
     // Store new
@@ -79,6 +79,8 @@
     
     [self setEditable:[self isEditable]];
 }
+
+- (BOOL)isTextHTMLElementLoaded; { return _textElement != nil; }
 
 - (DOMHTMLElement *)innerTextHTMLElement; { return [self textHTMLElement]; }
 

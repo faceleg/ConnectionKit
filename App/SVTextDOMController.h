@@ -42,6 +42,8 @@
 #pragma mark DOM Node
 
 @property(nonatomic, retain) DOMHTMLElement *textHTMLElement;
+- (BOOL)isTextHTMLElementLoaded;
+
 - (DOMHTMLElement *)innerTextHTMLElement;  // default is -textHTMLElement. Subclasses override to nil if there isn't one or can't be found
 
 - (WEKWebEditorItem *)orphanedWebEditorItemForImageDOMElement:(DOMHTMLImageElement *)aNode;
