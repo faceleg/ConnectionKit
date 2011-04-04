@@ -101,23 +101,47 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     DOMElement *contentElement = [self contentDOMElement];
     [[contentElement mutableChildDOMNodes] removeAllObjects];
     
+    
+    // Genrate markup for how the sidebar should look
     NSArray *pagelets = [[self pageletsController] arrangedObjects];
-    NSMutableArray *controllers = [[NSMutableArray alloc] initWithCapacity:[pagelets count]];
+    NSMutableString *html = [[NSMutableString alloc] init];
+    
+    SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc]
+                                       initWithOutputWriter:html
+                                       inheritFromContext:[self HTMLContext]];
+    
+    [context beginGraphicContainer:[self representedObject]];
+    [context writeGraphics:pagelets];
+    [context endGraphicContainer];
+    
+    
+    // Load HTML into DOM so can query items
+    DOMDocumentFragment *fragment = [(DOMHTMLDocument *)[[self HTMLElement] ownerDocument]
+                                     createDocumentFragmentWithMarkupString:html
+                                     baseURL:nil];
+    [html release];
+    
+    
+    NSMutableArray *controllers = [[[context rootDOMController] childWebEditorItems] mutableCopy];
+    [context release];
     
     SVGraphic *aPagelet;
     WEKWebEditorItem *nextController = nil;
     
-    for (NSUInteger i = [pagelets count] - 1; i < NSNotFound;)
+    for (NSUInteger i = [controllers count] - 1; i < NSNotFound;)
     {
-        aPagelet = [pagelets objectAtIndex:i];
-        i--;
+        aPagelet = [[controllers objectAtIndex:i] representedObject];
         
         
         // Grab controller for item. Create it if needed
         id controller = [self hitTestRepresentedObject:aPagelet];
-        if (!controller)
+        if (controller)
+        {
+            [controllers replaceObjectAtIndex:i withObject:controller];
+        }
+        else
         {            
-            controller = [[aPagelet newDOMController] autorelease];
+            controller = [controllers objectAtIndex:i];
             [controller loadPlaceholderDOMElementInDocument:[contentElement ownerDocument]];
             [self addChildWebEditorItem:controller];
             [controller setHTMLContext:[self HTMLContext]];
@@ -126,13 +150,12 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
             [controller updateIfNeeded];    // push it through quickly
         }
         
-             
+        i--;
+        
         // Insert before what should be its next sibling
         DOMElement *element = [controller HTMLElement];
         [contentElement insertBefore:element
                             refChild:[nextController HTMLElement]];
-        
-        [controllers insertObject:controller atIndex:0];
         
         
         // Loop
