@@ -95,6 +95,31 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     [self setContentDOMElement:[document getElementById:@"sidebar-content"]];
 }
 
+#pragma mark Updating
+
++ (void)loadHTMLElementsOfDOMControllers:(NSArray *)controllers fromDocumentFragment:(DOMDocumentFragment *)fragment;
+{
+    // TODO: ought to search more than top-level of tree
+    NSDictionary *controllersByID = [[NSDictionary alloc]
+                                     initWithObjects:controllers
+                                     forKeys:[controllers valueForKey:@"elementIdName"]];
+    
+    DOMHTMLElement *anElement = [fragment firstChildOfClass:[DOMElement class]];
+    while (anElement)
+    {
+        NSString *ID = [anElement getAttribute:@"id"];
+        if (ID)
+        {
+            SVDOMController *controller = [controllersByID objectForKey:ID];
+            [controller setHTMLElement:anElement];
+        }
+        
+        anElement = [anElement nextSiblingOfClass:[DOMElement class]];
+    }
+    
+    [controllersByID release];
+}
+
 - (void)updatePageletOrdering;
 {
     // Arrange DOM nodes to match. Start by removing all
@@ -115,16 +140,19 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     [context endGraphicContainer];
     
     
-    // Load HTML into DOM so can query items
+    // Load HTML into DOM, hooking up to controllers
     DOMDocumentFragment *fragment = [(DOMHTMLDocument *)[[self HTMLElement] ownerDocument]
                                      createDocumentFragmentWithMarkupString:html
                                      baseURL:nil];
     [html release];
     
-    
     NSMutableArray *controllers = [[[context rootDOMController] childWebEditorItems] mutableCopy];
     [context release];
     
+    [[self class] loadHTMLElementsOfDOMControllers:controllers fromDocumentFragment:fragment];
+    
+    
+    // Figure out correct DOM controllers for pagelets
     SVGraphic *aPagelet;
     WEKWebEditorItem *nextController = nil;
     
@@ -137,6 +165,12 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         id controller = [self hitTestRepresentedObject:aPagelet];
         if (controller)
         {
+            // Update attributes from new element
+            DOMElement *element = [[controllers objectAtIndex:i] HTMLElement];
+            if (element)
+            {
+                [[controller HTMLElement] setAttribute:@"class" value:[element getAttribute:@"class"]];
+            }
             [controllers replaceObjectAtIndex:i withObject:controller];
         }
         else
