@@ -482,6 +482,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
             {
                 [self moveItemForEvent:event];
             }
+            return;
         }
 
         
