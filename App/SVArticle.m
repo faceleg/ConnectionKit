@@ -49,6 +49,10 @@
     
     // Similarly, photocasts & podcasts want a graphic for their enclosure
     [page guessEnclosures];
+    
+    
+    // Update mod date
+    [[self page] setModificationDate:[NSDate date]];
 }
 
 #pragma mark HTML
