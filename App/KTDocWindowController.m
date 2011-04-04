@@ -1037,7 +1037,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 				buttonTitle = NSLocalizedString(@"Upgrade your License", @"Button title to purchase a license");
 				break;
 			default:					// Unlicensed, treat as free/demo
-				buttonPrompt = NSLocalizedString(@"Free edition (Unlicensed)", @"Indicator of license status of app");
+				buttonPrompt = NSLocalizedString(@"Free Demo (Unlicensed)", @"Indicator of license status of app");
 				buttonTitle = NSLocalizedString(@"Buy a License", @"Button title to purchase a license");
 				break;
 		}
