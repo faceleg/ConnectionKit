@@ -207,7 +207,7 @@ NSLog(@"%@", aURL);
 
 - (BOOL)alertShowHelp:(NSAlert *)alert
 {
-	NSString *helpString = @"Installing_Sandvox_Plugins_and_Designs";		// HELPSTRING
+	NSString *helpString = @"Installing Sandvox Plug-ins and Designs";		// HELPSTRING
 	return [NSHelpManager gotoHelpAnchor:helpString];
 }
 

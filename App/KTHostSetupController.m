@@ -327,8 +327,8 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		@"Publishing_to_your_Computer", @"apache",
 		@"Publishing_to_your_Computer", @"local",
 		@"Publishing_to_your_Computer", @"localError",
-		@"Publishing_to_.Mac", @"mac",
-		@"Entering_Your_Host_Settings", @"host",
+		@"Publishing to MobileMe", @"mac",
+		@"Publishing_to_a_Remote_Host", @"host",
 		@"Testing_Your_Connection", @"test",
 		@"Host_Summary", @"summary",
 		nil];
@@ -339,7 +339,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	if (myShouldShowConnectionTroubleshooting
 		&& ([myCurrentState isEqualToString:@"summary"] || [myCurrentState isEqualToString:@"introduction"]) )
 	{
-		pageName = @"Troubleshooting_Publishing_and_Connections";	// HELPSTRING
+		pageName = @"Testing_my_connection_fails";	// HELPSTRING
 	}
 	if (nil == pageName) pageName = @"Setting_Up_Your_Host";	// HELPSTRING
 
