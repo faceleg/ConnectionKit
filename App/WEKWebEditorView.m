@@ -554,8 +554,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
                 
                 // Can't call -sendEvent: as that doesn't update -currentEvent.
                 // Post in reverse order since I'm placing onto the front of the queue
-                [NSApp postEvent:[mouseUp eventWithClickCount:1] atStart:YES];
-                [NSApp postEvent:[event eventWithClickCount:1] atStart:YES];
+                [NSApp postEvent:[mouseUp ks_eventWithClickCount:1] atStart:YES];
+                [NSApp postEvent:[event ks_eventWithClickCount:1] atStart:YES];
             }
         }
     }
@@ -1510,12 +1510,16 @@ typedef enum {  // this copied from WebPreferences+Private.h
     if (item)
     {
         
-        // If mousing down on an image, pass the event through. Must do before changing selection so that WebView becomes first responder
+        // If mousing down on an image, pass the event through
         if ([item allowsDirectAccessToWebViewWhenSelected])
         {
-            [self forwardMouseEvent:event selector:@selector(mouseDown:) cachedTargetView:nil];
+            // Must do before changing selection so that WebView becomes first responder
+            // Post the event as if in the past so that a drag can begin immediately. #109381
+            [self forwardMouseEvent:[event ks_eventWithTimestamp:0]
+                           selector:@selector(mouseDown:)
+                   cachedTargetView:nil];
+            
             [self selectItem:item event:event];
-            //[NSApp postEvent:event atStart:YES];
         }
         else
         {
