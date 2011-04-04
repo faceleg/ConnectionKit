@@ -50,8 +50,11 @@
 {
     [super loadHTMLElementFromDocument:document];
     
-    DOMNodeList *nodes = [[self HTMLElement] getElementsByClassName:@"callout-content"];
-    [self setCalloutContentElement:(DOMElement *)[nodes item:0]];
+    if ([self isHTMLElementCreated])
+    {
+        DOMNodeList *nodes = [[self HTMLElement] getElementsByClassName:@"callout-content"];
+        [self setCalloutContentElement:(DOMElement *)[nodes item:0]];
+    }
 }
 
 - (void)createHTMLElement;
