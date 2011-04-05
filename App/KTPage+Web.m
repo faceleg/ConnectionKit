@@ -21,6 +21,7 @@
 #import "SVPublisher.h"
 #import "SVTitleBox.h"
 #import "SVWebEditorHTMLContext.h"
+#import "SVTemplate.h"
 
 #import "NSBundle+KTExtensions.h"
 
@@ -376,7 +377,13 @@
 		{
 			sUnpublishedTemplate = [[SVTemplate templateNamed:@"UnpublishedTemplate.html"] retain];
 		}
-		NSString *result = [context parseTemplate:sUnpublishedTemplate object:self];		
+
+		SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc]
+                                        initWithTemplate:[sUnpublishedTemplate templateString]
+                                        component:self];
+        
+        [parser parseIntoHTMLContext:context];
+        [parser release];
 	}
     [pool2 release];
     
