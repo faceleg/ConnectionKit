@@ -376,6 +376,9 @@
 		if (!sUnpublishedTemplate)
 		{
 			sUnpublishedTemplate = [[SVTemplate templateNamed:@"UnpublishedTemplate.html"] retain];
+			
+			// For template:
+			// NSLocalizedString(@"This page has not been published, because the webmaster is using a demo of Sandvox.", @"Note as to why a page wasn't published");
 		}
 
 		SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc]
