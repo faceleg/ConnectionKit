@@ -147,7 +147,7 @@
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 3C9B65950BFA7F9E007A4871 /* Build configuration list for PBXAggregateTarget "Sandvox-CompleteApplication" */;
 			buildPhases = (
-				3C9B66B00BFA83D6007A4871 /* Script - Remove AmazonSupport Headers */,
+				3C9B66B00BFA83D6007A4871 /* Script - Remove Framework Headers */,
 				3C9B66B20BFA8423007A4871 /* Script - Remove PrivateHeaders */,
 				3C9B66C60BFA940C007A4871 /* Script - Add PlugIns */,
 				3C9B66CC0BFA94BA007A4871 /* Script - Add Designs */,
@@ -1123,12 +1123,10 @@
 		CE1BE81B11D2AD1F00D875AE /* wide-design.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CE1BE7BF11D2AD1E00D875AE /* wide-design.pdf */; };
 		CE1BE81C11D2AD1F00D875AE /* checkmark.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE1BE7C111D2AD1E00D875AE /* checkmark.tiff */; };
 		CE1BE81D11D2AD1F00D875AE /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE1BE7C311D2AD1E00D875AE /* AppIcon.icns */; };
-		CE1BE81E11D2AD1F00D875AE /* datasource.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE1BE7C411D2AD1E00D875AE /* datasource.icns */; };
 		CE1BE81F11D2AD1F00D875AE /* design.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE1BE7C511D2AD1E00D875AE /* design.icns */; };
 		CE1BE82011D2AD1F00D875AE /* document.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE1BE7C611D2AD1E00D875AE /* document.icns */; };
 		CE1BE82111D2AD1F00D875AE /* favicon.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE1BE7C711D2AD1E00D875AE /* favicon.icns */; };
 		CE1BE82211D2AD1F00D875AE /* home.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE1BE7C811D2AD1E00D875AE /* home.icns */; };
-		CE1BE82311D2AD1F00D875AE /* index.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE1BE7C911D2AD1E00D875AE /* index.icns */; };
 		CE1BE82411D2AD1F00D875AE /* pageplugin.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE1BE7CA11D2AD1E00D875AE /* pageplugin.icns */; };
 		CE1BE82511D2AD1F00D875AE /* a2hosting.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1BE7CC11D2AD1E00D875AE /* a2hosting.png */; };
 		CE1BE82611D2AD1F00D875AE /* dotmac.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1BE7CD11D2AD1E00D875AE /* dotmac.png */; };
@@ -2933,12 +2931,10 @@
 		CE1BE7BF11D2AD1E00D875AE /* wide-design.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "wide-design.pdf"; sourceTree = "<group>"; };
 		CE1BE7C111D2AD1E00D875AE /* checkmark.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = checkmark.tiff; sourceTree = "<group>"; };
 		CE1BE7C311D2AD1E00D875AE /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
-		CE1BE7C411D2AD1E00D875AE /* datasource.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = datasource.icns; sourceTree = "<group>"; };
 		CE1BE7C511D2AD1E00D875AE /* design.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = design.icns; sourceTree = "<group>"; };
 		CE1BE7C611D2AD1E00D875AE /* document.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = document.icns; sourceTree = "<group>"; };
 		CE1BE7C711D2AD1E00D875AE /* favicon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = favicon.icns; sourceTree = "<group>"; };
 		CE1BE7C811D2AD1E00D875AE /* home.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = home.icns; sourceTree = "<group>"; };
-		CE1BE7C911D2AD1E00D875AE /* index.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = index.icns; sourceTree = "<group>"; };
 		CE1BE7CA11D2AD1E00D875AE /* pageplugin.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = pageplugin.icns; sourceTree = "<group>"; };
 		CE1BE7CC11D2AD1E00D875AE /* a2hosting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = a2hosting.png; sourceTree = "<group>"; };
 		CE1BE7CD11D2AD1E00D875AE /* dotmac.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dotmac.png; sourceTree = "<group>"; };
@@ -5452,12 +5448,10 @@
 			isa = PBXGroup;
 			children = (
 				CE1BE7C311D2AD1E00D875AE /* AppIcon.icns */,
-				CE1BE7C411D2AD1E00D875AE /* datasource.icns */,
 				CE1BE7C511D2AD1E00D875AE /* design.icns */,
 				CE1BE7C611D2AD1E00D875AE /* document.icns */,
 				CE1BE7C711D2AD1E00D875AE /* favicon.icns */,
 				CE1BE7C811D2AD1E00D875AE /* home.icns */,
-				CE1BE7C911D2AD1E00D875AE /* index.icns */,
 				CE1BE7CA11D2AD1E00D875AE /* pageplugin.icns */,
 			);
 			path = FileIcons;
@@ -6880,12 +6874,10 @@
 				CE1BE81B11D2AD1F00D875AE /* wide-design.pdf in Resources */,
 				CE1BE81C11D2AD1F00D875AE /* checkmark.tiff in Resources */,
 				CE1BE81D11D2AD1F00D875AE /* AppIcon.icns in Resources */,
-				CE1BE81E11D2AD1F00D875AE /* datasource.icns in Resources */,
 				CE1BE81F11D2AD1F00D875AE /* design.icns in Resources */,
 				CE1BE82011D2AD1F00D875AE /* document.icns in Resources */,
 				CE1BE82111D2AD1F00D875AE /* favicon.icns in Resources */,
 				CE1BE82211D2AD1F00D875AE /* home.icns in Resources */,
-				CE1BE82311D2AD1F00D875AE /* index.icns in Resources */,
 				CE1BE82411D2AD1F00D875AE /* pageplugin.icns in Resources */,
 				CE1BE82511D2AD1F00D875AE /* a2hosting.png in Resources */,
 				CE1BE82611D2AD1F00D875AE /* dotmac.png in Resources */,
@@ -7282,19 +7274,19 @@
 			shellScript = "echo \"Generating Localizable.strings ...\"\ncd ${SRCROOT}\n\n# KTAppDelegate.h contains NSLocalizedString calls\n# so we need to include .h files in genstring's purview\n# The weird code on the end searches the Shared repo\n\ngenstrings -littleEndian -q -u -o en.lproj *.[hm]\n\ngenstrings -littleEndian -q -u -o ../../Shared/en.lproj -s SVSharedLocalizedString \\\n\t${SRCROOT}/../../Shared/AppKit/*.[hm]\t\t\\\n\t${SRCROOT}/../../Shared/Core\\ Data/*.[hm]\t\\\n\t${SRCROOT}/../../Shared/Core\\ Image/*.[hm]\\\n\t${SRCROOT}/../../Shared/Foundation/*.[hm]\t\\\n\t${SRCROOT}/../../Shared/Imported/*.[hm]\t\\\n\t${SRCROOT}/../../Shared/QTKit/*.[hm]\t\t\\\n\t${SRCROOT}/../../Shared/WebKit/*.[hm]\n\nmv ../../Shared/en.lproj/Localizable.strings ../../Shared/en.lproj/Shared.strings\n\n";
 			showEnvVarsInLog = 0;
 		};
-		3C9B66B00BFA83D6007A4871 /* Script - Remove AmazonSupport Headers */ = {
+		3C9B66B00BFA83D6007A4871 /* Script - Remove Framework Headers */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Script - Remove AmazonSupport Headers";
+			name = "Script - Remove Framework Headers";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "\necho \"###\"\necho \"Removing Headers from ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport/ ...\"\n\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/Versions/A/PrivateHeaders\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/PrivateHeaders\n\necho TARGET_BUILD_DIR ${TARGET_BUILD_DIR}\n";
+			shellScript = "\necho \"###\"\n\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/Versions/A/PrivateHeaders\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/Versions/A/PrivateHeaders\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/Versions/A/PrivateHeaders\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/Versions/A/PrivateHeaders\n\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/PrivateHeaders\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/PrivateHeaders\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/PrivateHeaders\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/PrivateHeaders\n\n\necho \"Removing Headers from frameworks ...\"\n\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/Versions/A/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/BWToolkitFramework.framework/Versions/A/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Versions/A/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/Versions/A/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/Versions/A/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/Versions/A/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Growl.framework/Versions/A/Headers\n\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/BWToolkitFramework.framework/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Growl.framework/Headers\n\n\necho TARGET_BUILD_DIR ${TARGET_BUILD_DIR}\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66B20BFA8423007A4871 /* Script - Remove PrivateHeaders */ = {

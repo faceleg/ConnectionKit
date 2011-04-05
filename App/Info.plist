@@ -47,26 +47,6 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
-				<string>svxDataSource</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>datasource.icns</string>
-			<key>CFBundleTypeName</key>
-			<string>Sandvox Data Source</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>svDS</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSTypeIsPackage</key>
-			<true/>
-			<key>NSDocumentClass</key>
-			<string>KTPluginInstaller</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
 				<string>svxDesign</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
@@ -76,66 +56,6 @@
 			<key>CFBundleTypeOSTypes</key>
 			<array>
 				<string>svDz</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSTypeIsPackage</key>
-			<true/>
-			<key>NSDocumentClass</key>
-			<string>KTPluginInstaller</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>svxIndex</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>index.icns</string>
-			<key>CFBundleTypeName</key>
-			<string>Sandvox Index</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>svIn</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSTypeIsPackage</key>
-			<true/>
-			<key>NSDocumentClass</key>
-			<string>KTPluginInstaller</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>svxPage</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>pageplugin.icns</string>
-			<key>CFBundleTypeName</key>
-			<string>Sandvox Page</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>svPg</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSTypeIsPackage</key>
-			<true/>
-			<key>NSDocumentClass</key>
-			<string>KTPluginInstaller</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>svxPagelet</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>pageplugin.icns</string>
-			<key>CFBundleTypeName</key>
-			<string>Sandvox Pagelet</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>svPt</string>
 			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
