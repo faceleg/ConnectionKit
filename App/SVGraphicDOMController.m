@@ -392,7 +392,8 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 - (void)setNeedsUpdate;
 {
-    if ([[self representedObject] requiresPageLoad])
+    id object = [self representedObject];
+    if ([object respondsToSelector:@selector(requiresPageLoad)] && [object requiresPageLoad])
     {
         [[self webEditorViewController] setNeedsUpdate];
     }
