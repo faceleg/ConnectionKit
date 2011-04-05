@@ -183,13 +183,6 @@
             {
                 result = kSVDocumentType_1_0;
             }
-            else if (fileIsDirectory)
-            {
-                // Check for documents converted by 2.0 beta, with extension left intact
-                NSArray *contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[inAbsoluteURL path] error:NULL];
-                
-                if ([contents containsObject:@"index"]) result = kSVDocumentTypeName;
-            }
         }
     }
     
@@ -219,6 +212,17 @@
 			metadata = [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:nil
                                                                                   URL:sourceStoreURL
                                                                                 error:&subError];
+            
+            // Might be a 2.0 beta doc that had new format, but old extension
+            if (!metadata && [type isEqualToString:kSVDocumentTypeName_1_5])
+            {
+                sourceStoreURL = [KTDocument datastoreURLForDocumentURL:absoluteURL
+                                                                   type:kSVDocumentTypeName];
+                
+                metadata = [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:nil
+                                                                                      URL:sourceStoreURL
+                                                                                    error:&subError];
+            }
 		}
 		@catch (NSException *exception)
 		{
