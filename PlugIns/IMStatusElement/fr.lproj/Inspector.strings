@@ -29,9 +29,9 @@
 "Labels" = "Étiquettes";
 
 /* Class = "NSTextFieldCell"; title = "Online:"; ObjectID = "124"; */
-"Online:" = "En ligne :";
+"Online:" = "En ligne :";
 
 /* Class = "NSTextFieldCell"; title = "Offline:"; ObjectID = "128"; */
-"Offline:" = "Hors ligne :";
+"Offline:" = "Hors ligne :";
 /* Class = "NSTextFieldCell"; title = "Status is not “live” within Sandvox. An example image is being shown."; ObjectID = "141"; */
 "Status is not “live” within Sandvox. An example image is being shown." = "L’état n’est pas ‘en direct’ dans Sandvox. Un exemple illustré est affiché.";

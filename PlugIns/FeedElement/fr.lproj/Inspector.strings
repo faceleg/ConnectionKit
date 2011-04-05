@@ -1,5 +1,5 @@
 ﻿/* Class = "NSTextFieldCell"; title = "Full URL of feed (RSS or Atom):"; ObjectID = "138"; */
-"Full URL of feed (RSS or Atom):" = "URL complète du flux (RSS ou Atom) :";
+"Full URL of feed (RSS or Atom):" = "URL complète du flux (RSS ou Atom) :";
 
 /* Class = "NSTextFieldCell"; title = "Entries:"; ObjectID = "141"; */
 "Entries:" = "Entrées :";
@@ -20,4 +20,4 @@
 "characters" = "caractères";
 
 /* Class = "IBBindingConnection"; designableIsNilPlaceholder = "feed://"; ObjectID = "168"; */
-"feed://" = "Flux ://";
+"feed://" = "Flux ://";

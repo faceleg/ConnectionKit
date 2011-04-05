@@ -31,7 +31,7 @@
 "Layout" = "Mise en page";
 
 /* Class = "NSTextFieldCell"; title = "Article Length:"; ObjectID = "213"; */
-"Article Length:" = "Longueur de l'article :";
+"Article Length:" = "Longueur de l'article :";
 
 /* Class = "NSMenuItem"; designAccessibilityDescription = "Articles"; ObjectID = "229"; */
 "Articles" = "Articles";

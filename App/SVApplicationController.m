@@ -88,18 +88,18 @@ IMPLEMENTATION NOTES & CAUTIONS:
 // are in the target language.
 
 // Triggers to localize for the Comment/trackback stuff
-// NSLocalizedString(@"Configure Comments...", "Prompt in webview")
+// NSLocalizedString(@"Configure Comments…", "Prompt in webview")
 
 // Disqus
-// NSLocalizedString(@"Configure Disqus...", "Prompt in webview")
+// NSLocalizedString(@"Configure Disqus…", "Prompt in webview")
 // NSLocalizedString(@"Disqus Comments", "String_On_Page_Template -- text for link on a blog posting")
 
 // Intense Debate
-// NSLocalizedString(@"Configure IntenseDebate...", "Prompt in webview")
+// NSLocalizedString(@"Configure IntenseDebate…", "Prompt in webview")
 // NSLocalizedString(@"IntenseDebate Comments", "String_On_Page_Template -- text for link on a blog posting")
 
 // Facebook Comments
-// NSLocalizedString(@"Configure Facebook Comments...", "Prompt in webview")
+// NSLocalizedString(@"Configure Facebook Comments…", "Prompt in webview")
 // NSLocalizedString(@"Facebook Comments", "String_On_Page_Template -- text for link on a blog posting")
 
 

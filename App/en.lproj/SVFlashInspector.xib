@@ -241,7 +241,7 @@
 						<object class="NSTextFieldCell" key="NSCell" id="31192758">
 							<int key="NSCellFlags">67239488</int>
 							<int key="NSCellFlags2">272761856</int>
-							<string key="NSContents">FlashVars :</string>
+							<string key="NSContents">FlashVars:</string>
 							<object class="NSFont" key="NSSupport">
 								<string key="NSName">LucidaGrande</string>
 								<double key="NSSize">11</double>

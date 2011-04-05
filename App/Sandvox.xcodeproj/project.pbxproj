@@ -148,6 +148,7 @@
 			buildConfigurationList = 3C9B65950BFA7F9E007A4871 /* Build configuration list for PBXAggregateTarget "Sandvox-CompleteApplication" */;
 			buildPhases = (
 				3C9B66B00BFA83D6007A4871 /* Script - Remove Framework Headers */,
+				CEF64406134B69A60011AC68 /* Script - Remove other resources */,
 				3C9B66B20BFA8423007A4871 /* Script - Remove PrivateHeaders */,
 				3C9B66C60BFA940C007A4871 /* Script - Add PlugIns */,
 				3C9B66CC0BFA94BA007A4871 /* Script - Add Designs */,
@@ -7282,7 +7283,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "\necho \"###\"\n\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/Versions/A/PrivateHeaders\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/Versions/A/PrivateHeaders\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/Versions/A/PrivateHeaders\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/Versions/A/PrivateHeaders\n\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/PrivateHeaders\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/PrivateHeaders\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/PrivateHeaders\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/PrivateHeaders\n\n\necho \"Removing Headers from frameworks ...\"\n\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/Versions/A/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/BWToolkitFramework.framework/Versions/A/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Versions/A/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/Versions/A/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/Versions/A/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/Versions/A/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Growl.framework/Versions/A/Headers\n\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/BWToolkitFramework.framework/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Growl.framework/Headers\n\n\necho TARGET_BUILD_DIR ${TARGET_BUILD_DIR}\n";
+			shellScript = "\necho \"Removing Private Headers from frameworks ...\"\n\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/Versions/A/PrivateHeaders\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/Versions/A/PrivateHeaders\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/Versions/A/PrivateHeaders\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/Versions/A/PrivateHeaders\n\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/PrivateHeaders\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/PrivateHeaders\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/PrivateHeaders\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/PrivateHeaders\n\n\necho \"Removing Headers from frameworks ...\"\n\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/Versions/A/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/BWToolkitFramework.framework/Versions/A/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Versions/A/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/Versions/A/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/Versions/A/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/Versions/A/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Growl.framework/Versions/A/Headers\n\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/BWToolkitFramework.framework/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Growl.framework/Headers\n\n\necho TARGET_BUILD_DIR ${TARGET_BUILD_DIR}\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66B20BFA8423007A4871 /* Script - Remove PrivateHeaders */ = {
@@ -7502,6 +7503,20 @@
 			shellPath = /bin/sh;
 			shellScript = "\n# as of July 2008, we are only localized for\n# da, de, en, fr, it, ja, sv, zh_CN, and zh_TW\n\n# this script copies Sparkle into the app, but excludes those\n# those localizations not specified above\n\nPBXCP=${PROJECT_DIR}/../../Shared/Tools/pbxcp\nSPARKLE=${SRCROOT}/../../Shared/ThirdParty/Sparkle/Sparkle.framework\n\necho \"Copying Sparkle from ${SPARKLE} to ${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH} ...\"\n\n${PBXCP} \\\n\t-exclude ca.lproj -exclude cs.lproj -exclude cy.lproj -exclude es.lproj -exclude fi.lproj \\\n\t-exclude he.lproj -exclude hu.lproj -exclude id.lproj -exclude is.lproj -exclude ko.lproj \\\n\t-exclude nl.lproj -exclude no.lproj -exclude pl.lproj -exclude ru.lproj -exclude sk.lproj \\\n\t-exclude th.lproj -exclude tr.lproj \\\n\t-exclude .DS_Store -exclude CVS -exclude .svn -exclude PrivateHeaders -exclude Headers \\\n\t-resolve-src-symlinks -v \\\n\t\"${SPARKLE}\" \\\n\t\"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}\"\n\n\n\n";
 			showEnvVarsInLog = 0;
+		};
+		CEF64406134B69A60011AC68 /* Script - Remove other resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Script - Remove other resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\necho \"###\"\n\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Versions/A/Resources/en.lproj/DropletLauncher.nib\n\n\necho TARGET_BUILD_DIR ${TARGET_BUILD_DIR}\n";
 		};
 		CEFD3EFC12E9FA0100D3A6CD /* Script - Internationalize XIBs for Plugins */ = {
 			isa = PBXShellScriptBuildPhase;
