@@ -280,7 +280,7 @@
         {
             NSDocument *doc = [super openDocumentWithContentsOfURL:absoluteURL
                                                            display:NO
-                                                             error:&subError];
+                                                             error:outError];
             [doc saveDocumentAs:self];
             return doc;
         }
