@@ -232,21 +232,34 @@
 
 - (BOOL)migrateDocumentFromURL:(NSURL *)sourceDocURL
               toDestinationURL:(NSURL *)dURL
+                    attributes:(NSDictionary *)attributes
                          error:(NSError **)outError;
 {
     @try
     {
+        // Try to read metadata to be sure this is a suitable doc
+        NSURL *sStoreURL = [KTDocument datastoreURLForDocumentURL:sourceDocURL type:kSVDocumentTypeName_1_5];
+        
+        if (![NSPersistentStoreCoordinator metadataForPersistentStoreOfType:NSSQLiteStoreType
+                                                                        URL:sStoreURL
+                                                                      error:outError])
+        {
+            return NO;
+        }
+        
+        
         // Create context for accessing media during migration
         NSPersistentStoreCoordinator *coordinator = [[NSPersistentStoreCoordinator alloc]
                                                      initWithManagedObjectModel:[self sourceMediaModel]];
         
         NSURL *sMediaStoreURL = [sourceDocURL ks_URLByAppendingPathComponent:@"media.xml" isDirectory:NO];
         
-        if (![coordinator addPersistentStoreWithType:NSXMLStoreType
-                                       configuration:nil
-                                                 URL:sMediaStoreURL
-                                             options:NSDICT(NSBOOL(YES), NSReadOnlyPersistentStoreOption)
-                                               error:outError])
+        NSPersistentStore *store = [coordinator addPersistentStoreWithType:NSXMLStoreType
+                                                             configuration:nil
+                                                                       URL:sMediaStoreURL
+                                                                   options:NSDICT(NSBOOL(YES), NSReadOnlyPersistentStoreOption)
+                                                                     error:outError];
+        if (!store)
         {
             [coordinator release];
             return NO;
@@ -258,13 +271,22 @@
         
         
         
+        // Create directory to act as new document
+        NSFileManager *fileManager = [[NSFileManager alloc] init];
+        
+        if (![fileManager createDirectoryAtPath:[dURL path]
+                    withIntermediateDirectories:NO
+                                     attributes:attributes
+                                          error:outError]) return NO;
+        [fileManager release];
+    
+        
         // Do the basic migration
         NSURL *modelURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Sandvox" ofType:@"cdm"]];
         NSMappingModel *mappingModel = [[NSMappingModel alloc] initWithContentsOfURL:modelURL];
         
         _docURL = sourceDocURL;
         _destinationURL = dURL;
-        NSURL *sStoreURL = [KTDocument datastoreURLForDocumentURL:sourceDocURL type:kSVDocumentTypeName_1_5];
         NSURL *dStoreURL = [KTDocument datastoreURLForDocumentURL:dURL type:nil];
         
         NSError *error; // NSMigrationManager hates it if you don't provide an error pointer

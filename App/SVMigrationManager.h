@@ -29,6 +29,7 @@
 
 - (BOOL)migrateDocumentFromURL:(NSURL *)sourceDocURL
               toDestinationURL:(NSURL *)dURL
+                    attributes:(NSDictionary *)attributes
                          error:(NSError **)error;
 
 - (NSManagedObjectModel *)sourceMediaModel;

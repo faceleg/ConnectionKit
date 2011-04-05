@@ -149,10 +149,6 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     if (!attributes) return NO;
     
     NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];    // likely to run on worker thread
-    if (![fileManager createDirectoryAtPath:[inURL path]
-                withIntermediateDirectories:NO
-                                 attributes:attributes
-                                      error:outError]) return NO;
                                                                                                                          
                                                                                                                          
     // Migrate!
@@ -174,9 +170,29 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     OBASSERT(_migrationManager);
     if (![(SVMigrationManager *)_migrationManager migrateDocumentFromURL:inOriginalContentsURL
                                                         toDestinationURL:inURL
-                                                                   error:outError]) return NO;
-    
-    
+                                                              attributes:attributes
+                                                                   error:outError])
+    {
+        // Was the failure because this is actually a 1.5 doc?
+        if ([[self fileURL] isFileURL] && [inURL isFileURL])
+        {
+            NSURL *storeURL = [KTDocument datastoreURLForDocumentURL:[self fileURL] type:kSVDocumentTypeName];
+            
+            NSDictionary *metadata = [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:nil
+                                                                                                URL:storeURL
+                                                                                              error:NULL];
+            
+            if (metadata)
+            {
+                return [fileManager copyItemAtPath:[[self fileURL] path]
+                                            toPath:[inURL path]
+                                             error:outError];
+            }
+        }
+        
+        
+        return NO;
+    }
     
     return YES;
 }
