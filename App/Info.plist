@@ -234,7 +234,7 @@
 				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Sandvox Document</string>
+			<string>Sandvox 1 Document</string>
 			<key>UTTypeIconName</key>
 			<string>document.icns</string>
 			<key>UTTypeIdentifier</key>
@@ -256,11 +256,11 @@
 				<string>com.apple.package</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Sandvox Document</string>
+			<string>Sandvox 1.5 Document</string>
 			<key>UTTypeIconName</key>
 			<string>document.icns</string>
 			<key>UTTypeIdentifier</key>
-			<string>com.karelia.Sandvox.svxSite</string>
+			<string>com.karelia.sandvox.site-document</string>
 			<key>UTTypeReferenceURL</key>
 			<string>http://www.karelia.com/sandvox/</string>
 			<key>UTTypeTagSpecification</key>
@@ -269,6 +269,28 @@
 				<string>svSt</string>
 				<key>public.filename-extension</key>
 				<string>svxSite</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.composite-content</string>
+				<string>com.apple.package</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Sandvox 2 Document</string>
+			<key>UTTypeIconName</key>
+			<string>document.icns</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.karelia.Sandvox.sandvox</string>
+			<key>UTTypeReferenceURL</key>
+			<string>http://www.karelia.com/sandvox/</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>com.apple.ostype</key>
+				<string>svSt</string>
+				<key>public.filename-extension</key>
+				<string>sandvox</string>
 			</dict>
 		</dict>
 	</array>
