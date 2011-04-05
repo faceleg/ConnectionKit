@@ -331,7 +331,7 @@
 				
 				break;
 			default:					// Unlicensed, treat as free/demo
-				stickyHeadline = NSLocalizedString(@"This is the free edition of Sandvox", @"title of reminder note - please make sure this will fit on welcome window when unlicensed");
+				stickyHeadline = NSLocalizedString(@"This is a free demo of Sandvox", @"title of reminder note - please make sure this will fit on welcome window when unlicensed");
 				stickyDetails = [NSString stringWithFormat:NSLocalizedString(@"Sandvox is free for publishing small websites, up to %d pages. For more complex sites, you will want to buy a license.", @"explanation of license status - please make sure this will fit on welcome window when unlicensed"), kMaxNumberOfFreePublishedPages];
 				stickyButtonTitle = NSLocalizedString(@"Buy a License", @"Button title to purchase a license");
 				
