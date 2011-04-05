@@ -978,10 +978,22 @@
 		BOOL inDraggedRows = [[(KTSiteOutlineView *)outlineView draggedRows] containsIndex:rowIndex];
 		
         
-		BOOL isPublishable = (nil != gRegistrationString) || [item isPagePublishableInDemo] || inDraggedRows;
+		// Always show as publishable if we are registered.  ALSO show publishable (no markings) if in a drag.
+		BOOL isPublishable = YES;
+        if (!gRegistrationString && !inDraggedRows)
+        {
+            // Can publish up to 5 pages
+            NSIndexPath *fifthPagePath = [[self content] indexPathOfObjectAtIndex:4];
+            if (fifthPagePath)
+            {
+                NSIndexPath *path = [node indexPath];
+                if ([path isGreaterThan:fifthPagePath]) isPublishable = NO;
+                //if ([path ks_sumOfIndexes] >= 4) isPublishable = NO;  could potentially use this as a shortcut
+            }
+        }
 		[cell setPublishable:isPublishable];
-		// always show as publishable if we are registered.  ALSO show publishable (no markings) if in a drag.
 		
+        
 		// Code Injection
         [cell setHasCodeInjection:[[item codeInjection] hasCodeInjection]];
 		if (isRoot && ![cell hasCodeInjection])
