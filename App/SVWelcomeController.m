@@ -467,12 +467,9 @@
 	
 	for (NSURL *url in urls)
 	{
-		if ([[[url path] pathExtension] isEqualToString:@"sandvox"])
-		{
-			KSRecentDocument *recentDoc = [[[KSRecentDocument alloc] initWithURL:url allURLs:urlSet] autorelease];
-			[recentDocuments addObject:recentDoc];
-			(void) [recentDoc previewImage];	// get the preview started loading
-		}
+		KSRecentDocument *recentDoc = [[[KSRecentDocument alloc] initWithURL:url allURLs:urlSet] autorelease];
+		[recentDocuments addObject:recentDoc];
+		(void) [recentDoc previewImage];	// get the preview started loading
 	}
 	self.recentDocuments = [NSArray arrayWithArray:recentDocuments];
 	

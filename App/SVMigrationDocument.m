@@ -232,9 +232,6 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                          NSLocalizedString(@"Upgrading document “%@”","document upgrade message text"), filename];
     [messageTextField setStringValue:message];
     
-    
-    NSString *path = [[self fileURL] path];
-    
     message = [NSString stringWithFormat:@"%@\n\n%@",
                NSLocalizedString(@"Before it can be opened, this document must be upgraded to the latest Sandvox data format.","document upgrade informative text"),
                NSLocalizedString(@"A backup of the original document will be kept in the same folder in case you need to refer back to it.","document upgrade informative text")];
