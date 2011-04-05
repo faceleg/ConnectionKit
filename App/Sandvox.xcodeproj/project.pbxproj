@@ -156,6 +156,7 @@
 				3C9B66E80BFA95DD007A4871 /* Script - Add Spotlight Importer */,
 				CE9D3ED20DAAB8450025717A /* Script - Remove Unsupported Languages */,
 				CEFD3EFC12E9FA0100D3A6CD /* Script - Internationalize XIBs for Plugins */,
+				3CC092BA134BC490007E2390 /* Script - Code Sign .app */,
 			);
 			dependencies = (
 				3C9B65940BFA7F7F007A4871 /* PBXTargetDependency */,
@@ -7418,6 +7419,21 @@
 			shellScript = "#!/bin/bash\n\n###\n### PULL KSHTMLWriter FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../KSHTMLWriter\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"pulling KSHTMLWriter from GitHub ...\"\ncd ${REPOSITORY_PATH}\n${GIT_PATH} pull\necho \"... finished pulling KSHTMLWriter\"\n\npopd\n\nexit 0\n\n";
 			showEnvVarsInLog = 0;
 		};
+		3CC092BA134BC490007E2390 /* Script - Code Sign .app */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Script - Code Sign .app";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\n### sign complete build, including (hopefully) all executables in MacOS and plug-ins\n\n#if [[ ${CONFIGURATION} == \"Debug\" ]]\n#then\n\t# -s <identity> signs path at end of command\n\t# -f means force to re-sign even if already signed\n\t# -vv means verbose\n\t###codesign -s \"3rd Party Mac Developer Application: Karelia Software\" -fv \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/\"\n\n\t# now verify\n\n#fi\n";
+			showEnvVarsInLog = 0;
+		};
 		3CD5B7830DCA668D006EE4D9 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 8;
@@ -8948,7 +8964,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3CECB4FA085EA759000A9A69 /* SandvoxDebug.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Karelia Development Code Signing Certificate";
+				CODE_SIGN_IDENTITY = "Don't Code Sign";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"",
