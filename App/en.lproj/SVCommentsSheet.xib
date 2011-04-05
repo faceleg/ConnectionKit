@@ -556,7 +556,7 @@
 												<object class="NSButtonCell" key="NSCell" id="941111823">
 													<int key="NSCellFlags">-2080244224</int>
 													<int key="NSCellFlags2">134217728</int>
-													<string key="NSContents">Register Site...</string>
+													<string key="NSContents">Register Site…</string>
 													<reference key="NSSupport" ref="894490460"/>
 													<reference key="NSControlView" ref="672793611"/>
 													<int key="NSButtonFlags">-2038021889</int>
@@ -780,7 +780,7 @@
 												<object class="NSButtonCell" key="NSCell" id="860507621">
 													<int key="NSCellFlags">-2080244224</int>
 													<int key="NSCellFlags2">134217728</int>
-													<string key="NSContents">Register Site...</string>
+													<string key="NSContents">Register Site…</string>
 													<reference key="NSSupport" ref="894490460"/>
 													<reference key="NSControlView" ref="116733951"/>
 													<int key="NSButtonFlags">-2038021889</int>
