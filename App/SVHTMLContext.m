@@ -1479,10 +1479,8 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
                 NSString *title = [page title];
                 if (title)
                 {
-                    [self writeCharacters:@"“"];
-                    [self writeCharacters:title];
-                    [self writeCharacters:@"”"];
-                    [self writeCharacters:NSLocalizedString(@" has no RSS feed", "RSS badge feed placeholder")];
+					NSString *noFeed = NSLocalizedString(@"“%@” has no RSS feed", "no RSS placeholder for page title");
+                    [self writeCharacters:[NSString stringWithFormat:noFeed, title]];
                 }
                 else
                 {
