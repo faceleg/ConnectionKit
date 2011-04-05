@@ -178,6 +178,13 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
 
 #pragma mark Save Panel
 
+- (BOOL)prepareSavePanel:(NSSavePanel *)savePanel;
+{
+    BOOL result = [super prepareSavePanel:savePanel];
+	[savePanel setExtensionHidden:NO];
+	return result;
+}
+
 /*  We were putting up an iWork-esque control over whether audio & video get copied in. Changed mind on that. #63782
 - (BOOL)prepareSavePanel:(NSSavePanel *)savePanel;
 {
