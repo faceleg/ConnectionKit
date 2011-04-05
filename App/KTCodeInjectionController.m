@@ -95,6 +95,7 @@
 		{
 			NSTabViewItem *item = [oTabView tabViewItemAtIndex:cssIndex];
 			[oTabView removeTabViewItem:item];
+			oCSSTextView = nil;	// shouldn't be using this
 		}
 	}
 	
@@ -137,13 +138,20 @@
 	
 	
 	// Editing notifications
-	NSSet *textViews = [NSSet setWithObjects:oPreludeTextView, oHeadTextView, oEarlyHeadTextView, oBodyStartTextView, oBodyEndTextView, oCSSTextView, nil];
+	NSSet *textViews = nil;
+	
+	if ([self isMaster])
+	{
+		textViews = [NSSet setWithObjects:oPreludeTextView, oHeadTextView, oEarlyHeadTextView, oBodyStartTextView, oBodyEndTextView, oCSSTextView, nil];
+	}
+	else	// no CSS view
+	{
+		textViews = [NSSet setWithObjects:oPreludeTextView, oHeadTextView, oEarlyHeadTextView, oBodyStartTextView, oBodyEndTextView, nil];
+	}
 	NSTextView *aTextView;
 	for (aTextView in textViews)
 	{
-		OBASSERT([aTextView isKindOfClass:[NSTextView class]]);
 		NSTextStorage *textStorage = [aTextView textStorage];
-		OBASSERT([textStorage isKindOfClass:[NSTextStorage class]]);
 		[[NSNotificationCenter defaultCenter] addObserver:self 
 												 selector:@selector(textViewDidProcessEditing:)
 													 name:NSTextStorageDidProcessEditingNotification
@@ -199,10 +207,12 @@
 		@"Use this field to insert code at the end of the page, right before the </body> tag. This is generally used to include JavaScript that processes the preceding page contents.",
 		"Code Injection placeholder text")];
 
-	[oCSSTextView setPlaceholderString:NSLocalizedString(
-		@"Use this field to insert CSS styles on every page, to override the styles provided by the current design.",
-		"Code Injection placeholder text")];
-	
+	if ([self isMaster])
+	{
+		[oCSSTextView setPlaceholderString:NSLocalizedString(
+		 @"Use this field to insert CSS styles on every page, to override the styles provided by the current design.",
+		 "Code Injection placeholder text")];
+	}
 }
 
 - (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName
@@ -257,10 +267,13 @@
 				}
 				else
 				{
-					stringValue = [[oCSSTextView textStorage] string];
-					if ([self isMaster] && stringValue && ![stringValue isEqualToString:@""])
-					{					
-						[oTabView selectTabViewItemWithIdentifier:@"css"];
+					if ([self isMaster])
+					{
+						stringValue = [[oCSSTextView textStorage] string];
+						if (stringValue && ![stringValue isEqualToString:@""])
+						{					
+							[oTabView selectTabViewItemWithIdentifier:@"css"];
+						}
 					}
 				}
 			}
