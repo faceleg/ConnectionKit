@@ -185,6 +185,7 @@
             }
             else if (fileIsDirectory)
             {
+                // Check for documents converted by 2.0 beta, with extension left intact
                 NSArray *contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[inAbsoluteURL path] error:NULL];
                 
                 if ([contents containsObject:@"index"]) result = kSVDocumentTypeName;

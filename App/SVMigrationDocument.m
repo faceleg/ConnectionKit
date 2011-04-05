@@ -14,6 +14,7 @@
 #import "KSAppDelegate.h"
 
 #import "KSThreadProxy.h"
+#import "KSURLUtilities.h"
 
 
 @implementation SVMigrationDocument
@@ -84,10 +85,12 @@
 
 - (void)threaded_migrate;
 {
+    NSURL *newURL = [[[self fileURL] ks_URLByDeletingPathExtension] ks_URLByAppendingPathExtension:kKTDocumentExtension];
+    
     NSError *error;
-    BOOL result = [self saveToURL:[self fileURL]
+    BOOL result = [self saveToURL:newURL
                            ofType:kSVDocumentTypeName
-                 forSaveOperation:NSSaveOperation
+                 forSaveOperation:NSSaveAsOperation
                             error:&error];
     
     [[self ks_proxyOnThread:nil waitUntilDone:NO]
