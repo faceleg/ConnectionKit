@@ -55,6 +55,11 @@
     {
         OBASSERT(!delegate);
         
+        // Time for UI
+        [self makeWindowControllers];
+        [self showWindows];
+        
+        
         NSOperationQueue *queue = [[NSOperationQueue alloc] init];
         
         NSOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self
