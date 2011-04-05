@@ -282,7 +282,7 @@
                                                            display:NO
                                                              error:&subError];
             [doc saveDocumentAs:self];
-            return;
+            return doc;
         }
     }
     
