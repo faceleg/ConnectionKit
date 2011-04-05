@@ -342,7 +342,7 @@
     {
 		if ([document isKindOfClass:[KTDocument class]])	// make sure it's a KTDocument
 		{
-			if ( [[[document fileName] pathExtension] isEqualToString:kKTDocumentExtension] 
+			if ( [[[document fileName] pathExtension] isEqualToString:kSVDocumentPathExtension] 
 				&& ![[document fileName] hasPrefix:[[NSBundle mainBundle] bundlePath]]  )
 			{
 				BDAlias *alias = [BDAlias aliasWithPath:[document fileName] relativeToPath:[NSHomeDirectory() stringByResolvingSymlinksInPath]];

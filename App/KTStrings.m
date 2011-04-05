@@ -2,8 +2,8 @@
 // Document
 NSString *kSVDocumentTypeName = @"Sandvox Document";
 NSString *kSVDocumentTypeName_1_5 = @"Sandvox 1.5 Document";
-NSString *kKTDocumentExtension = @"sandvox";
-NSString *kKTDocumentExtension_1_0 = @"svxSite";
+NSString *kSVDocumentPathExtension = @"sandvox";
+NSString *kSVDocumentPathExtension_1_0 = @"svxSite";
 NSString *kSVDocumentType = @"com.karelia.Sandvox.svxSite";
 NSString *kSVDocumentType_1_0 = @"com.karelia.sandvox.document";
 
