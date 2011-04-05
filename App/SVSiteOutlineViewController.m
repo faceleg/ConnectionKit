@@ -980,15 +980,15 @@
         
 		// Always show as publishable if we are registered.  ALSO show publishable (no markings) if in a drag.
 		BOOL isPublishable = YES;
-        if (!gRegistrationString && !inDraggedRows)
+        if ((!gRegistrationString || gLicenseIsBlacklisted) && !inDraggedRows)
         {
-            // Can publish up to 5 pages
-            NSIndexPath *fifthPagePath = [[self content] indexPathOfObjectAtIndex:4];
-            if (fifthPagePath)
+            // Can publish up to N pages
+            NSIndexPath *nthPagePath = [[self content] indexPathOfObjectAtIndex:(kMaxNumberOfFreePublishedPages-1)];
+            if (nthPagePath)
             {
                 NSIndexPath *path = [node indexPath];
-                if ([path isGreaterThan:fifthPagePath]) isPublishable = NO;
-                //if ([path ks_sumOfIndexes] >= 4) isPublishable = NO;  could potentially use this as a shortcut
+                if ([path isGreaterThan:nthPagePath]) isPublishable = NO;
+                //if ([path ks_sumOfIndexes] >= (kMaxNumberOfFreePublishedPages-1)) isPublishable = NO;  could potentially use this as a shortcut
             }
         }
 		[cell setPublishable:isPublishable];
