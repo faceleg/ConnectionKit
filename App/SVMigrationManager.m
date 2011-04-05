@@ -245,7 +245,7 @@
         if (![coordinator addPersistentStoreWithType:NSXMLStoreType
                                        configuration:nil
                                                  URL:sMediaStoreURL
-                                             options:nil
+                                             options:NSDICT(NSBOOL(YES), NSReadOnlyPersistentStoreOption)
                                                error:outError])
         {
             [coordinator release];
