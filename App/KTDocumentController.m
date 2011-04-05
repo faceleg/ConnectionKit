@@ -272,6 +272,18 @@
 			}
 			return nil;
 		}
+        
+        
+        
+        // Migrate?
+        if (![type isEqualToString:kSVDocumentTypeName])
+        {
+            NSDocument *doc = [super openDocumentWithContentsOfURL:absoluteURL
+                                                           display:NO
+                                                             error:&subError];
+            [doc saveDocumentAs:self];
+            return;
+        }
     }
     
     

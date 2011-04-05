@@ -19,21 +19,13 @@
 
 @implementation SVMigrationDocument
 
-#pragma mark Init & Dealloc
+#pragma mark Lifecycle
 
 - (id)initWithContentsOfURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError;
 {
     if (self = [super initWithContentsOfURL:absoluteURL ofType:typeName error:outError])
     {
-        // Kick off migration in background
-        NSOperationQueue *queue = [[NSOperationQueue alloc] init];
         
-        NSOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self
-                                                                      selector:@selector(threaded_migrate)
-                                                                        object:nil];
-        
-        [queue addOperation:operation];
-        [operation release];
     }
     return self;
 }
@@ -55,6 +47,28 @@
 }
 
 #pragma mark Migration
+
+- (void)saveToURL:(NSURL *)absoluteURL ofType:(NSString *)typeName forSaveOperation:(NSSaveOperationType)saveOperation delegate:(id)delegate didSaveSelector:(SEL)didSaveSelector contextInfo:(void *)contextInfo;
+{
+    // Is this a migration, so should run on background thread?
+    if ([typeName isEqualToString:kSVDocumentTypeName] && ![[self fileType] isEqualToString:kSVDocumentTypeName])
+    {
+        OBASSERT(!delegate);
+        
+        NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+        
+        NSOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self
+                                                                      selector:@selector(threaded_migrateToURL:)
+                                                                        object:absoluteURL];
+        
+        [queue addOperation:operation];
+        [operation release];
+    }
+    else
+    {
+        [super saveToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation delegate:delegate didSaveSelector:didSaveSelector contextInfo:contextInfo];
+    }
+}
 
 - (void)documentDidMigrate:(BOOL)didMigrateSuccessfully error:(NSError *)error;
 {
@@ -83,10 +97,8 @@
     }
 }
 
-- (void)threaded_migrate;
-{
-    NSURL *newURL = [[[self fileURL] ks_URLByDeletingPathExtension] ks_URLByAppendingPathExtension:kKTDocumentExtension];
-    
+- (void)threaded_migrateToURL:(NSURL *)newURL;
+{    
     NSError *error;
     BOOL result = [self saveToURL:newURL
                            ofType:kSVDocumentTypeName
@@ -215,6 +227,22 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     //[dataMigratorController setContent:[self dataMigrator]];
     [progressIndicator startAnimation:self];
     
+}
+
+- (BOOL)prepareSavePanel:(NSSavePanel *)savePanel;
+{
+    BOOL result = [super prepareSavePanel:savePanel];
+    if (result && ![[self fileType] isEqualToString:kSVDocumentTypeName])
+    {
+        NSString *message = [NSString stringWithFormat:
+                   NSLocalizedString(@"Before it can be opened, this document must be upgraded to the latest Sandvox data format","document upgrade informative text")];
+        
+        [savePanel setMessage:message];
+        
+        [savePanel setPrompt:NSLocalizedString(@"Upgrade", "button title")];
+    }
+    
+    return result;
 }
 
 - (IBAction)cancelMigration:(id)sender
