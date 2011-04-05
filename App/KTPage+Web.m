@@ -343,6 +343,13 @@
 {
     if ([publishingEngine isCancelled]) return;
     
+	BOOL canBePublished = ((nil != gRegistrationString) && !gLicenseIsBlacklisted);	// OK if licensed, and not blacklisted...
+	if (!canBePublished)
+	{
+		canBePublished = [self isPagePublishableInDemo];
+	}
+	// If not canBePublished, put up a placeholder page instead.
+	
     
     /*  HTML writing tends to create a lot of temporary objects, so wrap in pools
      */
@@ -354,12 +361,28 @@
     SVHTMLContext *context = [publishingEngine beginPublishingHTMLToPath:path];
 	
     NSAutoreleasePool *pool2 = [[NSAutoreleasePool alloc] init];
-    [context writeDocumentWithPage:self];
+	
+	if (canBePublished)
+	{
+		[context writeDocumentWithPage:self];
+	}
+	else	// publish a placeholder instead
+	{
+		
+		// is this the right way to do it?
+		
+		static SVTemplate *sUnpublishedTemplate = nil;
+		if (!sUnpublishedTemplate)
+		{
+			sUnpublishedTemplate = [[SVTemplate templateNamed:@"UnpublishedTemplate.html"] retain];
+		}
+		NSString *result = [context parseTemplate:sUnpublishedTemplate object:self];		
+	}
     [pool2 release];
     
     
 	// Generate and publish RSS feed if needed
-	if ([[self collectionSyndicationType] boolValue])
+	if (canBePublished && [[self collectionSyndicationType] boolValue])
 	{
         pool2 = [[NSAutoreleasePool alloc] init];
         
@@ -374,47 +397,35 @@
         [pool2 release];
 	}
     
-    
-    // Publish archives
-    for (SVArchivePage *anArchivePage in [self archivePages])
-    {
-        pool2 = [[NSAutoreleasePool alloc] init];
-        
-        SVHTMLContext *context3 = [publishingEngine beginPublishingHTMLToPath:
-                                  [anArchivePage uploadPath]];
-        [context setBaseURL:[anArchivePage URL]]; // have to set manually. #98791
-        
-        [context3 writeDocumentWithArchivePage:anArchivePage];
-        [context3 close];
-        
-        [pool2 release];
-    }
-    
+    if (canBePublished)
+	{
+		// Publish archives
+		for (SVArchivePage *anArchivePage in [self archivePages])
+		{
+			pool2 = [[NSAutoreleasePool alloc] init];
+			
+			SVHTMLContext *context3 = [publishingEngine beginPublishingHTMLToPath:
+									   [anArchivePage uploadPath]];
+			[context setBaseURL:[anArchivePage URL]]; // have to set manually. #98791
+			
+			[context3 writeDocumentWithArchivePage:anArchivePage];
+			[context3 close];
+			
+			[pool2 release];
+		}
+	}
     
     // Want the page itself to be placed on the queue last, so if publishing fails between the two, both will be republished next time round
     [context close];
     [pool1 release];
     
-    
-    // Continue onto the next page if the app is licensed
-	// or if the pages to publish are the first N pages that can be published in the demo.
-	// Note: This won't publish a page that is OK to publish in the demo if its parent is NOT publishable.
-	// That's a pretty rare corner case (e.g. moving pages around) so let's not worry about it.
-    if (recursive)
+	if (recursive)
     {
         for (SVSiteItem *anItem in [self sortedChildren])
         {
             if (![[anItem isDraft] boolValue])
             {
-				BOOL canBePublished = ((nil != gRegistrationString) && !gLicenseIsBlacklisted);	// OK if licensed, and not blacklisted...
-				if (!canBePublished)
-				{
-					canBePublished = [anItem isPagePublishableInDemo];
-				}
-				if (canBePublished)
-				{
-					[anItem publish:publishingEngine recursively:recursive];
-				}
+				[anItem publish:publishingEngine recursively:recursive];
             }
         }
     }

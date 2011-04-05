@@ -1227,6 +1227,7 @@
 		CE65325A1253B5C8003A9AA0 /* right.gif in Resources */ = {isa = PBXBuildFile; fileRef = CE6532581253B5C8003A9AA0 /* right.gif */; };
 		CE65643B1219DAC8006C5B0D /* KSSimpleURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C98C9C0F1BA46B0079A84F /* KSSimpleURLConnection.m */; };
 		CE66D15E083D305700AD46CD /* imageReplacementEntry.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE66D15D083D305700AD46CD /* imageReplacementEntry.txt */; };
+		CE6BB267134A8DDB00EEB1E2 /* UnpublishedTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = CE6BB266134A8DDB00EEB1E2 /* UnpublishedTemplate.html */; };
 		CE6EDFF211F126FD00F00AAC /* Publishing.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6EDFF111F126FD00F00AAC /* Publishing.xib */; };
 		CE6EDFF411F1274F00F00AAC /* Publishing.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6EDFF311F1274F00F00AAC /* Publishing.xib */; };
 		CE6EDFFE11F129DC00F00AAC /* KSPDFWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6EDFFB11F129DC00F00AAC /* KSPDFWindow.xib */; };
@@ -3046,6 +3047,7 @@
 		CE6532571253B5C8003A9AA0 /* down.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = down.gif; sourceTree = "<group>"; };
 		CE6532581253B5C8003A9AA0 /* right.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = right.gif; sourceTree = "<group>"; };
 		CE66D15D083D305700AD46CD /* imageReplacementEntry.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = imageReplacementEntry.txt; sourceTree = "<group>"; };
+		CE6BB266134A8DDB00EEB1E2 /* UnpublishedTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = UnpublishedTemplate.html; sourceTree = "<group>"; };
 		CE6EDFE211F125A500F00AAC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/KSInspector.xib; sourceTree = "<group>"; };
 		CE6EDFF111F126FD00F00AAC /* Publishing.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Publishing.xib; sourceTree = "<group>"; };
 		CE6EDFF311F1274F00F00AAC /* Publishing.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Publishing.xib; sourceTree = "<group>"; };
@@ -4769,6 +4771,7 @@
 				27B0C1B011694F250084BFE0 /* SVMediaGraphic.h */,
 				27B0C1B211694F250084BFE0 /* SVMediaGraphic.m */,
 				27FA98951194BF06003B8308 /* SidebarTemplate.html */,
+				CE6BB266134A8DDB00EEB1E2 /* UnpublishedTemplate.html */,
 				2726DE8D11E699720000257D /* RawHTMLPlaceholder.html */,
 				27B1D5CF124CC87D00851A18 /* SVMediaPlugIn.h */,
 				27B1D5D0124CC87D00851A18 /* SVMediaPlugIn.m */,
@@ -7058,6 +7061,7 @@
 				CE540302133BC9DA003F635A /* object_overlay.tiff in Resources */,
 				CE495CE8133D38D50060FFDF /* colorbox.css in Resources */,
 				CE429F95133DA5CC007760AB /* colorbox in Resources */,
+				CE6BB267134A8DDB00EEB1E2 /* UnpublishedTemplate.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
