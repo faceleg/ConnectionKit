@@ -13,7 +13,7 @@
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<integer value="1009"/>
-			<integer value="62"/>
+			<integer value="2088"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1337,7 +1337,7 @@ Lg</string>
 								<object class="NSTabViewItem" id="869960946">
 									<string key="NSIdentifier">mac</string>
 									<object class="NSView" key="NSView" id="254452615">
-										<reference key="NSNextResponder" ref="273226907"/>
+										<nil key="NSNextResponder"/>
 										<int key="NSvFlags">256</int>
 										<object class="NSMutableArray" key="NSSubviews">
 											<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1884,7 +1884,6 @@ QXBwbGUgQ29tcHV0ZXIsIEluYy4sIDIwMDUAAAAAA</bytes>
 											</object>
 										</object>
 										<string key="NSFrameSize">{507, 415}</string>
-										<reference key="NSSuperview" ref="273226907"/>
 									</object>
 									<string key="NSLabel">MobileMe Account</string>
 									<reference key="NSColor" ref="205087010"/>
@@ -1893,7 +1892,7 @@ QXBwbGUgQ29tcHV0ZXIsIEluYy4sIDIwMDUAAAAAA</bytes>
 								<object class="NSTabViewItem" id="961928556">
 									<string key="NSIdentifier">host</string>
 									<object class="NSView" key="NSView" id="706000326">
-										<nil key="NSNextResponder"/>
+										<reference key="NSNextResponder" ref="273226907"/>
 										<int key="NSvFlags">256</int>
 										<object class="NSMutableArray" key="NSSubviews">
 											<bool key="EncodedWithXMLCoder">YES</bool>
@@ -2552,6 +2551,7 @@ d3csIC9ob21lL3lvdXJuYW1lA</string>
 											</object>
 										</object>
 										<string key="NSFrameSize">{507, 415}</string>
+										<reference key="NSSuperview" ref="273226907"/>
 									</object>
 									<string key="NSLabel">Remote Host</string>
 									<reference key="NSColor" ref="205087010"/>
@@ -2769,13 +2769,13 @@ d3csIC9ob21lL3lvdXJuYW1lA</string>
 									<reference key="NSTabView" ref="273226907"/>
 								</object>
 							</object>
-							<reference key="NSSelectedTabViewItem" ref="869960946"/>
+							<reference key="NSSelectedTabViewItem" ref="961928556"/>
 							<reference key="NSFont" ref="413709463"/>
 							<int key="NSTvFlags">6</int>
 							<bool key="NSAllowTruncatedLabels">YES</bool>
 							<object class="NSMutableArray" key="NSSubviews">
 								<bool key="EncodedWithXMLCoder">YES</bool>
-								<reference ref="254452615"/>
+								<reference ref="706000326"/>
 							</object>
 						</object>
 						<object class="NSTextField" id="585227161">
@@ -7066,7 +7066,7 @@ d3csIC9ob21lL3lvdXJuYW1lA</string>
 						<object class="IBToolTipAttribute" key="NS.object.0">
 							<string key="name">ToolTip</string>
 							<reference key="object" ref="435274094"/>
-							<string key="toolTip">Use ? as a placeholder for the user ID</string>
+							<string key="toolTip">Use '?' as a placeholder for the user ID</string>
 						</object>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
