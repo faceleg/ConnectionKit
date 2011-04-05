@@ -168,9 +168,10 @@
  */
 - (NSString *)typeForContentsOfURL:(NSURL *)inAbsoluteURL error:(NSError **)outError
 {
+    // Consult plist first
     NSString *result = [super typeForContentsOfURL:inAbsoluteURL error:outError];
     
-    if ([result isEqualToString:kSVDocumentTypeName] && [inAbsoluteURL isFileURL])
+    if ([result isEqualToString:kSVDocumentTypeName_1_5] && [inAbsoluteURL isFileURL])
     {
         BOOL fileIsDirectory = YES;
         BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[inAbsoluteURL path] isDirectory:&fileIsDirectory];
@@ -186,7 +187,7 @@
             {
                 NSArray *contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[inAbsoluteURL path] error:NULL];
                 
-                if (![contents containsObject:@"index"]) result = kSVDocumentTypeName_1_5;
+                if ([contents containsObject:@"index"]) result = kSVDocumentTypeName;
             }
         }
     }

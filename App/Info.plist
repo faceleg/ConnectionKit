@@ -7,6 +7,10 @@
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>svxSite</string>
+			</array>
 			<key>CFBundleTypeName</key>
 			<string>Sandvox 1.5 Document</string>
 			<key>CFBundleTypeRole</key>
@@ -21,7 +25,7 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
-				<string>svxSite</string>
+				<string>sandvox</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>document.icns</string>
