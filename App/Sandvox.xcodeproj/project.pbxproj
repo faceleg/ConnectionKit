@@ -1126,7 +1126,6 @@
 		CE1BE81F11D2AD1F00D875AE /* design.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE1BE7C511D2AD1E00D875AE /* design.icns */; };
 		CE1BE82011D2AD1F00D875AE /* document.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE1BE7C611D2AD1E00D875AE /* document.icns */; };
 		CE1BE82111D2AD1F00D875AE /* favicon.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE1BE7C711D2AD1E00D875AE /* favicon.icns */; };
-		CE1BE82211D2AD1F00D875AE /* home.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE1BE7C811D2AD1E00D875AE /* home.icns */; };
 		CE1BE82411D2AD1F00D875AE /* pageplugin.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE1BE7CA11D2AD1E00D875AE /* pageplugin.icns */; };
 		CE1BE82511D2AD1F00D875AE /* a2hosting.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1BE7CC11D2AD1E00D875AE /* a2hosting.png */; };
 		CE1BE82611D2AD1F00D875AE /* dotmac.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1BE7CD11D2AD1E00D875AE /* dotmac.png */; };
@@ -2934,7 +2933,6 @@
 		CE1BE7C511D2AD1E00D875AE /* design.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = design.icns; sourceTree = "<group>"; };
 		CE1BE7C611D2AD1E00D875AE /* document.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = document.icns; sourceTree = "<group>"; };
 		CE1BE7C711D2AD1E00D875AE /* favicon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = favicon.icns; sourceTree = "<group>"; };
-		CE1BE7C811D2AD1E00D875AE /* home.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = home.icns; sourceTree = "<group>"; };
 		CE1BE7CA11D2AD1E00D875AE /* pageplugin.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = pageplugin.icns; sourceTree = "<group>"; };
 		CE1BE7CC11D2AD1E00D875AE /* a2hosting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = a2hosting.png; sourceTree = "<group>"; };
 		CE1BE7CD11D2AD1E00D875AE /* dotmac.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dotmac.png; sourceTree = "<group>"; };
@@ -5451,7 +5449,6 @@
 				CE1BE7C511D2AD1E00D875AE /* design.icns */,
 				CE1BE7C611D2AD1E00D875AE /* document.icns */,
 				CE1BE7C711D2AD1E00D875AE /* favicon.icns */,
-				CE1BE7C811D2AD1E00D875AE /* home.icns */,
 				CE1BE7CA11D2AD1E00D875AE /* pageplugin.icns */,
 			);
 			path = FileIcons;
@@ -6877,7 +6874,6 @@
 				CE1BE81F11D2AD1F00D875AE /* design.icns in Resources */,
 				CE1BE82011D2AD1F00D875AE /* document.icns in Resources */,
 				CE1BE82111D2AD1F00D875AE /* favicon.icns in Resources */,
-				CE1BE82211D2AD1F00D875AE /* home.icns in Resources */,
 				CE1BE82411D2AD1F00D875AE /* pageplugin.icns in Resources */,
 				CE1BE82511D2AD1F00D875AE /* a2hosting.png in Resources */,
 				CE1BE82611D2AD1F00D875AE /* dotmac.png in Resources */,
