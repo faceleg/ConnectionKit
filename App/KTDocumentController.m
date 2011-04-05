@@ -280,7 +280,7 @@
 	id document = [super openDocumentWithContentsOfURL:absoluteURL
 											   display:displayDocument
 												 error:&subError];
-	if (subError && outError)
+	if (!document && subError && outError)
 	{
 		NSString *reasonOfSubError = [subError localizedFailureReason];
 		if (!reasonOfSubError)	// Note:  above returns nil!
