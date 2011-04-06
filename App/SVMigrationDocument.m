@@ -11,7 +11,9 @@
 #import "SVMediaGraphic.h"
 #import "SVMigrationManager.h"
 #import "KT.h"
+
 #import "KSAppDelegate.h"
+#import "KSDocumentController.h"
 
 #import "KSThreadProxy.h"
 #import "KSURLUtilities.h"
