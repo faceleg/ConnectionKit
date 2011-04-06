@@ -99,6 +99,11 @@
     {
         identifier = @"sandvox.GeneralIndex";
     }
+    // Convert External Link to External Page
+    else if ([identifier isEqualToString:@"sandvox.LinkElement"])
+    {
+        identifier = @"sandvox.IFrameElement";
+    }
     
     return identifier;
 }
