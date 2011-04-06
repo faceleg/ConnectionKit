@@ -111,7 +111,7 @@
 
 - (BOOL)createDestinationInstancesForSourceInstance:(NSManagedObject *)sInstance entityMapping:(NSEntityMapping *)mapping manager:(SVMigrationManager *)manager error:(NSError **)error;
 {
-    // Loate HTML
+    // Locate HTML
     NSString *keyPath = [[mapping userInfo] objectForKey:@"stringKeyPath"];
     NSString *string;
     
@@ -122,7 +122,15 @@
     else
     {
         NSDictionary *properties = [KSExtensibleManagedObject unarchiveExtensibleProperties:[sInstance valueForKey:@"extensiblePropertiesData"]];
+        
         string = [properties valueForKeyPath:keyPath];
+        if (!string)    // rich text plus
+        {
+            string = [[properties objectForKey:@"richTextHTML1"] stringByAppendingString:
+                      [[properties objectForKey:@"richTextHTML2"] stringByAppendingString:
+                       [properties objectForKey:@"richTextHTML3"]]];
+
+        }
     }
     
     
