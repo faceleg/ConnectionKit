@@ -59,6 +59,9 @@
         [self makeWindowControllers];
         [self showWindows];
         
+        // Deregister recent doc
+        [[NSDocumentController sharedDocumentController] clearRecentDocumentURL:[self fileURL]];
+        
         
         NSOperationQueue *queue = [[NSOperationQueue alloc] init];
         
