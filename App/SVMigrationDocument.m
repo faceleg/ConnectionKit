@@ -255,6 +255,9 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     BOOL result = [super prepareSavePanel:savePanel];
     if (result && ![[self fileType] isEqualToString:kSVDocumentTypeName])
     {
+        NSString *title = NSLocalizedString(@"Upgrade Document", "upgrade panel title");
+        [savePanel setTitle:title];
+        
         NSString *message = NSLocalizedString(@"Before it can be opened, this document must be upgraded to the latest Sandvox data format.","document upgrade informative text");
         
         [savePanel setMessage:message];
