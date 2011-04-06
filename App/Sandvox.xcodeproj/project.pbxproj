@@ -7431,7 +7431,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\n### sign complete build, including (hopefully) all executables in MacOS and plug-ins\n\n#if [[ ${CONFIGURATION} == \"Debug\" ]]\n#then\n\t# -s <identity> signs path at end of command\n\t# -f means force to re-sign even if already signed\n\t# -vv means verbose\n\t###codesign -s \"3rd Party Mac Developer Application: Karelia Software\" -fv \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/\"\n\n\t# now verify\n\n#fi\n";
+			shellScript = "\n### sign complete build\n\nPATHTOSIGN=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/\"\n\n# -s <identity> signs path\n# -f means force to re-sign even if already signed\n# -vv means verbose\n\n# sign .app\ncodesign -s \"3rd Party Mac Developer Application: Karelia Software\" -fvv \"${PATHTOSIGN}\"\n\n# display info about app\ncodesign -d \"${PATHTOSIGN}\"\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3CD5B7830DCA668D006EE4D9 /* ShellScript */ = {
@@ -8939,6 +8939,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3CECB524085EA76A000A9A69 /* SandvoxRelease.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Karelia Software";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"",
@@ -8964,7 +8965,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3CECB4FA085EA759000A9A69 /* SandvoxDebug.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Don't Code Sign";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application: Karelia Software";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"",
