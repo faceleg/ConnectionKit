@@ -52,6 +52,7 @@ typedef enum {
 @interface KTPublishingEngine : NSOperation <SVPublisher>
 {
   @private
+	NSUInteger	_countOfPublishedItems;
     KTSite      *_site;
     NSString    *_documentRootPath;
     NSString    *_subfolderPath;    // nil if there is no subfolder
@@ -95,6 +96,8 @@ typedef enum {
 // Control
 - (KTPublishingEngineStatus)status;
 - (void)addDependencyForNextPhase:(NSOperation *)op;    // can't finish publishing until the op runs. threadsafe
+
+- (NSUInteger)incrementingCountOfPublishedItems;
 
 // Tranfer records
 - (CKTransferRecord *)rootTransferRecord;

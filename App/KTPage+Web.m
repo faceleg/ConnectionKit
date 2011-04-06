@@ -347,7 +347,13 @@
 	BOOL canBePublished = ((nil != gRegistrationString) && !gLicenseIsBlacklisted);	// OK if licensed, and not blacklisted...
 	if (!canBePublished)
 	{
-		canBePublished = [self isPagePublishableInDemo];
+		// Check and see if it's in the first few
+		NSUInteger itemIndex = [publishingEngine incrementingCountOfPublishedItems];
+		DJW((@"itemIndex:%d   %@", itemIndex, [[self URL] path]));
+		if (itemIndex < kMaxNumberOfFreePublishedPages)
+		{
+			canBePublished = YES;
+		}
 	}
 	// If not canBePublished, put up a placeholder page instead.
 	
@@ -366,6 +372,7 @@
 	if (canBePublished)
 	{
 		[context writeDocumentWithPage:self];
+		DJW((@"publishing  %@", [[self URL] path]));
 	}
 	else	// publish a placeholder instead
 	{
@@ -387,6 +394,7 @@
         
         [parser parseIntoHTMLContext:context];
         [parser release];
+		DJW((@"PLACEHOLDER %@", [[self URL] path]));
 	}
     [pool2 release];
     
@@ -429,7 +437,7 @@
     [context close];
     [pool1 release];
     
-	if (recursive)
+	if (recursive && canBePublished)		// only bother going into children if this page could be published
     {
         for (SVSiteItem *anItem in [self sortedChildren])
         {

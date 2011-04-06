@@ -50,6 +50,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 @interface KTPublishingEngine ()
 
 @property(retain) NSOperation *startNextPhaseOperation;
+@property(assign) NSUInteger countOfPublishedItems;
 
 - (void)publishDesign;
 - (void)publishMainCSSToPath:(NSString *)cssUploadPath;
@@ -180,6 +181,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)start
 {
+	self.countOfPublishedItems = 0;
+	
 	if ([self status] != KTPublishingEngineStatusNotStarted) return;
     _status = KTPublishingEngineStatusGatheringMedia;
     
@@ -272,6 +275,15 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     {
         [self engineDidPublish:NO error:[NSError errorWithDomain:NSCocoaErrorDomain code:NSUserCancelledError userInfo:nil]];
     }
+}
+
+#pragma mark Counting Published Items
+
+@synthesize countOfPublishedItems = _countOfPublishedItems;
+
+- (NSUInteger)incrementingCountOfPublishedItems;
+{
+	return ++_countOfPublishedItems;
 }
 
 - (KTPublishingEngineStatus)status { return _status; }

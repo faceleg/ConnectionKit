@@ -16,6 +16,7 @@
 - (void)setDatePublished:(NSDate *)date;
 @end
 
+extern int kMaxNumberOfFreePublishedPages;
 
 
 #pragma mark -
@@ -74,5 +75,7 @@
 // If your writing occupies any significant amount of time, please check this and exit as soon as possible when canceled
 - (BOOL)isCancelled;
 
+#pragma mark Counting Published Items
+- (NSUInteger)incrementingCountOfPublishedItems;
 
 @end
