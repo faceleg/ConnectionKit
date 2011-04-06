@@ -124,10 +124,6 @@
 	<true/>
 	<key>KSFeedType</key>
 	<string>${PRODUCT_VARIANT_WITH_SECRET_KEY_FOR_SPARKLE}</string>
-	<key>KTConnectionVersion</key>
-	<string>${CK_REVISION}</string>
-	<key>KTiMediaVersion</key>
-	<string>${IMEDIA_REVISION}</string>
 	<key>LSEnvironment</key>
 	<dict>
 		<key>MinimumSystemVersion</key>
