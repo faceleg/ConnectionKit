@@ -169,6 +169,14 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     
     
     
+    // Disregard height if requested
+    if ([self resizeOptions] & SVResizingDisableVertically)
+    {
+        size.height = [[graphic height] unsignedIntegerValue];
+    }
+    
+    
+    
     // If constrained proportions, apply that. Have to enforce min sizes too
     NSNumber *ratio = [graphic constrainedProportionsRatio];
     NSUInteger minWidth = [graphic minWidth];
