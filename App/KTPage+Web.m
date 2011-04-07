@@ -344,6 +344,7 @@
 {
     if ([publishingEngine isCancelled]) return;
     
+    
 	BOOL canBePublished = ((nil != gRegistrationString) && !gLicenseIsBlacklisted);	// OK if licensed, and not blacklisted...
 	if (!canBePublished)
 	{
@@ -433,11 +434,12 @@
 		}
 	}
     
-    // Want the page itself to be placed on the queue last, so if publishing fails between the two, both will be republished next time round
+    
+    // Publish the page
     [context close];
     [pool1 release];
     
-	if (recursive && canBePublished)		// only bother going into children if this page could be published
+	if (recursive)
     {
         for (SVSiteItem *anItem in [self sortedChildren])
         {
