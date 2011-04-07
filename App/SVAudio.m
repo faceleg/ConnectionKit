@@ -195,7 +195,7 @@
 	[context pushAttribute:@"classid" value:@"clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"];	// Proper value?
 	[context pushAttribute:@"codebase" value:@"http://www.apple.com/qtactivex/qtplugin.cab"];
 	
-	[context buildAttributesForElement:@"object" bindSizeToObject:self DOMControllerClass:nil  sizeDelta:NSMakeSize(0,barHeight)];
+	[context buildAttributesForResizableElement:@"object" object:self DOMControllerClass:nil  sizeDelta:NSMakeSize(0,barHeight) options:0];
 	
 	// ID on <object> apparently required for IE8
 	NSString *elementID = [context pushPreferredIdName:@"quicktime"];
@@ -246,7 +246,7 @@
 	// Actually write the audio
 	if ([[self container] shouldWriteHTMLInline]) [self.container buildClassName:context];
 	
-	[context buildAttributesForElement:@"audio" bindSizeToObject:self DOMControllerClass:nil sizeDelta:NSZeroSize];
+	[context buildAttributesForResizableElement:@"audio" object:self DOMControllerClass:nil sizeDelta:NSZeroSize options:0];
 	
 	if (self.controller)	[context pushAttribute:@"controls" value:@"controls"];		// boolean attribute
 	if (self.autoplay)	[context pushAttribute:@"autoplay" value:@"autoplay"];
@@ -453,7 +453,7 @@
 										 [NSBundle mainBundle],
 										 @"This browser cannot play the embedded audio file.", @"Warning to show when an audio cannot be played")];
 	
-	[context buildAttributesForElement:@"div" bindSizeToObject:self DOMControllerClass:nil sizeDelta:NSZeroSize];
+	[context buildAttributesForResizableElement:@"div" object:self DOMControllerClass:nil sizeDelta:NSZeroSize options:0];
 	 NSString *elementID = [context startElement:@"div" preferredIdName:@"unrecognized" className:nil attributes:nil];	// class, attributes already pushed
 	[context writeElement:@"p" text:cannotPlayTitle];
 	// don't end the div....

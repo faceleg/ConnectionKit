@@ -665,13 +665,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 #pragma mark Metrics
 
-- (void)startElement:(NSString *)elementName bindSizeToObject:(NSObject *)object;
-{
-    [self buildAttributesForElement:elementName bindSizeToObject:object DOMControllerClass:nil  sizeDelta:NSZeroSize];
-    [self startElement:elementName];
-}
-
-- (void)buildAttributesForElement:(NSString *)elementName bindSizeToObject:(NSObject *)object DOMControllerClass:(Class)controllerClass  sizeDelta:(NSSize)sizeDelta;
+- (void)buildAttributesForResizableElement:(NSString *)elementName object:(NSObject *)object DOMControllerClass:(Class)controllerClass  sizeDelta:(NSSize)sizeDelta options:(SVResizingOptions)options;
 {
     id graphic = ([object isKindOfClass:[SVGraphic class]] ? object : [object valueForKey:@"container"]);
     if (![self isWritingPagelet] && ![graphic shouldWriteHTMLInline])
@@ -705,45 +699,30 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     }
 }
 
-- (void)startElement:(NSString *)elementName
-    bindSizeToPlugIn:(SVPlugIn *)plugIn
-          attributes:(NSDictionary *)attributes;
+- (NSString *)startResizableElement:(NSString *)elementName
+                             plugIn:(SVPlugIn *)plugIn
+                            options:(SVResizingOptions)options
+                    preferredIdName:(NSString *)preferredID
+                         attributes:(NSDictionary *)attributes;
 {
+    if (preferredID) preferredID = [self pushPreferredIdName:preferredID];
+    
     // Push the extra attributes
     [self pushAttributes:attributes];
     
     // During editing, placeholders want to recognise this specific content
-    if ([self isForEditing])
-    {
-        [self pushClassName:@"svx-size-bound"];
-    }
+    if ([self isForEditing]) [self pushClassName:@"svx-size-bound"];
     
-    [self buildAttributesForElement:elementName
-                   bindSizeToObject:[plugIn performSelector:@selector(container)]
+    [self buildAttributesForResizableElement:elementName
+                   object:[plugIn performSelector:@selector(container)]
                  DOMControllerClass:nil
                           sizeDelta:NSMakeSize([[plugIn elementWidthPadding] unsignedIntegerValue],
-                                               [[plugIn elementHeightPadding] unsignedIntegerValue])];
+                                               [[plugIn elementHeightPadding] unsignedIntegerValue])
+                            options:options];
     
     [self startElement:elementName];
-}
-
-- (NSString *)startElement:(NSString *)elementName
-          bindSizeToPlugIn:(SVPlugIn *)plugIn
-           preferredIdName:(NSString *)idName
-                attributes:(NSDictionary *)attributes;
-{
-    if (idName) idName = [self pushPreferredIdName:idName];
-    [self startElement:elementName bindSizeToPlugIn:plugIn attributes:attributes];
-    return idName;
-}
-
-- (NSString *)startResizableElement:(NSString *)elementName
-                              plugIn:(SVPlugIn *)plugIn
-                             options:(NSUInteger)options    // pass 0 for now, we may add options later
-                     preferredIdName:(NSString *)preferredID
-                          attributes:(NSDictionary *)attributes;
-{
-    return [self startElement:elementName bindSizeToPlugIn:plugIn preferredIdName:preferredID attributes:attributes];
+    
+    return preferredID;
 }
 
 #pragma mark Text Blocks

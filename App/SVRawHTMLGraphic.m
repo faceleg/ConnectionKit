@@ -44,7 +44,8 @@
     }
     else
     {
-        [context startElement:@"div" bindSizeToObject:self];
+        [context buildAttributesForResizableElement:@"div" object:self DOMControllerClass:nil sizeDelta:NSZeroSize options:SVResizingDisableVertically];
+        [context startElement:@"div"];
     }
     
     

@@ -466,7 +466,7 @@
 	[context pushAttribute:@"classid" value:@"clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"];	// Proper value?
 	[context pushAttribute:@"codebase" value:@"http://www.apple.com/qtactivex/qtplugin.cab"];
 	
-	[context buildAttributesForElement:@"object" bindSizeToObject:self DOMControllerClass:nil  sizeDelta:NSMakeSize(0,barHeight)];
+	[context buildAttributesForResizableElement:@"object" object:self DOMControllerClass:nil  sizeDelta:NSMakeSize(0,barHeight) options:0];
 
 	// ID on <object> apparently required for IE8
 	NSString *elementID = [context pushPreferredIdName:@"quicktime"];
@@ -503,7 +503,7 @@
 	NSUInteger barHeight = self.controller ? 46 : 0;		// Windows media controller is 46 pixels (on windows; adjusted on macs)
 
 	[context pushAttribute:@"classid" value:@"CLSID:6BF52A52-394A-11D3-B153-00C04F79FAA6"];
-	[context buildAttributesForElement:@"object" bindSizeToObject:self DOMControllerClass:nil sizeDelta:NSMakeSize(0,barHeight)];
+	[context buildAttributesForResizableElement:@"object" object:self DOMControllerClass:nil sizeDelta:NSMakeSize(0,barHeight) options:0];
 
 	// ID on <object> apparently required for IE8
 	NSString *elementID = [context pushPreferredIdName:@"wmplayer"];
@@ -537,7 +537,7 @@
 	
 	if (posterSourceURL)	[context pushAttribute:@"poster" value:posterSourcePath];
 
-	[context buildAttributesForElement:@"object" bindSizeToObject:self DOMControllerClass:nil sizeDelta:NSZeroSize];
+	[context buildAttributesForResizableElement:@"object" object:self DOMControllerClass:nil sizeDelta:NSZeroSize options:0];
 
 	NSString *elementID = [context pushPreferredIdName:@"video"];
     [context startElement:@"video"];
@@ -711,7 +711,7 @@
         [context pushAttribute:@"type" value:@"application/x-shockwave-flash"];
         [context pushAttribute:@"data" value:playerPath];
         
-        [context buildAttributesForElement:@"object" bindSizeToObject:self DOMControllerClass:nil sizeDelta:NSMakeSize(0,barHeight)];
+        [context buildAttributesForResizableElement:@"object" object:self DOMControllerClass:nil sizeDelta:NSMakeSize(0,barHeight) options:0];
 
         // ID on <object> apparently required for IE8
         NSString *elementID = [context pushPreferredIdName:[playerPath lastPathComponent]];
@@ -774,7 +774,7 @@
 								 NSLocalizedStringWithDefaultValue(@"noCrossDomainFlashText", nil, [NSBundle mainBundle], @"Unable to embed remotely-hosted Flash-based video.", @"Warning to show when a video cannot be played")];
 
 	
-	[context buildAttributesForElement:@"div" bindSizeToObject:self DOMControllerClass:nil sizeDelta:NSZeroSize];
+	[context buildAttributesForResizableElement:@"div" object:self DOMControllerClass:nil sizeDelta:NSZeroSize options:0];
 	NSString *elementID = [context startElement:@"div" preferredIdName:@"nocrossdomain" className:nil attributes:nil];	// class, attributes already pushed
 	[context writeElement:@"p" text:noCrossDomainFlash];
 	// Poster may be shown next, so don't end....
@@ -784,7 +784,7 @@
 
 - (NSString *)startUnknown:(SVHTMLContext *)context;
 {
-	[context buildAttributesForElement:@"div" bindSizeToObject:self DOMControllerClass:nil sizeDelta:NSZeroSize];
+	[context buildAttributesForResizableElement:@"div" object:self DOMControllerClass:nil sizeDelta:NSZeroSize options:0];
 	NSString *elementID = [context startElement:@"div" preferredIdName:@"unrecognized" className:nil attributes:nil];	// class, attributes already pushed
 	[context writeElement:@"p" text:[self cannotViewTitle:context]];
 	// Poster may be shown next, so don't end....

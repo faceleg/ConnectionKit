@@ -298,7 +298,7 @@
     
     if ([[self container] shouldWriteHTMLInline]) [[self container] buildClassName:context];
     
-    [context buildAttributesForElement:@"img" bindSizeToObject:self DOMControllerClass:[SVMediaDOMController class]  sizeDelta:NSZeroSize];
+    [context buildAttributesForResizableElement:@"img" object:self DOMControllerClass:[SVMediaDOMController class]  sizeDelta:NSZeroSize options:0];
     
     
     // Tooltip for placeholders

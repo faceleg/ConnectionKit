@@ -81,10 +81,11 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     SVHTMLContext *context = [[SVHTMLContext alloc] initWithOutputWriter:nil
                                                       inheritFromContext:[self HTMLContext]];
     
-    [context buildAttributesForElement:[[element tagName] lowercaseString]
-                      bindSizeToObject:object
+    [context buildAttributesForResizableElement:[[element tagName] lowercaseString]
+                      object:object
                     DOMControllerClass:[self class]
-							 sizeDelta:[self sizeDelta]];			// Need something dynamic here?
+							 sizeDelta:[self sizeDelta]
+                               options:0];			// Need something dynamic here?
     
     NSDictionary *attributes = [[context currentElementInfo] attributesAsDictionary];
     [element setAttribute:@"width" value:[attributes objectForKey:@"width"]];

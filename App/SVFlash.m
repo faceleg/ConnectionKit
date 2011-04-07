@@ -156,7 +156,7 @@
 	[context pushAttribute:@"codebase" value:@"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"];
 	// align?  It was in Sandvox 1.x.  Doesn't seem to be officially supported though.
 	
-	[context buildAttributesForElement:@"object" bindSizeToObject:self DOMControllerClass:nil sizeDelta:NSZeroSize];
+	[context buildAttributesForResizableElement:@"object" object:self DOMControllerClass:nil sizeDelta:NSZeroSize options:0];
 
 	// ID on <object> apparently required for IE8
 	NSString *elementID = [context startElement:@"object" preferredIdName:@"flash" className:nil attributes:nil];	// class, attributes already pushed
