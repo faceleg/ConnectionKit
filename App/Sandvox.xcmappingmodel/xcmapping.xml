@@ -281,7 +281,7 @@ CBESE1UkbnVsbNMJCgsMDQ9WJGNsYXNzV05TLmtleXNaTlMub2JqZWN0c4AEoQ6AAqEQgANdc3RyaW5n
 </attribute>
         <attribute name="migrationpolicyclassname" type="string">SVArticleMigrationPolicy</attribute>
         <attribute name="sourcename" type="string">Pagelet</attribute>
-        <attribute name="sourcefilterpredicatestring" type="string">pluginIdentifier == "sandvox.RichTextElement"</attribute>
+        <attribute name="sourcefilterpredicatestring" type="string">pluginIdentifier == "sandvox.RichTextElement" || pluginIdentifier == "com.sandvoxwebdesigns.Rich Text Plus"</attribute>
         <attribute name="mappingtypename" type="string">Undefined</attribute>
         <attribute name="mappingnumber" type="int16">28</attribute>
         <attribute name="destinationname" type="string">TextBoxBody</attribute>
@@ -2222,14 +2222,14 @@ CBMUGRoiJywtMjZVJG51bGzVCQoLDA0ODxAREl8QEE5TRXhwcmVzc2lvblR5cGVeTlNTZWxlY3Rvck5h
     <object type="XDDEVENTITYMAPPING" id="z475">
         <attribute name="migrationpolicyclassname" type="string">SVPageletMigrationPolicy</attribute>
         <attribute name="sourcename" type="string">Pagelet</attribute>
-        <attribute name="sourcefilterpredicatestring" type="string">pluginIdentifier == "sandvox.RichTextElement"</attribute>
+        <attribute name="sourcefilterpredicatestring" type="string">pluginIdentifier == "sandvox.RichTextElement" || pluginIdentifier == "com.sandvoxwebdesigns.Rich Text Plus"</attribute>
         <attribute name="mappingtypename" type="string">Undefined</attribute>
         <attribute name="mappingnumber" type="int16">1</attribute>
         <attribute name="destinationname" type="string">TextBox</attribute>
         <attribute name="autogenerateexpression" type="bool">1</attribute>
         <relationship name="mappingmodel" type="1/1" destination="XDDEVMAPPINGMODEL" idrefs="z353"></relationship>
-        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z274 z230 z497 z431 z225 z137 z256 z235 z396"></relationship>
-        <relationship name="relationshipmappings" type="0/0" destination="XDDEVRELATIONSHIPMAPPING" idrefs="z138 z174 z110 z238 z251"></relationship>
+        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z274 z431 z230 z497 z235 z225 z256 z396 z137"></relationship>
+        <relationship name="relationshipmappings" type="0/0" destination="XDDEVRELATIONSHIPMAPPING" idrefs="z238 z138 z174 z110 z251"></relationship>
     </object>
     <object type="XDDEVATTRIBUTEMAPPING" id="z476">
         <attribute name="name" type="string">collectionRSSEnclosures</attribute>
