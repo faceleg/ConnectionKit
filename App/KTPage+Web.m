@@ -345,11 +345,12 @@
     if ([publishingEngine isCancelled]) return;
     
     
-	BOOL canBePublished = ((nil != gRegistrationString) && !gLicenseIsBlacklisted);	// OK if licensed, and not blacklisted...
-	if (!canBePublished)
+	NSUInteger itemIndex = [publishingEngine incrementingCountOfPublishedItems];
+    BOOL canBePublished = ((nil != gRegistrationString) && !gLicenseIsBlacklisted);	// OK if licensed, and not blacklisted...
+	
+    if (!canBePublished)
 	{
 		// Check and see if it's in the first few
-		NSUInteger itemIndex = [publishingEngine incrementingCountOfPublishedItems];
 		DJW((@"itemIndex:%d   %@", itemIndex, [[self URL] path]));
 		if (itemIndex < kMaxNumberOfFreePublishedPages)
 		{
