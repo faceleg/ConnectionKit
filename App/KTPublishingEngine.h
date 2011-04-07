@@ -52,12 +52,12 @@ typedef enum {
 @interface KTPublishingEngine : NSOperation <SVPublisher>
 {
   @private
-	NSUInteger	_countOfPublishedItems;
-    KTSite      *_site;
+	KTSite      *_site;
     NSString    *_documentRootPath;
     NSString    *_subfolderPath;    // nil if there is no subfolder
     
     KTPublishingEngineStatus            _status;
+    NSUInteger                          _countOfPublishedItems;
     NSOperation                         *_nextOp;
     id <KTPublishingEngineDelegate>     _delegate;
     

@@ -236,6 +236,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     // Publish pages properly
     _status = KTPublishingEngineStatusParsing;
+    [self setCountOfPublishedItems:0];  // reset
     KTPage *home = [[self site] rootPage];
     [home publish:self recursively:YES];
     
