@@ -19,6 +19,11 @@ extern NSString * const SVDestinationMainCSS;               // *append* to desig
 
 
 enum {
+    SVResizingDisableVertically = 1 << 6,   // disable/remove the vertical resize handles
+};
+typedef NSUInteger SVResizingOptions;
+
+enum {
     SVImageScaleAspectFit = 1 << 0,             // without this, image will be cropped to fill width & height
                                                 // one day, might have option to control if can scale up
     SVPageImageRepresentationLink = 1 << 5,     // if possible an <A> element will also be written linking to the page
@@ -160,7 +165,7 @@ typedef NSUInteger SVPlaceholderOptions;
 // The element's size will be taken from plug-in's .width and .height properties. When editing, that will be kept up-to-date, with resize handles if appropriate
 - (NSString *)startResizableElement:(NSString *)elementName
                               plugIn:(SVPlugIn *)plugIn
-                             options:(NSUInteger)options    // pass 0 for now, we may add options later
+                             options:(SVResizingOptions)options
                      preferredIdName:(NSString *)preferredID
                           attributes:(NSDictionary *)attributes;
 
