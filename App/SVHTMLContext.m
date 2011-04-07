@@ -665,7 +665,11 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 #pragma mark Metrics
 
-- (void)buildAttributesForResizableElement:(NSString *)elementName object:(NSObject *)object DOMControllerClass:(Class)controllerClass  sizeDelta:(NSSize)sizeDelta options:(SVResizingOptions)options;
+- (void)buildAttributesForResizableElement:(NSString *)elementName
+                                    object:(NSObject *)object
+                        DOMControllerClass:(Class)controllerClass
+                                 sizeDelta:(NSSize)sizeDelta
+                                   options:(SVResizingOptions)options;
 {
     id graphic = ([object isKindOfClass:[SVGraphic class]] ? object : [object valueForKey:@"container"]);
     if (![self isWritingPagelet] && ![graphic shouldWriteHTMLInline])

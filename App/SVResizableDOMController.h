@@ -12,9 +12,11 @@
 @interface SVResizableDOMController : SVDOMController
 {
   @private
-    NSSize  _delta;
+    NSSize              _delta;
+    SVResizingOptions   _resizeOptions;
 }
 
 @property(nonatomic) NSSize sizeDelta;
+@property(nonatomic) SVResizingOptions resizeOptions;
 
 @end

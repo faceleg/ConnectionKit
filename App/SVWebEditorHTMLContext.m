@@ -244,6 +244,7 @@
     SVResizableDOMController *controller = [[controllerClass alloc] initWithRepresentedObject:
                                               [[self currentDOMController] representedObject]];
     [controller setSizeDelta:sizeDelta];
+    [controller setResizeOptions:options];
     
     
     // Has an ID for the controller already been decided?

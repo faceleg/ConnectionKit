@@ -42,7 +42,7 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 
 #pragma mark Selection
 
-- (DOMElement *) selectableDOMElement;
+- (DOMElement *)selectableDOMElement;
 {
     // Can be selected if graphic is explictly sized
     SVPlugInGraphic *graphic = [self representedObject];
@@ -85,7 +85,7 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
                       object:object
                     DOMControllerClass:[self class]
 							 sizeDelta:[self sizeDelta]
-                               options:0];			// Need something dynamic here?
+                               options:[self resizeOptions]];			// Need something dynamic here?
     
     NSDictionary *attributes = [[context currentElementInfo] attributesAsDictionary];
     [element setAttribute:@"width" value:[attributes objectForKey:@"width"]];
@@ -117,6 +117,8 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 }
 
 #pragma mark Resize
+
+@synthesize resizeOptions = _resizeOptions;
 
 - (BOOL)shouldResizeInline; { return [[self representedObject] shouldWriteHTMLInline]; }
 
@@ -282,7 +284,11 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     if (!result) result = [self resizingMaskForDOMElement:[self HTMLElement]];  // sidebar & callout
     
     SVPlugInGraphic *graphic = [self representedObject];
-    if ([graphic isExplicitlySized]) result = (result | kCALayerBottomEdge);
+    if (!([self resizeOptions] & SVResizingDisableVertically) &&
+        [graphic isExplicitlySized])
+    {
+        result = (result | kCALayerBottomEdge);
+    }
     
     return result;
 }
