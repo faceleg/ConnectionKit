@@ -10,8 +10,10 @@
 
 #import "KTMaster.h"
 #import "KTDesign.h"
-#import "KTSite.h"
 #import "KTDocumentController.h"
+#import "SVHTMLTemplateParser.h"
+#import "SVHTMLTextBlock.h"
+#import "KTSite.h"
 
 #import "NSArray+Karelia.h"
 #import "NSDocumentController+KTExtensions.h"
@@ -117,6 +119,27 @@
     }
     
     return result;
+}
+
+- (void)writeTimestamp;
+{
+    SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
+    
+    SVHTMLTextBlock *textBlock = [[SVHTMLTextBlock alloc] init];
+    
+    [textBlock setEditable:NO];
+    [textBlock setRichText:NO];
+    [textBlock setFieldEditor:YES];
+    [textBlock setImportsGraphics:NO];
+    [textBlock setTagName:@"div"];
+    [textBlock setCustomCSSClassName:@"timestamp"];
+    
+    [textBlock setHTMLSourceObject:self];
+    [textBlock setHTMLSourceKeyPath:@"timestamp"];
+    
+    [textBlock writeHTML:context];
+    
+    [textBlock release];
 }
 
 #pragma mark -
