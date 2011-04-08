@@ -937,12 +937,6 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     return result;
 }
 
-- (BOOL)shouldTrySelectingInline;
-{
-    if ([[self representedObject] shouldWriteHTMLInline]) return YES;
-    return [super shouldTrySelectingInline];
-}
-
 - (BOOL)allowsDirectAccessToWebViewWhenSelected;
 {
     // Generally, no. EXCEPT for inline, non-wrap-causing images

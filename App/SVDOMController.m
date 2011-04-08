@@ -175,6 +175,13 @@
 
 @synthesize HTMLContext = _context;
 
+#pragma mark Selection
+
+- (BOOL)shouldTrySelectingInline;
+{
+    return [[self representedObject] shouldWriteHTMLInline];
+}
+
 #pragma mark Updating
 
 - (BOOL)canUpdate;

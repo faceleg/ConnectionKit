@@ -52,6 +52,10 @@
     return nil;
 }
 
+#pragma mark Graphic
+
+- (BOOL)shouldWriteHTMLInline; { return NO; }
+
 @end
 
 
