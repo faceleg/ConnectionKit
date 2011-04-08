@@ -242,8 +242,9 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     {
         [super webEditorTextDidChange];
         
-        // Ditch any orphaned content
-        for (WEKWebEditorItem *anItem in [self childWebEditorItems])
+        // Ditch any orphaned content. By removing an item, previous -childWebEditorItems result is potentially invalid, so hang on to for duration of the loop. #115550
+        NSArray *children = [[self childWebEditorItems] copy];
+        for (WEKWebEditorItem *anItem in children)
         {
             if (![[anItem HTMLElement] parentNode])
             {
@@ -251,6 +252,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
                 [anItem removeFromParentWebEditorItem];
             }
         }
+        [children release];
     }
     @finally
     {
