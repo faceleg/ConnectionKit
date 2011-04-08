@@ -1226,7 +1226,24 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 #else
 	[self checkRegistrationString:nil];
 #endif
-	
+
+#ifndef NSAppKitVersionNumber10_7
+#define NSAppKitVersionNumber10_7 1100  // wild ass guess for now...
+#endif
+    // check Lion
+    if ( NSAppKitVersionNumber >= NSAppKitVersionNumber10_7 )
+    {
+        LOG((@"running on Lion (OS X 10.7) in unsupported"));
+        NSString *title = NSLocalizedString(@"Unsupported Operating System", "");
+        NSString *msg = NSLocalizedString(@"Sandvox 2 is not yet fully supported under Lion (Mac OS X 10.7). This application may unexpectedly Quit at any time. Proceed with caution.", "");
+        NSString *defaultButton = NSLocalizedString(@"No thanks. I'll wait for official support.", "");
+        NSString *alternateButton = NSLocalizedString(@"I'll take my chances. Proceed.", "");
+        NSInteger lionChoice = NSRunCriticalAlertPanel(title, msg, defaultButton, alternateButton, nil);
+        if ( lionChoice != NSAlertAlternateReturn )
+        {
+            [NSApp terminate:self];
+        }
+    }
 	
 	// Fix menus appropriately
 	[pool release];
