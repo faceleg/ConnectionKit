@@ -730,7 +730,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     NSResponder *firstResponder = [[self window] firstResponder];
     if (!firstResponder || ![self ks_followsResponder:firstResponder])
     {
-        [[self window] makeFirstResponder:self];
+        if ([[self window] makeFirstResponder:self]) firstResponder = self;
     }
     
     
@@ -741,6 +741,13 @@ typedef enum {  // this copied from WebPreferences+Private.h
         
         // Was it a success though?
         if (![[self selectedDOMRange] collapsed]) return;
+    }
+    else
+    {
+        if (firstResponder != self)
+        {
+            [[self window] makeFirstResponder:self];
+        }
     }
 }
 
