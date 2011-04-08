@@ -186,17 +186,14 @@
     [self setParentWebEditorItem:nil];
     [self retain];  // need to stay alive for removal message
     
-    NSMutableArray *children = [[parent childWebEditorItems] mutableCopy];
-    [children removeObject:self];
     
-    if (parent)
-    {
-        [parent->_childControllers release]; parent->_childControllers = children;
-    }
-    else
-    {
-        [children release];
-    }
+    NSMutableArray *children = [[parent childWebEditorItems] mutableCopy];
+    [children removeObjectIdenticalTo:self];
+    
+    OBASSERT(parent);
+    [parent->_childControllers release]; parent->_childControllers = children;
+    // parent has taken ownership of children array so don't release it
+    
     
     [self itemDidMoveToParentWebEditorItem];
     [self release];
