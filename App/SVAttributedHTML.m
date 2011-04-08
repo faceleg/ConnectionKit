@@ -98,7 +98,7 @@
     }
     else
     {
-        NSDictionary *graphicProps = [pasteboard propertyListForType:@"com.karelia.sandvox.graphic"];
+        NSDictionary *graphicProps = [pasteboard propertyListForType:kSVGraphicPboardType];
         if (graphicProps && [graphicProps isKindOfClass:[NSDictionary class]])
         {
             SVGraphic *graphic = [SVGraphic graphicWithSerializedProperties:graphicProps
