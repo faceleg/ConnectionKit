@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1273"/>
+			<integer value="169"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -524,6 +524,7 @@
 								</object>
 								<object class="NSMenuItem" id="623429141">
 									<reference key="NSMenu" ref="261338889"/>
+									<bool key="NSIsHidden">YES</bool>
 									<string key="NSTitle">Paste HTML into Text</string>
 									<string key="NSKeyEquiv">V</string>
 									<int key="NSKeyEquivModMask">1310720</int>
@@ -4845,7 +4846,7 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{462, 198}, {269, 483}}</string>
+					<string>{{667, 236}, {269, 483}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4873,7 +4874,7 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{329, 681}, {550, 20}}</string>
+					<string>{{534, 719}, {550, 20}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
