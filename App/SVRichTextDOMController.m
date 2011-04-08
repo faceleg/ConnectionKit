@@ -80,16 +80,12 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     [_graphicsController setSortDescriptors:[SVRichText attachmentSortDescriptors]];
     [_graphicsController setAutomaticallyRearrangesObjects:YES];
     
-    [_graphicsController addObserver:self forKeyPath:@"arrangedObjects" options:0 context:sBodyTextObservationContext];
-    
     
     return self;
 }
 
 - (void)dealloc
 {
-    [_graphicsController removeObserver:self forKeyPath:@"arrangedObjects"];
-    
     // Release ivars
     [self stopObservingDependencies];                           // otherwise super will crash trying..
     [_graphicsController release]; _graphicsController = nil;   // ... to access _graphicsController
@@ -881,6 +877,8 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
                              toObject:[self representedObject]
                           withKeyPath:@"attachments"
                               options:nil];
+            
+            [_graphicsController addObserver:self forKeyPath:@"arrangedObjects" options:0 context:sBodyTextObservationContext];
         }
     }
     
@@ -895,7 +893,10 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
         [self removeObserver:self forKeyPath:@"representedObject.string"];
         _trackingString = NO;
     }
+    
+    [_graphicsController removeObserver:self forKeyPath:@"arrangedObjects"];
     [_graphicsController unbind:NSContentSetBinding];
+    
     
     [super stopObservingDependencies];
 }
