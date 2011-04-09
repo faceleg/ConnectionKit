@@ -118,7 +118,7 @@
 					</object>
 					<object class="NSCustomView" id="94088254">
 						<reference key="NSNextResponder" ref="280967165"/>
-						<int key="NSvFlags">268</int>
+						<int key="NSvFlags">266</int>
 						<object class="NSMutableArray" key="NSSubviews">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="NSTextField" id="213407851">
@@ -282,8 +282,8 @@
 							</object>
 							<object class="NSTextField" id="729453611">
 								<reference key="NSNextResponder" ref="94088254"/>
-								<int key="NSvFlags">268</int>
-								<string key="NSFrame">{{0, 71}, {150, 19}}</string>
+								<int key="NSvFlags">266</int>
+								<string key="NSFrame">{{0, 71}, {159, 19}}</string>
 								<reference key="NSSuperview" ref="94088254"/>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSTextFieldCell" key="NSCell" id="399571666">
@@ -823,7 +823,7 @@
 						<bytes key="NSTransformStruct">P4AAAL+AAABDCgAAwuIAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{351, 577}, {250, 150}}</string>
+					<string>{{757, 609}, {250, 150}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 				</object>
