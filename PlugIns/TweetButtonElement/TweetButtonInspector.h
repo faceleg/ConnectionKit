@@ -41,9 +41,11 @@
 {
     NSArrayController *_inspectedPagesController;
     NSTextField *_tweetTextField;
+    NSTextField *_tweetURLField;
 }
 
 @property (nonatomic, retain) IBOutlet NSArrayController *inspectedPagesController;
 @property (nonatomic, retain) IBOutlet NSTextField *tweetTextField;
+@property (nonatomic, retain) IBOutlet NSTextField *tweetURLField;
 
 @end

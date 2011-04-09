@@ -45,6 +45,11 @@
                                     forKeyPath:@"selection.title"
                                        options:0 
                                        context:NULL];
+
+    [self.inspectedPagesController addObserver:self 
+                                    forKeyPath:@"selection.URL"
+                                       options:0 
+                                       context:NULL];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -60,15 +65,30 @@
                       withKeyPath:@"inspectedObjectsController.selection.tweetText"
                           options:options];
     }
+    else if ( [keyPath isEqualToString:@"selection.URL" ] )
+    {
+        NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                                 [self.inspectedPagesController valueForKeyPath:@"selection.URL"], NSNullPlaceholderBindingOption,
+                                 [NSNumber numberWithBool:YES], NSConditionallySetsEditableBindingOption,
+                                 nil];
+        [self.tweetURLField bind:@"value"
+                         toObject:self
+                      withKeyPath:@"inspectedObjectsController.selection.tweetURL"
+                          options:options];
+    }
 }
 
 - (void)dealloc
 {
     [self.inspectedPagesController removeObserver:self forKeyPath:@"selection.title"];
+    [self.inspectedPagesController removeObserver:self forKeyPath:@"selection.URL"];
     self.inspectedPagesController = nil;
     
     [self.tweetTextField unbind:@"value"];
     self.tweetTextField = nil;
+    
+    [self.tweetURLField unbind:@"value"];
+    self.tweetURLField = nil;
     
     [super dealloc];
 }
@@ -76,4 +96,5 @@
 
 @synthesize inspectedPagesController = _inspectedPagesController;
 @synthesize tweetTextField = _tweetTextField;
+@synthesize tweetURLField = _tweetURLField;
 @end
