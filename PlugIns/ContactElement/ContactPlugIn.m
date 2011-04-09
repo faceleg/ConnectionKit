@@ -112,6 +112,17 @@ triggerChangeNotificationsForDependentKey: @"subjectPrompt"];
 	[super dealloc];
 }
 
+- (void)awakeFromNew
+{
+    [super awakeFromNew];
+    
+    NSString *defaultEmail = [[NSUserDefaults standardUserDefaults] stringForKey:@"KSEmailAddress"];
+    if ( defaultEmail )
+    {
+        [self setAddress:defaultEmail];
+    }
+}
+
 #pragma mark Labels
 
 /*	All of these accessor methods fallback to using the -languageDictionary if no
