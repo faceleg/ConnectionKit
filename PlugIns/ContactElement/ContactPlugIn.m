@@ -46,9 +46,8 @@
 #include <openssl/blowfish.h>
 #include <zlib.h>
 
-// SVLocalizedString(@"Please specify an address for the recipient using the Inspector.", "String_On_Page_Template")
-// SVLocalizedString(@"Email address is missing.  Message cannot be sent.", "String_On_Page_Template")
-// SVLocalizedString(@"No message has been entered.  Message cannot be sent.", "String_On_Page_Template")
+// SVLocalizedString(@"Email address is missing. Message cannot be sent.", "String_On_Page_Template")
+// SVLocalizedString(@"No message has been entered. Message cannot be sent.", "String_On_Page_Template")
 // SVLocalizedString(@"Please leave this field empty:", "Title of invisible, anti-spam field")
 // SVLocalizedString(@"Submitting Form...", "String_On_Page_Template")
 // SVLocalizedString(@"Unable to Submit form. Result code = ", "String_On_Page_Template.  Followed by a number.")
@@ -110,6 +109,15 @@ triggerChangeNotificationsForDependentKey: @"subjectPrompt"];
 	[_fields release];
 	
 	[super dealloc];
+}
+
+
+#pragma mark HTML Generation
+
+- (void)writeNoAddressPlaceholder
+{
+    NSString *noAddress = SVLocalizedString(@"Please specify an address for the recipient using the Inspector.", "");
+    [[self currentContext] writePlaceholderWithText:noAddress options:0];
 }
 
 
