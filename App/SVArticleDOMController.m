@@ -68,6 +68,8 @@
 {
     [super loadHTMLElementFromDocument:document];
     
+    if (![self isHTMLElementCreated]) return;
+    
     
     // Text element is the kBlock
     id textElement = [[[self HTMLElement] getElementsByClassName:@"kBlock"] item:0];
@@ -83,11 +85,6 @@
         if ([calloutController isKindOfClass:[SVCalloutDOMController class]])
         {
             // Early callouts are those which appear outside our subtree. Have to ensure controller's element is loaded first
-            if (![calloutController isHTMLElementCreated])
-            {
-                [calloutController loadHTMLElementFromDocument:document];
-            }
-            
             if (![[calloutController HTMLElement] ks_isDescendantOfElement:[self HTMLElement]])
             {
                 [self setEarlyCalloutDOMController:(SVCalloutDOMController *)calloutController];

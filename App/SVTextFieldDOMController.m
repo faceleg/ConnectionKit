@@ -308,7 +308,7 @@
     [super setTextHTMLElement:element];
     
     // Once attached to our DOM node, give it the placeholder text if needed
-    if ([self placeholderHTMLString] && [[[self innerTextHTMLElement] innerText] isWhitespace])
+    if (element && [self placeholderHTMLString] && [[[self innerTextHTMLElement] innerText] isWhitespace])
     {
         [[self innerTextHTMLElement] setInnerHTML:[self placeholderHTMLString]];
     }

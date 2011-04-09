@@ -77,7 +77,9 @@
     [element retain];
     [_textElement release]; _textElement = element;
     
-    [self setEditable:[self isEditable]];
+    
+    // Think this preps the new element's properties, but not 100% sure - Mike
+    if (element) [self setEditable:[self isEditable]];
 }
 
 - (BOOL)isTextHTMLElementLoaded; { return _textElement != nil; }
