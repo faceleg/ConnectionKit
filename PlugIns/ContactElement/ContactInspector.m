@@ -85,6 +85,7 @@
     
     [oAddressComboBox setStringValue:@""];
     [oAddressComboBox selectItemWithObjectValue:@""];
+    [[oAddressComboBox cell] setPlaceholderString:@""];
 
     
 	// Correct the spacing of the custom labels form
