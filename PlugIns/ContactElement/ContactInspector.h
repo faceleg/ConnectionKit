@@ -43,6 +43,7 @@
 	IBOutlet NSTextField			*oLabel;
 	IBOutlet NSForm					*oCustomLabelsForm;
 	IBOutlet NSTextField			*oSubjects;
+    IBOutlet NSComboBox             *oAddressComboBox;
 }
 
 @end

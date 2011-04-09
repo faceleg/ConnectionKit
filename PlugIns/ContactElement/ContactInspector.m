@@ -79,8 +79,13 @@
 
 - (void)awakeFromNib
 {
+    // set up address combobox 
 	[KSEmailAddressComboBox setWillAddAnonymousEntry:NO];
 	[KSEmailAddressComboBox setWillIncludeNames:NO];
+    
+    [oAddressComboBox setStringValue:@""];
+    [oAddressComboBox selectItemWithObjectValue:@""];
+
     
 	// Correct the spacing of the custom labels form
 	NSSize spacing = [oCustomLabelsForm intercellSpacing];

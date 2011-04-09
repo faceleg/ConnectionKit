@@ -112,16 +112,6 @@ triggerChangeNotificationsForDependentKey: @"subjectPrompt"];
 	[super dealloc];
 }
 
-- (void)awakeFromNew
-{
-    [super awakeFromNew];
-    
-    NSString *defaultEmail = [[NSUserDefaults standardUserDefaults] stringForKey:@"KSEmailAddress"];
-    if ( defaultEmail )
-    {
-        [self setAddress:defaultEmail];
-    }
-}
 
 #pragma mark Labels
 
