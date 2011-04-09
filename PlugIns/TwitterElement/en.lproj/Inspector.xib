@@ -88,7 +88,7 @@
 								<object class="NSTextFieldCell" key="NSCell" id="600015384">
 									<int key="NSCellFlags">68288064</int>
 									<int key="NSCellFlags2">71435264</int>
-									<string key="NSContents">Updates:</string>
+									<string key="NSContents">Tweets:</string>
 									<reference key="NSSupport" ref="26"/>
 									<reference key="NSControlView" ref="286142615"/>
 									<reference key="NSBackgroundColor" ref="905542652"/>
