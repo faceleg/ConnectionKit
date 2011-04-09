@@ -54,45 +54,55 @@
 	
     NSString *fragment = [self HTMLString];
     
-    if (([context shouldWriteServerSideScripts] && [context isForPublishing]) ||
-        ([context isForEditing] && [[self shouldPreviewWhenEditing] boolValue]))
+    
+    [context addDependencyOnObject:self keyPath:@"contentType"];
+    NSString *contentType = [self contentType];
+    
+    if (!contentType || [contentType isEqualToString:(NSString *)kUTTypeHTML])
     {
-        // Is the preview going to be understandable by WebKit? Judge this by making sure there's no problem with close tags
-        NSString *html = [SVHTMLValidator HTMLStringWithFragment:(fragment ? fragment : @"")
-                                               docType:KSHTMLWriterDocTypeHTML_5];
-         
-        NSError *error = nil;
-        ValidationState validation = [SVHTMLValidator validateHTMLString:html docType:KSHTMLWriterDocTypeHTML_5 error:&error];
-        if (validation >= kValidationStateLocallyValid)
+        if (([context shouldWriteServerSideScripts] && [context isForPublishing]) ||
+            ([context isForEditing] && [[self shouldPreviewWhenEditing] boolValue]))
         {
-            NSString *description = [error localizedDescription];
-            if (description)
+            // Is the preview going to be understandable by WebKit? Judge this by making sure there's no problem with close tags
+            NSString *html = [SVHTMLValidator HTMLStringWithFragment:(fragment ? fragment : @"")
+                                                             docType:KSHTMLWriterDocTypeHTML_5];
+            
+            NSError *error = nil;
+            ValidationState validation = [SVHTMLValidator validateHTMLString:html docType:KSHTMLWriterDocTypeHTML_5 error:&error];
+            if (validation >= kValidationStateLocallyValid)
             {
-                if ([description rangeOfString:@" </"].location != NSNotFound) validation = kValidationStateUnparseable;
+                NSString *description = [error localizedDescription];
+                if (description)
+                {
+                    if ([description rangeOfString:@" </"].location != NSNotFound) validation = kValidationStateUnparseable;
+                }
             }
-        }
-        
-        if (validation >= kValidationStateLocallyValid)
-        {
-            if (fragment) [context writeHTMLString:fragment];
-            [context addDependencyOnObject:self keyPath:@"HTMLString"];
+            
+            if (validation >= kValidationStateLocallyValid)
+            {
+                if (fragment) [context writeHTMLString:fragment];
+                [context addDependencyOnObject:self keyPath:@"HTMLString"];
+            }
+            else
+            {
+                SVTemplate *template = [[self class] invalidHTMLPlaceholderTemplate];
+                NSString *parsed = [context parseTemplate:template object:self];
+                [context writeHTMLString:parsed];
+            }
         }
         else
         {
-			SVTemplate *template = [[self class] invalidHTMLPlaceholderTemplate];
-			NSString *parsed = [context parseTemplate:template object:self];
+            SVTemplate *template = [[self class] placeholderTemplate];
+            NSString *parsed = [context parseTemplate:template object:self];
             [context writeHTMLString:parsed];
         }
     }
     else
     {
-		SVTemplate *template = [[self class] placeholderTemplate];
-		NSString *parsed = [context parseTemplate:template object:self];
-        [context writeHTMLString:parsed];
+        if (![context isForEditing]) [context writeHTMLString:fragment];
     }
-	
-	[context addDependencyOnObject:self keyPath:@"contentType"];
-	[context addDependencyOnObject:self keyPath:@"typeString"];
+
+    [context addDependencyOnObject:self keyPath:@"typeString"];
     
     // Changes to any of these properties will be a visible change
     [context addDependencyOnObject:self keyPath:@"shouldPreviewWhenEditing"];
