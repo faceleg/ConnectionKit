@@ -79,10 +79,15 @@
     DOMHTMLElement *result = [super HTMLElement];
     if (!result)
     {
-        DOMElement *parentElement = [[self parentWebEditorItem] HTMLElement];
-        if (parentElement)
+        DOMDocument *document = [[[self parentWebEditorItem] HTMLElement] ownerDocument];
+        if (!document)
         {
-            [self loadHTMLElementFromDocument:[parentElement ownerDocument]];
+            document = [[self webEditor] HTMLDocument];
+        }
+        
+        if (document)
+        {
+            [self loadHTMLElementFromDocument:document];
             if ([self isHTMLElementCreated]) result = [self HTMLElement];
         }
     }
@@ -158,7 +163,7 @@
         _elementID = [[NSString alloc] initWithFormat:
                       @"%@-%p",
                       [self className],
-                      [self representedObject]];
+                      self];
         
         // Are we sharing the same HTML element as parent? If so, assign same ID to it
         SVDOMController *parent = (id)[self parentWebEditorItem];
