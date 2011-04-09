@@ -1854,16 +1854,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
 }
 
-- (void)webView:(WebView *)sender didFirstLayoutInFrame:(WebFrame *)frame;
-{
-    OBPRECONDITION(sender == [self webView]);
-    
-    if (frame == [sender mainFrame])
-    {
-        [[self delegate] webEditorViewDidFirstLayout:self];
-    }
-}
-
 - (void)webView:(WebView *)sender didClearWindowObject:(WebScriptObject *)windowObject forFrame:(WebFrame *)frame
 {
 	VALIDATION((@"%s %@",__FUNCTION__, frame));
@@ -1901,6 +1891,18 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [self setEditingItems:nil];
 	//[self setSelectedDOMRange:nil affinity:NSSelectionAffinityUpstream];
 	//[[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeSelectionNotification object:self.webView];
+}
+
+#pragma mark WebFrameLoadDelegatePrivate
+
+- (void)webView:(WebView *)sender didFirstLayoutInFrame:(WebFrame *)frame;
+{
+    OBPRECONDITION(sender == [self webView]);
+    
+    if (frame == [sender mainFrame])
+    {
+        [[self delegate] webEditorViewDidFirstLayout:self];
+    }
 }
 
 #pragma mark WebPolicyDelegate
