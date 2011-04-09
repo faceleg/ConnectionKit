@@ -42,11 +42,15 @@ enum { BADGE_TEXT = 0 };
 @interface BadgePlugIn : SVPlugIn
 {
   @private
+    // plugInKeys
     NSUInteger  _badgeTypeTag;
     BOOL        _includeReferralCode;
     BOOL        _openLinkInNewWindow;
     NSString    *_badgeAltString;
     NSString    *_badgeTitleString;
+    
+    // specific to page, not stored
+    NSArray *_altStrings;
 }
 
 @property(nonatomic) NSUInteger badgeTypeTag;
@@ -54,5 +58,6 @@ enum { BADGE_TEXT = 0 };
 @property(nonatomic) BOOL openLinkInNewWindow;
 @property(nonatomic, copy) NSString *badgeAltString;
 @property(nonatomic, copy) NSString *badgeTitleString;
+
 @end
 

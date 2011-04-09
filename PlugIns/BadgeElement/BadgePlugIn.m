@@ -39,13 +39,10 @@
 #import "KSSHA1Stream.h"
 
 
-static NSArray *sBadgeNames = nil;
-static NSArray *sBadgeSizes = nil;
-static NSArray *sAltStrings = nil;
-
 
 @interface BadgePlugIn ()
 - (NSString *)generateBlurbVariant:(NSInteger)aVariant;
+@property(nonatomic, retain) NSArray *altStrings;
 @end
 
 
@@ -55,18 +52,8 @@ static NSArray *sAltStrings = nil;
 {
     self.badgeAltString = nil;
     self.badgeTitleString = nil;
+    self.altStrings = nil;
 	[super dealloc];
-}
-
-- (void)configureAltAndTitleStrings
-{
-    NSString *altBlurb = [self generateBlurbVariant:0];
-    NSString *altString = [NSString stringWithFormat:SVLocalizedString(@"Created with Sandvox - %@",@"Alt string for sandvox badge"), altBlurb];			
-    self.badgeAltString = altString;
-    
-    NSString *titleBlurb = [self generateBlurbVariant:1];
-    NSString *titleString = [NSString stringWithFormat:SVLocalizedString(@"Learn about Sandvox - %@",@"title string for sandvox badge link"), titleBlurb];
-    self.badgeTitleString = titleString;
 }
 
 - (void)awakeFromNew;
@@ -75,7 +62,53 @@ static NSArray *sAltStrings = nil;
     [self setShowsTitle:NO];
     [self setBadgeTypeTag:1];
     [self setIncludeReferralCode:YES];
-    [self configureAltAndTitleStrings];
+}
+
+- (void)pageDidChange:(id <SVPage>)page
+{
+    // we want all strings to be in language of site vistor
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSString *language = [page language];
+
+    // determine strings based on language of page
+    
+    // These are various strings, randomly chosen, for the blurb on the badge.  This will help direct
+    // Traffic to the Sandvox site!
+
+    NSString *alt1 = [bundle localizedStringForString:@"The Website Builder for the Mac - publish blogs and photos on any host"
+                                             language:language 
+                                             fallback:SVLocalizedString(@"The Website Builder for the Mac - publish blogs and photos on any host", @"Sandvox link-back blurb")];
+    NSString *alt2 = [bundle localizedStringForString:@"The easy mac web site creator - for school, family, business"
+                                             language:language 
+                                             fallback:SVLocalizedString(@"The easy mac web site creator - for school, family, business", @"Sandvox link-back blurb")];
+    NSString *alt3 = [bundle localizedStringForString:@"Create websites on the Mac and host them anywhere"
+                                             language:language 
+                                             fallback:SVLocalizedString(@"Create websites on the Mac and host them anywhere", @"Sandvox link-back blurb")];
+    NSString *alt4 = [bundle localizedStringForString:@"Build websites, photo albums, and blogs on the Mac"
+                                             language:language 
+                                             fallback:SVLocalizedString(@"Build websites, photo albums, and blogs on the Mac", @"Sandvox link-back blurb")];
+    NSString *alt5 = [bundle localizedStringForString:@"Build and publish a web site with your Mac - for individuals, education, and small business"
+                                             language:language 
+                                             fallback:SVLocalizedString(@"Build and publish a web site with your Mac - for individuals, education, and small business", @"Sandvox link-back blurb")];
+    NSString *alt6 = [bundle localizedStringForString:@"Using your Macintosh, publish your photo album / blog / website on any ISP"
+                                             language:language 
+                                             fallback:SVLocalizedString(@"Using your Macintosh, publish your photo album / blog / website on any ISP", @"Sandvox link-back blurb")];
+    self.altStrings = [NSArray arrayWithObjects:alt1, alt2, alt3, alt4, alt5, alt6, nil];    
+    
+
+    NSString *altBlurb = [self generateBlurbVariant:0];
+    NSString *variant0 = [bundle localizedStringForString:@"Created with Sandvox - %@"
+                                                 language:language 
+                                                 fallback:SVLocalizedString(@"Created with Sandvox - %@",@"Alt string for sandvox badge")];
+    NSString *altString = [NSString stringWithFormat:variant0, altBlurb];			
+    self.badgeAltString = altString;
+    
+    NSString *titleBlurb = [self generateBlurbVariant:1];
+    NSString *variant1 = [bundle localizedStringForString:@"Learn about Sandvox - %@"
+                                                 language:language 
+                                                 fallback:SVLocalizedString(@"Learn about Sandvox - %@",@"title string for sandvox badge link")];
+    NSString *titleString = [NSString stringWithFormat:variant1, titleBlurb];
+    self.badgeTitleString = titleString;
 }
 
 - (void)awakeFromSourceProperties:(NSDictionary *)properties
@@ -85,7 +118,6 @@ static NSArray *sAltStrings = nil;
     {
         self.includeReferralCode = [[properties objectForKey:@"anonymous"] boolValue];
     }
-    [self configureAltAndTitleStrings];
     
     // #110070 - "fix" badgeTypeTag
     // arrays are treated as 1-ordered since 0 is text-only
@@ -151,6 +183,7 @@ static NSArray *sAltStrings = nil;
 
 + (NSArray *)sharedBadgeNames
 {
+    static NSArray *sBadgeNames = nil;
 	if (nil == sBadgeNames)
 	{
         // #110070 - any change to this ordering
@@ -170,6 +203,8 @@ static NSArray *sAltStrings = nil;
 
 + (NSArray *)sharedBadgeSizes
 {
+    static NSArray *sBadgeSizes = nil;
+
     if ( nil == sBadgeSizes )
     {
         sBadgeSizes = [[NSArray alloc] initWithObjects:
@@ -185,29 +220,15 @@ static NSArray *sAltStrings = nil;
     return sBadgeSizes;
 }
 
-// These are various strings, randomly chosen, for the blurb on the badge.  This will help direct
-// Traffic to the Sandvox site!
-
-+ (NSArray *)sharedAltStrings
-{
-	if (nil == sAltStrings)
-	{
-		sAltStrings = [[NSArray alloc] initWithObjects:
-			SVLocalizedString(@"The Website Builder for the Mac - publish blogs and photos on any host", @"Sandvox link-back blurb"),
-			SVLocalizedString(@"The easy mac web site creator - for school, family, business", @"Sandvox link-back blurb"),
-			SVLocalizedString(@"Create websites on the Mac and host them anywhere", @"Sandvox link-back blurb"),
-			SVLocalizedString(@"Build websites, photo albums, and blogs on the Mac", @"Sandvox link-back blurb"),
-			SVLocalizedString(@"Build and publish a web site with your Mac - for individuals, education, and small business", @"Sandvox link-back blurb"),
-			SVLocalizedString(@"Using your Macintosh, publish your photo album / blog / website on any ISP", @"Sandvox link-back blurb"),
-			nil];
-		// Changed 9 Oct 2008 to tweak the terms a bit, just so that the phrases used will be adjusted to mix things up a bit.
-	}
-	return sAltStrings;
-}
 
 - (NSString *)badgePreludeString
 {
-	return SVLocalizedString(@"Created with", @"string that goes before badgeLinkString, for badge - always BEFORE 'Sandvox' regardless of language");
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSString *language = [[[self currentContext] page] language];
+    NSString *result = [bundle localizedStringForString:@"Created with"
+                                               language:language 
+                                               fallback:SVLocalizedString(@"Created with", @"string that goes before badgeLinkString, for badge - always BEFORE 'Sandvox' regardless of language")];
+	return result;
 }
 
 - (NSString *)badgeLinkString
@@ -218,6 +239,8 @@ static NSArray *sAltStrings = nil;
 // Use a hash to get a sort of arbitrary string for this unique document
 - (NSString *)generateBlurbVariant:(NSInteger)aVariant
 {
+    NSAssert([self.altStrings count] > 0, @"no altStrings available for blurb");
+    
     CFUUIDRef uuid = CFUUIDCreate(NULL);
     NSString *seedString = NSMakeCollectable(CFUUIDCreateString(NULL, uuid));
     CFRelease(uuid);
@@ -239,8 +262,8 @@ static NSArray *sAltStrings = nil;
 	
 	total += aVariant;		// Offset the number just a bit
 	
-	NSInteger stringNumber = total % [[BadgePlugIn sharedAltStrings] count];
-	NSString *blurb = [[BadgePlugIn sharedAltStrings] objectAtIndex:stringNumber];
+	NSInteger stringNumber = total % [self.altStrings count];
+	NSString *blurb = [self.altStrings objectAtIndex:stringNumber];
     
 	return blurb;
 }
@@ -312,4 +335,5 @@ static NSArray *sAltStrings = nil;
 @synthesize badgeTypeTag = _badgeTypeTag;
 @synthesize includeReferralCode = _includeReferralCode;
 @synthesize openLinkInNewWindow = _openLinkInNewWindow;
+@synthesize altStrings = _altStrings;
 @end
