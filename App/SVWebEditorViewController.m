@@ -578,8 +578,8 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 - (void)registerWebEditorItem:(WEKWebEditorItem *)item;  // recurses through, registering descendants too
 {
     // Ensure element is loaded
-    DOMDocument *domDoc = [[self webEditor] HTMLDocument];
-    if (![item isHTMLElementCreated]) [item loadHTMLElementFromDocument:domDoc];
+    //DOMDocument *domDoc = [[self webEditor] HTMLDocument];
+    //if (![item isHTMLElementCreated]) [item loadHTMLElementFromDocument:domDoc];
     //if ([item representedObject]) OBASSERT([item HTMLElement]);
     
     
