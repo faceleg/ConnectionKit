@@ -15,14 +15,14 @@ function verifyAndSubmit[[=uniqueID]](form) {
 		|| checkEmail.lastIndexOf('.') >= (checkEmail.length - 2)
 		|| checkEmail == form.e.title)
 	{
-		var message = "[["Email address is missing.  Message cannot be sent.]]";
+		var message = "[["Email address is missing. Message cannot be sent.]]";
 		theResults.className = 'contactError';
 		theResults.innerHTML = message;
 		return false;
 	}
 	if (form.s.value == '' && form.m.value == '')
 	{
-		var message = "[["No message has been entered.  Message cannot be sent.]]";
+		var message = "[["No message has been entered. Message cannot be sent.]]";
 		theResults.className = 'contactError';
 		theResults.innerHTML = message;
 		return false;

@@ -46,9 +46,13 @@
 #include <openssl/blowfish.h>
 #include <zlib.h>
 
+
+// should be localized in user's language
 // SVLocalizedString(@"Email address is missing. Message cannot be sent.", "String_On_Page_Template")
 // SVLocalizedString(@"No message has been entered. Message cannot be sent.", "String_On_Page_Template")
 // SVLocalizedString(@"Please leave this field empty:", "Title of invisible, anti-spam field")
+
+// should be localized in visitor's language
 // SVLocalizedString(@"Submitting Form...", "String_On_Page_Template")
 // SVLocalizedString(@"Unable to Submit form. Result code = ", "String_On_Page_Template.  Followed by a number.")
 // SVLocalizedString(@"Message sent.", "String_On_Page_Template ")
