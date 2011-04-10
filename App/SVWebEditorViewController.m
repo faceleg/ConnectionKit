@@ -252,7 +252,9 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 
 - (void)loadPage:(KTPage *)page;
 {
-    // Mark as updating. Reset counter first since loading page wipes away any in-progress updates
+    // Mark as updating
+    // Stop existing load and reset counter first to wipe away any in-progress updates
+    [[[self webEditor] webView] stopLoading:self];
     _updatesCount = 0;
     [self willUpdate];
     
