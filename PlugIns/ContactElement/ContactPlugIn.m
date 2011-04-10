@@ -120,7 +120,7 @@ triggerChangeNotificationsForDependentKey: @"subjectPrompt"];
 
 - (void)writeNoAddressPlaceholder
 {
-    NSString *noAddress = SVLocalizedString(@"Please specify an address for the recipient using the Inspector.", "");
+    NSString *noAddress = SVLocalizedString(@"Enter your email address in the Inspector", "");
     [[self currentContext] writePlaceholderWithText:noAddress options:0];
 }
 
