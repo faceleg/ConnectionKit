@@ -58,10 +58,12 @@
     [context addDependencyOnObject:self keyPath:@"contentType"];
     NSString *contentType = [self contentType];
     
-    if (!contentType || [contentType isEqualToString:(NSString *)kUTTypeHTML])
+    
+    BOOL write = YES;
+    if (!contentType ||     // treat like HTML
+        [contentType isEqualToString:(NSString *)kUTTypeHTML])
     {
-        if (([context shouldWriteServerSideScripts] && [context isForPublishing]) ||
-            ([context isForEditing] && [[self shouldPreviewWhenEditing] boolValue]))
+        if ([context isForEditing] && [[self shouldPreviewWhenEditing] boolValue])
         {
             // Is the preview going to be understandable by WebKit? Judge this by making sure there's no problem with close tags
             NSString *html = [SVHTMLValidator HTMLStringWithFragment:(fragment ? fragment : @"")
@@ -78,29 +80,29 @@
                 }
             }
             
-            if (validation >= kValidationStateLocallyValid)
+            if (validation < kValidationStateLocallyValid)
             {
-                if (fragment) [context writeHTMLString:fragment];
-                [context addDependencyOnObject:self keyPath:@"HTMLString"];
-            }
-            else
-            {
+                // Invalid HTML should use placeholder instead
                 SVTemplate *template = [[self class] invalidHTMLPlaceholderTemplate];
                 NSString *parsed = [context parseTemplate:template object:self];
                 [context writeHTMLString:parsed];
+                write = NO;
             }
-        }
-        else
-        {
-            SVTemplate *template = [[self class] placeholderTemplate];
-            NSString *parsed = [context parseTemplate:template object:self];
-            [context writeHTMLString:parsed];
         }
     }
     else
     {
-        if (![context isForEditing]) [context writeHTMLString:fragment];
+        // don't show while editing
+        write = ![context isForEditing];
     }
+    
+    if (write)
+    {
+        [context writeHTMLString:fragment];
+        [context addDependencyOnObject:self keyPath:@"HTMLString"];
+    }
+    
+    
 
     [context addDependencyOnObject:self keyPath:@"typeString"];
     
