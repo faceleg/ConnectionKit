@@ -1,0 +1,331 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3C33BC8413517FB800ABF8B6 /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C33BC8313517FB800ABF8B6 /* License.rtf */; };
+		3C33BC91135180A400ABF8B6 /* DiggPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C33BC90135180A400ABF8B6 /* DiggPlugIn.m */; };
+		3C33BCAB1351835E00ABF8B6 /* digglogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C33BCAA1351835E00ABF8B6 /* digglogo.png */; };
+		3C33BCAD1351836700ABF8B6 /* Template.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C33BCAC1351836700ABF8B6 /* Template.html */; };
+		3C33BCB4135183D800ABF8B6 /* DiggInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C33BCB3135183D800ABF8B6 /* DiggInspector.m */; };
+		3C33BCC11351845600ABF8B6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C33BCBD1351845600ABF8B6 /* InfoPlist.strings */; };
+		3C33BCC21351845600ABF8B6 /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C33BCBF1351845600ABF8B6 /* Inspector.xib */; };
+		3C33BCD4135184AD00ABF8B6 /* toolbar_digg.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 3C33BCD3135184AD00ABF8B6 /* toolbar_digg.tiff */; };
+		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		32DBCF630370AF2F00C91783 /* DiggElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiggElement_Prefix.pch; sourceTree = "<group>"; };
+		3C33BC7A13517F8C00ABF8B6 /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
+		3C33BC7B13517F8C00ABF8B6 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
+		3C33BC8313517FB800ABF8B6 /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../License.rtf; sourceTree = SOURCE_ROOT; };
+		3C33BC8F135180A400ABF8B6 /* DiggPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiggPlugIn.h; sourceTree = "<group>"; };
+		3C33BC90135180A400ABF8B6 /* DiggPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiggPlugIn.m; sourceTree = "<group>"; };
+		3C33BCAA1351835E00ABF8B6 /* digglogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = digglogo.png; sourceTree = "<group>"; };
+		3C33BCAC1351836700ABF8B6 /* Template.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Template.html; sourceTree = "<group>"; };
+		3C33BCB2135183D800ABF8B6 /* DiggInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiggInspector.h; sourceTree = "<group>"; };
+		3C33BCB3135183D800ABF8B6 /* DiggInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiggInspector.m; sourceTree = "<group>"; };
+		3C33BCBE1351845600ABF8B6 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3C33BCC01351845600ABF8B6 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Inspector.xib; sourceTree = "<group>"; };
+		3C33BCD3135184AD00ABF8B6 /* toolbar_digg.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_digg.tiff; sourceTree = "<group>"; };
+		8D5B49B6048680CD000E48DA /* DiggElement.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiggElement.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D5B49B3048680CD000E48DA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		089C166AFE841209C02AAC07 /* DiggElement */ = {
+			isa = PBXGroup;
+			children = (
+				08FB77AFFE84173DC02AAC07 /* Classes */,
+				32C88E010371C26100C91783 /* Other Sources */,
+				089C167CFE841241C02AAC07 /* Resources */,
+				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
+				19C28FB8FE9D52D311CA2CBB /* Products */,
+				3C33BC8013517F9300ABF8B6 /* Xcode Configurations */,
+			);
+			name = DiggElement;
+			sourceTree = "<group>";
+		};
+		089C1671FE841209C02AAC07 /* Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */,
+				1058C7AEFEA557BF11CA2CBB /* Other Frameworks */,
+			);
+			name = "Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		089C167CFE841241C02AAC07 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8D5B49B7048680CD000E48DA /* Info.plist */,
+				3C33BCBD1351845600ABF8B6 /* InfoPlist.strings */,
+				3C33BCBF1351845600ABF8B6 /* Inspector.xib */,
+				3C33BCAC1351836700ABF8B6 /* Template.html */,
+				3C33BCAA1351835E00ABF8B6 /* digglogo.png */,
+				3C33BCD3135184AD00ABF8B6 /* toolbar_digg.tiff */,
+				3C33BC8313517FB800ABF8B6 /* License.rtf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		08FB77AFFE84173DC02AAC07 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				3C33BC8F135180A400ABF8B6 /* DiggPlugIn.h */,
+				3C33BC90135180A400ABF8B6 /* DiggPlugIn.m */,
+				3C33BCB2135183D800ABF8B6 /* DiggInspector.h */,
+				3C33BCB3135183D800ABF8B6 /* DiggInspector.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7AEFEA557BF11CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				089C167FFE841241C02AAC07 /* AppKit.framework */,
+				D2F7E65807B2D6F200F64583 /* CoreData.framework */,
+				089C1672FE841209C02AAC07 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FB8FE9D52D311CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D5B49B6048680CD000E48DA /* DiggElement.svxElement */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		32C88E010371C26100C91783 /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32DBCF630370AF2F00C91783 /* DiggElement_Prefix.pch */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		3C33BC8013517F9300ABF8B6 /* Xcode Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				3C33BC7A13517F8C00ABF8B6 /* Debug.xcconfig */,
+				3C33BC7B13517F8C00ABF8B6 /* Release.xcconfig */,
+			);
+			name = "Xcode Configurations";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D5B49AC048680CD000E48DA /* DiggElement */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "DiggElement" */;
+			buildPhases = (
+				8D5B49B1048680CD000E48DA /* Sources */,
+				8D5B49B3048680CD000E48DA /* Frameworks */,
+				3C33BCDA135184E600ABF8B6 /* Generate Localizable.strings */,
+				8D5B49AF048680CD000E48DA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DiggElement;
+			productInstallPath = "$(HOME)/Library/Bundles";
+			productName = DiggElement;
+			productReference = 8D5B49B6048680CD000E48DA /* DiggElement.svxElement */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		089C1669FE841209C02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = "Karelia Software";
+			};
+			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "DiggElement" */;
+			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+				en,
+			);
+			mainGroup = 089C166AFE841209C02AAC07 /* DiggElement */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D5B49AC048680CD000E48DA /* DiggElement */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D5B49AF048680CD000E48DA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3C33BC8413517FB800ABF8B6 /* License.rtf in Resources */,
+				3C33BCAB1351835E00ABF8B6 /* digglogo.png in Resources */,
+				3C33BCAD1351836700ABF8B6 /* Template.html in Resources */,
+				3C33BCC11351845600ABF8B6 /* InfoPlist.strings in Resources */,
+				3C33BCC21351845600ABF8B6 /* Inspector.xib in Resources */,
+				3C33BCD4135184AD00ABF8B6 /* toolbar_digg.tiff in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3C33BCDA135184E600ABF8B6 /* Generate Localizable.strings */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate Localizable.strings";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "\necho \"Generating Localizable.strings ...\"\n\ncd ${SRCROOT}\ngenstrings -littleEndian -q -u -s SVLocalizedString -o en.lproj *.m\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D5B49B1048680CD000E48DA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3C33BC91135180A400ABF8B6 /* DiggPlugIn.m in Sources */,
+				3C33BCB4135183D800ABF8B6 /* DiggInspector.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		3C33BCBD1351845600ABF8B6 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3C33BCBE1351845600ABF8B6 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		3C33BCBF1351845600ABF8B6 /* Inspector.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3C33BCC01351845600ABF8B6 /* en */,
+			);
+			name = Inspector.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB913B08733D840010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C33BC7A13517F8C00ABF8B6 /* Debug.xcconfig */;
+			buildSettings = {
+				INFOPLIST_FILE = Info.plist;
+				PRODUCT_NAME = DiggElement;
+				WRAPPER_EXTENSION = svxElement;
+			};
+			name = Debug;
+		};
+		1DEB913C08733D840010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C33BC7B13517F8C00ABF8B6 /* Release.xcconfig */;
+			buildSettings = {
+				INFOPLIST_FILE = Info.plist;
+				PRODUCT_NAME = DiggElement;
+				WRAPPER_EXTENSION = svxElement;
+			};
+			name = Release;
+		};
+		1DEB913F08733D840010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Debug;
+		};
+		1DEB914008733D840010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "DiggElement" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB913B08733D840010E9CD /* Debug */,
+				1DEB913C08733D840010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "DiggElement" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB913F08733D840010E9CD /* Debug */,
+				1DEB914008733D840010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 089C1669FE841209C02AAC07 /* Project object */;
+}
