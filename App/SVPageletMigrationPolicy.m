@@ -90,12 +90,12 @@
 - (NSString *)plugInIdentifierFromIdentifier:(NSString *)identifier;
 {
     // Convert RSS to Digg. #82975
-    if ([identifier isEqualToString:@"sandvox.DiggElement"])
+    /*if ([identifier isEqualToString:@"sandvox.DiggElement"])
     {
         identifier = @"sandvox.FeedElement";
     }
     // Convert Index Pagelet to General Index
-    else if ([identifier isEqualToString:@"sandvox.IndexElement"])
+    else*/ if ([identifier isEqualToString:@"sandvox.IndexElement"])
     {
         identifier = @"sandvox.GeneralIndex";
     }
