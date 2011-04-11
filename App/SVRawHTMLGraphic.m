@@ -37,6 +37,9 @@
 
 - (void)writeBody:(SVHTMLContext *)context;
 {
+    [context pushClassName:@"raw-html"];
+    [context addCSSString:@".raw-html { overflow:hidden; }"];
+    
     if ([self shouldWriteHTMLInline])
     {
         [context pushClassName:@"graphic-container"];
@@ -44,7 +47,11 @@
     }
     else
     {
-        [context buildAttributesForResizableElement:@"div" object:self DOMControllerClass:nil sizeDelta:NSZeroSize options:SVResizingDisableVertically];
+        [context buildAttributesForResizableElement:@"div"
+                                             object:self
+                                 DOMControllerClass:nil
+                                          sizeDelta:NSZeroSize
+                                            options:SVResizingDisableVertically];
         [context startElement:@"div"];
     }
     
