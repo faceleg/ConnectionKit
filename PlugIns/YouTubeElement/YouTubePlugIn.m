@@ -211,11 +211,6 @@
     NSLog(@"ratio number is %@", value);
 }
 
-- (BOOL)isConstrainProportionsEditable
-{
-    return YES;
-}
-
 - (void)makeOriginalSize;
 {
     float height = 480 / [[self constrainedAspectRatio] floatValue];
