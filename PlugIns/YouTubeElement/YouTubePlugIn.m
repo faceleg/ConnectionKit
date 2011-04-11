@@ -224,14 +224,14 @@
 
 - (void)setConstrainedAspectRatio:(NSNumber *)value
 {
-    ; //FICME: what are we supposed to do here?
+    NSLog(@"%@: %@", _cmd, value); //FIXME: what are we supposed to do here?
 }
-
 
 - (void)makeOriginalSize;
 {
-    CGFloat height = 480 / [self aspectRatio:self.widescreen];
-    [self setWidth:[NSNumber numberWithInt:480] height:[NSNumber numberWithFloat:height]];
+    //FIXME: it would be nice to be able to know the maximum width of our container
+    NSUInteger height = 430 / [self aspectRatio:self.widescreen];
+    [self setWidth:[NSNumber numberWithInt:430] height:[NSNumber numberWithUnsignedInteger:height]];
 }
 
 
