@@ -52,11 +52,12 @@
 	NSString *_videoID;
 	BOOL _widescreen;
 	BOOL _includeRelatedVideos;
+    BOOL _wantsConstrainedAspectRatio;
 }
 
 @property (nonatomic, copy) NSString *userVideoCode;
 @property (nonatomic, copy) NSString *videoID;
 @property (nonatomic) BOOL widescreen;
 @property (nonatomic) BOOL includeRelatedVideos;
-
+@property (nonatomic) BOOL wantsConstrainedAspectRatio;
 @end

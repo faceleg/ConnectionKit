@@ -51,6 +51,7 @@
             @"userVideoCode", 
             @"widescreen", 
             @"includeRelatedVideos", 
+            @"wantsConstrainedAspectRatio",
             nil];
 }
 
@@ -68,6 +69,7 @@
 - (void)setInitialProperties
 {
     self.widescreen = YES;
+    self.wantsConstrainedAspectRatio = YES;
     self.includeRelatedVideos = NO;
 }
 
@@ -199,8 +201,19 @@
 
 - (NSNumber *)constrainedAspectRatio;
 {
-    float result = (self.widescreen ? 16.0f/9.0f : 4.0f/3.0f);
-    return [NSNumber numberWithFloat:result];
+//    float result = (self.widescreen ? 16.0f/9.0f : 4.0f/3.0f);
+//    return [NSNumber numberWithFloat:result];
+    return nil;
+}
+
+- (void)setConstrainedAspectRation:(NSNumber *)value
+{
+    NSLog(@"ratio number is %@", value);
+}
+
+- (BOOL)isConstrainProportionsEditable
+{
+    return YES;
 }
 
 - (void)makeOriginalSize;
@@ -295,5 +308,5 @@
     [self setWidth:self.width height:[NSNumber numberWithFloat:height]];
 }
 @synthesize includeRelatedVideos = _includeRelatedVideos;
-
+@synthesize wantsConstrainedAspectRatio = _wantsConstrainedAspectRatio;
 @end
