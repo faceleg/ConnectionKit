@@ -33,6 +33,8 @@
     [self setHeight:nil];
 }
 
+- (NSUInteger)minWidth; { return 16; }
+
 #pragma mark HTML
 
 - (void)writeBody:(SVHTMLContext *)context;
