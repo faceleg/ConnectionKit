@@ -214,6 +214,7 @@
     
     [adaptor setDelegate:self];
     if (![self isFieldEditor]) [(id)adaptor setAllowsPagelets:[self allowsPagelets]];
+    [adaptor setAllowsLinks:YES];
     
     [self writeText:adaptor];
     
