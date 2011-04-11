@@ -111,10 +111,6 @@
         [context addDependencyOnObject:self keyPath:@"HTMLString"];
     }
     
-    
-
-    [context addDependencyOnObject:self keyPath:@"typeString"];
-    
     // Changes to any of these properties will be a visible change
     [context addDependencyOnObject:self keyPath:@"shouldPreviewWhenEditing"];
     
