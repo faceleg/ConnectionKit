@@ -206,7 +206,7 @@
     return nil;
 }
 
-- (void)setConstrainedAspectRation:(NSNumber *)value
+- (void)setConstrainedAspectRatio:(NSNumber *)value
 {
     NSLog(@"ratio number is %@", value);
 }
