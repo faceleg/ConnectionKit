@@ -142,7 +142,7 @@
 {
 	BOOL truncated = NO;
     id<SVPlugInContext> context = [self currentContext];
-	NSString *className = [context currentIterationCSSClassName];
+	NSString *className = [context currentIterationCSSClassNameIncludingArticle:0 != (self.indexLayoutType & kArticleMask)];
 	
 	if (self.indexLayoutType & kTableMask)
 	{

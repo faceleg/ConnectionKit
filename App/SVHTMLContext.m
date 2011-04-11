@@ -1186,12 +1186,16 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     [_iteratorsStack removeLastObject];
 }
 
-- (NSString *)currentIterationCSSClassName;
+- (NSString *)currentIterationCSSClassNameIncludingArticle:(BOOL)includeArticle;
 {
     unsigned int index = [self currentIteration];
     int count = [self currentIterationsCount];
     
-    NSMutableArray *classes = [NSMutableArray arrayWithObject:@"article"];
+	NSMutableArray *classes = [NSMutableArray array];
+	if (includeArticle)
+	{
+		[classes addObject:@"article"];
+	}
     if (index != NSNotFound)
     {
         NSString *indexClass = [NSString stringWithFormat:@"i%i", index + 1];
