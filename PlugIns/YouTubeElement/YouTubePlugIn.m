@@ -39,6 +39,11 @@
 #import "YouTubeCocoaExtensions.h"
 
 
+@interface YouTubePlugIn ()
+- (CGFloat)aspectRatio:(BOOL)isWidescreen;
+@end
+
+
 @implementation YouTubePlugIn
 
 
@@ -51,7 +56,7 @@
             @"userVideoCode", 
             @"widescreen", 
             @"includeRelatedVideos", 
-            @"wantsConstrainedAspectRatio",
+            @"constrainsProportions",
             nil];
 }
 
@@ -69,7 +74,7 @@
 - (void)setInitialProperties
 {
     self.widescreen = YES;
-    self.wantsConstrainedAspectRatio = YES;
+    self.constrainsProportions = YES;
     self.includeRelatedVideos = NO;
 }
 
@@ -111,6 +116,7 @@
     [context addDependencyForKeyPath:@"videoID" ofObject:self];
     [context addDependencyForKeyPath:@"widescreen" ofObject:self];
     [context addDependencyForKeyPath:@"includeRelatedVideos" ofObject:self];
+    [context addDependencyForKeyPath:@"constrainsProportions" ofObject:self];
 }
 
 //<iframe title="YouTube video player" width="425" height="349" src="http://www.youtube.com/embed/R-mUh4MOuvk?rel=0" frameborder="0" <iframe title="YouTube video player" width="480" height="390" src="http://www.youtube.com/embed/ulluhQQd9Bw?rel=0" frameborder="0" allowfullscreen></iframe>></iframe>
@@ -199,21 +205,32 @@
 
 #pragma mark Metrics
 
+- (CGFloat)aspectRatio:(BOOL)isWidescreen
+{
+    return ( (isWidescreen) ? 16.0f/9.0f : 4.0f/3.0f );
+}
+
 - (NSNumber *)constrainedAspectRatio;
 {
-//    float result = (self.widescreen ? 16.0f/9.0f : 4.0f/3.0f);
-//    return [NSNumber numberWithFloat:result];
-    return nil;
+    if ( self.constrainsProportions )
+    {
+        return [NSNumber numberWithFloat:[self aspectRatio:self.widescreen]];
+    }
+    else
+    {
+        return nil;
+    }
 }
 
 - (void)setConstrainedAspectRatio:(NSNumber *)value
 {
-    NSLog(@"ratio number is %@", value);
+    ; //FICME: what are we supposed to do here?
 }
+
 
 - (void)makeOriginalSize;
 {
-    float height = 480 / [[self constrainedAspectRatio] floatValue];
+    CGFloat height = 480 / [self aspectRatio:self.widescreen];
     [self setWidth:[NSNumber numberWithInt:480] height:[NSNumber numberWithFloat:height]];
 }
 
@@ -299,9 +316,12 @@
 {
     _widescreen = flag;
     
-    float height = [self.width floatValue] / [[self constrainedAspectRatio] floatValue];
-    [self setWidth:self.width height:[NSNumber numberWithFloat:height]];
+    if ( self.constrainsProportions )
+    {
+        float height = [self.width floatValue] / [[self constrainedAspectRatio] floatValue];
+        [self setWidth:self.width height:[NSNumber numberWithFloat:height]];
+    }
 }
 @synthesize includeRelatedVideos = _includeRelatedVideos;
-@synthesize wantsConstrainedAspectRatio = _wantsConstrainedAspectRatio;
+@synthesize constrainsProportions = _constrainsProportions;
 @end
