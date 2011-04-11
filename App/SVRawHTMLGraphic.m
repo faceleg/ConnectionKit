@@ -147,6 +147,9 @@
     return sInvalidHTMLPlaceholderTemplate;
 }
 
+// You never know if user has entered something bizarre that only displays right during a full load
+- (BOOL)requiresPageLoad; { return YES; }
+
 #pragma mark Inspector
 
 - (NSString *)plugInIdentifier; { return @"sandvox.RawHTML"; }
