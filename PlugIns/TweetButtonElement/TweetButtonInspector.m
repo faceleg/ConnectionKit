@@ -68,7 +68,7 @@
     else if ( [keyPath isEqualToString:@"selection.URL" ] )
     {
         NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
-                                 [self.inspectedPagesController valueForKeyPath:@"selection.URL"], NSNullPlaceholderBindingOption,
+                                 [self.inspectedPagesController valueForKeyPath:@"selection.URL.absoluteString"], NSNullPlaceholderBindingOption,
                                  [NSNumber numberWithBool:YES], NSConditionallySetsEditableBindingOption,
                                  nil];
         [self.tweetURLField bind:@"value"
