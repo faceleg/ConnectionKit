@@ -180,7 +180,7 @@
     }
 }
 
-- (NSString *)typeString
+- (NSString *)contentTypeDescription
 {
 	NSString *contentType = self.contentType;
 	if (!contentType
@@ -195,7 +195,7 @@
 	return result;
 }
 
-+ (NSSet *)keyPathsForValuesAffectingTypeString
++ (NSSet *)keyPathsForValuesAffectingContentTypeDescription
 {
     return [NSSet setWithObject:@"contentType"];
 }
