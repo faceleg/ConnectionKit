@@ -442,6 +442,7 @@
 - (NSNumber *)isNil:(id)anObject; { return NSBOOL(anObject == nil); }
 - (NSNumber *)isNotNil:(id)anObject; { return NSBOOL(anObject != nil); }
 - (NSNumber *)boolValue:(id)anObject; { return NSBOOL([anObject boolValue]); }
+- (NSNumber *)value:(id)anObject ifGreaterThan:(id)compareTo; { return ([anObject isGreaterThan:compareTo] ? anObject : nil); }
 
 - (id)propertyListFromData:(NSData *)data;
 {
