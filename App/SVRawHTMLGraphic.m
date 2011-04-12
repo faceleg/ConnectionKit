@@ -62,6 +62,7 @@
 	// OR we are previewing and the SVRawHTMLGraphic is marked as being OK for preview
 	
     NSString *fragment = [self HTMLString];
+    [context addDependencyOnObject:self keyPath:@"HTMLString"];
     
     
     [context addDependencyOnObject:self keyPath:@"contentType"];
@@ -108,7 +109,6 @@
     if (write)
     {
         [context writeHTMLString:fragment];
-        [context addDependencyOnObject:self keyPath:@"HTMLString"];
     }
     
     // Changes to any of these properties will be a visible change
