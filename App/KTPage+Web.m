@@ -632,6 +632,7 @@
 		{
 			BOOL isCurrentParent = (currentParserPage != siteItem
 									&& [currentParserPage isDescendantOfItem:siteItem]
+									&& ![siteItem isRoot]		// Don't include currentParent for Root since it owns it all!
 									// NOT USEFUL FOR NON-H-MENU ?  && [item containsSiteItem:currentParserPage]
 									);
 			OFF((@"%d .... current = %@ siteItem = %@", isCurrentParent, currentParserPage, siteItem));
