@@ -128,7 +128,7 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 {
     SVPlugInGraphic *graphic = [self representedObject];
     
-    NSSize result = NSMakeSize([graphic minHeight], [graphic minWidth]);
+    NSSize result = NSMakeSize([graphic minWidth], [graphic minHeight]);
     if (result.width < MIN_GRAPHIC_LIVE_RESIZE) result.width = MIN_GRAPHIC_LIVE_RESIZE;
     if (result.height < MIN_GRAPHIC_LIVE_RESIZE) result.height = MIN_GRAPHIC_LIVE_RESIZE;
     
