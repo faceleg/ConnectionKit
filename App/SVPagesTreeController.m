@@ -584,7 +584,12 @@
 {
     // Figure out the predecessor (which page to inherit properties from)
     if (![collection isCollection]) collection = [collection parentPage];
-    OBASSERT(collection || ![[self content] count]);    // it's acceptable to have no parent when creating first page
+    
+    // It's acceptable to have no parent only when creating first page
+    if ([[self content] count])
+    {
+        OBASSERT(collection);
+    }
     
     
     KTPage *predecessor = collection;
