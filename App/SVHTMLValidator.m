@@ -43,9 +43,21 @@
     }
     else
     {
-        result = kValidationStateUnparseable;
+		// Try parsing more leniantly.
+		xmlDoc = [[NSXMLDocument alloc] initWithXMLString:html
+				  // Don't try to actually validate HTML; it's not XML
+												  options:NSXMLDocumentTidyHTML|NSXMLNodePreserveAll
+													error:outError];
+		if (xmlDoc)
+		{
+			result = kValidationStateValidationError;		// indicate some sort of error since it didn't work the first non-tidy pass.
+			[xmlDoc release];
+		}
+		else
+		{
+			result = kValidationStateUnparseable;
+		}
     }
-    
         
     return result;
 }
