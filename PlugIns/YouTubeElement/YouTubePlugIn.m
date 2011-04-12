@@ -224,7 +224,8 @@
 
 - (void)setConstrainedAspectRatio:(NSNumber *)value
 {
-    NSLog(@"%@: %@", _cmd, value); //FIXME: what are we supposed to do here?
+    // Ignore a custom ratio and go back to what the checkbox says
+    self.constrainsProportions = (value ? YES : NO);
 }
 
 - (void)makeOriginalSize;
@@ -319,7 +320,7 @@
     if ( self.constrainsProportions )
     {
         float height = [self.width floatValue] / [[self constrainedAspectRatio] floatValue];
-        [self setWidth:self.width height:[NSNumber numberWithFloat:height]];
+        [self setWidth:self.width height:[NSNumber numberWithUnsignedInteger:height]];
     }
 }
 @synthesize includeRelatedVideos = _includeRelatedVideos;
