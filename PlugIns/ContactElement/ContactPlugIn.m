@@ -52,6 +52,7 @@
 // SVLocalizedString(@"No message has been entered. Message cannot be sent.", "String_On_Page_Template")
 // SVLocalizedString(@"Please leave this field empty:", "Title of invisible, anti-spam field")
 
+// THESE ARE NOT YET HOOKED UP.  THEY ARE FOR A FUTURE IFRAME-BASED SENDER.
 // should be localized in visitor's language
 // SVLocalizedString(@"Submitting Form...", "String_On_Page_Template")
 // SVLocalizedString(@"Unable to Submit form. Result code = ", "String_On_Page_Template.  Followed by a number.")
@@ -219,6 +220,7 @@ triggerChangeNotificationsForDependentKey: @"subjectPrompt"];
     return [[(NSObject *)[self currentContext] performSelector:@selector(mainCSSURL)] absoluteString];
 }
 
+// NOT USED .... MAYBE AT SOME POINT WE MAY WANT TO UPDATE THE INSPECTOR TO HAVE A BETTER PROMPT.
 - (NSString *)subjectPrompt
 {
 	NSString *result = nil;
