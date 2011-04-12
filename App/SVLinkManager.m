@@ -129,6 +129,7 @@ static SVLinkManager *sSharedLinkManager;
 
 - (BOOL)validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)anItem;
 {
+	VALIDATION((@"%s %@",__FUNCTION__, anItem));
     BOOL result = YES;
     
     if ([anItem action] == @selector(orderFrontLinkPanel:))

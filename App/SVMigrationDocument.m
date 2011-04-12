@@ -304,6 +304,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 
 - (BOOL) validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)anItem;
 {
+	VALIDATION((@"%s %@",__FUNCTION__, anItem));
     // Disable all controls while migrating
     BOOL result = ([[self fileType] isEqualToString:kSVDocumentTypeName_1_5] ?
                    NO :

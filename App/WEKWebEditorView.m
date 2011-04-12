@@ -1801,6 +1801,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 - (BOOL)validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)anItem;
 {
+	VALIDATION((@"%s %@",__FUNCTION__, anItem));
     BOOL result = YES;
     SEL action = [anItem action];
     
@@ -2023,6 +2024,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 - (BOOL)webView:(WebView *)sender validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)item defaultValidation:(BOOL)defaultValidation
 {
+	VALIDATION((@"%s %@",__FUNCTION__, item));
     //  On the whole, let WebKit get on with it. But, if WebKit can't handle the message, and we can, override to do so
     BOOL result = defaultValidation;
     SEL action = [item action];

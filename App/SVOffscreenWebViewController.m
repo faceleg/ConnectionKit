@@ -170,7 +170,7 @@ static BOOL sDoneLoading;
 
 - (void)webView:(WebView *)webView windowScriptObjectAvailable:(WebScriptObject *)windowScriptObject;
 {
-	VALIDATION((@"%s %@",__FUNCTION__, frame));
+	VALIDATION((@"%s %@",__FUNCTION__, windowScriptObject));
 }
 
 

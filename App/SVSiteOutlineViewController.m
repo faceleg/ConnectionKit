@@ -1506,6 +1506,7 @@
 
 - (BOOL)validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)anItem;
 {
+	VALIDATION((@"%s %@",__FUNCTION__, anItem));
     BOOL result = YES;
     SEL action = [anItem action];
     
