@@ -81,7 +81,7 @@
             
             NSError *error = nil;
             ValidationState validation = [SVHTMLValidator validateHTMLString:html docType:KSHTMLWriterDocTypeHTML_5 error:&error];
-            if (validation >= kValidationStateLocallyValid)
+            if (validation == kValidationStateValidationError)
             {
                 NSString *description = [error localizedDescription];
                 if (description)
@@ -90,7 +90,7 @@
                 }
             }
             
-            if (validation < kValidationStateLocallyValid)
+            if (validation < kValidationStateValidationError)
             {
                 // Invalid HTML should use placeholder instead
                 SVTemplate *template = [[self class] invalidHTMLPlaceholderTemplate];
