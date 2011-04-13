@@ -1305,7 +1305,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 - (NSAttributedString *)processLinks:(NSAttributedString *)attributedHTMLString
 {
-    if (![self isForEditing])
+    if (![self isForEditing] && [attributedHTMLString length])
     {
         /*!	Given the page text, scan for all page ID references and convert to the proper relative links. #110486
          */
