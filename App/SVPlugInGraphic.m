@@ -143,35 +143,6 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 #pragma mark Plug-in
 
-@dynamic plugIn;
-@synthesize primitivePlugIn = _plugIn;
-- (void)setPrimitivePlugIn:(SVPlugIn *)plugIn;
-{
-    // Tear down
-    [_plugIn setValue:nil forKey:@"container"];
-    [_plugIn removeObserver:self forKeyPaths:[[_plugIn class] plugInKeys]];
-    
-    // Store
-    [plugIn retain];
-    [_plugIn release]; _plugIn = plugIn;
-    
-    // Observe the plug-in's properties so they can be synced back to the MOC
-    [plugIn addObserver:self
-            forKeyPaths:[[plugIn class] plugInKeys]
-                options:0
-                context:sPlugInPropertiesObservationContext];
-    
-    // Connect
-    [_plugIn setValue:self forKey:@"container"];
-}
-
-- (void)setPlugIn:(SVPlugIn *)plugIn useSerializedProperties:(BOOL)serialize;
-{
-    [self willChangeValueForKey:@"plugIn"];
-    [self setPrimitivePlugIn:plugIn];      
-    [self didChangeValueForKey:@"plugIn"];
-}
-
 - (void)populatePlugInValues:(SVPlugIn *)plugIn
 {
     NSDictionary *plugInProperties = [self extensibleProperties];
@@ -188,6 +159,45 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
         // TODO: Log warning
     }
     
+}
+
+@dynamic plugIn;
+@synthesize primitivePlugIn = _plugIn;
+- (void)setPrimitivePlugIn:(SVPlugIn *)plugIn;
+{
+    // Tear down
+    [_plugIn setValue:nil forKey:@"container"];
+    [_plugIn removeObserver:self forKeyPaths:[[_plugIn class] plugInKeys]];
+    
+    // Store
+    [plugIn retain];
+    [_plugIn release]; _plugIn = plugIn;
+    
+    // Restore properties
+    if (plugIn)
+    {
+        NSUndoManager *undoManager = [[self managedObjectContext] undoManager];
+        if ([undoManager isUndoing] || [undoManager isRedoing])
+        {
+            [self populatePlugInValues:plugIn];
+        }
+    }
+    
+    // Observe the plug-in's properties so they can be synced back to the MOC
+    [plugIn addObserver:self
+            forKeyPaths:[[plugIn class] plugInKeys]
+                options:0
+                context:sPlugInPropertiesObservationContext];
+    
+    // Connect
+    [_plugIn setValue:self forKey:@"container"];
+}
+
+- (void)setPlugIn:(SVPlugIn *)plugIn useSerializedProperties:(BOOL)serialize;
+{
+    [self willChangeValueForKey:@"plugIn"];
+    [self setPrimitivePlugIn:plugIn];      
+    [self didChangeValueForKey:@"plugIn"];
 }
 
 - (void)loadPlugInAsNew:(BOOL)inserted;
