@@ -41,6 +41,7 @@
 
 @interface YouTubePlugIn ()
 - (CGFloat)aspectRatio:(BOOL)isWidescreen;
+- (void)adjustConstrainedSizeToWidth:(NSUInteger)aWidth;
 @end
 
 
@@ -210,6 +211,15 @@
     return ( (isWidescreen) ? 16.0f/9.0f : 4.0f/3.0f );
 }
 
+- (void)adjustConstrainedSizeToWidth:(NSUInteger)aWidth
+{
+    if ( self.constrainsProportions )
+    {
+        NSUInteger height = aWidth / [self aspectRatio:self.widescreen];
+        [self setWidth:[NSNumber numberWithUnsignedInteger:aWidth] height:[NSNumber numberWithUnsignedInteger:height]];
+    }
+}
+
 - (NSNumber *)constrainedAspectRatio;
 {
     if ( self.constrainsProportions )
@@ -316,13 +326,13 @@
 - (void)setWidescreen:(BOOL)flag
 {
     _widescreen = flag;
-    
-    if ( self.constrainsProportions )
-    {
-        float height = [self.width floatValue] / [[self constrainedAspectRatio] floatValue];
-        [self setWidth:self.width height:[NSNumber numberWithUnsignedInteger:height]];
-    }
+    [self adjustConstrainedSizeToWidth:[self.width unsignedIntegerValue]];
 }
 @synthesize includeRelatedVideos = _includeRelatedVideos;
 @synthesize constrainsProportions = _constrainsProportions;
+- (void)setConstrainsProportions:(BOOL)flag
+{
+    _constrainsProportions = flag;
+    [self adjustConstrainedSizeToWidth:[self.width unsignedIntegerValue]];
+}
 @end
