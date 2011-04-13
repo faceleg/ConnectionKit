@@ -237,9 +237,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                          NSLocalizedString(@"Upgrading document “%@”","document upgrade message text"), filename];
     [messageTextField setStringValue:message];
     
-    message = [NSString stringWithFormat:@"%@\n\n%@",
-               NSLocalizedString(@"Before it can be opened, this document must be upgraded to the latest Sandvox data format.","document upgrade informative text"),
-               NSLocalizedString(@"A backup of the original document will be kept in the same folder in case you need to refer back to it.","document upgrade informative text")];
+    message = NSLocalizedString(@"Your original document will be left alone, in case you need to refer back to it.","document upgrade informative text");
     [informativeTextField setStringValue:message];
     
 	[cancelButton setTitle:NSLocalizedString(@"Cancel","Button title")];
@@ -258,7 +256,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         NSString *title = NSLocalizedString(@"Upgrade Document", "upgrade panel title");
         [savePanel setTitle:title];
         
-        NSString *message = NSLocalizedString(@"Before it can be opened, this document must be upgraded to the latest Sandvox data format.","document upgrade informative text");
+        NSString *message = NSLocalizedString(@"This document must be upgraded to the latest Sandvox data format.","document upgrade informative text - TRY TO KEEP THIS SHORT, OTHERWISE IT WILL BE TRUNCATED");
         
         [savePanel setMessage:message];
         
