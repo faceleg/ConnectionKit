@@ -49,11 +49,14 @@
     }
     else
     {
-        [context buildAttributesForResizableElement:@"div"
-                                             object:self
-                                 DOMControllerClass:nil
-                                          sizeDelta:NSZeroSize
-                                            options:SVResizingDisableVertically];
+        if ([self isPagelet])   // use standard resize behaviour when inline. #116251
+        {
+            [context buildAttributesForResizableElement:@"div"
+                                                 object:self
+                                     DOMControllerClass:nil
+                                              sizeDelta:NSZeroSize
+                                                options:SVResizingDisableVertically];
+        }
         [context startElement:@"div"];
     }
     
