@@ -116,7 +116,7 @@
         write = ![context isForEditing];
     }
     
-    if (write)
+    if (write && fragment)
     {
         [context writeHTMLString:fragment];
     }
