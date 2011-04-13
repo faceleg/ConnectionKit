@@ -438,7 +438,7 @@
 					currentNode = [currentNode nextNode];
 				}
 				OBASSERT(theBody);
-				removedAnything = [theBody removeAllNodesAfter:(NSXMLElement *)currentNode];
+				removedAnything |= [theBody removeAllNodesAfter:(NSXMLElement *)currentNode];
 				if (removedAnything)
 				{
 					OFF((@"Removed some stuff"));
