@@ -45,7 +45,7 @@
     {
         [sheet endEditingFor:nil];
     }
-    [[self window] orderOut:nil];
+    [sheet orderOut:nil];
     [self.objectController setContent:nil];
 }
 
