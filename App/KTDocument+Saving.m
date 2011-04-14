@@ -627,7 +627,10 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     
     // Now we're sure store is available, can give it some metadata.
-    if (result) result = [self setMetadataForStoreAtURL:URL error:&error];
+    if (result && saveOp != NSAutosaveOperation)
+    {
+        result = [self setMetadataForStoreAtURL:URL error:&error];
+    }
     
     
     // Do the save
