@@ -146,14 +146,14 @@
 {
     NSURL *result = nil;
     
-    NSString *filename = [[self filename] legalizedWebPublishingFilename];
+    NSString *filename = [self filename];
     if (filename)
     {
-        result = [[NSURL alloc] initWithString:filename
-                                 relativeToURL:[[self parentPage] URL]];
+        result = [NSURL URLWithString:filename
+                        relativeToURL:[[self parentPage] URL]];
     }
     
-    return [result autorelease];
+    return result;
 }
 
 - (NSString *)filename
