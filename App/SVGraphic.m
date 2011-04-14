@@ -752,7 +752,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
         NSNumber *result = [self width];
         
         // Images can be smaller than 200px, but container should still be 200px in which case
-        if (result && [result unsignedIntegerValue] < 200) result = [NSNumber numberWithInt:200];
+        //if (result && [result unsignedIntegerValue] < 200) result = [NSNumber numberWithInt:200];
         return result;
     }
     else
