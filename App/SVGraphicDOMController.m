@@ -78,14 +78,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 - (void)setRepresentedObject:(id)object
 {
-    [[self representedObject] removeObserver:self forKeyPath:@"contentWidth"];
-    
     [super setRepresentedObject:object];
-    
-    [object addObserver:self
-             forKeyPath:@"contentWidth"
-                options:0
-                context:sGraphicSizeObservationContext];
 }
 
 #pragma mark DOM
@@ -404,6 +397,29 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 }
 
 #pragma mark Dependencies
+
+- (void)startObservingDependencies;
+{
+    if (![self isObservingDependencies])
+    {
+        [self addObserver:self
+                 forKeyPath:@"representedObject.contentWidth"
+                    options:0
+                    context:sGraphicSizeObservationContext];
+    }
+    
+    [super startObservingDependencies];
+}
+
+- (void)stopObservingDependencies;
+{
+    if ([self isObservingDependencies])
+    {
+        [self removeObserver:self forKeyPath:@"representedObject.contentWidth"];
+    }
+    
+    [super stopObservingDependencies];
+}
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
