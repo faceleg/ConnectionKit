@@ -217,7 +217,7 @@ disabledPreviewObjectsCount:(NSUInteger)disabledPreviewObjectsCount
 			{
 				// DEPRECATED
 				NSRunInformationalAlertPanelRelativeToWindow(
-					 NSLocalizedString(@"Congratulations!  The HTML is valid.",@"Title of results alert"),
+					 NSLocalizedString(@"Congratulations! The HTML is valid.",@"Title of results alert"),
 					 NSLocalizedString(@"The validator returned the following status message:\n\n%@%@",@""),
 					 nil,nil,nil, aWindow, explanation, disabledPreviewWarningWithNewlines);				
 			}
@@ -225,7 +225,7 @@ disabledPreviewObjectsCount:(NSUInteger)disabledPreviewObjectsCount
 			{
 				// DEPRECATED
 				NSRunInformationalAlertPanelRelativeToWindow(
-					 NSLocalizedString(@"Congratulations!  The HTML is valid.",@"Title of results alert"),
+					 NSLocalizedString(@"Congratulations! The HTML is valid.",@"Title of results alert"),
 						disabledPreviewWarningWithNewlines,
 					 nil,nil,nil, aWindow );
 			}
