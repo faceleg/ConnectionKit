@@ -37,7 +37,6 @@
 		3C3002D51312FCE10022E49A /* BUNDLED */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = BUNDLED; path = ../Configurations/BUNDLED; sourceTree = SOURCE_ROOT; };
 		3C42DDC80D64CA9B004F35FD /* RSSBadgePlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSBadgePlugIn.h; sourceTree = "<group>"; };
 		3C42DDC90D64CA9B004F35FD /* RSSBadgePlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSSBadgePlugIn.m; sourceTree = "<group>"; };
-		3C42DDCB0D64CAAD004F35FD /* Template.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Template.html; sourceTree = "<group>"; };
 		3C42DDCC0D64CAAD004F35FD /* rssbadge.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = rssbadge.css; sourceTree = "<group>"; };
 		3C42DDD00D64CAC0004F35FD /* Gray Badge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Gray Badge.png"; sourceTree = "<group>"; };
 		3C42DDD10D64CAC0004F35FD /* gray_large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gray_large.png; sourceTree = "<group>"; };
@@ -117,14 +116,13 @@
 			isa = PBXGroup;
 			children = (
 				3C3002D51312FCE10022E49A /* BUNDLED */,
-				CEDA1DBE1302076800DC6FE7 /* Inspector.strings */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 				3C5D6F3612A42D2600AAAB18 /* Inspector.xib */,
+				CEDA1DBE1302076800DC6FE7 /* Inspector.strings */,
 				3C42DE000D64CB6C004F35FD /* License.rtf */,
 				3C42DDE40D64CAFE004F35FD /* Localizable.strings */,
 				3C42DDCC0D64CAAD004F35FD /* rssbadge.css */,
-				3C42DDCB0D64CAAD004F35FD /* Template.html */,
 				CE28029112432B8100B00F3D /* toolbar_rss.tiff */,
 				3C42DDD00D64CAC0004F35FD /* Gray Badge.png */,
 				3C42DDD10D64CAC0004F35FD /* gray_large.png */,
