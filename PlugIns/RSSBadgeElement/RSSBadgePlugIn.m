@@ -194,16 +194,13 @@
                     [context endElement]; // </a>
                 }
             }
-            else
+            [context startElement:@"p" attributes:attrs];
+            if ( [context startAnchorElementWithFeedForPage:self.indexedCollection attributes:nil] )
             {
-                [context startElement:@"p" attributes:attrs];
-                if ( [context startAnchorElementWithFeedForPage:self.indexedCollection attributes:nil] )
-                {
-                    [context writeCharacters:self.label];
-                    [context endElement]; // </a>
-                }
-                [context endElement]; // </p>                
+                [context writeCharacters:self.label];
+                [context endElement]; // </a>
             }
+            [context endElement]; // </p>                
             
             [context endElement]; // </div>
         }
