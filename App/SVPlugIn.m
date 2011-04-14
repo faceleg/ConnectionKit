@@ -124,7 +124,9 @@ static id <SVPlugInContext> sCurrentContext;
     }
     
     
+    id <SVPlugInContext> oldContext = [self currentContext];
     sCurrentContext = context;
+    
     
     // Parse our built-in template
     SVTemplate *template = [self HTMLTemplate];
@@ -137,7 +139,8 @@ static id <SVPlugInContext> sCurrentContext;
         [parser release];
     }
     
-    sCurrentContext = nil;
+    
+    sCurrentContext = oldContext;
 }
 
 + (id <SVPlugInContext>)currentContext; { return sCurrentContext; }
