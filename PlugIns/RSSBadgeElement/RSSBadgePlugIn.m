@@ -37,9 +37,13 @@
 #import "RSSBadgePlugIn.h"
 
 
+@interface SVIndexPlugIn (RSSBadgePlugIn)
+- (void)rssBadge_super_makeOriginalSize;
+@end
+
 @implementation SVIndexPlugIn (RSSBadgePlugIn)
 
-- (void)rssBadge_super_makeOriginalSize;
+- (void)rssBadge_super_makeOriginalSize
 {
     [super makeOriginalSize];
 }
@@ -179,6 +183,7 @@
             NSDictionary *attrs = [NSDictionary dictionaryWithObject:@"largeRSSBadgeIcon" forKey:@"class"];
             [context startElement:@"div" attributes:attrs];
             
+            // write img anchor
             if ( self.iconStyle != 0 )
             {
                 NSDictionary *aAttrs = [NSDictionary dictionaryWithObject:@"imageLink" forKey:@"class"];
@@ -194,6 +199,8 @@
                     [context endElement]; // </a>
                 }
             }
+            
+            // write text anchor
             [context startElement:@"p" attributes:attrs];
             if ( [context startAnchorElementWithFeedForPage:self.indexedCollection attributes:nil] )
             {
@@ -208,6 +215,7 @@
         {
             [context startElement:@"p"];
             
+            // write img anchor
             if ( self.iconStyle != 0 )
             {
                 NSDictionary *aAttrs = [NSDictionary dictionaryWithObject:@"imageLink" forKey:@"class"];
@@ -233,13 +241,12 @@
                     [context endElement]; // </a>                    
                 }
             }
-            else
+            
+            // write text anchor
+            if ( [context startAnchorElementWithFeedForPage:self.indexedCollection attributes:nil] )
             {
-                if ( [context startAnchorElementWithFeedForPage:self.indexedCollection attributes:nil] )
-                {
-                    [context writeCharacters:self.label];
-                    [context endElement]; // </a>
-                }
+                [context writeCharacters:self.label];
+                [context endElement]; // </a>
             }
 
             [context endElement]; // </p>
