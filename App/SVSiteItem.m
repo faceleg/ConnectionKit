@@ -8,6 +8,7 @@
 
 #import "SVSiteItem.h"
 
+#import "KTDesign.h"
 #import "KTHostProperties.h"
 #import "SVHTMLContext.h"
 #import "SVHTMLTextBlock.h"
@@ -139,6 +140,11 @@
     if (![result length])
     {
         result = [self title];
+    }
+    
+    if ([[[self master] design] menusUseNonBreakingSpaces])
+    {
+        result = [result stringByReplacingOccurrencesOfString:@" " withString:@"&nbsp;"];
     }
     
     return result;
