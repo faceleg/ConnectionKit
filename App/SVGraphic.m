@@ -8,6 +8,7 @@
 
 #import "SVGraphic.h"
 
+#import "SVApplicationController.h"
 #import "SVArticle.h"
 #import "SVAuxiliaryPageletText.h"
 #import "KTDesign.h"
@@ -328,7 +329,9 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 {
     // See if our HTML includes size-binding anywhere
     SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] init];
+    [context setLiveDataFeeds:[[NSUserDefaults standardUserDefaults] boolForKey:kSVLiveDataFeedsKey]];
     [[context rootDOMController] stopObservingDependencies];
+    
     [self writeBody:context];
     
     BOOL result = NO;
