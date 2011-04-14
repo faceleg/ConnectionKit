@@ -30,7 +30,7 @@
 
 - (BOOL) canBecomeMainWindow
 {
-	return NO;
+	return YES;  // when this is NO, the find panel doesn't work, maybe because it can't be the key window?
 }
 @end
 
