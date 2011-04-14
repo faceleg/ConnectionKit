@@ -141,11 +141,8 @@
         {
             if ([link openInNewWindow])
             {
-                NSArray *anchors = [self selectedAnchorElements];
-                for (DOMHTMLAnchorElement *anAnchor in anchors)
-                {
-                    [anAnchor setTarget:@"_blank"];
-                }
+                [self makeSelectedLinksOpenInNewWindow];
+
             }
             
             [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
@@ -155,6 +152,16 @@
             NSBeep();
         }
     }
+}
+
+- (void)makeSelectedLinksOpenInNewWindow
+{
+    NSArray *anchors = [self selectedAnchorElements];
+    for (DOMHTMLAnchorElement *anAnchor in anchors)
+    {
+        [anAnchor setTarget:@"_blank"];
+    }
+    
 }
 
 - (void)unlink:(id)sender;

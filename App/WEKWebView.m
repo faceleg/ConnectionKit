@@ -71,6 +71,16 @@
     }
 }
 
+- (void)makeSelectedLinksOpenInNewWindow
+{
+    // Need to ask permission before doing so. If not, after the change, web editor may well not know what changed
+    DOMRange *selection = [self selectedDOMRange];
+    if (selection && [[self webEditor] shouldChangeTextInDOMRange:selection])
+    {
+        [super makeSelectedLinksOpenInNewWindow];
+    }
+}
+
 #pragma mark Dragging Destination
 
 - (NSDragOperation)willUpdateDrag:(id <NSDraggingInfo>)sender result:(NSDragOperation)result;

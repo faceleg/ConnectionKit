@@ -24,6 +24,7 @@
 - (NSString *)linkValue;
 
 - (void)createLink:(SVLink *)link userInterface:(BOOL)userInterface;
+- (void)makeSelectedLinksOpenInNewWindow;   // support method, called by above
 - (IBAction)unlink:(id)sender;
 - (IBAction)selectLink:(id)sender;
 
