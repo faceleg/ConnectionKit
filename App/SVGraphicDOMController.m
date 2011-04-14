@@ -16,6 +16,7 @@
 #import "SVParagraphedHTMLWriterDOMAdaptor.h"
 #import "SVPasteboardItemInternal.h"
 #import "SVRawHTMLGraphic.h"
+#import "SVResizableDOMController.h"
 #import "SVRichTextDOMController.h"
 #import "SVSidebarDOMController.h"
 #import "SVTemplate.h"
@@ -1020,6 +1021,17 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     return [(SVDOMController *)[self parentWebEditorItem] constrainSize:size
                                                                  handle:handle
                                                               snapToFit:snapToFit];
+}
+
+- (NSSize)minSize;
+{
+    NSSize result = [super minSize];
+    
+    SVGraphic *graphic = [self representedObject];
+    result.width = [graphic minWidth];
+
+    if (result.width < MIN_GRAPHIC_LIVE_RESIZE) result.width = MIN_GRAPHIC_LIVE_RESIZE;
+    return result;
 }
 
 #pragma mark Drawing

@@ -9,6 +9,9 @@
 #import "SVDOMController.h"
 
 
+#define MIN_GRAPHIC_LIVE_RESIZE 16.0f
+
+
 @interface SVResizableDOMController : SVDOMController
 {
   @private

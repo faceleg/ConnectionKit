@@ -122,8 +122,6 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 
 - (BOOL)shouldResizeInline; { return [[self representedObject] shouldWriteHTMLInline]; }
 
-#define MIN_GRAPHIC_LIVE_RESIZE 16.0f
-
 - (NSSize)minSize;
 {
     SVPlugInGraphic *graphic = [self representedObject];
