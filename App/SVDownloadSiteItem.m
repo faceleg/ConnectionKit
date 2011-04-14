@@ -124,8 +124,7 @@
     NSString *uploadPath = [publishingEngine baseRemotePath];
     uploadPath = [uploadPath stringByAppendingPathComponent:[[self parentPage] uploadPath]];
     uploadPath = [uploadPath stringByDeletingLastPathComponent];
-    uploadPath = [uploadPath stringByAppendingPathComponent:
-                  [[media preferredUploadPath] lastPathComponent]];
+    uploadPath = [uploadPath stringByAppendingPathComponent:[self filename]];
     
     NSData *data = [media mediaData];
     if (data)
