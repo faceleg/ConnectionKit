@@ -45,7 +45,7 @@ enum {
 	kThumbMask		= 1UL << 5,		// 32
 	kFloatThumbMask	= 1UL << 6,		// 64
 	kInsetThumbMask	= 1UL << 7,		// 128 Not implemented yet
-	kLargeMediaIfBigEnough = 1UL << 8	// 256
+	kLargeMediaIfBigEnough = 1UL << 8	// 256			// Not really using anymore, but keep so the masks don't change
 };
 
 // If these change, we need to change the tags on the popup menu in the nib.

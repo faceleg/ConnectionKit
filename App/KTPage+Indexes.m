@@ -260,8 +260,6 @@
 
 - (NSSize)RSSFeedThumbnailsSize { return NSMakeSize(128.0, 128.0); }
 
-extern NSUInteger kLargeMediaTruncationThreshold;
-
 - (void)writeRSSFeedItemDescription
 {
 	SVHTMLContext *feedContext = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
@@ -272,10 +270,9 @@ extern NSUInteger kLargeMediaTruncationThreshold;
 	SVHTMLContext *xmlContext = [[SVProxyHTMLContext alloc] initWithOutputWriter:xmlWriter target:feedContext];
 	
 	NSUInteger truncationLength = [self.parentPage.collectionMaxFeedItemLength intValue];
-	BOOL includeLargeMedia = truncationLength >= kLargeMediaTruncationThreshold;
 	
 	(void) [self writeSummary:xmlContext
-			includeLargeMedia:includeLargeMedia
+			includeLargeMedia:YES
 			 excludeThumbnail:NO		// don't exclude any thumbnail images
 				   truncation:truncationLength];
 	
@@ -358,7 +355,6 @@ double kTwoThirdsTruncationLog;
 
 NSUInteger kOneThirdTruncation;
 NSUInteger kTwoThirdsTruncation;
-NSUInteger kLargeMediaTruncationThreshold;	// above this -- Paragraphs -- and you get large media; below, you don't.
 
 + (void) initialize
 {
@@ -372,9 +368,7 @@ NSUInteger kLargeMediaTruncationThreshold;	// above this -- Paragraphs -- and yo
 	
 	kOneThirdTruncation = EXPFUNCTION(kOneThirdTruncationLog);
 	kTwoThirdsTruncation = EXPFUNCTION(kTwoThirdsTruncationLog);
-	
-	kLargeMediaTruncationThreshold = kTwoThirdsTruncation;
-	
+		
 	[pool release];
 }
 

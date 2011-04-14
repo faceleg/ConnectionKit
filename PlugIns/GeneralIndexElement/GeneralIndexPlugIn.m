@@ -372,16 +372,10 @@
  [[summary item indexedCollection.collectionTruncateCharacters]]
  */
 
-extern NSUInteger kLargeMediaTruncationThreshold;
-
 - (BOOL)writeSummaryOfIteratedPage;
 {
 	BOOL includeLargeMedia = self.indexLayoutType & kLargeMediaMask;
 	BOOL excludeThumbnail = self.indexLayoutType & kThumbMask;
-	if (includeLargeMedia && (self.indexLayoutType & kLargeMediaIfBigEnough) )
-	{
-		includeLargeMedia = self.maxItemLength >= kLargeMediaTruncationThreshold;
-	}
 	
     id<SVPlugInContext> context = [self currentContext]; 
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
