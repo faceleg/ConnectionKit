@@ -37,6 +37,17 @@
 #import "RSSBadgePlugIn.h"
 
 
+@implementation SVIndexPlugIn (RSSBadgePlugIn)
+
+- (void)rssBadge_super_makeOriginalSize;
+{
+    [super makeOriginalSize];
+}
+
+@end
+
+
+
 @implementation RSSBadgePlugIn
 
 
@@ -62,6 +73,12 @@
     self.showsTitle = NO;
     self.enableMaxItems = YES;
     self.maxItems = 10;
+}
+
+- (void)makeOriginalSize;
+{
+    // Not a real index, so use SVPlugIn's behaviour
+    [self rssBadge_super_makeOriginalSize];
 }
 
 - (void)pageDidChange:(id <SVPage>)page;
