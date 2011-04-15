@@ -475,7 +475,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		[NSNumber numberWithBool:NO], @"ConnectionVerifiesTransfers",
 										 
 		/// how frequently documents are autosaved as int (converted to NSTimeInternal (double))
-		[NSNumber numberWithInt:6], @"AutosaveFrequency",
+		[NSNumber numberWithInt:30], @"AutosaveFrequency",
 										 
 		/// whether CKTransferController sets permissions on uploads
 		[NSNumber numberWithBool:YES], @"ConnectionSetsPermissions",
