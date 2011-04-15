@@ -68,33 +68,72 @@
 // horizontal button is 110  (at least) x 20
 // vertical button is 55 x 62 (at least)
 
-- (NSNumber *)width
+// IMPLEMENTATION 1
+//- (NSNumber *)width
+//{
+//    if ( STYLE_HORIZONTAL == self.tweetButtonStyle )
+//    {
+//        return [NSNumber numberWithUnsignedInteger:110];
+//    }
+//    else 
+//    {
+//        return [self minWidth];
+//    }
+//}
+//
+//- (NSNumber *)height
+//{
+//    if ( STYLE_VERTICAL == self.tweetButtonStyle )
+//    {
+//        return [NSNumber numberWithUnsignedInteger:62];
+//    }
+//    else 
+//    {
+//        return [self minHeight];
+//    }
+//}
+//
+//- (NSNumber *)minWidth { return [NSNumber numberWithInt:55]; }
+//- (NSNumber *)minHeight { return [NSNumber numberWithInt:20]; }
+
+
+// IMPLEMENTATION 2
+- (NSNumber *)width { return [self minWidth]; }
+- (NSNumber *)height { return [self minHeight]; }
+
+- (NSNumber *)minWidth
 {
-    if ( STYLE_HORIZONTAL == self.tweetButtonStyle )
+    switch ( self.tweetButtonStyle )
     {
-        return [NSNumber numberWithUnsignedInteger:110];
-    }
-    else 
-    {
-        return [self minWidth];
+        case STYLE_VERTICAL:
+            return [NSNumber numberWithUnsignedInteger:55];
+            break;
+        case STYLE_HORIZONTAL:
+            return [NSNumber numberWithUnsignedInteger:110];
+            break;
+        case STYLE_NONE:
+        default:
+            return [NSNumber numberWithUnsignedInteger:55];
+            break;
     }
 }
 
-- (NSNumber *)height
+- (NSNumber *)minHeight
 {
-    if ( STYLE_VERTICAL == self.tweetButtonStyle )
+    switch ( self.tweetButtonStyle )
     {
-        return [NSNumber numberWithUnsignedInteger:62];
-    }
-    else 
-    {
-        return [self minHeight];
+        case STYLE_VERTICAL:
+            return [NSNumber numberWithUnsignedInteger:62];
+            break;
+        case STYLE_HORIZONTAL:
+            return [NSNumber numberWithUnsignedInteger:20];
+            break;
+        case STYLE_NONE:
+        default:
+            return [NSNumber numberWithUnsignedInteger:20];
+            break;
     }
 }
-
-- (NSNumber *)minWidth { return [NSNumber numberWithInt:55]; }
-- (NSNumber *)minHeight { return [NSNumber numberWithInt:20]; }
-
 
 #pragma mark Initialization
 
