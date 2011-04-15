@@ -19,6 +19,8 @@
   @private
     DOMHTMLElement  *_bodyElement;
     
+    BOOL    _observingWidth;
+    
     SVOffscreenWebViewController    *_offscreenWebViewController;
     NSArray                         *_offscreenDOMControllers;
 }

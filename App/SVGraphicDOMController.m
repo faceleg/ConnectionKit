@@ -401,12 +401,13 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 - (void)startObservingDependencies;
 {
-    if (![self isObservingDependencies])
+    if (!_observingWidth)
     {
         [self addObserver:self
                  forKeyPath:@"representedObject.contentWidth"
                     options:0
                     context:sGraphicSizeObservationContext];
+        _observingWidth = YES;
     }
     
     [super startObservingDependencies];
@@ -414,9 +415,10 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 - (void)stopObservingDependencies;
 {
-    if ([self isObservingDependencies])
+    if (_observingWidth)
     {
         [self removeObserver:self forKeyPath:@"representedObject.contentWidth"];
+        _observingWidth = NO;
     }
     
     [super stopObservingDependencies];
