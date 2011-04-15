@@ -145,6 +145,20 @@
     }
 }
 
+- (NSFetchRequest *)defaultFetchRequest
+{
+    // If the main window changes twice in a single event loop, ending on non-doc window, then Inspector's sidebar pagelets controller tries to fetch with no MOC. Think we can work around this. #116512
+    
+    if ([self managedObjectContext])
+    {
+        return [super defaultFetchRequest];
+    }
+    else
+    {
+        return nil;
+    }
+}
+
 #pragma mark Adding and Removing Objects
 
 - (void)insertObject:(id)object atArrangedObjectIndex:(NSUInteger)index;
