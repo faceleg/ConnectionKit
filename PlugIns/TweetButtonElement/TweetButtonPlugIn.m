@@ -135,6 +135,11 @@
     }
 }
 
+- (void)makeOriginalSize
+{
+    [self setWidth:[self minWidth] height:[self minHeight]];
+}
+
 #pragma mark Initialization
 
 - (void)dealloc
