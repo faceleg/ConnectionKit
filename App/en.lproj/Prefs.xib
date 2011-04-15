@@ -2,17 +2,17 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10F569</string>
-		<string key="IBDocument.InterfaceBuilderVersion">804</string>
-		<string key="IBDocument.AppKitVersion">1038.29</string>
+		<string key="IBDocument.SystemVersion">10J869</string>
+		<string key="IBDocument.InterfaceBuilderVersion">823</string>
+		<string key="IBDocument.AppKitVersion">1038.35</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">804</string>
+			<string key="NS.object.0">823</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="455"/>
+			<integer value="47"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -78,7 +78,7 @@
 						</object>
 						<object class="NSCustomView" id="942272411">
 							<reference key="NSNextResponder" ref="531057996"/>
-							<int key="NSvFlags">268</int>
+							<int key="NSvFlags">274</int>
 							<object class="NSMutableArray" key="NSSubviews">
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSPopUpButton" id="105884111">
@@ -202,8 +202,8 @@
 								</object>
 								<object class="NSButton" id="687894693">
 									<reference key="NSNextResponder" ref="942272411"/>
-									<int key="NSvFlags">256</int>
-									<string key="NSFrame">{{1, 220}, {207, 18}}</string>
+									<int key="NSvFlags">264</int>
+									<string key="NSFrame">{{1, 242}, {207, 18}}</string>
 									<reference key="NSSuperview" ref="942272411"/>
 									<int key="NSTag">-1</int>
 									<bool key="NSEnabled">YES</bool>
@@ -301,8 +301,8 @@ LCAyMDA1AAAAAA</bytes>
 								</object>
 								<object class="NSButton" id="48279688">
 									<reference key="NSNextResponder" ref="942272411"/>
-									<int key="NSvFlags">256</int>
-									<string key="NSFrame">{{1, 242}, {266, 18}}</string>
+									<int key="NSvFlags">264</int>
+									<string key="NSFrame">{{1, 222}, {266, 18}}</string>
 									<reference key="NSSuperview" ref="942272411"/>
 									<int key="NSTag">-1</int>
 									<bool key="NSEnabled">YES</bool>
@@ -378,7 +378,7 @@ LCAyMDA1AAAAAA</bytes>
 								</object>
 								<object class="NSButton" id="111455934">
 									<reference key="NSNextResponder" ref="942272411"/>
-									<int key="NSvFlags">256</int>
+									<int key="NSvFlags">264</int>
 									<string key="NSFrame">{{1, 181}, {166, 18}}</string>
 									<reference key="NSSuperview" ref="942272411"/>
 									<int key="NSTag">-1</int>
@@ -575,7 +575,7 @@ AH+5IbOAAAAAAAAAAAAAAAAAAAAAAHRleHQAAAAAQ29weXJpZ2h0IEFwcGxlLCBJbmMuLCAyMDA3AA</
 								</object>
 								<object class="NSButton" id="1046955238">
 									<reference key="NSNextResponder" ref="942272411"/>
-									<int key="NSvFlags">256</int>
+									<int key="NSvFlags">264</int>
 									<string key="NSFrame">{{1, 301}, {196, 18}}</string>
 									<reference key="NSSuperview" ref="942272411"/>
 									<int key="NSTag">-1</int>
@@ -691,7 +691,7 @@ AH+5IbOAAAAAAAAAAAAAAAAAAAAAAHRleHQAAAAAQ29weXJpZ2h0IEFwcGxlLCBJbmMuLCAyMDA3AA</
 						</object>
 						<object class="NSCustomView" id="455676857">
 							<reference key="NSNextResponder" ref="531057996"/>
-							<int key="NSvFlags">268</int>
+							<int key="NSvFlags">276</int>
 							<object class="NSMutableArray" key="NSSubviews">
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSTextField" id="820489388">
@@ -1509,7 +1509,6 @@ AH+5IbOAAAAAAAAAAAAAAAAAAAAAAHRleHQAAAAAQ29weXJpZ2h0IEFwcGxlLCBJbmMuLCAyMDA3AA</
 					<string>460.ImportedFromIB2</string>
 					<string>47.IBEditorWindowLastContentRect</string>
 					<string>47.IBPluginDependency</string>
-					<string>47.IBViewEditorWindowController.showingLayoutRectangles</string>
 					<string>47.IBWindowTemplateEditedContentRect</string>
 					<string>47.ImportedFromIB2</string>
 					<string>48.IBPluginDependency</string>
@@ -1594,7 +1593,7 @@ AH+5IbOAAAAAAAAAAAAAAAAAAAAAAHRleHQAAAAAQ29weXJpZ2h0IEFwcGxlLCBJbmMuLCAyMDA3AA</
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{858, 588}, {243, 63}}</string>
+					<string>{{370, 359}, {243, 63}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1605,10 +1604,9 @@ AH+5IbOAAAAAAAAAAAAAAAAAAAAAAHRleHQAAAAAQ29weXJpZ2h0IEFwcGxlLCBJbmMuLCAyMDA3AA</
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{628, 581}, {551, 340}}</string>
+					<string>{{140, 352}, {551, 340}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<boolean value="YES"/>
-					<string>{{628, 581}, {551, 340}}</string>
+					<string>{{140, 352}, {551, 340}}</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
@@ -2001,13 +1999,6 @@ AH+5IbOAAAAAAAAAAAAAAAAAAAAAAHRleHQAAAAAQ29weXJpZ2h0IEFwcGxlLCBJbmMuLCAyMDA3AA</
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../Shared/AppKit/KSSilencingConfirmSheet.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">../../Shared/AppKit/KSURLInfoField.h</string>
 					</object>
 				</object>
@@ -2082,13 +2073,6 @@ AH+5IbOAAAAAAAAAAAAAAAAAAAAAAHRleHQAAAAAQ29weXJpZ2h0IEFwcGxlLCBJbmMuLCAyMDA3AA</
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">KTPage.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">NSObject+KTExtensions.h</string>
 					</object>
 				</object>
@@ -2097,6 +2081,13 @@ AH+5IbOAAAAAAAAAAAAAAAAAAAAAAHRleHQAAAAAQ29weXJpZ2h0IEFwcGxlLCBJbmMuLCAyMDA3AA</
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">NSOutlineView+KTExtensions.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">SVHTMLTextBlock.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
