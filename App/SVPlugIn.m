@@ -275,8 +275,12 @@ static id <SVPlugInContext> sCurrentContext;
     SVInspectorViewController *result = nil;
     
     // Take a stab at Inspector class name
-    NSString *className = [NSStringFromClass([self class])
-                           stringByReplacingOccurrencesOfString:@"PlugIn" withString:@"Inspector"];
+    NSString *className = NSStringFromClass([self class]);
+    if ([className hasSuffix:@"PlugIn"] || [className hasSuffix:@"Plugin"])
+    {
+        className = [className substringToIndex:[className length] - 6];
+    }
+    className = [className stringByAppendingString:@"Inspector"];
     
     
     // Take a stab at Inspector nib
