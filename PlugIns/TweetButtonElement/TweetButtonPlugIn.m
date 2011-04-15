@@ -177,7 +177,6 @@
 - (void)setTweetButtonStyle:(NSUInteger)aStyle
 {
     _tweetButtonStyle = aStyle;
-    [self makeOriginalSize];
     switch ( _tweetButtonStyle )
     {
         case STYLE_HORIZONTAL:
