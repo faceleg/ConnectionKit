@@ -174,6 +174,25 @@
 #pragma mark Properties
 
 @synthesize tweetButtonStyle = _tweetButtonStyle;
+- (void)setTweetButtonStyle:(NSUInteger)aStyle
+{
+    _tweetButtonStyle = aStyle;
+    [self makeOriginalSize];
+    switch ( _tweetButtonStyle )
+    {
+        case STYLE_HORIZONTAL:
+            if ( [[self width] unsignedIntegerValue] < [[self minWidth] unsignedIntegerValue] )
+            {
+                [self makeOriginalSize];
+            }
+            break;
+        case STYLE_VERTICAL:
+        case STYLE_NONE:
+        default:
+            [self makeOriginalSize];
+            break;
+    }
+}
 @synthesize tweetText = _tweetText;
 @synthesize tweetURL = _tweetURL;
 @synthesize tweetVia = _tweetVia;
