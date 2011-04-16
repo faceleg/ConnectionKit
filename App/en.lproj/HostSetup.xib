@@ -512,8 +512,8 @@ ZXIsIEluYy4sIDIwMDUAAAAAA</bytes>
 													<int key="NSPeriodicDelay">200</int>
 													<int key="NSPeriodicInterval">25</int>
 												</object>
-												<int key="NSSelectedRow">1</int>
-												<reference key="NSSelectedCell" ref="944644100"/>
+												<int key="NSSelectedRow">-1</int>
+												<int key="NSSelectedCol">-1</int>
 												<reference key="NSBackgroundColor" ref="205087010"/>
 												<reference key="NSCellBackgroundColor" ref="205087010"/>
 											</object>
@@ -729,9 +729,9 @@ ZXRpbWUgMjAlIGRpc2NvdW50Lg</string>
 												<reference key="NSSuperview" ref="470760703"/>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSTextFieldCell" key="NSCell" id="73239047">
-													<int key="NSCellFlags">68288064</int>
-													<int key="NSCellFlags2">138413056</int>
-													<string key="NSContents">Karelia Recommends A2 Hosting</string>
+													<int key="NSCellFlags">69336641</int>
+													<int key="NSCellFlags2">1212160000</int>
+													<string key="NSContents"/>
 													<object class="NSFont" key="NSSupport">
 														<string key="NSName">LucidaGrande-Bold</string>
 														<double key="NSSize">13</double>
@@ -4278,6 +4278,14 @@ d3csIC9ob21lL3lvdXJuYW1lA</string>
 					</object>
 					<int key="connectionID">2094</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oRecommendation</string>
+						<reference key="source" ref="839278234"/>
+						<reference key="destination" ref="197927569"/>
+					</object>
+					<int key="connectionID">2106</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -4324,13 +4332,13 @@ d3csIC9ob21lL3lvdXJuYW1lA</string>
 							<reference ref="815515393"/>
 							<reference ref="822123811"/>
 							<reference ref="669501260"/>
-							<reference ref="273226907"/>
 							<reference ref="585227161"/>
 							<reference ref="89219174"/>
 							<reference ref="33433147"/>
 							<reference ref="232896182"/>
 							<reference ref="319952592"/>
 							<reference ref="869591954"/>
+							<reference ref="273226907"/>
 						</object>
 						<reference key="parent" ref="367897119"/>
 					</object>
@@ -6341,6 +6349,7 @@ d3csIC9ob21lL3lvdXJuYW1lA</string>
 					<string>57.ImportedFromIB2</string>
 					<string>58.CustomClassName</string>
 					<string>58.IBPluginDependency</string>
+					<string>58.IBViewBoundsToFrameTransform</string>
 					<string>58.ImportedFromIB2</string>
 					<string>6.IBEditorWindowLastContentRect</string>
 					<string>6.IBPluginDependency</string>
@@ -6787,6 +6796,9 @@ d3csIC9ob21lL3lvdXJuYW1lA</string>
 					<boolean value="YES"/>
 					<string>KTBackgroundTabView</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">P4AAAL+AAABDLQAAw+yAAA</bytes>
+					</object>
 					<boolean value="YES"/>
 					<string>{{165, 393}, {700, 520}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6930,7 +6942,7 @@ d3csIC9ob21lL3lvdXJuYW1lA</string>
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">2105</int>
+			<int key="maxID">2106</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -7156,6 +7168,7 @@ d3csIC9ob21lL3lvdXJuYW1lA</string>
 							<string>oPasswordField</string>
 							<string>oPortField</string>
 							<string>oPreviousButton</string>
+							<string>oRecommendation</string>
 							<string>oStepLabel</string>
 							<string>oSummaryTextView</string>
 							<string>oTabView</string>
@@ -7177,6 +7190,7 @@ d3csIC9ob21lL3lvdXJuYW1lA</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
 							<string>NSButton</string>
+							<string>NSTextField</string>
 							<string>NSTextField</string>
 							<string>NSTextView</string>
 							<string>KTBackgroundTabView</string>
@@ -7201,6 +7215,7 @@ d3csIC9ob21lL3lvdXJuYW1lA</string>
 							<string>oPasswordField</string>
 							<string>oPortField</string>
 							<string>oPreviousButton</string>
+							<string>oRecommendation</string>
 							<string>oStepLabel</string>
 							<string>oSummaryTextView</string>
 							<string>oTabView</string>
@@ -7266,6 +7281,10 @@ d3csIC9ob21lL3lvdXJuYW1lA</string>
 							<object class="IBToOneOutletInfo">
 								<string key="name">oPreviousButton</string>
 								<string key="candidateClassName">NSButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">oRecommendation</string>
+								<string key="candidateClassName">NSTextField</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">oStepLabel</string>

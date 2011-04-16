@@ -102,6 +102,7 @@ NO LONGER	save
 	IBOutlet NSTextField *oStepLabel;
 	IBOutlet NSTextView *oIntroductionTextView;
 	IBOutlet NSTextView *oSummaryTextView;
+	IBOutlet NSTextField *oRecommendation;
 
 	CKAbstractConnection *myTestConnection;
 	NSColor *myConnectionStatusColor;
