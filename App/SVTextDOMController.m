@@ -217,6 +217,7 @@
     [adaptor setAllowsLinks:YES];
     
     [self writeText:adaptor];
+    [stringWriter flush];   // to be sure. #116287
     
     NSString *html = [stringWriter string];
     [self setHTMLString:html attachments:[adaptor textAttachments]];
