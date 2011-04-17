@@ -228,8 +228,9 @@
             // Check each attribute should be written
             DOMAttr *anAttribute = (DOMAttr *)[attributes item:index];
             NSString *attributeName = [anAttribute name];
+            NSString *attributeValue = [anAttribute value];
             
-            if ([self validateAttribute:attributeName ofElement:elementName])
+            if (attributeValue = [self validateAttribute:attributeName value:attributeValue ofElement:elementName])
             {
                 // Validate individual styling
                 if ([attributeName isEqualToString:@"style"])
@@ -242,7 +243,7 @@
                 }
                 else
                 {
-                    [[self XMLWriter] pushAttribute:attributeName value:[anAttribute value]];
+                    [[self XMLWriter] pushAttribute:attributeName value:attributeValue];
                 }
             }
             else
@@ -531,35 +532,48 @@
 
 #pragma mark Attribute Whitelist
 
-- (BOOL)validateAttribute:(NSString *)attributeName ofElement:(NSString *)elementName;
+- (NSString *)validateAttribute:(NSString *)attributeName
+                          value:(NSString *)attributeValue
+                      ofElement:(NSString *)elementName;
 {
-    BOOL result = NO;
+    NSString *result = attributeValue;
     
 	if ([elementName isEqualToString:@"a"])
     {
-        result = ([attributeName isEqualToString:@"href"] ||
-                       [attributeName isEqualToString:@"target"] ||
-                       [attributeName isEqualToString:@"style"] ||
-                       [attributeName isEqualToString:@"charset"] ||
-                       [attributeName isEqualToString:@"hreflang"] ||
-                       [attributeName isEqualToString:@"name"] ||
-                       [attributeName isEqualToString:@"title"] ||
-                       [attributeName isEqualToString:@"rel"] ||
-                       [attributeName isEqualToString:@"rev"]);
-        
+        if (![attributeName isEqualToString:@"href"] &&
+            ![attributeName isEqualToString:@"target"] &&
+            ![attributeName isEqualToString:@"style"] &&
+            ![attributeName isEqualToString:@"charset"] &&
+            ![attributeName isEqualToString:@"hreflang"] &&
+            ![attributeName isEqualToString:@"name"] &&
+            ![attributeName isEqualToString:@"title"] &&
+            ![attributeName isEqualToString:@"rel"] &&
+            ![attributeName isEqualToString:@"rev"])
+        {
+            result = nil;
+        }
         return result;
     }
     // <FONT> tags are no longer allowed, but leave this in in case we turn support back on again
     else if ([elementName isEqualToString:@"font"])
     {
-        if ([attributeName isEqualToString:@"face"] || [attributeName isEqualToString:@"size"] || [attributeName isEqualToString:@"color"]) return YES;
+        if ([attributeName isEqualToString:@"face"] || [attributeName isEqualToString:@"size"] || [attributeName isEqualToString:@"color"]) return result;
     }
     
     // Allow style on any element except <BR>.
     // Used to allow class. #94455
     if (elementName && ![elementName isEqualToString:@"br"])
     {
-        result = ([attributeName isEqualToString:@"style"]);
+        if ([attributeName isEqualToString:@"style"]) result = nil;
+    }
+    
+    // Dissallow "in" class
+    if ([attributeName isEqualToString:@"class"])
+    {
+        NSMutableArray *components = [[attributeValue componentsSeparatedByWhitespace] mutableCopy];
+        [components removeObject:@"in"];
+        result = [components componentsJoinedByString:@" "];
+        [components release];
     }
     
     return result;
