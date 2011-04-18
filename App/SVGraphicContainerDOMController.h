@@ -13,11 +13,12 @@
 
 @protocol SVGraphicContainerDOMController <NSObject>
 
+@optional
 - (void)moveGraphicWithDOMController:(SVDOMController *)graphicController
                           toPosition:(CGPoint)position
                                event:(NSEvent *)event;
 
-@optional - (void)addGraphic:(SVGraphic *)graphic;
+- (void)addGraphic:(SVGraphic *)graphic;
 
 
 @end
