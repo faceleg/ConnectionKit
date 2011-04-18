@@ -88,9 +88,7 @@
     }
     if ( [properties objectForKey:@"titleHTML"] )
     {
-        NSString *oldTitle = [[[properties objectForKey:@"titleHTML"] copy] autorelease];
-        oldTitle = [oldTitle stringByConvertingHTMLToPlainText];
-        self.title = oldTitle;
+        self.title = [[properties objectForKey:@"titleHTML"] stringByConvertingHTMLToPlainText];
     }
 }
 

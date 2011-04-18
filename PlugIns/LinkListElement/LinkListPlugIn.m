@@ -198,8 +198,7 @@
             
             if ( oldTitle )
             {
-                NSString *title = [[oldTitle copy] autorelease];
-                title = [title stringByConvertingHTMLToPlainText];
+                NSString *title = [oldTitle stringByConvertingHTMLToPlainText];
                 [newLink setObject:title forKey:@"title"];
             }
             
