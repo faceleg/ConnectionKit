@@ -164,7 +164,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     WebDataSource *dataSource = [[[[self webEditor] webView] mainFrame] dataSource];
     for (SVMedia *media in [context media])
     {
-        if ([media mediaData])
+        if ([media webResource])
         {
             [dataSource addSubresource:[media webResource]];
         }
