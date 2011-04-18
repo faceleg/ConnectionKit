@@ -313,7 +313,21 @@
 #pragma mark Properties
 
 @dynamic sidebar;
+
 @dynamic showSidebar;
+- (void)setShowSidebar:(NSNumber *)showSidebar;
+{
+    [self willChangeValueForKey:@"showSidebar"];
+    [self setPrimitiveValue:showSidebar forKey:@"showSidebar"];
+    
+    
+    // Resize graphics. #116747
+    NSSet *articleGraphics = [[[self article] attachments] valueForKey:@"graphic"];
+    [articleGraphics makeObjectsPerformSelector:@selector(pageDidChange:) withObject:self];
+    
+    
+    [self didChangeValueForKey:@"showSidebar"];
+}
 
 #pragma mark Master
 
