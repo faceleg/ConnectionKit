@@ -40,6 +40,7 @@
 @property(nonatomic, readonly, getter=isUpdating) BOOL updating;
 //- (void)willUpdate;
 //- (void)didUpdate;
+- (Class)attachmentsControllerClass;    // default is NSArrayController
 
 
 #pragma mark Responding to Changes

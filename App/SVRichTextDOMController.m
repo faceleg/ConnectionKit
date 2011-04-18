@@ -60,23 +60,13 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 
 #pragma mark Init & Dealloc
 
-- (id)init;
-{
-    // Super
-    self = [super init];
-    
-    
-    // Finish up
-    return self;
-}
-
 - (id)initWithRepresentedObject:(id <SVDOMControllerRepresentedObject>)content;
 {
     self = [super initWithRepresentedObject:content];
     
     
     // Used to do this in -init, binding to representedObject.attachments, but that creates a retain cycle
-    _graphicsController = [[NSArrayController alloc] init];
+    _graphicsController = [[[self attachmentsControllerClass] alloc] init];
     [_graphicsController setSortDescriptors:[SVRichText attachmentSortDescriptors]];
     [_graphicsController setAutomaticallyRearrangesObjects:YES];
     
@@ -156,6 +146,8 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     OBPRECONDITION(_isUpdating);
     _isUpdating = NO;
 }
+
+- (Class)attachmentsControllerClass; { return [NSArrayController class]; }
 
 #pragma mark Controlling Editing Behaviour
 
