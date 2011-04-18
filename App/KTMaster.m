@@ -501,10 +501,20 @@
 	return (KTCommentsProviderDisqus == [[self commentsProvider] unsignedIntValue]);
 }
 
++ (NSSet *)keyPathsForValuesAffectingWantsDisqus
+{
+    return [NSSet setWithObject:@"commentsProvider"];
+}
+
 - (BOOL)wantsHaloscan
 {
     NSLog(@"warning: Haloscan is no longer supported.");
 	return (KTCommentsProviderHaloscan == [[self commentsProvider] unsignedIntValue]);
+}
+
++ (NSSet *)keyPathsForValuesAffectingWantsHaloscan
+{
+    return [NSSet setWithObject:@"commentsProvider"];
 }
 
 - (BOOL)wantsIntenseDebate
@@ -512,14 +522,30 @@
 	return (KTCommentsProviderIntenseDebate == [[self commentsProvider] unsignedIntValue]);
 }
 
++ (NSSet *)keyPathsForValuesAffectingWantsIntenseDebate
+{
+    return [NSSet setWithObject:@"commentsProvider"];
+}
+
 - (BOOL)wantsJSKit
 {
+    NSLog(@"warning: JSKit/Echo is no longer supported.");
 	return (KTCommentsProviderJSKit == [[self commentsProvider] unsignedIntValue]);
+}
+
++ (NSSet *)keyPathsForValuesAffectingWantsJSKit
+{
+    return [NSSet setWithObject:@"commentsProvider"];
 }
 
 - (BOOL)wantsFacebookComments
 {
     return (KTCommentsProviderFacebookComments == [[self commentsProvider] unsignedIntValue]);
+}
+
++ (NSSet *)keyPathsForValuesAffectingWantsFacebookComments
+{
+    return [NSSet setWithObject:@"commentsProvider"];
 }
 
 - (BOOL)usesExtensiblePropertiesForUndefinedKey:(NSString *)key
