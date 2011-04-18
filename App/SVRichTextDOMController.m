@@ -62,16 +62,13 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 
 - (id)initWithRepresentedObject:(id <SVDOMControllerRepresentedObject>)content;
 {
-    self = [super initWithRepresentedObject:content];
-    
-    
-    // Used to do this in -init, binding to representedObject.attachments, but that creates a retain cycle
+    // Create early, as super calls through to routine that begins observation
     _graphicsController = [[[self attachmentsControllerClass] alloc] init];
     [_graphicsController setSortDescriptors:[SVRichText attachmentSortDescriptors]];
     [_graphicsController setAutomaticallyRearrangesObjects:YES];
     
     
-    return self;
+    return [super initWithRepresentedObject:content];
 }
 
 - (void)dealloc
@@ -830,6 +827,22 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 
 #pragma mark Dependencies
 
+- (void)beginAttachmentsObservation;
+{
+    [_graphicsController bind:NSContentSetBinding
+                     toObject:[self representedObject]
+                  withKeyPath:@"attachments"
+                      options:nil];
+    
+    [_graphicsController addObserver:self forKeyPath:@"arrangedObjects" options:0 context:sBodyTextObservationContext];
+}
+
+- (void)endAttachmentsObservation;
+{
+    [_graphicsController removeObserver:self forKeyPath:@"arrangedObjects"];
+    [_graphicsController unbind:NSContentSetBinding];
+}
+
 - (void)setRepresentedObject:(id)object;
 {
     [super setRepresentedObject:object];
@@ -838,14 +851,11 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     {
         if (object)
         {
-            [_graphicsController bind:NSContentSetBinding
-                             toObject:[self representedObject]
-                          withKeyPath:@"attachments"
-                              options:nil];
+            [self beginAttachmentsObservation];
         }
         else
         {
-            [_graphicsController unbind:NSContentSetBinding];
+            [self endAttachmentsObservation];
         }
     }
 }
@@ -860,12 +870,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
         
         if ([self representedObject])
         {
-            [_graphicsController bind:NSContentSetBinding
-                             toObject:[self representedObject]
-                          withKeyPath:@"attachments"
-                              options:nil];
-            
-            [_graphicsController addObserver:self forKeyPath:@"arrangedObjects" options:0 context:sBodyTextObservationContext];
+            [self beginAttachmentsObservation];
         }
     }
     
@@ -881,8 +886,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
         _trackingString = NO;
     }
     
-    [_graphicsController removeObserver:self forKeyPath:@"arrangedObjects"];
-    [_graphicsController unbind:NSContentSetBinding];
+    [self endAttachmentsObservation];
     
     
     [super stopObservingDependencies];
