@@ -3456,6 +3456,23 @@
 			name = 1.5;
 			sourceTree = "<group>";
 		};
+		2734249A135C50C5000544DB /* KSWriter */ = {
+			isa = PBXGroup;
+			children = (
+				27F2778911F9A54600B7F8FA /* KSForwardingWriter.h */,
+				27F2778A11F9A54600B7F8FA /* KSForwardingWriter.m */,
+				27DDFDBC11FDB2040083C7C1 /* KSStringWriter.h */,
+				27DDFDBD11FDB2040083C7C1 /* KSStringWriter.m */,
+				2761E19F132948E300266D69 /* KSOutputStreamWriter.h */,
+				2761E1A0132948E300266D69 /* KSOutputStreamWriter.m */,
+				27579A2F132BAAE00006C605 /* KSMutableDataWriter.h */,
+				27579A30132BAAE00006C605 /* KSMutableDataWriter.m */,
+				27A6098311282AC0007C301F /* KSWriter.h */,
+				27A6098411282AC0007C301F /* KSWriter.m */,
+			);
+			path = KSWriter;
+			sourceTree = "<group>";
+		};
 		2734297F0D1AC59200F76E71 /* 1.5 */ = {
 			isa = PBXGroup;
 			children = (
@@ -4009,6 +4026,7 @@
 		27CC248211F07277007FB3FE /* KSHTMLWriter */ = {
 			isa = PBXGroup;
 			children = (
+				2734249A135C50C5000544DB /* KSWriter */,
 				27B82F1A11D50F260086CB6E /* KSXMLWriterDOMAdaptor.h */,
 				27B82F1C11D50F260086CB6E /* KSXMLWriterDOMAdaptor.m */,
 				277E72F6113416A20081389F /* KSHTMLWriter.h */,
@@ -4017,20 +4035,10 @@
 				27EF99C211A4205600FC8424 /* KSXMLWriter.m */,
 				270172F111CFBEF3001512F6 /* KSStringXMLEntityEscaping.h */,
 				270172F211CFBEF3001512F6 /* KSStringXMLEntityEscaping.m */,
-				27A6098311282AC0007C301F /* KSWriter.h */,
-				27A6098411282AC0007C301F /* KSWriter.m */,
 				27F2777F11F9A33E00B7F8FA /* KSCSSWriter.h */,
 				27F2778011F9A33E00B7F8FA /* KSCSSWriter.m */,
-				27F2778911F9A54600B7F8FA /* KSForwardingWriter.h */,
-				27F2778A11F9A54600B7F8FA /* KSForwardingWriter.m */,
-				27DDFDBC11FDB2040083C7C1 /* KSStringWriter.h */,
-				27DDFDBD11FDB2040083C7C1 /* KSStringWriter.m */,
 				271884411296A28000139C89 /* KSElementInfo.h */,
 				271884421296A28000139C89 /* KSElementInfo.m */,
-				2761E19F132948E300266D69 /* KSOutputStreamWriter.h */,
-				2761E1A0132948E300266D69 /* KSOutputStreamWriter.m */,
-				27579A2F132BAAE00006C605 /* KSMutableDataWriter.h */,
-				27579A30132BAAE00006C605 /* KSMutableDataWriter.m */,
 			);
 			name = KSHTMLWriter;
 			path = ../KSHTMLWriter;
