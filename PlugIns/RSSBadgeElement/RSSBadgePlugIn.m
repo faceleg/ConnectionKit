@@ -154,16 +154,14 @@
     NSString *path = [self feedIconResourcePath];
 	if (path && ![path isEqualToString:@""]) 
     {
-        feedIconURL = [NSURL fileURLWithPath:path];
-        [context addResourceAtURL:feedIconURL destination:SVDestinationResourcesDirectory options:0];
+         feedIconURL = [context addResourceAtURL:[NSURL fileURLWithPath:path] destination:SVDestinationResourcesDirectory options:0];
     }
     
     NSURL *cssURL = nil;
     path = [[NSBundle bundleForClass:[self class]] pathForResource:@"rssbadge" ofType:@"css"];
     if (path && ![path isEqualToString:@""]) 
     {
-        cssURL = [NSURL fileURLWithPath:path];
-        [context addResourceAtURL:cssURL destination:SVDestinationMainCSS options:0];
+        cssURL = [context addResourceAtURL:[NSURL fileURLWithPath:path] destination:SVDestinationMainCSS options:0];
     } 
 
     // write HTML
@@ -191,7 +189,7 @@
                 {
                     NSDictionary *imgAttrs = [NSDictionary dictionaryWithObjectsAndKeys:
                                               @"largeRSSBadgeIcon", @"class",
-                                              feedIconURL, @"src",
+                                              [context relativeStringFromURL:feedIconURL], @"src",
                                               @"RSS", @"alt",
                                               nil];
                     [context startElement:@"img" attributes:imgAttrs];
@@ -233,7 +231,7 @@
                     
                     NSDictionary *imgAttrs = [NSDictionary dictionaryWithObjectsAndKeys:
                                               imgClass, @"class",
-                                              feedIconURL, @"src",
+                                              [context relativeStringFromURL:feedIconURL], @"src",
                                               @"RSS", @"alt",
                                               nil];
                     [context startElement:@"img" attributes:imgAttrs];
