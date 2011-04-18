@@ -297,27 +297,28 @@
     
     
     WEKWebEditorView *webEditor = [self webEditor];
-    if ([webEditor shouldChangeText:self])
+
+    // Move graphic back to be top-level. Finding the right element to operate on can be a little tricky. Normally it's the controller's own node, but in the case of callouts, want to operate on the callout, not element. #83445
+    WEKWebEditorItem *controller = [webEditor selectedItem];
+    while ([controller parentWebEditorItem] != self)
     {
-        // Move graphic back to be top-level. Finding the right element to operate on can be a little tricky. Normally it's the controller's own node, but in the case of callouts, want to operate on the callout, not element. #83445
-        WEKWebEditorItem *controller = [webEditor selectedItem];
-        while ([controller parentWebEditorItem] != self)
-        {
-            controller = [controller parentWebEditorItem];
-        }
-        
-        DOMElement *element = [controller HTMLElement];
-        DOMNode *parent = [element parentNode];
-        
-        while (parent != [self textHTMLElement])
-        {
-            [[parent parentNode] insertBefore:element refChild:parent];
-            parent = [element parentNode];
-        }
-        
-        // Push the change to the model ready for the update to pick it up
-        [webEditor didChangeText];
+        controller = [controller parentWebEditorItem];
     }
+    
+    DOMElement *element = [controller HTMLElement];
+    DOMNode *parent = [element parentNode];
+    
+    while (parent != [self textHTMLElement])
+    {
+        // Ask permission first. Doing once per loop means no permission is asked if no change is made
+        if (![webEditor shouldChangeText:self]) break;
+        
+        [[parent parentNode] insertBefore:element refChild:parent];
+        parent = [element parentNode];
+    }
+    
+    // Push the change to the model ready for the update to pick it up
+    [webEditor didChangeText];
 }
 
 - (IBAction)placeInline:(id)sender;    // tells all selected graphics to become placed as block
