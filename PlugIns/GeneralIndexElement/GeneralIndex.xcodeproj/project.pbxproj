@@ -16,7 +16,6 @@
 		3C970A960D5CFD0F0070D4A1 /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C970A950D5CFD0F0070D4A1 /* License.rtf */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
-		CE2802CA12432C4100B00F3D /* toolbar_general_index.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE2802C912432C4100B00F3D /* toolbar_general_index.tiff */; };
 		CE29097A12B6D9AE00815440 /* articles_media.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE29097412B6D9AE00815440 /* articles_media.tiff */; };
 		CE29097B12B6D9AE00815440 /* articles_thumbs.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE29097512B6D9AE00815440 /* articles_thumbs.tiff */; };
 		CE29097C12B6D9AE00815440 /* articles.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE29097612B6D9AE00815440 /* articles.tiff */; };
@@ -60,7 +59,6 @@
 		3C970A950D5CFD0F0070D4A1 /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = License.rtf; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* GeneralIndex.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GeneralIndex.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CE2802C912432C4100B00F3D /* toolbar_general_index.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_general_index.tiff; sourceTree = "<group>"; };
 		CE29097412B6D9AE00815440 /* articles_media.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = articles_media.tiff; path = icons/articles_media.tiff; sourceTree = "<group>"; };
 		CE29097512B6D9AE00815440 /* articles_thumbs.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = articles_thumbs.tiff; path = icons/articles_thumbs.tiff; sourceTree = "<group>"; };
 		CE29097612B6D9AE00815440 /* articles.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = articles.tiff; path = icons/articles.tiff; sourceTree = "<group>"; };
@@ -115,7 +113,6 @@
 				3C3001E11312FC280022E49A /* BUNDLED */,
 				CEDA1DCA130207E200DC6FE7 /* Inspector.strings */,
 				3C5D6F3B12A42EB500AAAB18 /* Inspector.xib */,
-				CE2802C912432C4100B00F3D /* toolbar_general_index.tiff */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				3C9701210D5CFA8E0070D4A1 /* Template.html */,
 				3C9701170D5CFA2A0070D4A1 /* Localizable.strings */,
@@ -249,7 +246,6 @@
 				3C9701190D5CFA2A0070D4A1 /* Localizable.strings in Resources */,
 				3C9701230D5CFA8E0070D4A1 /* Template.html in Resources */,
 				3C970A960D5CFD0F0070D4A1 /* License.rtf in Resources */,
-				CE2802CA12432C4100B00F3D /* toolbar_general_index.tiff in Resources */,
 				3C5D6F3D12A42EB500AAAB18 /* Inspector.xib in Resources */,
 				CE29097A12B6D9AE00815440 /* articles_media.tiff in Resources */,
 				CE29097B12B6D9AE00815440 /* articles_thumbs.tiff in Resources */,
