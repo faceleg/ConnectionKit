@@ -1075,7 +1075,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     
     // Figure URL from upload path
     NSURL *siteURL = [[[[self page] site] hostProperties] siteURL];
-    if (!siteURL) return nil;
+    //if (!siteURL) return nil;
     
     return [NSURL ks_URLWithPath:uploadPath relativeToURL:siteURL isDirectory:NO];
 }
