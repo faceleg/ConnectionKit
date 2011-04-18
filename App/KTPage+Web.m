@@ -683,7 +683,7 @@
 }
 
 
-// Create the site menu forest.  Needed in both writeHierMenuLoader and writeSiteMenu.  Maybe cache value later?
+// Create the site menu forest.  Needed in both writeHierMenuScript and writeHierMenuCSS and writeSiteMenu.  Maybe cache value later?
 
 - (NSArray *)createSiteMenuForestIsHierarchical:(BOOL *)outHierarchical;
 {
@@ -766,8 +766,7 @@
 	return forest;
 }
 
-
-- (void)writeHierMenuLoader
+- (void)writeHierMenuCSS;		// this has to go above our design's CSS
 {
 	HierMenuType hierMenuType = [[[self master] design] hierMenuType];
 	if (HIER_MENU_NONE != hierMenuType && self.site.pagesInSiteMenu.count)
@@ -789,7 +788,26 @@
 			srcPath = [context relativeStringFromURL:src];
 			
 			[context writeLinkToStylesheet:srcPath title:nil media:nil];	// nil title; we don't want a title! https://bugs.webkit.org/show_bug.cgi?id=43870
+		}
+	}
+}
+
+- (void)writeHierMenuScript;
+{
+	HierMenuType hierMenuType = [[[self master] design] hierMenuType];
+	if (HIER_MENU_NONE != hierMenuType && self.site.pagesInSiteMenu.count)
+	{
+		// Now check if we *really* have a hierarchy.  No point in writing out loader if site menu is flat.
+		BOOL isHierarchical = NO;
+		(void) [self createSiteMenuForestIsHierarchical:&isHierarchical];
+		if (isHierarchical)
+		{
+			SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
 			
+			NSString *path = nil;
+			NSURL *src = nil;
+			NSString *srcPath = nil;
+						
 			path = [[NSBundle mainBundle] overridingPathForResource:@"ddsmoothmenu" ofType:@"js"];
 			src = [context addResourceAtURL:[NSURL fileURLWithPath:path] destination:SVDestinationResourcesDirectory options:0];
 			srcPath = [context relativeStringFromURL:src];

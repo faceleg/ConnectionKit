@@ -37,6 +37,7 @@
 [[endif]]
 		<link rel="canonical" href="[[=&parser.currentPage.URL]]" />
 [[if parser.includeStyling]]
+        [[=writeHierMenuCSS]]
         [[=writeStylesheetLinks]]
 [[endif]]
         [[=parser.outputWriter.writeExtraHeaders]]
@@ -46,7 +47,7 @@
         Licensing for this website's design:     <[[=-master.designDirectoryURL]]License.rtf>
         -->
 		[[=parser.HTMLContext.writeJQueryImport]]
-        [[=writeHierMenuLoader]]
+        [[=writeHierMenuScript]]
 [[if javascriptURLPath]]
 		<script src="[[=&javascriptURLPath]]" type="text/javascript" charset="UTF-8"></script>
 [[endif]]
