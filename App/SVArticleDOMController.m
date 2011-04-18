@@ -44,6 +44,13 @@
 #pragma mark -
 
 
+@interface SVArticleAttachmentsController : NSArrayController
+@end
+
+
+#pragma mark -
+
+
 @implementation SVArticleDOMController
 
 - (id)init;
@@ -656,6 +663,8 @@
     [htmlString release];
     [context release];
 }
+
+- (Class)attachmentsControllerClass; { return [SVArticleAttachmentsController class]; }
 
 #pragma mark Editing
 
@@ -1344,4 +1353,18 @@
 }
 
 @end
+
+
+#pragma mark -
+
+
+@implementation SVArticleAttachmentsController
+
+- (NSArray *)automaticRearrangementKeyPaths;
+{
+    return [[super automaticRearrangementKeyPaths] arrayByAddingObject:@"placement"];
+}
+
+@end
+
 

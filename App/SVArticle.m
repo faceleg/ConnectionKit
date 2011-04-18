@@ -154,13 +154,6 @@
     return archiveIndex;
 }
 
-- (void)write:(SVHTMLContext *)context graphic:(id <SVGraphic>)graphic;
-{
-    [context addDependencyForKeyPath:@"textAttachment.placement" ofObject:graphic];
-    
-    [super write:context graphic:graphic];
-}
-
 - (void)writeEarlyCallouts;
 {
     [self writeEarlyCallouts:[[SVHTMLTemplateParser currentTemplateParser] HTMLContext]];
