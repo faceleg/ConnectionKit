@@ -549,7 +549,7 @@
     
     
     NSObject *object = [newChildController representedObject];
-    if (!object)
+    if (!object || [object isKindOfClass:[SVCallout class]])
     {
         // Probably a callout, search for a matching one
         NSArray *objects = [newChildController valueForKeyPath:@"childWebEditorItems.representedObject"];
