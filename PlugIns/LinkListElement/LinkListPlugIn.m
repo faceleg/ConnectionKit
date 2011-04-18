@@ -38,6 +38,9 @@
 #import <SVWebLocation.h>
 #import <SVURLFormatter.h>
 
+@interface NSString (KareliaPrivate)
+- (NSString *)stringByConvertingHTMLToPlainText;
+@end
 
 @implementation LinkListPlugIn
 
@@ -196,14 +199,13 @@
             if ( oldTitle )
             {
                 NSString *title = [[oldTitle copy] autorelease];
+                title = [title stringByConvertingHTMLToPlainText];
                 [newLink setObject:title forKey:@"title"];
             }
             
             if ( oldURLString )
             {
-                //FIXME: I have to encode spaces here because doesn't actually use the string?
-                NSString *encodedString = [oldURLString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-                NSURL *url = [SVURLFormatter URLFromString:encodedString];
+                NSURL *url = [SVURLFormatter URLFromString:oldURLString];
                 [newLink setObject:url forKey:@"url"];
             }
             
