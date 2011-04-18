@@ -152,6 +152,7 @@ NSString *PCFilenameKey = @"filename";
                 
                 [sampleImage unlockFocus];
                 [themeImage setObject:sampleImage forKey:PCSampleImageKey];
+                [[self themeImages] setObject:themeImage forKey:filename];
             }
         }
     }
@@ -163,12 +164,24 @@ NSString *PCFilenameKey = @"filename";
 + (NSNumber *)widthOfSampleImageForFilename:(NSString *)filename
 {
     NSMutableDictionary *themeImage = [[self themeImages] objectForKey:filename];
+    if ( !themeImage )
+    {
+        (void)[self sampleImageForFilename:filename];
+        themeImage = [[self themeImages] objectForKey:filename];
+        NSAssert(themeImage, @"no themeImage");
+    }
     return [themeImage objectForKey:PCWidthKey];
 }
 
 + (NSNumber *)heightOfSampleImageForFilename:(NSString *)filename
 {
     NSMutableDictionary *themeImage = [[self themeImages] objectForKey:filename];
+    if ( !themeImage )
+    {
+        (void)[self sampleImageForFilename:filename];
+        themeImage = [[self themeImages] objectForKey:filename];
+        NSAssert(themeImage, @"no themeImage");
+    }
     return [themeImage objectForKey:PCHeightKey];
 }
 
