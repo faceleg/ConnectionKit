@@ -32,11 +32,14 @@
 
 - (void)configureComments:(NSWindowController *)sender;
 {
-    [NSApp beginSheet:[self window] 
-       modalForWindow:[sender window] 
-        modalDelegate:self 
-       didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) 
-          contextInfo:NULL];
+    if ( ![[self window] isVisible] )
+    {
+        [NSApp beginSheet:[self window] 
+           modalForWindow:[sender window] 
+            modalDelegate:self 
+           didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) 
+              contextInfo:NULL];
+    }
 }
 
 - (void)sheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
@@ -45,13 +48,13 @@
     {
         [sheet endEditingFor:nil];
     }
-    [sheet orderOut:nil];
     [self.objectController setContent:nil];
 }
 
 - (IBAction)closeSheet:(id)sender
 {
     [NSApp endSheet:[self window]];
+    [[self window] orderOut:nil];
 }
 
 - (IBAction)windowHelp:(id)sender
