@@ -527,8 +527,12 @@ typedef enum {  // this copied from WebPreferences+Private.h
                 /*  Generally, repost equivalent events (unless a link or object) so they go to their correct target.
                  */
                 
-                // Don't send event to links
-                if ([elementInfo objectForKey:WebElementLinkURLKey]) return;
+                // Don't send event to live links
+                if ([elementInfo objectForKey:WebElementLinkURLKey])
+                {
+                    NSNumber *live = [elementInfo objectForKey:@"WebElementLinkIsLive"];
+                    if (!live || [live boolValue]) return;
+                }
                 
                 // Don't send event to buttons
                 DOMNode *aNode = element;
