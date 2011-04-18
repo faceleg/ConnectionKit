@@ -39,13 +39,13 @@
 [[if parser.includeStyling]]
         [[=writeHierMenuCSS]]
         [[=writeStylesheetLinks]]
-[[endif]]
-        [[=parser.outputWriter.writeExtraHeaders]]
-[[comment ESCAPE THE URL SO THAT ANY DOUBLE-DASH FROM AN IDN DOESNT PRODUCE ILLEGAL MARKUP]]
         <!--
         Photo credits for this website's design: <[[=-master.designDirectoryURL]]Credits.rtf>
         Licensing for this website's design:     <[[=-master.designDirectoryURL]]License.rtf>
         -->
+[[endif]]
+        [[=parser.outputWriter.writeExtraHeaders]]
+[[comment ESCAPE THE URL SO THAT ANY DOUBLE-DASH FROM AN IDN DOESNT PRODUCE ILLEGAL MARKUP]]
 		[[=parser.HTMLContext.writeJQueryImport]]
         [[=writeHierMenuScript]]
 [[if javascriptURLPath]]
