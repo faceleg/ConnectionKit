@@ -360,7 +360,7 @@
 		
 		[context writeElement:@"span"
 			  withTitleOfPage:iteratedPage
-				  asPlainText:NO
+				  asPlainText:(0 == (kArticleMask & self.indexLayoutType))		// plain text 
 				   attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
 		
 		if ( self.hyperlinkTitles ) { [context endElement]; } // </a> 
