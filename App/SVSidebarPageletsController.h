@@ -64,3 +64,15 @@
 - (SVGraphic *)addObjectFromSerializedPagelet:(id)serializedPagelet;
 
 @end
+
+
+#pragma mark -
+
+
+// Tailored to supply the tableview in Inspector
+@interface SVInspectorSidebarPageletsController : SVSidebarPageletsController
+
+// Synchronous unlike default implementation. #116944
+- (void)fetch:(id)sender;
+
+@end

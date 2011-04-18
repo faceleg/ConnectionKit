@@ -133,32 +133,6 @@
 
 @synthesize page = _page;
 
-- (void)setManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
-{
-    [super setManagedObjectContext:managedObjectContext];
-    
-    //  Setting automaticallyPreparesContent to YES in IB doesn't handle there being no MOC set properly. So we hold off doing the initial fetch until there is a MOC. After that everything seems to work normally.
-    if (managedObjectContext && ![self automaticallyPreparesContent])
-    {
-        [self setAutomaticallyPreparesContent:YES];
-        [self fetch:self];
-    }
-}
-
-- (NSFetchRequest *)defaultFetchRequest
-{
-    // If the main window changes twice in a single event loop, ending on non-doc window, then Inspector's sidebar pagelets controller tries to fetch with no MOC. Think we can work around this. #116512
-    
-    if ([self managedObjectContext])
-    {
-        return [super defaultFetchRequest];
-    }
-    else
-    {
-        return nil;
-    }
-}
-
 #pragma mark Adding and Removing Objects
 
 - (void)insertObject:(id)object atArrangedObjectIndex:(NSUInteger)index;
@@ -491,6 +465,36 @@ toSidebarOfDescendantsOfPageIfApplicable:(KTPage *)page;
     NSArray *result = [super automaticRearrangementKeyPaths];
     result = (result ? [result arrayByAddingObject:@"sortKey"] : [NSArray arrayWithObject:@"sortKey"]);
     return result;
+}
+
+@end
+
+
+#pragma mark -
+
+
+@implementation SVInspectorSidebarPageletsController
+
+- (void)setManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
+{
+    [super setManagedObjectContext:managedObjectContext];
+    
+    //  Setting automaticallyPreparesContent to YES in IB doesn't handle there being no MOC set properly. So we hold off doing the initial fetch until there is a MOC. After that everything seems to work normally.
+    if (managedObjectContext && ![self automaticallyPreparesContent])
+    {
+        [self setAutomaticallyPreparesContent:YES];
+        [self fetch:self];
+    }
+}
+
+#pragma mark 
+
+- (void)fetch:(id)sender;
+{
+    if ([self commitEditing])
+    {
+        [self fetchWithRequest:[self defaultFetchRequest] merge:NO error:NULL];
+    }
 }
 
 @end
