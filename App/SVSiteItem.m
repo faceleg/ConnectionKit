@@ -375,6 +375,10 @@
 - (void)setSite:(KTSite *)site recursively:(BOOL)recursive;
 {
     // KTPage adds to this behaviour by recursively calling its descendants too, if requested
+    
+    // Bail if nothing to do
+    if (recursive && [self site] == site) return;
+    
     [self setSite:site];
 }
 
