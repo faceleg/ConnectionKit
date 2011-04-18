@@ -313,7 +313,11 @@ NSString *PCFilenameKey = @"filename";
                                 @"    }\n"
                                 @"    showCount(svxPageCount);\n"
                                 @"</script>\n",
-                                [[self resourcesURL:context] absoluteString], [self themeTitle], [self themeWidth], [self themeHeight], divID];
+                                [context relativeStringFromURL:[self resourcesURL:context]],
+                                [self themeTitle], 
+                                [self themeWidth], 
+                                [self themeHeight], 
+                                divID];
             [context addMarkupToEndOfBody:script];
         }
             break;
