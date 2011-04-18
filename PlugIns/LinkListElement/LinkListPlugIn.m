@@ -36,6 +36,7 @@
 
 #import "LinkListPlugIn.h"
 #import <SVWebLocation.h>
+#import <SVURLFormatter.h>
 
 
 @implementation LinkListPlugIn
@@ -200,8 +201,9 @@
             
             if ( oldURLString )
             {
+                //FIXME: I have to encode spaces here because doesn't actually use the string?
                 NSString *encodedString = [oldURLString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-                NSURL *url = [NSURL URLWithString:encodedString];
+                NSURL *url = [SVURLFormatter URLFromString:encodedString];
                 [newLink setObject:url forKey:@"url"];
             }
             
