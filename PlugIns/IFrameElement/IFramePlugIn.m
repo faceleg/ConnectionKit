@@ -37,6 +37,11 @@
 #import "IFramePlugIn.h"
 
 
+@interface NSString (KareliaPrivate)
+- (NSString *)stringByConvertingHTMLToPlainText;
+@end
+
+
 @implementation IFramePlugIn
 
 
@@ -79,11 +84,13 @@
     
     if ( [properties objectForKey:@"linkURL"] )
     {
-        self.linkURL = [NSURL URLWithString:[properties objectForKey:@"linkURL"]];
+        self.linkURL = [SVURLFormatter URLFromString:[properties objectForKey:@"linkURL"]];
     }
     if ( [properties objectForKey:@"titleHTML"] )
     {
-        self.title = [properties objectForKey:@"titleHTML"]; //FIXME: we need a plug-in accessible version of stringByConvertingHTMLToPlainText
+        NSString *oldTitle = [[[properties objectForKey:@"titleHTML"] copy] autorelease];
+        oldTitle = [oldTitle stringByConvertingHTMLToPlainText];
+        self.title = oldTitle;
     }
 }
 
