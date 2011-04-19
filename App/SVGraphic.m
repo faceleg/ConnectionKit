@@ -33,6 +33,13 @@
 NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 
+@interface SVExplicitlySizedTestHTMLContext : SVWebEditorHTMLContext
+@end
+
+
+#pragma mark -
+
+
 @implementation SVGraphic
 
 #pragma mark Initialization
@@ -325,20 +332,18 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 - (NSNumber *)elementWidthPadding; { return nil; }
 - (NSNumber *)elementHeightPadding; { return nil; }
 
-- (BOOL)isExplicitlySized; { return [self isExplicitlySized:nil]; }
-
 - (BOOL)isExplicitlySized:(SVHTMLContext *)existingContext; // context may be nil
 {
     // See if our HTML includes size-binding anywhere
     SVWebEditorHTMLContext *context;
     if (existingContext)
     {
-        context = [[SVWebEditorHTMLContext alloc] initWithOutputWriter:nil
-                                                    inheritFromContext:existingContext];
+        context = [[SVExplicitlySizedTestHTMLContext alloc] initWithOutputWriter:nil
+                                                              inheritFromContext:existingContext];
     }
     else
     {
-        context = [[SVWebEditorHTMLContext alloc] initWithOutputWriter:nil];
+        context = [[SVExplicitlySizedTestHTMLContext alloc] initWithOutputWriter:nil];
         [context setLiveDataFeeds:[[NSUserDefaults standardUserDefaults] boolForKey:kSVLiveDataFeedsKey]];
     }
     [[context rootDOMController] stopObservingDependencies];
@@ -360,6 +365,8 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     [context release];
     return result;
 }
+
+- (BOOL)isExplicitlySized; { return [self isExplicitlySized:nil]; }
 
 - (NSNumber *)contentWidth;
 {
@@ -805,3 +812,17 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 }
 
 @end
+
+
+#pragma mark -
+
+
+@implementation SVExplicitlySizedTestHTMLContext
+
+- (void)writeGraphic:(id <SVGraphic,SVDOMControllerRepresentedObject>)graphic;
+{
+    // Ignore since other graphics are irrelevant to determining if explicitly sized. Indeed, they can even mistakenly push the result to YES. #117012
+}
+
+@end
+
