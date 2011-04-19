@@ -65,17 +65,23 @@
 #import "SVMediaRecord.h"
 #import "KSSimpleURLConnection.h"
 #import "SVVideoInspector.h"
-#import <QTKit/QTKit.h>
-#include <zlib.h>
+
+#import "NSImage+KTExtensions.h"
+
 #import "NSImage+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSBundle+Karelia.h"
 #import "NSError+Karelia.h"
 #import "QTMovie+Karelia.h"
-#import <QuickLook/QuickLook.h>
-#import "KSThreadProxy.h"
-#import "NSImage+KTExtensions.h"
 #import "NSColor+Karelia.h"
+
+#import "KSThreadProxy.h"
+#import "KSURLUtilities.h"
+
+#import <QuickLook/QuickLook.h>
+#import <QTKit/QTKit.h>
+#include <zlib.h>
+
 
 @interface QTMovie (ApplePrivate)
 
@@ -211,12 +217,8 @@
 	if (videoURL)		// just in case we got cleared out from switching to an audio
 	{
 		// Rebuild URL by substituting in path. Create a FAKE URL for a synthesized thumbnail.
-		NSString *newPath = [[[videoURL path] stringByDeletingPathExtension] stringByAppendingString:@".jpg"];
-		
-		NSURL *fakeURL = [[[NSURL alloc] initWithScheme:[videoURL scheme]
-												   host:[videoURL host]
-												   path:newPath]
-						  autorelease];
+		NSString *filename = [[[videoURL ks_lastPathComponent] stringByDeletingPathExtension] stringByAppendingString:@".jpg"];
+		NSURL *fakeURL = [[videoURL ks_URLByDeletingLastPathComponent] ks_URLByAppendingPathComponent:filename isDirectory:NO];
 		
 		if (jpegData)
 		{
