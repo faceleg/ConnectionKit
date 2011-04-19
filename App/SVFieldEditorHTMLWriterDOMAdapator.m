@@ -562,7 +562,7 @@
     
     // Allow style on any element except <BR>.
     // Used to allow class. #94455
-    if (elementName && ![elementName isEqualToString:@"br"])
+    if ([elementName isEqualToString:@"br"])
     {
         if ([attributeName isEqualToString:@"style"]) result = nil;
     }
