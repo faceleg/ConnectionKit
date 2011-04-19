@@ -142,6 +142,16 @@
 {
 	BOOL truncated = NO;
     id<SVPlugInContext> context = [self currentContext];
+	
+    id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
+	if (iteratedPage == [context page])
+	{
+		[context startElement:@"span" className:@"svx-invisibadge svx-warning"];
+		[context writeCharacters:NSLocalizedString(@"A page cannot contain an index of itself", @"Warning")];
+		[context endElement];
+		return;
+	}
+	
 	NSString *className = [context currentIterationCSSClassNameIncludingArticle:0 != (self.indexLayoutType & kArticleMask)];
 	
 	if (self.indexLayoutType & kTableMask)
