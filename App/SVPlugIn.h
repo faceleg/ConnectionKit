@@ -111,7 +111,7 @@ typedef enum {
 #pragma mark Metrics
 
 // The values reported in the Metrics Inspector. A value of nil appears as "auto" in the Inspector.
-// It is important to remember that this is the size of your plug-in's *content* as far as users are concerned. Thus, Sandvox will generally NOT generate HTML that enforces these sizes; that is your responsibility. (The exception being that when placed inline, if your plug-in returns NO from +isExplicitlySized, a resizeable containing <DIV> will be generated to match -width)
+// It is important to remember that this is the size of your plug-in's *content* as far as users are concerned. Thus, Sandvox will generally NOT generate HTML that enforces these sizes; that is your responsibility. (The exception being that when placed inline, if your plug-in generates no resizable elements of its own, Sandvox will make one to enclose the entire plug-in)
 // Both are KVO-compliant
 @property(nonatomic, readonly) NSNumber *width;
 @property(nonatomic, readonly) NSNumber *height;
