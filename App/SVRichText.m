@@ -292,7 +292,7 @@
         NSString *className = [(SVGraphic *)graphic inlineGraphicClassName];
         if (className) [context pushClassName:className];
         
-        if (![graphic isExplicitlySized])
+        if (![graphic isExplicitlySized:context])
         {
             NSNumber *width = [graphic containerWidth];
             if (width)

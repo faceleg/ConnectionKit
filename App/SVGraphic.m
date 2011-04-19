@@ -325,14 +325,27 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 - (NSNumber *)elementWidthPadding; { return nil; }
 - (NSNumber *)elementHeightPadding; { return nil; }
 
-- (BOOL)isExplicitlySized;
+- (BOOL)isExplicitlySized; { return [self isExplicitlySized:nil]; }
+
+- (BOOL)isExplicitlySized:(SVHTMLContext *)existingContext; // context may be nil
 {
     // See if our HTML includes size-binding anywhere
-    SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] init];
-    [context setLiveDataFeeds:[[NSUserDefaults standardUserDefaults] boolForKey:kSVLiveDataFeedsKey]];
+    SVWebEditorHTMLContext *context;
+    if (existingContext)
+    {
+        context = [[SVWebEditorHTMLContext alloc] initWithOutputWriter:nil
+                                                    inheritFromContext:existingContext];
+    }
+    else
+    {
+        context = [[SVWebEditorHTMLContext alloc] initWithOutputWriter:nil];
+        [context setLiveDataFeeds:[[NSUserDefaults standardUserDefaults] boolForKey:kSVLiveDataFeedsKey]];
+    }
     [[context rootDOMController] stopObservingDependencies];
     
+    
     [self writeBody:context];
+    
     
     BOOL result = NO;
     for (WEKWebEditorItem *anItem in [[context rootDOMController] enumerator])

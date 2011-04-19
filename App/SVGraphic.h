@@ -56,7 +56,7 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 @property(nonatomic, copy) NSNumber *width;
 @property(nonatomic, copy) NSNumber *contentWidth;  // what appears in the Inspector
 - (NSNumber *)containerWidth;
-- (BOOL)isExplicitlySized;
+- (BOOL)isExplicitlySized:(SVHTMLContext *)context; // context may be nil
 
 - (id <SVGraphic>)captionGraphic;
 
@@ -150,6 +150,8 @@ extern NSString *kSVGraphicPboardType;
 
 - (NSNumber *)elementWidthPadding;
 - (NSNumber *)elementHeightPadding;
+
+- (BOOL)isExplicitlySized;  // convenience for -isExplicitlySized:
 
 
 #pragma mark Text Attachment
