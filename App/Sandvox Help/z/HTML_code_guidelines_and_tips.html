@@ -3,7 +3,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
 <head>
-    <meta name="keywords" content="raw, html, xhtml, code, coding, codes, markup, mark, up, rule, rules, tag, tags, guideline, guidelines, syntax, page, pages, object, objects, pro, sandvox, head, body, external, editor, fill, entire, validate, validation, validating, type, transitional, transition, strict, file, page, prelude, preludes, custom, head, &lt;head&gt;, element, elements" />
+    <meta name="keywords" content="raw, html, xhtml, code, coding, codes, markup, mark, up, rule, rules, tag, tags, guideline, guidelines, syntax, page, pages, object, objects, sandvox, head, body, external, editor, fill, entire, validate, validation, validating, type, transitional, transition, strict, file, page, prelude, preludes, custom, head, &lt;head&gt;, element, elements" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="../main.css" rel="stylesheet" type="text/css" media="all" />
     <link href="../print.css" rel="stylesheet" type="text/css" media="print" />
@@ -28,20 +28,18 @@
         <p>Sandvox has many ways of allowing you to use your own custom HTML code:</p>
 
         <ul>
-            <li><a href="Raw_HTML.html" title="Raw HTML">Raw HTML</a> pages and objects</li>
+            <li><a href="Raw_HTML.html" title="Raw HTML">Raw HTML</a> object</li>
 
             <li><a href="Code_Injection.html" title="Code Injection">Code Injection</a></li>
 
-            <li>The <a href="Clipboard_Menu_Commands.html#Paste_HTML_into_Text" title="Clipboard Menu Commands">Paste HTML into Text</a> menu command</li>
-
-            <li>The <a href="Edit_Raw_HTML.html" title="Edit Raw HTML">Edit Raw HTML</a> menu command.</li>
+            <li>Raw HTML/Text page</li>
         </ul>
 
         <p><br />
         Below are some tips and guidelines to help you get the most out of these features and avoid some possible pitfalls.</p>
 
         <div class="warning">
-            <p>The ability to insert custom HTML code is an advanced, pro-level ability of Sandvox. Because of the extent of HTML and the many ways in which HTML can be incorporated into a Sandvox site, Karelia does not attempt to provide its own HTML tutorial, nor can it provide specific troubleshooting advice related to an individual user's HTML code.</p>
+            <p>The ability to insert custom HTML code is an advanced ability of Sandvox. Because of the extent of HTML and the many ways in which HTML can be incorporated into a Sandvox site, Karelia does not attempt to provide its own HTML tutorial, nor can it provide specific troubleshooting advice related to an individual user's HTML code.</p>
 
             <p>If you would like to explore the possibilities that using HTML in your Sandvox site presents and need some assistance, we encourage you to visit the following third party sites that specifically address HTML issues:</p>
 
@@ -62,13 +60,9 @@
 
         <h3><span class="mw-headline">HTML Type</span></h3>
 
-        <p>Please try to use valid XHTML, closing all tags and using lowercase tag names, etc.</p>
+        <p>Please try to use valid HTML5, closing all tags and using lowercase tag names, etc.</p><a name="Image_Tags" id="Image_Tags"></a>
 
-        <p>If not, you can set the <a href="Raw_HTML.html#HTML_type" title="Raw HTML">HTML type</a> of a <a href="Raw_HTML.html" title="Raw HTML">Raw HTML</a> page or object using the <a href="Inspector.html" title="Selection Inspector">Selection Inspector</a>. Many sources of HTML code on the web use old-style HTML, so be sure to set the type to match your HTML code. Otherwise, the <a href="Page.html" title="Page">page</a> may fail to <a href="HTML_Validation.html" title="HTML Validation">validate</a>.</p>
-
-        <p>Note that you can only set the HTML type of <a href="Raw_HTML.html" title="Raw HTML">Raw HTML</a> pages and objects. In all other cases of using your own HTML code there is no such setting; you must use valid XHTML code.</p><a name="Things_to_Avoid" id="Things_to_Avoid"></a>
-
-        <h3><span class="mw-headline">Things to Avoid</span></h3>
+        <h3><span class="mw-headline">Image Tags</span></h3>
 
         <p>Avoid using <tt>&lt;img&gt;</tt> tags pointing to the _Media directory, which is used internally by Sandvox.</p><a name="Page_tags" id="Page_tags"></a>
 
@@ -76,7 +70,7 @@
 
         <p>When using custom HTML code within a Sandvox site, it only forms part of a <a href="Page.html" title="Page">page</a>. Therefore you should only use snippets of code. In particular, do <b>not</b> use the <tt>&lt;html&gt;</tt>, <tt>&lt;head&gt;</tt> and <tt>&lt;body&gt;</tt> tags.</p>
 
-        <p>The exception to this is if you are using a <a href="Raw_HTML.html" title="Raw HTML">Raw HTML</a> page with the "Fill Entire Page" box checked. In this case, you really are writing the HTML code for an entire webpage and need to provide all tags, including <tt>&lt;html&gt;</tt>, <tt>&lt;head&gt;</tt> and <tt>&lt;body&gt;</tt>.</p><a name="Heading_tags" id="Heading_tags"></a>
+        <p>The exception to this is if you are using a Raw HTML/Text page. In this case, you really are writing the HTML code for an entire webpage and need to provide all tags, including <tt>&lt;html&gt;</tt>, <tt>&lt;head&gt;</tt> and <tt>&lt;body&gt;</tt>.</p><a name="Heading_tags" id="Heading_tags"></a>
 
         <h3><span class="mw-headline">Heading tags</span></h3>
 
@@ -84,9 +78,7 @@
 
         <h3><span class="mw-headline">Javascript</span></h3>
 
-        <p><a href="Javascript.html" title="Javascript">Javascript</a> can be used anywhere HTML code can be inserted. Note that if you have the "<a href="Live_Data_Feeds.html" title="Live Data Feeds">show live data feeds</a>" <a href="Preferences.html" title="Preferences">preference</a> turned off, scripts will not load while editing a site. Please see the "<a href="Javascript.html" title="Javascript">Javascript</a>" article for more information.</p>
-
-        <p>If your custom HTML contains <b>only</b> a script, you may not see the results of that script until you have loaded or reloaded the page. This is a limitation in Sandvox for now. You also may have trouble clicking on this block if there is no text to click on. A work-around is to click on a block of editable text "above" this, and then use the "tab" key to select the desired block. Then, choose "Edit Raw HTML..." from the <a href="Sandvox_Menu_Guide.html#Edit" title="Sandvox Menu Guide">Edit menu</a>.</p><a name="What_if_I_can.27t_provide_valid_HTML.3F" id="What_if_I_can.27t_provide_valid_HTML.3F"></a>
+        <p><a href="Javascript.html" title="Javascript">Javascript</a> can be used anywhere HTML code can be inserted. Note that if you have the "<a href="Load_Data_from_the_Internet.html" title="Load Data from the Internet">Load Data from the Internet</a>" <a href="Preferences.html" title="Preferences">preference</a> turned off, scripts will not load while editing a site. Please see the "<a href="Javascript.html" title="Javascript">Javascript</a>" article for more information.</p><a name="What_if_I_can.27t_provide_valid_HTML.3F" id="What_if_I_can.27t_provide_valid_HTML.3F"></a>
 
         <h2><span class="mw-headline">What if I can't provide valid HTML?</span></h2>
 
@@ -99,8 +91,6 @@
 
             <ul>
                 <li><a href="Troubleshooting_HTML_code.html" title="Troubleshooting HTML code">Troubleshooting HTML code</a></li>
-
-                <li><a href="Sandvox_Pro.html" title="Sandvox Pro">Sandvox Pro</a></li>
 
                 <li><a href="Code_Injection.html" title="Code Injection">Code Injection</a></li>
 

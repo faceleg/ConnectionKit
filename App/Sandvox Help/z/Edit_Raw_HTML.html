@@ -26,7 +26,7 @@
         <h1 class="firstHeading">Edit Raw HTML</h1>
 
         <div class="warning">
-            <p>The ability to use custom HTML code is an advanced, pro-level ability of Sandvox. Because of the extent of HTML and the many ways in which HTML can be incorporated into a Sandvox site, Karelia does not attempt to provide its own HTML tutorial, nor can it provide specific troubleshooting advice related to an individual user's HTML code.</p>
+            <p>The ability to use custom HTML code is an advanced ability of Sandvox. Because of the extent of HTML and the many ways in which HTML can be incorporated into a Sandvox site, Karelia does not attempt to provide its own HTML tutorial, nor can it provide specific troubleshooting advice related to an individual user's HTML code.</p>
 
             <p>If you would like to explore the possibilities that using HTML in your Sandvox site presents and need some assistance, we encourage you to visit the following third party sites that specifically address HTML issues:</p>
 
@@ -41,35 +41,41 @@
             </ul>
         </div>
 
-        <p>With Sandvox you can edit the raw HTML of a HTML page or object.</p>
+        <p>With Sandvox you can edit the raw HTML of a HTML page or a HTML object in a page.</p>
+
+        <ul>
+            <li>A raw HTML object is an object that Sandvox manages (thus, you will not have any tags like &lt;html&gt;,&lt;head&gt;, or &lt;body&gt;)<br /></li>
+
+            <li>A raw HTML page is a page where you are editing the entire page, with no Sandvox-generated content at all.</li>
+        </ul>
 
         <div class="instructions">
-            <p><b>To edit the raw HTML:</b></p>
+            <p><b>To edit the raw HTML of a raw HTML page:</b></p>
 
             <ol>
-                <li>Add from the "New" menu a Raw HTML page or from the "Objects" menu a raw HTML object.</li>
+                <li>Select the raw HTML page in the site outline to select it.</li>
 
-                <li>Click the text to begin editing it.</li>
+                <li>From the <a href="Sandvox_Menu_Guide.html#Edit" title="Sandvox Menu Guide">Edit menu</a> select "Edit Raw HTML…" or click the "Edit Text…" button in the page details area.</li>
 
-                <li>From the <a href="Sandvox_Menu_Guide.html#Edit" title="Sandvox Menu Guide">Edit menu</a> select "Edit Raw HTML…"</li>
-
-                <li>Edit the HTML in the window that appears. Changes are updated live in the <a href="Web_View.html" title="Web View">Web View</a>.</li>
+                <li>Edit the HTML in the window that appears. Changes are updated in the <a href="Web_View.html" title="Web View">Web View</a> when you click 'Update Preview' in the top right corner.</li>
             </ol>
-        </div><a name="Restrictions" id="Restrictions"></a>
+        </div>
 
-        <h2><span class="mw-headline">Restrictions</span></h2><a name="Images" id="Images"></a>
+        <div class="instructions">
+            <p><b>To edit the raw HTML of a raw HTML object:</b></p>
 
-        <h3><span class="mw-headline">Images</span></h3>
+            <ol>
+                <li>Select the raw HTML object on the page to select it.</li>
 
-        <p>Please avoid altering any <tt>&lt;img&gt;</tt> tags created by Sandvox.</p><a name="Javascript" id="Javascript"></a>
+                <li>Open the <a href="Object_Inspector.html" title="Object Inspector">Object Inspector</a> and click the 'Edit HTML' button.</li>
+            </ol>
+        </div><a name="Content_Type" id="Content_Type"></a>
 
-        <h3><span class="mw-headline">Javascript</span></h3>
+        <h2><span class="mw-headline">Content Type</span></h2>
 
-        <p>If your custom HTML contains <b>only</b> a script, you may not see the results of that script until you have loaded or reloaded the page. This is a limitation in Sandvox for now. You also may have trouble clicking on this block if there is no text to click on. A work-around is to click on a block of editable text "above" this, and then use the "tab" key to select the desired block. Then, choose "Edit Raw HTML..." from the <a href="Sandvox_Menu_Guide.html#Edit" title="Sandvox Menu Guide">Edit menu</a>.</p><a name="Scripting" id="Scripting"></a>
+        <p>With the Edit Raw HTML window open you can choose the content type that you will be using. HTML, PHP, JavaScript, or Other.</p>
 
-        <h3><span class="mw-headline">Scripting</span></h3>
-
-        <p>You cannot use the "Edit Raw HTML" command to place scripting elements within the HTML. Instead, if you want to use <a href="Using_PHP_with_Sandvox.html" title="PHP">PHP</a> directives, etc. you should use a <a href="Raw_HTML.html" title="Raw HTML">Raw HTML</a> page or object.</p><a name="Customization" id="Customization"></a>
+        <p><i>This editing window is also used if you have just plain text (e.g. a file ending in .txt) in your site outline, created with the Raw HTML/Text option. The popup and validation button won't be there since this is text, not HTML.</i></p><a name="Customization" id="Customization"></a>
 
         <h2><span class="mw-headline">Customization</span></h2>
 

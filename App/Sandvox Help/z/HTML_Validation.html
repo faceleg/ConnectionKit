@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
 <head>
@@ -25,7 +25,7 @@
     <div id="mainbox">
         <h1 class="firstHeading">HTML Validation</h1>
 
-        <p><a href="Sandvox_Pro.html" title="Sandvox Pro">Sandvox Pro</a> allows you to validate the HTML of any <a href="Page.html" title="Page">page</a>. This is mainly useful for <a href="Page.html" title="Page">pages</a> which contain your own custom HTML content (such as <a href="Raw_HTML.html" title="Raw HTML">Raw HTML</a> pages or pagelets). The validation service is provided by <a href="http://www.w3.org/" class="external text" title="http://www.w3.org/">w3.org</a>.</p>
+        <p>Sandvox allows you to validate the HTML of any <a href="Page.html" title="Page">page</a> or <a href="Object.html" title="Object">object</a>. This is mainly useful for <a href="Page.html" title="Page">pages</a> which contain your own custom HTML content (such as <a href="Raw_HTML.html" title="Raw HTML">Raw HTML</a> pages or objects). The validation service is provided by <a href="http://www.w3.org/" class="external text" title="http://www.w3.org/">w3.org</a>.</p>
 
         <div class="instructions">
             <p><b>To validate a page's HTML:</b></p>
@@ -33,13 +33,25 @@
             <ol>
                 <li>Ensure an Internet connection is available.</li>
 
-                <li>From the <a href="Sandvox_Menu_Guide.html#View" title="Sandvox Menu Guide">View menu</a> choose "Web View → Validate HTML."</li>
+                <li>From the <a href="Sandvox_Menu_Guide.html#View" title="Sandvox Menu Guide">View menu</a> choose "Validate HTML."</li>
             </ol>
         </div>
 
-        <p>If the <a href="Page.html" title="Page">page</a> fails validation, Sandvox will display the results in the <a href="Web_View.html" title="Web View">Web View</a> until you <a href="Sandvox_Menu_Guide.html#Reload_Web_View" title="Sandvox Menu Guide">reload</a> it. It is then up to you to correct the issues causing the validation to fail.</p>
+        <p>Validating an entire HTML page is useful for ensuring that the page as a whole has been built properly, taking all the pieces (injected code, the HTML templates built by Sandvox, Raw HTML objects) into account. It's most useful for checking that your Code Injection is OK. But if there are Raw HTML objects, then it's better to validate just that object, so that it is easier to identify any problems, separate from the rest of the page's contents.</p>
+
+        <p>If the page fails validation, Sandvox will display the results in a new window. It is then up to you to correct the issues causing the validation to fail.</p>
 
         <p>Please note that it is possible for an HTML page to fail validation, yet be still perfectly usable for all or most browsers. Validation is an important tool, but in practice, it is not critical that your website contain completely valid HTML.</p>
+
+        <div class="center">
+            <div class="floatnone">
+                <img alt="" src="img/5/5f/Validation_Errors.jp2" width="504" height="459" border="0" />
+            </div>
+        </div>
+
+        <center>
+            Here is an example of the validation window, with errors.
+        </center>
 
         <div class="related">
             <a name="Related_Articles" id="Related_Articles"></a>
@@ -48,8 +60,6 @@
 
             <ul>
                 <li><a href="Raw_HTML.html" title="Raw HTML">Raw HTML</a></li>
-
-                <li><a href="Sandvox_Pro.html" title="Sandvox Pro">Sandvox Pro</a></li>
             </ul>
         </div>
     </div>
