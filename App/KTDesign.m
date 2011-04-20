@@ -443,7 +443,7 @@ const int kDesignThumbHeight = 65;
 {
     // Support left, right, or both; where both is the default
     
-    NSString *result = [[self bundle] objectForInfoDictionaryKey:@"SVInlineGraphicsClear"];
+    NSString *result = [[self bundle] objectForInfoDictionaryKey:@"SVInlineGraphicClearCSSValue"];
     
     if (![result isEqualToString:@"left"] && ![result isEqualToString:@"right"])
     {
