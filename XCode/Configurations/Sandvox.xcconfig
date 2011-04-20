@@ -14,7 +14,7 @@ PRODUCT_VARIANT_WITH_SECRET_KEY_FOR_SPARKLE = BETA_C3PO
 
 
 // expiry for beta
-EXPIRY_TIMESTAMP = '@\"2011-04-20 11:59:59 -0800\"'
+EXPIRY_TIMESTAMP = '@\"2011-04-30 11:59:59 -0800\"'
 
 // Release builds checkout and use these specific revisions
 
