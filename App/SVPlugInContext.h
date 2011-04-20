@@ -137,9 +137,19 @@ typedef NSUInteger SVPlaceholderOptions;
 
 // These methods return the URL to use for the resource in relation to this context. You can then pass it to -relativeStringFromURL: for example
 // You almost always want to use one of the string constants declared above for the destination. If more control is needed, you are welcome to append path components to a directory constant to specify the exact path
+
 - (NSURL *)addResourceAtURL:(NSURL *)fileURL
                 destination:(NSString *)uploadPath
                     options:(NSUInteger)options;    // pass in 0
+
+// Like the above, but for in-memory data. You should append your preferred filename to one of the destination constants, otherwise Sandvox will be forced to invent a filename
+- (NSURL *)addResourceWithData:(NSData *)data
+                      MIMEType:(NSString *)type     // use UTTypeCopyPreferredTagWithClass() to convert from UTI if needed
+              textEncodingName:(NSString *)encoding // IANA encoding name (e.g. “utf-8” or “utf-16”). nil for non-text files
+                   destination:(NSString *)uploadPath
+                       options:(NSUInteger)options; // pass in 0
+
+
 
 - (void)addJavascriptResourceWithTemplateAtURL:(NSURL *)templateURL
                                         object:(id)object;

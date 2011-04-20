@@ -34,6 +34,7 @@
 #import "KSURLUtilities.h"
 #import "NSObject+Karelia.h"
 
+#import "KSSHA1Stream.h"
 #import "KSStringWriter.h"
 
 #import "Registration.h"
@@ -1060,6 +1061,108 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
         if ([uploadPath isEqualToString:SVDestinationDesignDirectory])
         {
             uploadPath = [designPath stringByAppendingPathComponent:[fileURL ks_lastPathComponent]];
+        }
+        else
+        {
+            NSArray *components = [uploadPath pathComponents];
+            if ([[components objectAtIndex:0] isEqualToString:SVDestinationDesignDirectory])
+            {
+                NSRange range = NSMakeRange(0, [SVDestinationDesignDirectory length]);
+                uploadPath = [uploadPath stringByReplacingCharactersInRange:range withString:designPath];
+            }
+        }
+    }
+    
+    
+    // Figure URL from upload path
+    NSURL *siteURL = [[[[self page] site] hostProperties] siteURL];
+    //if (!siteURL) return nil;
+    
+    return [NSURL ks_URLWithPath:uploadPath relativeToURL:siteURL isDirectory:NO];
+}
+
+- (NSString *)inventFilenameForData:(NSData *)data MIMEType:(NSString *)mimeType
+{
+    // Invent a filename
+    NSString *result = [data sha1DigestString];
+    
+    if (mimeType) 
+    {
+        NSString *type = [NSString UTIForMIMEType:mimeType];
+        if (type)
+        {
+            NSString *extension = [NSString filenameExtensionForUTI:type];
+            if (extension)
+            {
+                result = [result stringByAppendingPathExtension:extension];
+            }
+        }
+    }
+    
+    return result;
+}
+
+- (NSURL *)addResourceWithData:(NSData *)data
+                      MIMEType:(NSString *)mimeType
+              textEncodingName:(NSString *)encoding
+                   destination:(NSString *)uploadPath
+                       options:(NSUInteger)options;
+{
+    OBPRECONDITION(data);
+    OBPRECONDITION(uploadPath);
+    
+    
+    if (![self isForPublishing])
+    {
+        // CSS must be handled specially
+        if ([uploadPath isEqualToString:SVDestinationMainCSS])
+        {
+            NSString *css = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            if (css)
+            {
+                [self addCSSString:css];
+                [css release];
+            }
+        }
+        
+        
+        return nil;
+    }
+    
+    
+    // Handle constants to figure real upload path
+    if ([uploadPath isEqualToString:SVDestinationMainCSS])
+    {
+        return [self mainCSSURL];
+    }
+    else if ([uploadPath hasPrefix:SVDestinationResourcesDirectory]) // not exhaustive check, but good first pass
+    {
+        NSString *resourcesPath = [[NSUserDefaults standardUserDefaults] stringForKey:@"DefaultResourcesPath"];
+        
+        if ([uploadPath isEqualToString:SVDestinationResourcesDirectory])
+        {
+            NSString *filename = [self inventFilenameForData:data MIMEType:mimeType];
+            uploadPath = [resourcesPath stringByAppendingPathComponent:filename];
+        }
+        else
+        {
+            NSArray *components = [uploadPath pathComponents];
+            if ([[components objectAtIndex:0] isEqualToString:SVDestinationResourcesDirectory])
+            {
+                NSRange range = NSMakeRange(0, [SVDestinationResourcesDirectory length]);
+                uploadPath = [uploadPath stringByReplacingCharactersInRange:range withString:resourcesPath];
+            }
+        }
+    }
+    else if ([uploadPath hasPrefix:SVDestinationDesignDirectory])
+    {
+        NSString *designPath = [[[[self page] master] design] remotePath];
+        if (!designPath) return nil;
+        
+        if ([uploadPath isEqualToString:SVDestinationDesignDirectory])
+        {
+            NSString *filename = [self inventFilenameForData:data MIMEType:mimeType];
+            uploadPath = [designPath stringByAppendingPathComponent:filename];
         }
         else
         {
