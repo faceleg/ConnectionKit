@@ -2,17 +2,17 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10J567</string>
+		<string key="IBDocument.SystemVersion">10J869</string>
 		<string key="IBDocument.InterfaceBuilderVersion">823</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
-		<string key="IBDocument.HIToolboxVersion">462.00</string>
+		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">823</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1"/>
+			<integer value="142"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -48,10 +48,9 @@
 							<object class="NSTabViewItem" id="65957717">
 								<string key="NSIdentifier">Item 4</string>
 								<object class="NSView" key="NSView" id="775509869">
-									<reference key="NSNextResponder" ref="685216708"/>
+									<nil key="NSNextResponder"/>
 									<int key="NSvFlags">256</int>
 									<string key="NSFrameSize">{230, 65}</string>
-									<reference key="NSSuperview" ref="685216708"/>
 								</object>
 								<string key="NSLabel">Item 4</string>
 								<object class="NSColor" key="NSColor" id="779414817">
@@ -68,7 +67,7 @@
 							<object class="NSTabViewItem" id="894881507">
 								<string key="NSIdentifier">2</string>
 								<object class="NSView" key="NSView" id="1069030782">
-									<nil key="NSNextResponder"/>
+									<reference key="NSNextResponder" ref="685216708"/>
 									<int key="NSvFlags">256</int>
 									<object class="NSMutableArray" key="NSSubviews">
 										<bool key="EncodedWithXMLCoder">YES</bool>
@@ -108,7 +107,7 @@
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="960351749">
 												<int key="NSCellFlags">-1804468671</int>
-												<int key="NSCellFlags2">268567552</int>
+												<int key="NSCellFlags2">272761856</int>
 												<string key="NSContents"/>
 												<reference key="NSSupport" ref="26"/>
 												<reference key="NSControlView" ref="54888771"/>
@@ -159,6 +158,7 @@
 										</object>
 									</object>
 									<string key="NSFrameSize">{230, 65}</string>
+									<reference key="NSSuperview" ref="685216708"/>
 								</object>
 								<reference key="NSColor" ref="779414817"/>
 								<reference key="NSTabView" ref="685216708"/>
@@ -409,14 +409,14 @@
 								<reference key="NSTabView" ref="685216708"/>
 							</object>
 						</object>
-						<reference key="NSSelectedTabViewItem" ref="65957717"/>
+						<reference key="NSSelectedTabViewItem" ref="894881507"/>
 						<reference key="NSFont" ref="26"/>
 						<int key="NSTvFlags">134217734</int>
 						<bool key="NSAllowTruncatedLabels">YES</bool>
 						<bool key="NSDrawsBackground">YES</bool>
 						<object class="NSMutableArray" key="NSSubviews">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="775509869"/>
+							<reference ref="1069030782"/>
 						</object>
 					</object>
 					<object class="NSTextField" id="419155358">
@@ -1372,7 +1372,7 @@
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{737, 151}, {230, 200}}</string>
+					<string>{{737, 146}, {230, 200}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSMutableArray">
 						<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1484,7 +1484,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">195</int>
+			<int key="maxID">197</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
