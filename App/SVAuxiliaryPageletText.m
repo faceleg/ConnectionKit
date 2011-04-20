@@ -61,5 +61,6 @@
 - (NSNumber *) containerWidth; { return [self width]; }
 
 - (BOOL)isExplicitlySized; { return NO; }
+- (BOOL)isExplicitlySized:(SVHTMLContext *)context; { return NO; }
 
 @end
