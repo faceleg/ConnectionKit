@@ -809,7 +809,15 @@ const int kDesignThumbHeight = 65;
 			NSString *fileCSS = [NSString stringWithFormat:@"%@.css", file];
 			fullPath = [basePath stringByAppendingPathComponent:fileCSS];
 			[context addResourceAtURL:[NSURL fileURLWithPath:fullPath] destination:SVDestinationMainCSS options:0];
-		}	
+		}
+        
+        
+        // Graphic clearing
+        NSString *clearRule = [NSString stringWithFormat:
+                               @".callout-container, .graphic-container { clear:%@; }",
+                               [self inlineGraphicClearValue]];
+        
+        [context addCSSString:clearRule];
 	}
 }
 

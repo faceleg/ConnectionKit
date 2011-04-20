@@ -21,10 +21,6 @@ div.text-navigation { text-align:center; margin-bottom:1em;}
 div.text-navigation div { display:inline; margin:0px 0.5em; }
 .collection-navigation .disabled-navigation { text-indent:-5000px; }
 
-/* 2.0 callout compatibility. 2.0-compatible designs are expected to implement this themselves */
-.callout-container, .graphic-container { clear:both; }
-/*.callout-container.first, .graphic-container.first { clear:none; }*/
-
 /* 2.0 wrap compatibility. 2.0-compatible designs can further adjust these if they need */
 .wide { display:block; }
 
