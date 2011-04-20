@@ -69,6 +69,9 @@ extern const int kDesignThumbHeight;
 - (NSString *)width;	// standard, wide, or flexible
 - (BOOL)menusUseNonBreakingSpaces;
 
+// Graphics
+- (NSString *)inlineGraphicClearValue;
+
 // Images
 - (NSImage *)thumbnail;
 - (CGImageRef)thumbnailCG;

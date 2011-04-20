@@ -437,6 +437,22 @@ const int kDesignThumbHeight = 65;
 	return (nil != urlString) ? [KSURLFormatter URLFromString:urlString] : nil;
 }
 
+#pragma mark Graphics
+
+- (NSString *)inlineGraphicClearValue;
+{
+    // Support left, right, or both; where both is the default
+    
+    NSString *result = [[self bundle] objectForInfoDictionaryKey:@"SVInlineGraphicsClear"];
+    
+    if (![result isEqualToString:@"left"] && ![result isEqualToString:@"right"])
+    {
+        result = @"both";
+    }
+    
+    return result;
+}
+
 #pragma mark Placeholder Image
 
 /*!	Return path for placeholder image, if it exists
