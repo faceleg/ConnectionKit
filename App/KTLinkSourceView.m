@@ -97,7 +97,7 @@ static NSImage *sTargetSetImage = nil;
 	
 	if (_flags.isConnecting)	// while connecting, draw a rectangle around it
 	{
-		NSRect anOutline = NSInsetRect(centeredRect, -2.5, -2.5);
+		NSRect anOutline = NSInsetRect(centeredRect, -1.5, -1.5);
 		
 		NSBezierPath *path = [NSBezierPath bezierPathWithRect:anOutline];
 		[path setLineWidth:1.0];
