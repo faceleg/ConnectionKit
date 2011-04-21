@@ -1142,7 +1142,6 @@
 		CE1BE83511D2AD1F00D875AE /* bigtop.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1BE7E011D2AD1E00D875AE /* bigtop.png */; };
 		CE1BE83611D2AD1F00D875AE /* unsorted.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1BE7E111D2AD1E00D875AE /* unsorted.png */; };
 		CE1BE83711D2AD1F00D875AE /* Z.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1BE7E211D2AD1E00D875AE /* Z.png */; };
-		CE1BE83911D2AD1F00D875AE /* BadgeAdd.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1BE7E611D2AD1E00D875AE /* BadgeAdd.png */; };
 		CE1BE83A11D2AD1F00D875AE /* mag.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1BE7E711D2AD1E00D875AE /* mag.png */; };
 		CE1BE83B11D2AD1F00D875AE /* 32favicon.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1BE7E911D2AD1E00D875AE /* 32favicon.png */; };
 		CE1BE83C11D2AD1F00D875AE /* favicon.ico in Resources */ = {isa = PBXBuildFile; fileRef = CE1BE7EA11D2AD1E00D875AE /* favicon.ico */; };
@@ -2946,7 +2945,6 @@
 		CE1BE7E011D2AD1E00D875AE /* bigtop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bigtop.png; sourceTree = "<group>"; };
 		CE1BE7E111D2AD1E00D875AE /* unsorted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unsorted.png; sourceTree = "<group>"; };
 		CE1BE7E211D2AD1E00D875AE /* Z.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Z.png; sourceTree = "<group>"; };
-		CE1BE7E611D2AD1E00D875AE /* BadgeAdd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BadgeAdd.png; sourceTree = "<group>"; };
 		CE1BE7E711D2AD1E00D875AE /* mag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mag.png; sourceTree = "<group>"; };
 		CE1BE7E911D2AD1E00D875AE /* 32favicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 32favicon.png; sourceTree = "<group>"; };
 		CE1BE7EA11D2AD1E00D875AE /* favicon.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = favicon.ico; sourceTree = "<group>"; };
@@ -5529,7 +5527,6 @@
 			children = (
 				CEED942F12691AD1004ACB0E /* sound_placeholder.png */,
 				CE7B67C911EE784600F56D8B /* MissingMediaQMark.png */,
-				CE1BE7E611D2AD1E00D875AE /* BadgeAdd.png */,
 				CE1BE7E711D2AD1E00D875AE /* mag.png */,
 			);
 			path = Misc;
@@ -6889,7 +6886,6 @@
 				CE1BE83511D2AD1F00D875AE /* bigtop.png in Resources */,
 				CE1BE83611D2AD1F00D875AE /* unsorted.png in Resources */,
 				CE1BE83711D2AD1F00D875AE /* Z.png in Resources */,
-				CE1BE83911D2AD1F00D875AE /* BadgeAdd.png in Resources */,
 				CE1BE83A11D2AD1F00D875AE /* mag.png in Resources */,
 				CE1BE83B11D2AD1F00D875AE /* 32favicon.png in Resources */,
 				CE1BE83C11D2AD1F00D875AE /* favicon.ico in Resources */,
