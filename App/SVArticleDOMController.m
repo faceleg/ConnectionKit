@@ -847,26 +847,40 @@
             // Set wrap to match
             if (position.x < NSMidX(bounds))
             {
-                CGFloat leftEdge = NSMinX(frame) + position.x - currentPosition.x;
-                if (leftEdge - NSMinX(bounds) < NSMidX(bounds) - position.x) // closer to left
+                if (wrap >= SVGraphicWrapLeft || wrap <= SVGraphicWrapFloat_1_0)    // is it floated?
                 {
-                    wrap = SVGraphicWrapRightSplit;
+                    wrap = SVGraphicWrapRight;
                 }
                 else
                 {
-                    wrap = SVGraphicWrapCenterSplit;
+                    CGFloat leftEdge = NSMinX(frame) + position.x - currentPosition.x;
+                    if (leftEdge - NSMinX(bounds) < NSMidX(bounds) - position.x) // closer to left
+                    {
+                        wrap = SVGraphicWrapRightSplit;
+                    }
+                    else
+                    {
+                        wrap = SVGraphicWrapCenterSplit;
+                    }
                 }
             }
             else
             {
-                CGFloat rightEdge = NSMaxX(frame) + position.x - currentPosition.x;
-                if (NSMaxX(bounds) - rightEdge < position.x - NSMidX(bounds)) // closer to right
+                if (wrap >= SVGraphicWrapLeft || wrap <= SVGraphicWrapFloat_1_0)    // is it floated?
                 {
-                    wrap = SVGraphicWrapLeftSplit;
+                    wrap = SVGraphicWrapLeft;
                 }
                 else
                 {
-                    wrap = SVGraphicWrapCenterSplit;
+                    CGFloat rightEdge = NSMaxX(frame) + position.x - currentPosition.x;
+                    if (NSMaxX(bounds) - rightEdge < position.x - NSMidX(bounds)) // closer to right
+                    {
+                        wrap = SVGraphicWrapLeftSplit;
+                    }
+                    else
+                    {
+                        wrap = SVGraphicWrapCenterSplit;
+                    }
                 }
             }
             
