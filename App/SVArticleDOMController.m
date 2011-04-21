@@ -746,7 +746,16 @@
 
 - (DOMNode *)nodeToMoveControllerBefore:(SVDOMController *)controller;
 {
-    DOMElement *element = [controller HTMLElement];
+    DOMNode *element = [controller HTMLElement];
+    
+    if ([element ks_isDescendantOfElement:[self textHTMLElement]])  //  this should always be true really
+    {
+        while ([element parentNode] != [self textHTMLElement])
+        {
+            element = [element parentNode];
+        }
+    }
+    
     
     DOMTreeWalker *walker = [[element ownerDocument] createTreeWalker:[self textHTMLElement]
                                                            whatToShow:DOM_SHOW_ALL
@@ -765,8 +774,17 @@
 
 - (DOMNode *)nodeToMoveControllerAfter:(SVDOMController *)controller;
 {
-    DOMElement *element = [controller HTMLElement];
+    DOMNode *element = [controller HTMLElement];
     
+    if ([element ks_isDescendantOfElement:[self textHTMLElement]])  //  this should always be true really
+    {
+        while ([element parentNode] != [self textHTMLElement])
+        {
+            element = [element parentNode];
+        }
+    }
+    
+
     DOMTreeWalker *walker = [[element ownerDocument] createTreeWalker:[self textHTMLElement]
                                                            whatToShow:DOM_SHOW_ALL
                                                                filter:nil
