@@ -191,7 +191,8 @@
         else
         {
             // Line breaks are permitted at top-level though
-            result = NO;
+            // So are anchors since they might contain an image. If empty they'll be removed
+            result = [tagName isEqualToString:@"A"];
         }
     }
     
