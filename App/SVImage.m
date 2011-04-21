@@ -9,12 +9,14 @@
 #import "SVImage.h"
 
 #import "SVApplicationController.h"
+#import "SVHTMLContext.h"
 #import "SVLink.h"
 #import "SVMediaDOMController.h"
 #import "SVMediaGraphicInspector.h"
 #import "SVMediaRecord.h"
 #import "SVSiteItem.h"
-#import "SVHTMLContext.h"
+#import "SVTextAttachment.h"
+
 #import "NSManagedObject+KTExtensions.h"
 
 #import "NSBitmapImageRep+Karelia.h"
@@ -346,7 +348,8 @@
 - (void)writeHTML:(SVHTMLContext *)context
 {
     // Link
-    if ([[self container] shouldWriteHTMLInline])
+    SVTextAttachment *attachment = [[self container] textAttachment];
+    if (attachment && ![[attachment causesWrap] boolValue])
     {
         [self writeImageElement: context];
     }
