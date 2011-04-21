@@ -24,11 +24,11 @@ div.text-navigation div { display:inline; margin:0px 0.5em; }
 /* 2.0 wrap compatibility. 2.0-compatible designs can further adjust these if they need */
 .wide { display:block; }
 
-img.narrow.left {   /* Some designs won't respect without !important */
+.narrow.left {   /* Some designs won't respect without !important */
     float:left!important;
     clear:left;
 }
-img.narrow.right {
+.narrow.right {
     float:right!important;
     clear:right;
 }
