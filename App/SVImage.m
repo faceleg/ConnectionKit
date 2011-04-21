@@ -358,6 +358,8 @@
         if ([[self container] shouldWriteHTMLInline]) [[self container] buildWrapClassName:context];
         
         SVLink *link = [self link];
+        [context addDependencyOnObject:self keyPath:@"link"];
+        
         if (link)
         {
             [context pushClassName:@"imageLink"];
