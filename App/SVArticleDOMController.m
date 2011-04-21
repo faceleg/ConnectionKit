@@ -883,12 +883,14 @@
         switch (wrap)
         {
             case SVGraphicWrapRightSplit:
+            case SVGraphicWrapRight:
                 guide = [NSNumber numberWithFloat:NSMinX(bounds)];
                 break;
             case SVGraphicWrapCenterSplit:
                 guide = [NSNumber numberWithFloat:NSMidX(bounds)];
                 break;
             case SVGraphicWrapLeftSplit:
+            case SVGraphicWrapLeft:
                 guide = [NSNumber numberWithFloat:NSMaxX(bounds)];
                 break;
             default:
