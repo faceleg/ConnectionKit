@@ -55,6 +55,7 @@
 #pragma mark Graphic
 
 - (BOOL)shouldWriteHTMLInline; { return NO; }
+- (BOOL)displayInline; { return NO; }
 
 @end
 
