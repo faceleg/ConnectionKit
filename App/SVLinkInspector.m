@@ -151,7 +151,9 @@
 - (IBAction)setLinkURL:(id)sender;
 {
     NSString *urlString = [sender stringValue];
-    if ([urlString length])
+    
+    if ([urlString length] &&
+        ![urlString isEqualToString:[[[self linkManager] selectedLink] URLString]])
     {
         // Emails need mailto: prepended
         SVLinkType type = [oLinkTypePopUpButton selectedTag];
