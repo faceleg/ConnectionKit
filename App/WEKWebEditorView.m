@@ -741,7 +741,23 @@ typedef enum {  // this copied from WebPreferences+Private.h
     // Try to match WebView selection to item when reasonable
     if ([item shouldTrySelectingInline])
     {
-        [self setSelectedDOMRange:[item selectableDOMRange] affinity:NSSelectionAffinityDownstream];
+        DOMRange *range = [item selectableDOMRange];
+        DOMRange *selection = [self selectedDOMRange];
+        
+        // If the selection's already as we want it, no point changing
+        if (![selection isEqualToDOMRange:range])
+        {
+            [self setSelectedDOMRange:range affinity:NSSelectionAffinityUpstream];
+            
+            // Did it work out as we wanted?
+            if (![[self selectedDOMRange] isEqualToDOMRange:range])
+            {
+                // Get sneaky. WebKit doesn't like the range of linked, floated images and changes the selection to something odd that partially covers the link. But we can fool it by faking keyboard commands
+                //[[self webView] moveForward:self];
+                //[[self webView] moveBackwardAndModifySelection:self];
+            }
+        }
+        
         
         // Was it a success though?
         if (![[self selectedDOMRange] collapsed]) return;
