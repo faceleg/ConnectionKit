@@ -747,17 +747,9 @@
 - (DOMNode *)nodeToMoveControllerBefore:(SVDOMController *)controller;
 {
     DOMNode *element = [controller HTMLElement];
-    
-    if ([element ks_isDescendantOfElement:[self textHTMLElement]])  //  this should always be true really
-    {
-        while ([element parentNode] != [self textHTMLElement])
-        {
-            element = [element parentNode];
-        }
-    }
-    
-    
-    DOMTreeWalker *walker = [[element ownerDocument] createTreeWalker:[self textHTMLElement]
+    DOMElement *textElement = [self textHTMLElement];
+
+    DOMTreeWalker *walker = [[element ownerDocument] createTreeWalker:textElement
                                                            whatToShow:DOM_SHOW_ALL
                                                                filter:nil
                                                expandEntityReferences:NO];
@@ -767,6 +759,15 @@
     while (result && ![result hasSize])
     {
         result = [walker ks_previousNodeIgnoringChildren];
+    }
+    
+    
+    // Make sure it's a move up to a paragraph
+    DOMNode *parent = [result parentNode];
+    while (parent != textElement)
+    {
+        result = parent;
+        parent = [result parentNode];
     }
     
     return result;
