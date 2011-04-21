@@ -1021,6 +1021,7 @@
         [[targetNode parentNode] insertBefore:[item HTMLElement] refChild:targetNode];
     }
     
+    
     [webEditor didChangeText];
     [[webEditor webView] wek_setSelection:selection];
 }
@@ -1031,19 +1032,27 @@
     WEKWebEditorView *webEditor = [item webEditor];
     WEKSelection *selection = [[webEditor webView] wek_selection];
     DOMNode *nextNode = [item nextDOMNode];
-    
+    DOMNode *targetNode = [self nodeToMoveControllerAfter:(SVDOMController *)item];
+
     while (nextNode && [webEditor shouldChangeTextInDOMRange:[item DOMRange]])
     {
         [item exchangeWithNextDOMNode];
         
         // Have we made a noticeable move yet?
-        if ([nextNode hasSize]) break;
+        if (nextNode == targetNode) break;
         
         nextNode = [item nextDOMNode];
     }
     
-    [webEditor didChangeText];
     
+    // The target couldn't be found? Time to move manually I guess. This should only be reached for images, so not a problem display-wise
+    if (!nextNode && [webEditor shouldChangeText:self])
+    {
+        [[targetNode parentNode] insertBefore:[item HTMLElement] refChild:[targetNode nextSibling]];
+    }
+    
+    
+    [webEditor didChangeText];
     [[webEditor webView] wek_setSelection:selection];
 }
 
