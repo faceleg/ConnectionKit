@@ -79,6 +79,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
                                DOMRange:(DOMRange *)domRange
                              isUIAction:(BOOL)consultDelegateFirst;
 
+- (void)finishChangingSelectionByDeselectingItem:(WEKWebEditorItem *)itemToDeselect DOMRange:(DOMRange *)domRange;
 - (void)changeFirstResponderAndWebViewSelectionToSelectItem:(WEKWebEditorItem *)item;
 - (NSArray *)editingItemsForDOMRange:(DOMRange *)range selectedItem:(WEKWebEditorItem *)item;
 
@@ -666,7 +667,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [_selectedItems release]; _selectedItems = proposedSelection;
     
     
-    
     // Draw new selection
     for (WEKWebEditorItem *anItem in itemsToSelect)
     {
@@ -674,7 +674,30 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
     
     
+    // Other work
+    [self finishChangingSelectionByDeselectingItem:itemToDeselect DOMRange:domRange];
+}
+@finally
+{
+    // Finish bracketing
+    _isChangingSelectedItems = NO;
+}   
     
+    
+    // Alert observers.
+    // If the change is from the user selecting something in WebView, we're not ready to post the notification yet; -webViewDidChangeSelection: will take care of that for us
+    if (!domRange)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:SVWebEditorViewDidChangeSelectionNotification
+                                                            object:self];
+    }
+    
+    
+    return YES;
+}
+
+- (void)finishChangingSelectionByDeselectingItem:(WEKWebEditorItem *)itemToDeselect DOMRange:(DOMRange *)domRange;
+{
     // Update WebView selection to match. Selecting the node would be ideal, but WebKit ignores us if it's not in an editable area
     WEKWebEditorItem *selectedItem = [self selectedItem];
     if (!domRange)
@@ -703,26 +726,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
     // Update editingItems list
     NSArray *parentItems = [self editingItemsForDOMRange:domRange selectedItem:selectedItem];
     [self setEditingItems:parentItems];
-    
-    
-}
-@finally
-{
-    // Finish bracketing
-    _isChangingSelectedItems = NO;
-}   
-    
-    
-    // Alert observers.
-    // If the change is from the user selecting something in WebView, we're not ready to post the notification yet; -webViewDidChangeSelection: will take care of that for us
-    if (!domRange)
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:SVWebEditorViewDidChangeSelectionNotification
-                                                            object:self];
-    }
-    
-    
-    return YES;
 }
 
 - (void)changeFirstResponderAndWebViewSelectionToSelectItem:(WEKWebEditorItem *)item;
