@@ -56,7 +56,7 @@
     BOOL result = NO;
     
     SVMediaGraphic *image = [self representedObject];
-    if ([image shouldWriteHTMLInline])
+    if ([image displayInline])
     {
         result = YES;
     }

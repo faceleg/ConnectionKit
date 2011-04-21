@@ -64,6 +64,7 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 #pragma mark HTML
 - (void)writeBody:(SVHTMLContext *)context;  // Subclasses MUST override
 - (BOOL)shouldWriteHTMLInline;
+- (BOOL)displayInline;
 - (BOOL)isPagelet;      // whether to generate <div class="pagelet"> etc. HTML. KVO-compliant
 
 

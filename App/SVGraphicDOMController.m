@@ -962,7 +962,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     BOOL result = NO;
     
     SVGraphic *image = [self representedObject];
-    if ([image shouldWriteHTMLInline])
+    if ([image displayInline])
     {
         result = YES;
     }

@@ -121,6 +121,16 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     return [NSSet setWithObjects:@"textAttachment.causesWrap", @"textAttachment.wrap", nil];
 }
 
+- (BOOL)displayInline;
+{
+    BOOL result = NO;
+    
+    SVTextAttachment *attachment = [self textAttachment];
+    if (attachment && ![[attachment causesWrap] boolValue]) result = YES;
+    
+    return NO;
+}
+
 // Inline graphics are not pagelets, but everything else is
 - (BOOL)isPagelet;
 {

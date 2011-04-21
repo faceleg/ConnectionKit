@@ -184,7 +184,7 @@
 
 - (BOOL)shouldTrySelectingInline;
 {
-    return [[self representedObject] shouldWriteHTMLInline];
+    return [[self representedObject] displayInline];
 }
 
 #pragma mark Updating

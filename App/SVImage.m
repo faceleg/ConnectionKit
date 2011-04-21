@@ -348,8 +348,7 @@
 - (void)writeHTML:(SVHTMLContext *)context
 {
     // Link
-    SVTextAttachment *attachment = [[self container] textAttachment];
-    if (attachment && ![[attachment causesWrap] boolValue])
+    if ([[self container] displayInline])
     {
         [[self container] buildWrapClassName:context];
         [self writeImageElement:context];
