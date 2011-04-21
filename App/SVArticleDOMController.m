@@ -998,15 +998,23 @@
     WEKWebEditorView *webEditor = [self webEditor];
     WEKSelection *selection = [[webEditor webView] wek_selection];
     DOMNode *previousNode = [item previousDOMNode];
+    DOMNode *targetNode = [self nodeToMoveControllerBefore:(SVDOMController *)item];
     
     while (previousNode && [webEditor shouldChangeTextInDOMRange:[item DOMRange]])
     {
         [item exchangeWithPreviousDOMNode];
         
         // Have we made a noticeable move yet?
-        if ([previousNode hasSize]) break;
+        if (previousNode == targetNode) break;
         
         previousNode = [item previousDOMNode];
+    }
+    
+    
+    // The target couldn't be found? Time to move manually I guess. This should only be reached for images, so not a problem display-wise
+    if (!previousNode && [webEditor shouldChangeText:self])
+    {
+        [[targetNode parentNode] insertBefore:[item HTMLElement] refChild:targetNode];
     }
     
     [webEditor didChangeText];
