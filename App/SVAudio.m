@@ -244,7 +244,7 @@
 	NSString *audioSourcePath  = audioSourceURL ? [context relativeStringFromURL:audioSourceURL] : @"";
 	
 	// Actually write the audio
-	if ([[self container] shouldWriteHTMLInline]) [self.container buildClassName:context];
+	if ([[self container] shouldWriteHTMLInline]) [self.container buildClassName:context includeWrap:YES];
 	
 	[context buildAttributesForResizableElement:@"audio" object:self DOMControllerClass:nil sizeDelta:NSZeroSize options:0];
 	
@@ -412,7 +412,7 @@
 		playerPath = [context relativeStringFromURL:playerURL];
 	}
 	
-	if ([[self container] shouldWriteHTMLInline]) [self.container buildClassName:context];
+	if ([[self container] shouldWriteHTMLInline]) [self.container buildClassName:context includeWrap:YES];
 	[context pushAttribute:@"type" value:@"application/x-shockwave-flash"];
 	[context pushAttribute:@"data" value:playerPath];
 	[context pushAttribute:@"width" value:self.width];

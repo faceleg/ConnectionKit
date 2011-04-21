@@ -276,7 +276,7 @@
         [context addDependencyOnObject:graphic keyPath:@"showsCaption"];
         
         // <div class="graphic-container center">
-        [(SVGraphic *)graphic buildClassName:context];
+        [(SVGraphic *)graphic buildClassName:context includeWrap:YES];
         [context startElement:@"div"];
         
         

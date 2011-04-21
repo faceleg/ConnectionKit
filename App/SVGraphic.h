@@ -185,7 +185,8 @@ extern NSString *kSVGraphicPboardType;
 
 - (void)writeBody:(SVHTMLContext *)context;  // Subclasses MUST override
 
-- (void)buildClassName:(SVHTMLContext *)context;
+- (void)buildClassName:(SVHTMLContext *)context includeWrap:(BOOL)includeWrap;
+- (void)buildWrapClassName:(SVHTMLContext *)context;
 - (NSString *)inlineGraphicClassName;
 
 + (SVTemplate *)template;

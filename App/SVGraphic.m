@@ -476,7 +476,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 #pragma mark HTML
 
-- (void)buildClassName:(SVHTMLContext *)context;
+- (void)buildClassName:(SVHTMLContext *)context includeWrap:(BOOL)includeWrap;
 {
     if (![self isCallout])
     {
@@ -485,6 +485,18 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
         {
             [context pushClassName:@"graphic-container"];
             
+            if (includeWrap) [self buildWrapClassName:context];
+        }
+    }
+}
+
+- (void)buildWrapClassName:(SVHTMLContext *)context;
+{
+    if (![self isCallout])
+    {
+        SVTextAttachment *textAttachment = [self textAttachment];
+        if ([[textAttachment causesWrap] boolValue])
+        {            
             switch ([[textAttachment wrap] integerValue])
             {
                 case SVGraphicWrapFloat_1_0:

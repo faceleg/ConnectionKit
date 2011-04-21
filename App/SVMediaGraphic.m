@@ -423,9 +423,9 @@
     }
 }
 
-- (void)buildClassName:(SVHTMLContext *)context;
+- (void)buildClassName:(SVHTMLContext *)context includeWrap:(BOOL)includeWrap;
 {
-    [super buildClassName:context];
+    [super buildClassName:context includeWrap:includeWrap];
     
     NSString *elementClass = [[[self plugIn] class] elementClassName];
     if (elementClass) [context pushClassName:elementClass];

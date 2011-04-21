@@ -298,8 +298,8 @@
     NSString *alt = [self alternateText];
     if (!alt) alt = @"";
     
-    if ([[self container] shouldWriteHTMLInline]) [[self container] buildClassName:context];
-    
+    if ([[self container] shouldWriteHTMLInline]) [[self container] buildClassName:context includeWrap:NO];
+
     [context buildAttributesForResizableElement:@"img" object:self DOMControllerClass:[SVMediaDOMController class]  sizeDelta:NSZeroSize options:0];
     
     
@@ -351,10 +351,13 @@
     SVTextAttachment *attachment = [[self container] textAttachment];
     if (attachment && ![[attachment causesWrap] boolValue])
     {
-        [self writeImageElement: context];
+        [[self container] buildWrapClassName:context];
+        [self writeImageElement:context];
     }
     else
     {
+        if ([[self container] shouldWriteHTMLInline]) [[self container] buildWrapClassName:context];
+        
         SVLink *link = [self link];
         if (link)
         {

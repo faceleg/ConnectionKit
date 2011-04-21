@@ -372,7 +372,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     // Update class name to get new wrap
     SVHTMLContext *context = [[SVHTMLContext alloc] initWithOutputWriter:nil];
-    [graphic buildClassName:context];
+    [graphic buildClassName:context includeWrap:YES];
     
     NSString *className = [[[context currentElementInfo] attributesAsDictionary] objectForKey:@"class"];
     DOMHTMLElement *element = [self HTMLElement];
