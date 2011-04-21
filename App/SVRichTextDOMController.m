@@ -286,21 +286,27 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     
     DOMNode *parentNode = [element parentNode];
     
-    if ([[adaptor XMLWriter] openElementsCount] &&
-        ![graphic shouldWriteHTMLInline])
+    if ([[adaptor XMLWriter] openElementsCount])
     {
-        // Push the element off up the tree; it will be written next time round
-        [[parentNode parentNode] insertBefore:element refChild:[parentNode nextSibling]];
-    }
-    else
-    {
-        // Graphics are written as-is. Callouts write their contents
-        if (![controller writeAttributedHTML:adaptor])
+        if ([[graphic textAttachment] causesWrap])
         {
-            result = element;
+            // Floated graphics should be moved up if enclosed by an anchor
+            // All other graphics should be moved up
+            if (![graphic shouldWriteHTMLInline] ||
+                [element ks_isDescendantOfElementWithTagName:@"A"])
+            {
+                // Push the element off up the tree; it will be written next time round
+                [[parentNode parentNode] insertBefore:element refChild:[parentNode nextSibling]];
+                return result;
+            }
         }
     }
-    
+        
+    // Graphics is OK where it is; write. Callouts write their contents
+    if (![controller writeAttributedHTML:adaptor])
+    {
+        result = element;
+    }    
     
     return result;
 }
