@@ -360,6 +360,8 @@
         SVLink *link = [self link];
         if (link)
         {
+            [context pushClassName:@"imageLink"];
+            
             NSString *href = @"";
             if ([link linkType] == SVLinkToFullSizeImage)
             {
