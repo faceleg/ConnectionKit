@@ -763,12 +763,16 @@
     
     
     // Make sure it's a move up to a paragraph
-    DOMNode *parent = [result parentNode];
-    while (parent != textElement)
+    if (result)
     {
-        result = parent;
-        parent = [result parentNode];
+        DOMNode *parent = [result parentNode];
+        while (parent != textElement)
+        {
+            result = parent;
+            parent = [result parentNode];
+        }
     }
+    
     
     return result;
 }
