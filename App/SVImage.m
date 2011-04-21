@@ -375,7 +375,7 @@
                 href = [[self link] URLString];
             }
             
-            [context startAnchorElementWithHref:href title:nil target:nil rel:nil];
+            [link writeStartTagToContext:context];
             [self writeImageElement:context];
             [context endElement];
         }

@@ -160,7 +160,10 @@
 
 - (void)writeStartTagToContext:(SVHTMLContext *)context;
 {
-    [context startAnchorElementWithHref:[self URLString] title:nil target:nil rel:nil];
+    [context startAnchorElementWithHref:[self URLString]
+                                  title:nil
+                                 target:([self openInNewWindow] ? @"_blank" : nil)
+                                    rel:nil];
 }
 
 - (DOMElement *)createDOMElementInDocument:(DOMDocument *)document;
