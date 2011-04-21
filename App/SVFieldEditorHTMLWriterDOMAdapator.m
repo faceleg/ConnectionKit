@@ -540,19 +540,18 @@
     
 	if ([elementName isEqualToString:@"a"])
     {
-        if (![attributeName isEqualToString:@"href"] &&
-            ![attributeName isEqualToString:@"target"] &&
-            ![attributeName isEqualToString:@"style"] &&
-            ![attributeName isEqualToString:@"charset"] &&
-            ![attributeName isEqualToString:@"hreflang"] &&
-            ![attributeName isEqualToString:@"name"] &&
-            ![attributeName isEqualToString:@"title"] &&
-            ![attributeName isEqualToString:@"rel"] &&
-            ![attributeName isEqualToString:@"rev"])
+        if ([attributeName isEqualToString:@"href"] ||
+            [attributeName isEqualToString:@"target"] ||
+            [attributeName isEqualToString:@"style"] ||
+            [attributeName isEqualToString:@"charset"] ||
+            [attributeName isEqualToString:@"hreflang"] ||
+            [attributeName isEqualToString:@"name"] ||
+            [attributeName isEqualToString:@"title"] ||
+            [attributeName isEqualToString:@"rel"] ||
+            [attributeName isEqualToString:@"rev"])
         {
-            result = nil;
+            return result;
         }
-        return result;
     }
     // <FONT> tags are no longer allowed, but leave this in in case we turn support back on again
     else if ([elementName isEqualToString:@"font"])
