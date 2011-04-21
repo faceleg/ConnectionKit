@@ -288,7 +288,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     
     if ([[adaptor XMLWriter] openElementsCount])
     {
-        if ([[graphic textAttachment] causesWrap])
+        if ([[[graphic textAttachment] causesWrap] boolValue])
         {
             // Floated graphics should be moved up if enclosed by an anchor
             // All other graphics should be moved up
@@ -306,7 +306,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     if (![controller writeAttributedHTML:adaptor])
     {
         result = element;
-    }    
+    }
     
     return result;
 }
