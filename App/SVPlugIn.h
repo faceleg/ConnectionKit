@@ -158,13 +158,25 @@ typedef enum {
 
 #pragma mark Pasteboard
 
-// Default is to refuse all items. You should study the location and return a SVPasteboardPriority to match
+/*  These methods are called in order when content is dragged or pasted in
+ */
+
+// 1. Default is nil, override to return the types you support. As a starting point, +readableURLTypesForPasteboard: covers all the formats that Sandvox can interpret URLs from for you
 + (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
+
+// 2. Default is NO. If overridden to return YES, when the user drags multiple items into a page, a single instance of your plug-in will be awoken from the handled items. (The usual behaviour would be to create one plug-in per item). Ideal for plug-ins which have a list-like display
++ (BOOL)supportsMultiplePasteboardItems;
+
+// 3. Override to study the item and return a SVPasteboardPriority to match. The plug-in with the highest priority for an item moves onto step 4
 + (SVPasteboardPriority)priorityForPasteboardItem:(id <SVPasteboardItem>)item;
+
+// 4. items is an array of SVPasteboardItems. Loop through as many items as your plug-in can handle (most will only bother to look at the first), and set properties from it
 - (BOOL)awakeFromPasteboardItems:(NSArray *)items;
 
-// Default is NO. If you override to return YES, when the user drags multiple items into a page, a single instance of your plug-in will be awoken from the handled items. (The usual behaviour would be to create one plug-in per item). This is great for plug-ins which have a list-like display.
-+ (BOOL)supportsMultiplePasteboardItems;
+
+#pragma mark Pasteboard Support
+// All the types that -[SVPasteboardItem URL] supports. Great starting point for your implementation of +readableTypesForPasteboard:
++ (NSArray *)readableURLTypesForPasteboard:(NSPasteboard *)pasteboard;
 
 
 #pragma mark Undo Management

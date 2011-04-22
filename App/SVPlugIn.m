@@ -352,6 +352,11 @@ static id <SVPlugInContext> sCurrentContext;
 
 + (BOOL)supportsMultiplePasteboardItems; { return NO; }
 
++ (NSArray *)readableURLTypesForPasteboard:(NSPasteboard *)pasteboard;
+{
+    return [KSWebLocation readableTypesForPasteboard:pasteboard];
+}
+
 #pragma mark Other
 
 @synthesize container = _container;
