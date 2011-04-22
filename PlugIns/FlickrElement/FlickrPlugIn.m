@@ -39,7 +39,6 @@
 
 
 // SVLocalizedString(@"Flickr (Placeholder)", "String_On_Page_Template")
-// SVLocalizedString(@"More ", "String_On_Page_Template")
 // SVLocalizedString(@"Flickr photos", "String_On_Page_Template")
 // SVLocalizedString(@" tagged with ", "String_On_Page_Template")
 
@@ -98,7 +97,7 @@
     [context addDependencyForKeyPath:@"random" ofObject:self];
     [context addDependencyForKeyPath:@"showInfo" ofObject:self];
     
-    // add resources 
+    // add resources
     NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"FlickrPlugIn" ofType:@"css"];
     if (path && ![path isEqualToString:@""]) 
     {
