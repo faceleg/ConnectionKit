@@ -207,6 +207,19 @@ do
 done
 popd
 
+# copy Images to dmg
+IMAGES_DIR="${SDK_DIR}/Images"
+echo "Copying ${IMAGES_DIR} to disk image..."
+mkdir -p "${DMG_DIR}/Images"
+pushd "${IMAGES_DIR}"
+for i in *
+do
+	# copy to DMG 
+	echo "IMAGE: PBXCp \"$i\" ${DMG_DIR}/Images"
+	${PBXCP} "${PWD}/${i}" "${DMG_DIR}/Images"
+done
+popd
+
 # ------------------------------------------------
 
 # clean up .dmg
