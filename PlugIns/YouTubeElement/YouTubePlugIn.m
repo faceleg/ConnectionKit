@@ -267,7 +267,7 @@
 
 + (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
 {
-    return SVWebLocationGetReadablePasteboardTypes(pasteboard);
+    return [self readableURLTypesForPasteboard:pasteboard];
 }
 
 + (SVPasteboardPriority)priorityForPasteboardItem:(id <SVPasteboardItem>)item;
