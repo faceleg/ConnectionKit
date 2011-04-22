@@ -26,8 +26,9 @@
 #import "SVTemplate.h"
 
 #import "NSBundle+KTExtensions.h"
-
 #import "NSManagedObject+KTExtensions.h"
+
+#import "KSWebLocationPasteboardUtilities.h"
 
 
 @interface SVPlugIn ()
