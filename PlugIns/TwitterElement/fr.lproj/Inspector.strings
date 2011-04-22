@@ -1,5 +1,5 @@
-﻿/* Class = "NSTextFieldCell"; title = "Updates:"; ObjectID = "444"; */
-"Updates:" = "Mises à jour :";
+﻿/* Class = "NSTextFieldCell"; title = "Tweets:"; ObjectID = "444"; */
+"Tweets:" = "Tweet :";
 
 /* Class = "NSTextFieldCell"; title = "Powered by"; ObjectID = "445"; */
 "Powered by" = "Fonctionnant avec";

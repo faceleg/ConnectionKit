@@ -16,8 +16,8 @@
 /* Class = "NSTextFieldCell"; title = "Position:"; ObjectID = "195"; */
 "Position:" = "Position :";
 
-/* Class = "NSBox"; title = "Box"; ObjectID = "225"; */
-"Box" = "Box";
-
 /* Class = "NSTextFieldCell"; title = "Appearance"; ObjectID = "227"; */
 "Appearance" = "Aspect";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "245"; */
+"Box" = "Box";

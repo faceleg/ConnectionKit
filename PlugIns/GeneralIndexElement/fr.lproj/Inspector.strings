@@ -40,3 +40,9 @@
 
 /* Class = "NSMenuItem"; title = "Date modified"; ObjectID = "283"; */
 "Date modified" = "Date de modification";
+
+/* Class = "NSButtonCell"; title = "Show at most:"; ObjectID = "296"; */
+"Show at most:" = "Montrer au plus :";
+
+/* Class = "NSTextFieldCell"; title = "888 items"; ObjectID = "297"; */
+"888 items" = "888 éléments";

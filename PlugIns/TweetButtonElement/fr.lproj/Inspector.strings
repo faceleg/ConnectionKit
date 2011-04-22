@@ -16,14 +16,17 @@
 /* Class = "NSTextFieldCell"; title = "Appearance"; ObjectID = "15"; */
 "Appearance" = "Aspect";
 
-/* Class = "NSTextFieldCell"; title = "Tweet Text"; ObjectID = "23"; */
-"Tweet Text" = "Texte du Tweet";
+/* Class = "NSTextFieldCell"; title = "Text"; ObjectID = "23"; */
+"Text" = "Texte";
 
-/* Class = "NSTextFieldCell"; title = "Tweet URL"; ObjectID = "29"; */
-"Tweet URL" = "Tweeter l’URL";
+/* Class = "NSTextFieldCell"; title = "URL"; ObjectID = "29"; */
+"URL" = "URL";
 
-/* Class = "NSTextFieldCell"; title = "This user will be @mentioned in the Tweet."; ObjectID = "37"; */
-"This user will be @mentioned in the Tweet." = "Cet utilisateur sera mentionné@ dans le Tweet.";
+/* Class = "NSTextFieldCell"; title = "Tweet will end with “via @YourName”"; ObjectID = "37"; */
+"Tweet will end with “via @YourName”" = "Tweet se terminera avec “via @VotreNom”";
 
-/* Class = "NSTextFieldCell"; title = "If not specified, the URL of the page will be used."; ObjectID = "41"; */
-"If not specified, the URL of the page will be used." = "Si rien n'est indiqué, l’URL de la page sera utilisée.";
+/* Class = "NSBox"; title = "Box"; ObjectID = "72"; */
+"Box" = "Box";
+
+/* Class = "NSTextFieldCell"; title = "Tweet"; ObjectID = "74"; */
+"Tweet" = "Tweet";
