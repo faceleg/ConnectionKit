@@ -18,6 +18,7 @@
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		CE2802A112432BBD00B00F3D /* toolbar_photogrid.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE2802A012432BBD00B00F3D /* toolbar_photogrid.tiff */; };
 		CECF2AE213426F120005E476 /* PhotoGridIndexInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = CECF2AE113426F120005E476 /* PhotoGridIndexInspector.m */; };
+		CEE30EB01361FCCA00565EA4 /* Inspector.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEE30EAE1361FCCA00565EA4 /* Inspector.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +61,7 @@
 		CEB4FDA910309DF60054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CECF2AE013426F120005E476 /* PhotoGridIndexInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoGridIndexInspector.h; sourceTree = "<group>"; };
 		CECF2AE113426F120005E476 /* PhotoGridIndexInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoGridIndexInspector.m; sourceTree = "<group>"; };
+		CEE30EAF1361FCCA00565EA4 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Inspector.strings; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -100,6 +102,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CEE30EAE1361FCCA00565EA4 /* Inspector.strings */,
 				3C3002C71312FCB50022E49A /* BUNDLED */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
@@ -234,6 +237,7 @@
 				3CDF98E11305D096000026AE /* placeholder.png in Resources */,
 				3C3002C81312FCB50022E49A /* BUNDLED in Resources */,
 				3C06888613353F06007A73EA /* Inspector.xib in Resources */,
+				CEE30EB01361FCCA00565EA4 /* Inspector.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,6 +330,14 @@
 				3C0429AC1306FF5D00D9F2A7 /* fr */,
 			);
 			name = placeholder.png;
+			sourceTree = "<group>";
+		};
+		CEE30EAE1361FCCA00565EA4 /* Inspector.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CEE30EAF1361FCCA00565EA4 /* fr */,
+			);
+			name = Inspector.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
