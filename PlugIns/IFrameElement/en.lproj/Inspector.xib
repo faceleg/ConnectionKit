@@ -114,7 +114,7 @@
 						<object class="NSTextFieldCell" key="NSCell" id="512414552">
 							<int key="NSCellFlags">-1805517311</int>
 							<int key="NSCellFlags2">4325888</int>
-							<string key="NSContents">rnjssaasdasd a da sda sd asd a da sd ad as da sdasd asa d ad a da sd asda sd asd as da sd as da sd  d</string>
+							<string key="NSContents"/>
 							<reference key="NSSupport" ref="26"/>
 							<reference key="NSControlView" ref="394107175"/>
 							<bool key="NSDrawsBackground">YES</bool>
