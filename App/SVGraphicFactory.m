@@ -581,6 +581,7 @@ static SVGraphicFactory *sRawHTMLFactory;
            insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
     SVGraphic *result = [self insertNewGraphicInManagedObjectContext:context];
+    [result makeOriginalSize];  // e.g. so Gists created by dragging are correct size
     [result awakeFromPasteboardItems:items];
     
     // Set title to match. #94380
