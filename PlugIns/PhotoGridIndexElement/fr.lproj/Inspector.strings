@@ -1,0 +1,49 @@
+﻿/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "41"; */
+"OtherViews" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Elastic"; ObjectID = "42"; */
+"Elastic" = "Élastique";
+
+/* Class = "NSMenuItem"; title = "Fade"; ObjectID = "43"; */
+"Fade" = "Fondu";
+
+/* Class = "NSMenuItem"; title = "None"; ObjectID = "65"; */
+"None" = "Aucun";
+
+/* Class = "NSTextFieldCell"; title = "Transition:"; ObjectID = "67"; */
+"Transition:" = "Transition :";
+
+/* Class = "NSTextFieldCell"; title = "Background:"; ObjectID = "71"; */
+"Background:" = "Arrière-plan :";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "100"; */
+"Box" = "Box";
+
+/* Class = "NSButtonCell"; title = "Wrap around"; ObjectID = "114"; */
+"Wrap around" = "Envelopper";
+
+/* Class = "NSTextFieldCell"; title = "At last item:"; ObjectID = "116"; */
+"At last item:" = "Au dernier élément :";
+
+/* Class = "NSTextFieldCell"; title = "Slideshow:"; ObjectID = "122"; */
+"Slideshow:" = "Diaporama :";
+
+/* Class = "NSTextFieldCell"; title = "Speed"; ObjectID = "124"; */
+"Speed" = "Vitesse";
+/* Class = "NSMenuItem"; title = "Start manually"; ObjectID = "128"; */
+"Start manually" = "Démarrer manuellement";
+
+/* Class = "NSMenuItem"; title = "Start automatically"; ObjectID = "129"; */
+"Start automatically" = "Démarrer automatiquement";
+
+/* Class = "NSMenuItem"; title = "Disabled"; ObjectID = "130"; */
+"Disabled" = "Désactivé";
+
+/* Class = "NSButtonCell"; title = "Show at most:"; ObjectID = "140"; */
+"Show at most:" = "Montrer au plus :";
+
+/* Class = "NSTextFieldCell"; title = "888 items"; ObjectID = "141"; */
+"888 items" = "888 éléments";
+
+/* Class = "NSButtonCell"; title = "Gallery"; ObjectID = "153"; */
+"Gallery" = "Galerie";
