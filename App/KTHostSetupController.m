@@ -121,12 +121,10 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	[KTHostSetupController setKeys:
         [NSArray arrayWithObjects: @"localSubFolder", @"localSharedMatrix", nil]
         triggerChangeNotificationsForDependentKey: @"localURL"];
+    
     [KTHostSetupController setKeys:
         [NSArray arrayWithObjects: @"localHostName", @"localSubFolder", @"localSharedMatrix", nil]
         triggerChangeNotificationsForDependentKey: @"globalSiteURL"];
-    [KTHostSetupController setKeys:
-        [NSArray arrayWithObjects: @"subFolder", @"userName", @"docRoot", @"remoteHosting", @"stemURL", @"domainName", nil]
-        triggerChangeNotificationsForDependentKey: @"remoteSiteURL"];
 
 	[KTHostSetupController setKeys:
 			[NSArray arrayWithObjects: @"hostName", @"port", @"docRoot", @"stemURL", @"protocol", @"subFolder", @"userName", nil]
@@ -163,6 +161,11 @@ static NSCharacterSet *sIllegalSubfolderSet;
         triggerChangeNotificationsForDependentKey: @"canCreateNewConfiguration"];
 	
 	[pool release];
+}
+
++ (NSSet *)keyPathsForValuesAffectingRemoteSiteURL
+{
+    return [NSSet setWithObjects:@"subFolder", @"userName", @"docRoot", @"remoteHosting", @"stemURL", @"domainName", nil];
 }
 
 - (id)initWithHostProperties:(KTHostProperties *)hostProperties
@@ -1799,7 +1802,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		[self setDotMacTimer:nil];
 	}
 
-	// Special: If we are at the Apache panel, start checking for changes in the .Mac status
+	// Special: If we are at the Apache panel, start checking for changes in the Apache status
 	if ([aCurrentState isEqualToString:@"apache"])
 	{
 		// Now start checking for any changes in Apache
