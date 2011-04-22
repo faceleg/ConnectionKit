@@ -39,6 +39,7 @@
 
 
 // SVLocalizedString(@"Flickr (Placeholder)", "String_On_Page_Template")
+// SVLocalizedString(@"More ", "String_On_Page_Template")
 // SVLocalizedString(@"Flickr photos", "String_On_Page_Template")
 // SVLocalizedString(@" tagged with ", "String_On_Page_Template")
 
@@ -102,7 +103,7 @@
     if (path && ![path isEqualToString:@""]) 
     {
         NSURL *cssURL = [NSURL fileURLWithPath:path];
-        [context addCSSWithURL:cssURL];
+        [context addResourceAtURL:cssURL destination:SVDestinationMainCSS options:0];
     }
 }
 
