@@ -580,10 +580,14 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     WEKWebEditorView *webEditor = [self webEditor];
     if ([webEditor shouldChangeTextInDOMRange:insertionRange])
     {
+        SVWebEditorHTMLContext *context = [self HTMLContext];
+        
+        
         // Create controller for graphic
         SVGraphicDOMController *controller = [[graphic newDOMController] autorelease];
         [controller loadPlaceholderDOMElementInDocument:[[self HTMLElement] ownerDocument]];
-        [controller setHTMLContext:[self HTMLContext]];
+        [controller setHTMLContext:context];
+        
         
         // Generate & insert DOM node
         [insertionRange insertNode:[controller HTMLElement]];
@@ -596,8 +600,12 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
         // Finish the edit – had to wait until both node and controller were present
         [webEditor didChangeText];
         
+        /*  STOP!!
+         *  I've found that in some rare cases -didChangeText can trigger a reload of the page which throws away this controller. Thus, don't access self after this point.
+         */
+        
         // Tell the graphic what's happened. Wait until after -didChangeText so full model has been hooked up
-        KTPage *page = [[self HTMLContext] page];        
+        KTPage *page = [context page];        
         [graphic pageDidChange:page];
         [controller update];	// push it through quickly
     }
