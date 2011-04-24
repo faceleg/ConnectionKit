@@ -35,3 +35,6 @@
 - (id)propertyListForType:(NSString *)type;
 
 @end
+
+
+//  If you're looking for more functionality, SVPlugIn features some support methods for handling pasteboard items
