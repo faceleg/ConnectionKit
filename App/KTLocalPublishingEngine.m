@@ -177,7 +177,7 @@
         NSData *digest = [data SHA1Digest];
         [data release];
         
-        [[self ks_proxyOnThread:nil waitUntilDone:NO]
+        [[self ks_proxyOnThread:nil]    // WANT to wait until done, else might be queued AFTER disconnect
          publishContentsOfURL:localURL toPath:remotePath cachedSHA1Digest:digest object:object];
     }
     else
@@ -191,7 +191,7 @@
             if ([fileManager fileExistsAtPath:[localURL path] isDirectory:&isDirectory] &&
                 isDirectory)
             {
-                [[self ks_proxyOnThread:nil waitUntilDone:NO]
+                [[self ks_proxyOnThread:nil]    // WANT to wait until done, else might be queued AFTER disconnect
                  publishContentsOfURL:localURL
                  toPath:remotePath
                  cachedSHA1Digest:[NSData data] // stops us trying to calculate digest again!
