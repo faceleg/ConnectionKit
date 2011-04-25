@@ -10,6 +10,7 @@
 
 #import "KT.h"
 #import "SVHTMLContext.h"
+#import "SVImage.h"
 #import "SVSiteItem.h"
 
 
@@ -174,6 +175,28 @@
     
     DOMText *text = [document createTextNode:[self targetDescription]];
     [result appendChild:text];
+    
+    return result;
+}
+
+- (NSString *)hrefInContext:(SVHTMLContext *)context image:(SVImage *)image;
+{
+    NSString *result;
+    if ([self linkType] == SVLinkToFullSizeImage)
+    {
+        NSURL *URL = [context addMedia:[image media]];
+        result = [context relativeStringFromURL:URL];
+    }
+    else
+    {
+        result = [context relativeStringFromURL:[NSURL URLWithString:[self URLString]]];
+    }
+    
+    // Fallback to raw string if previous failed
+    if (!result)
+    {
+        result = [self URLString];
+    }
     
     return result;
 }

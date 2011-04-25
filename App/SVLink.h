@@ -22,7 +22,7 @@ typedef enum {
 } SVLinkType;
 
 
-@class SVSiteItem, SVHTMLContext;
+@class SVSiteItem, SVHTMLContext, SVImage;
 
 
 @interface SVLink : NSObject <NSCopying, NSCoding>  // NSCoding DOESN'T apply to page links
@@ -58,6 +58,7 @@ typedef enum {
 #pragma mark HTML
 - (void)writeStartTagToContext:(SVHTMLContext *)context;
 - (DOMElement *)createDOMElementInDocument:(DOMDocument *)document;
+- (NSString *)hrefInContext:(SVHTMLContext *)context image:(SVImage *)image;
 
 
 @end
