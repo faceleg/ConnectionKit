@@ -131,6 +131,17 @@
                        [properties objectForKey:@"richTextHTML3"]]];
 
         }
+        
+        
+        // Page intro too?
+        if ([[mapping name] isEqualToString:@"PageToArticle"])
+        {
+            NSString *intro = [sInstance valueForKey:@"introductionHTML"];
+            if ([intro length])
+            {
+                string = (string ? [intro stringByAppendingString:string] : intro);
+            }
+        }
     }
     
     
