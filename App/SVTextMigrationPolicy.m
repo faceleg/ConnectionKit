@@ -293,20 +293,13 @@
     {
         NSManagedObject *anAttachment = [attachments objectAtIndex:i];
         
-        BOOL wasIndex = [[manager sourceInstancesForEntityMappingNamed:@"IndexToTextAttachment"
-                                                  destinationInstances:[NSArray arrayWithObject:anAttachment]] count];
+        BOOL isCallout = [[manager sourceInstancesForEntityMappingNamed:@"CalloutToTextAttachment"
+                                                   destinationInstances:[NSArray arrayWithObject:anAttachment]] count];
         
         
-        if (wasIndex)
-        {
-            NSString *string = [[dInstance valueForKey:@"string"] stringByAppendingString:[NSString stringWithUnichar:NSAttachmentCharacter]];
-            [dInstance setValue:string forKey:@"string"];
-            
-            [anAttachment setValue:[NSNumber numberWithUnsignedInteger:([string length] - 1)] forKey:@"location"];
-        }
         //else if ([[anAttachment valueForKey:@"location"] shortValue] >= 32767) break;    // we've reached the embedded images
         
-        else
+        if (isCallout)
         {
             // Correct location in case source document was a little wonky
             
@@ -314,6 +307,13 @@
             [dInstance setValue:string forKey:@"string"];
             
             [anAttachment setValue:[NSNumber numberWithUnsignedInteger:i] forKey:@"location"];
+        }
+        else
+        {
+            NSString *string = [[dInstance valueForKey:@"string"] stringByAppendingString:[NSString stringWithUnichar:NSAttachmentCharacter]];
+            [dInstance setValue:string forKey:@"string"];
+            
+            [anAttachment setValue:[NSNumber numberWithUnsignedInteger:([string length] - 1)] forKey:@"location"];
         }
     }
     
