@@ -151,8 +151,8 @@ typedef enum {
 
 #pragma mark UI
 // Default implementation looks for a Template.nib file (xibs work too). If found, a view controller is made and returned.
-// The class name for the controller is guessed, falling back to vanilla SVInspectorViewController.
-// Override this method if either of those behaviours isn't good enough
+// The class name for the controller is guessed, as described at http://www.karelia.com/sandvox/help/z/Sandvox_Developers_Guide.html#Further_Inspector_Customization
+// Override if that behaviour isn't enough
 + (SVInspectorViewController *)makeInspectorViewController;
 
 
