@@ -97,6 +97,13 @@
                                        inheritFromContext:[self HTMLContext]];
     [[self textBlock] buildGraphicalText:context];
     
+    
+    // Copy across dependencies. #117522
+    for (KSObjectKeyPathPair *aDependency in [[context rootDOMController] dependencies])
+    {
+        [self addDependency:aDependency];
+    }
+    
     NSString *style = [[[context currentElementInfo] attributesAsDictionary] objectForKey:@"style"];
     [[[self textHTMLElement] style] setCssText:style];
     [self setAlignment:[self alignment]];   // repair alignemnt #113613
