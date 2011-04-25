@@ -18,6 +18,7 @@
 
 #import "BDAlias.h"
 #import "KSExtensibleManagedObject.h"
+#import "KSSHA1Stream.h"
 
 
 @implementation SVMediaMigrationPolicy 
@@ -154,6 +155,30 @@
                                                                                     error:error];
     if (!dInstance && error && !*error) return YES;
     return (dInstance != nil);
+}
+
+@end
+
+
+#pragma mark -
+
+
+@implementation SVFullPageRawHTMLMediaMigrationPolicy
+
+- (NSData *)extensiblePropertiesFromHTMLString:(NSString *)html;
+{
+    NSData *data = [html dataUsingEncoding:NSUTF8StringEncoding];
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:
+                                       @"x-sandvox-fake-url:///%@.%@",
+                                       [data sha1DigestString],
+                                       @"html"]];
+    
+    SVMedia *media = [[SVMedia alloc] initWithData:data URL:url];
+    NSDictionary *properties = [NSDictionary dictionaryWithObject:media forKey:@"media"];
+    [media release];
+    
+    return [KSExtensibleManagedObject archiveExtensibleProperties:properties];
 }
 
 @end

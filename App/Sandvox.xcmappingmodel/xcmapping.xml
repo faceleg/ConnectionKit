@@ -5,7 +5,7 @@
     <databaseInfo>
         <version>134481920</version>
         <UUID>80C5EDCE-7FD9-41E4-AB5D-2568EBA8138D</UUID>
-        <nextObjectID>601</nextObjectID>
+        <nextObjectID>603</nextObjectID>
         <metadata>
             <plist version="1.0">
                 <dict>
@@ -3172,6 +3172,7 @@ GAcIExQZGh8gKC0yMzY3O0BBRkpQUldbXlUkbnVsbNUJCgsMDQ4PEBESXxAQTlNFeHByZXNzaW9uVHlw
         <relationship name="relationshipmappings" type="0/0" destination="XDDEVRELATIONSHIPMAPPING"></relationship>
     </object>
     <object type="XDDEVENTITYMAPPING" id="z599">
+        <attribute name="migrationpolicyclassname" type="string">SVFullPageRawHTMLMediaMigrationPolicy</attribute>
         <attribute name="sourcename" type="string">Page</attribute>
         <attribute name="sourcefilterpredicatestring" type="string">pluginIdentifier == "sandvox.HTMLElement" \u2600\u2600 pluginHTMLIsFullPage == YES</attribute>
         <attribute name="name" type="string">HTMLPageToFileMedia</attribute>
@@ -3180,7 +3181,7 @@ GAcIExQZGh8gKC0yMzY3O0BBRkpQUldbXlUkbnVsbNUJCgsMDQ4PEBESXxAQTlNFeHByZXNzaW9uVHlw
         <attribute name="destinationname" type="string">FileMedia</attribute>
         <attribute name="autogenerateexpression" type="bool">1</attribute>
         <relationship name="mappingmodel" type="1/1" destination="XDDEVMAPPINGMODEL" idrefs="z353"></relationship>
-        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z601"></relationship>
+        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z601 z602 z603"></relationship>
         <relationship name="relationshipmappings" type="0/0" destination="XDDEVRELATIONSHIPMAPPING" idrefs="z600"></relationship>
     </object>
     <object type="XDDEVRELATIONSHIPMAPPING" id="z600">
@@ -3195,6 +3196,20 @@ GAcIExQZGh8gKC0yMzY3O0BBRkpQUldbXlUkbnVsbNUJCgsMDQ4PEBESXxAQTlNFeHByZXNzaW9uVHlw
 FAcIExQZGh8gKC0yMzg8QkZLTFFTVSRudWxs1QkKCwwNDg8QERJfEBBOU0V4cHJlc3Npb25UeXBlXk5TU2VsZWN0b3JOYW1lViRjbGFzc1lOU09wZXJhbmRbTlNBcmd1bWVudHMQBIACgBOAA4AOXxAYc3RyaW5nQnlBcHBlbmRpbmdTdHJpbmc61QkKCwwNDhUWFxiABIANgAWACF8QEHZhbHVlRm9yS2V5UGF0aDrTGwkLHB0eWk5TVmFyaWFibGWABhACgAdWc291cmNl0iEiIyRaJGNsYXNzbmFtZVgkY2xhc3Nlc18QFE5TVmFyaWFibGVFeHByZXNzaW9uoyUmJ18QFE5TVmFyaWFibGVFeHByZXNzaW9uXE5TRXhwcmVzc2lvblhOU09iamVjdNILKSorWk5TLm9iamVjdHOADKEsgAnTLgkLLzAxWU5TS2V5UGF0aIAKEAqAC1hmaWxlTmFtZdIhIjQ1XxAcTlNLZXlQYXRoU3BlY2lmaWVyRXhwcmVzc2lvbqM2NydfEBxOU0tleVBhdGhTcGVjaWZpZXJFeHByZXNzaW9uXE5TRXhwcmVzc2lvbtIhIjk6Xk5TTXV0YWJsZUFycmF5ozk7J1dOU0FycmF50iEiPT5fEBNOU0tleVBhdGhFeHByZXNzaW9upD9AQSdfEBNOU0tleVBhdGhFeHByZXNzaW9uXxAUTlNGdW5jdGlvbkV4cHJlc3Npb25cTlNFeHByZXNzaW9u0gspQ0SAEqFFgA/TCUcLSElKXxAPTlNDb25zdGFudFZhbHVlEACAEIARVS5odG1s0iEiTU5fEBlOU0NvbnN0YW50VmFsdWVFeHByZXNzaW9uo09QJ18QGU5TQ29uc3RhbnRWYWx1ZUV4cHJlc3Npb25cTlNFeHByZXNzaW9u0iEiO1KiOyfSISJUVV8QFE5TRnVuY3Rpb25FeHByZXNzaW9uo1ZXJ18QFE5TRnVuY3Rpb25FeHByZXNzaW9uXE5TRXhwcmVzc2lvbl8QD05TS2V5ZWRBcmNoaXZlctFaW1Ryb290gAEACAARABoAIwAtADIANwBOAFQAXwByAIEAiACSAJ4AoACiAKQApgCoAMMAzgDQANIA1ADWAOkA8AD7AP0A/wEBAQgBDQEYASEBOAE8AVMBYAFpAW4BeQF7AX0BfwGGAZABkgGUAZYBnwGkAcMBxwHmAfMB+AIHAgsCEwIYAi4CMwJJAmACbQJyAnQCdgJ4An8CkQKTApUClwKdAqICvgLCAt4C6wLwAvMC+AMPAxMDKgM3A0kDTANRAAAAAAAAAgEAAAAAAAAAXAAAAAAAAAAAAAAAAAAAA1M=
 </attribute>
         <attribute name="name" type="string">preferredFilename</attribute>
+        <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z599"></relationship>
+    </object>
+    <object type="XDDEVATTRIBUTEMAPPING" id="z602">
+        <attribute name="valueexpressiondata" type="binary">YnBsaXN0MDDUAQIDBAUGGBlYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoKQH
+CA8QVSRudWxs0wkKCwwNDl8QEE5TRXhwcmVzc2lvblR5cGVfEA9OU0NvbnN0YW50VmFsdWVWJGNsYXNzEACAAoADCdIREhMUWiRjbGFzc25hbWVYJGNsYXNzZXNfEBlOU0NvbnN0YW50VmFsdWVFeHByZXNzaW9uoxUWF18QGU5TQ29uc3RhbnRWYWx1ZUV4cHJlc3Npb25cTlNFeHByZXNzaW9uWE5TT2JqZWN0XxAPTlNLZXllZEFyY2hpdmVy0RobVHJvb3SAAQAIABEAGgAjAC0AMgA3ADwAQgBJAFwAbgB1AHcAeQB7AHwAgQCMAJUAsQC1ANEA3gDnAPkA/AEBAAAAAAAAAgEAAAAAAAAAHAAAAAAAAAAAAAAAAAAAAQM=
+</attribute>
+        <attribute name="name" type="string">shouldCopyFileIntoDocument</attribute>
+        <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z599"></relationship>
+    </object>
+    <object type="XDDEVATTRIBUTEMAPPING" id="z603">
+        <attribute name="valueexpressiondata" type="binary">YnBsaXN0MDDUAQIDBAUGbW5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK8Q
+HQcIExQZGiInLC0yMzY3O0BBREVJTk9UWF5gZWlsVSRudWxs1QkKCwwNDg8QERJfEBBOU0V4cHJlc3Npb25UeXBlXk5TU2VsZWN0b3JOYW1lViRjbGFzc1lOU09wZXJhbmRbTlNBcmd1bWVudHMQBIACgBmAA4AGXxAjZXh0ZW5zaWJsZVByb3BlcnRpZXNGcm9tSFRNTFN0cmluZzrTFQkLFhcYWk5TVmFyaWFibGWABBACgAVcZW50aXR5UG9saWN50hscHR5aJGNsYXNzbmFtZVgkY2xhc3Nlc18QFE5TVmFyaWFibGVFeHByZXNzaW9uox8gIV8QFE5TVmFyaWFibGVFeHByZXNzaW9uXE5TRXhwcmVzc2lvblhOU09iamVjdNILIyQlWk5TLm9iamVjdHOAGKEmgAfVCQoLDA0OKCkqK4AIgBeACYAaXxAQdmFsdWVGb3JLZXlQYXRoOtUJCgsMDQ4uEDAxgAqAGYALgA1fEB1leHRlbnNpYmxlUHJvcGVydGllc0Zyb21EYXRhOtMVCQs0FxiADIAFV21hbmFnZXLSCyMkOYAYoTqADtUJCgsMDQ48KT4/gA+AF4AQgBJfEBB2YWx1ZUZvcktleVBhdGg60xUJC0IXGIARgAVWc291cmNl0gsjRkeAFqFIgBPTSgkLS0xNWU5TS2V5UGF0aIAUEAqAFV8QGGV4dGVuc2libGVQcm9wZXJ0aWVzRGF0YdIbHFBRXxAcTlNLZXlQYXRoU3BlY2lmaWVyRXhwcmVzc2lvbqNSUyFfEBxOU0tleVBhdGhTcGVjaWZpZXJFeHByZXNzaW9uXE5TRXhwcmVzc2lvbtIbHFVWXk5TTXV0YWJsZUFycmF5o1VXIVdOU0FycmF50hscWVpfEBNOU0tleVBhdGhFeHByZXNzaW9upFtcXSFfEBNOU0tleVBhdGhFeHByZXNzaW9uXxAUTlNGdW5jdGlvbkV4cHJlc3Npb25cTlNFeHByZXNzaW9u0hscV1+iVyHSGxxhYl8QFE5TRnVuY3Rpb25FeHByZXNzaW9uo2NkIV8QFE5TRnVuY3Rpb25FeHByZXNzaW9uXE5TRXhwcmVzc2lvbtILI0ZngBahaIAb00oJC2pMTYAcgBVUaHRtbF8QD05TS2V5ZWRBcmNoaXZlctFvcFRyb290gAEACAARABoAIwAtADIANwBXAF0AaAB7AIoAkQCbAKcAqQCrAK0ArwCxANcA3gDpAOsA7QDvAPwBAQEMARUBLAEwAUcBVAFdAWIBbQFvAXEBcwF+AYABggGEAYYBmQGkAaYBqAGqAawBzAHTAdUB1wHfAeQB5gHoAeoB9QH3AfkB+wH9AhACFwIZAhsCIgInAikCKwItAjQCPgJAAkICRAJfAmQCgwKHAqYCswK4AscCywLTAtgC7gLzAwkDIAMtAzIDNQM6A1EDVQNsA3kDfgOAA4IDhAOLA40DjwOUA6YDqQOuAAAAAAAAAgEAAAAAAAAAcQAAAAAAAAAAAAAAAAAAA7A=
+</attribute>
+        <attribute name="name" type="string">extensiblePropertiesData</attribute>
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z599"></relationship>
     </object>
 </database>

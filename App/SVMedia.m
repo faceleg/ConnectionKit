@@ -259,7 +259,7 @@
     [self init];
     
     _fileURL = [[aDecoder decodeObjectForKey:@"fileURL"] copy];
-    _webResource = [[aDecoder decodeObjectForKey:@"webResource"] copy];
+    _webResource = [[[aDecoder ks_proxyOnThread:nil] decodeObjectForKey:@"webResource"] copy];
     _preferredFilename = [[aDecoder decodeObjectForKey:@"preferredFilename"] copy];
     
     return self;

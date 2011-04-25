@@ -19,3 +19,10 @@
 + (NSManagedObject *)sourceMediaFileForContainerIdentifier:(NSString *)containerID manager:(SVMigrationManager *)manager error:(NSError **)error;
 
 @end
+
+
+#pragma mark -
+
+
+@interface SVFullPageRawHTMLMediaMigrationPolicy : NSEntityMigrationPolicy
+@end
