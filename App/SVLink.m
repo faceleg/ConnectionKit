@@ -159,9 +159,12 @@
 
 #pragma mark HTML
 
-- (void)writeStartTagToContext:(SVHTMLContext *)context;
+- (void)writeStartTagToContext:(SVHTMLContext *)context image:(SVImage *)image;
 {
-    [context startAnchorElementWithHref:[self URLString]
+    NSString *href = [self hrefInContext:context image:image];
+    if (!href) href = @"";
+    
+    [context startAnchorElementWithHref:href
                                   title:nil
                                  target:([self openInNewWindow] ? @"_blank" : nil)
                                     rel:nil];

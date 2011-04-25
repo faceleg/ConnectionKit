@@ -363,20 +363,10 @@
         if (link)
         {
             [context pushClassName:@"imageLink"];
-            
-            NSString *href = @"";
-            if ([link linkType] == SVLinkToFullSizeImage)
+            [link writeStartTagToContext:context image:self];
             {
-                NSURL *URL = [context addMedia:[self media]];
-                if (URL) href = [context relativeStringFromURL:URL];
+                [self writeImageElement:context];
             }
-            else
-            {
-                href = [[self link] URLString];
-            }
-            
-            [link writeStartTagToContext:context];
-            [self writeImageElement:context];
             [context endElement];
         }
         else

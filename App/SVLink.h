@@ -56,7 +56,7 @@ typedef enum {
 
 
 #pragma mark HTML
-- (void)writeStartTagToContext:(SVHTMLContext *)context;
+- (void)writeStartTagToContext:(SVHTMLContext *)context image:(SVImage *)image;
 - (DOMElement *)createDOMElementInDocument:(DOMDocument *)document;
 - (NSString *)hrefInContext:(SVHTMLContext *)context image:(SVImage *)image;
 
