@@ -175,8 +175,12 @@ typedef enum {
 
 
 #pragma mark Pasteboard Support
+
 // All the types that -[SVPasteboardItem URL] supports. Great starting point for your implementation of +readableTypesForPasteboard:
 + (NSArray *)readableURLTypesForPasteboard:(NSPasteboard *)pasteboard;
+
+// For if you need to interpret pasteboard items manually, perhaps as part of a drag & drop implementation for plug-in's inspector
++ (NSArray *)pasteboardItemsFromPasteboard:(NSPasteboard *)pasteboard;
 
 
 #pragma mark Undo Management

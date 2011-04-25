@@ -55,7 +55,7 @@
 #pragma mark -
 #pragma mark Dragging
 
-- (NSArray *)URLDragTypes { return SVWebLocationGetReadablePasteboardTypes(nil); }
+- (NSArray *)URLDragTypes { return [SVPlugIn readableURLTypesForPasteboard:nil]; }
 
 - (NSArray *)dragTypesToRegister
 {
@@ -65,8 +65,8 @@
 - (id)valueForDropFromPasteboard:(NSPasteboard *)pasteboard
 {
 	// Retrieve the appropriate URL from the pasteboard
-    NSArray *webLocations = [pasteboard readWebLocations];
-    NSURL *result = ([webLocations count] ? [[webLocations objectAtIndex:0] URL] : nil);
+    NSArray *pboardItems = [SVPlugIn pasteboardItemsFromPasteboard:pasteboard];
+    NSURL *result = ([pboardItems count] ? [[pboardItems objectAtIndex:0] URL] : nil);
     return result;
 }
 

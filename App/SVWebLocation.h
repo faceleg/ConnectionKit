@@ -25,17 +25,6 @@
 #pragma mark -
 
 
-@interface NSPasteboard (SVWebLocation)
-- (NSArray *)readWebLocations;
-@end
-
-
-NSArray *SVWebLocationGetReadablePasteboardTypes(NSPasteboard *pasteboard);
-
-
-#pragma mark -
-
-
 @interface NSWorkspace (SVWebLocation)
 - (id <SVWebLocation>)fetchBrowserWebLocation;
 - (id <SVWebLocation>)fetchFeedWebLocation;

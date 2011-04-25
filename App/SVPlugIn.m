@@ -27,6 +27,7 @@
 
 #import "NSBundle+KTExtensions.h"
 #import "NSManagedObject+KTExtensions.h"
+#import "SVPasteboardItemInternal.h"
 
 #import "KSWebLocationPasteboardUtilities.h"
 
@@ -356,6 +357,11 @@ static id <SVPlugInContext> sCurrentContext;
 + (NSArray *)readableURLTypesForPasteboard:(NSPasteboard *)pasteboard;
 {
     return [KSWebLocation readableTypesForPasteboard:pasteboard];
+}
+
++ (NSArray *)pasteboardItemsFromPasteboard:(NSPasteboard *)pasteboard;
+{
+    return [pasteboard sv_pasteboardItems];
 }
 
 #pragma mark Other

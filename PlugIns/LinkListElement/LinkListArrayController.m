@@ -97,7 +97,7 @@
 
 /*!	Also accept drag URL drag.  
 */
-- (NSArray *)urlTypes { return SVWebLocationGetReadablePasteboardTypes(nil); }
+- (NSArray *)urlTypes { return [SVPlugIn readableURLTypesForPasteboard:nil]; }
 
 - (NSArray *)dragTypesToRegister
 {
@@ -123,16 +123,19 @@
     else
     {
         // Get the URLs and titles from the pasteboard
-        NSArray *webLocations = [pasteboard readWebLocations];
+        NSArray *pboardItems = [SVPlugIn pasteboardItemsFromPasteboard:pasteboard];
         
         // Run through the URLs looking for something we can use
-        for ( id<SVWebLocation> location in webLocations )
+        for (id <SVPasteboardItem> location in pboardItems)
         {
-            NSMutableDictionary *link = [LinkListPlugIn displayableLinkFromLocation:location];
-            if ( link )
+            if ([location conformsToProtocol:@protocol(SVWebLocation)])
             {
-                result = NSDragOperationPrivate;
-                break;
+                NSMutableDictionary *link = [LinkListPlugIn displayableLinkFromLocation:(id <SVWebLocation>)location];
+                if ( link )
+                {
+                    result = NSDragOperationPrivate;
+                    break;
+                }
             }
         }
         
@@ -159,18 +162,21 @@
 	
 	// Get the URLs and titles from the pasteboard
 	NSPasteboard *pasteboard = [info draggingPasteboard];
-	NSArray *webLocations = [pasteboard readWebLocations];
+	NSArray *pboardItems = [SVPlugIn pasteboardItemsFromPasteboard:pasteboard];
 	
 	// Run through the URLs, adding them to the table
-    for ( id<SVWebLocation> location in webLocations )
+    for (id <SVPasteboardItem> location in pboardItems )
 	{
-        NSMutableDictionary *link = [LinkListPlugIn displayableLinkFromLocation:location];
-        if ( link )
+        if ([location conformsToProtocol:@protocol(SVWebLocation)])
         {
-            [self insertObject:link atArrangedObjectIndex:row];
-            [self setSelectionIndex:row];
-            row++;
-            didInsert = YES;
+            NSMutableDictionary *link = [LinkListPlugIn displayableLinkFromLocation:(id <SVWebLocation>)location];
+            if ( link )
+            {
+                [self insertObject:link atArrangedObjectIndex:row];
+                [self setSelectionIndex:row];
+                row++;
+                didInsert = YES;
+            }
         }
 	}
 	
