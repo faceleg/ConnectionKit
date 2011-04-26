@@ -287,19 +287,23 @@
 	// If the user has specified a custom banner and the design supports it, load it in
 	if ([[self bannerType] boolValue])
     {
-        if ([[self banner] fileURL])
+        SVMediaRecord *banner = [self banner];
+        NSURL *bannerURL = [banner fileURL];
+        
+        if (bannerURL)
         {
             NSString *bannerCSSSelector = [[self design] bannerCSSSelector];
             if (bannerCSSSelector)
             {
                 NSMutableDictionary *scalingProperties = [[[self design] imageScalingPropertiesForUse:@"bannerImage"] mutableCopy];
                 OBASSERT(scalingProperties);
-                [scalingProperties setObject:(NSString *)kUTTypeJPEG forKey:@"fileType"];
                 
-                SVMediaRecord *banner = [self banner];
+                NSString *type = [[NSWorkspace sharedWorkspace] typeOfFile:[bannerURL path] error:NULL];
+                if (![type isEqualToString:(NSString *)kUTTypePNG]) type = (NSString *)kUTTypeJPEG;
+                [scalingProperties setObject:type forKey:@"fileType"];
                 
-                NSURL *URL = [NSURL sandvoxImageURLWithFileURL:[banner fileURL]
-                                             scalingProperties:scalingProperties];
+                
+                NSURL *URL = [NSURL sandvoxImageURLWithFileURL:bannerURL scalingProperties:scalingProperties];
                 [scalingProperties release];
                 
                 URL = [context addBannerWithURL:URL];
