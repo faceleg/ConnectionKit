@@ -689,14 +689,38 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     [super awakeFromPropertyList:propertyList];
     
     // Restore title
-    NSDictionary *serializedTitle = [propertyList objectForKey:@"titleBox"];
-    if (serializedTitle)
+    NSDictionary *plist = [propertyList objectForKey:@"titleBox"];
+    if (plist)
     {
-        [[self titleBox] awakeFromPropertyList:serializedTitle];
+        [[self titleBox] awakeFromPropertyList:plist];
     }
     else
     {
         [self setShowsTitle:NO];
+    }
+    
+    
+    // Intro
+    plist = [propertyList objectForKey:@"introduction"];
+    if (plist)
+    {
+        [[self introduction] awakeFromPropertyList:plist];
+    }
+    else
+    {
+        [self setShowsIntroduction:NO];
+    }
+    
+    
+    // Caption
+    plist = [propertyList objectForKey:@"caption"];
+    if (plist)
+    {
+        [[self caption] awakeFromPropertyList:plist];
+    }
+    else
+    {
+        [self setShowsIntroduction:NO];
     }
     
     
