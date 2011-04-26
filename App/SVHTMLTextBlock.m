@@ -435,11 +435,13 @@
     if (![self isFieldEditor]) [result setPlaceholderHTMLString:@"<p><br /></p>"];
     
     // Bind to model
-    [result bind:NSValueBinding
-        toObject:[self HTMLSourceObject]
-     withKeyPath:[self HTMLSourceKeyPath]
-         options:nil];
-    
+    if ([self HTMLSourceObject] && [self HTMLSourceKeyPath])
+    {
+        [result bind:NSValueBinding
+            toObject:[self HTMLSourceObject]
+         withKeyPath:[self HTMLSourceKeyPath]
+             options:nil];
+    }
     
     return result;
 }
