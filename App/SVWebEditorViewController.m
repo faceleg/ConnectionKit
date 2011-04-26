@@ -1120,9 +1120,9 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     
     
     // Want serialized pagelets on pboard
-    // HACK for now, only write HTML to pboard so images don't get any custom behaviour
+    // HACK for now, don't write inline images to pboard, so don't get any custom behaviour
     SVGraphic *graphic = [[items lastObject] representedObject];
-    if ([graphic isKindOfClass:[SVRawHTMLGraphic class]])
+    if (![graphic displayInline] || [graphic isKindOfClass:[SVRawHTMLGraphic class]])
     {
         result = YES;
         
