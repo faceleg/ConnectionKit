@@ -702,8 +702,14 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 
 - (WEKWebEditorItem *)articleDOMController;
 {
+    WEKWebEditorItem *result = nil;
     SVRichText *article = [[[self HTMLContext] page] article];
-    WEKWebEditorItem *result = [[[self webEditor] contentItem] hitTestRepresentedObject:article];
+    
+    if (article)
+    {
+        result = [[[self webEditor] contentItem] hitTestRepresentedObject:article];
+    }
+    
     return result;
 }
 
