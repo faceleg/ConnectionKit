@@ -636,6 +636,12 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     
     [propertyList setValue:[[self titleBox] serializedProperties]   // might be nil in a subclass
                     forKey:@"titleBox"];
+    
+    [propertyList setValue:[[self introduction] serializedProperties]
+                    forKey:@"introduction"];
+    
+    [propertyList setValue:[[self caption] serializedProperties]   // might be nil in a subclass
+                    forKey:@"caption"];
 }
 
 - (void)writeToPasteboard:(NSPasteboard *)pboard;
