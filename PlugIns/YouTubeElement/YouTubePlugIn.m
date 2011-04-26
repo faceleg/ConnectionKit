@@ -84,7 +84,7 @@
     [super awakeFromNew];
     
     // see if we can start with the frontmost URL in the default browser
-    id<SVWebLocation> location = [[NSWorkspace sharedWorkspace] fetchBrowserWebLocation];
+    id<SVPasteboardItem> location = [[NSWorkspace sharedWorkspace] fetchBrowserWebLocation];
     if ( [[location URL] youTubeVideoID] )
     {
         self.userVideoCode = [[location URL] absoluteString];

@@ -27,7 +27,7 @@ typedef enum {
 } SVPasteboardPriority;
 
 
-@protocol SVPage, SVWebLocation;
+@protocol SVPage;
 
 
 @interface SVPlugIn : NSObject

@@ -64,7 +64,7 @@
     if (!result) return result;
     
     
-    NSManagedObject *sPagelet = [[manager sourceInstancesForEntityMappingNamed:[mapping name] destinationInstances:[NSArray arrayWithObject:dInstance]] lastObject]; 
+    NSManagedObject *sPagelet = [[manager sourceInstancesForEntityMappingNamed:[mapping name] destinationInstances:[NSArray arrayWithObject:dInstance]] lastObject];
     
     // Only interested in sidebar pagelets
     if ([dInstance valueForKey:@"textAttachment"]) return YES;

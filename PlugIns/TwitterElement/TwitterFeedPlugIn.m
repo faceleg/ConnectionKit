@@ -84,7 +84,7 @@
     [super awakeFromNew];
     
     // check for a location
-    id<SVWebLocation> location = [[NSWorkspace sharedWorkspace] fetchBrowserWebLocation];
+    id<SVPasteboardItem> location = [[NSWorkspace sharedWorkspace] fetchBrowserWebLocation];
     NSURL *URL = [location URL];
     if ( URL  )
     {

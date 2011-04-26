@@ -37,4 +37,13 @@
 @end
 
 
+#pragma mark -
+
+
+@interface NSWorkspace (SVPasteboardItem)
+- (id <SVPasteboardItem>)fetchBrowserWebLocation;
+- (id <SVPasteboardItem>)fetchFeedWebLocation;
+@end
+
+
 //  If you're looking for more functionality, SVPlugIn features some support methods for handling pasteboard items

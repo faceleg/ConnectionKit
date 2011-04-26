@@ -67,7 +67,7 @@
     [super awakeFromNew];
     
     // Attempt to automatically grab the URL from the user's browser
-    id<SVWebLocation> location = [[NSWorkspace sharedWorkspace] fetchBrowserWebLocation];
+    id<SVPasteboardItem> location = [[NSWorkspace sharedWorkspace] fetchBrowserWebLocation];
     if ( location )
     {
         if ( [location URL] ) self.linkURL = [location URL];
@@ -217,14 +217,11 @@
     
     if ( items && [items count] )
     {      
-        id<SVPasteboardItem, SVWebLocation> item = [items objectAtIndex:0];
+        id<SVPasteboardItem> item = [items objectAtIndex:0];
         
-        if ( [item conformsToProtocol:@protocol(SVWebLocation)] )
-        {
-            if ( [item  URL] ) self.linkURL = [item URL];
-            if ( [item title] ) [self setTitle:[item title]];
-            didAwakeAnItem = YES;
-        }
+        if ( [item  URL] ) self.linkURL = [item URL];
+        if ( [item title] ) [self setTitle:[item title]];
+        didAwakeAnItem = YES;
     }
     
     return didAwakeAnItem;    

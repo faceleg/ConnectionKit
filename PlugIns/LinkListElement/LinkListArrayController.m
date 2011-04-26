@@ -66,7 +66,7 @@
 */
 - (id)newObject	// must return object with a retain count of one
 {
-    id<SVWebLocation> location = [[NSWorkspace sharedWorkspace] fetchBrowserWebLocation];
+    id<SVPasteboardItem> location = [[NSWorkspace sharedWorkspace] fetchBrowserWebLocation];
     NSMutableDictionary *result = [[LinkListPlugIn displayableLinkFromLocation:location] retain];
     
     if ( !result )
@@ -128,14 +128,11 @@
         // Run through the URLs looking for something we can use
         for (id <SVPasteboardItem> location in pboardItems)
         {
-            if ([location conformsToProtocol:@protocol(SVWebLocation)])
+            NSMutableDictionary *link = [LinkListPlugIn displayableLinkFromLocation:location];
+            if ( link )
             {
-                NSMutableDictionary *link = [LinkListPlugIn displayableLinkFromLocation:(id <SVWebLocation>)location];
-                if ( link )
-                {
-                    result = NSDragOperationPrivate;
-                    break;
-                }
+                result = NSDragOperationPrivate;
+                break;
             }
         }
         
@@ -167,16 +164,13 @@
 	// Run through the URLs, adding them to the table
     for (id <SVPasteboardItem> location in pboardItems )
 	{
-        if ([location conformsToProtocol:@protocol(SVWebLocation)])
+        NSMutableDictionary *link = [LinkListPlugIn displayableLinkFromLocation:location];
+        if ( link )
         {
-            NSMutableDictionary *link = [LinkListPlugIn displayableLinkFromLocation:(id <SVWebLocation>)location];
-            if ( link )
-            {
-                [self insertObject:link atArrangedObjectIndex:row];
-                [self setSelectionIndex:row];
-                row++;
-                didInsert = YES;
-            }
+            [self insertObject:link atArrangedObjectIndex:row];
+            [self setSelectionIndex:row];
+            row++;
+            didInsert = YES;
         }
 	}
 	

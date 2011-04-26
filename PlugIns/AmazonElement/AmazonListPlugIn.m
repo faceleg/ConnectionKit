@@ -125,7 +125,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
     
     // Get the current URL from Safari and look for a possible product or list
     NSURL *browserURL = nil;
-    id<SVWebLocation> location = [[NSWorkspace sharedWorkspace] fetchBrowserWebLocation];
+    id<SVPasteboardItem> location = [[NSWorkspace sharedWorkspace] fetchBrowserWebLocation];
     if ( location )
     {
         browserURL = [location URL];

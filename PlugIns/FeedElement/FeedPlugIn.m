@@ -71,7 +71,7 @@
     
     self.max = 0;
     
-    id<SVWebLocation> location = [[NSWorkspace sharedWorkspace] fetchBrowserWebLocation];
+    id<SVPasteboardItem> location = [[NSWorkspace sharedWorkspace] fetchBrowserWebLocation];
     if ( [location URL] )
     {
         self.feedURL = [location URL];

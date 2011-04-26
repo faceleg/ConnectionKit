@@ -11,7 +11,6 @@
 #import "SVGraphicFactory.h"
 #import "SVMediaGraphic.h"
 #import "SVMediaRecord.h"
-#import "KSWebLocation+SVWebLocation.h"
 
 #import "NSString+Karelia.h"
 #import "KSURLUtilities.h"

@@ -35,7 +35,6 @@
 //
 
 #import "LinkListPlugIn.h"
-#import <SVWebLocation.h>
 #import <SVURLFormatter.h>
 
 @interface NSString (KareliaPrivate)
@@ -44,7 +43,7 @@
 
 @implementation LinkListPlugIn
 
-+ (Link *)displayableLinkFromLocation:(id<SVWebLocation>)location
++ (Link *)displayableLinkFromLocation:(id<SVPasteboardItem>)location
 {
     NSURL *URL = [location URL];
     if ( !URL ) return nil;
@@ -86,7 +85,7 @@
     self.openLinksInNewWindow = NO;
     
     // see if we can start with the frontmost URL in the default browser
-    id<SVWebLocation> location = [[NSWorkspace sharedWorkspace] fetchBrowserWebLocation];
+    id<SVPasteboardItem> location = [[NSWorkspace sharedWorkspace] fetchBrowserWebLocation];
     if ( location )
     {
         Link *link = [LinkListPlugIn displayableLinkFromLocation:location];
@@ -150,7 +149,7 @@
     {        
         for ( id <SVPasteboardItem>item in items )
         {
-            Link *link = [LinkListPlugIn displayableLinkFromLocation:(id <SVWebLocation>)item];  //lie for now
+            Link *link = [LinkListPlugIn displayableLinkFromLocation:item];  //lie for now
             if ( link ) 
             {
                 [self addLink:link];

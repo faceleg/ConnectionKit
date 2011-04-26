@@ -48,7 +48,7 @@ typedef NSMutableDictionary Link;
 }
 
 // returns keys url, title
-+ (Link *)displayableLinkFromLocation:(id<SVWebLocation>)location;
++ (Link *)displayableLinkFromLocation:(id<SVPasteboardItem>)location;
 
 - (void)addLink:(Link *)link;
 

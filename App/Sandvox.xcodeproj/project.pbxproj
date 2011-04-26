@@ -555,9 +555,6 @@
 		279C5882109916F20030F3B7 /* SVSidebar.m in Sources */ = {isa = PBXBuildFile; fileRef = 279C5880109916F20030F3B7 /* SVSidebar.m */; };
 		279D27E9103A112A0099A7DD /* NSTabView+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 279D27E7103A112A0099A7DD /* NSTabView+Karelia.h */; };
 		279D27EA103A112A0099A7DD /* NSTabView+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 279D27E8103A112A0099A7DD /* NSTabView+Karelia.m */; };
-		279DA2FC11901C140094EF12 /* SVWebLocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 279DA2FA11901C140094EF12 /* SVWebLocation.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		279DA2FD11901C140094EF12 /* SVWebLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 279DA2FB11901C140094EF12 /* SVWebLocation.m */; };
-		279DA31111901E150094EF12 /* KSWebLocation+SVWebLocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 279DA31011901E150094EF12 /* KSWebLocation+SVWebLocation.h */; };
 		279E79100F48566000BAB391 /* KSPluginInstallerController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A65C0EAFD63600BDF264 /* KSPluginInstallerController.m */; };
 		279F5EB510A73E0A00F6511F /* KSInspectorViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 279F5EB410A73E0A00F6511F /* KSInspectorViewController.h */; settings = {ATTRIBUTES = (); }; };
 		279F5EB710A73E0A00F6511F /* KSInspectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 279F5EB610A73E0A00F6511F /* KSInspectorViewController.m */; };
@@ -2281,9 +2278,6 @@
 		279C5880109916F20030F3B7 /* SVSidebar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSidebar.m; sourceTree = "<group>"; };
 		279D27E7103A112A0099A7DD /* NSTabView+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTabView+Karelia.h"; sourceTree = "<group>"; };
 		279D27E8103A112A0099A7DD /* NSTabView+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTabView+Karelia.m"; sourceTree = "<group>"; };
-		279DA2FA11901C140094EF12 /* SVWebLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebLocation.h; sourceTree = "<group>"; };
-		279DA2FB11901C140094EF12 /* SVWebLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebLocation.m; sourceTree = "<group>"; };
-		279DA31011901E150094EF12 /* KSWebLocation+SVWebLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KSWebLocation+SVWebLocation.h"; sourceTree = "<group>"; };
 		279F5EB410A73E0A00F6511F /* KSInspectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSInspectorViewController.h; sourceTree = "<group>"; };
 		279F5EB610A73E0A00F6511F /* KSInspectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSInspectorViewController.m; sourceTree = "<group>"; };
 		279FF2BC0EF27699009F6A16 /* KTPublishingEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPublishingEngine.h; sourceTree = "<group>"; };
@@ -3337,9 +3331,6 @@
 				271BFA4E10F00C2D006EA3A2 /* SVPageProtocol.h */,
 				27FAD5511146AEF80040FA44 /* SVTabViewController.h */,
 				27FAD5521146AEF80040FA44 /* SVTabViewController.m */,
-				279DA2FA11901C140094EF12 /* SVWebLocation.h */,
-				279DA2FB11901C140094EF12 /* SVWebLocation.m */,
-				279DA31011901E150094EF12 /* KSWebLocation+SVWebLocation.h */,
 				27DD0B56120329A80083C7C1 /* SVURLFormatter.h */,
 				27DD0B57120329A80083C7C1 /* SVURLFormatter.m */,
 				27D7340412118E3400722189 /* SVIndexPlugIn.h */,
@@ -6191,8 +6182,6 @@
 				273B443A1179046500A275E6 /* SVDocumentFileWrapper.h in Headers */,
 				27D9A259117FB49000049638 /* SVAuxiliaryPageletTextDOMController.h in Headers */,
 				2764AA1E1188D16C00D8E1BB /* SVArticleDOMController.h in Headers */,
-				279DA2FC11901C140094EF12 /* SVWebLocation.h in Headers */,
-				279DA31111901E150094EF12 /* KSWebLocation+SVWebLocation.h in Headers */,
 				27FA98851194BC0C003B8308 /* SVSidebarDOMController.h in Headers */,
 				CE1CFB011194DF0100F47941 /* SVDesignsController.h in Headers */,
 				27939A7E1196264E0091B5B4 /* WebEditingKit.h in Headers */,
@@ -7877,7 +7866,6 @@
 				273B438511786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.m in Sources */,
 				27D9A25A117FB49000049638 /* SVAuxiliaryPageletTextDOMController.m in Sources */,
 				2764AA1F1188D16C00D8E1BB /* SVArticleDOMController.m in Sources */,
-				279DA2FD11901C140094EF12 /* SVWebLocation.m in Sources */,
 				27FA98861194BC0C003B8308 /* SVSidebarDOMController.m in Sources */,
 				CE1CFB021194DF0100F47941 /* SVDesignsController.m in Sources */,
 				27EF99C311A4205600FC8424 /* KSXMLWriter.m in Sources */,
