@@ -231,7 +231,7 @@
 	
 	if (!result)
 	{
-		NSString *templatePath = [[NSBundle mainBundle] pathForResource:@"KTCommentsTemplate" ofType:@"html"];
+		NSString *templatePath = [[NSBundle mainBundle] overridingPathForResource:@"KTCommentsTemplate" ofType:@"html"];
 		result = [[NSString alloc] initWithContentsOfFile:templatePath];
 	}
 	
