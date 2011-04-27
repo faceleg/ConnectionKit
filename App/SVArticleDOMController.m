@@ -616,7 +616,9 @@
     
     
     // Hook up new DOM Controllers
+    [self stopObservingDependencies];
     [[self parentWebEditorItem] replaceChildWebEditorItem:self withItems:items];
+    
     for (SVDOMController *aController in items)
     {
         [aController didUpdateWithSelector:_cmd];

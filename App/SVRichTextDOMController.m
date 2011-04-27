@@ -237,6 +237,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
         {
             if ([[anItem HTMLElement] ks_isOrphanedFromDocument])
             {
+                [anItem stopObservingDependencies];
                 [anItem setHTMLElement:nil];
                 [anItem removeFromParentWebEditorItem];
             }
