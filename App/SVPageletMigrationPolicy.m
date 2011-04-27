@@ -10,6 +10,7 @@
 
 #import "SVGraphicFactory.h"
 #import "SVMediaMigrationPolicy.h"
+#import "SVLink.h"
 
 #import "NSError+Karelia.h"
 
@@ -212,6 +213,41 @@
         result = (NSString *)kUTTypeJPEG;
     }
     
+    return result;
+}
+
+- (NSData *)extensiblePropertiesDataFromSource:(NSManagedObject *)sInstance plugInIdentifier:(NSString *)identifier;
+{
+    NSData *result = [super extensiblePropertiesDataFromSource:sInstance plugInIdentifier:identifier];
+    
+    // Add in link if needed
+    NSDictionary *properties = [KSExtensibleManagedObject unarchiveExtensibleProperties:
+                                [sInstance valueForKey:@"extensiblePropertiesData"]];
+    
+    NSMutableDictionary *properties2 = [[KSExtensibleManagedObject unarchiveExtensibleProperties:result] mutableCopy];
+    
+    if ([[properties objectForKey:@"shouldIncludeLink"] boolValue])
+    {
+        if ([[properties objectForKey:@"linkImageToOriginal"] boolValue])
+        {
+            SVLink *link = [[SVLink alloc] initLinkToFullSizeImageOpensInNewWindow:NO];
+            [properties2 setObject:[NSKeyedArchiver archivedDataWithRootObject:link] forKey:@"link"];
+            [link release];
+        }
+        else
+        {
+            NSString *urlString = [properties objectForKey:@"externalURL"];
+            if (urlString)
+            {
+                SVLink *link = [SVLink linkWithURLString:urlString openInNewWindow:NO];
+                [properties2 setObject:[NSKeyedArchiver archivedDataWithRootObject:link] forKey:@"link"];
+            }
+        }
+    }
+    
+    
+    result = [KSExtensibleManagedObject archiveExtensibleProperties:properties2];
+    [properties2 release];
     return result;
 }
 
