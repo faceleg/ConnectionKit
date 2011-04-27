@@ -235,7 +235,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
         NSArray *children = [[self childWebEditorItems] copy];
         for (WEKWebEditorItem *anItem in children)
         {
-            if (![[anItem HTMLElement] parentNode])
+            if ([[anItem HTMLElement] ks_isOrphanedFromDocument])
             {
                 [anItem setHTMLElement:nil];
                 [anItem removeFromParentWebEditorItem];
