@@ -36,11 +36,6 @@ img[width="0"], img[height="0"] { display:none; }
 /*.graphic { min-height:16px; }   #91772*/
 
 
-/* While a change is happening in the editor, force floated, editable images not to float so WebKit doesn't insert spurious linebreaks. */
-.webeditor-changing[contenteditable] img { float:none !important; display:inline !important; }
-
-
-
 /* Regular placeholders are gray with white, inset text */
 .svx-placeholder
 {

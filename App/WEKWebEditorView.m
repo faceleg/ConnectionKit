@@ -910,10 +910,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
     if (![_changingTextControllers containsObjectIdenticalTo:textController])
     {
         [_changingTextControllers addObject:textController];
-        
-        // Temporarily mark the DOM as changing. #80643
-        // Yes, this is a rather horrible, kludgy hack. Mike.
-        [[textController textHTMLElement] ks_addClassName:@"webeditor-changing"];
     }
     
     
@@ -923,12 +919,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
 - (void)didChangeText;  // posts kSVWebEditorViewDidChangeNotification
 {
     // Unmark the DOM as changing. #80643
-    for (id <SVWebEditorText> aTextController in _changingTextControllers)
-    {
-        [[aTextController textHTMLElement] ks_removeClassName:@"webeditor-changing"];
-    }
-    
-    
     [_changingTextControllers makeObjectsPerformSelector:@selector(webEditorTextDidChange)];
     [_changingTextControllers removeAllObjects];
     
