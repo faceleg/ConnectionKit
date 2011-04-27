@@ -37,7 +37,8 @@
     if ([tagName isEqualToString:@"FONT"] ||    
         [tagName isEqualToString:@"I"] ||
         [tagName isEqualToString:@"B"] ||
-        [tagName isEqualToString:@"TT"])
+        [tagName isEqualToString:@"TT"] ||
+        [tagName hasPrefix:@"O:"])          // special for case like #118003
     {
         return [super handleInvalidDOMElement:element];
     }
