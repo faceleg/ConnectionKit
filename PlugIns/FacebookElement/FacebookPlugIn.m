@@ -329,6 +329,11 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
     }
 }
 
++ (NSSet *)keyPathsForValuesAffectingMinWidth
+{
+    return [NSSet setWithObject:@"layout"];
+}
+
 - (NSNumber *)minWidth
 {
     NSNumber *result = nil;
