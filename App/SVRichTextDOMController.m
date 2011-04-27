@@ -873,7 +873,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 {
     [super setRepresentedObject:object];
     
-    if ([self isObservingDependencies])
+    if (_isObservingText)
     {
         if (object)
         {
@@ -888,16 +888,12 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 
 - (void)startObservingDependencies;
 {
-    if (![self isObservingDependencies])
+    if (!_isObservingText)
     {
         // Keep an eye on model
         [self addObserver:self forKeyPath:@"representedObject.string" options:0 context:sBodyTextObservationContext];
-        _trackingString = YES;
-        
-        if ([self representedObject])
-        {
-            [self beginAttachmentsObservation];
-        }
+        if ([self representedObject]) [self beginAttachmentsObservation];
+        _isObservingText = YES;
     }
     
     [super startObservingDependencies];
@@ -906,13 +902,12 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 
 - (void)stopObservingDependencies;
 {
-    if (_trackingString)    // should be able to test isObservingDependencies but that's lying for reasons I cannot figure
+    if (_isObservingText)    // should be able to test isObservingDependencies but that's lying for reasons I cannot figure
     {
         [self removeObserver:self forKeyPath:@"representedObject.string"];
-        _trackingString = NO;
+        if ([self representedObject]) [self endAttachmentsObservation];
+        _isObservingText = NO;
     }
-    
-    [self endAttachmentsObservation];
     
     
     [super stopObservingDependencies];

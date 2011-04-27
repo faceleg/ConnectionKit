@@ -19,7 +19,7 @@
     BOOL    _importsGraphics;
     
     BOOL    _isUpdating;
-    BOOL    _trackingString;
+    BOOL    _isObservingText;
     
     NSArrayController       *_graphicsController;
     DOMHTMLAnchorElement    *_selectedLink;
