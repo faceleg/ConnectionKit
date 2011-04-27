@@ -66,10 +66,6 @@
         
         [self setSerializedValue:value forKey:aKey];
     }
-    
-    
-    // Size
-    [self makeOriginalSize];
 }
 
 - (void)dealloc

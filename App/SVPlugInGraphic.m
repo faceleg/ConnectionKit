@@ -23,6 +23,7 @@
 
 
 static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObservation";
+static void *sPlugInMinWidthObservationContext = &sPlugInMinWidthObservationContext;
 
 
 @interface SVPlugInGraphic ()
@@ -69,7 +70,14 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     [[self plugIn] awakeFromFetch];
 }
 
-- (void)awakeFromNew; { [[self plugIn] awakeFromNew]; }
+- (void)awakeFromNew;
+{
+    [[self plugIn] awakeFromNew];
+    
+    
+    // Size
+    [self makeOriginalSize];
+}
 
 - (void)awakeFromExtensiblePropertyUndoUpdateForKey:(NSString *)key;
 {
@@ -168,6 +176,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     // Tear down
     [_plugIn setValue:nil forKey:@"container"];
     [_plugIn removeObserver:self forKeyPaths:[[_plugIn class] plugInKeys]];
+    [_plugIn removeObserver:self forKeyPath:@"minWidth"];
     
     // Store
     [plugIn retain];
@@ -188,6 +197,8 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
             forKeyPaths:[[plugIn class] plugInKeys]
                 options:0
                 context:sPlugInPropertiesObservationContext];
+    
+    [plugIn addObserver:self forKeyPath:@"minWidth" options:0 context:sPlugInMinWidthObservationContext];
     
     // Connect
     [_plugIn setValue:self forKey:@"container"];
@@ -249,6 +260,18 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
         else
         {
             [self removeExtensiblePropertyForKey:keyPath];
+        }
+    }
+    else if (context == sPlugInMinWidthObservationContext)
+    {
+        NSUndoManager *undoManager = [[self managedObjectContext] undoManager];
+        if (![undoManager isUndoing] && ![undoManager isRedoing])
+        {
+            NSNumber *minWidth = [[self plugIn] minWidth];
+            if ([[self width] isLessThan:minWidth])
+            {
+                [self setWidth:minWidth];
+            }
         }
     }
     else

@@ -317,8 +317,6 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
         case STANDARD_LAYOUT:
             [self setWidth:[NSNumber numberWithInt:450] height:nil];
             break;
-        case BOX_COUNT_LAYOUT:
-        case BUTTON_COUNT_LAYOUT:
         default:
             [self setWidth:[self minWidth] height:nil];
             break;
