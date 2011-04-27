@@ -517,7 +517,8 @@
                    [tagName isEqualToString:@"BR"] ||
                    [tagName isEqualToString:@"SUP"] ||
                    [tagName isEqualToString:@"SUB"] ||
-                   [tagName isEqualToString:@"A"]);
+                   [tagName isEqualToString:@"A"] ||
+                   [tagName isEqualToString:@"U"]);
     
     return result;
 }
