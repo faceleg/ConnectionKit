@@ -246,10 +246,7 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
     [context addDependencyForKeyPath:@"urlString" ofObject:self];
 }
 
-
-#pragma mark Metrics
-
-// facebook wants width and height, so we calculate those explicitly
+// facebook wants width and height specified, so we need to calculate those explicitly
 
 - (NSNumber *)srcWidth:(id <SVPlugInContext>)context
 {
@@ -307,7 +304,8 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
     return result;
 }
 
-#pragma mark Resizing
+
+#pragma mark Metrics
 
 - (void)makeOriginalSize
 {
@@ -350,7 +348,6 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
     
     return result;
 }
-
 
 
 #pragma mark Properties
