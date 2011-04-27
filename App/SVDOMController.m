@@ -95,12 +95,20 @@
     return result;
 }
 
-- (void)setHTMLElement:(DOMHTMLElement *)element;
+// No point observing if there's no DOM to affect
+// At least that's the theory, I found in practice it broke dragging onto media placeholders
+- (void)XsetHTMLElement:(DOMHTMLElement *)element;
 {
-    [super setHTMLElement:element];
-    
-    // No point observing if there's no DOM to affect
-    if (!element) [self stopObservingDependencies];
+    if (element)
+    {
+        [super setHTMLElement:element];
+        [self startObservingDependencies];
+    }
+    else
+    {
+        [self stopObservingDependencies];
+        [super setHTMLElement:element];
+    }
 }
 
 - (void)createHTMLElement
