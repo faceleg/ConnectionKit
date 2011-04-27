@@ -455,7 +455,7 @@
 #pragma mark Other
 
 /*!	Generate path to javascript.  Nil if not there */
-- (NSString *)javascriptURLPath	// loaded after jquery so this can contain jquery in it.
+- (void)writeDesignJavascript	// loaded after jquery so this can contain jquery in it.
 {
 	NSBundle *designBundle = [[[self master] design] bundle];
 	NSString *scriptPath = [designBundle pathForResource:@"javascript" ofType:@"js"];
@@ -468,7 +468,7 @@
                                    destination:SVDestinationDesignDirectory
                                        options:0];
         
-		return [context relativeStringFromURL:url];
+		[context writeJavascriptWithSrc:[context relativeStringFromURL:url] encoding:NSUTF8StringEncoding];
 	}
 	
 	return nil;
