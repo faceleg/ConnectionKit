@@ -457,17 +457,21 @@
 /*!	Generate path to javascript.  Nil if not there */
 - (NSString *)javascriptURLPath	// loaded after jquery so this can contain jquery in it.
 {
-	NSString *result = nil;
-	
 	NSBundle *designBundle = [[[self master] design] bundle];
-	BOOL scriptExists = ([designBundle pathForResource:@"javascript" ofType:@"js"] != nil);
-	if (scriptExists)
+	NSString *scriptPath = [designBundle pathForResource:@"javascript" ofType:@"js"];
+    
+	if (scriptPath)
 	{
-		NSURL *javascriptURL = [NSURL URLWithString:@"javascript.js" relativeToURL:[[self master] designDirectoryURL]];
-		result = [javascriptURL ks_stringRelativeToURL:[self URL]];
+        SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
+        
+        NSURL *url = [context addResourceAtURL:[NSURL fileURLWithPath:scriptPath]
+                                   destination:SVDestinationDesignDirectory
+                                       options:0];
+        
+		return [context relativeStringFromURL:url];
 	}
 	
-	return result;
+	return nil;
 }
 
 #pragma mark Window Title
