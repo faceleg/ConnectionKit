@@ -26,6 +26,7 @@
 #import "SVTextBox.h"
 #import "SVTitleBox.h"
 #import "SVWebEditingURL.h"
+#import "NSBundle+KTExtensions.h"
 
 #import "SVCalloutDOMController.h"  // don't like having to do this
 
@@ -244,7 +245,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 - (void)writeJQueryImport
 {
 	// We might want to update this if a major new stable update comes along. We'd put fresh copies in the app resources.
-#define JQUERY_VERSION @"1.5.2"
+#define JQUERY_BUNDLED_VERSION @"1.5.2"
 	
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSURL *jQueryURL = nil;
@@ -252,20 +253,31 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 	NSString *scheme = [self.baseURL scheme];
 	if (!scheme) scheme = @"http";		// for instance, when newly set up. Better to show something for page source.
-    
-	if ([defaults boolForKey:@"jQueryDevelopment"])
+
+	NSString *jQueryPreferredVersion = JQUERY_BUNDLED_VERSION;	// try this initially
+	if ([defaults stringForKey:@"jQueryVersion"])
 	{
-		minimizationSuffix = @"";		// Use the development version instead, not the minimized.
+		jQueryPreferredVersion = [defaults stringForKey:@"jQueryVersion"];	// Version we will link to, or try to bundle.
 	}
 	
 	// This is either the local version, or not uploaded to a web server, or user preference to keep their own copy of jQuery.
+	// Use the overridingPathForResource method to try and look in an installed place.
 	if ([self isForEditing] || [scheme isEqualToString:@"file"] || [defaults boolForKey:@"jQueryLocal"])
 	{
-		NSURL *localJQueryURL = [NSURL fileURLWithPath:[[NSBundle mainBundle]
-                                                        pathForResource:[NSString stringWithFormat:@"jquery-%@%@", JQUERY_VERSION, minimizationSuffix]
-                                                        ofType:@"js"]];
+		NSString *localJQueryPath = [[NSBundle mainBundle]
+									 overridingPathForResource:[NSString stringWithFormat:@"jquery-%@%@", jQueryPreferredVersion, minimizationSuffix]
+									 ofType:@"js"];
+		if (!localJQueryPath)	// Not finding the version we hoped to find?
+		{
+			localJQueryPath = [[NSBundle mainBundle]
+							   pathForResource:[NSString stringWithFormat:@"jquery-%@%@", JQUERY_BUNDLED_VERSION, minimizationSuffix]
+							   ofType:@"js"];
+		}
+		NSURL *localJQueryURL = [NSURL fileURLWithPath:localJQueryPath];
 		
 		jQueryURL = [self addResourceAtURL:localJQueryURL destination:SVDestinationResourcesDirectory options:0];
+		
+		// One enhancement we could do would be to download and cache that file ourselves rather than requiring people to install it!
 		
 	}
 	else	// Normal publishing case: remote version from google, fastest for downloading.
@@ -273,7 +285,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 	{
 		jQueryURL = [NSURL URLWithString:
 					 [NSString stringWithFormat:@"%@://ajax.googleapis.com/ajax/libs/jquery/%@/jquery%@.js",
-					  scheme, JQUERY_VERSION, minimizationSuffix]];
+					  scheme, jQueryPreferredVersion, minimizationSuffix]];
 	}
 	
 	[self writeJavascriptWithSrc:[self relativeStringFromURL:jQueryURL] encoding:NSUTF8StringEncoding];
