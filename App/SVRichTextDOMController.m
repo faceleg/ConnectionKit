@@ -448,8 +448,19 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     [result awakeFromHTMLContext:[self HTMLContext]];
     [result setHTMLElement:imageElement];
     
-    [self addChildWebEditorItem:result];
+    
+    // Does this controller replace a first pass?
+    WEKWebEditorItem *existingItem = [self hitTestDOMNode:imageElement];
+    if ([existingItem parentWebEditorItem] == self)
+    {
+        [self replaceChildWebEditorItem:existingItem withItems:NSARRAY(result)];
+    }
+    else
+    {
+        [self addChildWebEditorItem:result];
+    }
     [result release];
+    
     
     return result;
 }
