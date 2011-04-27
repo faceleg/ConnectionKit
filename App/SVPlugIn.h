@@ -121,6 +121,7 @@ typedef enum {
 - (void)setWidth:(NSNumber *)width height:(NSNumber *)height;
 
 // Override these if your plug-in is more liberal than the defaults
+// If the return value can change during the lifetime of the plug-in (e.g. an option is exposed in the UI that affects minWidth), make your implementation KVO-compliant, and Sandvox will just -width to match if needed
 - (NSNumber *)minWidth;    // default is 200
 - (NSNumber *)minHeight;    // default is 1
 
