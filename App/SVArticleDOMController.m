@@ -583,14 +583,18 @@
     {
         if ([anOldController representedObject] == object)
         {
-            // Bring back the old element!
-            DOMElement *element = [newChildController HTMLElement];
-            [[element parentNode] replaceChild:[anOldController HTMLElement] oldChild:element];
-            
-            // Bring back the old controller!
-            [[newChildController parentWebEditorItem] replaceChildWebEditorItem:newChildController
-                                                                         with:anOldController];
-            return;
+            DOMNode *oldElement = [anOldController HTMLElement];
+            if (oldElement)
+            {
+                // Bring back the old element!
+                DOMElement *element = [newChildController HTMLElement];
+                [[element parentNode] replaceChild:oldElement oldChild:element];
+                
+                // Bring back the old controller!
+                [[newChildController parentWebEditorItem] replaceChildWebEditorItem:newChildController
+                                                                             with:anOldController];
+                return;
+            }
         }
     }
     
