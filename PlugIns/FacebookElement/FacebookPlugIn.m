@@ -91,6 +91,8 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
     [super awakeFromNew];
     [self setShowsTitle:NO];
     [self setShowFaces:NO];
+    [self setLayout:BOX_COUNT_LAYOUT];
+    [self setAction:LIKE_ACTION];
 }
 
 
@@ -309,13 +311,18 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
 
 - (void)makeOriginalSize
 {
+    // leave height as auto-height
     switch ( self.layout )
     {
         case STANDARD_LAYOUT:
             [self setWidth:[NSNumber numberWithInt:450] height:nil];
             break;
         case BOX_COUNT_LAYOUT:
+            [self setWidth:[NSNumber numberWithInt:55] height:nil];
+            break;
         case BUTTON_COUNT_LAYOUT:
+            [self setWidth:[NSNumber numberWithInt:90] height:nil];
+            break;
         default:
             [super makeOriginalSize];
             break;
@@ -329,13 +336,6 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
 @synthesize colorscheme = _colorscheme;
 @synthesize urlType = _urlType;
 @synthesize urlString = _urlString;
-
 @synthesize layout = _layout;
-- (void)setLayout:(NSUInteger)layoutTag
-{
-    [self willChangeValueForKey:@"layout"];
-    _layout = layoutTag;
-    [self didChangeValueForKey:@"layout"];
-}
 
 @end
