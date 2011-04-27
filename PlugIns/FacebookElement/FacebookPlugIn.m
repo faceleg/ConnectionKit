@@ -329,6 +329,31 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
     }
 }
 
+- (NSNumber *)minWidth
+{
+    NSNumber *result = nil;
+    
+    switch ( self.layout )
+    {
+        case STANDARD_LAYOUT:
+            result = [NSNumber numberWithInt:225];
+            break;
+        case BOX_COUNT_LAYOUT:
+            result = [NSNumber numberWithInt:55];
+            break;
+        case BUTTON_COUNT_LAYOUT:
+            result = [NSNumber numberWithInt:90];
+            break;
+        default:
+            result = [super minWidth];
+            break;
+    }
+    
+    return result;
+}
+
+
+
 #pragma mark Properties
 
 @synthesize showFaces = _showFaces;
