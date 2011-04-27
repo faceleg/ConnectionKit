@@ -605,18 +605,6 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     }
 }
 
-- (void)unregisterWebEditorItem:(WEKWebEditorItem *)item;  // recurses through, registering descendants too
-{
-    // Turn off dependencies
-    [item stopObservingDependencies];
-    
-    // Unregister descendants
-    for (WEKWebEditorItem *anItem in [item childWebEditorItems])
-    {
-        [self unregisterWebEditorItem:anItem];
-    }
-}
-
 #pragma mark Selection
 
 - (void)synchronizeLinkManagerWithSelection:(DOMRange *)range;
@@ -1489,7 +1477,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
 - (void)webEditor:(WEKWebEditorView *)sender willRemoveItem:(WEKWebEditorItem *)item;
 {
     OBPRECONDITION(sender == [self webEditor]);
-    [self unregisterWebEditorItem:item];
+    [item stopObservingDependencies];
 }
 
 #pragma mark NSDraggingDestination
