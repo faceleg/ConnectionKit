@@ -95,6 +95,14 @@
     return result;
 }
 
+- (void)setHTMLElement:(DOMHTMLElement *)element;
+{
+    [super setHTMLElement:element];
+    
+    // No point observing if there's no DOM to affect
+    if (!element) [self stopObservingDependencies];
+}
+
 - (void)createHTMLElement
 {
     // Gather the HTML
