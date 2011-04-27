@@ -289,7 +289,7 @@
     }
     
     DOMElement *element = [self HTMLElement];
-    BOOL isVisible = [element isDescendantOfNode:[element ownerDocument]];
+    BOOL isVisible = [element ks_isDescendantOfNode:[element ownerDocument]];
     if (!isVisible)
     {
         // Fallback to total refresh. #82192
