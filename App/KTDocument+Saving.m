@@ -571,7 +571,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                                                             attributes:nil
                                                                  error:outError];
         
-		if (result) [[NSWorkspace sharedWorkspace] setBundleBit:YES forFile:[inURL path]];
+		if (result) [[NSWorkspace sharedWorkspace] ks_setBundleBit:YES forFileAtURL:inURL];
 	}
 	
 	
