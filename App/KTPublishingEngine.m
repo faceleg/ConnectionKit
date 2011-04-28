@@ -549,6 +549,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     KTDesign *design = [master design];
     
     SVPublishingHTMLContext *context = [[SVPublishingHTMLContext alloc] initWithUploadPath:nil publisher:self];
+    [context startDocumentWithPage:rootPage];   // HACK way to set .page so that CSS can be located properly
+    
     
     [master writeCSS:context];
     [context release];
