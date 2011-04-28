@@ -308,7 +308,7 @@ webContentAreaController:(SVWebContentAreaController *)controller;
                 NSData *data = [NSData newDataWithContentsOfMedia:[record media]];
                 
                 [frame loadData:data
-                       MIMEType:[NSString MIMETypeForUTI:type]
+                       MIMEType:[[NSWorkspace sharedWorkspace] ks_MIMETypeForType:type]
                textEncodingName:nil
                         baseURL:[object URL]];
                 [data release];

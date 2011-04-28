@@ -199,7 +199,7 @@
     WebResource *webResource = [[WebResource alloc]
                                 initWithData:[html dataUsingEncoding:NSUTF8StringEncoding]
                                 URL:[NSURL URLWithString:@"x-sandvox://foogly.boo"]
-                                MIMEType:[NSString MIMETypeForUTI:(NSString *)kUTTypePlainText]
+                                MIMEType:[[NSWorkspace sharedWorkspace] ks_MIMETypeForType:(NSString *)kUTTypePlainText]
                                 textEncodingName:<#(NSString *)textEncodingName#> frameName:<#(NSString *)frameName#>]*/
     
     NSData *data = [html dataUsingEncoding:NSUTF8StringEncoding];

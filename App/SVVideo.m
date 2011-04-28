@@ -558,7 +558,7 @@
 	
 	// source
 	[context pushAttribute:@"src" value:movieSourcePath];
-	[context pushAttribute:@"type" value:[NSString MIMETypeForUTI:self.codecType]];
+	[context pushAttribute:@"type" value:[[NSWorkspace sharedWorkspace] ks_MIMETypeForType:self.codecType]];
 	[context pushAttribute:@"onerror" value:@"fallback(this.parentNode)"];
 	[context startElement:@"source"];
 	[context endElement];
@@ -575,7 +575,7 @@
 	[context stopWritingInline];
 	[context writeString:[NSString stringWithFormat:@"var video = document.getElementById('%@');\n", videoID]];
 	[context writeString:[NSString stringWithFormat:@"if (video.canPlayType && video.canPlayType('%@')) {\n",
-						  [NSString MIMETypeForUTI:self.codecType]]];
+						  [[NSWorkspace sharedWorkspace] ks_MIMETypeForType:self.codecType]]];
 	[context writeString:@"\t// canPlayType is overoptimistic, so we have browser sniff.\n"];
 	
 	// we have mp4, so no ogv/webm, so force a fallback if NOT webkit-based.

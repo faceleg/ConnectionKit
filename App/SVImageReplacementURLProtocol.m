@@ -122,7 +122,7 @@ static NSOperationQueue *sQueue;
     {
         // Convert to data
         NSImage *image = [_operation result];
-        NSString *MIMEType = [NSString MIMETypeForUTI:(NSString *)kUTTypePNG];
+        NSString *MIMEType = [[NSWorkspace sharedWorkspace] ks_MIMETypeForType:(NSString *)kUTTypePNG];
         NSData *data = [image representationForMIMEType:MIMEType];
         
         

@@ -187,7 +187,7 @@
         type = [NSString UTIForFilenameExtension:[[self externalSourceURL] ks_pathExtension]];
     }
     
-    NSString *result = (type ? [NSString MIMETypeForUTI:type] : nil);
+    NSString *result = (type ? [[NSWorkspace sharedWorkspace] ks_MIMETypeForType:type] : nil);
 	return result;
 }
 

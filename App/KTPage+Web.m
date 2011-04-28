@@ -252,7 +252,7 @@
 		
 		NSString *pathExtension = [[URL path] pathExtension];
 		NSString *UTI = [NSString UTIForFilenameExtension:pathExtension];
-		NSString *mimeType = [NSString MIMETypeForUTI:UTI];
+		NSString *mimeType = [[NSWorkspace sharedWorkspace] ks_MIMETypeForType:UTI];
 		
 		[context pushAttribute:@"rel" value:@"image_src"];
 		[context pushAttribute:@"href" value:href];

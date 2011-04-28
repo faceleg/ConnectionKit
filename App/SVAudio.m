@@ -260,7 +260,7 @@
 	[context pushAttribute:@"src" value:audioSourcePath];
 	if ([self codecType])
 	{
-		[context pushAttribute:@"type" value:[NSString MIMETypeForUTI:[self codecType]]];
+		[context pushAttribute:@"type" value:[[NSWorkspace sharedWorkspace] ks_MIMETypeForType:[self codecType]]];
 	}
 	[context pushAttribute:@"onerror" value:@"fallback(this.parentNode)"];
 	[context startElement:@"source"];
@@ -280,7 +280,7 @@
 	[context stopWritingInline];
 	[context writeString:[NSString stringWithFormat:@"var audio = document.getElementById('%@');\n", audioID]];
 	[context writeString:[NSString stringWithFormat:@"if (audio.canPlayType && audio.canPlayType('%@')) {\n",
-						  [NSString MIMETypeForUTI:[self codecType]]]];
+						  [[NSWorkspace sharedWorkspace] ks_MIMETypeForType:[self codecType]]]];
 	[context writeString:@"\t// canPlayType is overoptimistic, so we have browser sniff.\n"];
 	
 	// See: http://www.findmebyip.com/litmus#html5-audio-codecs

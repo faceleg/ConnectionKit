@@ -70,7 +70,7 @@
     OBPRECONDITION(url);
     
     NSString *type = [NSString UTIForFilenameExtension:[url ks_pathExtension]];
-    NSString *mimeType = ([type length] ? [NSString MIMETypeForUTI:type] : @"application/octet-stream");
+    NSString *mimeType = ([type length] ? [[NSWorkspace sharedWorkspace] ks_MIMETypeForType:type] : @"application/octet-stream");
     
     WebResource *resource = [[[WebResource alloc] ks_proxyOnThread:nil] initWithData:data   // yes, HACK
                                                                                  URL:url
