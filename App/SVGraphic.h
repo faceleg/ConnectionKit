@@ -98,6 +98,7 @@ extern NSString *kSVGraphicPboardType;
 #pragma mark Pagelet
 
 - (BOOL)canWriteHTMLInline;   // NO for most graphics. Images and Raw HTML return YES
+- (BOOL)canFloat;             // NO for all but images
 
 - (BOOL)isCallout;  // whether to generate enclosing <div class="callout"> etc.
 - (NSString *)calloutWrapClassName; // nil if not a callout

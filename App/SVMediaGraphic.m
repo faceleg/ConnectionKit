@@ -432,6 +432,7 @@
 }
 
 - (BOOL)canWriteHTMLInline; { return [[self plugIn] canWriteHTMLInline]; }
+- (BOOL)canFloat; { return [self canWriteHTMLInline]; }
 
 #pragma mark Inspector
 

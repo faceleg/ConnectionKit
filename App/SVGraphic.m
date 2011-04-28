@@ -139,6 +139,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 }
 
 - (BOOL)canWriteHTMLInline; { return NO; }
+- (BOOL)canFloat; { return NO; }
 
 - (BOOL)isCallout;  // whether to generate enclosing <div class="callout"> etc.
 {
