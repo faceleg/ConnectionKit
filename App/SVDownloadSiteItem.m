@@ -75,6 +75,7 @@
             NSData *png = [icon PNGRepresentation];
             
             NSURL *URL = [[[self media] media] mediaURL];
+            URL = [[URL ks_URLByDeletingPathExtension] ks_URLByAppendingPathExtension:@"png"];
             if (!URL) return NO;
             
             SVMedia *media = [[SVMedia alloc] initWithData:png URL:URL];
