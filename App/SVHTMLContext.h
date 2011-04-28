@@ -230,7 +230,6 @@ typedef enum {
 
 
 #pragma mark Design
-- (NSURL *)addBannerWithURL:(NSURL *)sourceURL;
 - (NSURL *)addGraphicalTextData:(NSData *)imageData idName:(NSString *)idName;
 
 

@@ -1257,11 +1257,6 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 #pragma mark Design
 
-- (NSURL *)addBannerWithURL:(NSURL *)sourceURL;
-{
-    return sourceURL;
-}
-
 - (NSURL *)addGraphicalTextData:(NSData *)imageData idName:(NSString *)idName;
 {
     NSString *filename = [[idName legalizedWebPublishingFileName]

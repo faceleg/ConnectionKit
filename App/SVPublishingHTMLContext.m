@@ -183,18 +183,6 @@
     return nil;
 }
 
-- (NSURL *)addBannerWithURL:(NSURL *)sourceURL;
-{
-    // Publish source
-    NSString *bannerPath = [[_publisher designDirectoryPath] stringByAppendingPathComponent:@"banner.jpeg"];
-    [_publisher publishContentsOfURL:sourceURL toPath:bannerPath];
-    
-    // Where will it be published to?
-    NSURL *designURL = [[[[_publisher site] rootPage] master] designDirectoryURL];
-    NSURL *result = [designURL ks_URLByAppendingPathComponent:@"banner.jpeg" isDirectory:NO];
-    return result;
-}
-
 - (BOOL)didAddMediaWithoutPath; { return _didAddMediaWithoutPath; }
 
 #pragma mark Resources
