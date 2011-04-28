@@ -318,7 +318,7 @@
         NSString *filename = [[[media preferredUploadPath] lastPathComponent] stringByDeletingPathExtension];
         filename = [filename stringByAppendingString:@"_med"];
         
-        NSString *extension = [NSString filenameExtensionForUTI:[self typeToPublish]];
+        NSString *extension = [[NSWorkspace sharedWorkspace] preferredFilenameExtensionForType:[self typeToPublish]];
         if (extension) filename = [filename stringByAppendingPathExtension:extension];
         
         NSURL *URL = [context addImageMedia:media

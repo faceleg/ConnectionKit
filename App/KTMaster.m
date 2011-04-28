@@ -306,7 +306,7 @@
                 NSURL *URL = [NSURL sandvoxImageURLWithFileURL:bannerURL scalingProperties:scalingProperties];
                 [scalingProperties release];
                 
-                NSString *destination = [[SVDestinationDesignDirectory stringByAppendingPathComponent:@"banner"] stringByAppendingPathExtension:[NSString filenameExtensionForUTI:type]];
+                NSString *destination = [[SVDestinationDesignDirectory stringByAppendingPathComponent:@"banner"] stringByAppendingPathExtension:[[NSWorkspace sharedWorkspace] preferredFilenameExtensionForType:type]];
                 
                 URL = [context addResourceAtURL:URL destination:destination options:0];
                 NSString *relativeString = [URL ks_stringRelativeToURL:[context mainCSSURL]];

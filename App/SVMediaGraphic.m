@@ -496,7 +496,7 @@
         {
             [[[media preferredUploadPath] lastPathComponent] stringByDeletingPathExtension];
             filename = [filename stringByAppendingFormat:@"_%u", width];
-            filename = [filename stringByAppendingPathExtension:[NSString filenameExtensionForUTI:type]];
+            filename = [filename stringByAppendingPathExtension:[[NSWorkspace sharedWorkspace] preferredFilenameExtensionForType:type]];
         }
         
         
@@ -627,7 +627,7 @@
         if (type)
         {
             // Invent a URL
-            NSString *extension = [NSString filenameExtensionForUTI:type];
+            NSString *extension = [[NSWorkspace sharedWorkspace] preferredFilenameExtensionForType:type];
             
             NSString *path = [[@"/" stringByAppendingPathComponent:@"pasted-file"]
                               stringByAppendingPathExtension:extension];

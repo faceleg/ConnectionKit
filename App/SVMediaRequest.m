@@ -115,7 +115,7 @@ preferredUploadPath:(NSString *)path;
             NSString *name = [[[self media] preferredUploadPath] stringByDeletingPathExtension];
             
             _uploadPath = [name stringByAppendingPathExtension:
-                           [NSString filenameExtensionForUTI:[self type]]];
+                           [[NSWorkspace sharedWorkspace] preferredFilenameExtensionForType:[self type]]];
             [_uploadPath retain];
         }
         else
