@@ -13,8 +13,8 @@
 #import "SVHTMLContext.h"
 
 
-@interface SVPlugIn (SVIndexPlugIn)
-- (id <SVPage>)pageWithIdentifier:(NSString *)identifier;
+@interface SVIndexPlugIn ()
+@property(nonatomic, retain, readwrite) id <SVPage> indexedCollection;
 @end
 
 
