@@ -221,7 +221,6 @@ typedef enum {
 - (NSString *)markupStringForEditing;   // for viewing source for debugging purposes.
 + (NSString *)pageTemplate;
 
-- (NSString *)javascriptURLPath;
 @property(nonatomic, assign) NSString *comboTitleText;
 
 - (void)write:(SVHTMLContext *)context codeInjectionSection:(NSString *)aKey masterFirst:(BOOL)aMasterFirst;

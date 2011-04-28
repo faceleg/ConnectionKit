@@ -470,8 +470,6 @@
         
 		[context writeJavascriptWithSrc:[context relativeStringFromURL:url] encoding:NSUTF8StringEncoding];
 	}
-	
-	return nil;
 }
 
 #pragma mark Window Title
