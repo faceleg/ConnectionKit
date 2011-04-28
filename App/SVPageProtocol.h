@@ -11,9 +11,13 @@
 
 
 #import <Cocoa/Cocoa.h>
-#import "SVPlugIn.h"
+
+
+@protocol SVPlugInContext;
+
 
 typedef enum { kTruncateNone, kTruncateCharacters, kTruncateWords, kTruncateSentences, kTruncateParagraphs } SVTruncationType;
+
 
 @protocol SVPage <NSObject>
 
@@ -38,7 +42,7 @@ typedef enum { kTruncateNone, kTruncateCharacters, kTruncateWords, kTruncateSent
 
 #pragma mark Children
 
-@property(nonatomic, readonly) BOOL isCollection;   // or is it enough to test if childPages is non-nil?
+@property(nonatomic, readonly) BOOL isCollection;
 - (NSArray *)childPages;
 - (id <SVPage>)parentPage;
 - (id <SVPage>)rootPage;

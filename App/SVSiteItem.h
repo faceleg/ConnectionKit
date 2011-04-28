@@ -13,6 +13,7 @@
 
 #import "KSExtensibleManagedObject.h"
 #import "SVPageProtocol.h"
+#import "SVPlugInContext.h"
 #import "SVPublisher.h"
 
 #import <iMedia/IMBImageItem.h>
