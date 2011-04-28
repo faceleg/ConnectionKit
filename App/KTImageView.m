@@ -335,14 +335,14 @@ the indexed value into NSFilenamesPboardType.
 		NSData *webArchiveData = [pasteboard dataForType:WebArchivePboardType];
 		WebArchive *webArchive = [[[WebArchive alloc] initWithData:webArchiveData] autorelease];
 		WebResource *resource = [webArchive mainResource];
-		UTI = [NSString UTIForMIMEType:[resource MIMEType]];
+		UTI = [[NSWorkspace sharedWorkspace] ks_typeForMIMEType:[resource MIMEType]];
 		if ( ![NSString UTI:UTI conformsToUTI:(NSString *)kUTTypeImage])
 		{
 			NSArray *subresources = [webArchive subresources];
 			if ([subresources count])
 			{
 				resource = [subresources objectAtIndex:0];
-				UTI = [NSString UTIForMIMEType:[resource MIMEType]];
+				UTI = [[NSWorkspace sharedWorkspace] ks_typeForMIMEType:[resource MIMEType]];
 			}
 			else
 			{
