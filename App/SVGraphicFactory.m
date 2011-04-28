@@ -135,7 +135,7 @@
     {
         NSString *path = [[item URL] path];
         type = [[NSWorkspace sharedWorkspace] typeOfFile:path error:NULL];
-        if (!type) type = [NSString UTIForFilenameExtension:[URL ks_pathExtension]];
+        if (!type) type = [[NSWorkspace sharedWorkspace] ks_typeForFilenameExtension:[URL ks_pathExtension]];
         
         if (type)
         {

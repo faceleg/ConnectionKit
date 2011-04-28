@@ -58,7 +58,7 @@
 {
     if (type == SVThumbnailTypePickFromPage)
     {
-        NSString *type = [NSString UTIForFilenameExtension:
+        NSString *type = [[NSWorkspace sharedWorkspace] ks_typeForFilenameExtension:
                           [[[[self media] media] mediaURL] ks_pathExtension]];
         
         if ([type conformsToUTI:(NSString *)kUTTypeImage])

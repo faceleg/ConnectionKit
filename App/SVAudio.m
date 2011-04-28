@@ -164,7 +164,7 @@
 	else
 	{
 		movieSourceURL = [self externalSourceURL];
-		[self setCodecType:[NSString UTIForFilenameExtension:[[movieSourceURL path] pathExtension]]];
+		[self setCodecType:[[NSWorkspace sharedWorkspace] ks_typeForFilenameExtension:[[movieSourceURL path] pathExtension]]];
 	}
 }
 

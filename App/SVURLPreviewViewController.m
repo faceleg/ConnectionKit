@@ -304,7 +304,7 @@ webContentAreaController:(SVWebContentAreaController *)controller;
             if (record)
             {
                 NSString *filename = [record preferredFilename];
-                NSString *type = [NSString UTIForFilenameExtension:[filename pathExtension]];
+                NSString *type = [[NSWorkspace sharedWorkspace] ks_typeForFilenameExtension:[filename pathExtension]];
                 NSData *data = [NSData newDataWithContentsOfMedia:[record media]];
                 
                 [frame loadData:data

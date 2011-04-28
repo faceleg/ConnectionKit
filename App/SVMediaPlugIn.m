@@ -184,7 +184,7 @@
 	NSString *type = [(id)[self media] typeOfFile];
     if (!type)
     {
-        type = [NSString UTIForFilenameExtension:[[self externalSourceURL] ks_pathExtension]];
+        type = [[NSWorkspace sharedWorkspace] ks_typeForFilenameExtension:[[self externalSourceURL] ks_pathExtension]];
     }
     
     NSString *result = (type ? [[NSWorkspace sharedWorkspace] ks_MIMETypeForType:type] : nil);

@@ -258,7 +258,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 - (NSString *)typeOfFile
 {
 	NSString *fileName = [self preferredFilename];
-	NSString *UTI = [NSString UTIForFilenameExtension:[fileName pathExtension]];
+	NSString *UTI = [[NSWorkspace sharedWorkspace] ks_typeForFilenameExtension:[fileName pathExtension]];
 	return UTI;
 }
 

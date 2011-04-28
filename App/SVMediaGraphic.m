@@ -98,7 +98,7 @@
     // The plug-in to use depends on the type of file you have. Ideally use .codecType as it means the file's content has been better analyzed
     NSString *type = [self codecType];
     if (!type) type = [[self media] typeOfFile];
-    if (!type) type = [NSString UTIForFilenameExtension:[[self externalSourceURL] ks_pathExtension]];
+    if (!type) type = [[NSWorkspace sharedWorkspace] ks_typeForFilenameExtension:[[self externalSourceURL] ks_pathExtension]];
     
     
     if ([type conformsToUTI:(NSString *)kUTTypeMovie] ||
@@ -223,7 +223,7 @@
     
     // Reset type
     NSString *type = [[self media] typeOfFile];
-    if (!type) type = [NSString UTIForFilenameExtension:[[self externalSourceURL] ks_pathExtension]];
+    if (!type) type = [[NSWorkspace sharedWorkspace] ks_typeForFilenameExtension:[[self externalSourceURL] ks_pathExtension]];
     [self setTypeToPublish:type];
     
     

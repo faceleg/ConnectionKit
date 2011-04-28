@@ -944,7 +944,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 			NSTextStorage *ts = [fieldEditor textStorage];
 			NSString *newFileName = [ts string];
 
-			NSString *type = [NSString UTIForFilenameExtension:[newFileName pathExtension]];
+			NSString *type = [[NSWorkspace sharedWorkspace] ks_typeForFilenameExtension:[newFileName pathExtension]];
 			BOOL isEditableTextUTI = ([type conformsToUTI:(NSString *)kUTTypePlainText] ||
 									  [type conformsToUTI:(NSString *)kUTTypeHTML] ||
 									  [type conformsToUTI:(NSString *)kUTTypeXML]);

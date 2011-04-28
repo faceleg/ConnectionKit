@@ -313,7 +313,7 @@
 	{
 		movieSourceURL = self.externalSourceURL;
         
-		[self setCodecType:[NSString UTIForFilenameExtension:[[movieSourceURL path] pathExtension]]];
+		[self setCodecType:[[NSWorkspace sharedWorkspace] ks_typeForFilenameExtension:[[movieSourceURL path] pathExtension]]];
 	}
 	
 	// Try to make a QTMovie out of this, or parse as FLV which is a special case (since QT is not needed to show.)
