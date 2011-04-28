@@ -87,8 +87,6 @@
 
 - (void)pageDidChange:(id <SVPage>)page;
 {
-    id <SVPage> oldPage = [self indexedCollection];
-    
     [super pageDidChange:page];
     
     if ( !self.label )
@@ -103,12 +101,6 @@
                                                          language:language
                                                          fallback:SVLocalizedString(@"Subscribe to RSS feed", @"Prompt to subscribe to the given collection via RSS")];
         self.label = theString;
-    }
-    
-    // Default behaviour is to hook the index up to the collection it was inserted into. If collection doesn't support RSS, undo that
-    if (!oldPage && ![self.indexedCollection hasFeed])
-    {
-        self.indexedCollection = nil;
     }
 }
 
