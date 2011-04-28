@@ -28,6 +28,8 @@ typedef enum { kTruncateNone, kTruncateCharacters, kTruncateWords, kTruncateSent
 
 - (BOOL)writeSummary:(id <SVPlugInContext>)context includeLargeMedia:(BOOL)includeLargeMedia excludeThumbnail:(BOOL)excludeThumbnail truncation:(NSUInteger)maxCount;
 
+// For the image representation of a page, see SVPlugInContext
+
 
 #pragma mark Properties
 - (NSString *)language;             // KVO-compliant
