@@ -661,7 +661,7 @@
 		[textBlock setTagName:@"span"];
 		
 		[textBlock setHTMLSourceObject:siteItem];
-		[textBlock setHTMLSourceKeyPath:@"menuTitle"];
+		[textBlock setHTMLSourceKeyPath:@"menuTitleHTMLString"];
 		
 		[textBlock writeHTML:context];
 		

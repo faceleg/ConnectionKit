@@ -142,6 +142,17 @@
         result = [self title];
     }
     
+    return result;
+}
++ (NSSet *)keyPathsForValuesAffectingMenuTitle;
+{
+    return [NSSet setWithObjects:@"title", @"customMenuTitle", nil];
+}
+
+- (NSString *)menuTitleHTMLString;
+{
+    NSString *result = [self menuTitle];
+    
     if ([[[self master] design] menusUseNonBreakingSpaces])
     {
         result = [result stringByReplacingOccurrencesOfString:@" " withString:@"&nbsp;"];
@@ -149,10 +160,7 @@
     
     return result;
 }
-+ (NSSet *)keyPathsForValuesAffectingMenuTitle;
-{
-    return [NSSet setWithObjects:@"title", @"customMenuTitle", nil];
-}
++ (NSSet *)keyPathsForValuesAffectingMenuTitleHTMLString; { return [NSSet setWithObject:@"menuTitle"]; }
 
 @dynamic customMenuTitle;
 
