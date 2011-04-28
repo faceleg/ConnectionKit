@@ -74,8 +74,10 @@
             NSImage *icon = [[NSWorkspace sharedWorkspace] iconForFileType:type];
             NSData *png = [icon PNGRepresentation];
             
+            // Derive a URL from the source media that can't accidentally correspond to a real file
             NSURL *URL = [[[self media] media] mediaURL];
             URL = [[URL ks_URLByDeletingPathExtension] ks_URLByAppendingPathExtension:@"png"];
+            URL = [URL ks_URLWithScheme:@"x-sandvox"];
             if (!URL) return NO;
             
             SVMedia *media = [[SVMedia alloc] initWithData:png URL:URL];
