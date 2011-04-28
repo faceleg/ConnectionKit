@@ -1064,9 +1064,8 @@
 - (id)serializeChildrenOfPage:(KTPage *)page;
 {
     NSTreeNode *node = [[self content] nodeForObject:page];
-    OBASSERT(node);
     
-    if ([[self outlineView] isItemExpanded:node])
+    if (node && [[self outlineView] isItemExpanded:node])
     {
         NSArray *nodes = [self nodesToWriteToPasteboard];
         if (_indexOfNextNodeToWriteToPasteboard >= [nodes count]) return nil;    // done all the writing already
