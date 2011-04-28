@@ -762,6 +762,7 @@ const int kDesignThumbHeight = 65;
 			if ([aFilename isEqualToStringCaseInsensitive:@"Info.plist"]) continue;
 			if ([[aFilename stringByDeletingPathExtension] hasSuffix:@"thumbnail"]) continue;
 			if ([aFilename isEqualToStringCaseInsensitive:@"sources"]) continue;
+			if ([aFilename isEqualToStringCaseInsensitive:@"testing_files"]) continue;
 			if ([variationNamesToIgnore containsObject:aFilename])	continue;
 			if (extraIgnoredFiles && [extraIgnoredFiles containsObject:aFilename])	continue;
 			if ([[aFilename stringByDeletingPathExtension] isEqualToString:@"placeholder"])	continue;
