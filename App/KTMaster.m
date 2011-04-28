@@ -309,9 +309,9 @@
                 NSString *destination = [[SVDestinationDesignDirectory stringByAppendingPathComponent:@"banner"] stringByAppendingPathExtension:[NSString filenameExtensionForUTI:type]];
                 
                 URL = [context addResourceAtURL:URL destination:destination options:0];
+                NSString *relativeString = [URL ks_stringRelativeToURL:[context mainCSSURL]];
                 
-                
-                NSString *css = [bannerCSSSelector stringByAppendingFormat:@" { background-image: url(\"%@\"); }\n", [URL absoluteString]];
+                NSString *css = [bannerCSSSelector stringByAppendingFormat:@" { background-image: url(\"%@\"); }\n", relativeString];
                 
                 
                 [context addCSSString:css];
