@@ -394,7 +394,7 @@ the indexed value into NSFilenamesPboardType.
 				[aDictionary setValue:[filePath lastPathComponent] forKey:kKTDataSourceFileName];
 
 				filePath = [[NSFileManager defaultManager] resolvedAliasPath:filePath];
-				UTI = [NSString UTIForFileAtPath:filePath];
+				UTI = [[NSWorkspace sharedWorkspace] ks_typeOfFileAtURL:[NSURL fileURLWithPath:filePath]];
 				[aDictionary setValue:filePath forKey:kKTDataSourceFilePath];
 				if (!hasiPhotoData)
 				{
@@ -466,7 +466,7 @@ the indexed value into NSFilenamesPboardType.
 					NSString *dataFilePath = nil;
 					if (nil == imageData
 						&& nil != (dataFilePath = [aDictionary valueForKey:kKTDataSourceFilePath])
-						&& ([[NSString UTIForFileAtPath:dataFilePath] isEqualToString:(NSString *)kUTTypeJPEG])
+						&& ([[[NSWorkspace sharedWorkspace] ks_typeOfFileAtURL:[NSURL fileURLWithPath:dataFilePath]] isEqualToString:(NSString *)kUTTypeJPEG])
 						)
 					{
 						CGImageSourceRef source = nil;

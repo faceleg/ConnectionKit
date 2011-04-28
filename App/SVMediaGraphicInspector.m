@@ -117,7 +117,7 @@
 	{
 		for (NSString *UTI in allowedFileTypes)
 		{
-			if ([[NSString UTIForFileAtPath:path] conformsToUTI:UTI])
+			if ([[[NSWorkspace sharedWorkspace] ks_typeOfFileAtURL:[NSURL fileURLWithPath:path]] conformsToUTI:UTI])
 			{
 				OK = YES;
 				break;

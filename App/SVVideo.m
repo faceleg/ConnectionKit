@@ -307,7 +307,7 @@
     {
 		movieSourceURL = [self.media mediaURL];
         
-		[self setCodecType:[NSString UTIForFileAtPath:[movieSourceURL path]]];	// actually look at the file, not just its extension
+		[self setCodecType:[[NSWorkspace sharedWorkspace] ks_typeOfFileAtURL:movieSourceURL]];	// actually look at the file, not just its extension
 	}
 	else
 	{

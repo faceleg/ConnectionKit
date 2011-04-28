@@ -159,7 +159,7 @@
     if (media)
     {
 		movieSourceURL = [media mediaURL];
-		[self setCodecType:[NSString UTIForFileAtPath:[movieSourceURL path]]];
+		[self setCodecType:[[NSWorkspace sharedWorkspace] ks_typeOfFileAtURL:movieSourceURL]];
 	}
 	else
 	{

@@ -769,7 +769,7 @@ const int kDesignThumbHeight = 65;
 			// Locate the full path and add to the list if of a suitable type
             NSString *resourceFilePath = [designBundlePath stringByAppendingPathComponent:aFilename];
 			NSURL *resourceFileURL = [NSURL fileURLWithPath:resourceFilePath];
-			NSString *UTI = [NSString UTIForFileAtPath:resourceFilePath];
+			NSString *UTI = [[NSWorkspace sharedWorkspace] ks_typeOfFileAtURL:[NSURL fileURLWithPath:resourceFilePath]];
 			if ([UTI conformsToUTI:(NSString *)kUTTypeImage] ||
 				[UTI conformsToUTI:(NSString *)kUTTypePlainText] ||
 				[UTI conformsToUTI:(NSString *)kUTTypeRTF] ||
