@@ -23,7 +23,7 @@
     return kSVHTMLGenerationPurposeQuickLookPreview;
 }
 
-- (BOOL)isForQuickLook; { return YES; }
+- (BOOL)isForQuickLookPreview; { return YES; }
 
 - (NSString *)relativeStringFromURL:(NSURL *)URL;
 {
