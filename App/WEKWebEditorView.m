@@ -2456,7 +2456,8 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     {
         NSURL *URL = [pboard URL];
         if ([URL isFileURL] &&
-            [[[NSWorkspace sharedWorkspace] ks_typeOfFileAtURL:URL] ks_conformsToOneOfTypes:[NSBitmapImageRep imageTypes]])
+            [[NSWorkspace sharedWorkspace] ks_type:[[NSWorkspace sharedWorkspace] ks_typeOfFileAtURL:URL]
+                              conformsToOneOfTypes:[NSBitmapImageRep imageTypes]])
         {
             [[node mutableChildDOMNodes] removeAllObjects];
             

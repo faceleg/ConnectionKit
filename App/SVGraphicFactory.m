@@ -139,7 +139,7 @@
         
         if (type)
         {
-            if ([type ks_conformsToOneOfTypes:[SVMediaGraphic allowedTypes]])
+            if ([[NSWorkspace sharedWorkspace] ks_type:type conformsToOneOfTypes:[SVMediaGraphic allowedTypes]])
             {
                 return SVPasteboardPriorityTypical;
             }
