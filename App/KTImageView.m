@@ -336,7 +336,7 @@ the indexed value into NSFilenamesPboardType.
 		WebArchive *webArchive = [[[WebArchive alloc] initWithData:webArchiveData] autorelease];
 		WebResource *resource = [webArchive mainResource];
 		UTI = [[NSWorkspace sharedWorkspace] ks_typeForMIMEType:[resource MIMEType]];
-		if ( ![NSString UTI:UTI conformsToUTI:(NSString *)kUTTypeImage])
+		if ( ![[NSWorkspace sharedWorkspace] type:UTI conformsToType:(NSString *)kUTTypeImage])
 		{
 			NSArray *subresources = [webArchive subresources];
 			if ([subresources count])
