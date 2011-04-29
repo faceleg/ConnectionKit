@@ -409,6 +409,15 @@ NSUInteger kTwoThirdsTruncation;
 	excludeThumbnail:(BOOL)excludeThumbnail
 		  truncation:(NSUInteger)maxItemLength;
 {
+	OFF((@"writeSummary: iteratedPage = %@, Page we are writing to = %@", self, [context page]));
+	if (self == [context page])
+	{
+		[context startElement:@"span" className:@"svx-invisibadge svx-warning"];
+		[context writeCharacters:NSLocalizedString(@"A page cannot contain an index of itself", @"Warning")];
+		[context endElement];
+		return NO;
+	}
+	
 	SVGraphic *thumbnailToExclude = excludeThumbnail ? [self thumbnailSourceGraphic] : nil;		// CORRECT FOR ALL CASES?
 	
 	SVTruncationType truncationType = [[self class] chooseTruncTypeFromMaxItemLength:maxItemLength];
