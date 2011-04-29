@@ -409,6 +409,9 @@ NSUInteger kTwoThirdsTruncation;
 			  plugIn:(SVPlugIn *)plugInToExclude
 			 options:(SVPageTruncationOptions)options;
 {
+    NSParameterAssert(plugInToExclude);
+    
+    
 	OFF((@"writeSummary: iteratedPage = %@, Page we are writing to = %@  .... exclude %@", self, [context page], plugInToExclude));
 	
 	BOOL includeLargeMedia = ![context isWritingPagelet];		// do not allow large media if writing pagelet.
