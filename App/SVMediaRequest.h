@@ -31,7 +31,7 @@
 preferredUploadPath:(NSString *)path
       scalingSuffix:(NSString *)suffix;
 
-- (id)initWithMedia:(SVMedia *)media;   // convenience
+- (id)initWithMedia:(SVMedia *)media preferredUploadPath:(NSString *)path;   // convenience
 
 @property(nonatomic, retain, readonly) SVMedia *media;
 

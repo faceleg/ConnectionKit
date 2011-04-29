@@ -96,7 +96,7 @@
 
 - (NSURL *)addMedia:(SVMedia *)media;
 {
-    SVMediaRequest *request = [[SVMediaRequest alloc] initWithMedia:media];
+    SVMediaRequest *request = [[SVMediaRequest alloc] initWithMedia:media preferredUploadPath:nil];
     NSURL *result = [self addMediaWithRequest:request];
     [request release];
     return result;
@@ -107,7 +107,7 @@
                   height:(NSNumber *)height
                     type:(NSString *)type
        preferredFilename:(NSString *)preferredFilename
-scalingSuffix:(NSString *)suffix;
+           scalingSuffix:(NSString *)suffix;
 {
     // When scaling an image, need full suite of parameters
     if (width || height)
@@ -140,7 +140,7 @@ scalingSuffix:(NSString *)suffix;
                                                              height:height
                                                                type:type
                                                 preferredUploadPath:path
-                                          scalingSuffix:suffix];
+                                                      scalingSuffix:suffix];
     
     NSURL *result = [self addMediaWithRequest:request];
     [request release];

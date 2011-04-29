@@ -61,13 +61,13 @@ preferredUploadPath:(NSString *)path
     return self;
 }
 
-- (id)initWithMedia:(SVMedia *)media;   // convenience
+- (id)initWithMedia:(SVMedia *)media preferredUploadPath:(NSString *)path;   // convenience
 {
     return [self initWithMedia:media
                          width:nil
                         height:nil
                           type:nil
-           preferredUploadPath:[media preferredUploadPath]
+           preferredUploadPath:path
                  scalingSuffix:nil];
 }
 
