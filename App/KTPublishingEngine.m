@@ -638,7 +638,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         {
             // This point shouldn't logically be reached if hash is already known, so it just needs hashing on a CPU-bound queue
             NSInvocation *invocation = [NSInvocation
-                                        invocationWithSelector:@selector(threadedPublishData:forMedia:)
+                                        invocationWithSelector:@selector(threaded_publishData:forMedia:)
                                         target:self
                                         arguments:NSARRAY(data, request)];
             
@@ -649,7 +649,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         {
             // Read data from disk for hashing
             NSInvocation *invocation = [NSInvocation
-                                        invocationWithSelector:@selector(threadedPublishMedia:cachedSHA1Digest:)
+                                        invocationWithSelector:@selector(threaded_publishMedia:cachedSHA1Digest:)
                                         target:self
                                         arguments:NSARRAY(request, cachedDigest)];
             
@@ -660,7 +660,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     else
     {
         NSInvocation *invocation = [NSInvocation
-                                    invocationWithSelector:@selector(threadedPublishMedia:cachedSHA1Digest:)
+                                    invocationWithSelector:@selector(threaded_publishMedia:cachedSHA1Digest:)
                                     target:self
                                     arguments:NSARRAY(request, cachedDigest)];
         
@@ -752,7 +752,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     return result;
 }
 
-- (NSString *)publishMediaWithRequest:(SVMediaRequest *)media;
+- (NSString *)publishMediaWithRequest:(SVMediaRequest *)request;
 {
     NSString *result = nil;
     
@@ -760,24 +760,24 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     //  A)  Collect digests of all media (e.g. for dupe identification)
     //  B)  As a head start, queue for upload any media that has previously been published, thus reserving path
     
-    NSData *cachedDigest = [_publishedMediaDigests objectForKey:media];
+    NSData *cachedDigest = [_publishedMediaDigests objectForKey:request];
     if (cachedDigest)
     {
         if (cachedDigest != (id)[NSNull null])  // nothing to do yet while hash is being calculated
         {
-            result = [self publishMediaWithRequest:media cachedData:nil SHA1Digest:cachedDigest];
+            result = [self publishMediaWithRequest:request cachedData:nil SHA1Digest:cachedDigest];
         }
     }
     else
     {
         // Calculating where to publish media is actually quite time-consuming, so do on a background thread
-        [self startPublishingMedia:media cachedSHA1Digest:nil];
+        [self startPublishingMedia:request cachedSHA1Digest:nil];
     }
     
     return result;
 }
 
-- (void)threadedPublishMedia:(SVMediaRequest *)request cachedSHA1Digest:(NSData *)cachedDigest;
+- (void)threaded_publishMedia:(SVMediaRequest *)request cachedSHA1Digest:(NSData *)cachedDigest;
 {
     /*  It is presumed that the call to this method will have been scheduled on an appropriate queue.
      */
@@ -815,7 +815,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             {
                 // Hash on a separate thread so this queue is ready to go again quickly
                 NSInvocation *invocation = [NSInvocation
-                                            invocationWithSelector:@selector(threadedPublishData:forMedia:)
+                                            invocationWithSelector:@selector(threaded_publishData:forMedia:)
                                             target:self
                                             arguments:[NSArray arrayWithObjects:fileContents, request, nil]];
                 
@@ -832,7 +832,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     }
 }
 
-- (void)threadedPublishData:(NSData *)data forMedia:(SVMediaRequest *)request;
+- (void)threaded_publishData:(NSData *)data forMedia:(SVMediaRequest *)request;
 {
     /*  Since all that's needed is to hash the data, presumed you'll call this using -defaultQueue
      */
