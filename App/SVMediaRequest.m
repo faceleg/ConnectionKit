@@ -177,6 +177,11 @@ preferredUploadPath:(NSString *)path
     
     result = [result stringByAppendingFormat:@" %@", [self preferredUploadPath]];
     
+    if ([self scalingPathSuffix])
+    {
+        result = [result stringByAppendingFormat:@" (%@)", [self scalingPathSuffix]];
+    }
+    
     return result;
 }
 
