@@ -438,9 +438,10 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     [self setCurrentHeaderLevel:[self currentHeaderLevel] - 1];
 }
 
-- (void)startHeadingWithAttributes:(NSDictionary *)attributes;
+- (NSUInteger)startHeadingWithAttributes:(NSDictionary *)attributes;
 {
     [self startElement:[self currentHeaderLevelTagName] attributes:attributes];
+    return [self currentHeaderLevel];
 }
 
 #pragma mark Elements/Comments
