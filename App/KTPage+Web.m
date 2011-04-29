@@ -384,7 +384,7 @@
 	if (canBePublished)
 	{
 		[context writeDocumentWithPage:self];
-		DJW((@"publishing  %@", [[self URL] path]));
+		OFF((@"publishing  %@", [[self URL] path]));
 	}
 	else	// publish a placeholder instead
 	{
