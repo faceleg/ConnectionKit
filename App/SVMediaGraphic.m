@@ -427,8 +427,11 @@
 {
     [super buildClassName:context includeWrap:includeWrap];
     
-    NSString *elementClass = [[[self plugIn] class] elementClassName];
-    if (elementClass) [context pushClassName:elementClass];
+    if (includeWrap)
+    {
+        NSString *elementClass = [[[self plugIn] class] elementClassName];
+        if (elementClass) [context pushClassName:elementClass];
+    }
 }
 
 - (BOOL)canWriteHTMLInline; { return [[self plugIn] canWriteHTMLInline]; }
