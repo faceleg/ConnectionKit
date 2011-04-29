@@ -495,7 +495,6 @@
                                     width:width
                                    height:height
                                      type:type
-                        preferredFilename:nil
                             scalingSuffix:[NSString stringWithFormat:@"_%u", width]
                                   options:0
                  pushSizeToCurrentElement:YES];

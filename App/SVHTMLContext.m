@@ -924,7 +924,6 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
                        width:(NSUInteger)width
                       height:(NSUInteger)height
                         type:(NSString *)type
-           preferredFilename:(NSString *)filename
                scalingSuffix:(NSString *)suffix
                      options:(SVPageImageRepresentationOptions)options
     pushSizeToCurrentElement:(BOOL)push;
@@ -976,7 +975,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
                              width:[NSNumber numberWithUnsignedInteger:width]
                             height:[NSNumber numberWithUnsignedInteger:height]
                               type:type
-                 preferredFilename:filename
+                 preferredFilename:nil
                      scalingSuffix:suffix];
     }
 }
@@ -992,7 +991,6 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 								   width:width
 								  height:height
 									type:type
-					   preferredFilename:nil
                            scalingSuffix:nil
 								 options:options
 				pushSizeToCurrentElement:YES];

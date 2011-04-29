@@ -618,7 +618,6 @@
                                              width:width
                                             height:height
                                               type:nil
-                                 preferredFilename:nil
                                      scalingSuffix:nil
                                            options:options
                           pushSizeToCurrentElement:push];

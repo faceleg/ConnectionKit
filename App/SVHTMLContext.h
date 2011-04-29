@@ -216,7 +216,6 @@ typedef enum {
                        width:(NSUInteger)width
                       height:(NSUInteger)height
                         type:(NSString *)type
-           preferredFilename:(NSString *)filename
                scalingSuffix:(NSString *)suffix
                      options:(SVPageImageRepresentationOptions)options
     pushSizeToCurrentElement:(BOOL)push;
