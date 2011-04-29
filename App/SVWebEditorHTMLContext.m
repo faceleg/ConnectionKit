@@ -49,6 +49,7 @@
     
     [self reset];
     _media = [[NSMutableSet alloc] init];
+    _mediaByData = [[NSMutableDictionary alloc] init];
         
     return self;
 }
@@ -75,6 +76,7 @@
     [[self rootDOMController] awakeFromHTMLContext:self];   // so it stores ref to us
     
     [_media removeAllObjects];
+    [_mediaByData removeAllObjects];
 }
 
 - (void)close;
@@ -92,6 +94,7 @@
     
     // Ditch media
     [_media release]; _media = nil;
+    [_mediaByData release]; _mediaByData = nil;
 }
 
 #pragma mark Page
@@ -359,8 +362,25 @@
 
 - (NSURL *)addMedia:(id <SVMedia>)media;
 {
-    NSURL *result = [super addMedia:media];
+    NSURL *result = nil;
+    
+    NSData *data = [media mediaData];
+    if (data)
+    {
+        SVMedia *matchingMedia = [_mediaByData objectForKey:data];
+        if (matchingMedia)
+        {
+            media = matchingMedia;
+        }
+        else
+        {
+            [_mediaByData setObject:media forKey:data];
+        }
+    }
+    
+    result = [super addMedia:media];
     [_media addObject:media];
+    
     return result;
 }
 

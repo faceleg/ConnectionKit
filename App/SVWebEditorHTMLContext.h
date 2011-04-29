@@ -23,7 +23,8 @@
     SVDOMController         *_currentDOMController;  // weak ref
     NSIndexPath             *_DOMControllerPoints;
         
-    NSMutableSet    *_media;
+    NSMutableSet        *_media;
+    NSMutableDictionary *_mediaByData;
     
     SVSidebarDOMController      *_sidebarDOMController;
 }
