@@ -202,8 +202,7 @@ typedef enum {
                               alt:(NSString *)altText
                             width:(NSNumber *)width
                            height:(NSNumber *)height
-                             type:(NSString *)type
-                preferredFilename:(NSString *)preferredFilename;
+                             type:(NSString *)type;
 
 - (void)writeThumbnailImageWithSourceMedia:(SVMedia *)media
                                        alt:(NSString *)altText

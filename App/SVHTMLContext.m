@@ -865,10 +865,9 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
                               alt:(NSString *)altText
                             width:(NSNumber *)width
                            height:(NSNumber *)height
-                             type:(NSString *)type
-                preferredFilename:(NSString *)filename;
+                             type:(NSString *)type;
 {
-    NSURL *URL = [self addImageMedia:media width:width height:height type:type preferredFilename:filename scalingSuffix:nil];
+    NSURL *URL = [self addImageMedia:media width:width height:height type:type preferredFilename:nil scalingSuffix:nil];
     NSString *src = (URL ? [self relativeStringFromURL:URL] : @"");
     
     [self writeImageWithSrc:src
