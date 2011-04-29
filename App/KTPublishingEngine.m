@@ -784,7 +784,39 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     OBPRECONDITION(request);
     
     
-    if ([request isNativeRepresentation] && ![[request media] mediaData])
+    BOOL isNative = [request isNativeRepresentation];
+    if (!isNative)
+    {
+        // Time to look closer to see if conversion/scaling is required
+        CGImageSourceRef imageSource = IMB_CGImageSourceCreateWithImageItem((id)[request media], NULL);
+        if (imageSource)
+        {
+            if ([[request type] isEqualToString:(NSString *)CGImageSourceGetType(imageSource)])
+            {
+                // TODO: Should we better take into account a source with multiple images?
+                CFDictionaryRef properties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, NULL);
+                if (properties)
+                {
+                    CFNumberRef width = CFDictionaryGetValue(properties, kCGImagePropertyPixelWidth);
+                    CFNumberRef height = CFDictionaryGetValue(properties, kCGImagePropertyPixelHeight);
+                    
+                    if ([[request width] isEqualToNumber:(NSNumber *)width] &&
+                        [[request height] isEqualToNumber:(NSNumber *)height])
+                    {
+                        isNative = YES;
+                    }
+                    
+                    CFRelease(properties);
+                }
+            }
+            
+            CFRelease(imageSource);
+        }
+    }
+    
+    
+    
+    if (isNative && ![[request media] mediaData])
     {
         // Read in the contents of the file to generate hash
         if (!cachedDigest)
