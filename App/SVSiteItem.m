@@ -659,9 +659,9 @@
 - (void)writeRSSFeedItemDescription { }
 
 - (BOOL)writeSummary:(SVHTMLContext *)context
-   includeLargeMedia:(BOOL)includeLargeMedia
-	excludeThumbnail:(BOOL)excludeThumbnail
-		  truncation:(NSUInteger)maxCount;
+		  truncation:(NSUInteger)maxCount
+			  plugIn:(SVPlugIn *)plugIn
+			 options:(SVPageTruncationOptions)options;
 {
     SVHTMLTextBlock *textBlock = [[SVHTMLTextBlock alloc] init];
     [textBlock setEditable:YES];

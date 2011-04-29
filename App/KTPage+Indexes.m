@@ -271,10 +271,10 @@
 	
 	NSUInteger truncationLength = [self.parentPage.collectionMaxFeedItemLength intValue];
 	
-	(void) [self writeSummary:xmlContext
-			includeLargeMedia:YES
-			 excludeThumbnail:NO		// don't exclude any thumbnail images
-				   truncation:truncationLength];
+    (void) [self writeSummary:xmlContext
+									 truncation:truncationLength
+										 plugIn:nil	// not an issue with RSS feed
+										options:0];	// not excluding thumbnails
 	
 	// Do we want to insert anything into the feed if it is truncated?
 	[xmlContext release];
@@ -405,20 +405,15 @@ NSUInteger kTwoThirdsTruncation;
 // Returns YES if truncated.
 
 - (BOOL)writeSummary:(SVHTMLContext *)context
-   includeLargeMedia:(BOOL)includeLargeMedia
-	excludeThumbnail:(BOOL)excludeThumbnail
-		  truncation:(NSUInteger)maxItemLength;
+		  truncation:(NSUInteger)maxItemLength
+			  plugIn:(SVPlugIn *)plugInToExclude
+			 options:(SVPageTruncationOptions)options;
 {
-	OFF((@"writeSummary: iteratedPage = %@, Page we are writing to = %@", self, [context page]));
-	if (self == [context page])
-	{
-		[context startElement:@"span" className:@"svx-invisibadge svx-warning"];
-		[context writeCharacters:NSLocalizedString(@"A page cannot contain an index of itself", @"Warning")];
-		[context endElement];
-		return NO;
-	}
+	DJW((@"writeSummary: iteratedPage = %@, Page we are writing to = %@  .... exclude %@", self, [context page], plugInToExclude));
 	
-	SVGraphic *thumbnailToExclude = excludeThumbnail ? [self thumbnailSourceGraphic] : nil;		// CORRECT FOR ALL CASES?
+	BOOL includeLargeMedia = ![context isWritingPagelet];		// do not allow large media if writing pagelet.
+	
+	SVGraphic *thumbnailToExclude = (options & SVExcludeThumbnailInTruncation) ? [self thumbnailSourceGraphic] : nil;		// CORRECT FOR ALL CASES?
 	
 	SVTruncationType truncationType = [[self class] chooseTruncTypeFromMaxItemLength:maxItemLength];
 	BOOL result = NO;
@@ -429,7 +424,7 @@ NSUInteger kTwoThirdsTruncation;
 	// do we have a custom summary? if so just write it
     if ( nil != [self customSummaryHTML] )
     {
-        [super writeSummary:context includeLargeMedia:includeLargeMedia excludeThumbnail:excludeThumbnail truncation:maxItemLength];
+        [super writeSummary:context truncation:maxItemLength plugIn:plugInToExclude options:options];
 		result = YES;		// A custom summary means we want to make an obvious link to more
     }
     else
@@ -442,6 +437,7 @@ NSUInteger kTwoThirdsTruncation;
 																						type:truncationType
 																		   includeLargeMedia:includeLargeMedia
 																		  thumbnailToExclude:thumbnailToExclude
+																			 plugInToExclude:plugInToExclude
 																				 didTruncate:&result];
 		}
 		else
@@ -505,13 +501,11 @@ NSUInteger kTwoThirdsTruncation;
         }
         else
         {
-            [super writeSummary:context includeLargeMedia:includeLargeMedia excludeThumbnail:excludeThumbnail truncation:truncationType];
+			[super writeSummary:context truncation:maxItemLength plugIn:plugInToExclude options:options];
         }
 		
 		[summary release];
-		
 	}
-
 
     [context endElement];
 

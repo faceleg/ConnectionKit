@@ -11,22 +11,29 @@
 
 
 #import <Cocoa/Cocoa.h>
-
+#import "SVPlugIn.h"
 
 @protocol SVPlugInContext;
 
 
 typedef enum { kTruncateNone, kTruncateCharacters, kTruncateWords, kTruncateSentences, kTruncateParagraphs } SVTruncationType;
 
+enum {
+    SVExcludeThumbnailInTruncation = 1 << 0,
+};
+typedef NSUInteger SVPageTruncationOptions;
 
-@protocol SVPage <NSObject>
+@protocol SVPage <NSObject>;
 
 #pragma mark Content
 
 - (NSString *)title;
 - (BOOL)showsTitle;
 
-- (BOOL)writeSummary:(id <SVPlugInContext>)context includeLargeMedia:(BOOL)includeLargeMedia excludeThumbnail:(BOOL)excludeThumbnail truncation:(NSUInteger)maxCount;
+- (BOOL)writeSummary:(id <SVPlugInContext>)context
+		  truncation:(NSUInteger)maxCount
+			  plugIn:(SVPlugIn *)plugIn
+			 options:(SVPageTruncationOptions)options;
 
 // For the image representation of a page, see SVPlugInContext
 

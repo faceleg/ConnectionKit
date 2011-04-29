@@ -381,15 +381,18 @@
 
 - (BOOL)writeSummaryOfIteratedPage;
 {
-	BOOL includeLargeMedia = self.indexLayoutType & kLargeMediaMask;
-	BOOL excludeThumbnail = self.indexLayoutType & kThumbMask;
-	
     id<SVPlugInContext> context = [self currentContext]; 
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
+
+	// BOOL includeLargeMedia = self.indexLayoutType & kLargeMediaMask;
+	BOOL excludeThumbnail = self.indexLayoutType & kThumbMask;
+	SVPageTruncationOptions truncationOptions = 0;
+	if (excludeThumbnail) truncationOptions = SVExcludeThumbnailInTruncation;
+	
     BOOL truncated = [iteratedPage writeSummary:context
-							  includeLargeMedia:includeLargeMedia
-							   excludeThumbnail:excludeThumbnail
-									 truncation:self.maxItemLength];
+									 truncation:self.maxItemLength
+										 plugIn:self		// so we can stop recursion
+										options:truncationOptions];
 	return truncated;
 }
 

@@ -77,10 +77,10 @@
 
 - (void)writeRSSFeedItemDescription { }
 
-- (BOOL)writeSummary:(id <SVPlugInContext>)context
-   includeLargeMedia:(BOOL)includeLargeMedia
-	excludeThumbnail:(BOOL)excludeThumbnail
-		  truncation:(NSUInteger)maxCount;
+- (BOOL)writeSummary:(SVHTMLContext *)context
+		  truncation:(NSUInteger)maxCount
+			  plugIn:(SVPlugIn *)plugIn
+			 options:(SVPageTruncationOptions)options;
 { return NO; }
 
 - (NSString *)language; { return [[self collection] language]; }
