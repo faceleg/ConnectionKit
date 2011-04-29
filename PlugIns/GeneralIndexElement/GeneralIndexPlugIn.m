@@ -46,6 +46,8 @@
 @end
 
 
+//FIXME: we really shouldn't rely on private API, if we need it, we should
+//discuss and expose the proper level of API from Sandvox
 @protocol PagePrivate
 - (NSNumber *)allowComments;
 - (id) master;
@@ -293,7 +295,9 @@
 
 	return (self.showTimestamps)
 		|| self.showPermaLinks
-		|| (self.showComments && [[iteratedPage allowComments] boolValue]);
+		|| (self.showComments 
+            && [iteratedPage respondsToSelector:@selector(allowComments)] 
+            && [[iteratedPage allowComments] boolValue]);
 }
 
 - (void)writeArticleInfoWithContinueReadingLink:(BOOL)continueReading;
@@ -342,7 +346,9 @@
 		[context endElement];	// </div> timestamp
 	}
 	
-	if (self.showComments && [[iteratedPage allowComments] boolValue])
+	if ( self.showComments 
+        && [iteratedPage respondsToSelector:@selector(allowComments)] 
+        && [[iteratedPage allowComments] boolValue] )
 	{
 		[iteratedPage writeComments:context];		// PRIVATE		
 	}
