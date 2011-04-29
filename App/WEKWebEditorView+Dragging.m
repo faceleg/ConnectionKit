@@ -160,6 +160,9 @@
         // Clean up
         [self forgetDraggedItems];
     }
+    
+    /*  This code is responsible for #118306. Pretty sure we don't need it since all drags are now handled entirely by webkit, or by moving the item. No more hybrid system.
+     
     else if (selection = [self selectedDOMRange])
     {
         // The drag was initiated by WebView itself, so make it delete the dragged items
@@ -168,7 +171,7 @@
         {
             [[self webView] delete:self];
         }
-    }
+    }*/
 }
 
 - (void)forgetDraggedItems; // call if you want to take over handling of drag source
