@@ -118,14 +118,6 @@
     }
     
     
-    // If the width and height match the original size, then keep that way
-    if (CGSizeEqualToSize(IMBImageItemGetSize((id)media),
-                          CGSizeMake([width floatValue], [height floatValue])))
-    {
-        width = nil;
-        height = nil;
-    }
-    
     NSString *path = nil;
     if (preferredFilename)
     {
