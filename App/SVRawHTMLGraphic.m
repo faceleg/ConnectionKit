@@ -59,6 +59,7 @@
         }
         [context startElement:@"div"];
         [context startNewline];
+        [context stopWritingInline];
     }
     
     
