@@ -170,10 +170,13 @@
 
 
 - (void)_mediaChanged;
-{
-	NSLog(@"SVAudio Media set.");
-	
+{	
 	[self loadAudio];
+}
+
+- (void)pageDidChange:(id <SVPage>)page;		// useful for migration
+{
+	[self _mediaChanged];
 }
 
 - (void)didSetSource;
