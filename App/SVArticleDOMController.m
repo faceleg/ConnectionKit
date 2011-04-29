@@ -300,6 +300,9 @@
 
     // Move graphic back to be top-level. Finding the right element to operate on can be a little tricky. Normally it's the controller's own node, but in the case of callouts, want to operate on the callout, not element. #83445
     WEKWebEditorItem *controller = [webEditor selectedItem];
+    if (!controller) controller = [[webEditor editingItems] lastObject];
+    if (!controller) return [self makeNextResponderDoCommandBySelector:_cmd];
+    
     while ([controller parentWebEditorItem] != self)
     {
         controller = [controller parentWebEditorItem];
