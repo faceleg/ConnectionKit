@@ -719,6 +719,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     {
         if ([self shouldPublishToPath:result])
         {
+            OBASSERT(![request scalingPathSuffix]); // should have been weeded out by this point
+            
+            
             // We might already know the data, ready to publish
             if (!data && [request isNativeRepresentation]) data = [[request media] mediaData];
             
