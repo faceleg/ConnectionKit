@@ -84,4 +84,5 @@ div.text-navigation div { display:inline; margin:0px 0.5em; }
 .pop_container_advanced { overflow:visible !important; z-index:500 !important; }
 .gigaboxx_composer { overflow:visible !important; z-index:500 !important; }
 .generic_dialog.pop_dialog.MessageComposerDialog.omitDialogFooter { overflow:visible !important; z-index:500 !important; }
+.fb_iframe_widget, .fb_iframe_widget iframe { width: 100%!important; }
 

@@ -71,7 +71,7 @@
 									[[if parser.isPublishing]]
 									[[if self==parser.HTMLContext.page]]
                                     <div id="fb-root"></div>
-                                    <fb:comments numposts="[[=master.fbNumberOfPosts]]" width=[[if parser.HTMLContext.page.showSidebar]]"[[=master.fbSidebarWidth]]"[[else6]]"[[=master.fbPageWidth]]"[[endif6]] publish_feed="[[=master.fbPublishFeed]]"></fb:comments>
+                                    <fb:comments numposts="[[=master.fbNumberOfPosts]]" width="100%" publish_feed="[[=master.fbPublishFeed]]"></fb:comments>
                                     [[else5]]
                                     <iframe src="http://www.facebook.com/plugins/comments.php?href=[[=&URL]]&permalink=1" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:130px; height:16px;" allowTransparency="true"></iframe>
                                     [[endif5]]
