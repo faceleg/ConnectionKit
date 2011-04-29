@@ -560,6 +560,9 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
     // Disregard 2 newlines in a row
 	if (_lastCharacterWrittenWasNewline)
 	{
+        // Trying to write a empty string at this point messes up newline tracking, so ignore it
+        if (![string length]) return;
+        
         if ([string hasPrefix:@"\n"])
         {
             if ([string length] == 1) return;   // special case where there's nothing to do
