@@ -39,8 +39,8 @@
 
 - (void)writeBody:(SVHTMLContext *)context;
 {
-    [context pushClassName:@"raw-html"];
-    [context addCSSString:@".raw-html { overflow:hidden; }"];
+    [context pushClassName:@"HTMLElement"];
+    [context addCSSString:@".HTMLElement { overflow:hidden; }"];
     
     if ([self shouldWriteHTMLInline])
     {
