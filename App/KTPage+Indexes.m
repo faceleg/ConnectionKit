@@ -409,7 +409,7 @@ NSUInteger kTwoThirdsTruncation;
 			  plugIn:(SVPlugIn *)plugInToExclude
 			 options:(SVPageTruncationOptions)options;
 {
-    NSParameterAssert(plugInToExclude);
+//    NSParameterAssert(plugInToExclude);
     
     
 	OFF((@"writeSummary: iteratedPage = %@, Page we are writing to = %@  .... exclude %@", self, [context page], plugInToExclude));
