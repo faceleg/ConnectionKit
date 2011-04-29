@@ -903,7 +903,6 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
                                            width:width
                                           height:height
                                             type:nil
-                               preferredFilename:nil
                                          options:options];
     }
 }
@@ -987,14 +986,13 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
                                      width:(NSUInteger)width
                                     height:(NSUInteger)height
                                       type:(NSString *)type // may be nil for context to guess
-                         preferredFilename:(NSString *)filename
                                    options:(SVPageImageRepresentationOptions)options;
 {
 	NSURL *url = [self addThumbnailMedia:media
 								   width:width
 								  height:height
 									type:type
-					   preferredFilename:filename
+					   preferredFilename:nil
                            scalingSuffix:nil
 								 options:options
 				pushSizeToCurrentElement:YES];
