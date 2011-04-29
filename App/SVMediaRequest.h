@@ -52,8 +52,15 @@ preferredUploadPath:(NSString *)path
 
 
 #pragma mark Upload
+
 // Where the media would ideally like to be placed
 @property(nonatomic, copy, readonly) NSString *preferredUploadPath;
+
+- (SVMediaRequest *)requestWithScalingSuffixApplied;
+
+
+#pragma mark Equality
+- (BOOL)isEqualToMediaRequest:(SVMediaRequest *)otherMedia;
 
 
 @end

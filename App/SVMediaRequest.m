@@ -14,6 +14,7 @@
 
 #import "NSString+Karelia.h"
 
+#import "KSPathUtilities.h"
 #import "KSURLUtilities.h"
 
 
@@ -86,6 +87,8 @@ preferredUploadPath:(NSString *)path
 @synthesize width = _width;
 @synthesize height = _height;
 @synthesize type = _type;
+@synthesize scalingPathSuffix = _scalingOrConversionPathSuffix;
+
 
 #pragma mark Image Scaling
 
@@ -130,7 +133,20 @@ preferredUploadPath:(NSString *)path
     return _uploadPath;
 }
 
-@synthesize scalingPathSuffix = _scalingOrConversionPathSuffix;
+- (SVMediaRequest *)requestWithScalingSuffixApplied;
+{
+    if (![self scalingPathSuffix]) return self;
+    
+    
+    NSString *path = [[self preferredUploadPath] ks_stringWithPathSuffix:[self scalingPathSuffix]];
+    
+    return [[[SVMediaRequest alloc] initWithMedia:[self media]
+                                            width:[self width]
+                                           height:[self height]
+                                             type:[self type]
+                              preferredUploadPath:path
+                                    scalingSuffix:nil] autorelease];
+}
 
 - (BOOL)isEqualToMediaRequest:(SVMediaRequest *)otherMedia;
 {
