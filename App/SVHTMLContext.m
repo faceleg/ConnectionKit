@@ -1198,6 +1198,9 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 - (void)addJavascriptResourceWithTemplateAtURL:(NSURL *)templateURL
                                         object:(id)object;
 {
+    NSParameterAssert(templateURL);
+    
+    
     NSMutableString *script = [[NSMutableString alloc] init];
     SVHTMLContext *context = [[SVHTMLContext alloc] initWithOutputWriter:script inheritFromContext:self];
     
