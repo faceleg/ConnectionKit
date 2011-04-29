@@ -58,74 +58,74 @@
                                                 options:SVResizingDisableVertically];
         }
         [context startElement:@"div"];
+        [context startNewline];
     }
     
     
-	// Show the real HTML if it's the pro-licensed edition publishing
-	// OR we are previewing and the SVRawHTMLGraphic is marked as being OK for preview
-	
-    NSString *fragment = [self HTMLString];
-    [context addDependencyOnObject:self keyPath:@"HTMLString"];
-    
-    
-    [context addDependencyOnObject:self keyPath:@"contentType"];
-    NSString *contentType = [self contentType];
-    
-    
-    BOOL write = YES;
-    if (!contentType ||     // treat like HTML
-        [contentType isEqualToString:(NSString *)kUTTypeHTML])
     {
-        if ([context isForEditing])
-		{
-			if ([[self shouldPreviewWhenEditing] boolValue])
-			{
-				// Is the preview going to be understandable by WebKit? Judge this by making sure there's no problem with close tags
-				NSString *html = [SVHTMLValidator HTMLStringWithFragment:(fragment ? fragment : @"")
-																 docType:KSHTMLWriterDocTypeHTML_5];
-				
-				NSError *error = nil;
-				ValidationState validation = [SVHTMLValidator validateHTMLString:html docType:KSHTMLWriterDocTypeHTML_5 error:&error];
-				if (validation == kValidationStateValidationError)
-				{
-					NSString *description = [error localizedDescription];
-					if (description)
-					{
-						if ([description rangeOfString:@" </"].location != NSNotFound) validation = kValidationStateUnparseable;
-					}
-				}
-				
-				if (validation < kValidationStateValidationError)
-				{
-					// Invalid HTML should use placeholder instead
-					SVTemplate *template = [[self class] invalidHTMLPlaceholderTemplate];
-					NSString *parsed = [context parseTemplate:template object:self];
-					[context writeHTMLString:parsed];
-					write = NO;
-				}
-			}
-			else
-			{
-				write = NO;
-			}
-		}
+        // Show the real HTML if it's the pro-licensed edition publishing
+        // OR we are previewing and the SVRawHTMLGraphic is marked as being OK for preview
+        
+        NSString *fragment = [self HTMLString];
+        [context addDependencyOnObject:self keyPath:@"HTMLString"];
+        
+        
+        [context addDependencyOnObject:self keyPath:@"contentType"];
+        NSString *contentType = [self contentType];
+        
+        
+        BOOL write = YES;
+        if (!contentType ||     // treat like HTML
+            [contentType isEqualToString:(NSString *)kUTTypeHTML])
+        {
+            if ([context isForEditing])
+            {
+                if ([[self shouldPreviewWhenEditing] boolValue])
+                {
+                    // Is the preview going to be understandable by WebKit? Judge this by making sure there's no problem with close tags
+                    NSString *html = [SVHTMLValidator HTMLStringWithFragment:(fragment ? fragment : @"")
+                                                                     docType:KSHTMLWriterDocTypeHTML_5];
+                    
+                    NSError *error = nil;
+                    ValidationState validation = [SVHTMLValidator validateHTMLString:html docType:KSHTMLWriterDocTypeHTML_5 error:&error];
+                    if (validation == kValidationStateValidationError)
+                    {
+                        NSString *description = [error localizedDescription];
+                        if (description)
+                        {
+                            if ([description rangeOfString:@" </"].location != NSNotFound) validation = kValidationStateUnparseable;
+                        }
+                    }
+                    
+                    if (validation < kValidationStateValidationError)
+                    {
+                        // Invalid HTML should use placeholder instead
+                        SVTemplate *template = [[self class] invalidHTMLPlaceholderTemplate];
+                        NSString *parsed = [context parseTemplate:template object:self];
+                        [context writeHTMLString:parsed];
+                        write = NO;
+                    }
+                }
+                else
+                {
+                    write = NO;
+                }
+            }
+        }
+        else
+        {
+            // don't show while editing
+            write = ![context isForEditing];
+        }
+        
+        if (write && fragment)
+        {
+            [context writeHTMLString:fragment];
+        }
+        
+        // Changes to any of these properties will be a visible change
+        [context addDependencyOnObject:self keyPath:@"shouldPreviewWhenEditing"];
     }
-    else
-    {
-        // don't show while editing
-        write = ![context isForEditing];
-    }
-    
-    if (write && fragment)
-    {
-        [context writeHTMLString:fragment];
-    }
-    
-    // Changes to any of these properties will be a visible change
-    [context addDependencyOnObject:self keyPath:@"shouldPreviewWhenEditing"];
-    
-    
-    
     [context endElement];
 }
 
