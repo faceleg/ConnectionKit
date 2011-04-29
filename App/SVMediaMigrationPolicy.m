@@ -163,6 +163,29 @@
 #pragma mark -
 
 
+@implementation SVFileMediaMigrationPolicy
+
++ (NSManagedObject *)createDestinationInstanceForSourceInstance:(NSManagedObject *)sInstance mediaContainerIdentifier:(NSString *)mediaID entityMapping:(NSEntityMapping *)mapping manager:(SVMigrationManager *)manager error:(NSError **)error;
+{
+    NSManagedObject *result = [super createDestinationInstanceForSourceInstance:sInstance mediaContainerIdentifier:mediaID entityMapping:mapping manager:manager error:error];
+    
+    // Set preferredFilename from page fileName
+    NSString *extension = [sInstance valueForKey:@"customFileExtension"];
+    if (!extension) extension = @"html";    // shouldn't happen
+    
+    [result setValue:[[sInstance valueForKey:@"fileName"] stringByAppendingPathExtension:extension]
+              forKey:@"preferredFilename"];
+    
+    return result;
+}
+
+@end
+
+
+
+#pragma mark -
+
+
 @implementation SVFullPageRawHTMLMediaMigrationPolicy
 
 - (NSData *)extensiblePropertiesFromHTMLString:(NSString *)html;

@@ -24,5 +24,13 @@
 #pragma mark -
 
 
+@interface SVFileMediaMigrationPolicy : SVMediaMigrationPolicy
+@end
+
+
+
+#pragma mark -
+
+
 @interface SVFullPageRawHTMLMediaMigrationPolicy : NSEntityMigrationPolicy
 @end
