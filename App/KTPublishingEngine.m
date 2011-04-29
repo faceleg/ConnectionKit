@@ -860,11 +860,15 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     
     
-    // Calculate hash of media so can decide where to place it
     NSData *fileContents = [SVImageScalingOperation dataWithMediaRequest:request];
     
     if (fileContents)
     {
+        // Since scaling was applied, we need to publish to the path requested. This should NOT affect equality of requests
+        SVMediaRequest *original = request;
+        request = [request requestWithScalingSuffixApplied];
+        OBASSERT([request isEqualToMediaRequest:original]);
+        
         if (cachedDigest)
         {
             // Hashing was done in a previous iteration, so recycle
