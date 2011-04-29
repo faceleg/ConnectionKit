@@ -387,7 +387,8 @@
                                       width:nil
                                      height:nil
                                        type:(NSString *)kUTTypeICO
-                          preferredFilename:@"../favicon.ico"];  // dirty HACK to get it at top-level
+                          preferredFilename:@"../favicon.ico"   // dirty HACK to get it at top-level
+                              scalingSuffix:nil];
         
         if (url) return [context relativeStringFromURL:url];
     }

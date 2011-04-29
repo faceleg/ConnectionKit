@@ -859,7 +859,8 @@
 										   width:self.width
 										  height:self.height
 											type:(NSString *)kUTTypeJPEG
-                               preferredFilename:nil];
+                               preferredFilename:nil
+                                   scalingSuffix:nil];
 	}
 		
 	BOOL wroteUnknownTag = NO;	// will be set below if nothing can be generated

@@ -490,22 +490,13 @@
         CFRelease(types);
         
         
-        // Where to publish?
-        NSString *filename = nil;
-        if (width)
-        {
-            [[[media preferredUploadPath] lastPathComponent] stringByDeletingPathExtension];
-            filename = [filename stringByAppendingFormat:@"_%u", width];
-            filename = [filename stringByAppendingPathExtension:[KSWORKSPACE preferredFilenameExtensionForType:type]];
-        }
-        
-        
         // Write the thumbnail
         return [context addThumbnailMedia:media
                                     width:width
                                    height:height
                                      type:type
-                        preferredFilename:filename
+                        preferredFilename:nil
+                            scalingSuffix:[NSString stringWithFormat:@"_%u", width]
                                   options:0
                  pushSizeToCurrentElement:YES];
     }

@@ -195,7 +195,8 @@ typedef enum {
                    width:(NSNumber *)width
                   height:(NSNumber *)height
                     type:(NSString *)type
-       preferredFilename:(NSString *)preferredFilename;
+       preferredFilename:(NSString *)preferredFilename
+           scalingSuffix:(NSString *)suffix;
 
 - (void)writeImageWithSourceMedia:(id <SVMedia>)media
                               alt:(NSString *)altText
@@ -217,6 +218,7 @@ typedef enum {
                       height:(NSUInteger)height
                         type:(NSString *)type
            preferredFilename:(NSString *)filename
+               scalingSuffix:(NSString *)suffix
                      options:(SVPageImageRepresentationOptions)options
     pushSizeToCurrentElement:(BOOL)push;
 

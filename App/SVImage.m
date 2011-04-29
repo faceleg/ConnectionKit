@@ -315,17 +315,12 @@
     SVMedia *media = [self media];
     if (media)
     {
-        NSString *filename = [[[media preferredUploadPath] lastPathComponent] stringByDeletingPathExtension];
-        filename = [filename stringByAppendingString:@"_med"];
-        
-        NSString *extension = [KSWORKSPACE preferredFilenameExtensionForType:[self typeToPublish]];
-        if (extension) filename = [filename stringByAppendingPathExtension:extension];
-        
         NSURL *URL = [context addImageMedia:media
                                       width:[self width]
                                      height:[self height]
                                        type:[self typeToPublish]
-                          preferredFilename:filename];
+                          preferredFilename:nil
+                              scalingSuffix:@"_med"];
         
         [context writeImageWithSrc:(URL ? [context relativeStringFromURL:URL] : @"")
                                alt:alt

@@ -21,27 +21,39 @@
     NSNumber        *_height;
     NSString        *_type;
     NSString        *_uploadPath;
+    NSString        *_scalingOrConversionPathSuffix;
 }
 
 - (id)initWithMedia:(SVMedia *)media
               width:(NSNumber *)width
              height:(NSNumber *)height
                type:(NSString *)type
-preferredUploadPath:(NSString *)path;
+preferredUploadPath:(NSString *)path
+      scalingSuffix:(NSString *)suffix;
 
 - (id)initWithMedia:(SVMedia *)media;   // convenience
 
 @property(nonatomic, retain, readonly) SVMedia *media;
-@property(nonatomic, copy, readonly) NSNumber *width;
-@property(nonatomic, copy, readonly) NSNumber *height;
-@property(nonatomic, copy, readonly) NSString *type;
 
 
 #pragma mark Scaling
-- (BOOL)isNativeRepresentation;
+
+@property(nonatomic, copy, readonly) NSNumber *width;
+@property(nonatomic, copy, readonly) NSNumber *height;
 - (NSDictionary *)imageScalingParameters;
 
+// If scaling was required, add this on to .preferredUploadPath using -ks_stringWithPathSuffix;
+@property(nonatomic, copy, readonly) NSString *scalingPathSuffix;
 
-- (NSString *)preferredUploadPath;    // what the media would like to be placed given the chance
+
+#pragma mark Scaling/Conversion
+@property(nonatomic, copy, readonly) NSString *type;
+- (BOOL)isNativeRepresentation;
+
+
+#pragma mark Upload
+// Where the media would ideally like to be placed
+@property(nonatomic, copy, readonly) NSString *preferredUploadPath;
+
 
 @end

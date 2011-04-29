@@ -855,7 +855,8 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
                    width:(NSNumber *)width
                   height:(NSNumber *)height
                     type:(NSString *)type
-       preferredFilename:(NSString *)preferredFilename;
+       preferredFilename:(NSString *)preferredFilename
+           scalingSuffix:(NSString *)suffix;
 {
     return [self addMedia:media];
 }
@@ -867,7 +868,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
                              type:(NSString *)type
                 preferredFilename:(NSString *)filename;
 {
-    NSURL *URL = [self addImageMedia:media width:width height:height type:type preferredFilename:filename];
+    NSURL *URL = [self addImageMedia:media width:width height:height type:type preferredFilename:filename scalingSuffix:nil];
     NSString *src = (URL ? [self relativeStringFromURL:URL] : @"");
     
     [self writeImageWithSrc:src
@@ -925,6 +926,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
                       height:(NSUInteger)height
                         type:(NSString *)type
            preferredFilename:(NSString *)filename
+               scalingSuffix:(NSString *)suffix
                      options:(SVPageImageRepresentationOptions)options
     pushSizeToCurrentElement:(BOOL)push;
 {
@@ -975,7 +977,8 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
                              width:[NSNumber numberWithUnsignedInteger:width]
                             height:[NSNumber numberWithUnsignedInteger:height]
                               type:type
-                 preferredFilename:filename];
+                 preferredFilename:filename
+                     scalingSuffix:suffix];
     }
 }
 
@@ -992,6 +995,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 								  height:height
 									type:type
 					   preferredFilename:filename
+                           scalingSuffix:nil
 								 options:options
 				pushSizeToCurrentElement:YES];
 	

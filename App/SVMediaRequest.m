@@ -19,13 +19,14 @@
 
 @implementation SVMediaRequest
 
-- (id)initWithMedia:(SVMedia *)mediaRecord
+- (id)initWithMedia:(SVMedia *)media
               width:(NSNumber *)width
              height:(NSNumber *)height
                type:(NSString *)type
-preferredUploadPath:(NSString *)path;
+preferredUploadPath:(NSString *)path
+      scalingSuffix:(NSString *)suffix;
 {
-    OBPRECONDITION(mediaRecord);
+    OBPRECONDITION(media);
     
     if (type)
     {
@@ -50,11 +51,12 @@ preferredUploadPath:(NSString *)path;
     
     self = [self init];
     
-    _media = [mediaRecord retain];
+    _media = [media retain];
     _width = [width copy];
     _height = [height copy];
     _type = [type copy];
     _uploadPath = [path copy];
+    _scalingOrConversionPathSuffix = [suffix copy];
     
     return self;
 }
@@ -65,7 +67,8 @@ preferredUploadPath:(NSString *)path;
                          width:nil
                         height:nil
                           type:nil
-           preferredUploadPath:[media preferredUploadPath]];
+           preferredUploadPath:[media preferredUploadPath]
+                 scalingSuffix:nil];
 }
 
 - (void)dealloc
@@ -126,6 +129,8 @@ preferredUploadPath:(NSString *)path;
     
     return _uploadPath;
 }
+
+@synthesize scalingPathSuffix = _scalingOrConversionPathSuffix;
 
 - (BOOL)isEqualToMediaRequest:(SVMediaRequest *)otherMedia;
 {

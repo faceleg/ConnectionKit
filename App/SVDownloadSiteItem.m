@@ -67,7 +67,8 @@
                                     width:[NSNumber numberWithUnsignedInteger:width]
                                    height:[NSNumber numberWithUnsignedInteger:height]
                                      type:(NSString *)kUTTypePNG
-                        preferredFilename:nil];
+                        preferredFilename:nil
+                            scalingSuffix:nil];
         }
         else
         {
@@ -86,7 +87,8 @@
                                              width:[NSNumber numberWithUnsignedInteger:width]
                                             height:[NSNumber numberWithUnsignedInteger:height]
                                               type:(NSString *)kUTTypePNG
-                                 preferredFilename:nil];
+                                 preferredFilename:nil
+                                     scalingSuffix:nil];
             
             [media release];
             return result;

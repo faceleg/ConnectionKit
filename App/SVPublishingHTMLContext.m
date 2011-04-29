@@ -106,7 +106,8 @@
                    width:(NSNumber *)width
                   height:(NSNumber *)height
                     type:(NSString *)type
-       preferredFilename:(NSString *)preferredFilename;
+       preferredFilename:(NSString *)preferredFilename
+scalingSuffix:(NSString *)suffix;
 {
     // When scaling an image, need full suite of parameters
     if (width || height)
@@ -138,7 +139,8 @@
                                                               width:width
                                                              height:height
                                                                type:type
-                                                preferredUploadPath:path];
+                                                preferredUploadPath:path
+                                          scalingSuffix:suffix];
     
     NSURL *result = [self addMediaWithRequest:request];
     [request release];
