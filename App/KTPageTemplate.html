@@ -47,8 +47,8 @@
 [[=parser.outputWriter.writeExtraHeaders]]
 [[comment ESCAPE THE URL SO THAT ANY DOUBLE-DASH FROM AN IDN DOESNT PRODUCE ILLEGAL MARKUP]]
 		[[=parser.HTMLContext.writeJQueryImport]]
-        [[=writeHierMenuScript]]
-        [[=writeDesignJavascript]]
+[[=writeHierMenuScript]]
+[[=writeDesignJavascript]]
 [[=writeCodeInjectionHeadArea]]
 [[if parser.HTMLContext.isForPublishing]][[if currentContext.canWriteProMarkup]][[if site.googleAnalyticsCode]]
 [[=site.googleAnalyticsCode]]
@@ -80,7 +80,7 @@
 						[[if master.siteTitle]][[textblock property:master.siteTitle flags:"line" tag:h1 hyperlink:site.rootPage class:"title"]][[endif3]]
 [[endif2]]
 [[endif]]
-						[[if !master.siteSubtitle.hidden]][[textblock property:master.siteSubtitle flags:"line" tag:p class:tagline placeholder:"Site Tagline"]][[endif]]
+						[[if !master.siteSubtitle.hidden]][[textblock property:master.siteSubtitle flags:"line" tag:p id:tagline placeholder:"Site Tagline"]][[endif]]
 					</div><!-- title -->
 					<div id="sitemenu-container">
 						[[=writeSiteMenu]]

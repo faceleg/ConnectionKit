@@ -26,6 +26,7 @@
 	
     NSString		*myHTMLTag;
     NSString        *_className;
+    NSString        *_id;
 	
 	NSString		*myHyperlinkString;
 	NSString		*myTargetString;
@@ -56,6 +57,7 @@
 
 @property(nonatomic, copy) NSString *tagName;
 @property(nonatomic, copy) NSString *customCSSClassName;
+@property(nonatomic, copy) NSString *customCSSID;
 
 
 @property(nonatomic, copy) NSString *hyperlinkString;

@@ -77,12 +77,13 @@
 		
 		// Build the text block
 		SVHTMLTextBlock *textBlock = [self textblockForKeyPath:textKeyPath
-													     ofObject:object
-														    flags:flags
-													      HTMLTag:tag
-														className:className
-											    graphicalTextCode:[parameters objectForKey:@"graphicalTextCode"]
-													    hyperlink:hyperlink];
+                                                      ofObject:object
+                                                         flags:flags
+                                                       HTMLTag:tag
+                                                     className:className
+                                                        idName:[parameters objectForKey:@"id"]
+                                             graphicalTextCode:[parameters objectForKey:@"graphicalTextCode"]
+                                                     hyperlink:hyperlink];
 		
 		// Generate HTML
         SVHTMLContext *context = [self HTMLContext];
@@ -98,11 +99,12 @@
 }
 
 - (SVHTMLTextBlock *)textblockForKeyPath:(NSString *)keypath ofObject:(id)object
-									  flags:(NSArray *)flags
-								    HTMLTag:(NSString *)tag
-								  className:(NSString *)className
-						  graphicalTextCode:(NSString *)GTCode
-								  hyperlink:(KTPage *)hyperlink
+                                   flags:(NSArray *)flags
+                                 HTMLTag:(NSString *)tag
+                               className:(NSString *)className
+                                  idName:(NSString *)idName
+                       graphicalTextCode:(NSString *)GTCode
+                               hyperlink:(KTPage *)hyperlink
 {
 	// Build a text block
 	SVHTMLTextBlock *result = [[[SVHTMLTextBlock alloc] init] autorelease];
@@ -115,10 +117,8 @@
 	[result setRichText:richText];	// Presumably there must be some cases where this is not desired.
 	[result setImportsGraphics:[flags containsObject:@"imageable"]];
 	if (tag) [result setTagName:tag];
-	if (className)
-	{
-		[result setCustomCSSClassName:className];
-	}
+	if (className) [result setCustomCSSClassName:className];
+    if (idName) [result setCustomCSSID:idName];
 	
 	if (hyperlink)
 	{

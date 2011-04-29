@@ -74,11 +74,12 @@
 
 @interface SVHTMLTemplateParser (Text)
 - (SVHTMLTextBlock *)textblockForKeyPath:(NSString *)keypath ofObject:(id)object
-									  flags:(NSArray *)flags
-								    HTMLTag:(NSString *)tag
-								  className:(NSString *)className
-						  graphicalTextCode:(NSString *)GTCode
-								  hyperlink:(KTPage *)hyperlink;
+                                   flags:(NSArray *)flags
+                                 HTMLTag:(NSString *)tag
+                               className:(NSString *)className
+                                  idName:(NSString *)idName
+                       graphicalTextCode:(NSString *)GTCode
+                               hyperlink:(KTPage *)hyperlink;
 @end
 
 

@@ -59,6 +59,7 @@
     [_placeholder release];
 	[myHTMLTag release];
     [_className release];
+    [_id release];
 	[myHyperlinkString release];
 	[myTargetString release];
 	[myHTMLSourceObject release];
@@ -82,6 +83,7 @@
 }
 
 @synthesize customCSSClassName = _className;
+@synthesize customCSSID = _id;
 
 - (void)buildClassName:(SVHTMLContext *)context;
 {
@@ -328,7 +330,8 @@
 
 - (void)startElements:(SVHTMLContext *)context;
 {
-    // Build up class
+    // Build up id & class
+    if ([self customCSSID]) [context pushAttribute:@"id" value:[self customCSSID]];
     [self buildClassName:context];
     
     
