@@ -520,8 +520,6 @@
 - (NSAttributedString *)attributedHTMLStringWithTruncation:(NSUInteger)maxItemLength
                                                       type:(SVTruncationType)truncationType
                                          includeLargeMedia:(BOOL)includeLargeMedia
-										thumbnailToExclude:(SVGraphic *) thumbnailToExclude
-										   plugInToExclude:(SVPlugIn *)plugInToExclude
                                                didTruncate:(BOOL *)truncated;
 {
     // take the normally generated HTML for the summary  
@@ -604,23 +602,10 @@
 		// Ignore if it is the thumbnail we want to exclude, or if it's the plugin that's used to summarize
         if (attachment)
 		{
-			SVGraphic *graphic = [attachment graphic];
-			SVPlugIn *plugInOfGraphic = (void *) -1;	// illegal value, never going to match
-			if ([graphic respondsToSelector:@selector(plugIn)])
-			{
-				plugInOfGraphic = [((SVPlugInGraphic *)graphic) plugIn];
-			}
-			if (thumbnailToExclude != graphic && plugInToExclude != plugInOfGraphic)
-			{
-				BOOL causesWrap = [[attachment causesWrap] boolValue];
-				if (includeLargeMedia || !causesWrap)
-				{    
-					[result addAttribute:@"SVAttachment" value:attachment range:dAttachmentRange];
-				}
-			}
-			else
-			{
-				DJW((@"Ignoring %@", [attachment graphic]));
+			BOOL causesWrap = [[attachment causesWrap] boolValue];
+			if (includeLargeMedia || !causesWrap)
+			{    
+				[result addAttribute:@"SVAttachment" value:attachment range:dAttachmentRange];
 			}
 		}
     }

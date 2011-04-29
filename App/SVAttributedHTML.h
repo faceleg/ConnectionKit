@@ -45,8 +45,6 @@
 - (NSAttributedString *)attributedHTMLStringWithTruncation:(NSUInteger)maxCount
                                                       type:(SVTruncationType)truncationType
                                          includeLargeMedia:(BOOL)includeLargeMedia
-										thumbnailToExclude:(SVGraphic *) thumbnailToExclude
-										   plugInToExclude:(SVPlugIn *)plugInToExclude
                                                didTruncate:(BOOL *)truncated;
 
 

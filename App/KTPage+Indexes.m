@@ -409,7 +409,7 @@ NSUInteger kTwoThirdsTruncation;
 			  plugIn:(SVPlugIn *)plugInToExclude
 			 options:(SVPageTruncationOptions)options;
 {
-	DJW((@"writeSummary: iteratedPage = %@, Page we are writing to = %@  .... exclude %@", self, [context page], plugInToExclude));
+	OFF((@"writeSummary: iteratedPage = %@, Page we are writing to = %@  .... exclude %@", self, [context page], plugInToExclude));
 	
 	BOOL includeLargeMedia = ![context isWritingPagelet];		// do not allow large media if writing pagelet.
 	
@@ -436,8 +436,6 @@ NSUInteger kTwoThirdsTruncation;
 			html = [[[self article] attributedHTMLString] attributedHTMLStringWithTruncation:maxItemLength
 																						type:truncationType
 																		   includeLargeMedia:includeLargeMedia
-																		  thumbnailToExclude:thumbnailToExclude
-																			 plugInToExclude:plugInToExclude
 																				 didTruncate:&result];
 		}
 		else
@@ -447,23 +445,45 @@ NSUInteger kTwoThirdsTruncation;
 		}
 		NSMutableAttributedString *summary = [html mutableCopy];
 		
-		if (!includeLargeMedia)
-		{
-			
-			NSMutableArray *attachments = [[NSMutableArray alloc] initWithCapacity:
-										   [[[self article] attachments] count]];
+		// keep around the attachments we are deleting so that we can grab some caption if needed
+		NSMutableArray *attachments = [[NSMutableArray alloc] initWithCapacity:
+									   [[[self article] attachments] count]];
 
-			// Strip out large attachments .... WHY?
-			NSUInteger location = 0;
+		// Strip out large attachments .... WHY?
+		NSUInteger location = 0;
+		
+		while (location < summary.length)
+		{
+			NSRange effectiveRange;
+			SVTextAttachment *attachment = [summary attribute:@"SVAttachment"
+													  atIndex:location
+											   effectiveRange:&effectiveRange];
+			BOOL shouldKeepAttachment = NO;
 			
-			while (location < summary.length)
+			if (attachment)
 			{
-				NSRange effectiveRange;
-				SVTextAttachment *attachment = [summary attribute:@"SVAttachment"
-														  atIndex:location
-												   effectiveRange:&effectiveRange];
+				shouldKeepAttachment = (includeLargeMedia && attachment && [[attachment causesWrap] boolValue]);
 				
-				if (attachment && [[attachment causesWrap] boolValue])
+				SVGraphic *graphic = [attachment graphic];
+				
+				if (thumbnailToExclude == graphic)
+				{
+					OFF((@"Excluding thumbnail %@", thumbnailToExclude));
+					shouldKeepAttachment = NO;
+				}
+				
+				SVPlugIn *plugInOfGraphic = (void *) -1;	// illegal value, never going to match
+				if ([graphic respondsToSelector:@selector(plugIn)])
+				{
+					plugInOfGraphic = [((SVPlugInGraphic *)graphic) plugIn];
+				}
+				if (plugInToExclude == plugInOfGraphic)
+				{
+					OFF((@"Excluding plugin %@", plugInToExclude));
+					shouldKeepAttachment = NO;
+				}
+				
+				if (!shouldKeepAttachment)
 				{
 					[attachments addObject:[attachment graphic]];
 					[summary deleteCharactersInRange:effectiveRange];
@@ -473,26 +493,28 @@ NSUInteger kTwoThirdsTruncation;
 					location = location + effectiveRange.length;
 				}
 			}
-
-			// Are we left with only whitespace? If so, fallback to graphic captions
-			NSString *text = [[summary string] stringByConvertingHTMLToPlainText];
-			if ([text isWhitespace])
+			else
 			{
-				[summary release]; summary = nil;
-				
-				for (SVGraphic *aGraphic in attachments)
+				location = location + effectiveRange.length;
+			}
+		}
+
+		// Are we left with only whitespace? If so, fallback to graphic captions
+		NSString *text = [[summary string] stringByConvertingHTMLToPlainText];
+		if ([text isWhitespace])
+		{
+			[summary release]; summary = nil;
+			
+			for (SVGraphic *aGraphic in attachments)
+			{
+				if ([aGraphic showsCaption])
 				{
-					if ([aGraphic showsCaption])
-					{
-						summary = [[[aGraphic caption] attributedHTMLString] retain];
-						break;
-					}
+					summary = [[[aGraphic caption] attributedHTMLString] retain];
+					break;
 				}
 			}
-			[attachments release];
 		}
-		
-		
+		[attachments release];
 		
 		// Write it
         if ([summary length])
