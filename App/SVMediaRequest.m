@@ -163,4 +163,21 @@ preferredUploadPath:(NSString *)path
     return [self retain];   // immutable
 }
 
+#pragma mark Debug
+
+- (NSString *)description;
+{
+    NSString *result = [super description];
+    result = [result stringByAppendingFormat:@" %@", [self media]];
+    
+    if ([self width] || [self height])
+    {
+        result = [result stringByAppendingFormat:@" %@x%@", [self width], [self height]];
+    }
+    
+    result = [result stringByAppendingFormat:@" %@", [self preferredUploadPath]];
+    
+    return result;
+}
+
 @end
