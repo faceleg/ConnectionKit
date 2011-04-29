@@ -827,7 +827,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         }
         else
         {
-            NSLog(@"Unable to load scaled image");
+            NSLog(@"Unable to load media request: %@", request);
         }
     }
 }
