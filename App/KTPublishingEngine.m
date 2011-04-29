@@ -816,54 +816,78 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     
     
-    if (isNative && ![[request media] mediaData])
+    // Great! No messy scaling work to do!
+    if (isNative)
     {
-        // Read in the contents of the file to generate hash
+        SVMediaRequest *canonical = [[SVMediaRequest alloc] initWithMedia:[request media]
+                                                      preferredUploadPath:[request preferredUploadPath]];
+        OBASSERT([canonical isNativeRepresentation]);
+        
+        // Calculate hash
+        // TODO: Ideally we could look up the canonical request to see if hash has already been generated (e.g. user opted to publish full-size copy of image too)
         if (!cachedDigest)
         {
-            NSURL *url = [[request media] mediaURL];
-            cachedDigest = [NSData SHA1DigestOfContentsOfURL:url];
+            NSData *data = [[request media] mediaData];
+            if (data)
+            {
+                cachedDigest = [data SHA1Digest];
+            }
+            else
+            {
+                NSURL *url = [[request media] mediaURL];
+                cachedDigest = [NSData SHA1DigestOfContentsOfURL:url];
             
-            if (!cachedDigest) NSLog(@"Unable to hash file: %@", url);
+                if (!cachedDigest) NSLog(@"Unable to hash file: %@", url);
+            }
         }
         
         if (cachedDigest)   // if couldn't be hashed, can't be published
         {
-            [[self ks_proxyOnThread:nil waitUntilDone:YES]  // wait before reporting op as finished
+            // Publish original image first. Ensures the publishing of real request will be to the same path
+            
+            [[self ks_proxyOnThread:nil]  // wait until done so op isn't reported as finished too early
+             publishMediaWithRequest:canonical cachedData:nil SHA1Digest:cachedDigest];
+            
+            [[self ks_proxyOnThread:nil]  // wait until done so op isn't reported as finished too early
              publishMediaWithRequest:request cachedData:nil SHA1Digest:cachedDigest];
+        }
+        
+        [canonical release];
+        return;
+    }
+    
+    
+    
+    
+    
+    // Calculate hash of media so can decide where to place it
+    NSData *fileContents = [SVImageScalingOperation dataWithMediaRequest:request];
+    
+    if (fileContents)
+    {
+        if (cachedDigest)
+        {
+            // Hashing was done in a previous iteration, so recycle
+            [[self ks_proxyOnThread:nil waitUntilDone:YES]  // wait before reporting op as finished
+             publishMediaWithRequest:request cachedData:fileContents SHA1Digest:cachedDigest];
+        }
+        else
+        {
+            // Hash on a separate thread so this queue is ready to go again quickly
+            NSInvocation *invocation = [NSInvocation
+                                        invocationWithSelector:@selector(threaded_publishData:forMedia:)
+                                        target:self
+                                        arguments:[NSArray arrayWithObjects:fileContents, request, nil]];
+            
+            NSOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
+            [self addDependencyForNextPhase:op];
+            [[self defaultQueue] addOperation:op];
+            [op release];
         }
     }
     else
     {
-        // Calculate hash of media so can decide where to place it
-        NSData *fileContents = [SVImageScalingOperation dataWithMediaRequest:request];
-        
-        if (fileContents)
-        {
-            if (cachedDigest)
-            {
-                // Hashing was done in a previous iteration, so recycle
-                [[self ks_proxyOnThread:nil waitUntilDone:YES]  // wait before reporting op as finished
-                 publishMediaWithRequest:request cachedData:fileContents SHA1Digest:cachedDigest];
-            }
-            else
-            {
-                // Hash on a separate thread so this queue is ready to go again quickly
-                NSInvocation *invocation = [NSInvocation
-                                            invocationWithSelector:@selector(threaded_publishData:forMedia:)
-                                            target:self
-                                            arguments:[NSArray arrayWithObjects:fileContents, request, nil]];
-                
-                NSOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
-                [self addDependencyForNextPhase:op];
-                [[self defaultQueue] addOperation:op];
-                [op release];
-            }
-        }
-        else
-        {
-            NSLog(@"Unable to load media request: %@", request);
-        }
+        NSLog(@"Unable to load media request: %@", request);
     }
 }
 
