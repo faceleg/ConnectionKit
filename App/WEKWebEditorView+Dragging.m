@@ -150,8 +150,6 @@
 
 - (void)removeDraggedItems; // removes from DOM and item tree
 {
-    DOMRange *selection;
-    
     if ([self draggedItems])
     {
         // Remove the objects
