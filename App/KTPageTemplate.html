@@ -33,7 +33,7 @@
 		<link rel="alternate" type="application/rss+xml" title="RSS: [[=&title]]" href="[[=&feedURL]]" charset="UTF-8" />
 [[endif2]][[endif]]
 [[if !parser.HTMLContext.isForEditing]]
-		[[=writeThumbnailRel]]
+[[=writeThumbnailRel]][[comment HTML Context will take care of whitespace for thumbnail]]
 [[endif]]
 		<link rel="canonical" href="[[=&parser.currentPage.URL]]" />
 [[if parser.includeStyling]]
