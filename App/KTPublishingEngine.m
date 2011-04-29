@@ -821,7 +821,10 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         // Read in the contents of the file to generate hash
         if (!cachedDigest)
         {
-            cachedDigest = [NSData SHA1DigestOfContentsOfURL:[[request media] mediaURL]];
+            NSURL *url = [[request media] mediaURL];
+            cachedDigest = [NSData SHA1DigestOfContentsOfURL:url];
+            
+            if (!cachedDigest) NSLog(@"Unable to hash file: %@", url);
         }
         
         if (cachedDigest)   // if couldn't be hashed, can't be published
