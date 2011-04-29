@@ -46,6 +46,7 @@
 }
 
 - (id)initWithTemplate:(NSString *)templateString component:(id)parsedComponent;
+- (id)initWithOutputWriter:(id <KSWriter>)output;
 
 // Accessors
 - (NSString *)parserID;

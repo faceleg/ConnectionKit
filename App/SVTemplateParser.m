@@ -84,6 +84,16 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	return self;
 }
 
+- (id)initWithOutputWriter:(id <KSWriter>)output;
+{
+    if (self = [self initWithTemplate:@"" component:nil])
+    {
+        _writer = output;
+    }
+    
+    return self;
+}
+
 - (void)dealloc
 {
     [myTemplate release];

@@ -187,9 +187,19 @@
             first = pageCode; second = masterCode;
         }
         
-        // We were writing newlines with each bit of code, but that causes problems with #110122
-		[context writeString:first];
-        [context writeString:second];
+        // Use a template parser so that it will weed out any double newlines for us
+        SVTemplateParser *templateParser = [SVHTMLTemplateParser currentTemplateParser];
+        if (!templateParser)
+        {
+            templateParser = [[[SVTemplateParser alloc] initWithOutputWriter:context] autorelease];
+        }
+        
+		if (first)
+        {
+            [templateParser writeString:first];
+            [templateParser writeString:@"\n"];
+        }
+        if (second) [templateParser writeString:second];
     }
 }
 
