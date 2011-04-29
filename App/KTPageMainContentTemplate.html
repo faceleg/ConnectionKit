@@ -1,6 +1,5 @@
 						<div id="main-content">
-							[[if !titleBox.hidden]][[textblock property:titleBox flags:"line" tag:h2 class:"title"]][[endif]]
-							
+[[if !titleBox.hidden]]							[[textblock property:titleBox flags:"line" tag:h2 class:"title"]][[endif]]
 [[if includeInIndex]]
 [[if parentPage.navigationArrowsStyle==1]]
 							<div class="collection-navigation photo-navigation">
@@ -17,7 +16,6 @@
 							</div>
 [[endif2]]
 [[endif]]
-
 							<div class="article">
 								[[=parser.context.article.writeHTML]]
 								<div class="article-info">
