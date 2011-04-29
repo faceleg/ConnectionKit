@@ -417,7 +417,7 @@ to be verified.
 		}
 		else
 		{
-			return [[NSWorkspace sharedWorkspace] userSitesDirectory];
+			return [KSWORKSPACE userSitesDirectory];
 		}
 		
 		return [self valueForKey:@"localSubFolder"];

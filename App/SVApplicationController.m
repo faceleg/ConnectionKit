@@ -1319,7 +1319,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 								@"utm_campaign", @"product_menu",
 						  nil];
 	NSURL *url = [[NSURL URLWithString:@"http://www.sandvox.com/"] ks_URLWithQueryParameters:dict];
-    [[NSWorkspace sharedWorkspace] attemptToOpenWebURL:url];
+    [KSWORKSPACE attemptToOpenWebURL:url];
 }
 
 - (IBAction)toggleMediaBrowserShown:(id)sender
@@ -1387,18 +1387,18 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 
 	if  (([[NSApp currentEvent] modifierFlags]&NSAlternateKeyMask) )
 	{
-		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:url];	
+		[KSWORKSPACE attemptToOpenWebURL:url];	
 	}
 	else
 	{
-		BOOL opened = [[NSWorkspace sharedWorkspace] openURLs:[NSArray arrayWithObject:url]
+		BOOL opened = [KSWORKSPACE openURLs:[NSArray arrayWithObject:url]
 									  withAppBundleIdentifier:@"com.apple.quicktimeplayer" 
 													  options:NSWorkspaceLaunchAsync
 							   additionalEventParamDescriptor:nil launchIdentifiers:nil];
 		if (!opened)
 		{
 			// try to open some other way
-			[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:url];	
+			[KSWORKSPACE attemptToOpenWebURL:url];	
 		}
 	}
 }
@@ -1413,7 +1413,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	if (([[NSApp currentEvent] modifierFlags]&NSAlternateKeyMask) )	// undocumented: option key - open in browser
 	{
 		NSURL *urlToOpen = [[KTReleaseNotesController sharedController] URLToLoad];
-		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:urlToOpen];
+		[KSWORKSPACE attemptToOpenWebURL:urlToOpen];
 	}
 	else
 	{
@@ -1431,7 +1431,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	NSString *urlString = @"http://support.karelia.com/?sandvox";
 //#endif
 	NSURL *url = [NSURL URLWithString:urlString];
-	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:url];	
+	[KSWORKSPACE attemptToOpenWebURL:url];	
 }
 
 #if !defined(VARIANT_RELEASE) && defined(EXPIRY_TIMESTAMP)

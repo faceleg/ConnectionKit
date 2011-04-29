@@ -10,6 +10,8 @@
 
 #import "NSError+Karelia.h"
 
+#import "KSWorkspaceUtilities.h"
+
 
 @implementation NSDocument (KTExtensions)
 
@@ -50,7 +52,7 @@
     {
         if (recycle)
         {
-            result = [[NSWorkspace sharedWorkspace] performFileOperation:NSWorkspaceRecycleOperation 
+            result = [KSWORKSPACE performFileOperation:NSWorkspaceRecycleOperation 
                                                                   source:[destinationPath stringByDeletingLastPathComponent]
                                                              destination:nil
                                                                    files:[NSArray arrayWithObject:[destinationPath lastPathComponent]] 

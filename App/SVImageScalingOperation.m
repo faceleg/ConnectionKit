@@ -282,7 +282,7 @@
         {
             // Construct new cached response
             _response = [[NSURLResponse alloc] initWithURL:[_sourceMedia mediaURL]
-                                                  MIMEType:[[NSWorkspace sharedWorkspace] ks_MIMETypeForType:UTI]
+                                                  MIMEType:[KSWORKSPACE ks_MIMETypeForType:UTI]
                                      expectedContentLength:[imageData length]
                                           textEncodingName:nil];
             

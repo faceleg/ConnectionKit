@@ -251,8 +251,8 @@
 		NSString *href = [URL absoluteString];	// leave it an absolute URL for Facebook's benefit
 		
 		NSString *pathExtension = [[URL path] pathExtension];
-		NSString *UTI = [[NSWorkspace sharedWorkspace] ks_typeForFilenameExtension:pathExtension];
-		NSString *mimeType = [[NSWorkspace sharedWorkspace] ks_MIMETypeForType:UTI];
+		NSString *UTI = [KSWORKSPACE ks_typeForFilenameExtension:pathExtension];
+		NSString *mimeType = [KSWORKSPACE ks_MIMETypeForType:UTI];
 		
 		[context pushAttribute:@"rel" value:@"image_src"];
 		[context pushAttribute:@"href" value:href];

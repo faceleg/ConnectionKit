@@ -69,8 +69,8 @@
 {
     OBPRECONDITION(url);
     
-    NSString *type = [[NSWorkspace sharedWorkspace] ks_typeForFilenameExtension:[url ks_pathExtension]];
-    NSString *mimeType = ([type length] ? [[NSWorkspace sharedWorkspace] ks_MIMETypeForType:type] : @"application/octet-stream");
+    NSString *type = [KSWORKSPACE ks_typeForFilenameExtension:[url ks_pathExtension]];
+    NSString *mimeType = ([type length] ? [KSWORKSPACE ks_MIMETypeForType:type] : @"application/octet-stream");
     
     WebResource *resource = [[[WebResource alloc] ks_proxyOnThread:nil] initWithData:data   // yes, HACK
                                                                                  URL:url
@@ -277,7 +277,7 @@
 - (NSString *)typeOfFile
 {
 	NSString *fileName = [self preferredFilename];
-	NSString *UTI = [[NSWorkspace sharedWorkspace] ks_typeForFilenameExtension:[fileName pathExtension]];
+	NSString *UTI = [KSWORKSPACE ks_typeForFilenameExtension:[fileName pathExtension]];
 	return UTI;
 }
 

@@ -102,7 +102,7 @@
     if (!fileType)
     {
         NSString *fileExtension = [mediaInfo objectForKey:@"fileExtension"];
-        if (fileExtension) fileType = [[NSWorkspace sharedWorkspace] ks_typeForFilenameExtension:fileExtension];
+        if (fileExtension) fileType = [KSWORKSPACE ks_typeForFilenameExtension:fileExtension];
     }
     [result setValue:fileType forKey:@"fileType"];
     

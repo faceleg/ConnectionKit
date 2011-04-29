@@ -304,11 +304,11 @@ webContentAreaController:(SVWebContentAreaController *)controller;
             if (record)
             {
                 NSString *filename = [record preferredFilename];
-                NSString *type = [[NSWorkspace sharedWorkspace] ks_typeForFilenameExtension:[filename pathExtension]];
+                NSString *type = [KSWORKSPACE ks_typeForFilenameExtension:[filename pathExtension]];
                 NSData *data = [NSData newDataWithContentsOfMedia:[record media]];
                 
                 [frame loadData:data
-                       MIMEType:[[NSWorkspace sharedWorkspace] ks_MIMETypeForType:type]
+                       MIMEType:[KSWORKSPACE ks_MIMETypeForType:type]
                textEncodingName:nil
                         baseURL:[object URL]];
                 [data release];
@@ -376,7 +376,7 @@ webContentAreaController:(SVWebContentAreaController *)controller;
     {
         [listener ignore];
         NSURL *URL = [request URL];
-        [[NSWorkspace sharedWorkspace] attemptToOpenWebURL:URL];
+        [KSWORKSPACE attemptToOpenWebURL:URL];
     }
     
     _copyNextLoadedURLToModel = NO; // reset
@@ -393,7 +393,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 	[listener ignore];
 	
 	NSURL *URL = [request URL];
-	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:URL];
+	[KSWORKSPACE attemptToOpenWebURL:URL];
 }
 
 #pragma mark WebUIDelegate

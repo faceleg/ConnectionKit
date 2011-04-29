@@ -178,7 +178,7 @@
                            
         if (fileExists)
         {
-            if ([[[NSWorkspace sharedWorkspace] ks_typeOfFileAtURL:inAbsoluteURL] conformsToUTI:kSVDocumentType_1_0] &&
+            if ([[KSWORKSPACE ks_typeOfFileAtURL:inAbsoluteURL] conformsToUTI:kSVDocumentType_1_0] &&
                 !fileIsDirectory)
             {
                 result = kSVDocumentType_1_0;

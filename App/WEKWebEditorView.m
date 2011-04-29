@@ -1932,7 +1932,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 	[listener ignore];
 	
 	NSURL *URL = [request URL];
-	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:URL];
+	[KSWORKSPACE attemptToOpenWebURL:URL];
 }
 
 /*  We don't allow navigation, but our delegate may then decide to
@@ -2456,7 +2456,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     {
         NSURL *URL = [pboard URL];
         if ([URL isFileURL] &&
-            [[NSWorkspace sharedWorkspace] ks_type:[[NSWorkspace sharedWorkspace] ks_typeOfFileAtURL:URL]
+            [KSWORKSPACE ks_type:[KSWORKSPACE ks_typeOfFileAtURL:URL]
                               conformsToOneOfTypes:[NSBitmapImageRep imageTypes]])
         {
             [[node mutableChildDOMNodes] removeAllObjects];

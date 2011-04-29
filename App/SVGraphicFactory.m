@@ -134,12 +134,12 @@
     if ([URL isFileURL])
     {
         NSString *path = [[item URL] path];
-        type = [[NSWorkspace sharedWorkspace] typeOfFile:path error:NULL];
-        if (!type) type = [[NSWorkspace sharedWorkspace] ks_typeForFilenameExtension:[URL ks_pathExtension]];
+        type = [KSWORKSPACE typeOfFile:path error:NULL];
+        if (!type) type = [KSWORKSPACE ks_typeForFilenameExtension:[URL ks_pathExtension]];
         
         if (type)
         {
-            if ([[NSWorkspace sharedWorkspace] ks_type:type conformsToOneOfTypes:[SVMediaGraphic allowedTypes]])
+            if ([KSWORKSPACE ks_type:type conformsToOneOfTypes:[SVMediaGraphic allowedTypes]])
             {
                 return SVPasteboardPriorityTypical;
             }

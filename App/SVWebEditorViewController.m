@@ -1421,7 +1421,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
                 
             default:
                 // load with user's preferred browser:
-                [[NSWorkspace sharedWorkspace] attemptToOpenWebURL:URL];
+                [KSWORKSPACE attemptToOpenWebURL:URL];
         }
     }
     

@@ -8,6 +8,8 @@
 
 #import "SVPasteboardItemInternal.h"
 
+#import "KSWorkspaceUtilities.h"
+
 #import <iMedia/iMedia.h>
 
 
@@ -118,7 +120,7 @@
 
 - (NSData *)dataForType:(NSString *)type;
 {
-    if ([[NSWorkspace sharedWorkspace] type:type conformsToType:(NSString *)kUTTypeURL])
+    if ([KSWORKSPACE type:type conformsToType:(NSString *)kUTTypeURL])
     {
         return [NSMakeCollectable(CFURLCreateData(NULL,
                                                  (CFURLRef)[self URL],
@@ -131,7 +133,7 @@
 
 - (NSString *)stringForType:(NSString *)type;
 {
-    if ([[NSWorkspace sharedWorkspace] type:type conformsToType:(NSString *)kUTTypeURL] ||
+    if ([KSWORKSPACE type:type conformsToType:(NSString *)kUTTypeURL] ||
         [type isEqualToString:NSURLPboardType] ||
         [type isEqualToString:NSStringPboardType])
     {

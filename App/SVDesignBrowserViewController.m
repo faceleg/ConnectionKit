@@ -7,13 +7,17 @@
 //
 
 #import "SVDesignBrowserViewController.h"
-#import "NSBundle+Karelia.h"
+
 #import "KT.h"
 #import "KTDesign.h"
 #import "KTDesignFamily.h"
 #import "SVDesignsController.h"
 #import "SVDesignChooserImageBrowserView.h"
+
+#import "NSBundle+Karelia.h"
+
 #import "KSPathUtilities.h"
+#import "KSWorkspaceUtilities.h"
 
 @interface IKImageBrowserView (Private10_5)
 
@@ -273,14 +277,14 @@
 {
 	KTDesign *design = [[oDesignsArrayController arrangedObjects] objectAtIndex:_rightClickedIndex];
 	NSString *path = [[design bundle] bundlePath];
-	[[NSWorkspace sharedWorkspace] selectFile:path inFileViewerRootedAtPath:@""];
+	[KSWORKSPACE selectFile:path inFileViewerRootedAtPath:@""];
 }
 
 - (void) openDesignURL
 {
 	KTDesign *design = [[oDesignsArrayController arrangedObjects] objectAtIndex:_rightClickedIndex];
 	NSURL *URL = [design URL];
-	[[NSWorkspace sharedWorkspace] openURL:[URL absoluteURL]];
+	[KSWORKSPACE openURL:[URL absoluteURL]];
 }
 
 

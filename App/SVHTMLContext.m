@@ -1101,10 +1101,10 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     
     if (mimeType) 
     {
-        NSString *type = [[NSWorkspace sharedWorkspace] ks_typeForMIMEType:mimeType];
+        NSString *type = [KSWORKSPACE ks_typeForMIMEType:mimeType];
         if (type)
         {
-            NSString *extension = [[NSWorkspace sharedWorkspace] preferredFilenameExtensionForType:type];
+            NSString *extension = [KSWORKSPACE preferredFilenameExtensionForType:type];
             if (extension)
             {
                 result = [result stringByAppendingPathExtension:extension];

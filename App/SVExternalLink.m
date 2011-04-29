@@ -16,7 +16,9 @@
 #import "NSImage+KTExtensions.h"
 
 #import "NSURL+Karelia.h"
+
 #import "KSURLUtilities.h"
+#import "KSWorkspaceUtilities.h"
 
 
 @implementation SVExternalLink 
@@ -85,7 +87,7 @@
 {
     if (type == SVThumbnailTypePickFromPage)
     {
-        NSImage *icon = [[NSWorkspace sharedWorkspace] iconForFileType:@"webloc"];
+        NSImage *icon = [KSWORKSPACE iconForFileType:@"webloc"];
         NSData *png = [icon PNGRepresentation];
         
         SVMedia *media = [[SVMedia alloc] initWithData:png URL:[NSURL URLWithString:@"x-sandvox:///webloc.png"]];

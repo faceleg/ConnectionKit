@@ -11,14 +11,16 @@
 #import "KTPluginInstaller.h"
 
 #import "Debug.h"
-#import "NSApplication+Karelia.h"
-#import "NSHelpManager+Karelia.h"
-#import "NSError+Karelia.h"
 #import "KSAppDelegate.h"
 #import "KSPlugInWrapper.h"
 #import "KSProgressPanel.h"
 
+#import "NSApplication+Karelia.h"
+#import "NSError+Karelia.h"
+#import "NSHelpManager+Karelia.h"
 #import "NSObject+Karelia.h"
+
+#import "KSWorkspaceUtilities.h"
 
 
 static KTPluginInstaller *sSharedPluginInstaller = nil;
@@ -58,7 +60,7 @@ NSLog(@"%@", aURL);
         myProgressPanel = [[KSProgressPanel alloc] init];
         [myProgressPanel setMessageText:NSLocalizedString(@"Installing Plug-ins…", @"")];
         [myProgressPanel setInformativeText:nil];
-        [myProgressPanel setIcon:[[NSWorkspace sharedWorkspace] iconForFile:[aURL path]]];
+        [myProgressPanel setIcon:[KSWORKSPACE iconForFile:[aURL path]]];
         
         [myProgressPanel makeKeyAndOrderFront:self];
 	}
@@ -162,7 +164,7 @@ NSLog(@"%@", aURL);
 		[alert setShowsHelp:YES];
 		[alert setDelegate:self];
 		
-		[alert setIcon:[[NSWorkspace sharedWorkspace] iconForFile:[[successURLs lastObject] path]]];
+		[alert setIcon:[KSWORKSPACE iconForFile:[[successURLs lastObject] path]]];
 		[alert setAlertStyle:NSInformationalAlertStyle];
 		[alert runModal];
 	}
@@ -194,7 +196,7 @@ NSLog(@"%@", aURL);
 		[alert setShowsHelp:YES];
 		[alert setDelegate:self];
 		
-		[alert setIcon:[[NSWorkspace sharedWorkspace] iconForFile:[[errorURLs lastObject] path]]];
+		[alert setIcon:[KSWORKSPACE iconForFile:[[errorURLs lastObject] path]]];
 		[alert setAlertStyle:NSCriticalAlertStyle];
 		[alert runModal];
 	}

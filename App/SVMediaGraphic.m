@@ -98,7 +98,7 @@
     // The plug-in to use depends on the type of file you have. Ideally use .codecType as it means the file's content has been better analyzed
     NSString *type = [self codecType];
     if (!type) type = [[self media] typeOfFile];
-    if (!type) type = [[NSWorkspace sharedWorkspace] ks_typeForFilenameExtension:[[self externalSourceURL] ks_pathExtension]];
+    if (!type) type = [KSWORKSPACE ks_typeForFilenameExtension:[[self externalSourceURL] ks_pathExtension]];
     
     
     if ([type conformsToUTI:(NSString *)kUTTypeMovie] ||
@@ -223,7 +223,7 @@
     
     // Reset type
     NSString *type = [[self media] typeOfFile];
-    if (!type) type = [[NSWorkspace sharedWorkspace] ks_typeForFilenameExtension:[[self externalSourceURL] ks_pathExtension]];
+    if (!type) type = [KSWORKSPACE ks_typeForFilenameExtension:[[self externalSourceURL] ks_pathExtension]];
     [self setTypeToPublish:type];
     
     
@@ -496,7 +496,7 @@
         {
             [[[media preferredUploadPath] lastPathComponent] stringByDeletingPathExtension];
             filename = [filename stringByAppendingFormat:@"_%u", width];
-            filename = [filename stringByAppendingPathExtension:[[NSWorkspace sharedWorkspace] preferredFilenameExtensionForType:type]];
+            filename = [filename stringByAppendingPathExtension:[KSWORKSPACE preferredFilenameExtensionForType:type]];
         }
         
         
@@ -627,7 +627,7 @@
         if (type)
         {
             // Invent a URL
-            NSString *extension = [[NSWorkspace sharedWorkspace] preferredFilenameExtensionForType:type];
+            NSString *extension = [KSWORKSPACE preferredFilenameExtensionForType:type];
             
             NSString *path = [[@"/" stringByAppendingPathComponent:@"pasted-file"]
                               stringByAppendingPathExtension:extension];

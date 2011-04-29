@@ -333,13 +333,13 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 - (IBAction) openPreferredHost:(id)sender;
 {
-	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:[sender title]]];
+	[KSWORKSPACE attemptToOpenWebURL:[NSURL URLWithString:[sender title]]];
 	
 }
 
 - (IBAction) settingUpDotMacPersnalDomains:(id)sender;
 {
-	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:@"http://docs.info.apple.com/article.html?path=MobileMe/Account/en/acct17114.html"]];
+	[KSWORKSPACE attemptToOpenWebURL:[NSURL URLWithString:@"http://docs.info.apple.com/article.html?path=MobileMe/Account/en/acct17114.html"]];
 }
 
 - (IBAction) windowHelp:(id)sender
@@ -884,7 +884,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 - (IBAction) doGetDotMacAccount:(id)sender
 {
-	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:@"http://www.apple.com/mobileme/"]];		// this is our link URL
+	[KSWORKSPACE attemptToOpenWebURL:[NSURL URLWithString:@"http://www.apple.com/mobileme/"]];		// this is our link URL
 }
 
 
@@ -896,7 +896,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		NSURL *url = [KSURLFormatter URLFromString:[[self properties] valueForKey:@"homePageURL"]];	// BETA: This used to be in a @try block. Are certain URL strings failing?
 		
 		if (url) {
-			[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:url];
+			[KSWORKSPACE attemptToOpenWebURL:url];
 		}
 		else
 		{
@@ -912,7 +912,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		NSURL *url = [KSURLFormatter URLFromString:[[self properties] valueForKey:@"setupURL"]];		// BETA: This used to be in a @try block. Are certain URL strings failing?
 		
 		if (url != nil) {
-			[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:url];
+			[KSWORKSPACE attemptToOpenWebURL:url];
 		}
 		else
 		{
@@ -2124,7 +2124,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 		if (homeDirectory)
 		{
-			sitesPath = [[NSWorkspace sharedWorkspace] userSitesDirectory];
+			sitesPath = [KSWORKSPACE userSitesDirectory];
 		}
 		else
 		{

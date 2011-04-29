@@ -56,7 +56,7 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
 		NSURL *URL = [[NSURL alloc] initWithString:clickContext];
         if (URL)
 		{
-			[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:URL];
+			[KSWORKSPACE attemptToOpenWebURL:URL];
 			[URL release];
 		}
 	}

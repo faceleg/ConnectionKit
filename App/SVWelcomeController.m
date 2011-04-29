@@ -144,7 +144,7 @@
 				LOG((@"Can't find '%@'", [lastKnownPath stringByAbbreviatingWithTildeInPath]));
 			}
 			
-			// is it in the Trash? ([[NSWorkspace sharedWorkspace] userTrashDirectory])
+			// is it in the Trash? ([KSWORKSPACE userTrashDirectory])
 			else if ( NSNotFound != [path rangeOfString:@".Trash"].location )
 			{
 				// path contains localized .Trash, let's skip it

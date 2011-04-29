@@ -58,7 +58,7 @@
 {
     if (type == SVThumbnailTypePickFromPage)
     {
-        NSString *type = [[NSWorkspace sharedWorkspace] ks_typeForFilenameExtension:
+        NSString *type = [KSWORKSPACE ks_typeForFilenameExtension:
                           [[[[self media] media] mediaURL] ks_pathExtension]];
         
         if ([type conformsToUTI:(NSString *)kUTTypeImage])
@@ -71,7 +71,7 @@
         }
         else
         {
-            NSImage *icon = [[NSWorkspace sharedWorkspace] iconForFileType:type];
+            NSImage *icon = [KSWORKSPACE iconForFileType:type];
             NSData *png = [icon PNGRepresentation];
             
             // Derive a URL from the source media that can't accidentally correspond to a real file
@@ -103,7 +103,7 @@
     id result = [super imageRepresentation];
     if (!result) 
     {
-        result = [[NSWorkspace sharedWorkspace] iconForFileType:
+        result = [KSWORKSPACE iconForFileType:
                   [[[self media] preferredFilename] pathExtension]];
     }
     return result;
@@ -202,7 +202,7 @@
     WebResource *webResource = [[WebResource alloc]
                                 initWithData:[html dataUsingEncoding:NSUTF8StringEncoding]
                                 URL:[NSURL URLWithString:@"x-sandvox://foogly.boo"]
-                                MIMEType:[[NSWorkspace sharedWorkspace] ks_MIMETypeForType:(NSString *)kUTTypePlainText]
+                                MIMEType:[KSWORKSPACE ks_MIMETypeForType:(NSString *)kUTTypePlainText]
                                 textEncodingName:<#(NSString *)textEncodingName#> frameName:<#(NSString *)frameName#>]*/
     
     NSData *data = [html dataUsingEncoding:NSUTF8StringEncoding];

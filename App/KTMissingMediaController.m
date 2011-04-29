@@ -16,6 +16,7 @@
 #import "NSObject+Karelia.h"
 
 #import "BDAlias.h"
+#import "KSWorkspaceUtilities.h"
 
 
 @interface NSString (KTMissingMediaController)
@@ -293,7 +294,7 @@
 	
 	if (!value || [value isEqual:[[NSBundle mainBundle] pathForImageResource:@"MissingMediaQMark"]])
 	{
-		result = [[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kAlertCautionIcon)];
+		result = [KSWORKSPACE iconForFileType:NSFileTypeForHFSTypeCode(kAlertCautionIcon)];
 	}
 	else
 	{

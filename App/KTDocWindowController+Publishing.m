@@ -346,7 +346,7 @@
 	NSURL *siteURL = [[[[self document] site] rootPage] URL];
 	if (siteURL)
 	{
-		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:siteURL];
+		[KSWORKSPACE attemptToOpenWebURL:siteURL];
 	}
 }
 
@@ -355,7 +355,7 @@
 	NSURL *pageURL = [[[[self siteOutlineViewController] content] selection] valueForKey:@"URL"];
 	if (pageURL && !NSIsControllerMarker(pageURL))
 	{
-		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:pageURL];
+		[KSWORKSPACE attemptToOpenWebURL:pageURL];
 	}
 }
 
@@ -370,7 +370,7 @@
 	
 	if (submissionURL)
 	{
-		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:submissionURL];
+		[KSWORKSPACE attemptToOpenWebURL:submissionURL];
 	}
 }
 

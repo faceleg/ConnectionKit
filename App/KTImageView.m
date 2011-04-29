@@ -335,14 +335,14 @@ the indexed value into NSFilenamesPboardType.
 		NSData *webArchiveData = [pasteboard dataForType:WebArchivePboardType];
 		WebArchive *webArchive = [[[WebArchive alloc] initWithData:webArchiveData] autorelease];
 		WebResource *resource = [webArchive mainResource];
-		UTI = [[NSWorkspace sharedWorkspace] ks_typeForMIMEType:[resource MIMEType]];
-		if ( ![[NSWorkspace sharedWorkspace] type:UTI conformsToType:(NSString *)kUTTypeImage])
+		UTI = [KSWORKSPACE ks_typeForMIMEType:[resource MIMEType]];
+		if ( ![KSWORKSPACE type:UTI conformsToType:(NSString *)kUTTypeImage])
 		{
 			NSArray *subresources = [webArchive subresources];
 			if ([subresources count])
 			{
 				resource = [subresources objectAtIndex:0];
-				UTI = [[NSWorkspace sharedWorkspace] ks_typeForMIMEType:[resource MIMEType]];
+				UTI = [KSWORKSPACE ks_typeForMIMEType:[resource MIMEType]];
 			}
 			else
 			{
@@ -394,7 +394,7 @@ the indexed value into NSFilenamesPboardType.
 				[aDictionary setValue:[filePath lastPathComponent] forKey:kKTDataSourceFileName];
 
 				filePath = [[NSFileManager defaultManager] resolvedAliasPath:filePath];
-				UTI = [[NSWorkspace sharedWorkspace] ks_typeOfFileAtURL:[NSURL fileURLWithPath:filePath]];
+				UTI = [KSWORKSPACE ks_typeOfFileAtURL:[NSURL fileURLWithPath:filePath]];
 				[aDictionary setValue:filePath forKey:kKTDataSourceFilePath];
 				if (!hasiPhotoData)
 				{
@@ -466,7 +466,7 @@ the indexed value into NSFilenamesPboardType.
 					NSString *dataFilePath = nil;
 					if (nil == imageData
 						&& nil != (dataFilePath = [aDictionary valueForKey:kKTDataSourceFilePath])
-						&& ([[[NSWorkspace sharedWorkspace] ks_typeOfFileAtURL:[NSURL fileURLWithPath:dataFilePath]] isEqualToString:(NSString *)kUTTypeJPEG])
+						&& ([[KSWORKSPACE ks_typeOfFileAtURL:[NSURL fileURLWithPath:dataFilePath]] isEqualToString:(NSString *)kUTTypeJPEG])
 						)
 					{
 						CGImageSourceRef source = nil;

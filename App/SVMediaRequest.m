@@ -41,7 +41,7 @@ preferredUploadPath:(NSString *)path;
         // Warn if path doesn't match type
         if (path)
         {
-            if (![[[NSWorkspace sharedWorkspace] ks_typeForFilenameExtension:[path pathExtension]] isEqualToUTI:type])
+            if (![[KSWORKSPACE ks_typeForFilenameExtension:[path pathExtension]] isEqualToUTI:type])
             {
                 NSLog(@"Warning: Request for image whose filename does not match format: %@", type);
             }
@@ -115,7 +115,7 @@ preferredUploadPath:(NSString *)path;
             NSString *name = [[[self media] preferredUploadPath] stringByDeletingPathExtension];
             
             _uploadPath = [name stringByAppendingPathExtension:
-                           [[NSWorkspace sharedWorkspace] preferredFilenameExtensionForType:[self type]]];
+                           [KSWORKSPACE preferredFilenameExtensionForType:[self type]]];
             [_uploadPath retain];
         }
         else

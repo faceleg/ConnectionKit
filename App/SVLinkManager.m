@@ -186,7 +186,7 @@ static SVLinkManager *sSharedLinkManager;
         {
             // Try to populate from frontmost Safari URL
             // someday, we could populate the link title as well!
-            URL = [[[NSWorkspace sharedWorkspace] fetchBrowserWebLocation] URL];
+            URL = [[KSWORKSPACE fetchBrowserWebLocation] URL];
         }
         NSString *scheme = [URL scheme];
         

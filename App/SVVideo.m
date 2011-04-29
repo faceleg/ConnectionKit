@@ -307,13 +307,13 @@
     {
 		movieSourceURL = [self.media mediaURL];
         
-		[self setCodecType:[[NSWorkspace sharedWorkspace] ks_typeOfFileAtURL:movieSourceURL]];	// actually look at the file, not just its extension
+		[self setCodecType:[KSWORKSPACE ks_typeOfFileAtURL:movieSourceURL]];	// actually look at the file, not just its extension
 	}
 	else
 	{
 		movieSourceURL = self.externalSourceURL;
         
-		[self setCodecType:[[NSWorkspace sharedWorkspace] ks_typeForFilenameExtension:[[movieSourceURL path] pathExtension]]];
+		[self setCodecType:[KSWORKSPACE ks_typeForFilenameExtension:[[movieSourceURL path] pathExtension]]];
 	}
 	
 	// Try to make a QTMovie out of this, or parse as FLV which is a special case (since QT is not needed to show.)
@@ -558,7 +558,7 @@
 	
 	// source
 	[context pushAttribute:@"src" value:movieSourcePath];
-	[context pushAttribute:@"type" value:[[NSWorkspace sharedWorkspace] ks_MIMETypeForType:self.codecType]];
+	[context pushAttribute:@"type" value:[KSWORKSPACE ks_MIMETypeForType:self.codecType]];
 	[context pushAttribute:@"onerror" value:@"fallback(this.parentNode)"];
 	[context startElement:@"source"];
 	[context endElement];
@@ -575,7 +575,7 @@
 	[context stopWritingInline];
 	[context writeString:[NSString stringWithFormat:@"var video = document.getElementById('%@');\n", videoID]];
 	[context writeString:[NSString stringWithFormat:@"if (video.canPlayType && video.canPlayType('%@')) {\n",
-						  [[NSWorkspace sharedWorkspace] ks_MIMETypeForType:self.codecType]]];
+						  [KSWORKSPACE ks_MIMETypeForType:self.codecType]]];
 	[context writeString:@"\t// canPlayType is overoptimistic, so we have browser sniff.\n"];
 	
 	// we have mp4, so no ogv/webm, so force a fallback if NOT webkit-based.

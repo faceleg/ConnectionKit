@@ -93,7 +93,7 @@
 			if (path)
 			{
 				// Is the file type suitable?
-				if ([[NSWorkspace sharedWorkspace] type:[[NSWorkspace sharedWorkspace] ks_typeOfFileAtURL:[NSURL fileURLWithPath:path]] conformsToType:[mediaFile fileType]])
+				if ([KSWORKSPACE type:[KSWORKSPACE ks_typeOfFileAtURL:[NSURL fileURLWithPath:path]] conformsToType:[mediaFile fileType]])
 				{
 					result = [self dragOperationForPath:path draggingMask:[info draggingSourceOperationMask]];
 				}

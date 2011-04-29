@@ -298,7 +298,7 @@
                 NSMutableDictionary *scalingProperties = [[[self design] imageScalingPropertiesForUse:@"bannerImage"] mutableCopy];
                 OBASSERT(scalingProperties);
                 
-                NSString *type = [[NSWorkspace sharedWorkspace] typeOfFile:[bannerURL path] error:NULL];
+                NSString *type = [KSWORKSPACE typeOfFile:[bannerURL path] error:NULL];
                 if (![type isEqualToString:(NSString *)kUTTypePNG]) type = (NSString *)kUTTypeJPEG;
                 [scalingProperties setObject:type forKey:@"fileType"];
                 
@@ -306,7 +306,7 @@
                 NSURL *URL = [NSURL sandvoxImageURLWithFileURL:bannerURL scalingProperties:scalingProperties];
                 [scalingProperties release];
                 
-                NSString *destination = [[SVDestinationDesignDirectory stringByAppendingPathComponent:@"banner"] stringByAppendingPathExtension:[[NSWorkspace sharedWorkspace] preferredFilenameExtensionForType:type]];
+                NSString *destination = [[SVDestinationDesignDirectory stringByAppendingPathComponent:@"banner"] stringByAppendingPathExtension:[KSWORKSPACE preferredFilenameExtensionForType:type]];
                 
                 URL = [context addResourceAtURL:URL destination:destination options:0];
                 NSString *relativeString = [URL ks_stringRelativeToURL:[context mainCSSURL]];
