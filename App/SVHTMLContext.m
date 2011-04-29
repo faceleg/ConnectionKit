@@ -1452,8 +1452,8 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
             idRange.length = postIDRange.location - idRange.location;
             
             NSString *idString = [[buffer string] substringWithRange:idRange];
-            KTPage *thePage = [KTPage pageWithUniqueID:idString
-                                inManagedObjectContext:[[self page] managedObjectContext]];
+            SVSiteItem *thePage = [SVSiteItem pageWithUniqueID:idString
+                                        inManagedObjectContext:[[self page] managedObjectContext]];
             
             // Figure out correct path
             NSString *newPath = nil;
