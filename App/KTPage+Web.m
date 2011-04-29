@@ -177,19 +177,19 @@
         NSString *masterCode = [[[self master] codeInjection] valueForKey:aKey];
 		NSString *pageCode = [[self codeInjection] valueForKey:aKey];
         
+        NSString *first, *second;
+        if (aMasterFirst)
+        {
+            first = masterCode; second = pageCode;
+        }
+        else
+        {
+            first = pageCode; second = masterCode;
+        }
+        
         // We were writing newlines with each bit of code, but that causes problems with #110122
-		if (masterCode && aMasterFirst)
-        {
-            [context writeString:masterCode];
-        }
-        if (pageCode)
-        {
-            [context writeString:pageCode];
-        }
-		if (masterCode && !aMasterFirst)
-        {
-            [context writeString:masterCode];
-        }
+		[context writeString:first];
+        [context writeString:second];
     }
 }
 
