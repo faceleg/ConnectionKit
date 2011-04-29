@@ -446,27 +446,22 @@ NSUInteger kTwoThirdsTruncation;
 			// no truncation, just process the complete, normal summary
 			html = [[self article] attributedHTMLString];
 		}
-		NSMutableAttributedString *summary = [html mutableCopy];
+		NSMutableAttributedString *summary = [html mutableCopy];		// RETAINED HERE
 		
-		// keep around the attachments we are deleting so that we can grab some caption if needed
-		NSMutableArray *attachments = [[NSMutableArray alloc] initWithCapacity:
-									   [[[self article] attachments] count]];
-
-		// Strip out large attachments .... WHY?
 		NSUInteger location = 0;
+		NSUInteger countOfAttachments = 0;
 		
 		while (location < summary.length)
 		{
 			NSRange effectiveRange;
 			SVTextAttachment *attachment = [summary attribute:@"SVAttachment"
 													  atIndex:location
-											   effectiveRange:&effectiveRange];
-			BOOL shouldKeepAttachment = NO;
-			
+											   effectiveRange:&effectiveRange];			
 			if (attachment)
 			{
-				shouldKeepAttachment = (includeLargeMedia && attachment && [[attachment causesWrap] boolValue]);
+				countOfAttachments++;
 				
+				BOOL shouldKeepAttachment = (includeLargeMedia && attachment && [[attachment causesWrap] boolValue]);
 				SVGraphic *graphic = [attachment graphic];
 				
 				if (thumbnailToExclude == graphic)
@@ -488,8 +483,8 @@ NSUInteger kTwoThirdsTruncation;
 				
 				if (!shouldKeepAttachment)
 				{
-					[attachments addObject:[attachment graphic]];
 					[summary deleteCharactersInRange:effectiveRange];
+					countOfAttachments--;		// DELETING, SO LOWER THE COUNT WE JUST INCREMENTED.
 				}
 				else
 				{
@@ -502,22 +497,24 @@ NSUInteger kTwoThirdsTruncation;
 			}
 		}
 
-		// Are we left with only whitespace? If so, fallback to graphic captions
-		NSString *text = [[summary string] stringByConvertingHTMLToPlainText];
-		if ([text isWhitespace])
+		// TODO -- WHAT ABOUT CAPTION SETTING?
+		
+		
+		if (0 == countOfAttachments)
 		{
-			[summary release]; summary = nil;
+			// Are we left with only whitespace? If so, fallback to caption of thumbnail's image
 			
-			for (SVGraphic *aGraphic in attachments)
+			NSString *text = [[summary string] stringByConvertingHTMLToPlainText];
+			if ([text isWhitespace])
 			{
-				if ([aGraphic showsCaption])
+				[summary release]; summary = nil;
+				
+				if ([thumbnailToExclude showsCaption])
 				{
-					summary = [[[aGraphic caption] attributedHTMLString] retain];
-					break;
+					summary = [[[thumbnailToExclude caption] attributedHTMLString] retain];
 				}
-			}
+			}			
 		}
-		[attachments release];
 		
 		// Write it
         if ([summary length])
