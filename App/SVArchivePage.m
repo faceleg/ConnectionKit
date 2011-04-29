@@ -223,7 +223,14 @@
     [plugIn setValue:[NSMutableDictionary dictionary] forKey:@"container"]; // improvised backing store
     [plugIn setValue:self forKey:@"indexedCollection"];	// Obviously this has to change from what got copied over
     
-    [plugIn writeHTML:context];
+    @try
+    {
+        [plugIn writeHTML:context];
+    }
+    @catch (NSException *exception)
+    {
+        //FIXME: Log the exception
+    }
     
     [plugIn release];		// don't need this temporary one any more
 }
