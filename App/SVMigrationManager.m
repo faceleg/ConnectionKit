@@ -14,12 +14,14 @@
 #import "KTDesign.h"
 #import "KTDocument.h"
 #import "SVGraphicFactory.h"
+#import "KTHostProperties.h"
 #import "KTImageScalingSettings.h"
 #import "KTMaster.h"
 #import "SVMediaGraphic.h"
 #import "SVMediaRecord.h"
 #import "KTPage.h"
 #import "SVSidebarPageletsController.h"
+#import "KTSite.h"
 #import "SVTextAttachment.h"
 #import "KT.h"
 
@@ -311,6 +313,21 @@
             if (dDoc)
             {
                 _destinationContextOverride = [dDoc managedObjectContext];
+                
+                
+                
+                // Import MediaFileUploads as publishing records so we can delete them one day
+                KTHostProperties *hostProps = [[dDoc site] hostProperties];
+                NSArray *uploads = [[self sourceMediaContext] fetchAllObjectsForEntityForName:@"MediaFileUpload" error:NULL];
+                
+                for (NSManagedObject *anUpload in uploads)
+                {
+                    NSString *path = [[[hostProps documentRoot]
+                                       stringByAppendingPathComponent:[hostProps subfolder]]
+                                      stringByAppendingPathComponent:[anUpload valueForKey:@"pathRelativeToSite"]];
+                    
+                    [hostProps regularFilePublishingRecordWithPath:path];
+                }
                 
                 
                 // #108740
