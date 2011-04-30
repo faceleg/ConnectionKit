@@ -446,7 +446,7 @@ defaults delete com.karelia.Sandvox metaRobots
 
             <dd><code>defaults write com.karelia.Sandvox SilenceSaveDocumentSnapshot -bool <span class="prefValue">NO</span></code></dd>
 
-            <dd>Warning when saving a new <a href="http://wiki2.karelia.com/index.php?title=Snapshot&amp;action=edit&amp;redlink=1" class="new" title="Snapshot (page does not exist)">snapshot</a>.</dd>
+            <dd>Warning when saving a new snapshot.</dd>
         </dl>
 
         <dl>
@@ -556,7 +556,29 @@ defaults delete com.karelia.Sandvox metaRobots
 
             <dd><code>defaults write com.karelia.Sandvox DisableCustomSiteOutlineIcons -bool <span class="prefValue">YES</span></code></dd>
 
-            <dd>Stops Sandvox generating a custom Site Outline thumbnail image when appropriate. e.g. <a href="Photo.html" title="Photo">Photo</a> pages and <a href="File_Download.html" title="File Download">File Download</a> pages</dd>
+            <dd>Stops Sandvox generating a custom Site Outline thumbnail image when appropriate. e.g. Photo pages and <a href="File_Download.html" title="File Download">File Download</a> pages</dd>
+        </dl><a name="JQuery" id="JQuery"></a>
+
+        <h2><span class="mw-headline">JQuery</span></h2>
+
+        <p>Sandvox comes bundled with the latest version of <a href="http://jquery.com/" class="external text" title="http://jquery.com/">jQuery</a> but you may wish to make use of a newer or older version if you have compatibility issues with other jQuery-based scripts.</p>
+
+        <dl>
+            <dt>jQuery Version</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox jQueryVersion <span class="prefValue">1.9.9</span></code></dd>
+
+            <dd>Links to the specified version of jQuery, which must be available at Google's <i>ajax.googleapis.com</i> URL.</dd>
+
+            <dd>If you have also included the appropriate file in the appropriate location as described in <a href="Overriding_Sandvox_Application_Files.html" title="Overriding Sandvox Application Files">Overriding Sandvox Application Files</a>, then that version will also be loaded locally when appropriate.</dd>
+        </dl>
+
+        <dl>
+            <dt>Preference for local jQuery library</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox jQueryLocal -bool <span class="prefValue">YES</span></code></dd>
+
+            <dd>Prevents jQuery from being loaded remotely from Google's cache. Normally, a Sandvox page will link to Google's copy of the file, for maximum loading speed. Use this preference if you would prefer to link to your <i>own</i> version from your website.</dd>
         </dl><a name="Contact_Form" id="Contact_Form"></a>
 
         <h2><span class="mw-headline">Contact Form</span></h2>
@@ -845,7 +867,7 @@ defaults delete com.karelia.Sandvox metaRobots
 
                 <li><a href="Overriding_Sandvox_Application_Files.html" title="Overriding Sandvox Application Files">Overriding Sandvox Application Files</a></li>
 
-                <li><a href="http://wiki2.karelia.com/index.php?title=Launching&amp;action=edit&amp;redlink=1" class="new" title="Launching (page does not exist)">Launching</a></li>
+                <li><a href="Creating_a_Custom_Contact_Form.html" title="Creating a Custom Contact Form">Creating a Custom Contact Form</a></li>
             </ul>
         </div>
     </div>

@@ -97,6 +97,26 @@ defaults write com.karelia.Sandvox ShowSearchPaths -bool YES
 
             <dd>The global HTML template that all <a href="Page.html" title="Page">pages</a> are generated from. Example: change <tt>[[=&amp;toplink.titleText]]</tt> instances to <tt>[[=toplink.titleHTML]]</tt> to force the site menu to show styles (font, color, boldface, etc.) in the page titles.</dd>
 
+            <dt>KTPageMainContentTemplate</dt>
+
+            <dd>The main contents of a page.</dd>
+
+            <dt>KTCommentsTemplate</dt>
+
+            <dd>The template for comment system generation.</dd>
+
+            <dt>ddsmoothmenu.css, ddsmoothmenu.js</dt>
+
+            <dd>The files that are uploaded to support drop-down site menus.</dd>
+
+            <dt>jquery-##.js</dt>
+
+            <dd>If you have set the <a href="Hidden_Preferences.html" title="Hidden Preferences">hidden preference</a> of "jQueryVersion" to a particular version and you include that file here (replacing the ## with the actual version), then this file will be loaded locally for editing.</dd>
+
+            <dt>KTScaledImageTypes</dt>
+
+            <dd>a property list to map image sizes for various contexts on a page. (This will not likely be useful for overriding.)</dd>
+
             <dt>RSSTemplate.xml</dt>
 
             <dd>The XML template for RSS feeds.</dd>

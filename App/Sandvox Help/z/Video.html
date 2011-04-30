@@ -25,20 +25,14 @@
     <div id="mainbox">
         <h1 class="firstHeading">Video</h1>
 
-        <p>A Video <a href="Object.html" title="Object">object</a> displays video within your site. As well as simply adding a multimedia file to a site, you can use a Video for:</p>
-
-        <ul>
-            <li><a href="Podcasting_and_Videocasting_with_Sandvox.html" title="Podcast">Podcasting</a> or <a href="Podcasting_and_Videocasting_with_Sandvox.html" title="Videocast">Videocasting</a></li>
-        </ul>
+        <p>A Video <a href="Object.html" title="Object">object</a> displays video within your site.</p>
 
         <div class="center">
             <div class="thumb tnone">
-                <div class="thumbinner" style="width:362px;">
-                    <img alt="" src="img/7/7a/MoviePage.jp2" width="360" height="339" border="0" />
+                <div class="thumbinner" style="width:478px;">
+                    <img alt="" src="img/7/7a/MoviePage.jp2" width="476" height="278" border="0" />
 
-                    <div class="thumbcaption">
-                        A Video object.
-                    </div>
+                    <div class="thumbcaption"></div>
                 </div>
             </div>
         </div>
@@ -49,13 +43,13 @@
             <ul>
                 <li>Use the "Object" item form the toolbar and choose "Media Placeholder" OR Choose "Media Placeholder" from the Insert Menu.</li>
 
-                <li>Drag a video file into the web view.</li>
+                <li>Drag a video file into the web view (dropping onto any Media Placeholder or other area of the page).</li>
             </ul>
         </div><a name="Video_File_Sizes_and_Dimensions" id="Video_File_Sizes_and_Dimensions"></a>
 
         <h2><span class="mw-headline">Video File Sizes and Dimensions</span></h2>
 
-        <p>When choosing a video file to provide to your website visitors, you should keep in mind that the file should be an appropriate size for viewing over the web, over a reasonable connection speed. The original video files that you have may not be suitable for putting on your website. Since Sandvox doesn't perform any processing on the video you provide, you will need to export an appropriate movie file from QuickTime, iMovie, etc. There is am online resources available, <a href="http://developer.apple.com/technotes/tn2008/tn2218.html" class="external text" title="http://developer.apple.com/technotes/tn2008/tn2218.html">here</a> that may be of use.</p>
+        <p>When choosing a video file to provide to your website visitors, you should keep in mind that the file should be an appropriate size for viewing over the web, over a reasonable connection speed. The original video files that you have may not be suitable for putting on your website. Since Sandvox doesn't perform any processing on the video you provide, you will need to export an appropriate <a href="Supported_Video_Formats.html" title="Supported Video Formats">movie file</a> from QuickTime, iMovie, etc. There is am online resources available, <a href="http://developer.apple.com/technotes/tn2008/tn2218.html" class="external text" title="http://developer.apple.com/technotes/tn2008/tn2218.html">here</a> that may be of use.</p>
 
         <p>When you add a Video to a site, Sandvox checks the video's width (measured in pixels). If the video is wider than the limits listed below, Sandvox will automatically scale it down and the video will be displayed at this smaller size.</p>
 
@@ -73,23 +67,15 @@
 
         <p>One good tool for resizing is Apple's <a href="http://www.apple.com/quicktime/pro" class="external text" title="http://www.apple.com/quicktime/pro">Quicktime Pro</a>. Resizing before adding the video to your site will speed load times.</p>
 
-        <p>Note that Sandvox <b>only</b> scales the video file down for viewing. The published file is exactly the same as the original, so if a visitor downloads the movie using Quicktime Pro, they can watch it at full resolution.</p><a name="Referencing" id="Referencing"></a>
+        <p>Note that Sandvox <b>only</b> scales the video file down for viewing. The published file is exactly the same as the original, so if a visitor downloads the movie using Quicktime Pro, they can watch it at full resolution.</p><a name="Options" id="Options"></a>
 
-        <h2><span class="mw-headline">Referencing</span></h2>
-
-        <p>Media Objects have a "Copy file into document" checkbox in the inspector. This is initially checked, but if you un-check before the file is saved, you can indicate that the file should *not* be copied into the Sandvox document package, and just be referenced at its original location on disk. If the checkbox remains checked, then once the file is saved, the file is copied into the document, and the checkbox is disabled since you cannot "un-copy" the file from the document any more.</p>
-
-        <p>This option exists because these media files can often be quite large, and it may be wasteful of hard disk space to have them stored in two places on one's computer. However, referencing them rather than copying them into the document means that the document is less portable. (See <a href="Collaborative_Site_Editing.html" title="Collaborative Site Editing">Collaborative Site Editing</a> for more information).</p>
-
-        <p>Images are *always* copied into the document.</p><a name="Settings" id="Settings"></a>
-
-        <h2><span class="mw-headline">Settings</span></h2>
+        <h2><span class="mw-headline">Options</span></h2>
 
         <div class="floatright">
-            <img alt="" src="img/2/2f/Movie_Inspector.jp2" width="213" height="432" border="0" />
+            <img alt="" src="img/2/2f/Movie_Inspector.jp2" width="195" height="397" border="0" />
         </div>
 
-        <p><i><b>iOS devices like iPad will not autoplay, so it is best to leave controller on</b></i><br />
+        <p><i><b>iOS devices like iPad will not autoplay, so it is best to leave the controller showing</b></i><br />
         <i>Please note that it is possible for site visitors' own computer settings to <a href="A_Video_on_my_site_does_not_behave_correctly.html" title="A Video on my site does not behave correctly">override</a> some of the settings here.</i></p><a name="Source" id="Source"></a>
 
         <h3><span class="mw-headline">Source</span></h3>
@@ -121,21 +107,31 @@ http://www.example.com/mymovie.mp4
 
         <p>By using an external URL for the movie, you save the time and bandwidth you would have spent downloading it yourself.</p>
 
-        <p>When using a Video page or object, keep in mind your visitors' connection speed (try to use relatively small video files) and their installed software (avoid unusual codecs that they may not have).</p><a name="Automatically_Play" id="Automatically_Play"></a>
-
-        <h3><span class="mw-headline">Automatically Play</span></h3>
-
-        <p>If you check this, the movie will start playing once the page has loaded. This only takes effect once the page is published and viewed online.</p><a name="Show_Controller" id="Show_Controller"></a>
-
-        <h3><span class="mw-headline">Show Controller</span></h3>
-
-        <p>Determines whether or not the video controls (pause, play, etc.) will be visible to visitors.</p>
-
-        <p>This applies only to regular video.</p><a name="Loop" id="Loop"></a>
+        <p>When using a Video page or object, keep in mind your visitors' connection speed (try to use relatively small video files) and their installed software (avoid unusual codecs that they may not have).</p><a name="Loop" id="Loop"></a>
 
         <h3><span class="mw-headline">Loop</span></h3>
 
-        <p>If checked, the movie will play continuously, starting again once it has finished.</p>
+        <p>If checked, the movie will play continuously, starting again once it has finished.</p><a name="Show_Controller" id="Show_Controller"></a>
+
+        <h3><span class="mw-headline">Show Controller</span></h3>
+
+        <p>Determines whether or not the video controls (pause, play, etc.) will be visible to visitors.</p><a name="Automatically_Play" id="Automatically_Play"></a>
+
+        <h3><span class="mw-headline">Automatically Play</span></h3>
+
+        <p>If you check this, the movie will start playing once the page has loaded. This only takes effect once the page is published and viewed online.</p><a name="Poster_Image" id="Poster_Image"></a>
+
+        <h2><span class="mw-headline">Poster Image</span></h2>
+
+        <p>This is where you would pick the poster image, that is the image that displays while your video is loading on the screen, also the image that is displayed in your site outline.</p><a name="Advanced" id="Advanced"></a>
+
+        <h2><span class="mw-headline">Advanced</span></h2><a name="Copy_file_into_document" id="Copy_file_into_document"></a>
+
+        <h3><span class="mw-headline">Copy file into document</span></h3>
+
+        <p>Media Objects have a "Copy file into document" checkbox in the inspector. This is initially checked, but if you un-check before the file is saved, you can indicate that the file should <i>not</i> be copied into the Sandvox document package, and just be referenced at its original location on disk. If the checkbox remains checked, then once the file is saved, the file is copied into the document, and the checkbox is disabled since you cannot "un-copy" the file from the document any more.</p>
+
+        <p>This option exists because these media files can often be quite large, and it may be wasteful of hard disk space to have them stored in two places on one's computer. However, referencing them rather than copying them into the document means that the document is less portable. (See <a href="Collaborative_Site_Editing.html" title="Collaborative Site Editing">Collaborative Site Editing</a> for more information).</p>
 
         <div class="related">
             <a name="Related_Articles" id="Related_Articles"></a>
@@ -144,6 +140,10 @@ http://www.example.com/mymovie.mp4
 
             <ul>
                 <li><a href="Supported_Video_Formats.html" title="Supported Video Formats">Supported Video Formats</a></li>
+
+                <li><a href="Podcasting_and_Videocasting_with_Sandvox.html" title="Podcast">Podcast</a></li>
+
+                <li><a href="Podcasting_and_Videocasting_with_Sandvox.html" title="Videocast">Videocast</a></li>
 
                 <li><a href="A_Video_on_my_site_takes_too_long_to_load.html" title="A Video on my site takes too long to load">A Video on my site takes too long to load</a></li>
 
