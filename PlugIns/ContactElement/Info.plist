@@ -26,26 +26,13 @@
 	<string>${SVN_VERSION}</string>
 	<key>SVMinimumAppVersion</key>
 	<string>2.0</string>
-	<key>KTPageDisableComments</key>
-	<true/>
 	<key>SVPlugInCSSFiles</key>
 	<array>
 		<string>ContactElement.css</string>
 	</array>
 	<key>SVPlugInIconPath</key>
 	<string>toolbar_contact.tiff</string>
-	<key>KTPluginInitialProperties</key>
-	<dict>
-		<key>copyToSender</key>
-		<false/>
-		<key>sideLabels</key>
-		<integer>0</integer>
-		<key>subjectType</key>
-		<integer>1</integer>
-	</dict>
-	<key>KTPluginUntitledName</key>
-	<string>Contact Me</string>
 	<key>NSPrincipalClass</key>
-	<string>ContactElementDelegate</string>
+	<string>ContactPlugIn</string>
 </dict>
 </plist>
