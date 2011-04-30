@@ -38,28 +38,21 @@
 
 #import "ContactPlugIn.h"
 
+@interface ContactElementField ()
+- (void)setIdentifier:(NSString *)string;
+@end
 
 @implementation ContactElementField
 
-#pragma mark -
-#pragma mark Init & Dealloc
 
-+ (void)initialize
-{
-	[self setKeys:[NSArray arrayWithObject:@"type"]
-		triggerChangeNotificationsForDependentKey:@"tabViewIdentifierForFieldType"];
-	
-	[self setKeys:[NSArray arrayWithObjects:@"identifier", @"label", nil]
-		triggerChangeNotificationsForDependentKey:@"UILabel"];
-	
-	
-}
+#pragma mark Init & Dealloc
 
 - (id)initWithIdentifier:(NSString *)identifier
 {
 	[super init];
+    
+    self.identifier = identifier;
 	
-	myIdentifier = [identifier copy];
 	
 	return self;
 }
@@ -81,16 +74,15 @@
 - (void)dealloc
 
 {
-	[myIdentifier release];
-	[myLabel release];
-	[myDefaultString release];
-	[myCheckBoxLabel release];
-	[myVisitorChoices release];
-	
+    self.identifier = nil;
+    self.label = nil;
+    self.defaultString = nil;
+    self.checkBoxLabel = nil;
+    self.visitorChoices = nil;	
 	[super dealloc];
 }
 
-#pragma mark -
+
 #pragma mark Copy
 
 - (id)copyWithZone:(NSZone *)zone
@@ -107,71 +99,13 @@
 	return copy;
 }
 
-#pragma mark -
-#pragma mark Owner
 
-- (ContactPlugIn *)owner { return myOwner; }
-
-- (void)setOwner:(ContactPlugIn *)owner { myOwner = owner; }
-
-#pragma mark -
-#pragma mark Accessors
-
-- (NSString *)identifier { return myIdentifier; }
-
-- (void)setIdentifier:(NSString *)identifier
-{
-	identifier = [identifier copy];
-	[myIdentifier release];
-	myIdentifier = identifier;
-}
-
-- (ContactElementFieldType)type { return myType; }
-
-- (void)setType:(ContactElementFieldType)type { myType = type; }
-
-- (NSString *)label { return myLabel; }
-
-- (void)setLabel:(NSString *)label
-{
-	label = [label copy];
-	[myLabel release];
-	myLabel = label;
-}
-
-- (NSString *)defaultString { return myDefaultString; }
-
-- (void)setDefaultString:(NSString *)defaultString
-{
-	defaultString = [defaultString copy];
-	[myDefaultString release];
-	myDefaultString = defaultString;
-}
-
-- (NSString *)checkBoxLabel { return myCheckBoxLabel; }
-
-- (void)setCheckBoxLabel:(NSString *)label
-{
-	label = [label copy];
-	[myCheckBoxLabel release];
-	myCheckBoxLabel = label;
-}
-
-- (BOOL)checkBoxIsSelected { return myCheckBoxIsSelected; }
-
-- (void)setCheckBoxIsSelected:(BOOL)selected { myCheckBoxIsSelected = selected; }
-
-- (NSArray *)visitorChoices { return myVisitorChoices; }
-
-- (void)setVisitorChoices:(NSArray *)choices
-{
-	choices = [choices copy];
-	[myVisitorChoices release];
-	myVisitorChoices = choices;
-}
-
-#pragma mark -
 #pragma mark UI
+
++ (NSSet *)keyPathsForValuesAffectingUILabel
+{
+    return [NSSet setWithObjects:@"identifier", @"label", nil];
+}
 
 /*	A specialised version of -label that is displayed in the Inspector table view.
  */
@@ -181,26 +115,33 @@
 	
 	NSString *identifier = [self identifier];
 	
-	if ([@"visitorName" isEqualToString:identifier]) {
+	if ([@"visitorName" isEqualToString:identifier]) 
+    {
 		result = SVLocalizedString(@"Name", "field label");
 	}
-	else if ([@"email" isEqualToString:identifier]) {
+	else if ([@"email" isEqualToString:identifier]) 
+    {
 		result = SVLocalizedString(@"Email", @"field label");
 	}
-	else if ([@"subject" isEqualToString:identifier]) {
+	else if ([@"subject" isEqualToString:identifier]) 
+    {
 		result = SVLocalizedString(@"Subject", @"field label");
 	}
-	else if ([@"message" isEqualToString:identifier]) {
+	else if ([@"message" isEqualToString:identifier]) 
+    {
 		result = SVLocalizedString(@"Message", @"field label");
 	}
-	else if ([@"send" isEqualToString:identifier]) {
+	else if ([@"send" isEqualToString:identifier]) 
+    {
 		result = SVLocalizedString(@"Send", @"button label");
 	}
-	else {
+	else 
+    {
 		result = [self label];
 	}
 	
-	if (!result || [result isEqualToString:@""]) {
+	if (!result || [result isEqualToString:@""]) 
+    {
 		result = SVLocalizedString(@"N/A", @"field label");
 	}
 	
@@ -222,6 +163,11 @@
 	}
 	
 	return result;
+}
+
++ (NSSet *)keyPathsForValuesAffectingTabViewIdentifierForFieldType
+{
+    return [NSSet setWithObject:@"type"];
 }
 
 /*	Which of the tab view items to display in the Inspector for our type
@@ -381,5 +327,23 @@
 {
 	return [self inputName];		// well, just provide the same as the input name
 }
+
+
+#pragma mark Properties
+
+@synthesize owner = _owner;
+@synthesize identifier = _identifier;
+- (void)setIdentifier:(NSString *)string
+{
+    NSString *copy = [string copy];
+    [_identifier release];
+    _identifier = copy;
+}
+@synthesize type = _type;
+@synthesize label = _label;
+@synthesize defaultString = _defaultString;
+@synthesize checkBoxLabel = _checkBoxLabel;
+@synthesize checkBoxIsSelected = _checkBoxIsSelected;
+@synthesize visitorChoices = _visitorChoices;
 
 @end

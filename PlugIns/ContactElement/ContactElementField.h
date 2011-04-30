@@ -50,49 +50,33 @@ typedef enum
 
 
 @class ContactPlugIn;
-
-
 @interface ContactElementField : NSObject <NSCopying>
 {
-	ContactPlugIn	*myOwner;
+	ContactPlugIn	*_owner;
 	
-	NSString				*myIdentifier;
-	ContactElementFieldType	myType;
-	NSString				*myLabel;
-	NSString				*myDefaultString;
-	NSString				*myCheckBoxLabel;
-	BOOL					myCheckBoxIsSelected;
-	NSArray					*myVisitorChoices;
+	NSString				*_identifier;
+	ContactElementFieldType	_type;
+	NSString				*_label;
+	NSString				*_defaultString;
+	NSString				*_checkBoxLabel;
+	BOOL					_checkBoxIsSelected;
+	NSArray					*_visitorChoices;
 }
 
 // Init
 - (id)initWithIdentifier:(NSString *)identifier;
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 
-// Owner
-- (ContactPlugIn *)owner;
-- (void)setOwner:(ContactPlugIn *)owner;
+@property(nonatomic, assign) ContactPlugIn *owner; // weak ref
+@property(nonatomic, readonly) NSString *identifier;
 
-// Accessors
-- (NSString *)identifier;
+@property(nonatomic) ContactElementFieldType type;
+@property(nonatomic, copy) NSString *label;
+@property(nonatomic, copy) NSString *defaultString;
+@property(nonatomic, copy) NSString *checkBoxLabel;
+@property(nonatomic) BOOL checkBoxIsSelected;
+@property(nonatomic, copy) NSArray *visitorChoices;
 
-- (ContactElementFieldType)type;
-- (void)setType:(ContactElementFieldType)type;
-
-- (NSString *)label;
-- (void)setLabel:(NSString *)label;
-
-- (NSString *)defaultString;
-- (void)setDefaultString:(NSString *)defaultString;
-
-- (NSString *)checkBoxLabel;
-- (void)setCheckBoxLabel:(NSString *)label;
-
-- (BOOL)checkBoxIsSelected;
-- (void)setCheckBoxIsSelected:(BOOL)selected;
-
-- (NSArray *)visitorChoices;
-- (void)setVisitorChoices:(NSArray *)choices;
 
 // UI
 - (BOOL)shouldDrawLockIcon;
