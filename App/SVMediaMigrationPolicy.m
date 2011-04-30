@@ -204,4 +204,11 @@
     return [KSExtensibleManagedObject archiveExtensibleProperties:properties];
 }
 
+- (NSString *)filenameFromName:(NSString *)name customExtension:(NSString *)extension;
+{
+    if (!extension) extension = @"html";
+    NSString *result = [name stringByAppendingPathExtension:extension];
+    return result;
+}
+
 @end
