@@ -86,20 +86,12 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 #pragma mark -
 #pragma mark Init & Dealloc
 
-+ (void) initialize
+- (void)awakeFromNew
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	
-	
-    [ContactPlugIn setKeys:
-	 [NSArray arrayWithObjects: @"address", nil]
-triggerChangeNotificationsForDependentKey: @"encodedRecipient"];
-	[ContactPlugIn setKeys:
-	 [NSArray arrayWithObjects: @"subjectType", nil]
-triggerChangeNotificationsForDependentKey: @"subjectPrompt"];
-	
-	
-	[pool release];
+    [super awakeFromNew];
+    self.copyToSender = NO;
+    self.sideLabels = NO;
+    self.subjectType = kKTContactSubjectField;
 }
 
 + (NSArray *)plugInKeys;
@@ -221,6 +213,12 @@ triggerChangeNotificationsForDependentKey: @"subjectPrompt"];
 }
 
 // NOT USED .... MAYBE AT SOME POINT WE MAY WANT TO UPDATE THE INSPECTOR TO HAVE A BETTER PROMPT.
+
++ (NSSet *)keyPathsForValuesAffectingSubjectPrompt
+{
+    return [NSSet setWithObject:@"subjectType"];
+}
+
 - (NSString *)subjectPrompt
 {
 	NSString *result = nil;
@@ -247,9 +245,13 @@ triggerChangeNotificationsForDependentKey: @"subjectPrompt"];
 
 #define MAX_EMAILS_LENGTH 256
 
++ (NSSet *)keyPathsForValuesAffectingEncodedRecipient
+{
+    return [NSSet setWithObject:@"address"];
+}
+
 - (NSString *)encodedRecipient
 {
-	
 	NSString *email = [self address];
 	
 	NSData *mailData = [email dataUsingEncoding:NSUTF8StringEncoding];
@@ -345,7 +347,8 @@ triggerChangeNotificationsForDependentKey: @"subjectPrompt"];
 - (NSString *)mailmeURL
 {
 	NSString *result = [[NSUserDefaults standardUserDefaults] objectForKey:@"mailmeURL"];
-	if (nil == result) {
+	if (nil == result) 
+    {
 		result = @"http://service.karelia.com/mailme.php";
 	}
 	return result;
@@ -354,7 +357,8 @@ triggerChangeNotificationsForDependentKey: @"subjectPrompt"];
 - (NSString *)mailmeAjaxURL
 {
 	NSString *result = [[NSUserDefaults standardUserDefaults] objectForKey:@"mailmeAjaxURL"];
-	if (nil == result) {
+	if (nil == result) 
+    {
 		result = @"http://service.karelia.com/mailmeAjax.php";
 	}
 	return result;
@@ -368,10 +372,6 @@ triggerChangeNotificationsForDependentKey: @"subjectPrompt"];
 }
 
 @synthesize fields = _fields;
-
-/*	Retrieves the fields plist representation from the delegateOwner and converts it to real
- *	ContactFormField objects.
- */
 - (void)setFields:(NSArray *)fields;
 {
 	fields = [fields copy];
@@ -386,6 +386,7 @@ triggerChangeNotificationsForDependentKey: @"subjectPrompt"];
     }
 }
 
+
 #pragma mark Metrics
 
 - (void)makeOriginalSize;
@@ -393,6 +394,7 @@ triggerChangeNotificationsForDependentKey: @"subjectPrompt"];
     // Contact forms generally want to be full-width
     [self setWidth:nil height:nil];
 }
+
 
 #pragma mark Migration
 
