@@ -115,15 +115,15 @@
 			isa = PBXGroup;
 			children = (
 				3C3001AA1312FB9D0022E49A /* BUNDLED */,
+				8D5B49B7048680CD000E48DA /* Info.plist */,
+				27F19AD00D4E479D000DB895 /* InfoPlist.strings */,
 				CEDA1DE81302084000DC6FE7 /* Inspector.strings */,
 				3C5D6F6D12A4371B00AAAB18 /* Inspector.xib */,
-				CEA32ADB1283353500648C39 /* toolbar_contact.tiff */,
-				27F19AD00D4E479D000DB895 /* InfoPlist.strings */,
-				27EF28F80C677862001055D3 /* lock.png */,
 				CE98EF3509994DE400EDCEE7 /* Template.html */,
+				CEA32ADB1283353500648C39 /* toolbar_contact.tiff */,
+				27EF28F80C677862001055D3 /* lock.png */,
 				CED6B34D099ABE0800D6528E /* ContactElement.css */,
 				CEA7FA4109B27B7C0034E035 /* ContactStrings.plist */,
-				8D5B49B7048680CD000E48DA /* Info.plist */,
 				3CAC4F0609A2AE2C007AB5B6 /* Localizable.strings */,
 				3C41CC7309B4D7BC0086EF83 /* License.rtf */,
 			);
