@@ -294,12 +294,33 @@
 
 - (void)writeImageElement:(SVHTMLContext *)context media:(SVMedia *)media alt:(NSString *)alt
 {
-    NSURL *URL = [context addImageMedia:media
-                                  width:[self width]
-                                 height:[self height]
-                                   type:[self typeToPublish]
-                      preferredFilename:nil
-                          scalingSuffix:@"_med"];
+    NSURL *URL = nil;
+    
+    // Want to publish the original file for animated GIFs, so that the animation is not lost. #118014
+    if ([[self typeToPublish] isEqualToString:(NSString *)kUTTypeGIF])
+    {
+        CGImageSourceRef source = IMB_CGImageSourceCreateWithImageItem((id)media, NULL);
+        if (source)
+        {
+            if ([(NSString *)CGImageSourceGetType(source) isEqualToString:(NSString *)kUTTypeGIF])
+            {
+                URL = [context addMedia:media];
+            }
+            
+            CFRelease(source);
+        }
+    }
+    
+    if (!URL)
+    {
+        URL = [context addImageMedia:media
+                               width:[self width]
+                              height:[self height]
+                                type:[self typeToPublish]
+                   preferredFilename:nil
+                       scalingSuffix:@"_med"];
+    }
+    
     
     [context writeImageWithSrc:(URL ? [context relativeStringFromURL:URL] : @"")
                            alt:alt
