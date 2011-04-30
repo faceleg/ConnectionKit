@@ -34,15 +34,12 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
+
 #import "ContactPlugIn.h"
+#import "ContactPassword.h" // defines CONTACT_PASSWORD, not supplied
 
 #import "ContactElementField.h"
-
-#import "Sandvox.h"
-// defines CONTACT_PASSWORD, not supplied
-#import <ContactPassword.h>
 #import "NSData+Karelia.h"
-
 #include <openssl/blowfish.h>
 #include <zlib.h>
 
@@ -58,10 +55,11 @@
 // SVLocalizedString(@"Unable to Submit form. Result code = ", "String_On_Page_Template.  Followed by a number.")
 // SVLocalizedString(@"Message sent.", "String_On_Page_Template ")
 
+
 enum { LABEL_NAME = 1, LABEL_EMAIL, LABEL_SUBJECT, LABEL_MESSAGE, LABEL_SEND };
 
-@interface ContactPlugIn ()
 
+@interface ContactPlugIn ()
 #ifdef DEBUG
 - (void)decode:(NSString *)v;
 #endif
@@ -83,8 +81,25 @@ enum { LABEL_NAME = 1, LABEL_EMAIL, LABEL_SUBJECT, LABEL_MESSAGE, LABEL_SEND };
 
 enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelection };
 
-#pragma mark -
-#pragma mark Init & Dealloc
+
+#pragma mark SVPlugIn
+
++ (NSArray *)plugInKeys;
+{
+    return [NSArray arrayWithObjects:
+            @"fields", 
+            @"address", 
+            @"copyToSender", 
+            @"sendButtonTitle", 
+            @"subjectLabel", 
+            @"emailLabel", 
+            @"nameLabel", 
+            @"messageLabel", 
+            @"sideLabels", 
+            @"subjectType", 
+            @"subjectText", 
+            nil];
+}
 
 - (void)awakeFromNew
 {
@@ -92,11 +107,6 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
     self.copyToSender = NO;
     self.sideLabels = NO;
     self.subjectType = kKTContactSubjectField;
-}
-
-+ (NSArray *)plugInKeys;
-{
-    return [NSArray arrayWithObjects:@"fields", @"address", @"copyToSender", @"sendButtonTitle", @"subjectLabel", @"emailLabel", @"nameLabel", @"messageLabel", @"sideLabels", @"subjectType", @"subjectText", nil];
 }
 
 - (void)dealloc
@@ -202,6 +212,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 @synthesize sideLabels = _sideLabels;
 @synthesize subjectType = _subjectType;
 @synthesize subjectText = _subjectText;
+
 
 #pragma mark Derived Accessors
 

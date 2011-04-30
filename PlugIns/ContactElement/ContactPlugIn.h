@@ -34,19 +34,15 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
+
 #import "Sandvox.h"
-
-
-@class ContactElementFieldsArrayController, ContactElementField;
+@class ContactElementField;
+@class ContactElementFieldsArrayController;
 
 
 @interface ContactPlugIn : SVPlugIn
 {
-	
-	
   @private
-	
-	
 	NSArray *_fields;
 	ContactElementField *_emailField;
 	BOOL	myIsArchivingFields;
@@ -67,7 +63,6 @@
 
 - (NSString *)encodedRecipient;
 - (NSString *)subjectPrompt;
-- (NSString *)subjectText;
 
 @property(nonatomic, copy) NSString *address;
 @property(nonatomic) BOOL copyToSender;
@@ -81,10 +76,6 @@
 @property(nonatomic) BOOL sideLabels;
 @property(nonatomic) NSInteger subjectType;
 @property(nonatomic, copy) NSString *subjectText;
-
-- (int)subjectType;
-- (void)setSubjectText:(NSString *)anAddress;
-- (void)setSubjectType:(int)aSubjectType;
 
 // New stuff
 @property(nonatomic, copy) NSArray *fields;
