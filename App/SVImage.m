@@ -292,6 +292,22 @@
 
 #pragma mark HTML
 
+- (void)writeImageElement:(SVHTMLContext *)context media:(SVMedia *)media alt:(NSString *)alt
+{
+    NSURL *URL = [context addImageMedia:media
+                                  width:[self width]
+                                 height:[self height]
+                                   type:[self typeToPublish]
+                      preferredFilename:nil
+                          scalingSuffix:@"_med"];
+    
+    [context writeImageWithSrc:(URL ? [context relativeStringFromURL:URL] : @"")
+                           alt:alt
+                         width:nil height:nil];// nil sizing because bindSizeToObject: takes care
+    
+    [context addDependencyOnObject:self keyPath:@"typeToPublish"];
+}
+
 - (void)writeImageElement:(SVHTMLContext *)context
 {
     // Actually write the image
@@ -315,18 +331,7 @@
     SVMedia *media = [self media];
     if (media)
     {
-        NSURL *URL = [context addImageMedia:media
-                                      width:[self width]
-                                     height:[self height]
-                                       type:[self typeToPublish]
-                          preferredFilename:nil
-                              scalingSuffix:@"_med"];
-        
-        [context writeImageWithSrc:(URL ? [context relativeStringFromURL:URL] : @"")
-                               alt:alt
-                             width:nil height:nil];// nil sizing because bindSizeToObject: takes care
-        
-        [context addDependencyOnObject:self keyPath:@"typeToPublish"];
+        [self writeImageElement:context media:media alt:alt];
     }
     else
     {
