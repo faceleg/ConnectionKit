@@ -768,16 +768,14 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 - (NSString *)relativeStringFromURL:(NSURL *)URL;
 {
     NSString *result;
-    switch ([self generationPurpose])
+    if ([self isForEditing])
     {
-        case kSVHTMLGenerationPurposeEditing:
-            result = [URL webEditorPreviewPath];
-            if (!result) result = [URL absoluteString];
-            break;
-            
-        default:
-            result = [URL ks_stringRelativeToURL:[self baseURL]];
-            break;
+        result = [URL webEditorPreviewPath];
+        if (!result) result = [URL absoluteString];
+    }
+    else
+    {
+        result = [URL ks_stringRelativeToURL:[self baseURL]];
     }
     
     return result;
