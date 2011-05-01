@@ -35,6 +35,7 @@
 #import "KSURLUtilities.h"
 #import "NSObject+Karelia.h"
 
+#import "KSPathUtilities.h"
 #import "KSSHA1Stream.h"
 #import "KSStringWriter.h"
 
@@ -1042,8 +1043,8 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
         else if ([self isForQuickLookPreview])
         {
             // CSS other than design should be written inline
-            // Yes, this check should be done better than just the filename
-            if ([[fileURL ks_lastPathComponent] isEqualToString:@"main.css"])
+            NSString *designPath = [[[[[self page] master] design] bundle] bundlePath];
+            if ([[fileURL path] ks_isSubpathOfPath:designPath])
             {
                 [self linkToCSSAtURL:fileURL];
                 return fileURL;
