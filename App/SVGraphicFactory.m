@@ -65,6 +65,8 @@
 	return result;
 }
 
+- (NSString *)identifier { return @"com.karelia.sandvox.TextBox"; }
+
 - (NSString *)name { return TOOLBAR_INSERT_TEXT_BOX; }	// from a localized string macro
 
 - (NSString *)graphicDescription { return NSLocalizedString(@"Write text in a separate box", @"name of object to insert"); }
