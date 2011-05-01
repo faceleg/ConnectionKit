@@ -102,11 +102,26 @@
     [super writeHTML:context];
 }
 
-- (void)writePlaceholder
+- (NSString *)placeholderString
 {
-    id <SVPlugInContext> context = [self currentContext];
-    [context writePlaceholderWithText:SVLocalizedString(@"Enter Delicious username in the Inspector", "String_On_Page_Template")
-                              options:0];
+    NSString *result = nil;
+    
+    if ( !self.deliciousID )
+    {
+        result = SVLocalizedString(@"Enter Delicious username in the Inspector", "missing Delicous ID");
+    }
+    else if ( [[self currentContext] liveDataFeeds] )
+    {
+        NSString *text = SVLocalizedString(@"No links are available for “%@”", "WebView Placeholder");
+        result = [NSString stringWithFormat:text, self.deliciousID];
+    }
+    else
+    {
+        // no live feed
+        result = SVLocalizedString(@"This is a placeholder for a Delicious feed. It will appear here once published or if you enable live data feeds in Preferences", "WebView Placeholder");
+    }
+    
+    return result;
 }
 
 #pragma mark Properties
