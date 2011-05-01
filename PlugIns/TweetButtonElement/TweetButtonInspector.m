@@ -37,8 +37,8 @@
 #import "TweetButtonInspector.h"
 
 
-const void *sTitleObservationContext = &sTitleObservationContext;
-const void *sURLObservationContext = &sURLObservationContext;
+static void *sTitleObservationContext = &sTitleObservationContext;
+static void *sURLObservationContext = &sURLObservationContext;
 
 
 @implementation TweetButtonInspector
