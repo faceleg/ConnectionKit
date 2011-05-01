@@ -38,6 +38,9 @@
 #import "NSURL+Twitter.h"
 
 
+// feed results can be validated at, e.g., http://jsonformatter.curiousconcept.com/
+
+
 // SVLocalizedStrings are declared here for genstrings, they are [[" ]] strings in template
 // SVLocalizedString(@"Tweet Permalink", "String_On_JavaScript_Template")
 // SVLocalizedString(@"less than a minute ago", "String_On_JavaScript_Template")
@@ -122,7 +125,7 @@
     NSURL *resourceURL = [NSURL fileURLWithPath:resourcePath];
     [context addJavascriptResourceWithTemplateAtURL:resourceURL object:self];
     
-    NSString *uniqueID = @"twitter_div";
+    NSString *uniqueID = @"feed";
     
     if ( self.username )
     {
@@ -130,11 +133,9 @@
         {
             // write a div with callback script
             uniqueID = [context startElement:@"div"
-                             preferredIdName:@"twitter_div"
+                             preferredIdName:@"feed"
                                    className:nil
                                   attributes:nil];
-            
-            
             [context endElement]; // </div>
         }
         else
