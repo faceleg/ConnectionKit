@@ -401,6 +401,8 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
         {
             [self writeStyleElementWithCSSString:css];
         }
+        
+        return nil;
     }
 }
 
