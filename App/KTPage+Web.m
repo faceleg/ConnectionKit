@@ -309,20 +309,22 @@
 		[context closeComment];
 	}
 	
-    // Write link to main.CSS file -- the most specific
-    NSURL *mainCSSURL = [context mainCSSURL];
-    if (mainCSSURL)
-    {
-        [context writeLinkToStylesheet:[context relativeStringFromURL:mainCSSURL]
-                                 title:[[[self master] design] title]
-                                 media:nil];
-    }
-	
-	
-	// design's print.css but not for Quick Look
+    
+    
+    // design's CSS but not for Quick Look
     if ([context isForPublishing])
-	{
-        NSURL *printCSSURL = [context URLOfDesignFile:@"print.css"];
+    {
+        // Write link to main.CSS file -- the most specific
+        NSURL *mainCSSURL = [context mainCSSURL];
+        if (mainCSSURL)
+        {
+            [context writeLinkToStylesheet:[context relativeStringFromURL:mainCSSURL]
+                                     title:[[[self master] design] title]
+                                     media:nil];
+        }
+        
+        
+	    NSURL *printCSSURL = [context URLOfDesignFile:@"print.css"];
         if ( printCSSURL )
         {
             path = [context relativeStringFromURL:printCSSURL];
@@ -332,8 +334,7 @@
             }
         }
 	}
-    
-    if (![context isForPublishing])    // during publishing, pub engine will take care of design CSS
+    else    // during publishing, pub engine will take care of design CSS
     {
         // Load up DESIGN CSS, which might override the generic stuff
         KTDesign *design = [[self master] design];
