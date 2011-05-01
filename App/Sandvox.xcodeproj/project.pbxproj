@@ -1499,6 +1499,13 @@
 			remoteGlobalIDString = 3C1F510911D575510036B375;
 			remoteInfo = xibLocalizationPostprocessor;
 		};
+		3C24384E136CF59B009D0D85 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3C243830136CF41D009D0D85 /* UpdateKSError */;
+			remoteInfo = UpdateKSError;
+		};
 		3C30036E131301160022E49A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
@@ -6326,6 +6333,7 @@
 				3C3ED2AE120895E60080EB6E /* PBXTargetDependency */,
 				3CD806E3120A633F00E0848F /* PBXTargetDependency */,
 				3C3ED2AA120895CF0080EB6E /* PBXTargetDependency */,
+				3C24384F136CF59B009D0D85 /* PBXTargetDependency */,
 				3CBC655A11EFD5E500716937 /* PBXTargetDependency */,
 				3C30036F131301160022E49A /* PBXTargetDependency */,
 				3CBC727711F0C5E000716937 /* PBXTargetDependency */,
@@ -8029,6 +8037,11 @@
 			isa = PBXTargetDependency;
 			target = 3C1F510911D575510036B375 /* xibLocalizationPostprocessor */;
 			targetProxy = 3C1F512611D576D00036B375 /* PBXContainerItemProxy */;
+		};
+		3C24384F136CF59B009D0D85 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3C243830136CF41D009D0D85 /* UpdateKSError */;
+			targetProxy = 3C24384E136CF59B009D0D85 /* PBXContainerItemProxy */;
 		};
 		3C30036F131301160022E49A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
