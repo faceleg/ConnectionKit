@@ -803,11 +803,6 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     return result;
 }
 
-- (NSString *)relativeURLStringOfSiteItem:(SVSiteItem *)page;
-{
-    return [self relativeStringFromURL:[self URLForPage:page]];
-}
-
 /*	Generates the path to the specified file with the current page's design.
  *	Takes into account the HTML Generation Purpose to handle Quick Look etc.
  */
@@ -1483,7 +1478,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
             
             // Figure out correct path
             NSString *newPath = nil;
-            if (thePage) newPath = [self relativeURLStringOfSiteItem:thePage];
+            if (thePage) newPath = [self relativeStringFromURL:[self URLForPage:thePage]];
             if (!newPath) newPath = @"#";	// Fallback
             
             // Substitute new path
@@ -1731,7 +1726,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 {
     OBPRECONDITION(page);
     
-    NSString *href = [self relativeURLStringOfSiteItem:(SVSiteItem *)page];
+    NSString *href = [self relativeStringFromURL:[self URLForPage:page]];
     if (!href) href = @"";  // happens for a site with no -siteURL set yet
     
     NSString *target = ([[(SVSiteItem *)page openInNewWindow] boolValue] ? @"_blank" : nil);

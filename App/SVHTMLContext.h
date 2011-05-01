@@ -177,7 +177,6 @@ typedef enum {
 
 #pragma mark URLs/Paths
 - (NSURL *)URLOfDesignFile:(NSString *)whichFileName;
-- (NSString *)relativeURLStringOfSiteItem:(SVSiteItem *)page;
 
 
 #pragma mark Media
