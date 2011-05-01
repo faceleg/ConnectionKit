@@ -121,10 +121,16 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 
 #pragma mark HTML Generation
 
-- (void)writeNoAddressPlaceholder
+- (NSString *)placeholderString
 {
-    NSString *noAddress = SVLocalizedString(@"Enter your email address in the Inspector", "");
-    [[self currentContext] writePlaceholderWithText:noAddress options:0];
+    if ([[self address] length])
+    {
+        return [super placeholderString];
+    }
+    else
+    {
+        return SVLocalizedString(@"Enter your email address in the Inspector", "");
+    }
 }
 
 
