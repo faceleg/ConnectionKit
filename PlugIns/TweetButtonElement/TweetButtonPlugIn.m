@@ -128,7 +128,13 @@
         // data-via
         if ( self.tweetVia )
         {
-            [tweetAttrs setObject:self.tweetVia forKey:@"data-via"];
+            // strip any leading @
+            NSString *via = self.tweetVia;
+            if ( [via hasPrefix:@"@"] && [via length] > 1 )
+            {
+                via = [via substringFromIndex:1];
+            }
+            [tweetAttrs setObject:via forKey:@"data-via"];
         }
         // data-related
         if ( self.tweetRelated )
