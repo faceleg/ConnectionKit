@@ -15,9 +15,11 @@
 #import "SVMediaGraphicInspector.h"
 #import "SVMediaRecord.h"
 #import "SVSiteItem.h"
+#import "KTSite.h"
 #import "SVTextAttachment.h"
 
 #import "NSManagedObject+KTExtensions.h"
+#import "NSManagedObjectContext+KTExtensions.h"
 
 #import "NSBitmapImageRep+Karelia.h"
 #import "NSError+Karelia.h"
@@ -127,7 +129,16 @@
 
 - (void)getDimensionsFromRemoteImage;
 {
-	NSURL *sourceURL = [self externalSourceURL];
+    // Need a page to resolve the URL against in case it's relative. #118435
+    KTPage *page = [[[self container] pages] anyObject];
+    if (!page)
+    {
+        page = [[[[self container] managedObjectContext] site] rootPage];
+    }
+    
+	NSURL *sourceURL = [NSURL URLWithString:[[self externalSourceURL] absoluteString]
+                              relativeToURL:[page URL]];
+    
 	if (sourceURL && [sourceURL scheme])
 	{
 		// Use imageIO to check the dimensions, on a background thread.
