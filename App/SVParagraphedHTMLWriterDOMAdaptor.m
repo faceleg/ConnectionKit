@@ -150,19 +150,6 @@
     return result;
 }
 
-- (void)writeCharacters:(NSString *)string;
-{
-    // At start of top element, ignore whitespace. #76588
-    if ([[self XMLWriter] openElementsCount] == 1 &&
-        [_pendingStartTagDOMElements count] &&
-        [string isWhitespace])
-    {
-        return;
-    }
-    
-    [super writeCharacters:string];
-}
-
 #pragma mark Validation
 
 - (BOOL)validateElement:(NSString *)tagName
