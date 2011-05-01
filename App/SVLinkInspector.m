@@ -73,9 +73,9 @@
             // Configure for a generic link
             [oLinkSourceView setConnected:NO];
             
-            NSString *title = [link URLString];
-            if (!title) title = @"";
-            [oLinkField setStringValue:title];
+            NSString *urlString = [link URLString];
+            if (!urlString) urlString = @"";
+            [oLinkField setObjectValue:urlString];
             
             break;
         }
