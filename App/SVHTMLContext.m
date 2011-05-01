@@ -1004,6 +1004,25 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     return [self addResourceAtURL:resourceURL destination:SVDestinationResourcesDirectory options:0];
 }
 
+- (void)linkToCSSAtURL:(NSURL *)fileURL
+{
+    if (_headerMarkupIndex != NSNotFound)
+    {
+        KSHTMLWriter *writer = [[KSHTMLWriter alloc] initWithOutputWriter:[self extraHeaderMarkup]];
+        
+        [writer writeLinkToStylesheet:[self relativeStringFromURL:fileURL]
+                                title:nil
+                                media:nil];
+        
+        [writer writeString:@"\n"];
+        [writer release];
+    }
+    else
+    {
+        [self writeLinkToStylesheet:[self relativeStringFromURL:fileURL] title:nil media:nil];
+    }
+}
+
 - (NSURL *)addResourceAtURL:(NSURL *)fileURL
                 destination:(NSString *)uploadPath
                     options:(NSUInteger)options;    // pass in 0
@@ -1012,29 +1031,34 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     OBPRECONDITION(uploadPath);
     
     
-    if (![self isForPublishing])
+    // CSS must be handled specially...
+    if ([uploadPath isEqualToString:SVDestinationMainCSS])
     {
-        // CSS must be handled specially
-        if ([uploadPath isEqualToString:SVDestinationMainCSS])
+        if ([self isForEditing])
         {
-            if (_headerMarkupIndex != NSNotFound)
-            {
-                KSHTMLWriter *writer = [[KSHTMLWriter alloc] initWithOutputWriter:[self extraHeaderMarkup]];
-                
-                [writer writeLinkToStylesheet:[self relativeStringFromURL:fileURL]
-                                        title:nil
-                                        media:nil];
-                
-                [writer writeString:@"\n"];
-                [writer release];
-            }
-            else
-            {
-                [self writeLinkToStylesheet:[self relativeStringFromURL:fileURL] title:nil media:nil];
-            }
+            [self linkToCSSAtURL:fileURL];
+            return fileURL;
         }
-        
+        else if ([self isForQuickLookPreview])
+        {
+            // CSS other than design should be written inline
+            // Yes, this check should be done better than just the filename
+            if ([[fileURL ks_lastPathComponent] isEqualToString:@"main.css"])
+            {
+                [self linkToCSSAtURL:fileURL];
+                return fileURL;
+            }
+            
+            NSString *css = [NSString stringWithContentsOfURL:fileURL
+                                                     encoding:NSUTF8StringEncoding
+                                                        error:NULL];
+            return (css ? [self addCSSString:css] : nil);
+        }
+    }
     
+    // ...everything else reference direct
+    else if (![self isForPublishing])
+    {
         return fileURL;
     }
     

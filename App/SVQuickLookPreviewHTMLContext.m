@@ -46,29 +46,4 @@
     return [super relativeStringFromURL:URL];
 }
 
-#pragma mark CSS
-
-- (NSURL *)addResourceAtURL:(NSURL *)fileURL
-                destination:(NSString *)uploadPath
-                    options:(NSUInteger)options;    // pass in 0
-{
-    if ([uploadPath isEqualToString:SVDestinationMainCSS])
-    {
-        // CSS other than design should be written inline
-        // Yes, this check should be done better than just the filename
-        if ([[fileURL ks_lastPathComponent] isEqualToString:@"main.css"])
-        {
-            return [super addResourceAtURL:fileURL destination:SVDestinationMainCSS options:0];
-        }
-        
-        
-        NSString *css = [NSString stringWithContentsOfURL:fileURL
-                                                 encoding:NSUTF8StringEncoding
-                                                    error:NULL];
-        return (css ? [self addCSSString:css] : nil);
-    }
-    
-    return [super addResourceAtURL:fileURL destination:uploadPath options:options];
-}
-
 @end
