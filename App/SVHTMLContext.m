@@ -783,27 +783,31 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     return result;
 }
 
-- (NSString *)relativeURLStringOfSiteItem:(SVSiteItem *)page;
+- (NSURL *)URLForPage:(SVSiteItem *)page;
 {
     OBPRECONDITION(page);
     
-    NSString *result = nil;
+    NSURL *result = nil;
     
     if ([self isForQuickLookPreview])
     {
-        result = @"javascript:void(0)";
+        result = [NSURL URLWithString:@"javascript:void(0)"];
     }
     else if ([self isForEditing])
     {
-        result = [page previewPath];
+        result = [NSURL URLWithString:[page previewPath]];
     }
     else
     {
-        NSURL *URL = [page URL];
-        if (URL) result = [self relativeStringFromURL:URL];
+        result = [page URL];
     }
     
     return result;
+}
+
+- (NSString *)relativeURLStringOfSiteItem:(SVSiteItem *)page;
+{
+    return [self relativeStringFromURL:[self URLForPage:page]];
 }
 
 /*	Generates the path to the specified file with the current page's design.

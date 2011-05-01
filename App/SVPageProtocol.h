@@ -39,7 +39,10 @@ typedef NSUInteger SVPageTruncationOptions;
 
 
 #pragma mark Properties
+
 - (NSString *)language;             // KVO-compliant
+
+// Want to know the URL of a page? Ask SVPlugInContext
 
 
 #pragma mark Dates
