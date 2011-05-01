@@ -31,16 +31,24 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 
 #pragma mark Placeholders
 
-- (void)writePlaceholder
+- (NSString *)placeholderString;
 {
-    [[self currentContext] writePlaceholderWithText:SVLocalizedString(@"Drag Amazon products here", "String_On_Page_Template")
-                                            options:0];
+    if (![[self productsSuitableForPublishing] count])
+    {
+        return SVLocalizedString(@"Drag Amazon products here", "String_On_Page_Template");
+    }
+    else
+    {
+        return [super placeholderString];
+    }
 }
 
 - (void)writeProductPlaceholder;
 {
-    [[self currentContext] writePlaceholderWithText:SVLocalizedString(@"This is a placeholder for an Amazon product; It will appear here once published or if you enable live data feeds in the preferences.", "Placeholder text")
-                                            options:0];
+    SVLocalizedString(@"This is a placeholder for an Amazon product; It will appear here once published or if you enable live data feeds in the preferences.", "Placeholder text");
+    
+    
+    //[[self currentContext] startel];
 }
 
 #pragma mark Initalization
@@ -337,6 +345,15 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 
 - (void)writeHTML:(id <SVPlugInContext>)context;
 {
+    if ([context isForEditing])
+    {
+        NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"design-time" ofType:@"css"];
+        if (path)
+        {
+            [context addResourceAtURL:[NSURL fileURLWithPath:path] destination:SVDestinationMainCSS options:0];
+        }
+    }
+    
     [super writeHTML:context];
     
 	// If the user has requested it, add the product preview popups javascript to the end of the page

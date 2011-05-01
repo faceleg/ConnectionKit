@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		27C45A3B136E0BE10040FDAF /* design-time.css in Resources */ = {isa = PBXBuildFile; fileRef = 27C45A3A136E0BE10040FDAF /* design-time.css */; };
 		3C0234640D5C268000E82E4B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C0234620D5C268000E82E4B /* InfoPlist.strings */; };
 		3C30016C1312FB120022E49A /* BUNDLED in Resources */ = {isa = PBXBuildFile; fileRef = 3C30016B1312FB120022E49A /* BUNDLED */; };
 		3C4A16BF0D5E71DB009476BF /* AmazonIDFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A16A20D5E71DB009476BF /* AmazonIDFormatter.m */; };
@@ -46,6 +47,7 @@
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		27C45A3A136E0BE10040FDAF /* design-time.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "design-time.css"; sourceTree = "<group>"; };
 		32DBCF630370AF2F00C91783 /* AmazonElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmazonElement_Prefix.pch; sourceTree = "<group>"; };
 		3C0234630D5C268000E82E4B /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C30016B1312FB120022E49A /* BUNDLED */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = BUNDLED; path = ../Configurations/BUNDLED; sourceTree = SOURCE_ROOT; };
@@ -158,6 +160,7 @@
 				3C4A17400D5E756B009476BF /* Other */,
 				3C0234620D5C268000E82E4B /* InfoPlist.strings */,
 				3C4A16FD0D5E7460009476BF /* Localizable.strings */,
+				27C45A3A136E0BE10040FDAF /* design-time.css */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -369,6 +372,7 @@
 				CEC1F0231141A69D00D8D0B9 /* Inspector.xib in Resources */,
 				CEDA1DF31302086A00DC6FE7 /* Inspector.strings in Resources */,
 				3C30016C1312FB120022E49A /* BUNDLED in Resources */,
+				27C45A3B136E0BE10040FDAF /* design-time.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,0 +1,49 @@
+.amazonListLayoutEnhanced a, .amazonListLayoutEnhanced a:visited {
+    color:#0000FF;
+}
+.amazonListLayoutEnhanced a img {
+    border:none;
+}
+div.amazonListLayoutEnhanced-content {
+    background-color:#FFFFFF;
+    color:#000000;
+    border:1px solid #CCCCCC;
+    margin:0px;
+    padding:0px;
+    width:118px;
+    height:238px;
+    text-align:center;
+    font-family:'Arial', sans-serif;
+    font-size:10px;
+    position:relative;
+    overflow:hidden;
+}
+div.amazonListLayoutEnhanced-image {
+    height:110px;
+    margin:2px 0px;
+    padding-top:7px;
+}
+.amazonListLayoutEnhanced p {
+    margin:3px 0px;
+    text-align:center;
+}
+p..amazonListLayoutEnhanced-prices {
+    white-space:nowrap;
+}
+.amazonListLayoutEnhanced form {
+    margin:3px 0px;
+}
+p.amazonListLayoutEnhanced-privacy {
+    position:absolute;
+    margin:0px auto;
+    left:0px;
+    bottom:0px;
+    width:118px;
+    background-color:#FFFFFF;
+}
+p.amazonListLayoutEnhanced-privacy a, p.amazonListLayoutEnhanced-privacy a:visited {
+    color:#a1a1a1;
+}
+span.amazonListLayoutEnhanced-price {
+    color:#990000;
+}
