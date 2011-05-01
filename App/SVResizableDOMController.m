@@ -36,7 +36,7 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     if ([self isHTMLElementCreated])
     {
         DOMElement *element = [self HTMLElement];
-        if (![element hasChildNodes])
+        if (![element hasChildNodes] && ![[element tagName] isEqualToString:@"IMG"])
         {
             // Replace with placeholder
             NSString *parsedPlaceholderHTML = [[self representedObject] parsedPlaceholderHTMLFromContext:self.HTMLContext];
