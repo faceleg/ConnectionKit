@@ -36,6 +36,12 @@
 static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 
+
+@interface DOMNode (SVGraphicDOMController)
+- (DOMNodeList *)getElementsByClassName:(NSString *)name;
+@end
+
+
 @interface SVGraphicPlaceholderDOMController : SVGraphicDOMController
 @end
 
@@ -886,7 +892,11 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     if ([self isHTMLElementCreated])    // #103629
     {
-        NSRect box = [[self HTMLElement] boundingBox];
+        DOMNode *elementToTest = [self HTMLElement];
+        DOMNodeList *contents = [elementToTest getElementsByClassName:@"figure-content"];
+        if ([contents length]) elementToTest = [contents item:0];
+        
+        NSRect box = [elementToTest boundingBox];
         if (box.size.width <= 0.0f || box.size.height <= 0.0f)
         {
             // Replace with placeholder
