@@ -338,6 +338,17 @@ static void *sPlugInMinWidthObservationContext = &sPlugInMinWidthObservationCont
     return [[self plugIn] valueForKey:@"inlineGraphicClassName"];
 }
 
+- (NSString *)parsedPlaceholderHTMLFromContext:(SVHTMLContext *)context;
+{
+    NSMutableString *result = [NSMutableString string];
+    SVHTMLContext *context2 = [[SVHTMLContext alloc] initWithOutputWriter:result inheritFromContext:context];
+    
+    [context2 writePlaceholderWithText:[[self plugIn] placeholderString] options:0];
+    
+    [context2 release];
+    return result;
+}
+
 #pragma mark Metrics
 
 - (void)setContentWidth:(NSNumber *)width;
