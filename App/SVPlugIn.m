@@ -16,6 +16,7 @@
 #import "SVRichText.h"
 #import "SVDOMController.h"
 #import "SVGraphic.h"
+#import "SVGraphicFactory.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVInspectorViewController.h"
 #import "SVIndexInspectorViewController.h"
