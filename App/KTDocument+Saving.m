@@ -1067,6 +1067,8 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     // Copy subresources across for preview
     WebView *webView = [self thumbnailGeneratorWebView];
+    NSString *designPath = [[[[[[[self site] rootPage] master] design] bundle] bundlePath] stringByResolvingSymlinksInPath];
+    
     for (WebResource *aResource in [[[webView mainFrame] dataSource] subresources])
     {
         NSURL *URL = [aResource URL];
@@ -1074,9 +1076,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         {
             if (![URL ks_isSubpathOfURL:docURL])
             {
-                NSString *path = [URL path];
-                NSString *designPath = [[[[[[self site] rootPage] master] design] bundle] bundlePath];
-                
+                NSString *path = [[URL path] stringByResolvingSymlinksInPath];
                 NSString *resourcePath = [path lastPathComponent];
                 if ([path ks_isSubpathOfPath:designPath])
                 {
