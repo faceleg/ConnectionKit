@@ -147,7 +147,7 @@
     [context endElement]; // </iframe>
 }
 
-- (void)writeNoLiveData
+- (void)writePlaceholderDiv
 {
     id <SVPlugInContext> context = [self currentContext];
     [context startResizableElement:@"div"
@@ -155,54 +155,30 @@
                             options:0
                     preferredIdName:@"youtube"
                          attributes:nil];
-    
-    NSString *message = SVLocalizedString(@"This is a placeholder for the YouTube video at:", 
-                                          "Live data feeds are disabled");
-    [context writePlaceholderWithText:message options:0];
-    
-    [context startElement:@"p"];
-    [context startAnchorElementWithHref:[self userVideoCode] 
-                                               title:[self userVideoCode] 
-                                              target:nil 
-                                                 rel:nil];
-    [context endElement]; // </a>
-    [context endElement]; // </p>
-    
-    message = SVLocalizedString(@"To see the video in Sandvox, please enable live data feeds in the Preferences.", 
-                                "Live data feeds are disabled");
-    [context writePlaceholderWithText:message options:0];
-    
-    [context endElement]; // </div>
-}
-
-- (void)writeNoVideoFound
-{
-    id <SVPlugInContext> context = [self currentContext];
-    [context startResizableElement:@"div"
-                             plugIn:self
-                            options:0
-                    preferredIdName:@"youtube"
-                         attributes:nil];
-    NSString *message = SVLocalizedString(@"Sorry, but no YouTube video was found for the code you entered.", 
-                                          "User entered an invalid YouTube code");
-    [context writePlaceholderWithText:message options:0];
     [context endElement];
 }
 
-- (void)writeNoVideoSpecified
+- (NSString *)placeholderString;
 {
-    id <SVPlugInContext> context = [self currentContext];
-    [context startResizableElement:@"div"
-                             plugIn:self
-                            options:0
-                    preferredIdName:@"youtube"
-                         attributes:nil];
-    NSString *message = SVLocalizedString(@"Drag YouTube video URL here", 
-                                          "No video code has been entered yet");
-    [context writePlaceholderWithText:message options:0];
-    [context endElement];    
+    if ([self videoID])
+    {
+        return SVLocalizedString(@"To see the video in Sandvox, please enable live data feeds in the Preferences.", 
+                          "Live data feeds are disabled");
+    }
+    else
+    {
+        if ([self userVideoCode])
+        {
+            return SVLocalizedString(@"Sorry, but no YouTube video was found for the code you entered.", 
+                                     "User entered an invalid YouTube code");
+        }
+        else
+        {
+            return SVLocalizedString(@"Drag YouTube video URL here", 
+                              "No video code has been entered yet");
+        }
+    }
 }
-
 
 #pragma mark Metrics
 

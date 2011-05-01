@@ -4,14 +4,10 @@
         [[if currentContext.liveDataFeeds]]
             [[=writeIFrameEmbed]]
         [[else2]]
-            [[=writeNoLiveData]]
+            [[=writePlaceholderDiv]]
         [[endif2]]
 	</div>
 </div>
 [[else]]
-    [[if userVideoCode]]
-        [[=writeNoVideoFound]]
-    [[else2]]
-        [[=writeNoVideoSpecified]]
-    [[endif2]]
+    [[=writePlaceholderDiv]]
 [[endif]]
