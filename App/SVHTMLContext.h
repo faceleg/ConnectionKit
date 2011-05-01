@@ -146,6 +146,10 @@ typedef enum {
 - (void)writeCalloutWithGraphics:(NSArray *)pagelets;
 
 
+#pragma mark Placeholder
+- (void)writePlaceholderWithText:(NSString *)text options:(SVPlaceholderOptions)options;
+
+
 #pragma mark Resizing
 // These methods take care of generating width, height or style attributes matching the object's size (which depends on the element being written).
 // In addition, when editing, the context will keep the DOM matching the object's size, live

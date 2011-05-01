@@ -172,7 +172,7 @@ typedef NSUInteger SVPlaceholderOptions;
 
 #pragma mark Placeholder
 // If you need to generate a stand-in for the real content. e.g. Live data feeds are disabled
-- (void)writePlaceholderWithText:(NSString *)text options:(SVPlaceholderOptions)options;
+//- (void)writePlaceholderWithText:(NSString *)text options:(SVPlaceholderOptions)options;
 
 
 #pragma mark Metrics
