@@ -150,8 +150,7 @@
     
     if ( !self.username )
     {
-            // write placeholder message to enter username
-            result = SVLocalizedString(@"Enter Twitter username in the Inspector", "missing Twitter username");
+        result = SVLocalizedString(@"Enter Twitter username in the Inspector", "missing Twitter username");
     }
     else if ( ![[self currentContext] liveDataFeeds] )
     {
