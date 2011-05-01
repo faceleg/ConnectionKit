@@ -150,13 +150,21 @@
     
     if ( !self.username )
     {
+        // we need a username
         result = SVLocalizedString(@"Enter Twitter username in the Inspector", "missing Twitter username");
     }
-    else if ( ![[self currentContext] liveDataFeeds] )
+    else if ( [[self currentContext] liveDataFeeds] )
     {
-        result = SVLocalizedString(@"This is a placeholder for a Twitter feed. It will appear here once published or if you enable live data feeds in Preferences.", "WebView Placeholder");
+        // we have a username but live feed is returning nothing, suggests bad username
+        NSString *text = SVLocalizedString(@"Either “%@” does not exist, or has protected their tweets", "WebView Placeholder");
+        result = [NSString stringWithFormat:text, self.username];
     }
-    
+    else
+    {
+        // no live feed
+        result = SVLocalizedString(@"This is a placeholder for a Twitter feed. It will appear here once published or if you enable live data feeds in Preferences", "WebView Placeholder");
+    }
+
     return result;
 }
 
