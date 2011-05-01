@@ -423,6 +423,21 @@
     }
 }
 
+- (void)tableView:(NSTableView *)aTableView willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
+{
+    if ([[aTableColumn identifier] isEqualToString:@"title"])
+    {
+        // Set placeholder to pagelet type
+        SVGraphic *pagelet = [[oSidebarPageletsController arrangedObjects]
+                              objectAtIndex:rowIndex];
+        
+        NSString *type = [pagelet plugInIdentifier];
+        SVGraphicFactory *factory = [SVGraphicFactory factoryWithIdentifier:type];
+        NSString *typeName = [factory name];
+        [aCell setPlaceholderString:typeName];
+    }
+}
+
 #pragma mark Archives
 
 - (void)addArchivePageletForCollectionIfNeeded:(KTPage *)collection
