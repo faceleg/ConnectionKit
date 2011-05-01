@@ -37,6 +37,10 @@
 #import "TweetButtonInspector.h"
 
 
+const void *sTitleObservationContext = &sTitleObservationContext;
+const void *sURLObservationContext = &sURLObservationContext;
+
+
 @implementation TweetButtonInspector
 
 - (void)awakeFromNib
@@ -44,17 +48,17 @@
     [self.inspectedPagesController addObserver:self 
                                     forKeyPath:@"selection.title"
                                        options:0 
-                                       context:NULL];
+                                       context:sTitleObservationContext];
 
     [self.inspectedPagesController addObserver:self 
                                     forKeyPath:@"selection.URL"
                                        options:0 
-                                       context:NULL];
+                                       context:sURLObservationContext];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if ( [keyPath isEqualToString:@"selection.title" ] )
+    if (context == sTitleObservationContext)
     {
         NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
                                  [self.inspectedPagesController valueForKeyPath:@"selection.title"], NSNullPlaceholderBindingOption,
@@ -65,7 +69,7 @@
                       withKeyPath:@"inspectedObjectsController.selection.tweetText"
                           options:options];
     }
-    else if ( [keyPath isEqualToString:@"selection.URL" ] )
+    else if (context == sURLObservationContext)
     {
         NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
                                  [self.inspectedPagesController valueForKeyPath:@"selection.URL.absoluteString"], NSNullPlaceholderBindingOption,
@@ -75,6 +79,10 @@
                          toObject:self
                       withKeyPath:@"inspectedObjectsController.selection.tweetURL"
                           options:options];
+    }
+    else
+    {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
 }
 
