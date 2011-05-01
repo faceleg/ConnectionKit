@@ -407,6 +407,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
             previewContext = [[SVQuickLookPreviewHTMLContext alloc] init];
             [previewContext setBaseURL:[KTDocument quickLookPreviewURLForDocumentURL:inURL]];
             [self writePreviewHTML:previewContext];
+            [previewContext close];
         }
     }
     
