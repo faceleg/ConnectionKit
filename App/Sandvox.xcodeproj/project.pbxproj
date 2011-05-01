@@ -18,6 +18,17 @@
 			name = UpdateDesigns;
 			productName = UpdateDesigns;
 		};
+		3C243830136CF41D009D0D85 /* UpdateKSError */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 3C24383D136CF444009D0D85 /* Build configuration list for PBXAggregateTarget "UpdateKSError" */;
+			buildPhases = (
+				3C24382F136CF41D009D0D85 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = UpdateKSError;
+			productName = UpdateKSError;
+		};
 		3C3003161313001B0022E49A /* UpdateKSFileUtilities */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 3C3003521313004B0022E49A /* Build configuration list for PBXAggregateTarget "UpdateKSFileUtilities" */;
@@ -6529,11 +6540,12 @@
 				3CA786E60DB546060014AD7E /* PackageBonusDesigns */,
 				3C5A77C50EB6E0880049B898 /* PackageAndDeploySDK */,
 				3CE4E19B0ED4A6DE008DD114 /* PackageAndDeployDesignKit */,
-				3C15B85E0DC790A100DE9957 /* UpdateDesigns */,
 				3C3E75FA0F1C5F42002E3A9A /* UpdateInvalidLicenses */,
+				3C15B85E0DC790A100DE9957 /* UpdateDesigns */,
 				3CE2B2B70D7F1DD900E2711E /* UpdateShared */,
-				3CD806DD120A62C300E0848F /* UpdateBDAlias */,
 				3C3ED293120894F70080EB6E /* UpdateConnectionKit */,
+				3CD806DD120A62C300E0848F /* UpdateBDAlias */,
+				3C243830136CF41D009D0D85 /* UpdateKSError */,
 				3CBC651B11EFD04800716937 /* UpdateKSExtensibleManagedObject */,
 				3C3003161313001B0022E49A /* UpdateKSFileUtilities */,
 				3CBC727311F0C59E00716937 /* UpdateKSHTMLWriter */,
@@ -7087,6 +7099,20 @@
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/zsh;
 			shellScript = "#echo \"looking in:\"\n#echo ${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\n#echo \"looking at:\"\n#echo ${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/**/*.nib\n\n\nforeach nibFile (${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/**/*.nib) # getting every nib in the built product - but not plugins\n\t#echo \"nibFile=${nibFile}\"\n\t#echo \"SOURCE_ROOT=${SOURCE_ROOT}\"\n\n\tstringsFilePath=${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/en.lproj/`basename ${nibFile} .nib`.strings # The path where the strings file will go\n\t#echo \"stringsFilePath=${stringsFilePath}\"\n\n\t# Look for the .xib file corresponding to that built nib file\n\txibFile=`basename ${nibFile} .nib`.xib\n\t#echo \"xibFile=${xibFile}\"\n\n\txibFilePath=`echo ${SOURCE_ROOT}/en.lproj/${xibFile}`\n\n\tif [[ -e ${xibFilePath} ]] {\n\t\techo \"*** en.lproj: Getting strings out of Xib: ${xibFilePath}\"\n\t\tibtool --generate-stringsfile ${stringsFilePath}~ ${xibFilePath}\n\t\t${BUILT_PRODUCTS_DIR}/xibLocalizationPostprocessor ${stringsFilePath}~ ${stringsFilePath}\n\t\trm ${stringsFilePath}~\n\t}\n\n\txibFilePath=`echo ${SOURCE_ROOT}/../../Shared/Interfaces/en.lproj/${xibFile}`\n\techo \"looking for Shared in ${xibFilePath}\"\n\n\tif [[ -e ${xibFilePath} ]] {\n\t\techo \"*** SHARED: Getting strings out of Xib: ${xibFilePath}\"\n\t\tibtool --generate-stringsfile ${stringsFilePath}~ ${xibFilePath}\n\t\t${BUILT_PRODUCTS_DIR}/xibLocalizationPostprocessor ${stringsFilePath}~ ${stringsFilePath}\n\t\trm ${stringsFilePath}~\n\t}\n\nend\n\n";
+			showEnvVarsInLog = 0;
+		};
+		3C24382F136CF41D009D0D85 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\n\n###\n### PULL KSError FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../KSError\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"pulling KSError from GitHub ...\"\ncd ${REPOSITORY_PATH}\n${GIT_PATH} pull\necho \"... finished pulling KSError\"\n\npopd\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
 		3C3003151313001B0022E49A /* ShellScript */ = {
@@ -9040,6 +9066,27 @@
 			};
 			name = Release;
 		};
+		3C243831136CF41E009D0D85 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = UpdateKSError;
+			};
+			name = Debug;
+		};
+		3C243832136CF41E009D0D85 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = UpdateKSError;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		3C3003491313001C0022E49A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -9473,6 +9520,15 @@
 			buildConfigurations = (
 				3C1F510C11D575510036B375 /* Debug */,
 				3C1F510D11D575510036B375 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3C24383D136CF444009D0D85 /* Build configuration list for PBXAggregateTarget "UpdateKSError" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3C243831136CF41E009D0D85 /* Debug */,
+				3C243832136CF41E009D0D85 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
