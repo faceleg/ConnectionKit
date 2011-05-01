@@ -65,6 +65,10 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     [graphics makeObjectsPerformSelector:_cmd withObject:page];
 }
 
+#pragma mark Type
+
+@dynamic plugInIdentifier;
+  
 #pragma mark Placement
 
 - (NSNumber *)placement;

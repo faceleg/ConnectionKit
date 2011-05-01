@@ -8,6 +8,7 @@
 
 #import "SVTextBox.h"
 
+#import "SVGraphicFactory.h"
 #import "SVRichText.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVTemplate.h"
@@ -22,6 +23,8 @@
 
 
 @implementation SVTextBox 
+
+- (NSString *)plugInIdentifier; { return [[SVGraphicFactory textBoxFactory] identifier]; }
 
 #pragma mark Body Text
 

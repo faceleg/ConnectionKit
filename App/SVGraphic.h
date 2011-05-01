@@ -90,6 +90,10 @@ extern NSString *kSVGraphicPboardType;
 - (void)pageDidChange:(id <SVPage>)page;
 
 
+#pragma mark Type
+@property(nonatomic, copy, readonly) NSString *plugInIdentifier;
+
+
 #pragma mark Placement
 @property(nonatomic, readonly) NSNumber *placement; // SVGraphicPlacement
 - (BOOL)isPlacementEditable;    // yes for sidebar & article embedded graphics
