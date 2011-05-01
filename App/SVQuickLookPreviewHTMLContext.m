@@ -65,7 +65,7 @@
         NSString *css = [NSString stringWithContentsOfURL:fileURL
                                                  encoding:NSUTF8StringEncoding
                                                     error:NULL];
-        return [self addCSSString:css];
+        return (css ? [self addCSSString:css] : nil);
     }
     
     return [super addResourceAtURL:fileURL destination:uploadPath options:options];
