@@ -343,7 +343,7 @@ static void *sPlugInMinWidthObservationContext = &sPlugInMinWidthObservationCont
     NSMutableString *result = [NSMutableString string];
     SVHTMLContext *context2 = [[SVHTMLContext alloc] initWithOutputWriter:result inheritFromContext:context];
     
-    [context2 writePlaceholderWithText:[[self plugIn] placeholderString] options:0];
+    [[self plugIn] performSelector:@selector(writePlaceholderHTML:) withObject:context2];
     
     [context2 release];
     return result;
