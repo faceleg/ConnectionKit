@@ -539,6 +539,16 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
  */
 - (BOOL)readFromURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
 {
+    // Make sure the file exists! #118559
+    if (![[NSFileManager defaultManager] fileExistsAtPath:[absoluteURL path]])
+    {
+        if (outError) *outError = [NSError errorWithDomain:NSCocoaErrorDomain
+                                                      code:NSFileNoSuchFileError
+                                                  userInfo:nil];
+        return NO;
+    }
+    
+    
 	// Should only be called the once
     NSURL *newStoreURL = [[self class] datastoreURLForDocumentURL:absoluteURL type:nil];
     
