@@ -198,10 +198,10 @@
     NSString *type = [self typeForContentsOfURL:absoluteURL error:outError];	// Should we ignore this error?
 	
 	// are we opening a KTDocument?
-	if (type && ([type isEqualToString:kSVDocumentTypeName] ||
-                 [type isEqualToString:kSVDocumentTypeName_1_5] ||
-                 [type isEqualToString:kSVDocumentType_1_0]))
-	{		
+	if ([type isEqualToString:kSVDocumentTypeName] ||
+        [type isEqualToString:kSVDocumentTypeName_1_5] ||
+        [type isEqualToString:kSVDocumentType_1_0])
+	{
 		// check compatibility with KTModelVersion
 		NSDictionary *metadata = nil;
 		@try
@@ -249,7 +249,7 @@
 			if (outError)
 			{
 				*outError = [NSError errorWithDomain:NSCocoaErrorDomain 
-												code:NSPersistentStoreInvalidTypeError 
+												code:[subError code]
 											userInfo:userInfo];
 			}
 			return nil;
