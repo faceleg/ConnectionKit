@@ -577,7 +577,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (NSString *)parsedPlaceholderHTMLFromContext:(SVHTMLContext *)context;
 {
-	SVTemplate *template = [[self class] placeholderTemplate];
+    SVTemplate *template = [[self class] placeholderTemplate];
 	NSString *result = [context parseTemplate:template object:self];
 	return result;
 }

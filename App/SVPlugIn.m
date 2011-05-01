@@ -148,6 +148,11 @@ static id <SVPlugInContext> sCurrentContext;
     return [factory name];
 }
 
+- (void)writePlaceholderHTML:(SVHTMLContext *)context;
+{
+    [context writePlaceholderWithText:[self placeholderString] options:0];
+}
+
 + (id <SVPlugInContext>)currentContext; { return sCurrentContext; }
 - (id <SVPlugInContext>)currentContext; { return [SVPlugIn currentContext]; }
 
