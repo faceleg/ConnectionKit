@@ -339,8 +339,17 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 	}
 	
 	
-    // Draw text
-    [self drawTitleWithFrame:cellFrame inView:controlView];
+    // Draw text. Fake placeholder to be white when highlighted
+    if (![[self stringValue] length] && [self isHighlighted] && [self placeholderString])
+    {
+        [self setStringValue:[self placeholderString]];
+        [self drawTitleWithFrame:cellFrame inView:controlView];
+        [self setStringValue:@""];
+    }
+    else
+    {
+        [self drawTitleWithFrame:cellFrame inView:controlView];
+    }
 }
 
 - (NSRect)titleDrawingRectForBounds:(NSRect)cellFrame
