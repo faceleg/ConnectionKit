@@ -96,6 +96,9 @@ typedef enum {
 // Sandvox supplies the current context for template-based plug-ins. Generally no reason to override this
 @property(nonatomic, readonly) id <SVPlugInContext> currentContext;
 
+// Displayed in the web view if your plug-in's HTML wasn't visible for some reason
+- (NSString *)placeholderString;
+
 
 #pragma mark Layout
 

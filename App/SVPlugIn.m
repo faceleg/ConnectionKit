@@ -141,6 +141,12 @@ static id <SVPlugInContext> sCurrentContext;
     sCurrentContext = oldContext;
 }
 
+- (NSString *)placeholderString;
+{
+    SVGraphicFactory *factory = [SVGraphicFactory factoryWithIdentifier:[[self container] plugInIdentifier]];
+    return [factory name];
+}
+
 + (id <SVPlugInContext>)currentContext; { return sCurrentContext; }
 - (id <SVPlugInContext>)currentContext; { return [SVPlugIn currentContext]; }
 
