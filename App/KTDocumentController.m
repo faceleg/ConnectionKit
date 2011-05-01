@@ -202,6 +202,10 @@
         [type isEqualToString:kSVDocumentTypeName_1_5] ||
         [type isEqualToString:kSVDocumentType_1_0])
 	{
+        // Make sure the doc exists. Normally NSDocument would do this for us, but we need to read metadata first
+        
+        
+        
 		// check compatibility with KTModelVersion
 		NSDictionary *metadata = nil;
 		@try
@@ -231,50 +235,31 @@
 			metadata = nil;
 		}
 		
-		if (!metadata)
-		{
-			NSLog(@"error: ***Can't open %@ : unable to read metadata!", requestedPath);
-			NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
-			
-			// Description is shown after an "unable to open..." sentence thanks to documentController.
-			[userInfo setObject:NSLocalizedString(@"Metadata error.", @"brief description of error") forKey:NSLocalizedDescriptionKey];
-			[userInfo setObject:requestedPath forKey:NSFilePathErrorKey];
-			
-			NSString *secondary = NSLocalizedString(@"Sandvox was not able to read the document metadata.\n\nPlease contact Karelia Software by sending feedback from the “Sandvox” menu.",
-												 "error reason: document metadata is unreadable");
-			[userInfo setObject:secondary forKey:NSLocalizedRecoverySuggestionErrorKey];
-			[userInfo setObject:[absoluteURL path] forKey:NSFilePathErrorKey];
-			[userInfo setObject:subError forKey:NSUnderlyingErrorKey];
-			
-			if (outError)
-			{
-				*outError = [NSError errorWithDomain:NSCocoaErrorDomain 
-												code:[subError code]
-											userInfo:userInfo];
-			}
-			return nil;
-		}
 		
 		NSString *modelVersion = [metadata valueForKey:kKTMetadataModelVersionKey];
-		if (!modelVersion || [modelVersion isEqualToString:@""])
+        if (![modelVersion length])
 		{
-			NSLog(@"error: ***Can't open %@ : no model version!", requestedPath);
-			
-			NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
-						
-			NSString *secondary = NSLocalizedString(@"This document appears to have an unknown document model.\n\nPlease contact Karelia Software by sending feedback from the 'Sandvox' menu.",
-												 "error reason: document model version is unknown");
-			[userInfo setObject:NSLocalizedString(@"Document model error.", @"brief description of error") forKey:NSLocalizedDescriptionKey];
-			[userInfo setObject:secondary forKey:NSLocalizedRecoverySuggestionErrorKey];
-			[userInfo setObject:requestedPath forKey:NSFilePathErrorKey];
-			
-			if (outError)
-			{
-				*outError = [NSError errorWithDomain:NSCocoaErrorDomain 
-												code:NSPersistentStoreInvalidTypeError 
-											userInfo:userInfo];	
-			}
-			return nil;
+            // If failed to read in metadata, assume it's a regular document and try to open it. The document itself will probably then report a failure because the doc is corrupt in some way. #118559
+            if (metadata)   
+            {
+                NSLog(@"error: ***Can't open %@ : no model version!", requestedPath);
+                
+                NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+                            
+                NSString *secondary = NSLocalizedString(@"This document appears to have an unknown document model.\n\nPlease contact Karelia Software by sending feedback from the 'Sandvox' menu.",
+                                                     "error reason: document model version is unknown");
+                [userInfo setObject:NSLocalizedString(@"Document model error.", @"brief description of error") forKey:NSLocalizedDescriptionKey];
+                [userInfo setObject:secondary forKey:NSLocalizedRecoverySuggestionErrorKey];
+                [userInfo setObject:requestedPath forKey:NSFilePathErrorKey];
+                
+                if (outError)
+                {
+                    *outError = [NSError errorWithDomain:NSCocoaErrorDomain 
+                                                    code:NSPersistentStoreInvalidTypeError 
+                                                userInfo:userInfo];	
+                }
+                return nil;
+            }
 		}
         
         
