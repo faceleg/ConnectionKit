@@ -27,6 +27,24 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     [super dealloc];
 }
 
+#pragma mark DOM
+
+- (void)loadHTMLElementFromDocument:(DOMDocument *)document;
+{
+    [super loadHTMLElementFromDocument:document];
+    
+    if ([self isHTMLElementCreated])
+    {
+        DOMElement *element = [self HTMLElement];
+        if (![element hasChildNodes])
+        {
+            // Replace with placeholder
+            NSString *parsedPlaceholderHTML = [[self representedObject] parsedPlaceholderHTMLFromContext:self.HTMLContext];
+            [[self HTMLElement] setInnerHTML:parsedPlaceholderHTML];
+        }
+    }
+}
+
 #pragma mark Content
 
 - (void)setRepresentedObject:(id)object
