@@ -899,6 +899,11 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     return NO;
 }
 
+- (void)cleanHTML:(NSMenuItem *)sender;
+{
+    [[self firstResponderItem] doCommandBySelector:_cmd];
+}
+
 #pragma mark Undo
 
 - (SVWebEditorTextRange *)selectedTextRange;
@@ -978,6 +983,19 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 			}
 		}
 	}
+    else if (action == @selector(cleanHTML:))
+    {
+        id target = [[self firstResponderItem] ks_targetForAction:action];
+        if (target)
+        {
+            result = YES;
+            if ([target respondsToSelector:_cmd]) result = [target validateMenuItem:menuItem];
+        }
+        else
+        {
+            result = NO;
+        }
+    }
 	else if (action == @selector(makeTextLarger:))
 	{
 		result = [[self webView] canMakeTextLarger];

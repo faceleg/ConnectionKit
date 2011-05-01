@@ -611,6 +611,11 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     [[[self webContentAreaController] selectedViewControllerWhenReady] doCommandBySelector:_cmd];
 }
 
+- (void)cleanHTML:(NSMenuItem *)sender;
+{
+    [[[self webContentAreaController] selectedViewControllerWhenReady] doCommandBySelector:_cmd];
+}
+
 #pragma mark Other
 
 - (IBAction)toggleSmallPageIcons:(id)sender
@@ -706,6 +711,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     else if (itemAction == @selector(editRawHTMLInSelectedBlock:) ||
              itemAction == @selector(paste:) ||
              itemAction == @selector(insertPagelet:) ||
+             itemAction == @selector(cleanHTML:) ||
              itemAction == @selector(makeTextLarger:) ||
              itemAction == @selector(makeTextSmaller:) ||
              itemAction == @selector(makeTextStandardSize:))

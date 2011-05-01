@@ -479,6 +479,14 @@
     }
 }
 
+- (IBAction)cleanHTML:(NSMenuItem *)sender;
+{
+    // Fake a change
+    WEKWebEditorView *webEditor = [self webEditor];
+    [webEditor shouldChangeText:self];
+    [webEditor didChangeText];
+}
+
 #pragma mark Selection
 
 - (NSArray *)selectedItems;

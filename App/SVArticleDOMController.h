@@ -37,6 +37,7 @@
 #pragma mark Actions
 // Like -delete: but targets the children that are selected or editing
 - (void)deleteObjects:(id)sender;
+- (IBAction)cleanHTML:(NSMenuItem *)sender;
 
 
 #pragma mark Selection
