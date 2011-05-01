@@ -161,7 +161,7 @@
 
 #pragma mark Inspector
 
-- (NSString *)plugInIdentifier; { return @"sandvox.RawHTML"; }
+- (NSString *)plugInIdentifier; { return @"com.karelia.sandvox.RawHTML"; }
 
 + (SVInspectorViewController *)makeInspectorViewController;
 {
