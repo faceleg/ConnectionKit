@@ -150,7 +150,12 @@ static id <SVPlugInContext> sCurrentContext;
 
 - (void)writePlaceholderHTML:(SVHTMLContext *)context;
 {
+    id <SVPlugInContext> oldContext = [self currentContext];
+    sCurrentContext = context;
+    
     [context writePlaceholderWithText:[self placeholderString] options:0];
+    
+    sCurrentContext = oldContext;
 }
 
 + (id <SVPlugInContext>)currentContext; { return sCurrentContext; }
