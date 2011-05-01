@@ -99,21 +99,21 @@
 
 #pragma mark HTML Generation
 
-- (void)writePlaceholderHTML:(id <SVPlugInContext>)context;
+- (NSString *)placeholderString;
 {
-    NSString *text = nil;
+    NSString *result;
     if ( self.indexedCollection )
     {
-        text = NSLocalizedString(@"To see the Index, please add indexable pages to the collection.",
+        result = NSLocalizedString(@"To see the Index, please add indexable pages to the collection.",
                                         "add pages to collection");
     }
     else
     {
-        text = NSLocalizedString(@"Use the Inspector to connect this index to a collection.",
+        result = NSLocalizedString(@"Use the Inspector to connect this index to a collection.",
                                         "set index collection");
     }
     
-    [context writePlaceholderWithText:text options:0];
+    return result;
 }
 
 - (void)writeHTML:(id <SVPlugInContext>)context
@@ -130,11 +130,6 @@
     [context addDependencyForKeyPath:@"enableMaxItems" ofObject:self];
     
     [super writeHTML:context];
-        
-    if ( [context isForEditing] )
-    {
-        if ( ![self.indexedPages count] ) [self writePlaceholderHTML:context];
-    }
 }
 
 #pragma mark Properties
