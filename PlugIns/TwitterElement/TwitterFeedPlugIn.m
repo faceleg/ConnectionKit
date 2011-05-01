@@ -172,7 +172,7 @@
         [context addMarkupToEndOfBody:script1];
         
         NSString *script2 = [NSString stringWithFormat:
-                             @"<script type=\"text/javascript\" src=\"http://api.twitter.com/1/statuses/user_timeline.json/?screen_name=%@&amp;count=%@&amp;callback=twitterCallback_%@&amp;include_rts=true\">\n</script>\n",
+                             @"<script type=\"text/javascript\" src=\"http://api.twitter.com/1/statuses/user_timeline.json/?screen_name=%@&amp;count=%@&amp;callback=twitterCallback_%@&amp;include_rts=true&amp;trim_user=true\">\n</script>\n",
                              self.username, [[NSNumber numberWithUnsignedInteger:self.count] stringValue], uniqueID];
         [context addMarkupToEndOfBody:script2];
     }
