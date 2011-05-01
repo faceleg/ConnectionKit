@@ -122,14 +122,15 @@
     {
         NSArrayController *controller = [SVPagesController controllerWithPagesToIndexInCollection:self.indexedCollection bind:YES];
         [context addDependencyForKeyPath:@"arrangedObjects" ofObject:controller];
+        
+        if ([[controller arrangedObjects] count])
+        {
+            [super writeHTML:context];
+        }
     }
     
     // add dependencies
     [context addDependencyForKeyPath:@"indexedCollection" ofObject:self];
-    [context addDependencyForKeyPath:@"maxItems" ofObject:self];
-    [context addDependencyForKeyPath:@"enableMaxItems" ofObject:self];
-    
-    [super writeHTML:context];
 }
 
 #pragma mark Properties
