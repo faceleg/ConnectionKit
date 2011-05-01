@@ -2919,7 +2919,6 @@
 		CE13026A0BD009D000DC2439 /* SyntaxColorDefaults.plist */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 4; path = SyntaxColorDefaults.plist; sourceTree = "<group>"; };
 		CE13026C0BD009E700DC2439 /* HTMLSyntaxColoring.plist */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 4; path = HTMLSyntaxColoring.plist; sourceTree = "<group>"; };
 		CE138FFF09BAB73000661A1A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
-		CE15C2920E75C74D00755113 /* SandvoxSymbols.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = SandvoxSymbols.xcconfig; sourceTree = "<group>"; };
 		CE16DC510D870FC40077C779 /* KTMovieViewPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMovieViewPlugin.h; sourceTree = "<group>"; };
 		CE16DC520D870FC40077C779 /* KTMovieViewPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMovieViewPlugin.m; sourceTree = "<group>"; };
 		CE16DC590D8711790077C779 /* MovieWebKitPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovieWebKitPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4903,11 +4902,10 @@
 		3C951FF70D762D9C009FCAC9 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				3C6B91F31186859B00EBFAA2 /* Hudson.xcconfig */,
 				3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */,
 				3CECB4FA085EA759000A9A69 /* SandvoxDebug.xcconfig */,
 				3CECB524085EA76A000A9A69 /* SandvoxRelease.xcconfig */,
-				CE15C2920E75C74D00755113 /* SandvoxSymbols.xcconfig */,
+				3C6B91F31186859B00EBFAA2 /* Hudson.xcconfig */,
 			);
 			name = Configuration;
 			sourceTree = "<group>";
