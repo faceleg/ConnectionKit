@@ -139,20 +139,26 @@
                                    className:nil
                                   attributes:nil];
             [context endElement]; // </div>
-        }
-        else
-        {
-            [context writePlaceholderWithText:SVLocalizedString(@"This is a placeholder for a Twitter feed. It will appear here once published or if you enable live data feeds in Preferences.", "WebView Placeholder")
-                                      options:0];
-        }
-        
+        }        
         [self writeScriptToEndBodyMarkup:uniqueID context:context];            
     }
-    else if ( [context isForEditing] )
+}
+
+- (NSString *)placeholderString
+{
+    NSString *result = nil;
+    
+    if ( !self.username )
     {
-        // write placeholder message to enter username
-        [context writePlaceholderWithText:SVLocalizedString(@"Enter Twitter username in the Inspector", "missing Twitter username") options:0];
+            // write placeholder message to enter username
+            result = SVLocalizedString(@"Enter Twitter username in the Inspector", "missing Twitter username");
     }
+    else if ( ![[self currentContext] liveDataFeeds] )
+    {
+        result = SVLocalizedString(@"This is a placeholder for a Twitter feed. It will appear here once published or if you enable live data feeds in Preferences.", "WebView Placeholder");
+    }
+    
+    return result;
 }
 
 - (void)writeScriptToEndBodyMarkup:(NSString *)uniqueID context:(id<SVPlugInContext>)context
