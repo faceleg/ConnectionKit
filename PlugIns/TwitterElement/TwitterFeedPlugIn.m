@@ -38,6 +38,8 @@
 #import "NSURL+Twitter.h"
 
 
+// plugIn parses results of URL like http://api.twitter.com/1/statuses/user_timeline.json?screen_name=noradio&count=5
+// docs at http://dev.twitter.com/doc/get/statuses/user_timeline
 // feed results can be validated at, e.g., http://jsonformatter.curiousconcept.com/
 
 
@@ -170,8 +172,8 @@
         [context addMarkupToEndOfBody:script1];
         
         NSString *script2 = [NSString stringWithFormat:
-                             @"<script type=\"text/javascript\" src=\"http://twitter.com/statuses/user_timeline/%@.json?callback=twitterCallback_%@&amp;count=%@\">\n</script>\n",
-                             self.username, uniqueID, [[NSNumber numberWithUnsignedInteger:self.count] stringValue]];
+                             @"<script type=\"text/javascript\" src=\"http://api.twitter.com/1/statuses/user_timeline.json/?screen_name=%@&amp;count=%@&amp;callback=twitterCallback_%@&amp;include_rts=true\">\n</script>\n",
+                             self.username, [[NSNumber numberWithUnsignedInteger:self.count] stringValue], uniqueID];
         [context addMarkupToEndOfBody:script2];
     }
 }
