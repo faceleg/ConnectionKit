@@ -379,30 +379,27 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 - (NSURL *)addCSSString:(NSString *)css;
 {
+    OBPRECONDITION(css);
+    
     if ([self isForPublishing])
     {
         return [self mainCSSURL];
     }
     else
     {
-        if (css)
+        if (_headerMarkupIndex != NSNotFound)
         {
-            if (_headerMarkupIndex != NSNotFound)
-            {
-                KSHTMLWriter *writer = [[KSHTMLWriter alloc] initWithOutputWriter:[self extraHeaderMarkup]];
-                
-                [writer writeStyleElementWithCSSString:css];
-                [writer writeString:@"\n"];
-                
-                [writer release];
-            }
-            else
-            {
-                [self writeStyleElementWithCSSString:css];
-            }
+            KSHTMLWriter *writer = [[KSHTMLWriter alloc] initWithOutputWriter:[self extraHeaderMarkup]];
+            
+            [writer writeStyleElementWithCSSString:css];
+            [writer writeString:@"\n"];
+            
+            [writer release];
         }
-        
-        return nil;
+        else
+        {
+            [self writeStyleElementWithCSSString:css];
+        }
     }
 }
 
