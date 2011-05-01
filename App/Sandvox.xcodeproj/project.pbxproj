@@ -172,8 +172,8 @@
 			dependencies = (
 				3C9B65940BFA7F7F007A4871 /* PBXTargetDependency */,
 				27275736124146B20043C223 /* PBXTargetDependency */,
-				27CFC649123E79C300BF018C /* PBXTargetDependency */,
 				3CBC719E11F02FAD00716937 /* PBXTargetDependency */,
+				27CFC649123E79C300BF018C /* PBXTargetDependency */,
 				3C7C2B791219E5C9005D75B1 /* PBXTargetDependency */,
 				3C5851921289ACB00084315D /* PBXTargetDependency */,
 				3C79F2F211F3BF9900B699EE /* PBXTargetDependency */,
@@ -190,11 +190,11 @@
 				3C8544AA12061D69000A19C3 /* PBXTargetDependency */,
 				3C042AC51307167D00D9F2A7 /* PBXTargetDependency */,
 				3C7C1E401219B5DA005D75B1 /* PBXTargetDependency */,
+				CE15E155133C095700D9963F /* PBXTargetDependency */,
 				3C9CF9B0121201D8005CFDD4 /* PBXTargetDependency */,
 				3C85B31C13023F8A00690048 /* PBXTargetDependency */,
 				274E82800D627180004F89C2 /* PBXTargetDependency */,
 				3C15B86A0DC7917B00DE9957 /* PBXTargetDependency */,
-				CE15E155133C095700D9963F /* PBXTargetDependency */,
 			);
 			name = "Sandvox-CompleteApplication";
 			productName = Sandvox;
