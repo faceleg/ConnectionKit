@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3C3002F01312FD240022E49A /* BUNDLED in Resources */ = {isa = PBXBuildFile; fileRef = 3C3002EF1312FD240022E49A /* BUNDLED */; };
 		3C30064313132EBA0022E49A /* TweetButtonInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C30064213132EBA0022E49A /* TweetButtonInspector.m */; };
+		3C495F1D136E5D0E00BE3D67 /* NSURL+TweetButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C495F1C136E5D0E00BE3D67 /* NSURL+TweetButton.m */; };
 		3C5D6F4B12A431F500AAAB18 /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C5D6F4912A431F500AAAB18 /* Inspector.xib */; };
 		3CFEEDDB1228766A005A08FC /* TweetButtonPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CFEEDDA1228766A005A08FC /* TweetButtonPlugIn.m */; };
 		3CFEEDE2122877BE005A08FC /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3CFEEDE1122877BE005A08FC /* License.rtf */; };
@@ -27,6 +28,8 @@
 		3C3002EF1312FD240022E49A /* BUNDLED */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = BUNDLED; path = ../Configurations/BUNDLED; sourceTree = SOURCE_ROOT; };
 		3C30064113132EBA0022E49A /* TweetButtonInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetButtonInspector.h; sourceTree = "<group>"; };
 		3C30064213132EBA0022E49A /* TweetButtonInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetButtonInspector.m; sourceTree = "<group>"; };
+		3C495F1B136E5D0E00BE3D67 /* NSURL+TweetButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+TweetButton.h"; sourceTree = "<group>"; };
+		3C495F1C136E5D0E00BE3D67 /* NSURL+TweetButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+TweetButton.m"; sourceTree = "<group>"; };
 		3C5D6F4A12A431F500AAAB18 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Inspector.xib; sourceTree = "<group>"; };
 		3CFEEDBE1228672A005A08FC /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
 		3CFEEDBF1228672A005A08FC /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
@@ -96,6 +99,8 @@
 				3CFEEDDA1228766A005A08FC /* TweetButtonPlugIn.m */,
 				3C30064113132EBA0022E49A /* TweetButtonInspector.h */,
 				3C30064213132EBA0022E49A /* TweetButtonInspector.m */,
+				3C495F1B136E5D0E00BE3D67 /* NSURL+TweetButton.h */,
+				3C495F1C136E5D0E00BE3D67 /* NSURL+TweetButton.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -232,6 +237,7 @@
 			files = (
 				3CFEEDDB1228766A005A08FC /* TweetButtonPlugIn.m in Sources */,
 				3C30064313132EBA0022E49A /* TweetButtonInspector.m in Sources */,
+				3C495F1D136E5D0E00BE3D67 /* NSURL+TweetButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

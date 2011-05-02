@@ -72,7 +72,7 @@ static void *sURLObservationContext = &sURLObservationContext;
     else if (context == sURLObservationContext)
     {
         NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
-                                 [self valueForKeyPath:@"inspectedPagesController.selection.URL.absoluteString"], NSNullPlaceholderBindingOption,
+                                 [self valueForKeyPath:@"inspectedPagesController.selection.URL.svx_placeholderString"], NSNullPlaceholderBindingOption,
                                  [NSNumber numberWithBool:YES], NSConditionallySetsEditableBindingOption,
                                  nil];
         [self.tweetURLField bind:@"value"
