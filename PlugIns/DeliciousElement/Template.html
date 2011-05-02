@@ -1,0 +1,107 @@
+[[if deliciousID]]
+
+[[if currentContext.liveDataFeeds]]
+
+<div id="delicious-container-[[=container.elementID]]">
+<script type="text/javascript" src="http://delicious.com/feeds/json/[[=&deliciousID]][[if restrictedTags]]/[[=&%restrictedTags]][[endif3]][[if maxEntries]]?count=[[=maxEntries]][[endif3]]"></script>
+<script type="text/javascript">
+[[if sortAlphabetically]]
+Delicious.posts.sort(function(a,b){return (a.d.toLowerCase()>b.d.toLowerCase()?1:a.d.toLowerCase()<b.d.toLowerCase()?-1:0)})
+[[endif3]]
+[[if listStyle]]
+var ul = document.createElement('ul')
+for (var i=0, post; post = Delicious.posts[i]; i++) {
+	var li = document.createElement('li')
+	li.setAttribute('class', 'i' + (i+1) + ' ' + (i%2?'e':'o'))
+	var a = document.createElement('a')
+	a.setAttribute('href', post.u)
+	[[if openLinksInNewWindow]]a.setAttribute('target', '_blank')[[endif4]]
+	a.innerHTML = post.d
+	li.appendChild(a)
+[[if showExtended]]
+	if (post.n) {
+		var extended = document.createElement('span')
+		extended.setAttribute('style', 'font-size:85%;')
+		li.appendChild(extended)
+		extended.innerHTML = ' : ' + post.n
+	}
+[[endif4]]
+[[if showTags]]
+	if (post.t) {
+		var tagSpan = document.createElement('span')
+		tagSpan.setAttribute('style', 'font-size:75%;')
+		tagSpan.appendChild(document.createTextNode(' / '))
+		for (var t=0, tag; tag=post.t[t]; t++) {
+			var tagA = document.createElement('a')
+			[[if openLinksInNewWindow]]tagA.setAttribute('target', '_blank')[[endif5]]
+			tagA.setAttribute('href', 'http://delicious.com/[[=&deliciousID]]/'+tag)
+			tagA.appendChild(document.createTextNode(tag))
+			tagSpan.appendChild(tagA)
+			tagSpan.appendChild(document.createTextNode(' '))
+		}
+		li.appendChild(tagSpan)
+	}
+[[endif4]]
+	ul.appendChild(li)
+}
+document.getElementById('delicious-container-[[=container.elementID]]').appendChild(ul)
+[[else3]]
+var dl = document.createElement('dl')
+for (var i=0, post; post = Delicious.posts[i]; i++) {
+	var dt = document.createElement('dt')
+	var dd = document.createElement('dd')
+	var a = document.createElement('a')
+	a.setAttribute('href', post.u)
+	[[if openLinksInNewWindow]]a.setAttribute('target', '_blank')[[endif4]]
+	a.innerHTML = post.d
+	dt.appendChild(a)
+[[if showExtended]]
+	if (post.n) {
+		dd.innerHTML = post.n
+	}
+[[endif4]]
+[[if showTags]]
+	if (post.t) {	
+		var tagSpan = document.createElement('span')
+		tagSpan.setAttribute('style', 'font-size:75%;')
+		tagSpan.appendChild(document.createTextNode(' : '))
+		for (var t=0, tag; tag=post.t[t]; t++) {
+			var tagA = document.createElement('a')
+			tagA.setAttribute('href', 'http://delicious.com/[[=&deliciousID]]/'+tag)
+			[[if openLinksInNewWindow]]tagA.setAttribute('target', '_blank')[[endif5]]
+			tagA.appendChild(document.createTextNode(tag))
+			tagSpan.appendChild(tagA)
+			tagSpan.appendChild(document.createTextNode(' '))
+		}
+		dd.appendChild(tagSpan)
+	}
+[[endif4]]
+	dl.appendChild(dt)
+	dl.appendChild(dd)
+}
+document.getElementById('delicious-container-[[=container.elementID]]').appendChild(dl)
+[[endif3]]
+</script>
+<noscript><p><a href="http://delicious.com/[[=&deliciousID]][[if restrictedTags]]/[[=&%restrictedTags]][[endif3]]">[["My Delicious Links]]</a></p></noscript>
+</div>
+
+[[if restrictedTags]]
+<div style="text-align:center">
+<span style="text-align:center; font-size:85%;">[["Bookmarks tagged ]][[=restrictedTags]]</span>
+</div>
+[[endif3]]
+
+[[else2]]
+[[if listStyle]]
+<ul>
+	<li>[['delicious.com example no.]] 1</li>
+	<li>[['delicious.com example no.]] 2</li>
+	<li>[['delicious.com example no.]] 3</li>
+</ul>
+[[else3]]
+	[['delicious.com example no.]] 1<br/>
+	[['delicious.com example no.]] 2<br/>
+	[['delicious.com example no.]] 3<br/>
+[[endif3]]
+[[endif2]]
+[[endif]]

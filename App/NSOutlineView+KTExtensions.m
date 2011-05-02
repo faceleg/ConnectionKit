@@ -2,7 +2,7 @@
 //  NSOutlineView+KTExtensions.m
 //  KTComponents
 //
-//  Copyright 2004-2009 Karelia Software. All rights reserved.
+//  Copyright 2004-2011 Karelia Software. All rights reserved.
 //
 
 #import "NSOutlineView+KTExtensions.h"
@@ -11,6 +11,8 @@
 #import "KTPage.h"
 
 @implementation NSOutlineView (KTExtensions)
+
+#pragma mark Items
 
 - (int)numberOfChildrenOfItem:(id)item;
 {
@@ -24,24 +26,49 @@
 	return result;
 }
 
-/*	A similar method is available on Leopard. Ours:
- *		A) Supports Tiger
- *		B) Uses the data source to do the dirty work, which should be generally better
- */
-- (id)parentOfItem:(id)item
+- (NSArray *)itemsAtRows:(NSIndexSet *)rowIndexes
 {
-	id result = nil;
-	
-	id datasource = [self dataSource];
-	if (datasource && [datasource respondsToSelector:@selector(outlineView:parentOfItem:)])
+	// We can bail early in certain circumstances
+	if (!rowIndexes || [rowIndexes count] <= 0)
 	{
-		result = [datasource outlineView:self parentOfItem:item];
+		return nil;
 	}
 	
+	
+	NSMutableArray *buffer = [NSMutableArray arrayWithCapacity:[rowIndexes count]];
+	
+	unsigned index = [rowIndexes firstIndex];
+    id anItem = [self itemAtRow:index];
+    if (anItem) // during startup there sometimes isn't an item to match the row
+    {
+        [buffer addObject:anItem];
+        
+        while ((index = [rowIndexes indexGreaterThanIndex:index]) != NSNotFound)
+        {
+            [buffer addObject:[self itemAtRow:index]];
+        }
+    }
+	
+	return buffer;
+}
+
+- (NSIndexSet *)rowsForItems:(NSArray *)items;
+{
+	NSMutableIndexSet *buffer = [[NSMutableIndexSet alloc] init];
+	id anItem;		int aRow;
+	
+	for (anItem in items)
+	{
+		aRow = [self rowForItem:anItem];
+		[buffer addIndex:aRow];
+	}
+	
+	// Tidy up
+	NSIndexSet *result = [[buffer copy] autorelease];
+	[buffer release];
 	return result;
 }
 
-#pragma mark -
 #pragma mark Selection
 
 - (void)expandSelectedRow
@@ -55,11 +82,19 @@
 - (int)makeItemVisible:(id)item
 {
 	OBPRECONDITION(item);
-	
+
 	int result = [self rowForItem:item];
 	if (result < 0)
 	{
-		id parent = [self parentOfItem:item];
+		id parent = [self parentForItem:item];
+        
+        
+        // REAL UGLY HACK: -parentForItem: doesn't always seem to work, so let's look it directly
+        if (!parent && [item isKindOfClass:[SVSiteItem class]])
+        {
+            parent = [item parentPage];
+        }
+        
 		if (parent)
 		{
 			int parentRow = [self makeItemVisible:parent];
@@ -113,11 +148,9 @@
 {
     NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
     
-    NSEnumerator *e = [theItems objectEnumerator];
-    id item;
-    while (item = [e nextObject])
+    for (id item in theItems)
     {
-        int row = [self rowForItem:item];
+        NSInteger row = [self rowForItem:item];
 		
 		// If the item doesn't have a row, it is presumably hidden inside a collapsed parent.
 		// We must work up the hierarchy expanding items until it becomes visible.
@@ -193,46 +226,6 @@
 - (id)itemAboveFirstSelectedRow
 {
     return [self itemAtRow:[[self selectedRowIndexes] firstIndex]-1];
-}
-
-- (NSArray *)itemsAtRows:(NSIndexSet *)rowIndexes
-{
-	// We can bail early in certain circumstances
-	if (!rowIndexes || [rowIndexes count] <= 0)
-	{
-		return nil;
-	}
-	
-	
-	NSMutableArray *buffer = [NSMutableArray arrayWithCapacity:[rowIndexes count]];
-	
-	unsigned index = [rowIndexes firstIndex];
-	[buffer addObject:[self itemAtRow:index]];
-	
-	while ((index = [rowIndexes indexGreaterThanIndex:index]) != NSNotFound)
-	{
-		[buffer addObject:[self itemAtRow:index]];
-	}
-	
-	return [[buffer copy] autorelease];
-}
-
-- (NSIndexSet *)rowsForItems:(NSArray *)items;
-{
-	NSMutableIndexSet *buffer = [[NSMutableIndexSet alloc] init];
-	NSEnumerator *itemsEnumerator = [items objectEnumerator];
-	id anItem;		int aRow;
-	
-	while (anItem = [itemsEnumerator nextObject])
-	{
-		aRow = [self rowForItem:anItem];
-		[buffer addIndex:aRow];
-	}
-	
-	// Tidy up
-	NSIndexSet *result = [[buffer copy] autorelease];
-	[buffer release];
-	return result;
 }
 
 #pragma mark -

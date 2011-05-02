@@ -2,7 +2,7 @@
 //  DOMNode+KTExtensions.h
 //  KTComponents
 //
-//  Copyright 2005-2009 Karelia Software. All rights reserved.
+//  Copyright 2005-2011 Karelia Software. All rights reserved.
 //
 //  THIS SOFTWARE IS PROVIDED BY KARELIA SOFTWARE AND ITS CONTRIBUTORS "AS-IS"
 //  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -31,8 +31,6 @@
 + (BOOL)isHTMLElementFromDOMNodeClass:(NSString *)aClass;
 + (BOOL)isSummaryFromDOMNodeClass:(NSString *)aClass;
 
-- (NSString *)cleanedInnerHTML;
-- (NSString *)cleanedOuterHTML;
 
 #pragma mark parent elements
 
@@ -52,7 +50,7 @@
 - (BOOL)hasChildOfClass:(Class)aClass;
 
 /*! recursive method that returns all instances of a particular element */
-- (NSArray *)childrenOfClass:(Class)aClass;
+- (NSArray *)sv_descendantNodesOfClass:(Class)aClass;
 
 /*! returns all child DOMHTMLAnchorElements (a tags) */
 - (NSArray *)anchorElements;
@@ -72,19 +70,13 @@
 
 // Media
 - (BOOL)isFileList;
-- (void)convertImageSourcesToUseSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractElement *)plugin;
 
-
-- (DOMNode *)removeJunkRecursiveRestrictive:(BOOL)aRestricted allowEmptyParagraphs:(BOOL)anAllowEmptyParagraphs;
 
 #pragma mark Utility
 
 - (void)appendChildren:(DOMNodeList *)aList;
 
 - (void)makePlainTextWithSingleLine:(BOOL)aSingleLine;
-- (void)makeSingleLine;
-
-- (DOMHTMLElement *)replaceWithElementName:(NSString *)anElement elementClass:(NSString *)aClass elementID:(NSString *)anID text:(NSString *)aText innerSpan:(BOOL)aSpan innerParagraph:(BOOL)aParagraph;
 
 - (DOMNode *)removeStylesRecursive;
 - (void)removeAnyDescendentElementsNamed:(NSString *)elementName;
@@ -94,21 +86,6 @@
 @end
 
 
-@interface DOMHTMLElement ( KTExtensions )
-
--(BOOL) hasVisibleContents;
-
-@end
-
-
-#pragma mark -
-
-
-@interface DOMNode ( KTUndo )
-+ (DOMNode *)node:(DOMNode *)parent insertBefore:(DOMNode *)newChild :(DOMNode *)refChild;
-+ (DOMNode *)node:(DOMNode *)parent appendChild:(DOMNode *)child;
-+ (DOMNode *)node:(DOMNode *)parent removeChild:(DOMNode *)child;
-@end
 
 #pragma mark -
 
@@ -116,23 +93,6 @@
 @interface DOMElement ( KTExtensions )
 
 + (NSString *)cleanupStyleText:(NSString *)inStyleText restrictUnderlines:(BOOL)aRestrictUnderlines wasItalic:(BOOL *)outWasItalic wasBold:(BOOL *)outWasBold wasTT:(BOOL *)outWasTT;
-- (NSString *)cleanedOuterHTMLWithInnards:(BOOL)aFlag;
 - (DOMElement *)removeJunkFromParagraphAllowEmpty:(BOOL)anAllowEmptyParagraphs;
 
-- (void)convertImageSourcesToUseSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractElement *)plugin;
-
-
-@end
-
-#pragma mark -
-
-
-@interface DOMHTMLAnchorElement ( KTUndo )
-/*! passing nil for target removes that attribute */
-+ (void)element:(DOMHTMLAnchorElement *)anchor setHref:(NSString *)anHref target:(NSString *)aTarget;
-@end
-
-
-@interface DOMHTMLImageElement (KTExtensions)
-- (void)convertSourceToUseSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractElement *)plugin;
 @end

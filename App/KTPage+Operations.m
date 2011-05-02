@@ -3,27 +3,16 @@
 //  KTComponents
 //
 //  Created by Dan Wood on 8/9/05.
-//  Copyright 2005-2009 Karelia Software. All rights reserved.
+//  Copyright 2005-2011 Karelia Software. All rights reserved.
 //
 
 #import "KTPage+Internal.h"
 
 #import "Debug.h"
-#import "KTAbstractIndex.h"
 #import "KTDocument.h"
 
 #import "NSObject+Karelia.h"
 #import "NSSet+KTExtensions.h"
-
-
-@interface NSObject ( RichTextElementDelegateHack )
-- (NSString *)richTextHTML;
-@end
-
-
-@interface NSObject ( HTMLElementDelegateHack )
-- (NSString *)html;
-@end
 
 
 @implementation KTPage ( Operations )
@@ -34,7 +23,7 @@
     
     if (recursive)
     {
-        NSEnumerator *childrenEnumerator = [[self children] objectEnumerator];
+        NSEnumerator *childrenEnumerator = [[self childItems] objectEnumerator];
         KTPage *aChildPage;
         while (aChildPage = [childrenEnumerator nextObject])
         {
@@ -43,75 +32,14 @@
     }
 }
 
-#pragma mark -
 #pragma mark Perform Selector
-
-/*	Add to the default behavior by respecting the recursive flag
- */
-- (void)makeSelfOrDelegatePerformSelector:(SEL)selector
-							   withObject:(void *)anObject
-								 withPage:(KTPage *)page
-								recursive:(BOOL)recursive
-{
-	[super makeSelfOrDelegatePerformSelector:selector withObject:anObject withPage:page recursive:recursive];
-	
-	if (recursive)
-	{
-		NSEnumerator *childrenEnumerator = [[self children] objectEnumerator];
-		KTPage *aPage;
-		while (aPage = [childrenEnumerator nextObject])
-		{
-			[aPage makeSelfOrDelegatePerformSelector:selector withObject:anObject withPage:page recursive:recursive];
-		}
-	}
-}
-
-/*	Perform the selector on our components (pagelets, index if present). Then allow
- *	-makeSelfOrDelegatePerformSelector: to take over.
- */
-- (void)makeComponentsPerformSelector:(SEL)selector
-						   withObject:(void *)anObject
-							 withPage:(KTPage *)page
-							recursive:(BOOL)recursive
-{
-	// Bail early if we've been deleted
-	if ([self isDeleted])
-	{
-		return;
-	}
-	
-	
-	// Pagelets
-	NSEnumerator *pageletsEnumerator = [[self callouts] objectEnumerator];
-	KTPagelet *aPagelet;
-	while (aPagelet = [pageletsEnumerator nextObject])
-	{
-		[aPagelet makeSelfOrDelegatePerformSelector:selector withObject:anObject withPage:page recursive:NO];
-	}
-	
-	pageletsEnumerator = [[self sidebarPagelets] objectEnumerator];
-	while (aPagelet = [pageletsEnumerator nextObject])
-	{
-		[aPagelet makeSelfOrDelegatePerformSelector:selector withObject:anObject withPage:page recursive:NO];
-	}
-	
-	
-	// Index - if we have no index, this call is to nil, so does nothing
-	KTAbstractIndex *index = [self index];
-	[index makeComponentsPerformSelector:selector withObject:anObject withPage:page];
-	
-	
-	// Self/delegate, and then children
-	[self makeSelfOrDelegatePerformSelector:selector withObject:anObject withPage:page recursive:recursive];
-}
 
 // Called via recursiveComponentPerformSelector
 // Kind of inefficient since we're just looking to see if there are ANY RSS collections
 
 - (void)addRSSCollectionsToArray:(NSMutableArray *)anArray forPage:(KTPage *)aPage
 {
-	BOOL rss = ([self collectionCanSyndicate] && [self collectionSyndicate]);
-	if (rss)
+	if ([[self collectionSyndicationType] boolValue])
 	{
 		[anArray addObject:self];
 	}
@@ -132,37 +60,9 @@
 {
 	if ([self boolForKey:@"isStale"])
 	{
-		LOG((@"adding to stale set: %@", [self titleText]));
+		LOG((@"adding to stale set: %@", [[self titleBox] text]));
 		[aSet addObject:self];
 	}
-}
-
-#pragma mark -
-#pragma mark Spotlight
-
-- (NSString *)spotlightHTML
-{
-	NSMutableString *buf = [NSMutableString stringWithString:[super spotlightHTML]];
-	
-	// Add spotlightHTML of any pagelets owned by this page	
-	NSEnumerator *e = [[self pagelets] objectEnumerator];
-	KTPagelet *pagelet;
-	while ( pagelet = [e nextObject] )
-	{
-		NSString *pageletHTML = [pagelet spotlightHTML];
-		if ( (nil != pageletHTML) && ![pageletHTML isEqualToString:@""] )
-		{
-			[buf appendFormat:@" %@", pageletHTML];
-		}
-	}
-	
-	NSString *result = @"";
-	if ( nil != buf )
-	{
-		result = [NSString stringWithString:buf];
-	}
-	
-	return result;
 }
 
 @end

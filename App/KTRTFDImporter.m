@@ -3,24 +3,23 @@
 //  KTComponents
 //
 //  Created by Terrence Talbot on 5/3/05.
-//  Copyright 2005-2009 Karelia Software. All rights reserved.
+//  Copyright 2005-2011 Karelia Software. All rights reserved.
 //
 
 #import "KTRTFDImporter.h"
 
 #import "Debug.h"
 #import "KTDesign.h"
-#import "KTOffScreenWebViewController.h"
+#import "SVOffscreenWebViewController.h"
 #import "KTMaster.h"
 
-#import "KTAbstractPluginDelegate.h"
 #import "DOMNode+KTExtensions.h"
 #import "NSAttributedString+Karelia.h"
 
 #import <WebKit/WebKit.h>
 
 
-@interface KTRTFDImporter ( Private )
+@interface KTRTFDImporter ()
 - (NSString *)processDOMDocument:(DOMDocument *)aDOMDocument basePath:(NSString *)aBasePath requestor:(id)aRequestor;
 @end
 
@@ -31,7 +30,7 @@
 {
 	NSString *snippet = [anAttrString standardSnippet];
 	
-	DOMDocument *aDOMDocument = [KTOffScreenWebViewController DOMDocumentForHTMLString:snippet baseURL:nil];
+	DOMDocument *aDOMDocument = [SVOffscreenWebViewController DOMDocumentForHTMLString:snippet baseURL:nil];
 	if ( nil == aDOMDocument )
 	{
 		return [NSString stringWithFormat:NSLocalizedString(@"Unable to convert %@ to editable HTML.", @""), snippet];
@@ -51,7 +50,7 @@
 
 	NSString *snippet = [attr standardSnippet];
 	
-	DOMDocument *aDOMDocument = [KTOffScreenWebViewController DOMDocumentForHTMLString:snippet baseURL:nil];
+	DOMDocument *aDOMDocument = [SVOffscreenWebViewController DOMDocumentForHTMLString:snippet baseURL:nil];
 	if ( nil == aDOMDocument )
 	{
 		return [NSString stringWithFormat:NSLocalizedString(@"Unable to convert document %@ to HTML.", @""), [[NSFileManager defaultManager] displayNameAtPath:aPath]];
@@ -73,15 +72,7 @@
 	OBASSERT([aRequestor respondsToSelector:@selector(managedObjectContext)]);
 	
 	// track it with a mediaRef
-	id owner = nil;
-	if ( [aRequestor isKindOfClass:[KTAbstractPluginDelegate class]] )
-	{
-		owner = [aRequestor delegateOwner];
-	}
-	else
-	{
-		owner = aRequestor;
-	}
+	id owner = aRequestor;
 	
 	
 	[aDOMDocument convertImageSourcesToUseSettingsNamed:@"inTextMediumImage" forPlugin:owner];

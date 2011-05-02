@@ -3,15 +3,15 @@
 //  Marvel
 //
 //  Created by Mike on 30/01/2008.
-//  Copyright 2008-2009 Karelia Software. All rights reserved.
+//  Copyright 2008-2011 Karelia Software. All rights reserved.
 //
 
 #import "KTPage.h"
-#import "KTArchivePage.h"
 
 #import "KTSite.h"
 
 #import "NSArray+Karelia.h"
+#import "NSError+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSObject+Karelia.h"
 #import "NSSortDescriptor+Karelia.h"
@@ -21,15 +21,11 @@
 
 @interface KTPage (ChildrenPrivate)
 
-- (short)childIndex;
-- (void)setChildIndex:(short)index;
-
-- (void)invalidateSortedChildrenCache;
 + (void)setCollectionIndexForPages:(NSArray *)pages;
 
 + (NSPredicate *)includeInIndexAndPublishPredicate;
-- (NSArray *)sortDescriptorsForCollectionSortType:(KTCollectionSortType)sortType;
 + (NSSet *)sortedChildrenDependentChildrenKeys;
+- (NSArray *)sortDescriptorsForCollectionSortType:(SVCollectionSortOrder)sortType ascending:(BOOL)ascending;
 
 @end
 
@@ -39,30 +35,7 @@
 
 @implementation KTPage (Children)
 
-#pragma mark -
 #pragma mark Basic Accessors
-
-- (KTCollectionSortType)collectionSortOrder
-{
-	KTCollectionSortType result = [self wrappedIntegerForKey:@"collectionSortOrder"];
-	
-	OBPOSTCONDITION(result != KTCollectionSortUnspecified);
-	return result;
-}
-
-- (void)setCollectionSortOrder:(KTCollectionSortType)sorting
-{
-	[self setWrappedInteger:sorting forKey:@"collectionSortOrder"];
-	
-	// When switching TO manual sorting ensure child indexes are up-to-date
-	if (sorting == KTCollectionUnsorted)
-	{
-		[KTPage setCollectionIndexForPages:[self sortedChildren]];
-	}
-	
-	// Since the sort ordering has changed the sortedChildren cache must be invalid
-	[self invalidateSortedChildrenCache];
-}
 
 /*!	simple wrapper; defined for convenience of calling it.  Not optional property, so this should be OK.
 */
@@ -72,135 +45,72 @@
 	return result;		// not an optional property, so it's OK to convert to a non-object
 }
 
-#pragma mark -
-#pragma mark Index
-
-/*	-collectionIndex and -setCollectionIndex are private methods that -sortedChildren uses internally.
- *	The public API for this is the -moveToIndex: method which calls -setCollectionIndex on all affected siblings
- *	and updates the parent's -sortedChildren cache.
- *
- *	Calling this method upon a page with no parent, or within a sorted collection will raise an exception.
- */
-
-- (void)moveToIndex:(unsigned)index
+- (void)setIsCollection:(BOOL)collection;
 {
-	KTPage *parent = [self parent];
-	
-	NSAssert1(parent, @"-%@ called upon page with not in a collection", NSStringFromSelector(_cmd));
-	NSAssert1(([parent collectionSortOrder] == KTCollectionUnsorted),
-			   @"-%@ called upon page in a sorted collection", NSStringFromSelector(_cmd));
-	
-	// Change our index and that of any affected siblings
-	NSMutableArray *newSortedChildren = [NSMutableArray arrayWithArray:[parent sortedChildren]];
-	unsigned whereSelfInParent = [newSortedChildren indexOfObjectIdenticalTo:self];
-	
-	// Check that we were actually found.  Mystery case 34642.  
-	if (whereSelfInParent != NSNotFound && index <= [newSortedChildren count])
-	{
-		[newSortedChildren moveObjectAtIndex:whereSelfInParent toIndex:index];
-		[KTPage setCollectionIndexForPages:newSortedChildren];
-		
-		// Invalidate our parent's sortedChildren cache
-		[parent invalidateSortedChildrenCache];
-	}
-	else
-	{
-		NSLog(@"moveToIndex: trying to move from %d to %d in an array of %d elements", whereSelfInParent, index, [newSortedChildren count]);
-	}
+    [self willChangeValueForKey:@"isCollection"];
+    [self setPrimitiveValue:NSBOOL(collection) forKey:@"isCollection"];
+    [self didChangeValueForKey:@"isCollection"];
+    
+    // #93959
+    [self setDatePublished:nil];
+    [self recursivelyInvalidateURL:YES];
+    
+    // Regular pages can't take thumbnail from children. #93638
+    if (!collection)
+    {
+        SVThumbnailType thumbType = [[self thumbnailType] intValue];
+        if (thumbType == SVThumbnailTypeFirstChildItem ||
+            thumbType == SVThumbnailTypeLastChildItem)
+        {
+            [self setThumbnailType:[NSNumber numberWithInt:SVThumbnailTypeNone]];
+        }
+    }
 }
 
-- (short)childIndex { return [self wrappedIntegerForKey:@"childIndex"]; }
-
-- (void)setChildIndex:(short)index { [self setWrappedInteger:index forKey:@"childIndex"]; }
-
-#pragma mark -
-#pragma mark Unsorted Children
-
-- (NSSet *)children { return [self wrappedValueForKey:@"children"]; }
-
-/*	Adds the specified page to the receiver's children relationship.
- *
- *	If the receiver is sorted manually this method behaves like -[NSArray addObject:] and the page is
- *	placed at the end of the list.
- */
-- (void)addPage:(KTPage *)page
+- (BOOL)willPublishAsCollection; { return [self isCollection]; }
+- (void)setWillPublishAsCollection:(BOOL)collection; { }
++ (NSSet *) keyPathsForValuesAffectingWillPublishAsCollection;
 {
-	OBPRECONDITION(page);
-	
-	// To have a child page we must be a collection
-	[self setBool:YES forKey:@"isCollection"];
-	
-	
-	// If inserting a page into a manually sorted collection, place the page at the end of it
-	if ([self collectionSortOrder] == KTCollectionUnsorted)
-	{
-		unsigned index = [[[self sortedChildren] lastObject] childIndex] + 1;
-		[page setChildIndex:index];
-	}
-	
-	
-	// Attach the page to ourself and update the page cache
-	[page setValue:self forKey:@"parent"];
-	[self invalidateSortedChildrenCache];
-	
-	
-	// As it has a new parent, the page's path must have changed.
-	[page recursivelyInvalidateURL:YES];
-	
-	
-	// Create an archive to conatain the page if needed
-	[self archivePageForTimestamp:[page editableTimestamp] createIfNotFound:YES];
+    return [NSSet setWithObject:@"isCollection"];
 }
 
+#pragma mark Children
 
-/*	This method is remarkably simple since when you remove a page there is actually no need to update
- *	the childrens' -collectionIndex. They are ultimately still in the right overall order.
- */
-- (void)removePage:(KTPage *)aPage
+@dynamic childItems;
+- (NSSet *)childItems
 {
-	// Remove the page and update the page cache
-	[[self mutableSetValueForKey:@"children"] removeObject:aPage];
-	[self invalidateSortedChildrenCache];
-	
-	// Delete the corresponding archive page if unused now
-	KTArchivePage *archive = [self archivePageForTimestamp:[aPage editableTimestamp] createIfNotFound:NO];
-	if (archive)
-	{
-		NSArray *archivePages = [archive sortedPages];
-		if ([archivePages count] == 0)
-		{
-			[[self managedObjectContext] deleteObject:archive];
-		}
-	}
+    [self willAccessValueForKey:@"childItems"];
+    NSSet *result = [self primitiveValueForKey:@"childItems"];
+    [self didAccessValueForKey:@"childItems"];
+    return result;
 }
 
+#pragma mark Sorting Properties
 
-/*	Batch equivalent of the above method. It's significantly faster because we guarantee that the
- *	-sortedChildren cache will only be invalidated the once.
- */
-- (void)removePages:(NSSet *)pages
+@dynamic collectionSortOrder;
+- (void)setCollectionSortOrder:(NSNumber *)sorting
 {
-	[[self mutableSetValueForKey:@"children"] minusSet:pages];
-	[self invalidateSortedChildrenCache];
-	
-	// Delete / mark stale the corresponding archive pages if unused now
-	NSEnumerator *pagesEnumerator = [pages objectEnumerator];
-	KTPage *aPage;
-	while (aPage = [pagesEnumerator nextObject])
+	// When switching TO manual sorting ensure child indexes are up-to-date
+    // Should do this first. #111644
+	if ([sorting integerValue] == SVCollectionSortManually)
 	{
-		KTArchivePage *archive = [self archivePageForTimestamp:[aPage editableTimestamp] createIfNotFound:NO];
-		if (archive)
-		{
-			NSArray *archivePages = [archive sortedPages];
-			if ([archivePages count] == 0)
-			{
-				[[self managedObjectContext] deleteObject:archive];
-			}
-		}
+		[KTPage setCollectionIndexForPages:[self sortedChildren]];
 	}
+    
+	[self willChangeValueForKey:@"collectionSortOrder"];
+	[self setPrimitiveValue:sorting forKey:@"collectionSortOrder"];
+    [self didChangeValueForKey:@"collectionSortOrder"];
 }
 
-#pragma mark -
+- (BOOL)isSortedChronologically;
+{
+    SVCollectionSortOrder sorting = [[self collectionSortOrder] integerValue];
+    BOOL result = (sorting == SVCollectionSortByDateCreated || sorting == SVCollectionSortByDateModified);
+    return result;
+}
+
+@dynamic collectionSortAscending;
+
 #pragma mark Sorted Children
 
 /*	Returns our child pages in the correct ordering.
@@ -209,14 +119,44 @@
  */
 - (NSArray *)sortedChildren
 {
-	NSArray *result = [self wrappedValueForKey:@"sortedChildren"];
-	if (!result)
-	{
-		result = [self childrenWithSorting:KTCollectionSortUnspecified inIndex:NO];
-		[self setPrimitiveValue:result forKey:@"sortedChildren"];
-	}
+	NSArray *result = [self childrenWithSorting:SVCollectionSortOrderUnspecified
+                                 ascending:[[self collectionSortAscending] boolValue]
+                                   inIndex:NO];
 	
 	return result;
+}
+
+/*	-collectionIndex and -setCollectionIndex are private methods that -sortedChildren uses internally.
+ *	The public API for this is the -moveChild:toIndex: method which calls -setCollectionIndex on all affected siblings
+ *	and updates the parent's -sortedChildren cache.
+ *
+ *	Calling this method upon a page with no parent, or within a sorted collection will raise an exception.
+ */
+
+- (void)moveChild:(SVSiteItem *)child toIndex:(NSUInteger)index;
+{	
+	NSAssert1(self, @"-%@ called upon page with not in a collection", NSStringFromSelector(_cmd));
+	NSAssert1(([[self collectionSortOrder] integerValue] == SVCollectionSortManually),
+              @"-%@ called upon page in a sorted collection", NSStringFromSelector(_cmd));
+	
+	// Change our index and that of any affected siblings
+	NSMutableArray *newSortedChildren = [NSMutableArray arrayWithArray:[self sortedChildren]];
+	unsigned whereSelfInParent = [newSortedChildren indexOfObjectIdenticalTo:child];
+	
+	// Check that we were actually found.  Mystery case 34642.  
+	if (whereSelfInParent != NSNotFound && index <= [newSortedChildren count])
+	{
+		[newSortedChildren moveObjectAtIndex:whereSelfInParent toIndex:index];
+		[KTPage setCollectionIndexForPages:newSortedChildren];
+	}
+	else
+	{
+		NSLog(@"%@ trying to move from %d to %d in an array of %d elements",
+              NSStringFromSelector(_cmd),
+              whereSelfInParent,
+              index,
+              [newSortedChildren count]);
+	}
 }
 
 
@@ -246,40 +186,17 @@
 	return result;
 }
 
-- (void)invalidateSortedChildrenCache
-{
-	// Clear the cache
-	[self willChangeValueForKey:@"sortedChildren"];
-	[[self children] makeObjectsPerformSelector:@selector(willChangeValuesForKeys:)
-									 withObject:[KTPage sortedChildrenDependentChildrenKeys]];
-	
-	[self setPrimitiveValue:nil forKey:@"sortedChildren"];
-	
-	[[self children] makeObjectsPerformSelector:@selector(didChangeValuesForKeys:)
-									 withObject:[KTPage sortedChildrenDependentChildrenKeys]];
-	[self didChangeValueForKey:@"sortedChildren"];
-	
-	
-	// Logically this change must have affected the index
-	[self invalidatePagesInIndexCache];
-	
-	// Also, the site menu may well have been affected
-	[[self valueForKey:@"site"] invalidatePagesInSiteMenuCache];
-	
-	// For some collections, this change will have affected their thumbnail
-	[self generateCollectionThumbnail];
-}
-
-
-#pragma mark arbitrary sorting
+#pragma mark Sorting Support
 
 /*	Public support method that will return the receiver's children with the specified sorting.
  *	If ignoreDrafts==YES then UNPUBLISHED drafts are filtered out.
  *	Not cached like -sortedChildren.
 */
-- (NSArray *)childrenWithSorting:(KTCollectionSortType)sortType inIndex:(BOOL)ignoreDrafts
+- (NSArray *)childrenWithSorting:(SVCollectionSortOrder)sortType
+                       ascending:(BOOL)ascending
+                         inIndex:(BOOL)ignoreDrafts;
 {
-	NSArray *result = [[self children] allObjects];
+	NSArray *result = [[self childItems] allObjects];
 	
 	
 	// Filter out drafts if requested
@@ -293,7 +210,8 @@
 	if ([result count] > 1)
 	{		
 		// Do the sort
-		NSArray *sortDescriptors = [self sortDescriptorsForCollectionSortType:sortType];
+		NSArray *sortDescriptors = [self sortDescriptorsForCollectionSortType:sortType ascending:ascending];
+        
 		result = [result sortedArrayUsingDescriptors:sortDescriptors];
 	}	
 	
@@ -306,48 +224,124 @@
 	static NSPredicate *result;
 	if (!result)
 	{
-		result = [[NSPredicate predicateWithFormat:@"includeInIndexAndPublish == 1"] retain];
+		result = [[NSPredicate predicateWithFormat:@"shouldIncludeInIndexes == 1"] retain];
 	}
 	
 	return result;
+}
+
+- (NSArray *)childItemsSortDescriptors;
+{
+    return [self
+            sortDescriptorsForCollectionSortType:[[self collectionSortOrder] intValue]
+            ascending:[[self collectionSortAscending] boolValue]];
+}
++ (NSSet *)keyPathsForValuesAffectingChildItemsSortDescriptors;
+{
+    return [NSSet setWithObjects:@"collectionSortOrder", @"collectionSortAscending", nil];
 }
 
 /*	Translates between KTCollectionSortType & the right sort descriptor objects
  */
-- (NSArray *)sortDescriptorsForCollectionSortType:(KTCollectionSortType)sortType
+- (NSArray *)sortDescriptorsForCollectionSortType:(SVCollectionSortOrder)sortType ascending:(BOOL)ascending;
 {
 	NSArray *result;
 	switch (sortType)
 	{
-		case KTCollectionSortUnspecified:	// Use whatever is currently selected for this collection
-			result = [self sortDescriptorsForCollectionSortType:[self collectionSortOrder]];
+		case SVCollectionSortOrderUnspecified:	// Use whatever is currently selected for this collection
+			result = [self sortDescriptorsForCollectionSortType:[[self collectionSortOrder] integerValue]
+                                                      ascending:ascending];
 			break;
-		case KTCollectionSortAlpha:
-			result = [NSSortDescriptor alphabeticalTitleTextSortDescriptors];
+		case SVCollectionSortAlphabetically:
+			result = [KTPage alphabeticalTitleTextSortDescriptorsAscending:ascending];
 			break;
-		case KTCollectionSortReverseAlpha:
-			result = [NSSortDescriptor reverseAlphabeticalTitleTextSortDescriptors];
+		case SVCollectionSortByDateCreated:
+			result = [KTPage dateCreatedSortDescriptorsAscending:ascending];
 			break;
-		case KTCollectionSortLatestAtBottom:
-			result = [NSSortDescriptor chronologicalSortDescriptors];
-			break;
-		case KTCollectionSortLatestAtTop:
-			result = [NSSortDescriptor reverseChronologicalSortDescriptors];
+		case SVCollectionSortByDateModified:
+			result = [KTPage dateModifiedSortDescriptorsAscending:ascending];
 			break;
 		default:
-			result = [NSSortDescriptor unsortedPagesSortDescriptors];	// use the "childIndex" values
+			result = [KTPage unsortedPagesSortDescriptors];	// use the "childIndex" values
 			break;
 	}
 	
 	return result;
 }
 
-#pragma mark -
++ (NSArray *)unsortedPagesSortDescriptors;
+{
+	static NSArray *result;
+	
+	if (!result)
+	{
+		NSSortDescriptor *orderingDescriptor = [[NSSortDescriptor alloc] initWithKey:@"childIndex" ascending:YES];
+		result = [[NSArray alloc] initWithObjects:orderingDescriptor, nil];
+		[orderingDescriptor release];
+	}
+	
+	return result;
+}
+
++ (NSArray *)alphabeticalTitleTextSortDescriptorsAscending:(BOOL)ascending;
+{
+    NSSortDescriptor *orderingDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title"
+                                                                       ascending:ascending
+                                                                        selector:@selector(caseInsensitiveCompare:)];
+    
+	NSArray *result = [NSArray arrayWithObject:orderingDescriptor];
+    [orderingDescriptor release];
+	
+	return result;
+}
+
++ (NSArray *)dateCreatedSortDescriptorsAscending:(BOOL)ascending;
+{
+	NSArray *result = nil;
+	
+	if (!result)
+	{
+		NSSortDescriptor *orderingDescriptor = [[NSSortDescriptor alloc] initWithKey:@"creationDate"
+                                                                           ascending:ascending];
+		result = [[[NSArray alloc] initWithObject:orderingDescriptor] autorelease];
+		[orderingDescriptor release];
+	}
+	
+	return result;
+}
+
++ (NSArray *)dateModifiedSortDescriptorsAscending:(BOOL)ascending;
+{
+	NSArray *result = nil;
+	
+	if (!result)
+	{
+		NSSortDescriptor *orderingDescriptor = [[NSSortDescriptor alloc] initWithKey:@"modificationDate" 
+                                                                           ascending:ascending];
+		result = [[[NSArray alloc] initWithObject:orderingDescriptor] autorelease];
+		[orderingDescriptor release];
+	}
+	
+	return result;
+}
+
 #pragma mark Page Hierarchy Queries
+
+- (BOOL)isRootPage; // like NSTreeNode, the root page is defined to be one with no parent. This is just a convenience around that
+{
+    BOOL result = ([self parentPage] == nil);
+    return result;
+}
+
+- (KTPage *)rootPage;   // searches up the tree till it finds a page with no parent
+{
+    KTPage *result = ([self isRootPage] ? self : [[self parentPage] rootPage]);
+    return result;
+}
 
 - (KTPage *)parentOrRoot
 {
-	KTPage *result = [self parent];
+	KTPage *result = [self parentPage];
 	if (nil == result)
 	{
 		result = self;
@@ -357,117 +351,53 @@
 
 /*	Every page bar root should have a parent.
  */
-- (BOOL)validateParent:(KTPage **)aPage error:(NSError **)outError
+- (BOOL)validateParentPage:(KTPage **)page error:(NSError **)outError;
 {
-	BOOL result = YES;
-	if (![[[self entity] name] isEqualToString:@"Root"])
-	{
-		result = (aPage != nil);
-		if (!result)
-		{
-			// Something went wrong. We need to generate an error object
-			NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-				self, NSValidationObjectErrorKey,
-				@"parent", NSValidationKeyErrorKey,
-				NSLocalizedString(@"Page without a parent","Validation error"), NSLocalizedDescriptionKey, nil];
-			
-			if (outError)
-			{
-				*outError = [NSError errorWithDomain:@"KTPage" code:0 userInfo:userInfo];
-			}
-		}
-	}
-	
-	return result;
+	if ([self isRoot])
+    {
+        return YES;
+    }
+    else
+    {
+        return [super validateParentPage:page error:outError];
+    }
 }
 
 - (BOOL)hasChildren
 {
-	NSSet *children = [self valueForKey:@"children"];
+	NSSet *children = [self childItems];
 	BOOL result = ([children count] > 0);
 	return result;
 }
 
-- (BOOL)containsDescendant:(KTPage *)aPotentialDescendant	// DEPRECATED.  FASTER TO USE isDescendantOfPage:
-{
-	if ( ![self hasChildren] )
-	{
-		return NO;
-	}
-	else
-	{
-		NSEnumerator *e = [[self children] objectEnumerator];
-		KTPage *child;
-		while ( child = [e nextObject] )
-		{
-			if ( [child isEqual:aPotentialDescendant] )
-			{
-				return YES;
-			}
-			else if ( [child hasChildren] )
-			{
-				if ( [child containsDescendant:aPotentialDescendant] )
-				{
-					return YES;
-				}
-			}
-		}
-	}
-	
-	return NO;
-}
+#pragma mark Navigation Arrows
 
-
-/*	Returns the page's index path relative to root parent. i.e. the Site object.
- *	This means every index starts with 0 to signify root.
- */
-- (NSIndexPath *)indexPath;
-{
-	NSIndexPath *result = nil;
-	
-	KTPage *parent = [self parent];
-	if (parent)
-	{
-		unsigned index = [[parent sortedChildren] indexOfObjectIdenticalTo:self];
-		
-        // BUGSID: 30402. NSNotFound really shouldn't happen, but if so we need to track it down.
-        if (index == NSNotFound)
-        {
-            if ([[parent children] containsObject:self])
-            {
-                OBASSERT_NOT_REACHED("parent's -sortedChildren must be out of date");
-            }
-            else
-            {
-                NSLog(@"Parent to child relationship is broken.\nChild:\n%@\nDeleted:%d\n",
-                      self,                     // Used to be an assertion. Now, we return nil and expect the
-                      [self isDeleted]);       // original caller to tidy up.
-            }
-        }
-		else
-        {
-            NSIndexPath *parentPath = [parent indexPath];
-            result = [parentPath indexPathByAddingIndex:index];
-        }
-	}
-	else if ([self isRoot])
-	{
-		result = [NSIndexPath indexPathWithIndex:0];
-	}
-	
-    
-	return result;
-}
+@dynamic navigationArrowsStyle;
 
 #pragma mark -
 #pragma mark Should probably be deprecated
 
++ (NSArray *)orderingSortDescriptors
+{
+	static NSArray *result;
+	
+	if (!result)
+	{
+		NSSortDescriptor *orderingDescriptor = [[NSSortDescriptor alloc] initWithKey:@"ordering" ascending:YES];
+		result = [[NSArray alloc] initWithObjects:orderingDescriptor, nil];
+		[orderingDescriptor release];
+	}
+	
+	return result;
+}
+
 /*! returns a suggested ordering value for inserting aProposedChild
 	based on aSortType -- used for intra-app dragging */
 - (int)proposedOrderingForProposedChild:(id)aProposedChild
-							   sortType:(KTCollectionSortType)aSortType
+							   sortType:(SVCollectionSortOrder)aSortType
+                              ascending:(BOOL)ascending;
 {
-    NSSet *values = [self children];
+    NSSet *values = [self childItems];
 	
 	if (0 == [values count])
 	{
@@ -484,20 +414,17 @@
 	NSArray *descriptors = nil;
 	switch ( aSortType )
 	{
-		case KTCollectionSortAlpha:
-			descriptors = [NSSortDescriptor alphabeticalTitleTextSortDescriptors];
+		case SVCollectionSortAlphabetically:
+			descriptors = [KTPage alphabeticalTitleTextSortDescriptorsAscending:ascending];
 			break;
-		case KTCollectionSortReverseAlpha:
-			descriptors = [NSSortDescriptor reverseAlphabeticalTitleTextSortDescriptors];
+		case SVCollectionSortByDateCreated:
+			descriptors = [KTPage dateCreatedSortDescriptorsAscending:ascending];
 			break;
-		case KTCollectionSortLatestAtBottom:
-			descriptors = [NSSortDescriptor chronologicalSortDescriptors];
-			break;
-		case KTCollectionSortLatestAtTop:
-			descriptors = [NSSortDescriptor reverseChronologicalSortDescriptors];
+		case SVCollectionSortByDateModified:
+			descriptors = [KTPage dateModifiedSortDescriptorsAscending:ascending];
 			break;
 		default:
-			descriptors = [NSSortDescriptor orderingSortDescriptors];	// use the "ordering" values
+			descriptors = [KTPage orderingSortDescriptors];	// use the "ordering" values
 			break;
 	}
 	[childArray sortUsingDescriptors:descriptors];
@@ -518,13 +445,12 @@
 	NSMutableArray *titlesArray = [NSMutableArray array];
 	[titlesArray addObject:sortableTitle];
 	
-    NSSet *children = [self children];
+    NSSet *children = [self childItems];
 	
-	NSEnumerator *e = [children objectEnumerator];
 	KTPage *child;
-	while ( child = [e nextObject] )
+	for ( child in children )
 	{
-		[titlesArray addObject:[child titleHTML]];
+		[titlesArray addObject:[child title]];
 	}
 	[titlesArray sortUsingSelector:@selector(caseInsensitiveCompare:)];
 	int result = [titlesArray indexOfObject:sortableTitle];

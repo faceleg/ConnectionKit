@@ -1,0 +1,58 @@
+﻿/* Class = "NSButtonCell"; title = "Chronologically"; ObjectID = "7"; */
+"Chronologically" = "Chronologiquement";
+
+/* Class = "NSButtonCell"; title = "Alphabetically"; ObjectID = "8"; */
+"Alphabetically" = "Alphabétiquement";
+
+/* Class = "NSButtonCell"; title = "Show Tags"; ObjectID = "43"; */
+"Show Tags" = "Afficher les étiquettes";
+
+/* Class = "NSButtonCell"; title = "Show Extended"; ObjectID = "44"; */
+"Show Extended" = "Afficher en entier";
+
+/* Class = "NSButtonCell"; title = "Separate Lines"; ObjectID = "48"; */
+"Separate Lines" = "Lignes séparées";
+
+/* Class = "NSButtonCell"; title = "Bulleted List"; ObjectID = "49"; */
+"Bulleted List" = "Liste à puces";
+
+/* Class = "NSTextFieldCell"; title = "maximum"; ObjectID = "103"; */
+"maximum" = "maximum";
+
+/* Class = "NSTextFieldCell"; title = "Sort:"; ObjectID = "104"; */
+"Sort:" = "Trier :";
+
+/* Class = "NSTextFieldCell"; title = "Entries:"; ObjectID = "105"; */
+"Entries:" = "Entrées :";
+
+/* Class = "NSButtonCell"; title = "delicious"; ObjectID = "106"; */
+"delicious" = "delicious";
+
+/* Class = "NSTextFieldCell"; title = "Options:"; ObjectID = "107"; */
+"Options:" = "Options :";
+
+/* Class = "NSTextFieldCell"; title = "Style:"; ObjectID = "108"; */
+"Style:" = "Style :";
+
+/* Class = "NSTextFieldCell"; title = "Powered by"; ObjectID = "109"; */
+"Powered by" = "Fonctionnant avec";
+
+/* Class = "NSTextFieldCell"; title = "Links:"; ObjectID = "110"; */
+"Links:" = "Liens :";
+
+/* Class = "NSButtonCell"; title = "Open in new window"; ObjectID = "111"; */
+"Open in new window" = "Ouvrir dans une nouvelle fenêtre";
+
+/* Class = "NSButtonCell"; title = "Radio"; ObjectID = "116"; */
+"Radio" = "Radio";
+/* Class = "NSTextFieldCell"; title = "Delicious Username"; ObjectID = "137"; */
+"Delicious Username" = "Nom utilisateur Delicious";
+
+/* Class = "NSTextFieldCell"; title = "Tags"; ObjectID = "139"; */
+"Tags" = "Mots-clés";
+
+/* Class = "NSTextFieldCell"; title = "Appearance"; ObjectID = "141"; */
+"Appearance" = "Aspect";
+
+/* Class = "IBBindingConnection"; designableIsNilPlaceholder = "Required"; ObjectID = "142"; */
+"Required" = "Obligatoire";

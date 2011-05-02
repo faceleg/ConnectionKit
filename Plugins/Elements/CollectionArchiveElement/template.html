@@ -1,9 +1,0 @@
-[[if collection]]
-<ul>
-[[foreach collection.sortedArchivePages aPage]]
-	<li>
-		[[if parser.HTMLGenerationPurpose]]<a href="[[path aPage]]">[[endif2]][[=&aPage.dateDescription]][[if parser.HTMLGenerationPurpose]]</a>[[endif2]]
-	</li>
-[[endforeach]]
-</ul>
-[[endif]]

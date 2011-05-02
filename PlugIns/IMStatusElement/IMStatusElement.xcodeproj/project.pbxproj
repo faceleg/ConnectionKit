@@ -1,0 +1,430 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		27958D561208B9650006D4FA /* IMStatusImageURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 27958D551208B9650006D4FA /* IMStatusImageURLProtocol.m */; };
+		3C3002061312FC5E0022E49A /* BUNDLED in Resources */ = {isa = PBXBuildFile; fileRef = 3C3002051312FC5E0022E49A /* BUNDLED */; };
+		3C42E4240D64FB4B004F35FD /* ABPerson+IMStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42E41F0D64FB4B004F35FD /* ABPerson+IMStatus.m */; };
+		3C42E4250D64FB4B004F35FD /* IMStatusPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42E4210D64FB4B004F35FD /* IMStatusPlugIn.m */; };
+		3C42E4260D64FB4B004F35FD /* IMStatusService.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42E4230D64FB4B004F35FD /* IMStatusService.m */; };
+		3C42E4310D64FB59004F35FD /* offline.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E42B0D64FB59004F35FD /* offline.png */; };
+		3C42E4320D64FB59004F35FD /* online.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E42C0D64FB59004F35FD /* online.png */; };
+		3C42E4330D64FB59004F35FD /* online_skype.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E42D0D64FB59004F35FD /* online_skype.png */; };
+		3C42E4340D64FB59004F35FD /* online_yahoo.gif in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E42E0D64FB59004F35FD /* online_yahoo.gif */; };
+		3C42E43B0D64FB65004F35FD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E4380D64FB65004F35FD /* Localizable.strings */; };
+		3C42E4550D64FBCC004F35FD /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E4540D64FBCC004F35FD /* License.rtf */; };
+		3C42E4780D64FCD1004F35FD /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C42E4770D64FCD1004F35FD /* AddressBook.framework */; };
+		3C5D6F5B12A434A200AAAB18 /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C5D6F5912A434A200AAAB18 /* Inspector.xib */; };
+		3CFCD655123AF4B1003A635C /* NSString+IMStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CFCD654123AF4B1003A635C /* NSString+IMStatus.m */; };
+		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
+		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+		CEA32AE81283356500648C39 /* toolbar_imstatus.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CEA32AE71283356500648C39 /* toolbar_imstatus.tiff */; };
+		CEDA1DD4130207F900DC6FE7 /* Inspector.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEDA1DD2130207F900DC6FE7 /* Inspector.strings */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		27958D541208B9650006D4FA /* IMStatusImageURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMStatusImageURLProtocol.h; sourceTree = "<group>"; };
+		27958D551208B9650006D4FA /* IMStatusImageURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMStatusImageURLProtocol.m; sourceTree = "<group>"; };
+		32DBCF630370AF2F00C91783 /* IMStatusElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMStatusElement_Prefix.pch; sourceTree = "<group>"; };
+		3C3002051312FC5E0022E49A /* BUNDLED */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = BUNDLED; path = ../Configurations/BUNDLED; sourceTree = SOURCE_ROOT; };
+		3C42E41E0D64FB4B004F35FD /* ABPerson+IMStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ABPerson+IMStatus.h"; sourceTree = "<group>"; };
+		3C42E41F0D64FB4B004F35FD /* ABPerson+IMStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ABPerson+IMStatus.m"; sourceTree = "<group>"; };
+		3C42E4200D64FB4B004F35FD /* IMStatusPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMStatusPlugIn.h; sourceTree = "<group>"; };
+		3C42E4210D64FB4B004F35FD /* IMStatusPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMStatusPlugIn.m; sourceTree = "<group>"; };
+		3C42E4220D64FB4B004F35FD /* IMStatusService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMStatusService.h; sourceTree = "<group>"; };
+		3C42E4230D64FB4B004F35FD /* IMStatusService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMStatusService.m; sourceTree = "<group>"; };
+		3C42E42B0D64FB59004F35FD /* offline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = offline.png; sourceTree = "<group>"; };
+		3C42E42C0D64FB59004F35FD /* online.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = online.png; sourceTree = "<group>"; };
+		3C42E42D0D64FB59004F35FD /* online_skype.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = online_skype.png; sourceTree = "<group>"; };
+		3C42E42E0D64FB59004F35FD /* online_yahoo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = online_yahoo.gif; sourceTree = "<group>"; };
+		3C42E4370D64FB65004F35FD /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3C42E4390D64FB65004F35FD /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3C42E43E0D64FB71004F35FD /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3C42E43F0D64FB71004F35FD /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3C42E4410D64FB79004F35FD /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3C42E4420D64FB79004F35FD /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3C42E4440D64FB84004F35FD /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3C42E4450D64FB84004F35FD /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3C42E4470D64FB8E004F35FD /* it */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3C42E4480D64FB8E004F35FD /* it */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3C42E44A0D64FB9D004F35FD /* ja */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3C42E44B0D64FB9D004F35FD /* ja */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3C42E44D0D64FBA6004F35FD /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_CN; path = zh_CN.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3C42E44E0D64FBA6004F35FD /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3C42E4500D64FBB1004F35FD /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_TW; path = zh_TW.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3C42E4510D64FBB1004F35FD /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3C42E4540D64FBCC004F35FD /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../License.rtf; sourceTree = SOURCE_ROOT; };
+		3C42E4560D64FBE4004F35FD /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
+		3C42E4570D64FBE4004F35FD /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
+		3C42E4770D64FCD1004F35FD /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = /System/Library/Frameworks/AddressBook.framework; sourceTree = "<absolute>"; };
+		3C5D6F5A12A434A200AAAB18 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Inspector.xib; sourceTree = "<group>"; };
+		3CFCD653123AF4B1003A635C /* NSString+IMStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+IMStatus.h"; sourceTree = "<group>"; };
+		3CFCD654123AF4B1003A635C /* NSString+IMStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+IMStatus.m"; sourceTree = "<group>"; };
+		8D5B49B6048680CD000E48DA /* IMStatus.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IMStatus.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CEA32AE71283356500648C39 /* toolbar_imstatus.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_imstatus.tiff; sourceTree = "<group>"; };
+		CEB4FD9710309DBC0054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEB4FD9810309DBC0054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEDA1DD3130207F900DC6FE7 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Inspector.strings; sourceTree = "<group>"; };
+		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D5B49B3048680CD000E48DA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */,
+				3C42E4780D64FCD1004F35FD /* AddressBook.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		089C166AFE841209C02AAC07 /* IMStatusElement */ = {
+			isa = PBXGroup;
+			children = (
+				08FB77AFFE84173DC02AAC07 /* Classes */,
+				32C88E010371C26100C91783 /* Other Sources */,
+				089C167CFE841241C02AAC07 /* Resources */,
+				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
+				19C28FB8FE9D52D311CA2CBB /* Products */,
+				3C42E45A0D64FBE9004F35FD /* Xcode Configurations */,
+			);
+			name = IMStatusElement;
+			sourceTree = "<group>";
+		};
+		089C1671FE841209C02AAC07 /* Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */,
+				1058C7AEFEA557BF11CA2CBB /* Other Frameworks */,
+			);
+			name = "Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		089C167CFE841241C02AAC07 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3C3002051312FC5E0022E49A /* BUNDLED */,
+				CEDA1DD2130207F900DC6FE7 /* Inspector.strings */,
+				3C5D6F5912A434A200AAAB18 /* Inspector.xib */,
+				CEA32AE71283356500648C39 /* toolbar_imstatus.tiff */,
+				8D5B49B7048680CD000E48DA /* Info.plist */,
+				3C42E42B0D64FB59004F35FD /* offline.png */,
+				3C42E42C0D64FB59004F35FD /* online.png */,
+				3C42E42D0D64FB59004F35FD /* online_skype.png */,
+				3C42E42E0D64FB59004F35FD /* online_yahoo.gif */,
+				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
+				3C42E4380D64FB65004F35FD /* Localizable.strings */,
+				3C42E4540D64FBCC004F35FD /* License.rtf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		08FB77AFFE84173DC02AAC07 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				3C42E41E0D64FB4B004F35FD /* ABPerson+IMStatus.h */,
+				3C42E41F0D64FB4B004F35FD /* ABPerson+IMStatus.m */,
+				3C42E4200D64FB4B004F35FD /* IMStatusPlugIn.h */,
+				3C42E4210D64FB4B004F35FD /* IMStatusPlugIn.m */,
+				3C42E4220D64FB4B004F35FD /* IMStatusService.h */,
+				3C42E4230D64FB4B004F35FD /* IMStatusService.m */,
+				27958D541208B9650006D4FA /* IMStatusImageURLProtocol.h */,
+				27958D551208B9650006D4FA /* IMStatusImageURLProtocol.m */,
+				3CFCD653123AF4B1003A635C /* NSString+IMStatus.h */,
+				3CFCD654123AF4B1003A635C /* NSString+IMStatus.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3C42E4770D64FCD1004F35FD /* AddressBook.framework */,
+				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7AEFEA557BF11CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				089C167FFE841241C02AAC07 /* AppKit.framework */,
+				D2F7E65807B2D6F200F64583 /* CoreData.framework */,
+				089C1672FE841209C02AAC07 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FB8FE9D52D311CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D5B49B6048680CD000E48DA /* IMStatus.svxElement */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		32C88E010371C26100C91783 /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32DBCF630370AF2F00C91783 /* IMStatusElement_Prefix.pch */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		3C42E45A0D64FBE9004F35FD /* Xcode Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				3C42E4560D64FBE4004F35FD /* Debug.xcconfig */,
+				3C42E4570D64FBE4004F35FD /* Release.xcconfig */,
+			);
+			name = "Xcode Configurations";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D5B49AC048680CD000E48DA /* IMStatusElement */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "IMStatusElement" */;
+			buildPhases = (
+				8D5B49B1048680CD000E48DA /* Sources */,
+				8D5B49B3048680CD000E48DA /* Frameworks */,
+				3C42E4730D64FC0F004F35FD /* Generate Localizable.strings */,
+				8D5B49AF048680CD000E48DA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = IMStatusElement;
+			productInstallPath = "$(HOME)/Library/Bundles";
+			productName = IMStatusElement;
+			productReference = 8D5B49B6048680CD000E48DA /* IMStatus.svxElement */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		089C1669FE841209C02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "IMStatusElement" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				da,
+				de,
+				es,
+				fr,
+				it,
+				ja,
+				pt_BR,
+				zh_CN,
+				zh_TW,
+				en,
+			);
+			mainGroup = 089C166AFE841209C02AAC07 /* IMStatusElement */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D5B49AC048680CD000E48DA /* IMStatusElement */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D5B49AF048680CD000E48DA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
+				3C42E4310D64FB59004F35FD /* offline.png in Resources */,
+				3C42E4320D64FB59004F35FD /* online.png in Resources */,
+				3C42E4330D64FB59004F35FD /* online_skype.png in Resources */,
+				3C42E4340D64FB59004F35FD /* online_yahoo.gif in Resources */,
+				3C42E43B0D64FB65004F35FD /* Localizable.strings in Resources */,
+				3C42E4550D64FBCC004F35FD /* License.rtf in Resources */,
+				CEA32AE81283356500648C39 /* toolbar_imstatus.tiff in Resources */,
+				3C5D6F5B12A434A200AAAB18 /* Inspector.xib in Resources */,
+				CEDA1DD4130207F900DC6FE7 /* Inspector.strings in Resources */,
+				3C3002061312FC5E0022E49A /* BUNDLED in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3C42E4730D64FC0F004F35FD /* Generate Localizable.strings */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate Localizable.strings";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "echo \"Generating Localizable.strings ...\"\n\ncd ${SRCROOT}\ngenstrings -littleEndian -q -u -s SVLocalizedString -o en.lproj *.m\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D5B49B1048680CD000E48DA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3C42E4240D64FB4B004F35FD /* ABPerson+IMStatus.m in Sources */,
+				3C42E4250D64FB4B004F35FD /* IMStatusPlugIn.m in Sources */,
+				3C42E4260D64FB4B004F35FD /* IMStatusService.m in Sources */,
+				27958D561208B9650006D4FA /* IMStatusImageURLProtocol.m in Sources */,
+				3CFCD655123AF4B1003A635C /* NSString+IMStatus.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		089C167DFE841241C02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3C42E4370D64FB65004F35FD /* en */,
+				3C42E43E0D64FB71004F35FD /* da */,
+				3C42E4410D64FB79004F35FD /* de */,
+				3C42E4440D64FB84004F35FD /* fr */,
+				3C42E4470D64FB8E004F35FD /* it */,
+				3C42E44A0D64FB9D004F35FD /* ja */,
+				3C42E44D0D64FBA6004F35FD /* zh_CN */,
+				3C42E4500D64FBB1004F35FD /* zh_TW */,
+				CEB4FD9710309DBC0054C9BE /* pt_BR */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		3C42E4380D64FB65004F35FD /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3C42E4390D64FB65004F35FD /* en */,
+				3C42E43F0D64FB71004F35FD /* da */,
+				3C42E4420D64FB79004F35FD /* de */,
+				3C42E4450D64FB84004F35FD /* fr */,
+				3C42E4480D64FB8E004F35FD /* it */,
+				3C42E44B0D64FB9D004F35FD /* ja */,
+				3C42E44E0D64FBA6004F35FD /* zh_CN */,
+				3C42E4510D64FBB1004F35FD /* zh_TW */,
+				CEB4FD9810309DBC0054C9BE /* pt_BR */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		3C5D6F5912A434A200AAAB18 /* Inspector.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3C5D6F5A12A434A200AAAB18 /* en */,
+			);
+			name = Inspector.xib;
+			sourceTree = "<group>";
+		};
+		CEDA1DD2130207F900DC6FE7 /* Inspector.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CEDA1DD3130207F900DC6FE7 /* fr */,
+			);
+			name = Inspector.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB913B08733D840010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C42E4560D64FBE4004F35FD /* Debug.xcconfig */;
+			buildSettings = {
+				INFOPLIST_FILE = Info.plist;
+				OTHER_LDFLAGS = (
+					"-seg1addr",
+					0x50520000,
+				);
+				PRODUCT_NAME = IMStatus;
+				WRAPPER_EXTENSION = svxElement;
+			};
+			name = Debug;
+		};
+		1DEB913C08733D840010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C42E4570D64FBE4004F35FD /* Release.xcconfig */;
+			buildSettings = {
+				INFOPLIST_FILE = Info.plist;
+				OTHER_LDFLAGS = (
+					"-seg1addr",
+					0x50520000,
+				);
+				PRODUCT_NAME = IMStatus;
+				WRAPPER_EXTENSION = svxElement;
+			};
+			name = Release;
+		};
+		1DEB913F08733D840010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Debug;
+		};
+		1DEB914008733D840010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "IMStatusElement" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB913B08733D840010E9CD /* Debug */,
+				1DEB913C08733D840010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "IMStatusElement" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB913F08733D840010E9CD /* Debug */,
+				1DEB914008733D840010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 089C1669FE841209C02AAC07 /* Project object */;
+}

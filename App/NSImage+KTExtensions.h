@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Dan Wood on 5/10/05.
-//  Copyright 2005-2009 Karelia Software. All rights reserved.
+//  Copyright 2005-2011 Karelia Software. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
@@ -20,15 +20,7 @@
 
 - (NSBitmapImageRep *)bitmapByScalingWithBehavior:(KTImageScalingSettings *)settings;
 
-+ (float)preferredJPEGQuality;
-
 - (NSData *)faviconRepresentation;
-
-/*! returns UTI but also checks alpha */
-- (NSString *)preferredFormatUTI;
-
-- (NSData *)preferredRepresentation;
-- (NSData *)preferredRepresentationWithOriginalMedia:(KTMedia *)parentMedia;
 
 // assumes kFitWithinRect, NSImageAlignCenter
 - (NSImage *)imageWithMaxPixels:(int)aPixels;
@@ -46,11 +38,18 @@
 
 - (NSData *)representationForMIMEType:(NSString *)aMimeType;
 - (NSData *)representationForUTI:(NSString *)aUTI;
+// Also see +[NSBitmapImageRep typeForUTI:]
+
+
+#pragma mark Specific representations
 
 - (NSData *)PNGRepresentation;
 - (NSData *)PNGRepresentationWithOriginalMedia:(KTMedia *)parentMedia;
-- (NSData *)JPEGRepresentationWithQuality:(float)aQuality;
-- (NSData *)JPEGRepresentationWithQuality:(float)aQuality originalMedia:(KTMedia *)parentMedia;
+
+- (NSData *)JPEGRepresentationWithCompressionFactor:(float)aQuality;
+- (NSData *)JPEGRepresentationWithCompressionFactor:(float)aQuality
+                                      originalMedia:(KTMedia *)parentMedia;
+
 - (NSData *)faviconRepresentation;
 
 

@@ -3,14 +3,15 @@
 //  KTComponents
 //
 //  Created by Terrence Talbot on 5/21/05.
-//  Copyright 2005 Karelia Software. All rights reserved.
+//  Copyright 2005-2011 Karelia Software. All rights reserved.
 //
 
 #import "KTSite.h"
 
 #import "KT.h"
-#import "KTAppDelegate.h"
+#import "SVApplicationController.h"
 #import "KTHostProperties.h"
+#import "SVHTMLTemplateParser.h"
 #import "KTPage.h"
 
 #import "NSApplication+Karelia.h"
@@ -19,10 +20,12 @@
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
-#import "NSURL+Karelia.h"
+#import "KSURLUtilities.h"
+
+#import "KSStringXMLEntityEscaping.h"
 
 
-@interface KTSite (Private)
+@interface KTSite ()
 - (NSArray *)_pagesInSiteMenu;
 + (NSArray *)_siteMenuSortDescriptors;
 @end
@@ -40,72 +43,45 @@
 	
 	// Give ourself a unique ID
 	NSString *siteID = [NSString shortUUIDString];
-    [self setValue:siteID forKey:@"siteID"];
+    [self setPrimitiveValue:siteID forKey:@"siteID"];
 	
 	
 	// Create Host Properties object as well.
 	NSManagedObject *hostProperties = [NSEntityDescription insertNewObjectForEntityForName:@"HostProperties"
 																	inManagedObjectContext:[self managedObjectContext]];
 	[self setValue:hostProperties forKey:@"hostProperties"];
-	
-	
-	// Copy media originals setting
-	[self setCopyMediaOriginals:[[NSUserDefaults standardUserDefaults] integerForKey:@"copyMediaOriginals"]];
 }
 
 #pragma mark -
 #pragma mark Pages
 
-- (KTPage *)root { return [self wrappedValueForKey:@"root"]; }
-
-- (KTPage *)pageWithPreviewURLPath:(NSString *)path
+- (KTPage *)rootPage
 {
-	KTPage *result = nil;
-	
-	// skip media objects ... starting or containing Media if it's not a request in the main frame
-	if ( NSNotFound == [path rangeOfString:[[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultMediaPath"]].location )
-	{
-		int whereTilde = [path rangeOfString:kKTPageIDDesignator options:NSBackwardsSearch].location;	// special mark internally to look up page IDs
-		if (NSNotFound != whereTilde)
-		{
-			NSString *idString = [path substringFromIndex:whereTilde+[kKTPageIDDesignator length]];
-			NSManagedObjectContext *context = [self managedObjectContext];
-			result = [KTPage pageWithUniqueID:idString inManagedObjectContext:context];
-		}
-		else if ([path hasSuffix:@"/"])
-		{
-			result = [self root];
-		}
-	}
-	return result;
+    [self willAccessValueForKey:@"rootPage"];
+    KTPage *result = [self primitiveValueForKey:@"rootPage"];
+    if (!result)
+    {
+        result = [[[self siteItems] anyObject] rootPage];
+        [self setPrimitiveValue:result forKey:@"rootPage"];
+    }
+    
+    [self didAccessValueForKey:@"rootPage"];
+    
+    return result;
 }
 
-#pragma mark -
+@dynamic siteItems;
+
 #pragma mark Accessors
 
 - (NSString *)siteID { return [self wrappedValueForKey:@"siteID"]; }
 
-- (KTCopyMediaType)copyMediaOriginals { return [self wrappedIntegerForKey:@"copyMediaOriginals"]; }
+@synthesize document = _document;
 
-- (void)setCopyMediaOriginals:(KTCopyMediaType)copy
-{
-	[self setWrappedInteger:copy forKey:@"copyMediaOriginals"];
-	
-	// Record in the defaults
-	[[NSUserDefaults standardUserDefaults] setInteger:copy forKey:@"copyMediaOriginals"];
-}
+#pragma mark Media
 
-- (NSDictionary *)metadata
-{
-	return [self transientValueForKey:@"metadata" persistentPropertyListKey:@"metadataData"];
-}
+@dynamic copyMoviesIntoDocument;
 
-- (void)setMetadata:(NSDictionary *)metadata
-{
-	[self setTransientValue:metadata forKey:@"metadata" persistentPropertyListKey:@"metadataData"];
-}
-
-#pragma mark -
 #pragma mark UI
 
 - (NSRect)docWindowContentRect
@@ -140,10 +116,6 @@
 	NSString *marketingVersion = [NSApplication marketingVersion];
 	
 	NSString *applicationName = [NSApplication applicationName];
-	if ([[NSApp delegate] isPro])
-	{
-		applicationName = [applicationName stringByAppendingString:@" Pro"];
-	}
 	
 	return [NSString stringWithFormat:@"%@ %@", applicationName, marketingVersion];
 }
@@ -176,25 +148,28 @@
 	NSError *error = nil;
 	NSArray *unsortedResult = [[self managedObjectContext] executeFetchRequest:request error:&error];
 	if (error) {
-		[[NSAlert alertWithError:error] runModal];
+		NSAlert *alert = [NSAlert alertWithError:error];
+		[alert setIcon:[NSApp applicationIconImage]];
+		[alert runModal];	
 		return nil;
 	}
 	
     
-    // We have an odd bug where occasionally, a page will have a parent, but the parent will not recognise it as a child.
-    // To fix, we need to delete such pages.
-    static NSPredicate *orphansPredicate;
-    if (!orphansPredicate) orphansPredicate = [[NSPredicate predicateWithFormat:@"indexPath == NIL"] retain];
+    // We have an odd bug where occasionally, a page will have a parent, but the parent will not recognise it as a child. To fix, we need to delete such pages.
+    // However, that is causing problems with 2.0 #92429. I think we no longer need this functionality, so commenting out. We'll see if orphaned pages do somehow appear again.
     
-    NSArray *orphanedPages = [unsortedResult filteredArrayUsingPredicate:orphansPredicate];
-    if ([orphanedPages count] > 0)
-    {
-        NSLog(@"Deleting orphaned pages:\n%@", orphanedPages);
-        [[self managedObjectContext] deleteObjectsInCollection:orphanedPages];
+    //static NSPredicate *orphansPredicate;
+    //if (!orphansPredicate) orphansPredicate = [[NSPredicate predicateWithFormat:@"indexPath == nil"] retain];
+    
+    //NSArray *orphanedPages = [unsortedResult filteredArrayUsingPredicate:orphansPredicate];
+    //if ([orphanedPages count] > 0)
+    //{
+    //    NSLog(@"Deleting orphaned pages:\n%@", orphanedPages);
+    //    [[self managedObjectContext] deleteObjectsInCollection:orphanedPages];
         
-        result = [self _pagesInSiteMenu]; // After the deletion, it should be safe to run again
-    }
-    else
+    //    result = [self _pagesInSiteMenu]; // After the deletion, it should be safe to run again
+    //}
+    //else
     {
         // Sort the pages according to their index path from root
         result = [unsortedResult sortedArrayUsingDescriptors:[[self class] _siteMenuSortDescriptors]];
@@ -233,9 +208,9 @@
 - (void)appendGoogleMapOfPage:(KTPage *)aPage toArray:(NSMutableArray *)ioArray siteMenuCounter:(int *)ioSiteMenuCounter level:(int)aLevel
 {
 	NSURL *siteURL = [[self hostProperties] siteURL];
-    if (![siteURL hasDirectoryPath])
+    if (![siteURL ks_hasDirectoryPath])
     {
-        siteURL = [siteURL URLByDeletingLastPathComponent];
+        siteURL = [siteURL ks_URLByDeletingLastPathComponent];
     }
     
     NSString *url = [[aPage URL] absoluteString];
@@ -256,7 +231,7 @@
 	NSMutableDictionary *entry = [NSMutableDictionary dictionary];
 	[entry setObject:url forKey:@"loc"];
 	float levelFraction = 1.0 / aLevel;
-	if ([aPage boolForKey:@"includeInSiteMenu"] && aLevel > 1)	// boost items in site menu?
+	if ([[aPage includeInSiteMenu] boolValue] && aLevel > 1)	// boost items in site menu?
 	{
 		if (ioSiteMenuCounter)
 		{
@@ -268,7 +243,7 @@
 	OBASSERT(levelFraction <= 1.0 && levelFraction > 0.0);
 	[entry setObject:[NSNumber numberWithFloat:levelFraction] forKey:@"priority"];
     
-	NSDate *lastModificationDate = [aPage wrappedValueForKey:@"lastModificationDate"];
+	NSDate *lastModificationDate = [aPage modificationDate];
 	NSString *timestamp = [lastModificationDate descriptionWithCalendarFormat:@"%Y-%m-%dT%H:%M:%SZ" timeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT"] locale:nil];
 	[entry setObject:timestamp forKey:@"lastmod"];
 	
@@ -295,18 +270,17 @@
 {
 	NSMutableArray *array = [NSMutableArray array];
 	int siteMenuCounter = 0;
-	[self appendGoogleMapOfPage:[self root] toArray:array siteMenuCounter:&siteMenuCounter level:1];
+	[self appendGoogleMapOfPage:[self rootPage] toArray:array siteMenuCounter:&siteMenuCounter level:1];
     
 	NSMutableString *result = [NSMutableString string];
 	[result appendString:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n"];
 	
-    NSEnumerator *enumerator = [array objectEnumerator];
 	NSDictionary *dict;
-    while ((dict = [enumerator nextObject]) != nil)
+    for (dict in array)
 	{
 		[result appendFormat:
          @"<url><loc>%@</loc><lastmod>%@</lastmod><priority>%.02f</priority></url>\n",
-         [[dict objectForKey:@"loc"] stringByEscapingHTMLEntities],
+         [KSXMLWriter stringFromCharacters:[dict objectForKey:@"loc"]],
          [dict objectForKey:@"lastmod"],
          [[dict objectForKey:@"priority"] floatValue] ];
 	}
@@ -316,8 +290,7 @@
 	return result;
 }
 
-/*! returns publishSiteURL/sitemap.xml */
-- (NSString *)publishedSitemapURL
+- (NSString *)publishedSitemapURLString
 {
 	NSString *result;
     
@@ -335,28 +308,19 @@
 	return result;
 }
 
+
 #pragma mark -
 #pragma mark Publishing
 
-- (KTHostProperties *)hostProperties { return [self wrappedValueForKey:@"hostProperties"]; }
-
-- (NSString *)lastExportDirectoryPath
-{
-    return [self wrappedValueForKey:@"lastExportDirectoryPath"];
-}
-
-- (void)setLastExportDirectoryPath:(NSString *)path
-{
-    [self setWrappedValue:path forKey:@"lastExportDirectoryPath"];
-}
-
+@dynamic hostProperties;
+@dynamic lastExportDirectoryPath;
 
 #pragma mark -
 #pragma mark Quick Look
 
 - (NSString *)pageCount
 {
-	NSArray *pages = [[self managedObjectContext] allObjectsWithEntityName:@"Page" error:NULL];
+	NSArray *pages = [[self managedObjectContext] fetchAllObjectsForEntityForName:@"Page" error:NULL];
 	NSString *result = [NSString stringWithFormat:@"%u", [pages count]];
 	return result;
 }

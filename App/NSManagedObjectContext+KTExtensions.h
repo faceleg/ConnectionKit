@@ -2,7 +2,7 @@
 //  NSManagedObjectContext+KTExtensions.h
 //  Sandvox
 //
-//  Copyright 2005-2009 Karelia Software. All rights reserved.
+//  Copyright 2005-2011 Karelia Software. All rights reserved.
 //
 //  THIS SOFTWARE IS PROVIDED BY KARELIA SOFTWARE AND ITS CONTRIBUTORS "AS-IS"
 //  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -18,13 +18,23 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "NSManagedObjectContext+Karelia.h"
 
 
-@class KTAbstractElement, KTDocument, KTSite, KTManagedObject, KTAbstractPage, KTPage;
+extern NSString *SVPageWillBeDeletedNotification;
+
+
+@class KTAbstractElement, KTDocument, KTSite, KTPage, KTPage;
 
 @interface NSManagedObjectContext (KTExtensions)
 
-#pragma mark genernal NSManagedObjectContext extensions
+#pragma mark General NSManagedObjectContext extensions
+
+/*! returns an autoreleased core data stack with file at aStoreURL */
++ (NSManagedObjectContext *)contextWithStoreType:(NSString *)storeType
+                                             URL:(NSURL *)aStoreURL
+                                           model:(NSManagedObjectModel *)aModel
+                                           error:(NSError **)error;
 
 /*! returns set of all updated, inserted, and deleted objects in context */
 - (NSSet *)changedObjects;
@@ -35,16 +45,6 @@
 							   substitutionVariables:(NSDictionary *)aDictionary
 											   error:(NSError **)anError;
 
-// returns array of objects in context matching criteria
-// (functions as thread-safe executeFetchRequest: method)
-- (NSArray *)objectsWithEntityName:(NSString *)anEntityName
-						 predicate:(NSPredicate *)aPredicate
-							 error:(NSError **)anError;
-
-// returns an array of all objects of anEntityName (by using a nil predicate)
-- (NSArray *)allObjectsWithEntityName:(NSString *)anEntityName
-								error:(NSError **)anError;
-
 // returns object corresponding to NSManagedObjectID's URIRepresentation
 - (NSManagedObject *)objectWithURIRepresentation:(NSURL *)aURL;
 
@@ -54,27 +54,20 @@
 // returns array of unique values for aColumnName for all instances of anEntityName
 - (NSArray *)objectsForColumnName:(NSString *)aColumnName entityName:(NSString *)anEntityName;
 
-#pragma mark methods Sandvox-specific extensions
 
-// returns corresponding KTDocument via sharedDocumentController
-// (document must be open and on-screen)
+#pragma mark Undo
+- (void)disableUndoRegistration;
+- (void)enableUndoRegistration;
+
+
+#pragma mark methods Sandvox-specific extensions
 
 // return context's Site
 - (KTSite *)site;
 
-// returns KTManagedObject in context matching criteria 
-- (KTManagedObject *)objectWithUniqueID:(NSString *)aUniqueID entityNames:(NSArray *)aNamesArray;
-- (KTManagedObject *)objectWithUniqueID:(NSString *)aUniqueID entityName:(NSString *)anEntityName;
+// returns object in context matching criteria 
+- (NSManagedObject *)objectWithUniqueID:(NSString *)aUniqueID entityName:(NSString *)anEntityName;
 
-// returns KTManagedObject, searching entities Root, Page, Pagelet, Element, and Media
-- (KTManagedObject *)objectWithUniqueID:(NSString *)aUniqueID;
-- (KTAbstractElement *)pluginWithUniqueID:(NSString *)pluginID;
-
-- (NSArray *)pageletsWithPluginIdentifier:(NSString *)pluginIdentifier;
-
-// returns context's Root
-- (KTPage *)root;
-
-- (void)makeAllPluginsPerformSelector:(SEL)selector withObject:(id)object withPage:(KTPage *)page;
+- (void)deletePage:(KTPage *)page;  // Please ALWAYS call this for pages as it posts a notification first
 
 @end

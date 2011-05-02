@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Dan Wood on 5/10/05.
-//  Copyright 2005-2009 Karelia Software. All rights reserved.
+//  Copyright 2005-2011 Karelia Software. All rights reserved.
 //
 
 #import "NSImage+KTExtensions.h"
@@ -16,28 +16,31 @@
 
 @implementation NSImage ( KTApplication )
 
+// This has a big flaw -- it only works for one image size.  Really we ought to be getting all of the NSImage's sizes, and
+// doing the composite for each size of the badge.
+
 - (NSImage *)imageWithCompositedAddBadge
 {
 	static NSImage *sBadgeAddImage = nil;
 	if (nil == sBadgeAddImage)
 	{
-		sBadgeAddImage = [[NSImage imageNamed:@"BadgeAdd"] retain];
+		sBadgeAddImage = [[NSImage imageNamed:@"toolbar_plus_badge"] retain];
 	}
 	
 
 	NSImage *newImage = [[[NSImage alloc] initWithSize:[self size]] autorelease];
-        
+	
     [newImage lockFocus];
-    [self drawAtPoint:NSZeroPoint
+		[self drawAtPoint:NSZeroPoint
 			 fromRect:NSMakeRect(0,0,[self size].width, [self size].height)
-			operation:NSCompositeSourceOver fraction:1.0];
-
-	[sBadgeAddImage drawAtPoint:NSZeroPoint
+				operation:NSCompositeSourceOver fraction:1.0];
+		
+		[sBadgeAddImage drawAtPoint:NSZeroPoint
 					   fromRect:NSMakeRect(0,0,[sBadgeAddImage size].width, [sBadgeAddImage size].height)
-			operation:NSCompositeSourceOver fraction:1.0];
-	
-	[newImage unlockFocus];
-	
+					operation:NSCompositeSourceOver fraction:1.0];
+		
+		[newImage unlockFocus];
+
 	return newImage;
 }
 
@@ -105,15 +108,11 @@
 	}
 	else if ([aMimeType isEqualToString:@"image/jpeg"])
 	{
-		data = [self JPEGRepresentationWithQuality:[NSImage preferredJPEGQuality]];
+		data = [self JPEGRepresentationWithCompressionFactor:0.7];
 	}
 	else if ([aMimeType isEqualToString:@"image/tiff"])
 	{
 		data = [self TIFFRepresentation];
-	}
-	else
-	{
-		data = [self preferredRepresentation];
 	}
 	
 	return data;
@@ -129,7 +128,7 @@
 	}
 	else if ( [aUTI isEqualToString:(NSString *)kUTTypeJPEG] )
 	{
-		data = [self JPEGRepresentationWithQuality:[NSImage preferredJPEGQuality]];
+		data = [self JPEGRepresentationWithCompressionFactor:0.7];
 	}
 	else if ( [aUTI isEqualToString:(NSString *)kUTTypePNG] )
 	{
@@ -139,80 +138,10 @@
 	{
 		data = [self TIFFRepresentation];
 	}
-	else
-	{
-		data = [self preferredRepresentation];
-	}
 	
 	return data;
 }
 
-
-/*!	Return UTI of preferred format type
- */
-- (NSString *)preferredFormatUTI	// return user defaults preferred file format, good for extensions!
-{
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	NSString *result;
-	if ( [defaults boolForKey:@"KTPrefersPNGFormat"] || [self hasAlphaComponent])
-	{
-		result = (NSString *)kUTTypePNG;	// png if that's our preference, or if there is alpha in the image
-	}
-	else
-	{
-		result = (NSString *)kUTTypeJPEG;
-	}
-	return result;
-}
-
-+ (float)preferredJPEGQuality
-{
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	float quality = [defaults floatForKey:@"KTPreferredJPEGQuality"];
-	if (quality > 1.0)
-	{
-		quality = 1.0;
-	}
-	if (quality <= 0.0)
-	{
-		quality = 0.7;		// default value if not specified
-	}
-	return quality;
-}
-
-/*!	Return data in preferred representation.
- */
-- (NSData *)preferredRepresentation
-{
-	NSData *result = nil;
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	
-	if ( [defaults boolForKey:@"KTPrefersPNGFormat"]  || [self hasAlphaComponent] )
-	{
-		result = [self PNGRepresentation];
-	}
-	else
-	{
-		result = [self JPEGRepresentationWithQuality:[NSImage preferredJPEGQuality]];
-	}
-	return result;
-}
-
-- (NSData *)preferredRepresentationWithOriginalMedia:(KTMedia *)aParentMedia
-{
-	NSData *result = nil;
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	
-	if ( [defaults boolForKey:@"KTPrefersPNGFormat"]  || [self hasAlphaComponent])
-	{
-		result = [self PNGRepresentationWithOriginalMedia:aParentMedia];
-	}
-	else
-	{
-		result = [self JPEGRepresentationWithQuality:[NSImage preferredJPEGQuality] originalMedia:aParentMedia];
-	}
-	return result;
-}
 
 /*!	Get the data for a favicon.ico file.  Returns nil if unable.
  Note:  If the image is >= 32 pixels wide or high, a 32-pixel variant is created along with the 16,
@@ -339,10 +268,14 @@
 					  behavior:(CIScalingBehavior)aBehavior 
 					 alignment:(NSImageAlignment)anAlignment
 {
-	if ([self size].width <= aWidth && [self size].height <= aHeight)
+	if (aBehavior != kAnamorphic &&
+        [self size].width <= aWidth &&
+        [self size].height <= aHeight)
 	{
-		return self;	// Don't scale down.  FIXME: This might not be right for all CIScalingBehavior's!
+		return self;	// Don't need to scale
 	}
+    
+    
 	CIImage *theCI			= [self toCIImage];
 	CIImage *scaledCI		= [theCI scaleToWidth:aWidth height:aHeight behavior:aBehavior alignment:anAlignment opaqueEdges:YES];
 	NSUserDefaults *defaults= [NSUserDefaults standardUserDefaults];
@@ -362,7 +295,7 @@
 	NSString *path = [dirPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%p-%@.tiff", self, [NSString UUIDString]]];
 	[[result TIFFRepresentation] writeToFile:path atomically:NO];
 	
-	DJW((@"@Scaling image %@ down to %d %d -> %@", [[self description] condenseWhiteSpace], aWidth, aHeight, path));
+	OFF((@"@Scaling image %@ down to %d %d -> %@", [[self description] condenseWhiteSpace], aWidth, aHeight, path));
 #endif
 	
 	return result;
@@ -396,7 +329,7 @@
 	return [self PNGRepresentationWithOriginalMedia:nil];
 }
 
-- (NSData *)JPEGRepresentationWithQuality:(float)aQuality originalMedia:(KTMedia *)parentMedia;
+- (NSData *)JPEGRepresentationWithCompressionFactor:(float)aQuality originalMedia:(KTMedia *)parentMedia;
 {
 	NSMutableDictionary *props;
 	if (nil != parentMedia)
@@ -429,9 +362,9 @@
 	return result;
 }
 
-- (NSData *)JPEGRepresentationWithQuality:(float)aQuality;
+- (NSData *)JPEGRepresentationWithCompressionFactor:(float)aQuality;
 {
-	return [self JPEGRepresentationWithQuality:aQuality originalMedia:nil];
+	return [self JPEGRepresentationWithCompressionFactor:aQuality originalMedia:nil];
 }
 
 

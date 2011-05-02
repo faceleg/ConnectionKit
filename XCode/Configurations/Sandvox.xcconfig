@@ -2,29 +2,47 @@
 // include SVN_VERSION (the first step in any Sandvox build)
 #include "/private/tmp/build-sandvox/BuildSettings.xcconfig"
 
-// Snow Leopard will default to building with GCC 4.2 which is Tiger-incompatible.
-GCC_VERSION = 4.0
-
 // the "marketing" version is baked into CFBundleShortVersionString
-SANDVOX_VERSION = 1.6.4b1
+SANDVOX_VERSION = 2.0b51
 
-// the SLA variant to wrap around the .dmg [BETA,RELEASE]
-// Also determines if VARIANT_BETA or VARIANT_RELEASE is defined.
+// the SLA variant to wrap around the .dmg [ALPHA,BETA,RELEASE]
+// Also determines if VARIANT_ALPHA or VARIANT_BETA or VARIANT_RELEASE is defined.
+// For checking alpha/beta behaviors, better to test for being *not* VARIANT_RELEASE
+// We use the macro with the secret key so that sparkle can match with key on the server end.
 PRODUCT_VARIANT = BETA
+PRODUCT_VARIANT_WITH_SECRET_KEY_FOR_SPARKLE = BETA_C3PO
+
 
 // expiry for beta
-EXPIRY_TIMESTAMP = '@\"2009-08-31 11:59:59 -0800\"'
+EXPIRY_TIMESTAMP = '@\"2011-05-10 11:59:59 -0800\"'
 
 // Release builds checkout and use these specific revisions
 
-// ConnectionKit
-CK_REVISION = 1364
 
 // iMedia
-IMEDIA_REVISION = 733
+IMEDIA_REVISION = HEAD
 
-// Debugging -- should be OMNI_FORCE_ASSERTIONS for beta, DONT_FORCE_ASSERTIONS (an ad-hoc replacement) for release
+// Building -- common settings across all configurations
 
-// note:  RIGHT NOW WE HAVE BAD PROBLEMS RUNNING A RELEASE BUILD IF IT IS != OMNI_FORCE_ASSERTIONS
-OMNI_DEBUG_CURRENT_SETTING = OMNI_FORCE_ASSERTIONS
+// GCC 4.2
+//GCC_VERSION = 4.2
+
+// Clang LLVM 1.0 (Waiting for one update to Clang to accept Class<...>)
+// GCC_VERSION = com.apple.compilers.llvm.clang.1_0
+
+// LLVM GCC 4.2
+// GCC_VERSION = com.apple.compilers.llvmgcc42
+
+// For testing out the TOT clang installed.  Useful to get new warnings.
+//GCC_VERSION = com.apple.compilers.llvm.clang.1_0
+//RUN_CLANG_STATIC_ANALYZER = YES
+//CC = /opt/bin/clang
+
+
+GCC_C_LANGUAGE_STANDARD = c99
+
+
+// For betas that are to be localized, be sure to set IBC_FLATTEN_NIBS to NO (which, apparently, gets echoed to IBC_STRIP_NIBS)
+IBC_FLATTEN_NIBS = YES
+// NOTE: WE NEED TO MANUALLY SET 'NO' IN CONNECTION AND IMEDIA PROJECTS for localizers
 

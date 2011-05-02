@@ -3,12 +3,12 @@
 //  Marvel
 //
 //  Created by Mike on 05/03/2008.
-//  Copyright 2008-2009 Karelia Software. All rights reserved.
+//  Copyright 2008-2011 Karelia Software. All rights reserved.
 //
 
 #import "ContinueReadingLinkTextBlock.h"
 
-#import "KTHTMLParser.h"
+#import "SVHTMLTemplateParser.h"
 #import "KTPage.h"
 
 #import "NSString+Karelia.h"
@@ -40,19 +40,19 @@
 #pragma mark -
 #pragma mark HTML
 
-- (NSString *)outerHTML
+- (NSString *)HTMLString
 {
 	NSString *result;
-    if ([[self parser] HTMLGenerationPurpose] == kGeneratingPreview)
+    if ([[[SVHTMLTemplateParser currentTemplateParser] HTMLContext] isEditable])
     {
 		result = [NSString stringWithFormat:
                   @"<span id=\"%@\" class=\"kLine\">\n%@\n</span>",
-                  [self DOMNodeID],
-                  [self innerHTML]];
+                  [self elementIdName],
+                  [self innerHTMLString]];
 	}
     else
     {
-        result = [NSString stringWithFormat:@"<span class=\"kLine\">\n%@\n</span>", [self innerHTML]];
+        result = [NSString stringWithFormat:@"<span class=\"kLine\">\n%@\n</span>", [self innerHTMLString]];
     }
     
 	return result;
@@ -60,15 +60,15 @@
 
 /*	Convert @@ to the page title
  */
-- (NSString *)innerHTML
+- (NSString *)innerHTMLString
 {
 	NSString *contentFormat = [self innerEditingHTML];
-	NSString *titleText = [[self targetPage] titleText];
-	if (nil == titleText)
+	NSString *title = [[[self targetPage] titleBox] text];
+	if (nil == title)
 	{
-		titleText = @"";		// better than nil, which crashes!
+		title = @"";		// better than nil, which crashes!
 	}
-	NSString *result = [contentFormat stringByReplacing:@"@@" with:titleText];
+	NSString *result = [contentFormat stringByReplacingOccurrencesOfString:@"@@" withString:title];
 	return result;
 }
 
@@ -77,34 +77,6 @@
 - (NSString *)innerEditingHTML
 {
 	NSString *result = [[self HTMLSourceObject] valueForKeyPath:[self HTMLSourceKeyPath]];
-	return result;
-}
-
-#pragma mark -
-#pragma mark Editing Status
-
-- (BOOL)becomeFirstResponder
-{
-	BOOL result = [super becomeFirstResponder];
-    
-    // Insert the new HTML
-    if (result)
-    {
-        [[self DOMNode] setInnerHTML:[self innerEditingHTML]];
-    }
-    
-	return result;
-}
-
-- (BOOL)resignFirstResponder
-{
-	BOOL result = [super resignFirstResponder];
-	
-	if (result)
-	{
-		[[self DOMNode] setInnerHTML:[self innerHTML]];
-	}
-	
 	return result;
 }
 

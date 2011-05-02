@@ -3,13 +3,12 @@
 //  Marvel
 //
 //  Created by Mike on 23/12/2008.
-//  Copyright 2008-2009 Karelia Software. All rights reserved.
+//  Copyright 2008-2011 Karelia Software. All rights reserved.
 //
 
 
 #import "KTDocWindowController.h"
 
-#import "KTAbstractPage+Internal.h"
 #import "KTDocument.h"
 #import "KTSite.h"
 #import "KTExportEngine.h"
@@ -18,27 +17,88 @@
 #import "KTMobileMePublishingEngine.h"
 #import "KTPublishingWindowController.h"
 #import "KTRemotePublishingEngine.h"
+#import "SVSiteOutlineViewController.h"
+#import "SVPagesController.h"
 #import "KTToolbars.h"
+#import "KTPublishingEngine.h"
+
+#import "KSSilencingConfirmSheet.h"
 
 #import "NSObject+Karelia.h"
+#import "NSInvocation+Karelia.h"
+#import "NSManagedObjectContext+Karelia.h"
+#import "KSURLUtilities.h"
+#import "NSWorkspace+Karelia.h"
+#import "NSToolbar+Karelia.h"
+
+#import "Registration.h"
 
 
 @interface KTDocWindowController (PublishingPrivate)
-- (BOOL)shouldPublish;
+- (BOOL)shouldPublishWithWarningIfNo;
+- (BOOL)tryToEndEditing;
 - (Class)publishingEngineClass;
 @end
 
 
+#pragma mark -
+
+
 @implementation KTDocWindowController (Publishing)
 
-#pragma mark -
 #pragma mark Publishing
+
+- (void)maybeShowRestrictedPublishingAlertAndContinueWith:(SEL)aSelector;
+{
+	if (nil == gRegistrationString)	// check registration
+	{
+		// Further check... see if we have too many pages to publish
+		NSArray *pages = [[[self document] managedObjectContext] fetchAllObjectsForEntityForName:@"Page" error:NULL];
+		unsigned int pageCount = 0;
+		if ( nil != pages )
+		{
+			pageCount = [pages count]; // according to mmalc, this is the only way to get this kind of count
+		}
+		
+		if (pageCount > kMaxNumberOfFreePublishedPages)
+		{
+			KSSilencingConfirmSheet *sheet = [[[KSSilencingConfirmSheet alloc]
+											   initWithWindow:[self window]
+											   silencingKey:@"shutUpDemoUploadWarning"
+											   canCancel:YES
+											   OKButton:nil
+											   silence:nil	// default button
+											   title:NSLocalizedString(@"Restricted Publishing", @"title of alert")
+											   message:
+											   [NSString stringWithFormat:NSLocalizedString(@"You are running the free edition of Sandvox. Only the first %d pages will be exported or uploaded. To publish additional pages, you will need to purchase a license.",@""), kMaxNumberOfFreePublishedPages]
+											   ] autorelease];
+			
+			sheet.invocation = [NSInvocation invocationWithSelector:aSelector target:self];
+			sheet.target = self;
+
+			[sheet doAlert];		// may or may not actually alert, but the invocation will happen
+		}
+		else
+		{
+			NSInvocation *nextStep = [NSInvocation invocationWithSelector:aSelector target:self];
+			[nextStep invoke];
+		}
+	}
+	else
+	{
+		NSInvocation *nextStep = [NSInvocation invocationWithSelector:aSelector target:self];
+		[nextStep invoke];
+	}
+}
 
 - (IBAction)publishSiteChanges:(id)sender
 {
-    if (![self shouldPublish]) return;
-    
-    
+	if (![self tryToEndEditing]) return;
+    if (![self shouldPublishWithWarningIfNo]) return;
+	[self maybeShowRestrictedPublishingAlertAndContinueWith:@selector(_publishSiteChanges)];
+}
+- (void)_publishSiteChanges
+{
     // Start publishing
 	Class publishingEngineClass = [self publishingEngineClass];
     KTPublishingEngine *publishingEngine = [[publishingEngineClass alloc] initWithSite:[[self document] site]
@@ -54,9 +114,12 @@
 
 - (IBAction)publishSiteAll:(id)sender
 {
-    if (![self shouldPublish]) return;
-    
-    
+	if (![self tryToEndEditing]) return;
+    if (![self shouldPublishWithWarningIfNo]) return;
+	[self maybeShowRestrictedPublishingAlertAndContinueWith:@selector(_publishSiteAll)];
+}
+- (void)_publishSiteAll
+{
     // Start publishing
     Class publishingEngineClass = [self publishingEngineClass];
     KTPublishingEngine *publishingEngine = [[publishingEngineClass alloc] initWithSite:[[self document] site]
@@ -70,11 +133,13 @@
     [windowController release];
 }
 
-/*  Usually acts just like -publishSiteChanges: but calls -publishEntireSite: if the Option key is pressed
+/*  Usually acts just like -publishSiteChanges: but calls -publishEntireSite: if the Option key is pressed (when there is no PublishAll)
  */
 - (IBAction)publishSiteFromToolbar:(NSToolbarItem *)sender;
 {
-    if ([[NSApp currentEvent] modifierFlags] & NSAlternateKeyMask)
+	NSToolbarItem *publishAllToolbarItem = [[[self window] toolbar] itemWithIdentifier:@"publishAll"];
+
+    if (!publishAllToolbarItem && ([[NSApp currentEvent] modifierFlags] & NSAlternateKeyMask) )
     {
         [self publishSiteAll:sender];
     }
@@ -84,38 +149,40 @@
     }
 }
 
+- (BOOL)tryToEndEditing;
+{
+    BOOL result = [[self pagesController] commitEditing];
+    if (result) result = [[[[self webContentAreaController] webEditorViewController] graphicsController] commitEditing];
+	return result;
+}
 /*  Disallow publishing if the user hasn't been through host setup yet
  */
-- (BOOL)shouldPublish
+- (BOOL)shouldPublishWithWarningIfNo
 {
-    BOOL result = [[self webViewController] commitEditing];
-    [[self siteOutlineController] commitEditing];
-
-    result = ([[[[self document] site] hostProperties] siteURL] != nil);
+    BOOL result = NO;
     
-    if (result)
+    // Check host setup
+    KTHostProperties *hostProperties = [[[self document] site] hostProperties];
+    BOOL localHosting = [[hostProperties valueForKey:@"localHosting"] intValue];    // Taken from
+    BOOL remoteHosting = [[hostProperties valueForKey:@"remoteHosting"] intValue];  // KTHostSetupController.m
+    
+    result = ((localHosting || remoteHosting) && [hostProperties siteURL] != nil);
+        
+    if (!result)
     {
-        KTHostProperties *hostProperties = [[[self site] documentInfo] hostProperties];
-        BOOL localHosting = [[hostProperties valueForKey:@"localHosting"] intValue];    // Taken from
-        BOOL remoteHosting = [[hostProperties valueForKey:@"remoteHosting"] intValue];  // KTHostSetupController.m
+        // Tell the user why
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert setMessageText:NSLocalizedString(@"This website is not set up to be published on this computer or on another host.", @"Hosting not setup")];
+        [alert setInformativeText:NSLocalizedString(@"Please set up the site for publishing, or export it to a folder instead.", @"Hosting not setup")];
+        [alert addButtonWithTitle:[TOOLBAR_SETUP_HOST stringByAppendingString:NSLocalizedString(@"\\U2026", @"ellipses appended to command, meaning there will be confirmation alert.  Probably spaces before in French.")]];
+        [alert addButtonWithTitle:NSLocalizedString(@"Cancel", "Cancel Button")];
+        [alert addButtonWithTitle:NSLocalizedString(@"Export…", @"button title")];
         
-        result = ((localHosting || remoteHosting) && [hostProperties siteURL] != nil);
-        
-        if (!result)
-        {
-            // Tell the user why
-            NSAlert *alert = [[NSAlert alloc] init];    // Will be released when it ends
-            [alert setMessageText:NSLocalizedString(@"This website is not set up to be published on this computer or on another host.", @"Hosting not setup")];
-            [alert setInformativeText:NSLocalizedString(@"Please set up the site for publishing, or export it to a folder instead.", @"Hosting not setup")];
-            [alert addButtonWithTitle:TOOLBAR_SETUP_HOST];
-            [alert addButtonWithTitle:NSLocalizedString(@"Cancel", "Cancel Button")];
-            [alert addButtonWithTitle:NSLocalizedString(@"Export…", @"button title")];
-            
-            [alert beginSheetModalForWindow:[self window]
-                              modalDelegate:self
-                             didEndSelector:@selector(setupHostBeforePublishingAlertDidEnd:returnCode:contextInfo:)
-                                contextInfo:NULL];
-        }
+        [alert beginSheetModalForWindow:[self window]
+                          modalDelegate:self
+                         didEndSelector:@selector(setupHostBeforePublishingAlertDidEnd:returnCode:contextInfo:)
+                            contextInfo:NULL];
+        [alert release];	// will be dealloced when alert is dismissed
     }
     
     return result;
@@ -152,8 +219,6 @@
     {
         [self exportSite:self];
     }
-    
-    [alert release];
 }
 
 - (void)noChangesToPublishAlertDidEnd:(NSAlert *)alert returnCode:(int)returnCode contextInfo:(void *)contextInfo
@@ -167,7 +232,6 @@
     }
 }
 
-#pragma mark -
 #pragma mark Site Export
 
 /*  Puts up a sheet for the user to pick an export location, then starts up the publishing engine.
@@ -195,7 +259,7 @@
     }
     
     
-    NSString *exportDirectoryPath = [[[self document] site] lastExportDirectoryPath];
+    NSString *exportDirectoryPath = [[[self document] lastExportDirectory] path];
     
     [savePanel beginSheetForDirectory:[exportDirectoryPath stringByDeletingLastPathComponent]
                                  file:[exportDirectoryPath lastPathComponent]
@@ -208,7 +272,10 @@
 
 - (IBAction)exportSiteAgain:(id)sender
 {
-    NSString *exportDirectoryPath = [[[self document] site] lastExportDirectoryPath];
+    if (![self tryToEndEditing]) return;
+	
+    
+    NSString *exportDirectoryPath = [[[self document] lastExportDirectory] path];
     if (exportDirectoryPath)
     {
         // Start publishing
@@ -241,15 +308,19 @@
         if (returnCode == NSOKButton)
         {
             KTHostProperties *hostProperties = [[[self document] site] hostProperties];
-            [hostProperties setValue:[[controller siteURL] absoluteString] forKey:@"stemURL"];
-            
-            // host properties has an insane design from the 1.0 days. May need to reset localHosting value for stemURL to take effect. #43405
-            if (![hostProperties siteURL])
+            NSString *siteURLString = [[controller siteURL] absoluteString];
+            if (![siteURLString isEqualToString:[[hostProperties siteURL] absoluteString]])
             {
-                [hostProperties setValue:nil forKey:@"localHosting"];
-            }
+                [hostProperties setStemURL:siteURLString];
             
-            [[[[self document] site] root] recursivelyInvalidateURL:YES];
+                // host properties has an insane design from the 1.0 days. May need to reset localHosting value for stemURL to take effect. #43405
+                if (![hostProperties siteURL])
+                {
+                    [hostProperties setValue:nil forKey:@"localHosting"];
+                }
+                
+                [[[[self document] site] rootPage] recursivelyInvalidateURL:YES];
+            }
         }
         
         [savePanel setDelegate:nil];
@@ -264,8 +335,43 @@
     [savePanel orderOut:self];
     
     // Store the path and kick off exporting
-    [[[self document] site] setLastExportDirectoryPath:[savePanel filename]];
+    [[self document] setLastExportDirectory:[NSURL fileURLWithPath:[savePanel filename]]];
     [self exportSiteAgain:self];
+}
+
+#pragma mark Open in Web Browser
+
+- (IBAction)visitPublishedSite:(id)sender
+{
+	NSURL *siteURL = [[[[self document] site] rootPage] URL];
+	if (siteURL)
+	{
+		[KSWORKSPACE attemptToOpenWebURL:siteURL];
+	}
+}
+
+- (IBAction)visitPublishedPage:(id)sender
+{
+	NSURL *pageURL = [[[[self siteOutlineViewController] content] selection] valueForKey:@"URL"];
+	if (pageURL && !NSIsControllerMarker(pageURL))
+	{
+		[KSWORKSPACE attemptToOpenWebURL:pageURL];
+	}
+}
+
+- (IBAction)submitSiteToDirectory:(id)sender;
+{
+	NSURL *siteURL = [[[[self document] site] rootPage] URL];
+	NSURL *submissionURL = [[NSURL URLWithString:@"http://www.sandvoxsites.com/submit_from_app.php"]
+                            ks_URLWithQueryParameters:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                       [siteURL absoluteString], @"url",
+                                                       gRegistrationString, @"reg",
+                                                       nil]];
+	
+	if (submissionURL)
+	{
+		[KSWORKSPACE attemptToOpenWebURL:submissionURL];
+	}
 }
 
 @end

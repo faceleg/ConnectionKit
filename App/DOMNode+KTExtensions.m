@@ -3,19 +3,16 @@
 //  Marvel
 //
 //  Created by Terrence Talbot on 5/4/05.
-//  Copyright 2005-2009 Karelia Software. All rights reserved.
+//  Copyright 2005-2011 Karelia Software. All rights reserved.
 //
 
 #import "DOMNode+KTExtensions.h"
 
-#import "KTAbstractElement+Internal.h"
-#import "KTMediaContainer.h"
-#import "KTMediaManager.h"
 #import "NSColor+Karelia.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
-#import "NSURL+Karelia.h"
+#import "KSURLFormatter.h"
 
 #import <WebKit/WebKit.h>
 #import "DOMNodeList+KTExtensions.h"
@@ -25,14 +22,8 @@
 #import "Debug.h"
 
 
-static NSSet *sTagsWithNewlineOnOpen  = nil;
-static NSSet *sTagsThatCanBeSelfClosed  = nil;
-static NSSet *sTagsWithNewlineOnClose = nil;
-
-
 @interface DOMNode (KTExtensionsPrivate)
 - (DOMNode *)unlink;
-- (void)combineAdjacentRedundantNodes;
 - (NSString *)textContent;
 @end
 
@@ -152,7 +143,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
  */
 - (DOMNode *)descendantNodeAtIndexPath:(NSIndexPath *)indexPath
 {
-	DOMNode *result = nil;
+	DOMNode *result = self; // empty paths should return self
 	
 	DOMNode *aParentNode = self;
 	unsigned position;
@@ -187,6 +178,8 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 {
 	NSIndexPath *result = nil;
 	
+    if (node == self) return [NSIndexPath indexPathWithIndexes:NULL length:0];
+    
 	DOMNode *parent = [self parentNode];
 	if (parent)
 	{
@@ -210,9 +203,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 
 /*! recursive method that returns all instances of a particular element */
 
-// TODO: this could be rewritten to use DOMNodeIterator, perhaps faster
-
-- (NSArray *)childrenOfClass:(Class)aClass
+- (NSArray *)sv_descendantNodesOfClass:(Class)aClass
 {
 	NSMutableArray *array = [NSMutableArray array];
 	
@@ -223,13 +214,15 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 	 
 	if ( [self hasChildNodes] )
 	{
-		DOMNodeList *nodes = [self childNodes];
+		// This could potentially be rewritten to use DOMNodeIterator, perhaps faster
+        
+        DOMNodeList *nodes = [self childNodes];
 		int i;
 		int length = [nodes length];
 		for ( i=0; i<length; i++ )
 		{
 			id node = [nodes item:i];
-			[array addObjectsFromArray:[node childrenOfClass:aClass]];
+			[array addObjectsFromArray:[node sv_descendantNodesOfClass:aClass]];
 		}
 	}
 	
@@ -238,55 +231,30 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 
 - (NSArray *)anchorElements
 {
-	return [self childrenOfClass:[DOMHTMLAnchorElement class]];
+	return [self sv_descendantNodesOfClass:[DOMHTMLAnchorElement class]];
 }
 
 - (NSArray *)divElements
 {
-	return [self childrenOfClass:[DOMHTMLDivElement class]];
+	return [self sv_descendantNodesOfClass:[DOMHTMLDivElement class]];
 }
 
 - (NSArray *)imageElements
 {
-	return [self childrenOfClass:[DOMHTMLImageElement class]];
+	return [self sv_descendantNodesOfClass:[DOMHTMLImageElement class]];
 }
 
 - (NSArray *)linkElements
 {
-	return [self childrenOfClass:[DOMHTMLLinkElement class]];
+	return [self sv_descendantNodesOfClass:[DOMHTMLLinkElement class]];
 }
 
 - (NSArray *)objectElements
 {
-	return [self childrenOfClass:[DOMHTMLObjectElement class]];
+	return [self sv_descendantNodesOfClass:[DOMHTMLObjectElement class]];
 }
 
 #pragma mark inner/outer HTML
-
-- (NSString *)cleanedInnerHTML
-{
-	NSMutableString *output = [NSMutableString string];
-	if ([self hasChildNodes])
-	{
-		DOMNodeList *childNodes = [self childNodes];
-		int i, length = [childNodes length];
-		for (i = 0 ; i < length ; i++)
-		{
-			[output appendString:[[childNodes item:i] cleanedOuterHTML]];			// <----- RECURSION POINT
-		}
-	}
-	return output;
-}
-
-/*!	Fallback -- should NOT be called.  If it is, we need to implement something.
-*/
-- (NSString *)cleanedOuterHTML
-{
-	[self notImplemented:_cmd];
-	return nil;
-}
-
-
 
 - (void)makePlainTextWithSingleLine:(BOOL)aSingleLine
 {
@@ -316,81 +284,6 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 	[self appendChild:newChild];
 }
 
-/*!	Ignore everything after the first line
-*/
-- (void)makeSingleLine;
-{
-	DOMNodeIterator *it = [[self ownerDocument] createNodeIterator:self whatToShow:DOM_SHOW_TEXT filter:nil expandEntityReferences:YES];
-	DOMNode *subNode;
-	
-	
-	while ((subNode = [it nextNode]))
-	{
-		NSString *theString = [subNode nodeValue];
-		if (NSNotFound != [theString rangeOfString:@"\n"].location)
-		{
-			NSString *newString = [theString condenseWhiteSpace];
-			if ([newString isEqualToString:@""])
-			{
-				[[subNode parentNode] removeChild:subNode];
-			}
-			else
-			{
-				[((DOMCharacterData *)subNode) setData:newString];
-			}
-		}
-	}
-	
-	/* MAYBE BETTER TO DO: 	BOOL isRemoving = NO;
-	
-	// Iterate through text.  When newline is found, delete everything after that.
-	while ((subNode = [it nextNode]))
-	{
-		if (isRemoving)
-		{
-			[[subNode parentNode] removeChild:subNode];
-		}
-		else
-		{
-			NSString *theString = [subNode nodeValue];
-			NSRange *whereNewline = [theString rangeOfString:@"\n"]
-				if (NSNotFound != whereNewline.location)
-				{
-					isRemoving = YES;
-					NSString *newString = [theString substringToIndex:whereNewline];
-					if ([newString isEqualToString:@""])
-					{
-						[[subNode parentNode] removeChild:subNode];
-					}
-					else
-					{
-						[((DOMCharacterData *)subNode) setData:newString];
-					}
-				}
-		}
-	}
-*/	
-	
-	// also remove graphics and unlink anchors & paragraphs from a single line
-	it = [[self ownerDocument] createNodeIterator:self whatToShow:DOM_SHOW_ELEMENT filter:nil expandEntityReferences:YES];
-	
-	while ((subNode = [it nextNode]))
-	{
-		DOMElement *theElement = (DOMElement *)subNode;
-		if ([[theElement tagName] isEqualToString:@"IMG"] || [[theElement tagName] isEqualToString:@"OBJECT"]  || [[theElement tagName] isEqualToString:@"A"])
-		{
-			[[theElement parentNode] removeChild:theElement];
-		}
-		else if ( [[theElement tagName] isEqualToString:@"P"] || [[theElement tagName] isEqualToString:@"BR"] || [[theElement tagName] isEqualToString:@"A"] )
-		{
-			[theElement unlink];
-		}
-	}
-	// remove adjacent elements, which in a single line, are redundant.
-	[self combineAdjacentRedundantNodes];
-}
-
-
 #pragma mark -
 #pragma mark Media
 
@@ -403,9 +296,8 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 	}
 	
 	
-	NSEnumerator *divsEnumerator = [divElements objectEnumerator];
 	DOMHTMLDivElement *aDiv;
-	while (aDiv = [divsEnumerator nextObject])
+	for (aDiv in divElements)
 	{
 		if ([[aDiv childNodes] length] != 1 || ![[aDiv firstChild] isKindOfClass:[DOMText class]])
 		{
@@ -413,7 +305,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 		}
 		
 		NSString *URLString = [(DOMText *)[aDiv firstChild] data];     // The URL string WebKit hands us MUST be encoded
-        NSURL *URL = [NSURL URLWithUnescapedString:URLString];   // again in order for NSURL to accept it
+        NSURL *URL = [KSURLFormatter URLFromString:URLString];   // again in order for NSURL to accept it
 		if (!URL || ![URL isFileURL])
 		{
 			return NO;
@@ -424,54 +316,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 }
 
 
-/*	Run through our child nodes, converting the source of any images to use the
- *	media:// URL scheme.
- *	This method is implemented for both DOMNode and DOMElement since only DOMElement supports the
- *	-getElementsByTagName: method.
- */
-- (void)convertImageSourcesToUseSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractElement *)plugin;
-{
-	// Since we're a DOMNode, ask evey child to do this method.
-	DOMNodeList *children = [self childNodes];
-	unsigned i;
-	for (i=0; i<[children length]; i++)
-	{
-		[[children item:i] convertImageSourcesToUseSettingsNamed:settingsName forPlugin:plugin];
-	}
-}
-
 #pragma mark Additional Utility operations
-
-/*!	When nodes next to each other are the same, like <b>foo</b><b>bar</b> this combines them.
- *
- // TODO:   I know -normalize does this for text nodes. We should check if it works for <b> elements etc.
- //         Then either remove this method, or rename it to have "nromalize" in the name.
-*/
-- (void)combineAdjacentRedundantNodes
-{
-	if ([self hasChildNodes])
-	{
-		DOMNodeList *childNodes = [self childNodes];
-		int i, length = [childNodes length];
-		NSString *followingNodeName = nil;
-		for (i = length-1 ; i >=0 ; i--)	// backwards
-		{
-			DOMNode *child = [childNodes item:i];
-			if ([[child nodeName] isEqualToString:followingNodeName])
-			{
-				DOMNode *followingChild = [childNodes item:i+1];
-				DOMNodeList *followingGrandchildren = [followingChild childNodes];
-				[child appendChildren:followingGrandchildren];
-				[self removeChild:followingChild];		// done with following child
-			}
-			else
-			{
-				followingNodeName = [child nodeName];
-			}
-		}
-	}
-	[self normalize];
-}
 
 - (void) appendChildren:(DOMNodeList *)aList
 {
@@ -526,54 +371,11 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 			}
 		}
 	}
-	NSEnumerator *e = [nodesToUnlink objectEnumerator];
 	DOMElement *theElement;
-	while ((theElement = [e nextObject])) {
+	for (theElement in nodesToUnlink) {
 		(void)[theElement unlink];
 	}
 }
-
-/*!	Called from javascript "replaceElement" ... pressing of "+" button ... puts back an element that was empty
-*/
-- (DOMHTMLElement *)replaceWithElementName:(NSString *)anElement elementClass:(NSString *)aClass elementID:(NSString *)anID text:(NSString *)aText innerSpan:(BOOL)aSpan innerParagraph:(BOOL)aParagraph
-{
-	DOMDocument *doc = [self ownerDocument];
-	DOMText *text = [doc createTextNode:aText];
-	
-	DOMHTMLElement *element = (DOMHTMLElement *)[doc createElement:anElement];
-	[element setClassName:aClass];
-	[element setIdName:anID];
-	[element setContentEditable:@"true"];
-	
-	if (aSpan)
-	{
-		DOMHTMLElement *span = (DOMHTMLElement *)[doc createElement:@"SPAN"];
-		[span setAttribute:@"class" value:@"in"];
-	
-		[span appendChild:text];
-		[element appendChild:span];
-	}
-	else if ([anElement isEqualToString:@"SPAN"])
-    {
-        [element appendChild:text];
-    }
-    else
-	{
-// OLD BEHAVIOR -- JUST THE TEXT.  INSTEAD, WE WILL PUT THAT INTO A <P>		[element appendChild:text];
-		
-		DOMHTMLElement *p = (DOMHTMLElement *)[doc createElement:@"P"];
-		[p appendChild:text];
-		[element appendChild:p];
-	}
-		
-    WebView *webView = [[doc webFrame] webView];
-	[webView replaceNode:self withNode:element];
-
-	NSUndoManager *undoManager = [webView undoManager];
-	[undoManager setActionName:NSLocalizedString(@"Insert Text","ActionName: Insert Text")];
-	return element;	// new node
-}
-
 
 - (DOMNode *) removeStylesRecursive
 {
@@ -593,26 +395,6 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 }
 
 
-
-/*!	General case  .... look in child nodes and process there.  We call this when we want to recurse
-*/
-
-- (DOMNode *) removeJunkRecursiveRestrictive:(BOOL)aRestrictive allowEmptyParagraphs:(BOOL)anAllowEmptyParagraphs
-{
-	if ([self hasChildNodes])
-	{
-		DOMNode *child;
-		for ( child = [self firstChild]; nil != child; )
-		{
-			DOMNode *next = [child nextSibling];		// get it in advance just in case we deleted this child
-			(void) [child removeJunkRecursiveRestrictive:aRestrictive allowEmptyParagraphs:anAllowEmptyParagraphs];
-			
-			// Point to the sibling to process, which we already fetched
-			child = next;
-		}
-	}
-	return self;
-}
 
 - (DOMNode *) replaceFakeCDataWithCDATA	// replace "fakecdata" tag with #TEXT underneath to real CDATA.  Returns new node.
 {
@@ -657,92 +439,6 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 
 @end
 
-
-// FIXME: These methods do not account for removing the undo history once the enclosing WebFrame goes away
-
-@implementation DOMNode ( KTUndo )
-
-/*! by passing the parent as an argument, NSInvocation retains parent making this method suitable for Undo */
-+ (DOMNode *)node:(DOMNode *)parent appendChild:(DOMNode *)child
-{
-	DOMDocument *doc = [parent ownerDocument];
-	NSUndoManager *undoManager = [[[doc webFrame] webView] undoManager];
-	
-	// to undo appendChild:, we simply remove the child
-	[[undoManager prepareWithInvocationTarget:[DOMNode class]] node:parent removeChild:child];
-	
-	return [parent appendChild:child];
-}
-
-+ (DOMNode *)node:(DOMNode *)parent insertBefore:(DOMNode *)newChild :(DOMNode *)refChild
-{
-	DOMDocument *doc = [parent ownerDocument];
-	NSUndoManager *undoManager = [[[doc webFrame] webView] undoManager];
-	
-	// to undo insertBefore::, we remove the newChild
-	[[undoManager prepareWithInvocationTarget:[DOMNode class]] node:parent removeChild:newChild];
-	
-	return [parent insertBefore:newChild refChild:refChild];	
-}
-
-+ (DOMNode *)node:(DOMNode *)parent removeChild:(DOMNode *)child
-{
-	DOMDocument *doc = [parent ownerDocument];
-	NSUndoManager *undoManager = [[[doc webFrame] webView] undoManager];
-	
-	// to undo removeChild:, we need to insertBefore:: the correct node
-	DOMNode *nextSibling = [child nextSibling];
-	if ( nil != nextSibling )
-	{
-		[[undoManager prepareWithInvocationTarget:[DOMNode class]] node:parent insertBefore:child :nextSibling];
-	}
-	else
-	{
-		// if there's no nextSibling, we can just appendChild:
-		[[undoManager prepareWithInvocationTarget:[DOMNode class]] node:parent appendChild:child];
-	}
-	
-	return [parent removeChild:child];
-}
-
-@end
-
-@implementation DOMHTMLAnchorElement ( KTUndo )
-+ (void)element:(DOMHTMLAnchorElement *)anchor setHref:(NSString *)anHref target:(NSString *)aTarget
-{
-	DOMDocument *doc = [anchor ownerDocument];
-	NSUndoManager *undoManager = [[[doc webFrame] webView] undoManager];
-	
-	// to undo, simply set the original properties
-	[[undoManager prepareWithInvocationTarget:[DOMHTMLAnchorElement class]] element:anchor 
-																			setHref:[anchor href] 
-																			 target:[anchor target]];
-	
-	[anchor setHref:anHref];
-	if ( nil != aTarget )
-	{
-		[anchor setTarget:aTarget];
-	}
-	else
-	{
-		[anchor removeAttribute:@"target"];
-	}
-}
-@end
-
-#pragma mark -
-
-
-@implementation DOMAttr ( KTExtensions )
-
-- (NSString *)cleanedOuterHTML
-{
-	NSString *result = [NSString stringWithFormat:@"%@=\"%@\"", [[self name] lowercaseString], [[self value] stringByEscapingHTMLEntities] ];	// escape entities properly
-	return result;
-}
-@end
-
-
 #pragma mark -
 
 
@@ -768,7 +464,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 		if (NSNotFound != whereColon.location)
 		{
 			key = [keyValue substringToIndex:whereColon.location];
-			value = [[keyValue substringFromIndex:NSMaxRange(whereColon)] trim];
+			value = [[keyValue substringFromIndex:NSMaxRange(whereColon)] stringByTrimmingWhitespace];
 		}
 		else
 		{
@@ -984,210 +680,13 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 }
 
 
-- (NSString *)cleanedOuterHTML
-{
-	return [self cleanedOuterHTMLWithInnards:YES];
-}
-
-- (NSString *)cleanedOuterHTMLWithInnards:(BOOL)aFlag
-{
-	NSMutableString *output = [NSMutableString string];
-	NSString *tagName = [[self tagName] lowercaseString];
-	[output appendFormat:@"<%@", tagName];
-	if ([self hasAttributes])
-	{
-		[output appendFormat:@" "];
-		DOMNamedNodeMap *attrMap = [self attributes];
-		int i;
-		int length = [attrMap length];
-		for ( i = 0 ; i < length ; i++ )
-		{
-			DOMNode *oneAttr = [attrMap item:i];
-			[output appendString:[oneAttr cleanedOuterHTML] ];
-			[output appendString:@" "];
-		}
-		// delete last space
-		[output deleteCharactersInRange:NSMakeRange([output length] - 1, 1)];
-	}
-	
-	if (nil == sTagsThatCanBeSelfClosed)
-	{
-		sTagsThatCanBeSelfClosed = [[NSSet alloc] initWithObjects:@"img", @"br", @"hr", @"p", @"meta", @"link", @"base", @"param", nil];
-	}
-	
-	if ([self hasChildNodes] || ![sTagsThatCanBeSelfClosed containsObject:tagName])
-	{
-		[output appendString:@">"];		// close the node first
-		
-		if (nil == sTagsWithNewlineOnOpen)
-		{
-			sTagsWithNewlineOnOpen = [[NSSet alloc] initWithObjects:@"head", @"body", @"ul", @"ol", @"table", @"tr", nil];
-		}
-		if ([sTagsWithNewlineOnOpen containsObject:tagName])
-		{
-			[output appendString:@"\n"];
-		}
-		if (aFlag)
-		{
-			if ([self hasChildNodes])
-			{
-				[output appendString:[self cleanedInnerHTML]];		// <----- RECURSION POINT
-			}
-			[output appendFormat:@"</%@>", tagName];
-		}
-	}
-	else	// no children, self-close tag.
-	{
-		[output appendString:@" />"];
-	}
-	
-	if (aFlag)	// only deal with newline if we're doing the innards too
-	{
-		if (nil == sTagsWithNewlineOnClose)
-		{
-			sTagsWithNewlineOnClose = [[NSSet alloc] initWithObjects:@"ul", @"ol", @"table", @"li", @"p", @"h1", @"h2", @"h3", @"h4", @"blockquote", @"br", @"pre", @"td", @"tr", @"div", @"hr", nil];
-		}
-		if ([sTagsWithNewlineOnClose containsObject:tagName])
-		{
-			[output appendString:@"\n"];
-		}
-	}
-	return output;
-}
-
-/*	Run through our child nodes, converting the source of any images to use the
- *	media:// URL scheme.
- *	This method is implemented for both DOMNode and DOMElement since only DOMElement supports the
- *	-getElementsByTagName: method.
- */
-- (void)convertImageSourcesToUseSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractElement *)plugin;
-{
-	// If we're an IMG element, convert our source
-	if ([self isKindOfClass:[DOMHTMLImageElement class]])
-	{
-		[(DOMHTMLImageElement *)self convertSourceToUseSettingsNamed:settingsName forPlugin:plugin];
-	}
-	
-	// And then convert any child image elements
-	DOMNodeList *childImages = [self getElementsByTagName:@"IMG"];
-	unsigned i;
-	for (i=0; i<[childImages length]; i++)
-	{
-		[(DOMHTMLImageElement *)[childImages item:i] convertSourceToUseSettingsNamed:settingsName
-																		   forPlugin:plugin];
-	}
-}
-
 @end
 
 
 #pragma mark -
 
 
-@implementation DOMComment  ( KTExtensions )
-
-- (NSString *)cleanedOuterHTML
-{
-	NSString *comment = [self data];
-	comment = [comment stringByReplacing:@"--" with:@"- -"];	// don't allow any double-dashes!
-	return [NSString stringWithFormat:@"<!-- %@ -->", comment];
-}
-
-@end
-
-
-@implementation DOMCDATASection ( KTExtensions )
-
-- (NSString *)cleanedOuterHTML
-{
-	return [NSString stringWithFormat:@"<![CDATA[%@]]>", [self data]];
-}
-
-@end
-
-
-@implementation DOMText ( KTExtensions )
-
-- (NSString *)cleanedOuterHTML
-{
-	NSString *text = [self data];
-	
-	// Hack -- instead of escaping the whole thing, look for comment blocks, which SHOULD NOT BE IN HERE
-	// This code based on replaceAllTextBetweenString:andString:fromDictionary:
-	
-	NSString *startDelim = @"<!--";
-	NSString *endDelim = @"-->";
-	
-	NSRange range = NSMakeRange(0,[text length]);	// We'll increment this
-	NSMutableString *buf = [NSMutableString string];
-		
-	// Now loop through; looking.
-	while (range.length != 0)
-	{
-		NSRange foundRange = [text rangeFromString:startDelim toString:endDelim options:0 range:range];
-		if (foundRange.location != NSNotFound)
-		{
-			// First, append what was the search range and the found range -- before match -- to output
-		{
-			NSRange beforeRange = NSMakeRange(range.location, foundRange.location - range.location);
-			NSString *before = [text substringWithRange:beforeRange];
-			[buf appendString:[before stringByEscapingHTMLEntities]];
-		}
-			// Now, figure out what was between those two strings
-			{
-				NSRange betweenRange = NSMakeRange(foundRange.location, foundRange.length);
-				NSString *between = [text substringWithRange:betweenRange];
-				[buf appendString:between];		// not escaped
-			}
-			// Now, update things and move on.
-			range.length = NSMaxRange(range) - NSMaxRange(foundRange);
-			range.location = NSMaxRange(foundRange);
-		}
-		else
-		{
-			NSString *after = [text substringWithRange:range];
-			[buf appendString:[after stringByEscapingHTMLEntities]];
-			// Now, update to be past the range, to finish up.
-			range.location = NSMaxRange(range);
-			range.length = 0;
-		}
-	}
-	
-/// Fixed in r18043 so we don't need it here, this should take out problem I was having with two spaces in a comment
-//#warning PATCH here to deal with WEBKIT BUG -- 10636   http://bugs.webkit.org/show_bug.cgi?id=10636
-//	if ([self respondsToSelector:@selector(isContentEditable)] && [(DOMHTMLElement *)self isContentEditable])
-//	{
-//		NSString *twoSpaces = @"  ";
-//		NSString *nbsp = [NSString stringWithUTF8String:"\xc2\xa0"]; // non-breaking-space
-//		NSString *replacePattern = [NSString stringWithUTF8String:"\xc2\xa0 "]; // {non-breaking-space, ' '}
-//		[buf replaceOccurrencesOfString:nbsp withString:@" " options:NSLiteralSearch range:NSMakeRange(0, [buf length])];
-//		[buf replaceOccurrencesOfString:twoSpaces withString:replacePattern options:NSBackwardsSearch range:NSMakeRange(0, [buf length])];
-//	}
-	return [NSString stringWithString:buf];
-}
-
-@end
-
 @implementation DOMHTMLElement ( KTExtensions )
-
--(BOOL) hasVisibleContents
-{
-	BOOL result = ![[[self textContent] trim] isEqualToString:@""];
-	if (!result)
-	{
-		// Looks like no text, but make sure there aren't other useful tags in there
-		NSString *outerHTML = [self outerHTML];
-		BOOL hasEmbed = NSNotFound != [outerHTML rangeOfString:@"<embed" options:NSCaseInsensitiveSearch].location;
-		BOOL hasImage = NSNotFound != [outerHTML rangeOfString:@"<img" options:NSCaseInsensitiveSearch].location;
-		BOOL hasObject = NSNotFound != [outerHTML rangeOfString:@"<object" options:NSCaseInsensitiveSearch].location;
-		BOOL hasScript = NSNotFound != [outerHTML rangeOfString:@"<script" options:NSCaseInsensitiveSearch].location;
-		BOOL hasIframe = NSNotFound != [outerHTML rangeOfString:@"<iframe" options:NSCaseInsensitiveSearch].location;
-		
-		result = hasEmbed || hasImage || hasObject || hasScript || hasIframe;
-	}
-	return result;
-}
-
 
 /*!	General case  .... look in child nodes and process there.  We call this when we want to recurse
 */
@@ -1203,123 +702,5 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 	return result;
 }
 
-
-- (DOMNode *) removeJunkRecursiveRestrictive:(BOOL)aRestrictive allowEmptyParagraphs:(BOOL)anAllowEmptyParagraphs
-{
-	BOOL wasItalic = NO;
-	BOOL wasBold = NO;
-	BOOL wasTT = NO;
-	
-	if ( [[self tagName] isEqualToString:@"A"])
-	{
-		aRestrictive = YES;	// we have an A, so nestings from here on down should be restrictive
-							// to pull out pseudo-underlines.
-	}
-	
-	[self removeJunkFromAttributesRestrictive:aRestrictive wasItalic:&wasItalic wasBold:&wasBold wasTT:&wasTT];
-	[self removeJunkFromClass];
-	
-	DOMNode *result = [super removeJunkRecursiveRestrictive:aRestrictive
-									   allowEmptyParagraphs:anAllowEmptyParagraphs];		// call super to deal with children
-	
-	
-	// remove P with a BR in it.
-	if ([[((DOMElement *)result) tagName] isEqualToString:@"P"])
-	{
-		result = [(DOMElement *)result removeJunkFromParagraphAllowEmpty:(BOOL)anAllowEmptyParagraphs];
-	}
-	else if ( [[((DOMElement *)result) tagName] isEqualToString:@"LI"] && ![result hasChildNodes])
-	{
-		// Remove empty lists, which is what you get when converting rich text with lists with blank lines
-		[[result parentNode] removeChild:result];
-		return nil;
-	}
-	
-	// OK, node is still alive.  Now maybe insert b and i nodes above.
-	if (wasBold)
-	{
-		result = [result insertElementIntoTreeNamed:@"B"];
-		[result removeAnyDescendentElementsNamed:@"B"];
-	}
-	if (wasItalic)
-	{
-		result = [result insertElementIntoTreeNamed:@"I"];
-		[result removeAnyDescendentElementsNamed:@"I"];
-	}
-	if (wasTT)
-	{
-		result = [result insertElementIntoTreeNamed:@"TT"];
-		[result removeAnyDescendentElementsNamed:@"TT"];
-	}
-	[result normalize];		// coalesce stuff, like two contiguous #text nodes
-	
-	return result;
-// TODO: here I should coalesce PRE elements (with a \n #text node between) into a single PRE
-}
-
-@end
-
-
-#pragma mark -
-
-
-@implementation DOMHTMLImageElement (KTExtensions)
-
-/*	Create a media container object for our source.
- *	Then replace our source URL with an appropriate media:// one.
- *	Depending on the URL scheme, we can either use the local path, or might have to convert to
- *	data first.
- */
-- (void)convertSourceToUseSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractElement *)plugin;
-{
-	NSURL *sourceURL = [NSURL URLWithString:[self src]];
-	if (sourceURL)
-	{
-		// Create a media container from the URL.
-		KTMediaContainer *mediaContainer = nil;
-		if ([sourceURL isFileURL])
-		{
-			mediaContainer = [[plugin mediaManager] mediaContainerWithPath:[sourceURL path]];
-		}
-		else if ([[sourceURL scheme] isEqualToString:@"svxmedia"])	// Media container already exists
-		{
-			return;
-		}
-		else
-		{
-			// Pull the data for the URL from WebKit. May have to use a private method sometimes.
-			WebDataSource *dataSource = [[[self ownerDocument] webFrame] dataSource];
-			NSData *data = [[dataSource subresourceForURL:sourceURL] data];
-			if (!data && [dataSource respondsToSelector:@selector(_archivedSubresourceForURL:)])
-			{
-				data = [[dataSource performSelector:@selector(_archivedSubresourceForURL:)
-										 withObject:sourceURL] data];
-			}
-			
-			if (data)
-			{
-				NSString *UTI = [NSString UTIForFilenameExtension:[[sourceURL path] pathExtension]];
-				mediaContainer = [[plugin mediaManager] mediaContainerWithData:data
-																	  filename:@"pastedGraphic"
-																		   UTI:UTI];
-			}
-		}
-		
-		
-		// Scale the image appropriately
-		if (mediaContainer)
-		{
-			mediaContainer = [mediaContainer imageWithScalingSettingsNamed:settingsName forPlugin:plugin];
-		}
-		
-		
-		// Convert our src URL to point to the media
-		if (mediaContainer)
-		{
-			NSString *mediaURL = [[mediaContainer URIRepresentation] absoluteString];
-			[self setSrc:mediaURL];
-		}
-	}
-}
 
 @end

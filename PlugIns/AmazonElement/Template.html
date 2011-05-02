@@ -1,0 +1,77 @@
+[[if self]][[comment Didn't want to take the if statement out yet since it means changing a whole bunch of others]]
+[[if productsSuitableForPublishing]]
+[[comment WE HAVE PRODUCTS.  LET'S SHOW 'EM. ]]
+[[if layout==6]]
+<ul>
+[[foreach productsSuitableForPublishing aProduct]]
+	<li class="amazonList">
+		<p class="amazonListBulletsParagraph"><a href="[[=&aProduct.URL]]">[[=&aProduct.title]]</a></p>
+[[if showCreators&&aProduct.creator]]		<p class="amazonListBulletsParagraph">[[=&aProduct.creator]]</p>[[endif4]]
+[[if showComments&&aProduct.comment]]		<p class="amazonListBulletsParagraph"><i>[[=&aProduct.comment]]</i></p>[[endif4]]
+	</li>
+[[endForEach]]
+</ul>
+[[else3]]
+<div class="amazonList [[=layoutCSSClassName]][[if frame==1]] amazonListWhiteBackground whiteBackground[[endif4]]">
+[[if layout==8]]
+<iframe	src="[[=randomLayoutIFrameURL]][[if showPrices]][[if showNewPricesOnly]]&nou=1[[endif6]][[else5]]&npa=1[[endif5]]"
+	style="width:120px; height:240px;"
+	scrolling="no"
+	marginwidth="0"
+	marginheight="0"
+	frameborder="0">
+</iframe>
+[[else4]]
+[[foreach productsSuitableForPublishing aProduct]]
+<div class="amazonListRow [[eo]]">
+[[if layout==7]]
+[[if currentContext.liveDataFeeds]]
+<iframe	src="[[=&aProduct.enhancedDisplayIFrameURL]][[if showPrices]][[if showNewPricesOnly]]&nou=1[[endif8]][[else7]]&npa=1[[endif7]]"
+	style="width:120px; height:240px;"
+	scrolling="no"
+	marginwidth="0"
+	marginheight="0"
+	frameborder="0">
+</iframe>
+[[else6]]
+<div class="amazonListLayoutEnhanced-content" style="width:120px; height:240px; margin-left:auto; margin-right:auto;">
+    <div class="amazonListLayoutEnhanced-image"><a><img src="[[=&thumbnailPlaceholderURL]]" /></a>
+    </div>
+    <p class="amazonListLayoutEnhanced-title"><a>[[=&aProduct.title]]</a></p>
+    <p>[[=&aProduct.creator]]</p>
+    [[=writeProductPlaceholder]]
+</div>
+[[endif6]]
+[[else5]]
+[[if showThumbnails&&aProduct.publishingThumbnailURLString]]
+<a class="imageLink" href="[[=&aProduct.URL]]"><img
+	class="amazonProductThumbnail[[if frame==2]] amazonProductThumbnailFrame[[endif7]][[if frame==0]] amazonProductThumbnailNoFrame[[endif7]]"
+	src="[[if currentContext.liveDataFeeds]][[=&aProduct.publishingThumbnailURLString]][[else7]][[=&thumbnailPlaceholderURL]][[endif7]]"
+	alt="[[=&aProduct.title]]"
+	width="[[=&thumbnailWidthsString]]" /></a>
+[[endif6]]
+<div class="amazonText">
+[[if showThumbnails]]<div class="amazonListShowThumbnails">[[endif6]]
+[[if aProduct.publishingThumbnailURLString]]<div class="amazonTextWithThumbnail">[[endif6]]
+[[if showTitles]]
+<p class="amazonText"><a href="[[=&aProduct.URL]]">[[=&aProduct.title]]</a></p>
+[[endif6]]
+[[if showCreators&&aProduct.creator]]
+<p class="amazonText">[[=&aProduct.creator]]</p>
+[[endif6]]
+[[if showComments&&aProduct.comment]]
+<p class="amazonText"><i>[[=&aProduct.comment]]</i></p>
+[[endif6]]
+[[if aProduct.publishingThumbnailURLString]]</div>[[endif6]]
+[[if showThumbnails]]</div>[[endif6]]
+</div>
+[[comment This is a little hacky but it nicely stops thumbnails being taller than the div. <br style="clear:both"> doesn't work since it inserts an extra, invisible, line of text]]
+<div style="clear:both;"></div>
+[[endif5]]
+</div>
+[[endForEach]]
+[[endif4]]
+</div>
+[[endif3]]
+[[endif2]]
+[[endif]]

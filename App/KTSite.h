@@ -2,7 +2,7 @@
 //  KTSite.h
 //  Sandvox
 //
-//  Copyright (c) 2005-2008, Karelia Software. All rights reserved.
+//  Copyright (c) 2005-2011 Karelia Software. All rights reserved.
 //
 //  THIS SOFTWARE IS PROVIDED BY KARELIA SOFTWARE AND ITS CONTRIBUTORS "AS-IS"
 //  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -17,7 +17,7 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "KTManagedObject.h"
+#import "KSExtensibleManagedObject.h"
 
 
 typedef enum {
@@ -27,24 +27,29 @@ typedef enum {
 } KTCopyMediaType;
 
 
-@class KTPage, KTHostProperties;
+@class KTDocument, KTPage, KTHostProperties;
 
-@interface KTSite : KTManagedObject 
+@interface KTSite : KSExtensibleManagedObject
+{
+    KTDocument  *_document; // weak ref
+}
 
 - (NSString *)siteID;
-
-// Pages
-- (KTPage *)root;
-- (KTPage *)pageWithPreviewURLPath:(NSString *)path;
+@property(nonatomic, assign) KTDocument *document;
 
 
-- (KTCopyMediaType)copyMediaOriginals;
-- (void)setCopyMediaOriginals:(KTCopyMediaType)copy;
+#pragma mark Site Items
 
-- (NSDictionary *)metadata;
-- (void)setMetadata:(NSDictionary *)metadata;
+- (KTPage *)rootPage;
+@property(nonatomic, retain, readonly) NSSet *siteItems;
+
+
+#pragma mark Media
+@property(nonatomic, copy, readonly) NSNumber *copyMoviesIntoDocument;  // BOOL
+
 
 - (NSString *)appNameVersion;
+
 
 // UI
 - (NSRect)docWindowContentRect;
@@ -58,10 +63,10 @@ typedef enum {
 
 // Google sitemap
 - (NSString *)googleSiteMapXMLString;
+- (NSString *)publishedSitemapURLString;
 
 // Publishing
-- (KTHostProperties *)hostProperties;
-- (NSString *)lastExportDirectoryPath;
-- (void)setLastExportDirectoryPath:(NSString *)path;
+@property(nonatomic, retain, readonly) KTHostProperties *hostProperties;
+@property(nonatomic, copy) NSString *lastExportDirectoryPath;
 
 @end

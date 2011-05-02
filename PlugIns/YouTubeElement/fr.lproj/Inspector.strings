@@ -1,0 +1,23 @@
+﻿/* Class = "NSTextFieldCell"; title = "Video"; ObjectID = "485"; */
+"Video" = "Vidéo";
+
+/* Class = "NSTextFieldCell"; title = "Enter the URL, ID, or embed code of a YouTube video"; ObjectID = "491"; */
+"Enter the URL, ID, or embed code of a YouTube video" = "Saisir l’ID de l’URL ou insérer le code de la vidéo YouTube";
+
+/* Class = "NSTextFieldCell"; title = "powered by"; ObjectID = "496"; */
+"powered by" = "activé par";
+
+/* Class = "NSButtonCell"; title = "YouTube"; ObjectID = "497"; */
+"YouTube" = "YouTube";
+
+/* Class = "NSTextFieldCell"; title = "Options"; ObjectID = "535"; */
+"Options" = "Options";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "551"; */
+"Box" = "Box";
+
+/* Class = "NSButtonCell"; title = "Link to related videos after playing"; ObjectID = "566"; */
+"Link to related videos after playing" = "Créer un lien vers les vidéos connexes après la lecture";
+
+/* Class = "NSButtonCell"; title = "Widescreen"; ObjectID = "529"; */
+"Widescreen" = "Écran large";

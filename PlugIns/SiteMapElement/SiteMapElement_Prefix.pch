@@ -1,0 +1,8 @@
+//
+// Prefix header for all source files of the 'SiteMapElement' target in the 'SiteMapElement' project.
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+    #import "Macros.h"
+#endif

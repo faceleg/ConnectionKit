@@ -3,83 +3,63 @@
 //  Marvel
 //
 //  Created by Dan Wood on 5/4/05.
-//  Copyright 2005-2009 Karelia Software. All rights reserved.
+//  Copyright 2005-2011 Karelia Software. All rights reserved.
 //
 
 #import "KTDocWindowController.h"
 
-
-#import "AMRollOverButton.h"
-#import "Debug.h"
-#import "KSSilencingConfirmSheet.h"
-#import "KSTextField.h"
-#import "KSNetworkNotifier.h"
 #import "KT.h"
-#import "KTElementPlugin+DataSourceRegistration.h"
-#import "KTAbstractIndex.h"
-#import "KTAppDelegate.h"
-#import "KTApplication.h"
+#import "SVApplicationController.h"
+#import "SVArticle.h"
 #import "KTCodeInjectionController.h"
-#import "KTDesignPickerView.h"
-#import "KTDocSiteOutlineController.h"
+#import "SVDesignPickerController.h"
+#import "SVPagesController.h"
 #import "KTDocument.h"
-#import "KTSite.h"
-#import "KTDocWebViewController.h"
-#import "KTDocWindow.h"
-#import "KTElementPlugin.h"
+#import "KTElementPlugInWrapper.h"
 #import "KTHostProperties.h"
-#import "KTIndexPlugin.h"
-#import "KTInfoWindowController.h"
-#import "KTInlineImageElement.h"
-#import "KTLinkSourceView.h"
-#import "KTMediaManager+Internal.h"
+#import "SVHTMLTextBlock.h"
 #import "KTMissingMediaController.h"
 #import "KTPage+Internal.h"
-#import "KTPagelet+Internal.h"
-#import "KTPluginInspectorViewsManager.h"
+#import "SVSidebar.h"
+#import "KTSite.h"
+#import "SVSiteOutlineViewController.h"
+#import "KTSummaryWebViewTextBlock.h"
+#import "SVTextAttachment.h"
 #import "KTToolbars.h"
-#import "KTHTMLTextBlock.h"
+#import "KSSilencingConfirmSheet.h"
+#import "SVValidatorWindowController.h"
+#import "KSNetworkNotifier.h"
+#import "SVRawHTMLGraphic.h"
+#import "NSMenuItem+Karelia.h"
+#import "SVCommentsWindowController.h"
+#import "SVGoogleWindowController.h"
+#import "SVDesignsController.h"
+#import "KTDesign.h"
+
+#import "NSManagedObjectContext+KTExtensions.h"
 
 #import "NSArray+Karelia.h"
-#import "NSArray+KTExtensions.h"
 #import "NSBundle+Karelia.h"
-#import "NSCharacterSet+Karelia.h"
-#import "NSColor+Karelia.h"
 #import "NSException+Karelia.h"
-#import "NSManagedObjectContext+KTExtensions.h"
 #import "NSSet+Karelia.h"
 #import "NSObject+Karelia.h"
-#import "NSOutlineView+KTExtensions.h"
-#import "NSSortDescriptor+Karelia.h"
+#import "NSResponder+Karelia.h"
 #import "NSString+Karelia.h"
-#import "NSTextView+KTExtensions.h"
-#import "NSThread+Karelia.h"
-#import "NSURL+Karelia.h"
 #import "NSWindow+Karelia.h"
-#import "NSWorkspace+Karelia.h"
+#import "NSToolbar+Karelia.h"
 
-#import "NTBoxView.h"
 #import "KSProgressPanel.h"
 
+#import "Debug.h"
 #import "Registration.h"
-
-#import <iMediaBrowser/iMedia.h>
-#import <WebKit/WebKit.h>
+#import "MAAttachedWindow.h"
 
 NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 
-@interface KTDocWindowController (Private)
-
-// Controller chain
-- (void)removeAllChildControllers;
-
-// Actions
-- (void)showDesigns:(BOOL)inShow;
-- (void)showStatusBar:(BOOL)inShow;
-
-+ (NSSet *)windowTitleKeyPaths;
-
+@interface KTDocWindowController ()
+@property(nonatomic, retain, readwrite) SVWebContentAreaController *webContentAreaController;
+- (void)changeDesignTo:(KTDesign *)aDesign;
 @end
 
 
@@ -88,100 +68,78 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 @implementation KTDocWindowController
 
+@synthesize rawHTMLMenuItem = _rawHTMLMenuItem;
+@synthesize HTMLTextPageMenuItem = _HTMLTextPageMenuItem;
+
++ (void)initialize;
+{
+    [self exposeBinding:@"contentTitle"];
+}
+
+- (id)init
+{
+	return [self initWithWindowNibName:@"KTDocument"];
+}
+
 /*	Designated initializer.
  */
 - (id)initWithWindow:(NSWindow *)window;
 {
-	self = [super initWithWindow:window];
-	
-    if (self)
+	if (self = [super initWithWindow:window])
     {
-        _childControllers = [[NSMutableArray alloc] init];
         [self setShouldCloseDocument:YES];
     }
         
 	return self;
 }
 
-- (id)init
-{
-	self = [super initWithWindowNibName:@"KTDocument"];
-	
-	if ( nil != self )
-	{
-		// do not cascade window using size in nib
-		[self setShouldCascadeWindows:NO];
-	}
-    
-    return self;
-}
-
 - (void)dealloc
 {
-	// Get rid of the site outline controller
-	[self setSiteOutlineController:nil];
-	
-	// release my copy of the window script object.
-	[[self webViewController] setWindowScriptObject:nil];
-	
-	
-	// Dispose of the controller chain
-    [self removeAllChildControllers];
-	
+	self.designIdentityWindow = nil;		// Try doing this sooner, crash 108258
+
+	// Get rid of view controllers
+	[self setSiteOutlineViewController:nil];
+	[self setWebContentAreaController:nil];
+	[self setDesignChooserWindowController:nil];
+	self.rawHTMLMenuItem = nil;
+	self.HTMLTextPageMenuItem = nil;
+    self.HTMLEditorController = nil;
     
-	// stop observing
+    // Tear down model controller. #101246
+    [[self pagesController] unbind:NSContentSetBinding];
+    [[self pagesController] setContent:nil];
+    [self setPagesController:nil];
+    
+    // stop observing
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    // disconnect UI delegates
-    [oDesignsSplitView setDelegate:nil];
-	[oDocumentController unbind:@"contentObject"];
-    [oDocumentController setContent:nil];
-    [oSidebarSplitView setDelegate:nil];
-
     // release ivars
-	[self setContextElementInformation:nil];
-    [self setAddCollectionPopUpButton:nil];
-    [self setAddPagePopUpButton:nil];
-    [self setAddPageletPopUpButton:nil];
-    [self setSelectedDOMRange:nil];
-    [self setSelectedInlineImageElement:nil];
-    [self setSelectedPagelet:nil];
-    [self setToolbars:nil];
-    [self setWebViewTitle:nil];    
+    [myToolbars release];
+    
+    [_contentTitle release];
 	[myMasterCodeInjectionController release];
 	[myPageCodeInjectionController release];
-	[myPluginInspectorViewsManager release];
-	[myBuyNowButton release]; myBuyNowButton = nil;
 
+	
     [super dealloc];
 }
 
-// break bindings in oDocumentController
-- (void)documentControllerDeallocSupport
-{
-	[oDocumentController unbind:@"contentObject"];
-    [oDocumentController setContent:nil];
-}
-
-- (void)selectionDealloc
-{
-	[self setSelectedInlineImageElement:nil];
-    [self setSelectedPagelet:nil];
-}
+#pragma mark Window
 
 - (void)windowDidLoad
 {	
     [super windowDidLoad];
 	
-	
-	// Setup binding
-	[oDocumentController setContent:self];		// allow nib binding to the KTDocWindowController
-	
-	
-	// Now let the webview and the site outline initialize themselves.
-	[self webViewDidLoad];
-	[self linkPanelDidLoad];
-	
+    
+    // Finish setting up controllers
+    [[self pagesController] setManagedObjectContext:[[self document] managedObjectContext]];
+    [self siteOutlineViewController].displaySmallPageIcons = [[self document] displaySmallPageIcons];
+	//[[self siteOutlineViewController] setRootPage:[[[self document] site] rootPage]];
+    [[self siteOutlineViewController] setContent:[self pagesController]];
+
+	// Ready to do this now that the above has been set
+	[[self siteOutlineViewController] loadPersistentProperties];
+
 	
 	// Early on, window-related stuff
 	NSString *sizeString = [[NSUserDefaults standardUserDefaults] stringForKey:@"DefaultDocumentWindowContentSize"];
@@ -194,9 +152,8 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	}
 	
 	// Toolbar
-	[self setToolbars:[NSMutableDictionary dictionary]];
+	myToolbars = [[NSMutableDictionary alloc] init];
 	[self makeDocumentToolbar];
-	[self updatePopupButtonSizesSmall:[[self document] displaySmallPageIcons]];
 	
 	
 	// Restore the window's previous frame, if available. Always do this after loading toolbar to make rect consistent
@@ -209,290 +166,135 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	}
 	
 	
-	// Controller chain
-	[self addChildController:oPageDetailsController];
 	
-	// Design Chooser bindings
-	[oDesignsView bind:@"selectedDesign"
-			  toObject:[self siteOutlineController]
-		   withKeyPath:@"selection.master.design"
-			   options:nil];
-	
-	
-	// Split View
-	// Do not use autosave, we save this in document... [oSidebarSplitView restoreState:YES];
-	short sourceOutlineSize = [[[self document] site] integerForKey:@"sourceOutlineSize"];
-	if ( sourceOutlineSize > 0)
-	{
-		[[[self siteOutlineSplitView] subviewAtPosition:0] setDimension:sourceOutlineSize];
-		[oSidebarSplitView adjustSubviews];
-	}
-	
-	// UI setup of box views
-	[oStatusBar setDrawsFrame:YES];
-	[oStatusBar setBorderMask:NTBoxTop];
-	
-	
-	// Link Popup in address bar
-	//		[[oLinkPopup cell] setUsesItemFromMenu:NO];
-	//		[oLinkPopup setIconImage:[NSImage imageNamed:@"links"]];
-	//		[oLinkPopup setShowsMenuWhenIconClicked:YES];
-	//		[oLinkPopup setArrowImage:nil];	// we have our own arrow, thank you
-	
+    // Tie the web content area to the source list's selection
+    [[[[self webContentAreaController] webEditorViewController] pageController]
+     bind:NSManagedObjectContextBinding
+     toObject:[self siteOutlineViewController]
+     withKeyPath:@"pagesController.managedObjectContext"
+     options:nil];
+    
+    [[self webContentAreaController] bind:@"selectedPages"
+                                 toObject:[self siteOutlineViewController]
+                              withKeyPath:@"pagesController.selectedObjects"
+                                  options:nil];
+		
 	
 	
 	// Hide address bar if it's hidden (it's showing to begin with, in the nib)
-	if (![[self document] showDesigns])
-	{
-		[oDesignsSplitPane collapse];	// collapse the split pane -- without animation.
-	}
-	else	// initialize the view
-	{
-		[self splitView:oDesignsSplitView didExpand:oDesignsSplitPane];
-	}
-	
-	// Same with status bar
-	if (![[self document] displayStatusBar])
-	{
-		[self showStatusBar:NO];
-	}
-	
 	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(anyWindowWillClose:)
-												 name:NSWindowWillCloseNotification
-											   object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(updateBuyNow:)
+											 selector:@selector(updateDocWindowLicenseStatus:)
 												 name:kKSLicenseStatusChangeNotification
 											   object:nil];
-	[self updateBuyNow:nil];	// update them now
+	[self updateDocWindowLicenseStatus:nil];	// update them now
 	
 	
-	
-	[self showInfo:[[NSUserDefaults standardUserDefaults] boolForKey:@"DisplayInfo"]];
 	
 	myLastClickedPoint = NSZeroPoint;
 	
-	// register for updates
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(updateSelectedItemForDocWindow:)
-												 name:kKTItemSelectedNotification
-											   object:nil];
 	
-	//	[[NSNotificationCenter defaultCenter] addObserver:self
-	//											 selector:@selector(infoWindowMayNeedRefreshing:)
-	//												 name:kKTInfoWindowMayNeedRefreshingNotification
-	//											   object:nil];	
+    // Give focus to article
+    [[[self webContentAreaController] webEditorViewController] setArticleShouldBecomeFocusedAfterNextLoad:YES];
 	
+    
 	// Check for missing media
-	[self performSelector:@selector(checkForMissingMedia) withObject:nil afterDelay:0.0];
-	
-	
-	// LAST: clear the undo stack
-	[[self document] performSelector:@selector(processPendingChangesAndClearChangeCount)
-						  withObject:nil
-						  afterDelay:0.0];
+	//[self performSelector:@selector(checkForMissingMedia) withObject:nil afterDelay:0.0];
 }
 
-#pragma mark -
-#pragma mark Controller Chain
+#pragma mark Controllers
 
-- (id <KTDocumentControllerChain>)parentController { return nil; }
-
-- (NSArray *)childControllers { return [[_childControllers copy] autorelease]; }
-
-- (void)addChildController:(KTDocViewController *)controller
+@synthesize siteOutlineViewController = _siteOutlineViewController;
+- (void)setSiteOutlineViewController:(SVSiteOutlineViewController *)controller
 {
-    OBPRECONDITION(controller);
-    OBPRECONDITION(![controller parentController]); // The controller shouldn't already have a parent
-    
-    
-    // Patch responder chain
-    NSResponder *previousResponder = [_childControllers lastObject];
-    if (!previousResponder) previousResponder = self;
-    
-    [controller setNextResponder:[previousResponder nextResponder]];
-    [previousResponder setNextResponder:controller];
-    
-    
-    // Add to controller chain
-    [controller setParentController:self];
-    [_childControllers addObject:controller];
-}
-
-- (void)removeChildController:(KTDocViewController *)controller
-{
-    unsigned index = [_childControllers indexOfObjectIdenticalTo:controller];
-    if (index != NSNotFound)
-    {
-        // Patch responder chain
-        NSResponder *previousResponder = (index > 0) ? [_childControllers objectAtIndex:(index - 1)] : self;
-        [previousResponder setNextResponder:[controller nextResponder]];
-        [controller setNextResponder:nil];
-        
-        
-        // Remove from controller chain
-        [controller setParentController:nil];
-        [_childControllers removeObjectAtIndex:index];
-    }
-}
-
-- (void)removeAllChildControllers
-{
-    // Patch responder chain
-    KTDocViewController *lastController = [_childControllers lastObject];
-    if (lastController)
-    {
-        [self setNextResponder:[lastController nextResponder]];
-    }
-    
-    [_childControllers makeObjectsPerformSelector:@selector(setNextResponder:) withObject:nil];
-    
-    
-    // Dump controllers
-    [_childControllers makeObjectsPerformSelector:@selector(setParentController:) withObject:nil];
-    [_childControllers removeAllObjects];
-}
-
-/*	We observe notifications from the document's undo manager
- */
-- (void)setDocument:(NSDocument *)document
-{
-	// Throw away any existing plugin Inspector manager we might have otherwise it will attempt to access an invalid
-	// managed object context later.
-	[myPluginInspectorViewsManager release];	myPluginInspectorViewsManager = nil;
-	
-	
-	// Stop notifications from old doc
-	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-	[notificationCenter removeObserver:self
-								  name:NSUndoManagerWillCloseUndoGroupNotification
-								object:[[self document] undoManager]];
-    
-    
-    // Default behaviour
-	[super setDocument:document];
-	
-	
-	// Alert sub-controllers to the change
-    [[self childControllers] makeObjectsPerformSelector:@selector(setDocument:) withObject:[self document]];
-	
-	
-	// Observe new document
-    if (document)
-    {
-        [notificationCenter addObserver:self
-                               selector:@selector(undoManagerWillCloseUndoGroup:)
-                                   name:NSUndoManagerWillCloseUndoGroupNotification
-                                 object:[document undoManager]];
-    }
-}
-
-- (KTDocWindowController *)windowController { return self; }
-
-#pragma mark individual controllers
-
-- (KTDocSiteOutlineController *)siteOutlineController { return siteOutlineController; }
-
-- (void)setSiteOutlineController:(KTDocSiteOutlineController *)controller
-{
-	// Dump the old controller
-	NSSet *windowTitleKeyPaths = [[self class] windowTitleKeyPaths];
-	[[self siteOutlineController] removeObserver:self forKeyPaths:windowTitleKeyPaths];
-	
-	[[self siteOutlineController] setWindowController:nil];
-	
-	
 	// Set up the new controller
 	[controller retain];
-	[siteOutlineController release];
-	siteOutlineController = controller;
-	
-	[controller setContent:[[[self document] site] root]];
-	[controller setWindowController:self];
-	[controller addObserver:self forKeyPaths:windowTitleKeyPaths options:0 context:NULL];
+	[_siteOutlineViewController release];   _siteOutlineViewController = controller;
 }
 
-- (KTDocWebViewController *)webViewController { return webViewController; }
-
-- (void)setWebViewController:(KTDocWebViewController *)controller
+@synthesize webContentAreaController = _webContentAreaController;
+- (void)setWebContentAreaController:(SVWebContentAreaController *)controller
 {
-	// Dispose of the old controller
-    if (webViewController) [self removeChildController:webViewController];
+    [[self webContentAreaController] setDelegate:nil];
+    [self unbind:@"contentTitle"];
     
-    webViewController = controller; // Weak ref since -childControllers retains it
-    [self addChildController:controller];
+    [controller retain];
+    [_webContentAreaController release],   _webContentAreaController = controller;
+    
+    [controller setDelegate:self];
 }
 
-#pragma mark -
-#pragma mark Window Title
-
-- (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName
+@synthesize pagesController = _pagesController;
+- (void) setPagesController:(SVPagesTreeController *)controller;
 {
-	if ([[self siteOutlineController] selectedPage])
-	{
-		KTPage *selPage = [[self siteOutlineController] selectedPage];
-		NSString *titleString = [selPage windowTitle];
-		if (nil == titleString || [titleString isEqualToString:@""])
-		{
-			titleString = [selPage comboTitleText];
-		}
-		
-		return [NSString stringWithFormat:@"%@ %C %@",
-			displayName,
-			0x2014,	// em dash
-			titleString];
-	}
-	return displayName;
-}
-
-/*	When something changes to affect it, reload the window title.
- */
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context
-{
-	if ([[[self class] windowTitleKeyPaths] containsObject:keyPath])
-	{
-		[self synchronizeWindowTitleWithDocumentName];
-	}
-    else
+    if (_pagesController)
     {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:SVPagesControllerDidInsertObjectNotification object:_pagesController];
+    }
+    
+    [controller retain];
+    [_pagesController release]; _pagesController = controller;
+    
+    if (controller)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pagesControllerDidInsertObject:) name:SVPagesControllerDidInsertObjectNotification object:controller];
     }
 }
 
-+ (NSSet *)windowTitleKeyPaths
+@synthesize commentsWindowController = _commentsWindowController;
+@synthesize googleWindowController = _googleWindowController;
+
+#pragma mark Window Title
+
+/*  We append the title of our current content to the default. This gives a similar effect to the titlebar in a web browser.
+ */
+- (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName
 {
-	static NSSet *result;
-	
-	if (!result)
-	{
-		result = [[NSSet alloc] initWithObjects:@"selection.master.siteTitleHTML",
-												@"selection.master.author",
-												@"selection.windowTitle",
-												@"selection.titleText", nil];
+    SVWebContentAreaController *contentController = [self webContentAreaController];
+    
+    NSString *contentTitle = [[contentController selectedViewController] title];
+    if ([contentTitle length] > 0)
+    {
+        displayName = [displayName stringByAppendingFormat:
+                       @" — %@",    // yes, that's an em-dash
+                       contentTitle];
 	}
-	
-	return result;
+    
+    return displayName;
 }
 
-#pragma mark -
+@synthesize contentTitle = _contentTitle;
+- (void)setContentTitle:(NSString *)title
+{
+    title = [title copy];
+    [_contentTitle release]; _contentTitle = title;
+    
+    [self synchronizeWindowTitleWithDocumentName];
+}
+
+#pragma mark Inspector
+
+- (id <KSCollectionController>)objectsController;
+{
+    return [[self webContentAreaController] objectsController];
+}
+
 #pragma mark Missing Media
 
+/*
 - (void)checkForMissingMedia
 {
+    return;
+    
 	@try	// Called once the window is on-screen via a delayedPerformSelector. Therefore we have to manage exceptions ourself.
     {
         // Check for missing media files. If any are missing alert the user
-        NSSet *missingMedia = [[(KTDocument *)[self document] mediaManager] missingMediaFiles];
+        NSSet *missingMedia = [[self document] missingMedia];
         if (missingMedia && [missingMedia count] > 0)
         {
             KTMissingMediaController *missingMediaController =
 			[[KTMissingMediaController alloc] initWithWindowNibName:@"MissingMedia"];	// We'll release it after closing the sheet
             
-            [missingMediaController setMediaManager:[(KTDocument *)[self document] mediaManager]];
+            //[missingMediaController setMediaManager:[(KTDocument *)[self document] mediaManager]];
             
             NSArray *sortedMissingMedia = [missingMedia allObjects];    // Not actually performing any sorting
             [missingMediaController setMissingMedia:sortedMissingMedia];
@@ -520,198 +322,301 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		[[self window] performClose:self]; 
 	}
 }
+*/
 
-#pragma mark -
-#pragma mark Public Functions
-
-- (BOOL)sidebarIsCollapsed
-{
-	return [[oSidebarSplitView subviewAtPosition:0] isCollapsed];
-}
-
-- (void)setStatusField:(NSString *)string
-{
-	//if (nil == string) string = @"";	/// defense against nil
-	NSString *newStatus = @"";
-	if ( nil != string )
-	{
-		newStatus = [newStatus stringByAppendingString:string];
-	}
-    [oStatusBarField setStringValue:newStatus];
-	//[oStatusBarField displayIfNeeded];  // Why are we doing this? Mike.
-}
-
-- (NSString *)status
-{
-	return [oStatusBarField stringValue];
-}
-
-- (void)updatePopupButtonSizesSmall:(BOOL)aSmall;
-{
-	NSSize iconSize = aSmall ? NSMakeSize(16.0,16.0) : NSMakeSize(32.0, 32.0);
-	
-	NSArray *popupButtonsToAdjust = [NSArray arrayWithObjects:
-		[self addPagePopUpButton],
-		[self addPageletPopUpButton],
-		[self addCollectionPopUpButton],
-		nil];
-	NSEnumerator *theEnum = [popupButtonsToAdjust objectEnumerator];
-	RYZImagePopUpButton *aPopup;
-	
-	NSMutableParagraphStyle *style = [[[NSMutableParagraphStyle alloc] init] autorelease];
-	[style setMinimumLineHeight:iconSize.height];
-	
-	while (nil != (aPopup = [theEnum nextObject]) )
-	{
-		NSEnumerator *thePopupEnum = [[[aPopup menu] itemArray] objectEnumerator];
-		NSMenuItem *item;
-		
-		while (nil != (item = [thePopupEnum nextObject]) )
-		{
-			NSImage *image = [item image];
-			[image setSize:iconSize];
-			
-			// We also have to set the line height.
-			NSMutableAttributedString *titleString
-				= [[[NSMutableAttributedString alloc] initWithAttributedString:[item attributedTitle]] autorelease];
-			[titleString addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0,[titleString length])];
-			[titleString addAttribute:NSBaselineOffsetAttributeName
-								value:[NSNumber numberWithFloat:((([image size].height-[NSFont smallSystemFontSize])/2.0)+2.0)]
-								range:NSMakeRange(0,[titleString length])];
-			
-			
-			[item setAttributedTitle:titleString];
-		}
-	}
-}
-
-#pragma mark -
 #pragma mark IBActions
+
+- (IBAction)editRawHTMLInSelectedBlock:(id)sender;
+{
+	[[[self webContentAreaController] selectedViewControllerWhenReady] ks_doCommandBySelector:_cmd with:sender];
+}
+
+/*  The controller which is the real target of these actions may not be in the responder chain, so take care of passing the message on.
+ *  BUT, do I actually want to always pass this on to the web editor? Might there be times when a different controller is desired?
+ */
+- (void)insertPagelet:(id)sender;
+{
+    [[[self webContentAreaController] selectedViewControllerWhenReady]
+     ks_doCommandBySelector:_cmd with:sender];
+}
+
+- (IBAction)insertFile:(id)sender;
+{
+    [[[self webContentAreaController] selectedViewControllerWhenReady] doCommandBySelector:_cmd];
+}
+
+- (void)insertPageletTitle:(id)sender;
+{
+    [[[self webContentAreaController] selectedViewControllerWhenReady] doCommandBySelector:_cmd];
+}
+
+#pragma mark WebView Actions
+
+- (void)makeTextLarger:(id)sender;
+{
+    [[[self webContentAreaController] selectedViewControllerWhenReady] doCommandBySelector:_cmd];
+}
+
+- (void)makeTextSmaller:(id)sender;
+{
+    [[[self webContentAreaController] selectedViewControllerWhenReady] doCommandBySelector:_cmd];
+}
+
+- (void)makeTextStandardSize:(id)sender;
+{
+    [[[self webContentAreaController] selectedViewControllerWhenReady] doCommandBySelector:_cmd];
+}
+
+- (IBAction)selectWebViewViewType:(id)sender;
+{
+    [[self webContentAreaController] selectWebViewViewType:sender];
+}
+
+#pragma mark -
 
 - (IBAction)windowHelp:(id)sender
 {
 	[[NSApp delegate] showHelpPage:@"Link"];		// HELPSTRING
 }
 
-- (IBAction)visitPublishedSite:(id)sender
+#pragma mark Design Chooser
+
+@synthesize designChooserWindowController = _designChooserWindowController;
+
+- (SVDesignPickerController *)designChooserWindowController
 {
-	NSURL *siteURL = [[[[self document] site] root] URL];
-	if (siteURL)
-	{
-		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:siteURL];
+	if ( !_designChooserWindowController )
+    {
+        _designChooserWindowController = [[SVDesignPickerController alloc] init];
+		[_designChooserWindowController window];  // make sure nib is loaded
+
 	}
+	return _designChooserWindowController;
 }
 
-- (IBAction)visitPublishedPage:(id)sender
+- (IBAction)chooseDesign:(id)sender
 {
-	NSURL *pageURL = [[[self siteOutlineController] selectedPage] URL];
-	if (pageURL)
+    [self showChooseDesignSheet:sender];
+}
+
+- (IBAction)nextDesign:(id)sender;
+{
+	SVDesignsController *designsController = [[[SVDesignsController alloc] init] autorelease];
+	NSArray *arrangedObjects = [designsController arrangedObjects];
+	
+    KTDesign *design = [[self pagesController] valueForKeyPath:@"selection.master.design"];
+	KTDesign *matchingDesign = [designsController designWithIdentifier:[design identifier]];
+
+	NSUInteger index = [arrangedObjects indexOfObject:matchingDesign];
+	if (NSNotFound == index || !arrangedObjects)
 	{
-		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:pageURL];
-	}
-}
-
-- (IBAction)submitSiteToDirectory:(id)sender;
-{
-	NSURL *siteURL = [[[[self document] site] root] URL];
-	NSURL *submissionURL = [NSURL URLWithBaseURL:[NSURL URLWithString:@"http://www.sandvoxsites.com/submit_from_app.php"]
-	parameters:[NSDictionary dictionaryWithObjectsAndKeys:
-		[siteURL absoluteString], @"url",
-			gRegistrationString, @"reg",
-							  nil]];
-	
-	if (submissionURL)
-	{
-		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:submissionURL];
-	}
-}
-
-#pragma mark -
-#pragma mark Other
-
-- (IBAction)toggleDesignsShown:(id)sender
-{
-    // set value
-	BOOL value = [[self document] showDesigns];
-	BOOL newValue = !value;
-	[[self document] setShowDesigns:newValue];
-    
-	// update UI
-	[self showDesigns:newValue];
-}
-
-- (IBAction)toggleStatusBarShown:(id)sender
-{
-    // set value
-	BOOL value = [[self document] displayStatusBar];
-	BOOL newValue = !value;
-	[[self document] setDisplayStatusBar:newValue];
-	
-	// update UI
-	[self showStatusBar:newValue];
-}
-
-- (IBAction)toggleEditingControlsShown:(id)sender
-{
-    // set value
-	BOOL value = [[self document] displayEditingControls];
-	BOOL newValue = !value;
-	[[self document] setDisplayEditingControls:newValue];
-
-	// update UI
-	[self updateToolbar];
-	[[self webViewController] reloadWebView];
-}
-
-- (IBAction)toggleInfoShown:(id)sender
-{
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	
-	// reverse the flag in defaults
-	BOOL value = [defaults boolForKey:@"DisplayInfo"];
-	BOOL newValue = !value;
-	[defaults setBool:newValue forKey:@"DisplayInfo"];
-	
-	// set menu to opposite of flag
-	if ( newValue )
-	{
-		[[NSApp delegate] setDisplayInfoMenuItemTitle:KTHideInfoMenuItemTitle];
+		NSBeep();
 	}
 	else
 	{
-		[[NSApp delegate] setDisplayInfoMenuItemTitle:KTShowInfoMenuItemTitle];
-	}
-	
-	// display info, if appropriate
-	[self showInfo:newValue];
-}
-
-- (IBAction)toggleSiteOutlineShown:(id)sender
-{
-	RBSplitSubview *sidebarSplit = [oSidebarSplitView subviewAtPosition:0];
-    BOOL newValue = [sidebarSplit isCollapsed];	// opposite of current actual state
-	
-	NSWindow *window = [self window];
-	NSRect frame = [window frame];
-	
-	if (newValue)		//  FIXME: This needs new versions of RBSplitView from RB ... to deal with programatic/dragged collapses
-	{
-		[sidebarSplit expand];
-		frame.size.width += [sidebarSplit dimension];
-	}
-	else
-	{
-		[sidebarSplit collapse];
-		frame.size.width -= [sidebarSplit dimension];
-		if (frame.size.width < [window minSize].width)
+		index++;
+		if (index >= [arrangedObjects count])
 		{
-			frame.size.width = [window minSize].width;
+			index = 0;	// overflow -- loop back to the beginning
 		}
+		KTDesign *newDesign = [arrangedObjects objectAtIndex:index];
+		[self changeDesignTo:newDesign];
 	}
-	[window setFrame:frame display:NO];
-	
-	[oSidebarSplitView adjustSubviews];
 }
+
+- (IBAction)previousDesign:(id)sender;
+{
+	SVDesignsController *designsController = [[[SVDesignsController alloc] init] autorelease];
+	NSArray *arrangedObjects = [designsController arrangedObjects];
+	
+    KTDesign *design = [[self pagesController] valueForKeyPath:@"selection.master.design"];
+	KTDesign *matchingDesign = [designsController designWithIdentifier:[design identifier]];
+
+	NSUInteger index = [arrangedObjects indexOfObject:matchingDesign];
+	if (NSNotFound == index || !arrangedObjects)
+	{
+		NSBeep();
+	}
+	else
+	{
+		if (index > 0)
+		{
+			index--;
+		}
+		else	// loop to end
+		{
+			index = [arrangedObjects count] - 1;
+		}
+		KTDesign *newDesign = [arrangedObjects objectAtIndex:index];
+		[self changeDesignTo:newDesign];
+	}
+}
+
+
+- (IBAction)showChooseDesignSheet:(id)sender
+{
+    
+    KTDesign *design = [[self pagesController] valueForKeyPath:@"selection.master.design"];
+    if (NSIsControllerMarker(design)) design = nil;
+    
+    [self.designChooserWindowController setDesign:design];
+    
+    
+    [self performSelector:@selector(showDesignSheet) withObject:nil afterDelay:0.0];
+}
+
+- (void)showDesignSheet;
+{
+    // Private support method that only handles getting the sheet onscreen
+    [self.designChooserWindowController beginDesignChooserForWindow:[self window]
+													   delegate:self
+                                                     didEndSelector:@selector(designChooserDidEnd:returnCode:)];
+}
+
+@synthesize designIdentityWindow = _designIdentityWindow;
+
+- (void) setDesignIdentityWindow: (MAAttachedWindow *) aDesignIdentityWindow
+{
+	if (_designIdentityWindow)
+	{
+		[[self window] removeChildWindow:_designIdentityWindow];
+	}
+	
+    [aDesignIdentityWindow retain];
+    [_designIdentityWindow release];
+    _designIdentityWindow = aDesignIdentityWindow;
+}
+
+
+- (void) hideDesignIdentityWindow
+{
+	[[NSAnimationContext currentContext] setDuration:1.0f];
+	[_designIdentityWindow.animator setAlphaValue:0.0];	// animate closed
+	
+}
+- (void) showDesignIdentityWindow:(KTDesign *)aDesign;
+{
+	self.designIdentityWindow = nil;		// make sure old one is released before creating new one
+
+	SVWebContentAreaController *contentAreaController = [self webContentAreaController];
+	NSTabView *tabview = [contentAreaController tabView];
+
+	NSUInteger tabviewHeight = [tabview bounds].size.height;
+	NSUInteger tabviewWidth = [tabview bounds].size.width - 16;	// don't include scroll bars
+
+	NSUInteger kDesignIDWindowHeight = kDesignThumbHeight + 100;
+	NSUInteger kDesignIDWindowWidth = 350;
+
+
+	const NSUInteger kDesignIDThumbY   = 70;
+	
+	NSView *contentView = [[[NSView alloc] initWithFrame:NSMakeRect(0,0,kDesignIDWindowWidth, kDesignIDWindowHeight)] autorelease];
+	_designIdentityThumbnail = [[[NSImageView alloc] initWithFrame:
+								 NSMakeRect((kDesignIDWindowWidth- kDesignThumbWidth)/2.0,kDesignIDThumbY,
+											kDesignThumbWidth, kDesignThumbHeight)] autorelease];
+	[_designIdentityThumbnail setImageScaling:NSImageScaleProportionallyDown];
+	_designIdentityTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(0,0,kDesignIDWindowWidth, 40)];
+	[_designIdentityTitle setAlignment:NSCenterTextAlignment];
+	[[_designIdentityTitle cell] setLineBreakMode:NSLineBreakByTruncatingMiddle];
+	[_designIdentityTitle setTextColor:[NSColor whiteColor]];
+	[_designIdentityTitle setBordered:NO];
+	[_designIdentityTitle setBezeled:NO];
+	[_designIdentityTitle setSelectable:NO];
+	[_designIdentityTitle setDrawsBackground:NO];
+	[_designIdentityTitle setFont:[NSFont systemFontOfSize:[NSFont systemFontSize] * 2.0]];
+	
+	[contentView addSubview:_designIdentityThumbnail];
+	[contentView addSubview:_designIdentityTitle];
+
+	NSWindow *parentWindow = [self window];
+	
+	NSRect tabviewRectInWindow = [tabview convertRect:[tabview bounds] toView:nil];
+	
+	NSPoint attachmentPoint = NSMakePoint( tabviewRectInWindow.origin.x+ (tabviewWidth)/2.0,
+										  tabviewRectInWindow.origin.y + (tabviewHeight)/2.0);
+	_designIdentityWindow = [[MAAttachedWindow alloc]
+							 initWithView:contentView
+							 attachedToPoint:attachmentPoint
+							 inWindow:parentWindow
+							 onSide:MAPositionTop
+							 atDistance:0.0 ];
+	
+	[_designIdentityWindow setHasArrow:NO];
+	[_designIdentityWindow setBorderWidth:0.0];
+	[_designIdentityWindow setAlphaValue:0.0];		// initially ZERO ALPHA!
+
+	[parentWindow addChildWindow:_designIdentityWindow ordered:NSWindowAbove];
+
+	[_designIdentityTitle setStringValue:[aDesign title]];
+	[_designIdentityThumbnail setImage:[aDesign thumbnail]];
+	
+	[[NSAnimationContext currentContext] setDuration:0.25f];
+	[_designIdentityWindow.animator setAlphaValue:1.0];	// animate open
+	[self performSelector:@selector(hideDesignIdentityWindow) withObject:nil afterDelay:1.0];
+
+}
+
+- (void)changeDesignTo:(KTDesign *)aDesign;
+{
+	[[self pagesController] setValue:aDesign forKeyPath:@"selection.master.design"];
+	
+	
+	// Update in-design media
+	[[self document] designDidChange];
+	
+	
+	[self showDesignIdentityWindow:aDesign];
+}
+- (void)designChooserDidEnd:(SVDesignPickerController *)designChooser returnCode:(NSInteger)returnCode;
+{
+    if (returnCode == NSAlertAlternateReturn)
+    {
+        [NSApp endSheet:[designChooser window]];
+        return;
+    }
+
+    KTDesign *aDesign = [designChooser design];
+    
+	OFF((@"%s %p",__FUNCTION__, aDesign));
+    if (aDesign)
+    {
+		[self changeDesignTo:aDesign];
+    }
+}
+
+#pragma mark Editor Actions
+
+- (void)paste:(id)sender;
+{
+    [[[self webContentAreaController] selectedViewControllerWhenReady] doCommandBySelector:_cmd];
+}
+
+- (IBAction)placeInline:(id)sender;
+{
+    [[[self webContentAreaController] selectedViewControllerWhenReady] doCommandBySelector:_cmd];
+}
+
+- (IBAction)placeAsCallout:(id)sender;
+{
+    [[[self webContentAreaController] selectedViewControllerWhenReady] doCommandBySelector:_cmd];
+}
+
+- (IBAction)placeInSidebar:(id)sender;
+{
+    [[[self webContentAreaController] selectedViewControllerWhenReady] doCommandBySelector:_cmd];
+}
+
+- (void)moveToBlockLevel:(id)sender;
+{
+    [[[self webContentAreaController] selectedViewControllerWhenReady] doCommandBySelector:_cmd];
+}
+
+- (void)cleanHTML:(NSMenuItem *)sender;
+{
+    [[[self webContentAreaController] selectedViewControllerWhenReady] doCommandBySelector:_cmd];
+}
+
+#pragma mark Other
 
 - (IBAction)toggleSmallPageIcons:(id)sender
 {
@@ -719,683 +624,129 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     [[self document] setDisplaySmallPageIcons:!value];
 }
 
-- (IBAction)reloadOutline:(id)sender
-{
-	[[[self siteOutlineController] siteOutline] reloadData];
-}
-
 #pragma mark Page Actions
 
-/*! adds a new page to site outline, obtaining its class from representedObject */
-- (IBAction)addPage:(id)sender
+- (void)pagesControllerDidInsertObject:(NSNotification *)notification;
 {
-    // LOG((@"%@: addPage using bundle: %@", self, [sender representedObject]));
-	KTElementPlugin *plugin = nil;
-	if ( [sender respondsToSelector:@selector(representedObject)] )
-	{
-		plugin = [sender representedObject];
-	}
-	
-	if ( nil != plugin )
-    {
-		/// Case 17992, we now pass in a context to nearestParent
-		KTPage *nearestParent = [self nearestParent:[[self document] managedObjectContext]];
-		if ( ![nearestParent isKindOfClass:[KTPage class]] )
-		{
-			NSLog(@"unable to addPage: nearestParent is nil");
-			return;
-		}
-		
-		KTPage *page = [KTPage insertNewPageWithParent:nearestParent 
-									   plugin:plugin];
-		
-		if (page)
-		{
-			// Insert the page
-            [self insertPage:page parent:nearestParent];
-            
-            // Make the Site Outline display the new item nicely
-			[[self siteOutlineController] setSelectedObjects:[NSArray arrayWithObject:page]];
-		}
-		else
-		{
-			NSLog(@"unable to addPage: unable to create Page");
-			return;
-		}
-	}
-	else
-    {
-		NSLog(@"unable to addPage: sender has no representedObject");
-		return;
-    }
+    // As we're making a new page, give its article the focus
+    [[self webContentAreaController] setViewType:KTStandardWebView];
+    [[[self webContentAreaController] webEditorViewController] setArticleShouldBecomeFocusedAfterNextLoad:YES];
 }
 
-/*! adds a new pagelet to current page, obtaining its class from representedObject */
-- (IBAction)addPagelet:(id)sender
+- (IBAction)addPage:(id)sender;             // your basic page
 {
-    //LOG((@"%@: addPagelet using bundle: %@", self, [sender representedObject]));
-	KTElementPlugin *pageletPlugin = nil;
-	
-	if ([sender respondsToSelector:@selector(representedObject)])
-	{
-		pageletPlugin = [sender representedObject];
-	}
-	
-	if (pageletPlugin && [pageletPlugin isKindOfClass:[KTElementPlugin class]])
-    {
-		KTPage *targetPage = [[self siteOutlineController] selectedPage];
-		if (nil == targetPage)
-		{
-			// if nothing is selected, treat as if the root folder were selected
-			targetPage = [[[self document] site] root];
-		}
-		
-		KTPagelet *pagelet = [KTPagelet pageletWithPage:targetPage plugin:pageletPlugin];
-		
-		if ( nil != pagelet )
-		{
-			[self insertPagelet:pagelet toSelectedItem:targetPage];
-		}
-		else
-		{
-			[NSException raise:kKareliaDocumentException format:@"unable to create Pagelet"];
-		}
-	}
-	else
-    {
-		[NSException raise:kKareliaDocumentException
-							  reason:@"sender has no representedObject"
-							userInfo:[NSDictionary dictionaryWithObject:sender forKey:@"sender"]];
-    }
+    [[self siteOutlineViewController] addPage:sender];
 }
 
-
-/*! adds a new collection to site outline, obtaining the information of a dictionary
-from representedObject */
-
-// TODO: Perhaps a lot more of this logic ought to be moved to KTPage+Operations.m
-
-
-- (IBAction)addCollection:(id)sender
+- (IBAction)addCollection:(id)sender;       // a collection. Uses [sender representedObject] for preset info
 {
-	OBASSERTSTRING( [sender respondsToSelector:@selector(representedObject)], @"Sender needs to have a representedObject" );
-	
-	NSDictionary *presetDict= [sender representedObject];
-	NSString *identifier = [presetDict objectForKey:@"KTPresetIndexBundleIdentifier"];
-	KTIndexPlugin *indexPlugin = identifier ? [KTIndexPlugin pluginWithIdentifier:identifier] : nil;
-	
-    if ( nil != indexPlugin )
-    {		
-		NSBundle *indexBundle = [indexPlugin bundle];
-		// Figure out page type to construct based on info plist.  Be  a bit forgiving if not found.
-		NSString *pageIdentifier = [presetDict objectForKey:@"KTPreferredPageBundleIdentifier"];
-		if (nil == pageIdentifier)
-		{
-			pageIdentifier = [indexBundle objectForInfoDictionaryKey:@"KTPreferredPageBundleIdentifier"];
-		}
-		KTElementPlugin *pagePlugin = pageIdentifier ? [KTElementPlugin pluginWithIdentifier:pageIdentifier]  : nil;
-		if (nil == pagePlugin)
-		{
-			pageIdentifier = [[NSUserDefaults standardUserDefaults] objectForKey:@"DefaultIndexBundleIdentifier"];
-			pagePlugin = pageIdentifier ? [KTElementPlugin pluginWithIdentifier:pageIdentifier] : nil;
-		}
-		if (nil == pagePlugin)
-		{
-			[NSException raise: NSInternalInconsistencyException
-						format: @"Unable to create page of type %@.",
-				pageIdentifier];
-		}
-		
-		/// Case 17992, nearestParent method now requires we pass in a context
-		KTPage *nearestParent = [self nearestParent:[[self document] managedObjectContext]];
-		/// Case 17992, added assert to better detect source of exception
-		OBASSERTSTRING((nil != nearestParent), @"nearestParent should not be nil, root at worst");
-		
-		KTPage *indexPage = [KTPage insertNewPageWithParent:nearestParent plugin:pagePlugin];
-		[indexPage setBool:YES forKey:@"isCollection"]; // Duh!
-		
-		// Now set the index on the page
-		[indexPage setWrappedValue:identifier forKey:@"collectionIndexBundleIdentifier"];
-		Class indexToAllocate = [indexBundle principalClassIncludingOtherLoadedBundles:YES];
-		KTAbstractIndex *theIndex = [[((KTAbstractIndex *)[indexToAllocate alloc]) initWithPage:indexPage plugin:indexPlugin] autorelease];
-		[indexPage setIndex:theIndex];
-		
-		
-		// Now re-set title of page to be the appropriate untitled name
-		NSString *englishPresetTitle = [presetDict objectForKey:@"KTPresetUntitled"];
-		NSString *presetTitle = [indexBundle localizedStringForKey:englishPresetTitle value:englishPresetTitle table:nil];
-		
-		[indexPage setTitleText:presetTitle];
-		
-		NSDictionary *pageSettings = [presetDict objectForKey:@"KTPageSettings"];
-		[indexPage setValuesForKeysWithDictionary:pageSettings];
-		
-		[self insertPage:indexPage parent:nearestParent];
-		
-		
-		// Generate a first child page if desired
-		NSString *firstChildIdentifier = [presetDict valueForKeyPath:@"KTFirstChildSettings.pluginIdentifier"];
-		if (firstChildIdentifier && [firstChildIdentifier isKindOfClass:[NSString class]])
-		{
-			NSMutableDictionary *firstChildProperties =
-				[NSMutableDictionary dictionaryWithDictionary:[presetDict objectForKey:@"KTFirstChildSettings"]];
-			[firstChildProperties removeObjectForKey:@"pluginIdentifier"];
-			
-			KTPage *firstChild = [KTPage insertNewPageWithParent:indexPage
-												 plugin:[KTElementPlugin pluginWithIdentifier:firstChildIdentifier]];
-			
-			NSEnumerator *propertiesEnumerator = [firstChildProperties keyEnumerator];
-			NSString *aKey;
-			while (aKey = [propertiesEnumerator nextObject])
-			{
-				id aProperty = [firstChildProperties objectForKey:aKey];
-				if ([aProperty isKindOfClass:[NSString class]])
-				{
-					aProperty = [indexBundle localizedStringForKey:aProperty value:nil table:@"InfoPlist"];
-				}
-				
-				[firstChild setValue:aProperty forKey:aKey];
-			}
-		}
-		
-		
-		// Any collection with an RSS feed should have an RSS Badge.
-		if ([pageSettings boolForKey:@"collectionSyndicate"])
-		{
-			NSNumber *includeRSSBadge = [presetDict objectForKey:@"KTIncludeRSSBadge"];
-			if (!includeRSSBadge || [includeRSSBadge boolValue])
-			{
-				// Make the initial RSS badge
-				NSString *initialBadgeBundleID = [[NSUserDefaults standardUserDefaults] objectForKey:@"DefaultRSSBadgeBundleIdentifier"];
-				if (nil != initialBadgeBundleID && ![initialBadgeBundleID isEqualToString:@""])
-				{
-					KTElementPlugin *badgePlugin = [KTElementPlugin pluginWithIdentifier:initialBadgeBundleID];
-					if (badgePlugin)
-					{
-						[KTPagelet pageletWithPage:indexPage plugin:badgePlugin];
-					}
-				}
-			}
-		
-		
-			// Give weblogs special introductory text
-			if ([[presetDict objectForKey:@"KTPresetIndexBundleIdentifier"] isEqualToString:@"sandvox.GeneralIndex"])
-			{
-				NSString *intro = NSLocalizedString(@"<p>This is a new weblog. You can replace this text with an introduction to your blog, or just delete it if you wish. To add an entry to the weblog, add a new page using the \\U201CPages\\U201D button in the toolbar. For more information on blogging with Sandvox, please have a look through our <a href=\"help:Blogging_with_Sandvox\">help guide</a>.</p>",
-													"Introductory text for Weblogs");
-				
-				[indexPage setValue:intro forKey:@"richTextHTML"];
-			}
-		}
-        
-        
-        // Expand the item in the Site Outline
-        [[[self siteOutlineController] siteOutline] expandItem:indexPage];
-    }
-    else
-    {
-		[NSException raise:kKareliaDocumentException reason:@"Unable to instantiate collection"
-							userInfo:[NSDictionary dictionaryWithObject:sender forKey:@"sender"]];
-    }
+    [[self siteOutlineViewController] addCollection:sender];
 }
 
-/*! inserts aPage at the current selection */
-- (void)insertPage:(KTPage *)aPage parent:(KTPage *)aCollection
+- (IBAction)addExternalLinkPage:(id)sender; // external link
 {
-	// add component to parent
-	[aCollection addPage:aPage];
-	
-	[[self siteOutlineController] setSelectedObjects:[NSSet setWithObject:aPage]];
-	
-	// label undo and perserve the current selection
-    if ( [aPage isCollection] )
-	{
-        [[[self document] undoManager] setActionName:NSLocalizedString(@"Add Collection", "action name for adding a collection")];
-    }
-    else
-	{
-		[[[self document] undoManager] setActionName:NSLocalizedString(@"Add Page", "action name for adding a page")];
-    }
-	
-	if (([aPage boolForKey:@"includeInSiteMenu"])) 
-	{
-		////LOG((@"~~~~~~~~~ %@ calls markStale:kStaleFamily on root because included in site menu", NSStringFromSelector(_cmd)));
-		//[[aCollection root] markStale:kStaleFamily];
-	}
-	else
-	{
-		////LOG((@"~~~~~~~~~ %@ calls markStale:kStaleFamily on '%@' because page inserted but not in site menu", NSStringFromSelector(_cmd), [aCollection titleText]));
-		//[aCollection markStale:kStaleFamily];
-	}
-	
+    [[self siteOutlineViewController] addExternalLinkPage:sender];
 }
 
-/*! inserts aPagelet at the current selection.  Just insert as a sidebar; let it be moved to callout */
-- (void)insertPagelet:(KTPagelet *)aPagelet toSelectedItem:(KTPage *)selectedItem
+- (IBAction)addRawTextPage:(id)sender;      // Raw HTML page
 {
-	if ( [selectedItem isKindOfClass:[KTPage class]] )
-	{
-		if ([selectedItem includeSidebar] || [selectedItem includeCallout]) {
-			//[selectedItem insertPagelet:aPagelet atIndex:0];
-			/// There's no need to actually insert the pagelet, since creating it on this page did the job. Mike.
-		}
-		else {
-            NSBeep();
-		}
-	}
-	else
-	{
-		RAISE_EXCEPTION(kKareliaDocumentException, @"selectedItem is of unknown class", [NSDictionary dictionaryWithObject:selectedItem forKey:@"selectedItem"]);
-		return;
-	}
-	
-	// add component to parent
-	
-	// label undo and perserve the current selection
-	[[[self document] undoManager] setActionName:NSLocalizedString(@"Add Pagelet", @"action name for adding a page")];
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:kKTItemSelectedNotification object:aPagelet];
+    [[self siteOutlineViewController] addRawTextPage:sender];
 }
 
-/*! group the selection in a new summary */
-- (void)group:(id)sender
+- (IBAction)addFilePage:(id)sender;         // uses open panel to select a file, then inserts
 {
-	NSArray *selectedPages = [[[[self siteOutlineController] selectedObjects] retain] autorelease];	// Hang onto it for length of method
-	
-	// This shouldn't happen
-	if ([selectedPages count] == 0)
-	{
-		NSBeep();
-		NSLog(@"Unable to create group: no selection to group.");
-		return;
-	}
-	
-	
-	// It is not possible to make a group containing root
-	OBASSERTSTRING(![selectedPages containsObject:[[[self document] site] root]], @"Can't create a group containing root");
-	
-	
-	KTPage *firstSelectedPage = [selectedPages objectAtIndex:0];
-	
-	// our group's parent will be the original parent of firstSelectedPage
-	KTPage *parentCollection = [(KTPage *)firstSelectedPage parent];
-	if ( (nil == parentCollection) || (nil == [[parentCollection site] root]) )
-	{
-		NSLog(@"Unable to create group: could not determine parent collection.");
-		return;
-	}
-	
-	// create a new summary
-	KTElementPlugin *collectionPlugin = nil;
-	if ( [sender respondsToSelector:@selector(representedObject)] )
-	{
-		collectionPlugin = [sender representedObject];
-	}
-	
-	if (!collectionPlugin)
-	{
-		NSString *defaultIdentifier = [[NSUserDefaults standardUserDefaults] stringForKey:@"DefaultIndexBundleIdentifier"];
-		collectionPlugin = defaultIdentifier ? [KTIndexPlugin pluginWithIdentifier:defaultIdentifier] : nil;
-	}
-	OBASSERTSTRING(collectionPlugin, @"Must have a new collection plug-in to group the pages into");
-	
-	
-	NSBundle *collectionBundle = [collectionPlugin bundle];
-	NSString *pageIdentifier = [collectionBundle objectForInfoDictionaryKey:@"KTPreferredPageBundleIdentifier"];
-	KTElementPlugin *pagePlugin = pageIdentifier ? [KTElementPlugin pluginWithIdentifier:pageIdentifier] : nil;
-	if ( nil == pagePlugin )
-	{
-		pageIdentifier = [[NSUserDefaults standardUserDefaults] objectForKey:@"DefaultIndexBundleIdentifier"];
-		pagePlugin = pageIdentifier ? [KTElementPlugin pluginWithIdentifier:pageIdentifier] : nil;
-	}
-	if ( nil == pagePlugin )
-	{
-		NSLog(@"Unable to create group: could not locate default index.");
-		return;
-	}
-	
-	///////////////////////////////////////////////////////////////////////////////////////////////////
-	// at this point, we should be good to go
-	
-	// first, remove the selectedPages from their parents
-	// the selectedPages array will hold pointers so we don't lose them
-	unsigned int i;
-	for ( i=0; i < [selectedPages count]; i++ )
-	{
-		KTPage *page = [selectedPages objectAtIndex:i];
-		[[page parent] removePage:page];
-	}
-	
-	
-	// now, create a new collection to hold selectedPages
-	KTPage *collection = [KTPage insertNewPageWithParent:parentCollection 
-										 plugin:pagePlugin];
-	
-	
-	[collection setValue:[collectionBundle bundleIdentifier] forKey:@"collectionIndexBundleIdentifier"];
-	
-// FIXME: we should load up the properties from a KTPreset
-	
-	Class indexToAllocate = [collectionBundle principalClassIncludingOtherLoadedBundles:YES];
-	KTAbstractIndex *theIndex = [[((KTAbstractIndex *)[indexToAllocate alloc]) initWithPage:collection plugin:collectionPlugin] autorelease];
-	[collection setIndex:theIndex];
-	[collection setInteger:KTCollectionUnsorted forKey:@"collectionSortOrder"];				
-	[collection setBool:YES forKey:@"isCollection"];
-	[collection setBool:NO forKey:@"includeTimestamp"];
-	
-	// insert the new collection
-	[parentCollection addPage:collection];
-	
-	// add our selectedPages back to the new collection
-	for ( i=0; i < [selectedPages count]; i++ )
-	{
-		KTPage *page = [selectedPages objectAtIndex:i];
-		[collection addPage:page];
-	}            
-	
-	[[self siteOutlineController] setSelectedObjects:[NSSet setWithObject:collection]];
-	
-	// expand the new collection
-	[[[self siteOutlineController] siteOutline] expandItem:collection];
-	
-	// tidy up the undo stack with a relevant name
-	[[[self document] undoManager] setActionName:NSLocalizedString(@"Group", @"action name for grouping selected items")];
+    [[self siteOutlineViewController] addFilePage:sender];
 }
 
-- (IBAction)insertList:(id)sender
+- (void)toggleIsCollection:(id)sender;
 {
-    [[[self webViewController] webView] replaceSelectionWithMarkupString:@"<p><ul><li></li></ul></p>"];
+    [[self siteOutlineViewController] toggleIsCollection:sender];
 }
 
-- (IBAction)insert2Table:(id)sender
-{
-    [[[self webViewController] webView] replaceSelectionWithMarkupString:@"<table><tr><td></td><td></td></tr></table>"];
-}
-
-
-
-/*! removes the selected pages */
-- (IBAction)remove:(id)sender
-{
-	OBASSERTSTRING([NSThread isMainThread], @"should be main thread");
-	
-	// here's the naive approach
-	NSArray *selectedPages = [[[self siteOutlineController] selectedObjects] copy];
-	id itemAbove = [[[self siteOutlineController] siteOutline] itemAboveFirstSelectedRow];
-	
-	KTPage *selectedParent = [[[self siteOutlineController] selectedPage] parent];
-	if (nil == selectedParent)
-	{
-		selectedParent = [[(KTDocument *)[self document] site] root];
-	}
-	
-	NSManagedObjectContext *context = [selectedParent managedObjectContext];
-	
-	NSEnumerator *e = [selectedPages objectEnumerator];
-	KTPage *object;
-	while ( object = [e nextObject] )
-	{
-		KTPage *parent = [object parent];
-		[parent removePage:object]; // this might be better done with a delete rule in the model
-		LOG((@"deleting page “%@” from context", [object fileName]));
-		[context deleteObject:object];
-	}
-	
-	[context processPendingChanges];
-	LOG((@"removed a save here, is it still needed?"));
-//	[[self document] saveContext:context onlyIfNecessary:NO];
-	
-	if ( [selectedPages count] == 1 )
-	{
-		[[[self document] undoManager] setActionName:NSLocalizedString(@"Remove Selected Page", @"action name for removing selected page")];
-	}
-	else
-	{
-		[[[self document] undoManager] setActionName:NSLocalizedString(@"Remove Selected Pages", @"action name for removing selected pages")];
-	}
-	
-	[[self siteOutlineController] setSelectedObjects:[NSSet setWithObject:itemAbove]];
-	
-	[itemAbove release];
-	[selectedPages release];
-}
-
-#pragma mark -
 #pragma mark Action Validation
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
-	OFF((@"KTDocWindowController validateMenuItem:%@ %@", [menuItem title], NSStringFromSelector([menuItem action])));
+	VALIDATION((@"%s %@",__FUNCTION__, menuItem));
+    
+    BOOL result = YES;		// default to YES so we don't have to do special validation for each action. Some actions might say NO.
 	SEL itemAction = [menuItem action];
 		
 	// File menu handled by KTDocument
 		
 	// Edit menu
 	
-	// "Cut" cut:
-	if (itemAction == @selector(cut:))
-	{
-		NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
-		if (selectedPages && [selectedPages count] > 0 && ![selectedPages containsObject:[[[self document] site] root]])
-		{
-			return YES;
-		}
-		else
-		{
-			return NO;
-		}
-	}
-	
-	// "Cut Page(s)" cutPages:
-	else if (itemAction == @selector(cutPages:))
-	{
-		LOG((@"ERROR: cutPages: validated but shouldn't exist!"));
-		return NO;
-	}
-	
-	// "Copy" copy:
-	else if (itemAction == @selector(copy:))
-	{
-		NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
-		if (selectedPages && [selectedPages count] > 0)
-		{
-			return YES;
-		}
-		else
-		{
-			return NO;
-		}
-	}	
-	
-	// "Copy Page(s)" copyPages:
-	else if (itemAction == @selector(copyPages:))
-	{
-		LOG((@"ERROR: copyPages: validated but shouldn't exist!"));
-		return NO;
-	}
-	
-	// "Paste" paste:
-	else if ( itemAction == @selector(paste:) )
-	{
-		{
-			NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
-			if (1 != [selectedPages count])
-			{
-				return NO;	// can't paste if zero or >1 pages selected
-			}
-				
-			KTPage *selectedPage = [selectedPages objectAtIndex:0];
-			if ( [self canPastePages] )
-			{
-				return [selectedPage isCollection];
-			}
-			else if ( [self canPastePagelets] )
-			{
-				return ([selectedPage includeSidebar] || [selectedPage includeCallout]);
-			}
-			else
-			{
-				return NO;
-			}
-		}
-	}	
-	
 	// "Paste" pasteAsRichText: NB: also intercepts general "paste" command
-	else if ( itemAction == @selector(pasteAsRichText:) )
+	if ( itemAction == @selector(pasteAsRichText:) )
 	{
 		// check the general pasteboard to see if there are any pages on it
 		NSPasteboard *generalPboard = [NSPasteboard generalPasteboard];
 		if ( nil != [generalPboard availableTypeFromArray:[NSArray arrayWithObject:kKTPagesPboardType]] )
 		{
-			return YES;
+			result = YES;
 		}
 		else
 		{
-			return NO;
+			result = NO;
 		}
 	}
 	
-	// "Delete Page(s)" deletePage:
-	else if ( itemAction == @selector(deletePages:) )
-	{
-		if (![[[self window] firstResponder] isEqual:[[self siteOutlineController] siteOutline]])
-		{
-			return NO;
-		}
-
-		KTPage *selectedPage = [[self siteOutlineController] selectedPage];
-		NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
-		
-		if ( (nil != selectedPage) && ![selectedPage isRoot] )
-		{
-			return YES;
-		}
-		else if ( ([selectedPages count] > 1) && ![selectedPages containsRoot] )
-		{
-			return YES;
-		}
-		else
-		{
-			return NO;
-		}
-	}
-	
-	// "Delete Pagelet(s)" deletePagelets:
-	else if ( itemAction == @selector(deletePagelets:) )
-	{
-		KTPage *selectedPage = [[self siteOutlineController] selectedPage];
-		KTPagelet *selectedPagelet = [self selectedPagelet];
-		if ( (nil != selectedPagelet) && [[selectedPagelet page] isEqual:selectedPage] )
-		{
-			return YES;
-		}
-		else
-		{
-			return NO;
-		}
-	}
-    
-    // Duplicate
-    else if (itemAction == @selector(duplicate:))
+	// Insert menu
+    else if (itemAction == @selector(insertSiteTitle:) ||
+             itemAction == @selector(insertSiteSubtitle:) ||
+             itemAction == @selector(insertPageTitle:) ||
+             itemAction == @selector(insertPageletTitle:) ||
+             itemAction == @selector(insertFooter:))
     {
-        if ([self selectedDOMRangeIsEditable] )
-        {
-            [menuItem setTitle:NSLocalizedString(@"Duplicate", "menu title to duplicate generic item")];
-        }
-        else if ([self selectedPagelet])
-        {
-            [menuItem setTitle:NSLocalizedString(@"Duplicate Pagelet", "menu title to duplicate pagelet")];
-        }
-        else
-        {
-            NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
-            if ([selectedPages count] > 0 && ![selectedPages containsRoot])
-            {
-                if ([selectedPages count] == 1)
-                {
-                    if ([[selectedPages objectAtIndex:0] isCollection])
-                    {
-                        [menuItem setTitle:NSLocalizedString(@"Duplicate Collection", "menu title to duplicate a collection")];
-                    }
-                    else
-                    {
-                        [menuItem setTitle:NSLocalizedString(@"Duplicate Page", "menu title to duplicate a single page")];
-                    }
-                }
-                else
-                {
-                    [menuItem setTitle:NSLocalizedString(@"Duplicate Pages", "menu title to duplicate multiple pages")];
-                }
-            }
-            else
-            {
-                [menuItem setTitle:NSLocalizedString(@"Duplicate", "menu title to duplicate generic item")];
-                return NO;
-            }
-        }
+        result = [[[self webContentAreaController] webEditorViewController] validateMenuItem:menuItem];
     }
-	
-	// "Create Link..." showLinkPanel:
-	else if (itemAction == @selector(showLinkPanel:))
-	{
-		NSString *title;
-		BOOL result = [[self webViewController] validateCreateLinkItem:menuItem title:&title];
-		[menuItem setTitle:title];
-		return result;
-	}
+    else if ( itemAction == @selector(groupAsCollection:) )
+    {
+        result = ([[self pagesController] canGroupAsCollection]);
+    }
+    
 	
 	// View menu
-	// "Hide Designs" toggleDesignsShown:
-    else if (itemAction == @selector(toggleDesignsShown:))
-    {
-        if ([[self document] showDesigns])
-        {
-            [menuItem setTitle:NSLocalizedString(@"Hide Designs", @"menu title to hide designs bar")];
-        }
-        else
-        {
-            [menuItem setTitle:NSLocalizedString(@"Show Designs", @"menu title to show design bar")];
-        }
-    }
     
-    else if (itemAction == @selector(toggleEditingControlsShown:))
+    else if (itemAction == @selector(editRawHTMLInSelectedBlock:) ||
+             itemAction == @selector(paste:) ||
+             itemAction == @selector(insertPagelet:) ||
+             itemAction == @selector(cleanHTML:) ||
+             itemAction == @selector(makeTextLarger:) ||
+             itemAction == @selector(makeTextSmaller:) ||
+             itemAction == @selector(makeTextStandardSize:))
     {
-        if ([[self document] displayEditingControls])
+        id target = [[[self webContentAreaController] selectedViewControllerWhenReady]
+                     ks_targetForAction:itemAction];
+        
+        if ([target respondsToSelector:@selector(validateMenuItem:)])
         {
-            [menuItem setTitle:NSLocalizedString(@"Hide Editing Markers", @"menu title to hide Editing Markers")];
+            result = [target validateMenuItem:menuItem];
         }
-        else
+        else if (!target)
         {
-            [menuItem setTitle:NSLocalizedString(@"Show Editing Markers", @"menu title to show Editing Markers")];
+            result = NO;
         }
+		// else result will be YES
     }
-	
-	// "Hide Status Bar" toggleStatusBarShown:
-    else if (itemAction == @selector(toggleStatusBarShown:))
+    else if (itemAction == @selector(selectWebViewViewType:))
     {
-        if ([[self document] displayStatusBar])
-        {
-            [menuItem setTitle:NSLocalizedString(@"Hide Status Bar", @"menu title to hide status bar")];
-        }
-        else
-        {
-            [menuItem setTitle:NSLocalizedString(@"Show Status Bar", @"menu title to show status bar")];
-        }
+        result = [[self webContentAreaController] validateMenuItem:menuItem];
     }
-	
-	// "Hide Site Outline" toggleSiteOutlineShown:
-	else if (itemAction == @selector(toggleSiteOutlineShown:))
+	else if (itemAction == @selector(validateSource:))
 	{
-		if ([self sidebarIsCollapsed])
-        {
-            [menuItem setTitle:NSLocalizedString(@"Show Site Outline", @"menu title to show site outline")];
-            [menuItem setToolTip:NSLocalizedString(@"Shows the outline of the site on the left side of the window. Window must be wide enough to accomodate it.", @"Tooltip: menu tooltip to show site outline")];
-        }
-        else
-        {
-            [menuItem setTitle:NSLocalizedString(@"Hide Site Outline", @"menu title to hide site outline")];
-            [menuItem setToolTip:NSLocalizedString(@"Collapses the outline of the site from the left side of the window.", @"menu tooltip to hide site outline")];
-        }
+		id selection = [[[self siteOutlineViewController] content] selectedObjects];
+		result = ( [KSNetworkNotifier isNetworkAvailable]
+				&& !NSIsControllerMarker(selection)
+				&& 1 == [selection count]
+				&& nil != [[selection lastObject] pageRepresentation] );
+	}
+	else if ( itemAction == @selector(showPageCodeInjection:) || itemAction == @selector(showSiteCodeInjection:) )
+	{
+		id selection = [[[self siteOutlineViewController] content] selectedObjects];
+		result = ( !NSIsControllerMarker(selection)
+				  && 1 == [selection count]
+				  && nil != [[selection lastObject] pageRepresentation] );
 	}
 	
 	// "Use Small Page Icons" toggleSmallPageIcons:
@@ -1403,76 +754,71 @@ from representedObject */
 	{
 		[menuItem setState:
 			([[self document] displaySmallPageIcons] ? NSOnState : NSOffState)];
-		RBSplitSubview *sidebarSplit = [oSidebarSplitView subviewAtPosition:0];
-		return ![sidebarSplit isCollapsed];	// enabled if we can see the site outline
+		// result will be YES
 	}
 	
 	// Site menu items
-    else if (itemAction == @selector(addPage:))
-    {
-        return YES;
-    }
-    else if (itemAction == @selector(addPagelet:))
-    {
-		KTPage *selectedPage = [[self siteOutlineController] selectedPage];
-		return ([selectedPage sidebarChangeable]);
-    }
-	else if (itemAction == @selector(addCollection:))
-    {
-        return YES;
-    }	
     else if (itemAction == @selector(exportSiteAgain:))
     {
-        NSString *exportPath = [[[self document] site] lastExportDirectoryPath];
-        return (exportPath != nil && [exportPath isAbsolutePath]);
+        NSString *exportPath = [[[self document] lastExportDirectory] path];
+        result = (exportPath != nil && [exportPath isAbsolutePath]);
     }
     
     // Other
     else if ( itemAction == @selector(group:) )
     {
-        return ( ![[[self siteOutlineController] selectedObjects] containsObject:[[(KTDocument *)[self document] site] root]] );
+        result = ( ![[[[self siteOutlineViewController] content] selectedObjects] containsObject:[[(KTDocument *)[self document] site] rootPage]] );
     }
     else if ( itemAction == @selector(ungroup:) )
     {
-		NSArray *selectedItems = [[self siteOutlineController] selectedObjects];
-        return ( (1==[selectedItems count])
-				 && ([selectedItems objectAtIndex:0] != [[(KTDocument *)[self document] site] root])
+		NSArray *selectedItems = [[[self siteOutlineViewController] content] selectedObjects];
+        result = ( (1==[selectedItems count])
+				 && ([selectedItems objectAtIndex:0] != [[(KTDocument *)[self document] site] rootPage])
 				 && ([[selectedItems objectAtIndex:0] isKindOfClass:[KTPage class]]) );
-    }
-	else if ( itemAction == @selector(duplicate:) )
-    {
-		KTPage *selectedPage = [[self siteOutlineController] selectedPage];
-		KTPagelet *selectedPagelet = [self selectedPagelet];
-		if ( (nil != selectedPagelet) && [[selectedPagelet page] isEqual:selectedPage] )
-		{
-			// we're going to be duplicating a pagelet
-			return YES;
-		}
-		else
-		{
-			// we're going to be duplicating a page or pages
-			return ( ![[[self siteOutlineController] selectedObjects] containsObject:[[[self document] site] root]] );
-		}
     }
 	
 	// "Visit Published Site" visitPublishedSite:
 	else if ( itemAction == @selector(visitPublishedSite:) ) 
 	{
 		NSURL *siteURL = [[[[self document] site] hostProperties] siteURL];
-		return (nil != siteURL);
+		result = (nil != siteURL);
+		
+		NSString *title = NSLocalizedString(@"Visit Published Site", @"Menu item");
+		if (!result) title = NSLocalizedString(@"Visit Published Site (Not Yet Published)", @"Menu item");
+		[menuItem setTitle:title];
 	}
 	
 	// "Visit Published Page" visitPublishedPage:
 	else if ( itemAction == @selector(visitPublishedPage:) ) 
 	{
-		NSURL *pageURL = [[[self siteOutlineController] selectedPage] URL];
-		return (nil != pageURL);
+		id content = [[self siteOutlineViewController] content];
+		NSDate *published = [content valueForKeyPath:@"selection.datePublished"];
+        
+		// Enable if published, and this is only one item selected
+		result = (published && !NSIsControllerMarker(published));
+
+		// Check if page *can* be published
+		BOOL canBePublished = (nil != gRegistrationString);
+		if (!canBePublished)
+		{
+			NSNumber *isPublishableNumber = [content valueForKeyPath:@"selection.isPagePublishableInDemo"];
+			if (!NSIsControllerMarker(isPublishableNumber))
+			{
+				canBePublished = [isPublishableNumber boolValue];
+			}
+		}
+		NSArray *selectedItems = [[[self siteOutlineViewController] content] selectedObjects];
+
+		NSString *title = NSLocalizedString(@"Visit Published Page", @"Menu item");
+		if ((nil == published) && (1==[selectedItems count])) title = NSLocalizedString(@"Visit Published Page (Not Yet Published)", @"Menu item");
+		if (!canBePublished) title = NSLocalizedString(@"License Required to Publish Page", @"Menu item");
+		[menuItem setTitle:title];
 	}
 
 	else if ( itemAction == @selector(submitSiteToDirectory:) ) 
 	{
 		NSURL *siteURL = [[[[self document] site] hostProperties] siteURL];
-		return (nil != siteURL);
+		result = (nil != siteURL);
 	}
 	
 	// Window menu
@@ -1489,248 +835,70 @@ from representedObject */
         id context = [menuItem representedObject];
         id selection = [context valueForKey:kKTSelectedObjectsKey];
 		
-		if ( ![selection containsRoot] )
-		{
-			return YES;
-		}
-		else
-		{
-			return NO;
-		}
+		result = ( ![selection containsObject:[[[self document] site] rootPage]] );
 	}
-    else if ( itemAction == @selector(pasteViaContextualMenu:) )
-    {
-        if ( ![self canPastePages] )
-        {
-            return NO;
-        }
-        
-        id context = [menuItem representedObject];
-        id selection = [context valueForKey:kKTSelectedObjectsKey];
-        if ( [selection isKindOfClass:[NSArray class]] )
-        {
-            KTPage *firstPage = [selection objectAtIndex:0];
-            if ( [firstPage isCollection] )
-            {
-                return YES;
-            }
-            else
-            {
-                return NO;
-            }
-        }
-        else
-        {
-            KTPage *page = selection;
-            if ( [page isCollection] )
-            {
-                return YES;
-            }
-            else
-            {
-                return NO;
-            }
-        }
-    }
 
 	// DEFAULT: let webKit handle it
-	else
-	{
-		return YES;
-	}
     
-    return YES;
+    return result;
 }
 
 - (BOOL)validateToolbarItem:(NSToolbarItem *)toolbarItem
 {
-	if ( [toolbarItem action] == @selector(addPage:) )
+	VALIDATION((@"%s %@ %@",__FUNCTION__, toolbarItem, [toolbarItem itemIdentifier]));
+	
+	BOOL result = YES;		// default to YES so we don't have to do special validation for each action. Some actions might say NO.
+	SEL action = [toolbarItem action];
+
+	if (action == @selector(editRawHTMLInSelectedBlock:))
+	{
+		result = NO;	// default, unless found below
+		for (id selection in [[[[self webContentAreaController] webEditorViewController] graphicsController] selectedObjects])
+		{
+			if ([selection isKindOfClass:[SVRawHTMLGraphic class]])
+			{
+				result = YES;
+				break;
+			}
+		}
+	}
+    else if ( action == @selector(groupAsCollection:) )
     {
-        return YES;
+        result = ([[self pagesController] canGroupAsCollection]);
     }
-    else if ( [toolbarItem action] == @selector(addCollection:) )
+    else if ( action == @selector(group:) )
     {
-        return YES;
+        result = ( ![[[[self siteOutlineViewController] content] selectedObjects] containsObject:[[(KTDocument *)[self document] site] rootPage]] );
     }
-    else if ( [toolbarItem action] == @selector(groupAsCollection:) )
+    else if ( action == @selector(ungroup:) )
     {
-        return ( ![[[self siteOutlineController] selectedObjects] containsObject:[[(KTDocument *)[self document] site] root]] );
-    }
-    else if ( [toolbarItem action] == @selector(group:) )
-    {
-        return ( ![[[self siteOutlineController] selectedObjects] containsObject:[[(KTDocument *)[self document] site] root]] );
-    }
-    else if ( [toolbarItem action] == @selector(ungroup:) )
-    {
-		NSArray *selectedItems = [[self siteOutlineController] selectedObjects];
-        return ( (1==[selectedItems count])
-				 && ([selectedItems objectAtIndex:0] != [[(KTDocument *)[self document] site] root])
+		NSArray *selectedItems = [[[self siteOutlineViewController] content] selectedObjects];
+        result = ( (1==[selectedItems count])
+				 && ([selectedItems objectAtIndex:0] != [[(KTDocument *)[self document] site] rootPage])
 				 && ([[selectedItems objectAtIndex:0] isKindOfClass:[KTPage class]]) );
     }
     // Validate the -publishSiteFromToolbar: item here because -flagsChanged: doesn't catch all edge cases
-    else if ([toolbarItem action] == @selector(publishSiteFromToolbar:))
+    else if (action == @selector(publishSiteFromToolbar:))
     {
-        [toolbarItem setLabel:
-         ([[NSApp currentEvent] modifierFlags] & NSAlternateKeyMask) ? TOOLBAR_PUBLISH_ALL : TOOLBAR_PUBLISH];
-    }
-    else if ( [toolbarItem action] == @selector(toggleDesignsShown:) )
-    {
-        return YES;
-    }
-    else if ( [toolbarItem action] == @selector(duplicate:) )
-    {
-        return ( ![[[self siteOutlineController] selectedObjects] containsObject:[[[self document] site] root]] );
-    }
-	else if ([toolbarItem action] == @selector(showLinkPanel:))
-	{
-		NSString *label;
-		BOOL result = [[self webViewController] validateCreateLinkItem:toolbarItem title:&label];
-		[toolbarItem setLabel:label];
-		return result;
-	}
-	
-    return YES;
-}
-
-#pragma mark -
-#pragma mark Selection
-
-- (void)postSelectionAndUpdateNotificationsForItem:(id)aSelectableItem
-{
-	[[NSNotificationCenter defaultCenter] postNotificationName:kKTItemSelectedNotification 
-														object:aSelectableItem];
-}
-
-- (void)updateSelectedItemForDocWindow:(NSNotification *)aNotification
-{
-	OFF((@"windowController shows you selected %@", [[aNotification object] managedObjectDescription]));
-	id selectedObject = [aNotification object];
-	
-	if ([selectedObject respondsToSelector:@selector(DOMNode)])
-	{
-		DOMNode *dn = [selectedObject DOMNode];
-		DOMDocument *dd = [dn ownerDocument];
-		DOMDocument *myDD = [[[[self webViewController] webView] mainFrame] DOMDocument];
-		if (dd != myDD)
+		NSToolbarItem *publishAllToolbarItem = [[[self window] toolbar] itemWithIdentifier:@"publishAll"];
+		if (!publishAllToolbarItem)
 		{
-			return;		// notification is coming from a different dom document, thus differnt svx document
+			[toolbarItem setLabel:
+			 ([[NSApp currentEvent] modifierFlags] & NSAlternateKeyMask) ? TOOLBAR_PUBLISH_ALL : TOOLBAR_PUBLISH];
+			[toolbarItem setImage:
+			 [NSImage imageNamed:([[NSApp currentEvent] modifierFlags] & NSAlternateKeyMask ? @"toolbar_publish_all" : @"toolbar_publish")]];
 		}
-	}
-	
-	if ( ![[selectedObject document] isEqual:[self document]] )
-	{
-		return; // notification is coming from a different document
-	}
-	
-	if ( [selectedObject isKindOfClass:[KTInlineImageElement class]] )
-	{
-		[self setSelectedInlineImageElement:selectedObject];
-	}
-	else if ( [selectedObject isKindOfClass:[KTPagelet class]] )
-	{
-		[self setSelectedPagelet:selectedObject];
-	}
-	else	// KTPage
-	{
-		myDocumentVisibleRect = NSZeroRect;
-		myHasSavedVisibleRect = YES;		// new page, so don't save the scroll position.
-		[self setSelectedPagelet:nil];
-		[self setSelectedInlineImageElement:nil];
-	}
-	
-	//[self updateEditMenuItems];
-}
-
-#pragma mark -
-#pragma mark Plugins
-
-- (KTPluginInspectorViewsManager *)pluginInspectorViewsManager
-{
-	if (!myPluginInspectorViewsManager)
-	{
-		myPluginInspectorViewsManager = [[KTPluginInspectorViewsManager alloc] init];
-	}
-	
-	return myPluginInspectorViewsManager;
-}
-
-#pragma mark -
-#pragma mark TextField Delegate
-
-- (void)controlTextDidEndEditing:(NSNotification *)aNotification
-{
-	//LOG((@"controlTextDidEndEditing: %@", aNotification));
-	id object = [aNotification object];
-	if ( [object isEqual:oLinkDestinationField] )
-	{
-		/// defend against nil
-		NSString *string = [[[object stringValue] stringWithValidURLScheme] stringByTrimmingFirstLine];
-		if (nil == string) string = @"";
-		[object setStringValue:string];
-	}
-}
-
-- (void)controlTextDidChange:(NSNotification *)aNotification
-{
-	//LOG((@"controlTextDidEndEditing: %@", aNotification));
-	id object = [aNotification object];
-	if ( [object isEqual:oLinkDestinationField] )
-	{
-		NSString *value = [[[oLinkDestinationField stringValue] stringWithValidURLScheme] stringByTrimmingFirstLine];
 		
-		BOOL empty = ( [value isEqualToString:@""] 
-			 || [value isEqualToString:@"http://"] 
-			 || [value isEqualToString:@"https://"] 
-			 || [value isEqualToString:@"ftp://"]
-					   || [value isEqualToString:@"mailto:"] );
-		
-		[oLinkView setConnected:!empty];
-	}
+    }
+    
+    return result;
 }
 
-
-- (BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor;
+- (void)groupAsCollection:(id)sender;
 {
-	if ( [control isEqual:oLinkDestinationField] )
-	{
-		NSString *value = [[[oLinkDestinationField stringValue] stringWithValidURLScheme] stringByTrimmingFirstLine];
-		
-		if ( [value isEqualToString:@""] 
-			 || [value isEqualToString:@"http://"] 
-			 || [value isEqualToString:@"https://"] 
-			 || [value isEqualToString:@"ftp://"]
-			 || [value isEqualToString:@"mailto:"] )
-		{
-			// empty, this is OK
-			return YES;
-		}
-		else if ( [value hasPrefix:@"mailto:"] )
-		{
-			// check how mailto looks.
-			if ( NSNotFound == [value rangeOfString:@"@"].location )
-			{
-				return NO;
-			}
-		}
-		else
-		{
-			// Check how URL looks.  If it's bad, beep and exit -- don't let them close.
-			NSURL *checkURL = [NSURL URLWithUnescapedString:value];
-
-			NSString *host = [checkURL host];
-			NSString *path = [checkURL path];
-			if (NULL == checkURL
-				|| (NULL == host && NULL == path) 
-				|| (NULL != host && NSNotFound == [host rangeOfString:@"."].location) )
-			{
-				return NO;
-			}
-		}
-	}
-	return YES;
+    [[self pagesController] groupAsCollection:sender];
 }
 
-#pragma mark -
 #pragma mark Window Delegate
 
 - (void)windowDidResize:(NSNotification *)aNotification
@@ -1755,278 +923,29 @@ from representedObject */
     }
     
     
-	if (![NSApp isTerminating])
-	{
-		// Empty out the windowScriptObject, remove the pointer to self to kill reference loop
-		// NOT WORKING THOUGH
-		
-		// Case 9274, kludge approach to Graham's suggestion
-		if ([[[self webViewController] windowScriptObject] retainCount] == 1)
-		{
-			[[self webViewController] setWindowScriptObject:nil];
-		}
-		else
-		{
-			[[[self webViewController] windowScriptObject] removeWebScriptKey:@"helper"];	// bugzilla # 6152 ... ought to release old value
-		}
-	}
-
-	[oDesignsView unbind:@"selectedDesign"];
-	[oDocumentController unbind:@"contentObject"];
-	
-	[[self siteOutlineController] setContent:nil];
-	[self setSiteOutlineController:nil];
-	
-	 [oDocumentController setContent:nil];
+	[[self webContentAreaController] close];
+    [self setSiteOutlineViewController:nil];
 }
 
-/*!	Notification that some window is closing
-*/
-- (void)anyWindowWillClose:(NSNotification *)aNotification
+#pragma mark Code Injection & other pro stuff
+
+@synthesize HTMLEditorController = _HTMLEditorController;
+- (KTHTMLEditorController *)HTMLEditorController	// lazily instantiate
 {
-	id obj = [aNotification object];
-	if (obj == [[KTInfoWindowController sharedControllerWithoutLoading] window])
+	if (!_HTMLEditorController)
 	{
-		NSRect frame = [obj frame];
-		NSPoint topLeft = NSMakePoint(frame.origin.x, frame.origin.y+frame.size.height);
-		NSString *topLeftAsString = NSStringFromPoint(topLeft);
-		[[NSUserDefaults standardUserDefaults] setObject:topLeftAsString forKey:gInfoWindowAutoSaveName];
-
-		[[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"DisplayInfo"];
-		[[NSApp delegate] setDisplayInfoMenuItemTitle:KTShowInfoMenuItemTitle];
+		_HTMLEditorController = [[KTHTMLEditorController alloc] init];
+        //		[self addWindowController:controller];
 	}
-	else if (obj == [[iMediaBrowser sharedBrowserWithoutLoading] window])
-	{
-		[[NSApp delegate] setDisplayMediaMenuItemTitle:KTShowMediaMenuItemTitle];
-	}
-	else if ([[aNotification object] isKindOfClass:[KTDocWindow class]])
-	{
-		;  // taken care of from standard one
-	}
-	else
-	{
-		// LOG((@"windowWillClose --> %@", [aNotification object]));
-	}
+	return _HTMLEditorController;
 }
-
-- (NSSize)windowWillResize:(NSWindow *)sender toSize:(NSSize)proposedFrameSize
-{
-	NSSize result = proposedFrameSize;
-	RBSplitSubview *leftView = [oSidebarSplitView subviewAtPosition:0];
-	
-	if (![leftView isCollapsed])	// not collapsed -- see if we can do this
-	{
-		float currentWidth = [sender frame].size.width;
-		if (proposedFrameSize.width < currentWidth)	// we're shrinking
-		{
-			RBSplitSubview *rightView = [oSidebarSplitView subviewAtPosition:1];
-			float minimumWidths = [rightView minDimension] + [leftView minDimension];
-			
-			// Only allow shrinking if we're N pixels moved over, making it kind of hard to shrink.
-			if (proposedFrameSize.width < minimumWidths ) // && proposedFrameSize.width > minimumWidths - 100)
-			{
-				result = NSMakeSize(minimumWidths, proposedFrameSize.height);
-				// Slightly smaller than minimum, don't let it shrink to that size.
-			}
-		}
-	}
-	return result;
-}
-
-#pragma mark -
-#pragma mark Undo
-
-/*	Called whenever a change is undone. Ensure the correct page is highlighted in the Site Outline to show the change.
- */
-- (void)undo_selectPages:(NSArray *)pages scrollPoint:(NSPoint)scrollPoint
-{
-	// Select the pages in the Site Outline; the rest is taken care of for us
-	[[self siteOutlineController] setSelectedObjects:pages];
-	
-	
-	// Record what to do when redoing/undoing the change again
-	NSUndoManager *undoManager = [[self document] undoManager];
-	[[undoManager prepareWithInvocationTarget:self] undo_selectPages:pages scrollPoint:scrollPoint];
-}
-
-- (void)undoManagerWillCloseUndoGroup:(NSNotification *)notification
-{
-	// I have disabled this code for now as it forces any text editing to record undo operations
-	// character-by-character. Mike.
-	
-	/*
-	NSUndoManager *undoManager = [notification object];
-	
-	// When ending the top level undo group, record the selected pages
-	if ([undoManager groupingLevel] == 1)
-	{
-		NSArray *selectedPages = [[self siteOutlineController] selectedObjects];
-		
-		// Figuring out the scroll point is a little trickier
-		NSPoint scrollPoint = NSZeroPoint;
-		WebView *webView = [[self webViewController] webView];
-		NSView <WebDocumentView> *documentView = [[[webView mainFrame] frameView] documentView];
-		NSClipView *clipView = (NSClipView *)[documentView superview];
-		if ([clipView isKindOfClass:[NSClipView class]])
-		{
-			scrollPoint = [clipView documentVisibleRect].origin;
-		}
-		
-		[[undoManager prepareWithInvocationTarget:self] undo_selectPages:selectedPages scrollPoint:scrollPoint];
-	}*/
-}
-
-#pragma mark -
-#pragma mark Components
-
-- (BOOL)addPagesViaDragToCollection:(KTPage *)aCollection atIndex:(int)anIndex draggingInfo:(id <NSDraggingInfo>)info
-{
-	// LOG((@"%@", NSStringFromSelector(_cmd) ));
-    
-	BOOL result = NO;	// set to YES if at least one item got processed
-	int numberOfItems = [KTElementPlugin numberOfItemsToProcessDrag:info];
-	
-	/*
-     /// Mike: I see no point in this artificial limit in 1.5
-     int maxNumberDragItems = [defaults integerForKey:@"MaximumDraggedPages"];
-     numberOfItems = MIN(numberOfItems, maxNumberDragItems);
-     */
-	KTPage *latestPage = nil; //only select the last page created
-	
-	
-    //[[[self document] managedObjectContext] lockPSCAndSelf];
-    // TODO: it would be nice if we could do the ordering insert just once ahead of time, rather than once per "insertPage:atIndex:"
-    
-    NSString *localizedStatus = NSLocalizedString(@"Creating pages...", "");
-    KSProgressPanel *progressPanel = nil;
-    if (numberOfItems > 3)
-    {
-        progressPanel = [[KSProgressPanel alloc] init];
-        [progressPanel setMessageText:localizedStatus];
-        [progressPanel setInformativeText:nil];
-        [progressPanel setMinValue:0 maxValue:numberOfItems doubleValue:0];
-        [progressPanel beginSheetModalForWindow:[self window]];
-    }
-    
-    int i;
-    for ( i = 0 ; i < numberOfItems ; i++ )
-    {
-        NSAutoreleasePool *poolForEachDrag = [[NSAutoreleasePool alloc] init];
-        
-        [progressPanel setMessageText:localizedStatus];
-        [progressPanel setDoubleValue:i];
-        
-        Class <KTDataSource> bestSource = [KTElementPlugin highestPriorityDataSourceForDrag:info index:i isCreatingPagelet:NO];
-        if ( nil != bestSource )
-        {
-            NSMutableDictionary *dragDataDictionary = [NSMutableDictionary dictionary];
-            [dragDataDictionary setValue:[info draggingPasteboard] forKey:kKTDataSourcePasteboard];	// always include this!
-            
-            BOOL didPerformDrag;
-            didPerformDrag = [bestSource populateDataSourceDictionary:dragDataDictionary fromPasteboard:[info draggingPasteboard] atIndex:i forCreatingPagelet:NO];
-            NSString *theBundleIdentifier = [[NSBundle bundleForClass:bestSource] bundleIdentifier];
-            
-            if ( didPerformDrag && theBundleIdentifier)
-            {
-                KTElementPlugin *thePlugin = [KTElementPlugin pluginWithIdentifier:theBundleIdentifier];
-                if (thePlugin)
-                {
-                    [dragDataDictionary setObject:thePlugin forKey:kKTDataSourcePlugin];
-                    
-                    KTPage *newPage = [KTPage pageWithParent:aCollection
-                                        dataSourceDictionary:dragDataDictionary
-                              insertIntoManagedObjectContext:[[self document] managedObjectContext]];
-                    
-                    if (newPage)
-                    {
-                        // Insert the page where indicated
-                        [aCollection addPage:newPage];
-                        if (anIndex != NSOutlineViewDropOnItemIndex && [aCollection collectionSortOrder] == KTCollectionUnsorted)
-                        {
-                            [newPage moveToIndex:anIndex];
-                        }
-                        
-                        
-                        
-                        if ( NSOutlineViewDropOnItemIndex != anIndex )
-                        {
-                            latestPage = newPage;
-                        }
-                        
-                        // we're golden
-                        result = YES;
-                        
-                        // Now see if we need to recurse; it's a collection
-                        if ([[dragDataDictionary objectForKey:kKTDataSourceRecurse] boolValue])
-                        {
-                            NSString *defaultIdentifier = [[NSUserDefaults standardUserDefaults] stringForKey:@"DefaultIndexBundleIdentifier"];
-                            KTIndexPlugin *indexPlugin = defaultIdentifier ? [KTIndexPlugin pluginWithIdentifier:defaultIdentifier] : nil;
-                            NSBundle *indexBundle = [indexPlugin bundle];
-                            
-                            // FIXME: we should load up the properties from a KTPreset
-                            
-                            [newPage setValue:[indexBundle bundleIdentifier] forKey:@"collectionIndexBundleIdentifier"];
-                            Class indexToAllocate = [indexBundle principalClassIncludingOtherLoadedBundles:YES];
-                            KTAbstractIndex *theIndex = [[((KTAbstractIndex *)[indexToAllocate alloc]) initWithPage:newPage plugin:indexPlugin] autorelease];
-                            [newPage setIndex:theIndex];
-                            [newPage setBool:YES forKey:@"isCollection"]; // should this info be specified in the plist?
-                            [newPage setBool:NO forKey:@"includeTimestamp"];		// collection should generally not have timestamp
-                            
-                            // At this point we should recurse ... deal with indexes, and whether it was photos
-                        }
-                        
-                        // label undo last
-                        [[[self document] undoManager] setActionName:NSLocalizedString(@"Drag from External Source",
-                                                                                       "action name for dragging external objects to source outline")];
-                    }
-                    else
-                    {
-                        LOG((@"error: unable to create item of type: %@", theBundleIdentifier));
-                    }
-                }
-                else
-                {
-                    LOG((@"error: datasource returned unknown bundle identifier: %@", theBundleIdentifier));
-                }
-            }
-            else
-            {
-                LOG((@"%@ did not accept drop, no child returned", bestSource));
-            }
-        }
-        else
-        {
-            LOG((@"No datasource agreed to handle types: %@", [[[info draggingPasteboard] types] description]));
-        }
-        
-        [poolForEachDrag release];
-    }
-    
-    [progressPanel endSheet];
-    [progressPanel release];
-    
-	
-	// if not dropping on an item, set the selection to the last page created
-	if ( latestPage != nil )
-	{
-		[[self siteOutlineController] setSelectedObjects:[NSSet setWithObject:latestPage]];
-	}
-	
-	// Done
-	[KTElementPlugin doneProcessingDrag];
-	
-	return result;
-}
-
-#pragma mark -
-#pragma mark Code Injection
 
 - (KTCodeInjectionController *)masterCodeInjectionController
 {
 	if (!myMasterCodeInjectionController)
 	{
 		myMasterCodeInjectionController =
-			[[KTCodeInjectionController alloc] initWithSiteOutlineController:[self siteOutlineController] master:YES];
+			[[KTCodeInjectionController alloc] initWithPagesController:[[self siteOutlineViewController] content] master:YES];
 		
 		[[self document] addWindowController:myMasterCodeInjectionController];
 	}
@@ -2044,7 +963,7 @@ from representedObject */
 	if (!myPageCodeInjectionController)
 	{
 		myPageCodeInjectionController =
-			[[KTCodeInjectionController alloc] initWithSiteOutlineController:[self siteOutlineController] master:NO];
+			[[KTCodeInjectionController alloc] initWithPagesController:[[self siteOutlineViewController] content] master:NO];
 		
 		[[self document] addWindowController:myPageCodeInjectionController];
 	}
@@ -2057,161 +976,102 @@ from representedObject */
 	[[self pageCodeInjectionController] showWindow:sender];
 }
 
+- (IBAction)configureGoogle:(id)sender;
+{
+	if ( !self.googleWindowController )
+	{
+		self.googleWindowController = [[[SVGoogleWindowController alloc] initWithWindowNibName:@"SVGoogleSheet"] autorelease];
+	}
+	[self.googleWindowController setSite:[[self document] site]];
+	[self.googleWindowController configureGoogle:self];
+}
+
+- (IBAction)configureComments:(id)sender;
+{
+    if ( !self.commentsWindowController )
+    {
+        self.commentsWindowController = [[[SVCommentsWindowController alloc] initWithWindowNibName:@"SVCommentsSheet"] autorelease];
+    }
+    [self.commentsWindowController setMaster:[[[[self document] site] rootPage] master]];
+    [self.commentsWindowController configureComments:self];
+}
+
+
+#pragma mark Persistence
+
+- (void)persistUIProperties
+{
+    [super persistUIProperties];
+    
+    // Window size
+	NSWindow *window = [self window];
+	if (window)
+	{
+		[[[self document] site] setDocWindowContentRect:[window contentRectForFrameRect:[window frame]]];
+	}
+	[[[self document] site] setLastExportDirectoryPath:[[[self document] lastExportDirectory] path]];
+    
+    // Ask Site Outline View Controller to do the same - this will save the split view width
+    [[self siteOutlineViewController] persistUIProperties];
+}
+
 #pragma mark -
 #pragma mark Support
 
-- (void) updateBuyNow:(NSNotification *)aNotification
+- (void) updateDocWindowLicenseStatus:(NSNotification *)aNotification;
 {
 	if (nil == gRegistrationString)
 	{
-		if (!myBuyNowButton)
+		
+		NSString *buttonTitle = nil;
+		NSString *buttonPrompt = @"";
+		
+		switch(gRegistrationFailureCode)
+		// enum { kKSLicenseOK, kKSCouldNotReadLicenseFile, kKSEmptyRegistration, kKSBlacklisted, kKSLicenseExpired, kKSNoLongerValid, kKSLicenseCheckFailed };
 		{
-			NSButton *newButton = [[self window] createBuyNowButton];
-			myBuyNowButton = [newButton retain];
-			[myBuyNowButton setAction:@selector(showRegistrationWindow:)];
-			[myBuyNowButton setTarget:[NSApp delegate]];
+			case kKSLicenseCheckFailed:	// license entered but it's not valid
+				
+				buttonPrompt = NSLocalizedString(@"Invalid registration key entered", @"Indicator of license status of app");
+				buttonTitle = NSLocalizedString(@"Update License", @"Button title to enter a license Code");
+				break;
+			case kKSLicenseExpired:		// Trial license expired
+				buttonPrompt = NSLocalizedString(@"Trial expired", @"Indicator of license status of app");
+				buttonTitle = NSLocalizedString(@"Buy a License", @"Button title to purchase a license");
+				break;
+			case kKSNoLongerValid:		// License from a previous version of Sandvox
+				buttonPrompt = NSLocalizedString(@"Sandvox 2 license required", @"Indicator of license status of app");
+				buttonTitle = NSLocalizedString(@"Upgrade your License", @"Button title to purchase a license");
+				break;
+			default:					// Unlicensed, treat as free/demo
+				buttonPrompt = NSLocalizedString(@"Free Demo (Unlicensed)", @"Indicator of license status of app");
+				buttonTitle = NSLocalizedString(@"Buy a License", @"Button title to purchase a license");
+				break;
 		}
-		[myBuyNowButton setHidden:NO];
+		NSButton *button = [[self window] createBuyNowButtonWithTitle:buttonTitle prompt:buttonPrompt];
+		[button setAction:@selector(showRegistrationWindow:)];
+		[button setTarget:[NSApp delegate]];
 	}
 	else
 	{
-		[myBuyNowButton setHidden:YES];
+		[[self window] removeBuyNowButton];
 	}
 	
 }
 
-
-- (void)showDesigns:(BOOL)inShow
+- (void)reload:(id)sender;
 {
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	BOOL animate = [defaults boolForKey:@"DoAnimations"];
-	if ( inShow )
-	{
-		[oDesignsSplitPane expandWithAnimation:animate withResize:NO];
-	}
-	else
-	{
-		[oDesignsSplitPane collapseWithAnimation:animate withResize:NO];
-	}
-	if (!animate)
-	{
-		[oDesignsSplitPane display];	// hack, rainer suggested this....
-	}
+    [[[self webContentAreaController] selectedViewControllerWhenReady] doCommandBySelector:_cmd];
 }
 
-- (void)showStatusBar:(BOOL)inShow
-{
-    if ( inShow ) {
-        // show status bars
-        // add status bar back as a subview
-        // resize the two views in the frame
-		[oStatusBar setHidden:NO];
-		
-        WebView *webView = [[self webViewController] webView];
-		NSRect webViewFrame = [webView frame];
-		float statusBarHeight = [oStatusBar frame].size.height;
-		webViewFrame.size.height -= statusBarHeight;
-		webViewFrame.origin.y += statusBarHeight;
-		[webView setFrame:webViewFrame];
-		[webView setNeedsDisplay:YES];
-    }
-    else {
-        // hide status bars
-		
-		[oStatusBar setHidden:YES];
-		
-		WebView *webView = [[self webViewController] webView];
-		NSRect webViewFrame = [webView frame];
-		float statusBarHeight = [oStatusBar frame].size.height;
-		webViewFrame.size.height += statusBarHeight;
-		webViewFrame.origin.y -= statusBarHeight;
-		[webView setFrame:webViewFrame];
-		[webView setNeedsDisplay:YES];
-    }
-	
-}
+#pragma mark HTML Validation
 
-// the goal here will be to clear the HTML markup from the pasteboard before pasting,
-// if we can just get this to work!
-- (void)handleEvent:(DOMEvent *)event;
+- (IBAction)validateSource:(id)sender
 {
-	LOG((@"event= %@", event));
-}
-
-#pragma mark -
-#pragma mark Inspector
-
-/*!	Show the info, in whatever is the current configuration.  Close other things not showing.
-*/
-- (void)showInfo:(BOOL)inShow
-{
-	if (inShow)	// show separate info
+	id selection = [[[self siteOutlineViewController] content] selectedObjects];
+	KTPage *page = nil;
+	if ( !NSIsControllerMarker(selection) && 1 == [selection count] && nil != (page = [[selection lastObject] pageRepresentation]) )
 	{
-		KTInfoWindowController *sharedController = [KTInfoWindowController sharedController];
-		[sharedController setAssociatedDocument:[self document]];
-		if (nil != mySelectedInlineImageElement)
-		{
-			[sharedController setupViewStackFor:mySelectedInlineImageElement selectLevel:NO];
-		}
-		else if (nil != mySelectedPagelet)
-		{
-			[sharedController setupViewStackFor:mySelectedPagelet selectLevel:NO];
-		}
-		else if ([[[self siteOutlineController] selectedObjects] count] > 0)
-		{
-			[sharedController setupViewStackFor:[[[self siteOutlineController] selectedObjects] firstObjectKS]
-                                    selectLevel:NO];
-		}
-		
-		[sharedController putContentInWindow];
-		
-		if (![[sharedController window] isVisible])
-		{
-			NSString *topLeftAsString = [[NSUserDefaults standardUserDefaults] objectForKey:gInfoWindowAutoSaveName];
-			if ( nil != topLeftAsString )
-			{
-				NSWindow *window = [sharedController window];
-				NSPoint topLeft = NSPointFromString(topLeftAsString);
-				NSRect screenRect = [[window screen] visibleFrame];
-				NSRect frame = [window frame];
-				frame.origin = topLeft;
-				if (!NSContainsRect(screenRect, frame))
-				{
-					if (NSMaxX(frame) > NSMaxX(screenRect))
-					{
-						frame.origin.x -= (NSMaxX(frame) - NSMaxX(screenRect));	// right edge
-					}
-					if (NSMaxY(frame) > NSMaxY(screenRect))
-					{
-						frame.origin.y = NSMaxY(screenRect);	// top edge
-					}
-					if (NSMinX(frame) < NSMinX(screenRect))
-					{
-						frame.origin.x = NSMinX(screenRect);	// left edge
-					}
-					if (NSMinY(frame) < NSMinY(screenRect))
-					{
-						frame.origin.y = NSMinY(screenRect) + frame.size.height;	// bottom edge
-					}
-				}
-				[window setFrameTopLeftPoint:frame.origin];
-			}
-			[sharedController showWindow:nil];
-		}
-	}
-	else	// hide
-	{
-		KTInfoWindowController *sharedControllerMaybe = [KTInfoWindowController sharedControllerWithoutLoading];
- 		if (sharedControllerMaybe)
-		{
-
-			NSRect frame = [[sharedControllerMaybe window] frame];
-			NSPoint topLeft = NSMakePoint(frame.origin.x, frame.origin.y+frame.size.height);
-			NSString *topLeftAsString = NSStringFromPoint(topLeft);
-			[[NSUserDefaults standardUserDefaults] setObject:topLeftAsString forKey:gInfoWindowAutoSaveName];
-
-			[[sharedControllerMaybe window] orderOut:nil];
-		}
+		[[SVValidatorWindowController sharedController] validatePage:page windowForSheet:[self window]];
 	}
 }
 

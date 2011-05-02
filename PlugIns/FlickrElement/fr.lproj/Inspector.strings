@@ -1,0 +1,58 @@
+﻿/* Class = "NSButtonCell"; alternateTitle = "flickr"; ObjectID = "126"; */
+"flickr" = "flickr";
+/* Class = "NSButtonCell"; title = "Include link to more photos"; ObjectID = "131"; */
+"Include link to more photos" = "Inclure un lien pour plus de photos";
+
+/* Class = "NSTextFieldCell"; title = "Powered by"; ObjectID = "133"; */
+"Powered by" = "Fonctionnant avec";
+
+/* Class = "NSTextFieldCell"; title = "Tags"; ObjectID = "175"; */
+"Tags" = "Mots-clés";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "178"; */
+"OtherViews" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Flash"; ObjectID = "179"; */
+"Flash" = "Flash";
+
+/* Class = "NSMenuItem"; title = "Simple"; ObjectID = "180"; */
+"Simple" = "Simple";
+
+/* Class = "NSTextFieldCell"; title = "Flickr ID"; ObjectID = "181"; */
+"Flickr ID" = "ID  Flickr";
+
+/* Class = "NSTextFieldCell"; title = "Style"; ObjectID = "182"; */
+"Style" = "Style";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "183"; */
+"Box" = "Box";
+/* Class = "IBBindingConnection"; designableIsNilPlaceholder = "tag1,tag2,tag3 (Optional)"; ObjectID = "189"; */
+"tag1,tag2,tag3 (Optional)" = "tag1,tag2,tag3 (facultatif)";
+
+/* Class = "IBBindingConnection"; designableIsNilPlaceholder = "e.g., ########@### (Optional)"; ObjectID = "244"; */
+"e.g., ########@### (Optional)" = "e.g., ########@### (facultatif)";
+
+/* Class = "NSTextFieldCell"; title = "photos"; ObjectID = "257"; */
+"photos" = "photos";
+/* Class = "NSMenuItem"; title = "random"; ObjectID = "260"; */
+"random" = "aléatoire";
+
+/* Class = "NSMenuItem"; title = "most recent"; ObjectID = "261"; */
+"most recent" = "plus récent";
+/* Class = "NSMenuItem"; title = "8"; ObjectID = "264"; */
+"8" = "8";
+
+/* Class = "NSMenuItem"; title = "6"; ObjectID = "265"; */
+"6" = "6";
+
+/* Class = "NSMenuItem"; title = "10"; ObjectID = "266"; */
+"10" = "10";
+
+/* Class = "NSMenuItem"; title = "2"; ObjectID = "267"; */
+"2" = "2";
+
+/* Class = "NSMenuItem"; title = "1"; ObjectID = "268"; */
+"1" = "1";
+
+/* Class = "NSMenuItem"; title = "4"; ObjectID = "269"; */
+"4" = "4";

@@ -1,0 +1,15 @@
+[[if indexedCollection.childPages]]
+[[if indexedCollection.archivePages]]
+<ul>
+[[foreach indexedCollection.archivePages aPage]]
+	<li>
+		[[if parser.HTMLGenerationPurpose]]<a href="[[path aPage]]">[[endif3]][[=&aPage.title]][[if parser.HTMLGenerationPurpose]]</a>[[endif3]]
+	</li>
+[[endforeach]]
+</ul>
+[[else2]]
+<p>[['Please turn on Publish Archives in the Collection Inspector.]]</p>
+[[endif2]]
+[[else]]
+<p>[['Please add at least one page to this collection.]]</p>
+[[endif]]

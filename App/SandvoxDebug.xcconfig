@@ -4,7 +4,7 @@
 
 COPY_PHASE_STRIP = NO
 DEBUG_INFORMATION_FORMAT = dwarf
-FRAMEWORK_SEARCH_PATHS = $(SRCROOT)/../../Shared/ThirdParty/Sparkle $(SRCROOT)/../../Shared/ThirdParty/Growl
+FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../Shared/ThirdParty/BWToolkit" "$(SRCROOT)/../../Shared/ThirdParty/Sparkle" "$(SRCROOT)/../../Shared/ThirdParty/JSTalk" "$(SRCROOT)/../../Shared/ThirdParty/Growl" "$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks"
 GCC_DYNAMIC_NO_PIC = NO
 GCC_ENABLE_FIX_AND_CONTINUE = YES
 GCC_ENABLE_OBJC_EXCEPTIONS = YES
@@ -15,7 +15,6 @@ GCC_OPTIMIZATION_LEVEL = 0
 GCC_PRECOMPILE_PREFIX_HEADER = YES
 GCC_PREFIX_HEADER = Marvel_Prefix.pch
 LIBRARY_SEARCH_PATHS = $(BUILD_DIR)
-MACOSX_DEPLOYMENT_TARGET = 10.4
 PREBINDING = NO
 ZERO_LINK = NO
 
@@ -49,10 +48,15 @@ GCC_SYMBOLS_PRIVATE_EXTERN=NO
 
 // GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES	// might be useful
 // GCC_WARN_MISSING_PARENTHESES = YES	// this is pretty pendantic for enums/init
-// GCC_WARN_SHADOW = YES				// useful to check from time to time
+// GCC_WARN_SHADOW = YES				// useful to check from time to time. Wish I could ignore *global* shadows!
 // GCC_WARN_SIGN_COMPARE = YES			// useful to check from time to time
-// GCC_WARN_PEDANTIC = YES				// Not very useful, warns too m
+// GCC_WARN_PEDANTIC = YES				// Not very useful, warns too much
 
-GCC_PREPROCESSOR_DEFINITIONS = USES_IMEDIA VARIANT_$(PRODUCT_VARIANT) $(OMNI_DEBUG_CURRENT_SETTING) DEBUG
+// SUPPRESS_IMEDIA_PPC
+GCC_PREPROCESSOR_DEFINITIONS = USES_IMEDIA VARIANT_$(PRODUCT_VARIANT) $(OMNI_DEBUG_CURRENT_SETTING) DEBUG EXPIRY_TIMESTAMP=$(EXPIRY_TIMESTAMP)
 OTHER_LDFLAGS = -lssl -lcrypto -seg1addr 0x70000000
 
+// Debugging -- should be OMNI_FORCE_ASSERTIONS for beta, DONT_FORCE_ASSERTIONS (an ad-hoc replacement) for release
+
+// note:  RIGHT NOW WE HAVE BAD PROBLEMS RUNNING A RELEASE BUILD IF IT IS != OMNI_FORCE_ASSERTIONS
+OMNI_DEBUG_CURRENT_SETTING = OMNI_FORCE_ASSERTIONS

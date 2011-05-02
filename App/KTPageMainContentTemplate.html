@@ -1,50 +1,28 @@
 						<div id="main-content">
-							[[textblock property:titleHTML flags:"line" tag:h2 graphicalTextCode:h2]]
-							
-[[if includeInIndex]][[if parent.collectionShowNavigationArrows]]
-[[if parent.index.navigationArrowsStyle==1]]
+[[if !titleBox.hidden]]							[[textblock property:titleBox flags:"line" tag:h2 class:"title"]][[endif]]
+[[if includeInIndex]]
+[[if parentPage.navigationArrowsStyle==1]]
 							<div class="collection-navigation photo-navigation">
-								<div id="previous-photo" class="previous-page">[[if previousPage]]<a class="imageLink" href="[[path previousPage]]#previous-photo">[[`navigatePreviousHTML]]</a>[[endif4]]</div>
-								<div id="next-photo" class="next-page">[[if nextPage]]<a class="imageLink" href="[[path nextPage]]#previous-photo">[[`navigateNextHTML]]</a>[[endif4]]</div>
-								<div id="photo-list" class="collection-index"><a class="imageLink" href="[[path parent]]">[[`navigateListHTML]]</a></div>
+								<div id="previous-photo" class="previous-page[[if !previousPage]] disabled-navigation[[endif3]]">[[if previousPage]]<a class="imageLink" href="[[path previousPage]]#previous-photo">[[else3]]<span>[[endif3]][[`navigatePreviousHTML]][[if previousPage]]</a>[[else3]]</span>[[endif3]]</div>
+								<div id="next-photo" class="next-page[[if !nextPage]] disabled-navigation[[endif3]]">[[if nextPage]]<a class="imageLink" href="[[path nextPage]]#previous-photo">[[else3]]<span>[[endif3]][[`navigateNextHTML]][[if nextPage]]</a>[[else3]]</span>[[endif3]]</div>
+								<div id="photo-list" class="collection-index"><a class="imageLink" href="[[path parentPage]]">[[`navigateListHTML]]</a></div>
 							</div>
-[[endif3]]
-[[if parent.index.navigationArrowsStyle==2]]
-							<div class="collection-navigation text-navigation">
-								[[if previousPage]]<div class="previous-page"><a href="[[path previousPage]]"><span>&laquo;</span> [[=&previousPage.titleText]]</a></div>[[endif4]]
-								<div class="collection-index"><a href="[[path parent]]">[[=&parent.titleText]]</a></div>
-								[[if nextPage]]<div class="next-page"><a href="[[path nextPage]]">[[=&nextPage.titleText]] <span>&raquo;</span></a></div>[[endif4]]
-							</div>
-[[endif3]]
-[[endif2]][[endif]]
-
-[[if includeCallout]]
-							<div class="article [[if callouts]]has-callout[[else2]]no-callout[[endif2]]">
-[[if callouts]]
-[[parseComponent self parser.calloutContainerTemplateHTML]]
 [[endif2]]
-								<div class="article-content">
+[[if parentPage.navigationArrowsStyle==2]]
+							<div class="collection-navigation text-navigation">
+								[[if previousPage]]<div class="previous-page"><a href="[[path previousPage]]"><span>&laquo;</span> [[=&previousPage.title]]</a></div>[[endif3]]
+								<div class="collection-index"><a href="[[path parentPage]]">[[=&parentPage.title]]</a></div>
+								[[if nextPage]]<div class="next-page"><a href="[[path nextPage]]">[[=&nextPage.title]] <span>&raquo;</span></a></div>[[endif3]]
+							</div>
+[[endif2]]
 [[endif]]
-								[[if includeCallout]][[else]]<div class="no-callouts">[[endif]]
-									[[parsecomponent self elementTemplate]]
-								</div>[[comment END OF NO-CALLOUTS OR ARTICLE-CONTENT]]
-
+							<div class="article">
+								[[=parser.context.article.writeHTML]]
 								<div class="article-info">
-
 [[if includeTimestamp]]
-									<div class="timestamp">
-										[[=&timestamp]]
-									</div>
+									[[=writeTimestamp]]
 [[endif]]
-
 [[parsecomponent self commentsTemplate]]
-
 								</div> <!-- /article-info -->
-							[[if includeCallout]]</div>[[endif]] <!-- /article -->
-[[if index]]
-							<div id="index" class="[[=&index.cssClassName]]">
-[[index index pagesInIndex]]
-							</div> <!-- index -->
-							<div class="clear"></div>
-[[endif]]
+							</div> <!-- /article -->
 						</div> <!-- main-content -->

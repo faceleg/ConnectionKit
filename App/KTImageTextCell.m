@@ -2,7 +2,7 @@
 //  KTImageTextCell.m
 //  OutlineViewTester
 //
-//  Copyright 2004-2009 Karelia Software. All rights reserved.
+//  Copyright 2004-2011 Karelia Software. All rights reserved.
 //
 
 // a few additions to Chuck's ImageAndTextCell class
@@ -11,33 +11,12 @@
 
 #import "KT.H"
 
-void InterpolateBlue (void* info, float const* inData, float *outData);
-void InterpolateGray (void* info, float const* inData, float *outData);
-
 
 #define DEFAULT_PADDING 4   // eyeball guess, 4 is a standard Aqua spacing
 
-void InterpolateBlue (void* info, float const* inData, float *outData)
-{
-	static float color1[4] = { 0.36, 0.61, 0.92, 1.0f };
-	static float color2[4] = { 0.14, 0.36, 0.81, 1.0f };
 
-	int i;
-	float a = inData[0];
-	for(i = 0; i < 4; i++)
-		outData[i] = (1.0f-a)*color1[i] + a*color2[i];
-}
+#pragma mark -
 
-void InterpolateGray (void* info, float const* inData, float *outData)
-{
-	static float color1[4] = { 0.59, 0.59, 0.59, 1.0f };
-	static float color2[4] = { 0.42, 0.42, 0.42, 1.0f };
-
-	int i;
-	float a = inData[0];
-	for(i = 0; i < 4; i++)
-		outData[i] = (1.0f-a)*color1[i] + a*color2[i];
-}
 
 void InterpolateCurveShadow (void* info, float const* inData, float *outData)
 {
@@ -60,9 +39,7 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 }
 
 
-@interface KTImageTextCell ( Private )
-- (BOOL)useGradientHighlight;
-
+@interface KTImageTextCell ()
 + (NSImage *)codeInjectionIcon;
 - (float)codeInjectionIconWidth;
 @end
@@ -79,9 +56,9 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
         [self setPadding:DEFAULT_PADDING];
 //		[self setStaleness:kNotStale]; // enum removed, staleness flag has changed
         
-		myImageCell = [[NSImageCell alloc] initImageCell:nil];
+		myImageCell = [[SVShadowingImageCell alloc] initImageCell:nil];
 		[myImageCell setImageAlignment:NSImageAlignCenter];
-		[myImageCell setImageScaling:NSScaleProportionally];
+		[myImageCell setImageScaling:NSImageScaleNone]; // we are supplied correct size images
     }
 
     return self;
@@ -89,11 +66,13 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 
 - (void)dealloc
 {
+    [myImageCell release];
     [myImage release];
+    
     [super dealloc];
 }
 
-#pragma mark -
+#pragma mark NSCopying
 
 - copyWithZone:(NSZone *)zone
 {
@@ -105,10 +84,32 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
     return cell;
 }
 
+#pragma mark Layout
+
+/*  -cellSize is an NSCell convenience method that calls through to this one
+ */
+- (NSSize)cellSizeForBounds:(NSRect)aRect;
+{
+    // Add in width of image and its padding
+    CGFloat imageWidthWithPadding = [self padding] + [self maxImageSize];
+    aRect.size.width -= imageWidthWithPadding;
+    NSSize result = [super cellSizeForBounds:aRect];
+    result.width += imageWidthWithPadding;
+    
+    // Generally image is taller than text, so accomodate that
+    if ([self maxImageSize] > result.height) result.height = [self maxImageSize];
+    
+    
+    return result;
+}
+
 /*	The rect to fit the text in
  */
 - (NSRect)titleRectForBounds:(NSRect)theRect
 {
+    // Start with the default size
+    theRect = [super titleRectForBounds:theRect];
+    
 	// Calculate the area to the left of the image
 	NSRect nonImageRect;	NSRect otherRect;
 	NSDivideRect(theRect,
@@ -122,12 +123,10 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 	if ([self isDraft]) iconsWidth += 8.0;
 	if ([self hasCodeInjection]) iconsWidth += [self codeInjectionIconWidth];
 	
-	NSRect almostResult;
-	NSDivideRect(nonImageRect, &otherRect, &almostResult, iconsWidth, NSMaxXEdge);
+	NSRect result;
+	NSDivideRect(nonImageRect, &otherRect, &result, iconsWidth, NSMaxXEdge);
 	
 	
-	// We have to inset by a pixel for proper text drawing. Not sure why.
-	NSRect result = NSInsetRect(almostResult, 1.0, 1.0);
 	return result;
 }
 
@@ -148,45 +147,51 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 	return result;
 }
 
-- (void)editWithFrame:(NSRect)aRect
-               inView:(NSView *)controlView
-               editor:(NSText *)textObj
-             delegate:(id)anObject
-                event:(NSEvent *)theEvent
+/*  Default implementation calls -cellSize and then passes that to -titleRectForBounds:
+ *  Problem is title rect ignores the cell, so you end with an expansion frame that's too small and oddly offset
+ */
+- (NSRect)expansionFrameWithFrame:(NSRect)cellFrame inView:(NSView *)view
 {
-    NSRect textFrame, imageFrame;
-
-    NSDivideRect(aRect, &imageFrame, &textFrame, myPadding + [myImage size].width, NSMinXEdge);
-
-    [super editWithFrame:textFrame
-                  inView:controlView
-                  editor:textObj
-                delegate:anObject
-                   event:theEvent];
+    NSRect result = NSZeroRect;
+    
+    // Show expansion if the desired width is greater than frame
+    CGFloat width = [self cellSize].width;
+    if (width > cellFrame.size.width)
+    {
+        result = cellFrame;
+        result.size.width = width;
+    }
+    
+    return result;
 }
 
-- (void)selectWithFrame:(NSRect)aRect
-                 inView:(NSView *)controlView
-                 editor:(NSText *)textObj
-               delegate:(id)anObject
-                  start:(int)selStart
-                 length:(int)selLength
+#pragma mark Drawing
+
+- (void)drawNotPublishableMarkersWithFrame:(NSRect)cellFrame
 {
-    NSRect textFrame, imageFrame;
-
-    NSDivideRect(aRect, &imageFrame, &textFrame, myPadding + [myImage size].width, NSMinXEdge);
-
-    [super selectWithFrame:textFrame
-                    inView:controlView
-                    editor:textObj
-                  delegate:anObject
-                     start:selStart
-                    length:selLength];
+	if (![self isPublishable])
+	{
+		static NSColor *sNotPublishablePattern = nil;
+		if (nil == sNotPublishablePattern)
+		{
+			NSImage *notPublishablePatternImage = [NSImage imageNamed:@"notPublishable"];		// TO FIX
+			sNotPublishablePattern = [[NSColor colorWithPatternImage:notPublishablePatternImage] retain];
+		}
+		[NSGraphicsContext saveGraphicsState];
+		[[NSGraphicsContext currentContext] setCompositingOperation:NSCompositePlusDarker];
+		[sNotPublishablePattern set];
+		NSRect theRect = NSMakeRect(cellFrame.origin.x,
+									  cellFrame.origin.y,
+									  cellFrame.size.width,
+									  cellFrame.size.height+1);		// one pixel taller so it will bleed with adjacent row
+		[NSBezierPath fillRect:theRect];
+		[NSGraphicsContext restoreGraphicsState];
+		
+	}
 }
-
-- (void)drawDraftMarkersFrorFrame:(NSRect)cellFrame		// assumes focused
+- (void)drawDraftMarkersWithFrame:(NSRect)cellFrame		// assumes focused
 {
-	if (myIsDraft)
+	if ([self isDraft])
 	{
 		static NSColor *sDraftPattern = nil;
 		if (nil == sDraftPattern)
@@ -291,106 +296,37 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 	}
 }
 
-// draw cell background (gradient or standard)
+// draw cell background
 - (void)drawWithFrame:(NSRect)cellFrame
                inView:(NSView *)controlView
 {
-	// in Sandvox, we only draw a gradient behind selected cells
-    if ( [self useGradientHighlight] && [self isHighlighted] )
-	{
-		/* Determine whether we should draw a blue or grey gradient. */
-		NSWindow *window = [controlView window];
-		BOOL useBlue = (([window firstResponder] == controlView) && [window isMainWindow] && [window isKeyWindow]);
-		
-		
-        [controlView lockFocus];
-
-        /* Draw the gradient background. */
-		NSEraseRect(cellFrame);
-
-		struct CGFunctionCallbacks callbacks = { 0, useBlue ? InterpolateBlue : InterpolateGray, NULL };
-
-		CGFunctionRef function = CGFunctionCreate(
-												  NULL,       // void* info,
-												  1,          // size_t domainDimension,
-												  NULL,       // float const* domain,
-												  4,          // size_t rangeDimension,
-												  NULL,       // float const* range,
-												  &callbacks  // CGFunctionCallbacks const* callbacks
-												  );
-
-		CGColorSpaceRef cspace = CGColorSpaceCreateDeviceRGB();
-
-		float srcX = NSMinX(cellFrame), srcY = NSMinY(cellFrame);	// from lower left
-		float dstX = NSMinX(cellFrame), dstY = NSMaxY(cellFrame);	// to upper left
-		CGShadingRef shading = CGShadingCreateAxial(
-													cspace,                    // CGColorSpaceRef colorspace,
-													CGPointMake(srcX, srcY),   // CGPoint start,
-													CGPointMake(dstX, dstY),   // CGPoint end,
-													function,                  // CGFunctionRef function,
-													false,                     // bool extendStart,
-													false                      // bool extendEnd
-													);
-
-		CGContextRef context = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
-		CGContextDrawShading(
-							 context,
-							 shading
-							 );
-
-		CGShadingRelease(shading);
-		CGColorSpaceRelease(cspace);
-		CGFunctionRelease(function);
-
-		/* Draw a darker line along the top */
-		NSColor *topColor = useBlue
-			? [NSColor colorWithCalibratedRed:0.14 green:0.36 blue:0.82 alpha:1.0]
-			: [NSColor colorWithCalibratedWhite:0.42 alpha:1.0];
-		[topColor set];
-
-		NSPoint pt1 = NSMakePoint(0, NSMinY(cellFrame) + 0.5);
-		NSPoint pt2 = NSMakePoint(1000.0, NSMinY(cellFrame) + 0.5);		// fake the width
-        [NSBezierPath strokeLineFromPoint:pt1 toPoint:pt2];
-
-		[self drawDraftMarkersFrorFrame:cellFrame];	// draw draft markers on TOP of highlight blue
-		
-        [controlView unlockFocus];
-		
-		// now, draw the rest of the cell
-		[self drawInteriorWithFrame:cellFrame inView:controlView];
-    }
-	
-	// otherwise, we just let Cocoa do its thing
-	else
-	{
-		[self drawDraftMarkersFrorFrame:cellFrame];	// draw draft markers FIRST - will this work?
-		[super drawWithFrame:cellFrame inView:controlView];
-	}
+	[self drawDraftMarkersWithFrame:cellFrame];	// draw draft markers FIRST - will this work?
+	[super drawWithFrame:cellFrame inView:controlView];
+	NSRect cellFrameToLeftEdge = cellFrame;
+	cellFrameToLeftEdge.size.width += cellFrameToLeftEdge.origin.x;
+	cellFrameToLeftEdge.origin.x = 0;
+	[self drawNotPublishableMarkersWithFrame:cellFrameToLeftEdge];	// draw afterwards so it goes on top
 }
 
 // draw cell interior (image and text)
 - (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
-	// fix for 7294: don't lockFocus in this method, it alters the coords
+	// don't lockFocus in this method, it alters the coords. #7294
 
-	// draw image
-	if ( myImage != nil ) 
-	{
-		// Draw image
-        NSRect	imageFrame = [self imageRectForBounds:cellFrame];
-		[myImageCell drawWithFrame:imageFrame inView:controlView];
-		
-		
-		// Draw staleness indicator, if appropriate
-		if ([self staleness])
-		{
-			NSRect markerRect = NSMakeRect(imageFrame.origin.x, NSMaxY(imageFrame) - 3.0, 3.0, 3.0);
-			NSBezierPath *markerPath = [NSBezierPath bezierPathWithOvalInRect:markerRect];
-			[markerPath setLineWidth:0.0];
-			
-			[[NSColor colorWithCalibratedRed:0.094 green:0.301 blue:0.75 alpha:1.0] setFill];
-			[markerPath fill];
-		}
+	// Draw image
+	NSRect	imageFrame = [self imageRectForBounds:cellFrame];
+    [myImageCell drawWithFrame:imageFrame inView:controlView];
+    
+    
+    // Draw staleness indicator, if appropriate
+    if ([self staleness])
+    {
+        NSRect markerRect = NSMakeRect(imageFrame.origin.x, NSMaxY(imageFrame) - 3.0, 3.0, 3.0);
+        NSBezierPath *markerPath = [NSBezierPath bezierPathWithOvalInRect:markerRect];
+        [markerPath setLineWidth:0.0];
+        
+        [[NSColor colorWithCalibratedRed:0.094 green:0.301 blue:0.75 alpha:1.0] setFill];
+        [markerPath fill];
     }
 	
 	
@@ -403,55 +339,71 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 	}
 	
 	
-	// if drawing on top of a gradient, make the text color white
-	if ( [self useGradientHighlight] && [self isHighlighted] )
-	{
-		NSMutableAttributedString *newAttrString = [[[self attributedStringValue] mutableCopy] autorelease];
-		[newAttrString addAttribute:@"NSColor" value:[NSColor whiteColor] range:NSMakeRange(0, [newAttrString length])];
-		[self setAttributedStringValue:newAttrString];
-	}
-	
-	//if ( [self type] == NSTextCellType )
-	NSAttributedString *attributedString = [self attributedStringValue];
-	NSSize stringSize = [attributedString size];
-	NSRect textRect = [self titleRectForBounds:cellFrame];
-	NSRect stringBoundingRect = [attributedString boundingRectWithSize:textRect.size options:(NSStringDrawingUsesFontLeading & NSStringDrawingOneShot)];
-	
-	// look at lineBreakMode and stringSize to calculate drawRect
-	NSDictionary *stringAttributes = [attributedString attributesAtIndex:0 effectiveRange:NULL];
-	NSParagraphStyle *style = [stringAttributes valueForKey:NSParagraphStyleAttributeName];
-	if ( (nil != style)
-		 && (!([style lineBreakMode] == NSLineBreakByWordWrapping) || (([style lineBreakMode] == NSLineBreakByWordWrapping) && stringSize.width <= cellFrame.size.width))
-		 && (!([style lineBreakMode] == NSLineBreakByCharWrapping) || (([style lineBreakMode] == NSLineBreakByCharWrapping) && stringSize.width <= cellFrame.size.width)) )
-	{
-		// we're not wrapping, center vertically on single line
-		textRect.origin.y += cellFrame.size.height/2.0-stringBoundingRect.size.height/2.0;
-		textRect.size.height = stringBoundingRect.size.height;
-	}
-	else
-	{
-		// we're wrapping, center it vertically on multiple lines
-		int numberOfLinesNeeded = ceil(stringSize.width/cellFrame.size.width);
-		int numberOfLinesPossible = floor(cellFrame.size.height/stringSize.height);
-		int numberOfLines = (numberOfLinesNeeded > numberOfLinesPossible) ? numberOfLinesPossible : numberOfLinesNeeded;
-		if ( numberOfLines < 1 )
-		{
-			numberOfLines = 1;
-		}
-		textRect.origin.y += (cellFrame.size.height/2.0-(stringBoundingRect.size.height*numberOfLines)/2.0);
-		textRect.size.height = stringBoundingRect.size.height * numberOfLines;
-	}
-	
-	// draw the string
-	[attributedString drawInRect:textRect];
+    // Draw text. Fake placeholder to be white when highlighted
+    if (![[self stringValue] length] && [self isHighlighted] && [self placeholderString])
+    {
+        [self setStringValue:[self placeholderString]];
+        [self drawTitleWithFrame:cellFrame inView:controlView];
+        [self setStringValue:@""];
+    }
+    else
+    {
+        [self drawTitleWithFrame:cellFrame inView:controlView];
+    }
 }
 
-- (NSSize)cellSize
+- (NSRect)titleDrawingRectForBounds:(NSRect)cellFrame
 {
-	// expand cellSize my width of myImage + padding
-    NSSize cellSize = [super cellSize];
-    cellSize.width += (myImage ? [myImage size].width : 0) + myPadding;
-    return cellSize;
+    //  The title rect encompasses the full height of the cell. This narrows it down to the height of the text, centered in that rectangle
+    
+    
+    // What rect is the title to be drawn in?
+    NSRect titleRect = [self titleRectForBounds:cellFrame];
+    
+    // Center vertically within that (taken from KSVerticallyAlignedTextCell).
+    NSSize textSize = [super cellSizeForBounds:titleRect];
+	CGFloat verticalInset = (cellFrame.size.height - textSize.height) / 2;
+	NSRect result = NSInsetRect(titleRect, 0.0, verticalInset);
+	
+    
+    return result;
+}
+
+- (void)drawTitleWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;
+{
+    // What rect is the title to be drawn in?
+    NSRect centeredRect = [self titleDrawingRectForBounds:cellFrame];
+    [super drawInteriorWithFrame:centeredRect inView:controlView];
+}
+
+#pragma mark Editing
+
+- (void)editWithFrame:(NSRect)cellFrame
+               inView:(NSView *)controlView
+               editor:(NSText *)textObj
+             delegate:(id)anObject
+                event:(NSEvent *)theEvent
+{
+    [super editWithFrame:[self titleDrawingRectForBounds:cellFrame]
+                  inView:controlView
+                  editor:textObj
+                delegate:anObject
+                   event:theEvent];
+}
+
+- (void)selectWithFrame:(NSRect)cellFrame
+                 inView:(NSView *)controlView
+                 editor:(NSText *)textObj
+               delegate:(id)anObject
+                  start:(int)selStart
+                 length:(int)selLength
+{
+    [super selectWithFrame:[self titleDrawingRectForBounds:cellFrame]
+                    inView:controlView
+                    editor:textObj
+                  delegate:anObject
+                     start:selStart
+                    length:selLength];
 }
 
 #pragma mark -
@@ -460,6 +412,10 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 - (BOOL)isDraft { return myIsDraft; }
 
 - (void)setDraft:(BOOL)flag { myIsDraft = flag; }
+
+- (BOOL)isPublishable { return myIsPublishable; }
+
+- (void)setPublishable:(BOOL)flag { myIsPublishable = flag; }
 
 - (int)staleness { return myStaleness; }
 
@@ -476,6 +432,13 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 		
 		[myImageCell setImage:anImage];
     }
+}
+
+@synthesize isImageThumbnail = _thumbnail;
+- (void)setIsImageThumbnail:(BOOL)isThumbnail;
+{
+    _thumbnail = isThumbnail;
+    [myImageCell setHasShadow:isThumbnail];
 }
 
 - (float)maxImageSize { return myMaxImageSize; }
@@ -499,11 +462,6 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 - (int)padding { return myPadding; }
 
 - (void)setPadding:(int)anInt { myPadding = anInt; }
-
-- (BOOL)useGradientHighlight
-{
-	return [[NSUserDefaults standardUserDefaults] boolForKey:@"UseGradientSiteOutlineHilite"];
-}
 
 - (BOOL)isRoot { return myIsRoot; }
 
@@ -561,3 +519,41 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 }
 
 @end
+
+
+#pragma mark -
+
+
+@implementation SVShadowingImageCell
+
+@synthesize hasShadow = _shadow;
+
+- (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;
+{
+    if ([self hasShadow])
+    {
+        // Apply shadow
+        [[NSGraphicsContext currentContext] saveGraphicsState];
+        
+        NSShadow *shadow = [[NSShadow alloc] init];
+        [shadow setShadowColor:[NSColor blackColor]];
+        [shadow setShadowBlurRadius:2.0f];
+        [shadow setShadowOffset:NSMakeSize(0.0f, -1.0f)];
+        [shadow set];
+        
+        
+        // Draw image
+        cellFrame.origin.y--;   // budge up by one pixel to match shadow offset
+        [self drawInteriorWithFrame:cellFrame inView:controlView];
+        
+        [[NSGraphicsContext currentContext] restoreGraphicsState];
+        [shadow release];
+    }
+    else
+    {
+        [super drawWithFrame:cellFrame inView:controlView];
+    }
+}
+
+@end
+

@@ -3,21 +3,23 @@
 //  Marvel
 //
 //  Created by Dan Wood on 5/25/05.
-//  Copyright 2005-2009 Karelia Software. All rights reserved.
+//  Copyright 2005-2011 Karelia Software. All rights reserved.
 //
 
 #import "KTHostProperties.h"
 
-#import "KTAppDelegate.h"
 #import "KTHostSetupController.h"
+#import "SVRootPublishingRecord.h"
 
 #import "NSCharacterSet+Karelia.h"
 #import "NSEntityDescription+KTExtensions.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
-#import "NSURL+Karelia.h"
+#import "KSURLUtilities.h"
 #import "NSWorkspace+Karelia.h"
+
+#import "KSURLFormatter.h"
 
 #import "debug.h"
 
@@ -35,9 +37,13 @@
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	
 	[self setBool:[defaults boolForKey:@"deletePagesWhenPublishing"] forKey:@"deletePagesWhenPublishing"];
-	[self setBool:[defaults boolForKey:@"PathsWithIndexPages"] forKey:@"PathsWithIndexPages"];
-	[self setValue:[defaults objectForKey:@"htmlIndexBaseName"] forKey:@"htmlIndexBaseName"];
+	[self setPrimitiveValue:[defaults objectForKey:@"htmlIndexBaseName"] forKey:@"htmlIndexBaseName"];
 	[self setValue:[defaults objectForKey:@"archivesBaseName"] forKey:@"archivesBaseName"];
+    
+    
+    // Root record
+    SVRootPublishingRecord *record = [NSEntityDescription insertNewObjectForEntityForName:@"RootPublishingRecord" inManagedObjectContext:[self managedObjectContext]];
+    [self setRootPublishingRecord:record];
 }
 
 - (void)awakeFromFetch
@@ -52,11 +58,6 @@
 		[self setBool:deletePagesWhenPublishing forKey:@"deletePagesWhenPublishing"];
 	}
 	
-	BOOL PathsWithIndexPages = [defaults boolForKey:@"PathsWithIndexPages"];
-	if (PathsWithIndexPages != [self boolForKey:@"PathsWithIndexPages"]) {
-		[self setBool:PathsWithIndexPages forKey:@"PathsWithIndexPages"];
-	}
-	
 	NSString *htmlIndexBaseName = [defaults objectForKey:@"htmlIndexBaseName"];
 	if (![htmlIndexBaseName isEqualToString:[self valueForKey:@"htmlIndexBaseName"]]) {
 		[self setValue:htmlIndexBaseName forKey:@"htmlIndexBaseName"];
@@ -66,6 +67,11 @@
 	if (![archivesBaseName isEqualToString:[self valueForKey:@"archivesBaseName"]]) {
 		[self setValue:archivesBaseName forKey:@"archivesBaseName"];
 	}
+}
+
+- (BOOL)usesExtensiblePropertiesForUndefinedKey:(NSString *)key
+{
+    return YES;
 }
 
 #pragma mark -
@@ -79,9 +85,9 @@
     if (siteURL)
     {
         // If the user's entered a non-directory URL, trim it down
-        if (![siteURL hasDirectoryPath])
+        if (![siteURL ks_hasDirectoryPath])
         {
-            siteURL = [siteURL URLByDeletingLastPathComponent];
+            siteURL = [siteURL ks_URLByDeletingLastPathComponent];
         }
         
         // We compose the result out of just the host and path
@@ -147,7 +153,7 @@
 		[stem replaceOccurrencesOfString:@"?" withString:userID options:0 range:NSMakeRange(0, [stem length])];
 	}
 	// Now get just the path part
-	NSURL *stemURL = [NSURL URLWithUnescapedString:stem];
+	NSURL *stemURL = [KSURLFormatter URLFromString:stem];
 	result = [stemURL path];	// won't end in slash
 	
 	NSString *subFolder = [self valueForKey:@"subFolder"];
@@ -176,7 +182,7 @@
 	NSString *subFolder = [self valueForKey:@"localSubFolder"];
 	if (nil != subFolder && ![subFolder isEqualToString:@""])
 	{
-		[result appendString:[subFolder stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES]];
+		[result appendString:[subFolder ks_stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES]];
 		if (![result hasSuffix:@"/"])		// make sure it ends with /
 		{
 			[result appendString:@"/"];
@@ -224,7 +230,7 @@
 		NSString *subFolder = [self valueForKey:@"localSubFolder"];
 		if (nil != subFolder && ![subFolder isEqualToString:@""])
 		{
-			[result appendString:[subFolder stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES]];
+			[result appendString:[subFolder ks_stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES]];
 			if (![result hasSuffix:@"/"])		// make sure it ends with /
 			{
 				[result appendString:@"/"];
@@ -362,10 +368,7 @@ to be verified.
 	return result;
 }
 
-- (void)setStemURL:(NSString *)someString
-{
-	[self setWrappedValue:someString forKey:@"stemURL"];
-}
+@dynamic stemURL;
 
 /*!	Returns the base of the url like http://mysite.mydomain.com/~user/thisSite/ 
  */
@@ -414,7 +417,7 @@ to be verified.
 		}
 		else
 		{
-			return [[NSWorkspace sharedWorkspace] userSitesDirectory];
+			return [KSWORKSPACE userSitesDirectory];
 		}
 		
 		return [self valueForKey:@"localSubFolder"];
@@ -437,31 +440,6 @@ to be verified.
 	}
 }
 
-#pragma mark -
-#pragma mark Resources
-
-- (NSURL *)resourcesDirectoryURL
-{
-	NSString *resourcesDirectoryName = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultResourcesPath"];
-	NSURL *result = [NSURL URLWithPath:resourcesDirectoryName relativeToURL:[self siteURL] isDirectory:YES];
-	
-	OBPOSTCONDITION(result);
-	return result;
-}
-
-- (NSURL *)URLForResourceFile:(NSString *)filename
-{
-	OBPRECONDITION(filename);
-	
-	NSURL *result = [NSURL URLWithPath:[filename lastPathComponent] 
-						 relativeToURL:[self resourcesDirectoryURL]
-						   isDirectory:NO];
-	
-	OBPOSTCONDITION(result);
-	return result;
-}
-
-#pragma mark -
 #pragma mark Troubleshooting
 
 - (NSString *)hostPropertiesReport
@@ -481,6 +459,62 @@ to be verified.
 	NSString *result = [buffer description];
 	[buffer release];
 	return result;
+}
+
+#pragma mark Publishing Records
+
+@dynamic rootPublishingRecord;
+
+- (SVPublishingRecord *)publishingRecordForPath:(NSString *)path;
+{
+    OBPRECONDITION(path);
+    
+    
+    NSArray *pathComponents = [path pathComponents];
+    
+    SVPublishingRecord *aRecord = [self rootPublishingRecord];
+    for (int i = 0; i < [pathComponents count]; i++)
+    {
+        NSString *component = [pathComponents objectAtIndex:i];        
+        aRecord = [aRecord publishingRecordForFilename:component];
+    }
+    SVPublishingRecord *result = aRecord;
+    
+    return result;
+}
+
+- (SVPublishingRecord *)regularFilePublishingRecordWithPath:(NSString *)path;
+{
+    OBPRECONDITION(path);
+    
+    
+    
+    NSArray *pathComponents = [path pathComponents];
+    
+    // Create intermediate directories
+    SVPublishingRecord *aRecord = [self rootPublishingRecord];
+    for (int i = 0; i < [pathComponents count] - 1; i++)
+    {
+        NSString *aPathComponent = [pathComponents objectAtIndex:i];        
+        SVDirectoryPublishingRecord *parentRecord = (SVDirectoryPublishingRecord *)aRecord;
+        aRecord = [parentRecord directoryPublishingRecordWithFilename:aPathComponent];
+    }
+    
+    
+    // Create final record
+    NSString *filename = [pathComponents lastObject];
+    SVDirectoryPublishingRecord *parentRecord = (SVDirectoryPublishingRecord *)aRecord;
+    aRecord = [parentRecord regularFilePublishingRecordWithFilename:filename];
+    
+    
+    // Finish up
+    SVPublishingRecord *result = aRecord;
+    return result;
+}
+
+- (SVPublishingRecord *)publishingRecordForSHA1Digest:(NSData *)digest;
+{
+    return [[self rootPublishingRecord] publishingRecordForSHA1Digest:digest];
 }
 
 @end

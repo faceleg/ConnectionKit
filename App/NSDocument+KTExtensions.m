@@ -3,12 +3,14 @@
 //  Marvel
 //
 //  Created by Mike on 21/10/2008.
-//  Copyright 2008-2009 Karelia Software. All rights reserved.
+//  Copyright 2008-2011 Karelia Software. All rights reserved.
 //
 
 #import "NSDocument+KTExtensions.h"
 
 #import "NSError+Karelia.h"
+
+#import "KSWorkspaceUtilities.h"
 
 
 @implementation NSDocument (KTExtensions)
@@ -33,7 +35,7 @@
     {
         if (outError)
         {
-            *outError = [NSError errorWithDomain:kKareliaErrorDomain
+            *outError = [KSError errorWithDomain:kKareliaErrorDomain
                                             code:KareliaError
                             localizedDescription:NSLocalizedString(@"Cannot copy document over itself.", "alert message")
                      localizedRecoverySuggestion:NSLocalizedString(@"Please choose a different location to copy to.", "error recovery suggestion")
@@ -50,7 +52,7 @@
     {
         if (recycle)
         {
-            result = [[NSWorkspace sharedWorkspace] performFileOperation:NSWorkspaceRecycleOperation 
+            result = [KSWORKSPACE performFileOperation:NSWorkspaceRecycleOperation 
                                                                   source:[destinationPath stringByDeletingLastPathComponent]
                                                              destination:nil
                                                                    files:[NSArray arrayWithObject:[destinationPath lastPathComponent]] 
@@ -66,11 +68,9 @@
         {
             if (outError)
             {
-                *outError = [NSError errorWithDomain:kKareliaErrorDomain
+                *outError = [KSError errorWithDomain:kKareliaErrorDomain
                                                 code:KareliaError
-                                localizedDescription:NSLocalizedString(@"The document could not be copied. Sandvox was unable to remove an existing file or folder at the same location.", "alert message")
-                         localizedRecoverySuggestion:nil
-                                     underlyingError:nil];
+                                localizedDescription:NSLocalizedString(@"The document could not be copied. Sandvox was unable to remove an existing file or folder at the same location.", "alert message")];
             }
             
             return NO;
@@ -99,11 +99,9 @@
     {
         if (outError)
         {
-            *outError = [NSError errorWithDomain:kKareliaErrorDomain
+            *outError = [KSError errorWithDomain:kKareliaErrorDomain
                                             code:KareliaError
-                            localizedDescription:NSLocalizedString(@"The document could not be copied.", "alert message")
-                     localizedRecoverySuggestion:nil
-                                 underlyingError:nil];
+                            localizedDescription:NSLocalizedString(@"The document could not be copied.", "alert message")];
         }
     }
 

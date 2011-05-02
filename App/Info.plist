@@ -11,6 +11,22 @@
 			<array>
 				<string>svxSite</string>
 			</array>
+			<key>CFBundleTypeName</key>
+			<string>Sandvox 1.5 Document</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSTypeIsPackage</key>
+			<true/>
+			<key>NSDocumentClass</key>
+			<string>SVMigrationDocument</string>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>SQLite</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>sandvox</string>
+			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>document.icns</string>
 			<key>CFBundleTypeName</key>
@@ -26,27 +42,7 @@
 			<key>NSDocumentClass</key>
 			<string>KTDocument</string>
 			<key>NSPersistentStoreTypeKey</key>
-			<string>SQLite</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>svxDataSource</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>datasource.icns</string>
-			<key>CFBundleTypeName</key>
-			<string>Sandvox Data Source</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>svDS</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSTypeIsPackage</key>
-			<true/>
-			<key>NSDocumentClass</key>
-			<string>KTPluginInstaller</string>
+			<string>Binary</string>
 		</dict>
 		<dict>
 			<key>CFBundleTypeExtensions</key>
@@ -60,66 +56,6 @@
 			<key>CFBundleTypeOSTypes</key>
 			<array>
 				<string>svDz</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSTypeIsPackage</key>
-			<true/>
-			<key>NSDocumentClass</key>
-			<string>KTPluginInstaller</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>svxIndex</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>index.icns</string>
-			<key>CFBundleTypeName</key>
-			<string>Sandvox Index</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>svIn</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSTypeIsPackage</key>
-			<true/>
-			<key>NSDocumentClass</key>
-			<string>KTPluginInstaller</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>svxPage</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>pageplugin.icns</string>
-			<key>CFBundleTypeName</key>
-			<string>Sandvox Page</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>svPg</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSTypeIsPackage</key>
-			<true/>
-			<key>NSDocumentClass</key>
-			<string>KTPluginInstaller</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>svxPagelet</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>pageplugin.icns</string>
-			<key>CFBundleTypeName</key>
-			<string>Sandvox Pagelet</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>svPt</string>
 			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
@@ -152,7 +88,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleGetInfoString</key>
-	<string>${SANDVOX_VERSION} (${SVN_VERSION}), © 2004–2009 Karelia Software</string>
+	<string>${SANDVOX_VERSION}, © 2004-2011 Karelia Software</string>
 	<key>CFBundleHelpBookFolder</key>
 	<string>Sandvox Help</string>
 	<key>CFBundleHelpBookName</key>
@@ -184,30 +120,30 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>${SVN_VERSION}</string>
-	<key>KTConnectionVersion</key>
-	<string>${CK_REVISION}</string>
-	<key>KTiMediaVersion</key>
-	<string>${IMEDIA_REVISION}</string>
+	<key>ClickToFlashOptOut</key>
+	<true/>
+	<key>KSFeedType</key>
+	<string>${PRODUCT_VARIANT_WITH_SECRET_KEY_FOR_SPARKLE}</string>
 	<key>LSEnvironment</key>
 	<dict>
 		<key>MinimumSystemVersion</key>
-		<string>10.4.11</string>
+		<string>10.5.7</string>
 	</dict>
 	<key>NSAppleScriptEnabled</key>
 	<false/>
 	<key>NSHumanReadableCopyright</key>
-	<string>© 2004-2009 Karelia Software. All Rights Reserved.</string>
+	<string>© 2004-2011 Karelia Software. All Rights Reserved.</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>KTApplication</string>
+	<key>SUEnableAutomaticChecks</key>
+	<false/>
 	<key>SUFeedURL</key>
 	<string>http://launch.karelia.com/appcast.php</string>
-	<key>KSFeedType</key>
-	<string>${PRODUCT_VARIANT}</string>
-	<key>SUIncludeProfile</key>
-	<false/>
-	<key>SUEnableAutomaticChecks</key>
+	<key>SUPublicDSAKeyFile</key>
+	<string>dsa_pub.pem</string>
+	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
@@ -218,7 +154,7 @@
 				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Sandvox Document</string>
+			<string>Sandvox 1 Document</string>
 			<key>UTTypeIconName</key>
 			<string>document.icns</string>
 			<key>UTTypeIdentifier</key>
@@ -240,7 +176,7 @@
 				<string>com.apple.package</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Sandvox Document</string>
+			<string>Sandvox 1.5 Document</string>
 			<key>UTTypeIconName</key>
 			<string>document.icns</string>
 			<key>UTTypeIdentifier</key>
@@ -255,6 +191,28 @@
 				<string>svxSite</string>
 			</dict>
 		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.composite-content</string>
+				<string>com.apple.package</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Sandvox 2 Document</string>
+			<key>UTTypeIconName</key>
+			<string>document.icns</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.karelia.Sandvox.sandvox</string>
+			<key>UTTypeReferenceURL</key>
+			<string>http://www.karelia.com/sandvox/</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>com.apple.ostype</key>
+				<string>svSt</string>
+				<key>public.filename-extension</key>
+				<string>sandvox</string>
+			</dict>
+		</dict>
 	</array>
 	<key>UTImportedTypeDeclarations</key>
 	<array>
@@ -263,16 +221,13 @@
 			<array>
 				<string>public.source-code</string>
 				<string>public.plain-text</string>
-				<string>public.text</string>
-				<string>public.data</string>
-				<string>public.item</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>Cascading Style Sheet</string>
 			<key>UTTypeIdentifier</key>
 			<string>public.css</string>
 			<key>UTTypeReferenceURL</key>
-			<string>http://www.w3.org/TR/REC-CSS2/</string>
+			<string>http://www.w3.org/TR/CSS2/</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>com.apple.macos.ostype</key>
@@ -289,15 +244,13 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.audiovisual-content</string>
-				<string>public.data</string>
-				<string>public.item</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Macromedia Flash</string>
+			<string>Adobe Flash</string>
 			<key>UTTypeIdentifier</key>
-			<string>com.macromedia.shockwave-flash</string>
+			<string>com.adobe.shockwave-flash</string>
 			<key>UTTypeReferenceURL</key>
-			<string>http://www.macromedia.com/software/flash/</string>
+			<string>http://www.adobe.com/products/flash/</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
@@ -308,8 +261,164 @@
 				<string>application/x-shockwave-flash</string>
 			</dict>
 		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<string>public.movie</string>
+			<key>UTTypeDescription</key>
+			<string>Flash video</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.adobe.flash.video</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>flv</string>
+					<string>f4v</string>
+					<string>f4p</string>
+					<string>f4a</string>
+					<string>f4b</string>
+				</array>
+				<key>public.mime-type</key>
+				<array>
+					<string>video/x-flv</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.movie</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Theora Video File</string>
+			<key>UTTypeIdentifier</key>
+			<string>public.ogg-theora</string>
+			<key>UTTypeReferenceURL</key>
+			<string>http://www.theora.org/</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>ogv</string>
+					<string>ogm</string>
+				</array>
+				<key>public.mime-type</key>
+				<string>video/ogg</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.movie</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Webm Video</string>
+			<key>UTTypeIdentifier</key>
+			<string>public.webm</string>
+			<key>UTTypeReferenceURL</key>
+			<string>http://www.webmproject.org/</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>webm</string>
+				</array>
+				<key>public.mime-type</key>
+				<string>video/webm</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.mpeg-4</string>
+				<string>public.movie</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>H.264 Video</string>
+			<key>UTTypeIdentifier</key>
+			<string>public.h264</string>
+			<key>UTTypeReferenceURL</key>
+			<string>http://www.itu.int/rec/T-REC-H.264/en</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>mp4</string>
+					<string>mpg4</string>
+					<string>h264</string>
+					<string>264</string>
+				</array>
+				<key>public.mime-type</key>
+				<string>video/mp4</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.h264</string>
+				<string>public.mpeg-4</string>
+				<string>public.movie</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>H.264 Video, iOS compatible</string>
+			<key>UTTypeIdentifier</key>
+			<string>public.h264.ios</string>
+			<key>UTTypeReferenceURL</key>
+			<string>http://www.itu.int/rec/T-REC-H.264/en</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>mp4</string>
+					<string>mpg4</string>
+					<string>h264</string>
+					<string>264</string>
+				</array>
+				<key>public.mime-type</key>
+				<string>video/mp4</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.audio</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Ogg Vorbis Audio</string>
+			<key>UTTypeIdentifier</key>
+			<string>public.ogg-vorbis</string>
+			<key>UTTypeReferenceURL</key>
+			<string>http://www.vorbis.org/</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>ogg</string>
+					<string>oga</string>
+				</array>
+				<key>public.mime-type</key>
+				<string>audio/ogg</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.audio</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>QuickTime Audio</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.apple.quicktime-audio</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>mov</string>
+				</array>
+				<key>public.mime-type</key>
+				<string>audio/mov</string>
+			</dict>
+		</dict>
 	</array>
-	<key>SUPublicDSAKeyFile</key>
-	<string>dsa_pub.pem</string>
 </dict>
 </plist>

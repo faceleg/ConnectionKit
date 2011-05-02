@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Mike on 15/01/2009.
-//  Copyright 2009 Karelia Software. All rights reserved.
+//  Copyright 2009-2011 Karelia Software. All rights reserved.
 //
 
 #import "KTCodeInjection.h"
@@ -14,12 +14,14 @@
 + (void)initialize
 {
 	// Site Outline
+	// Deprecated .... should use keyPathsForValuesAffectingValueForKey
 	[self setKeys:[NSArray arrayWithObjects:@"beforeHTML",
                    @"bodyTag",
                    @"bodyTagEnd",
                    @"bodyTagStart",
                    @"earlyHead",
-                   @"headArea", nil]
+                   @"headArea", 
+				   @"additionalCSS", nil]
         triggerChangeNotificationsForDependentKey:@"hasCodeInjection"];
 }
 
@@ -46,6 +48,12 @@
 	
 	aCodeInjection = [self valueForKey:@"headArea"];
 	if (aCodeInjection && ![aCodeInjection isEqualToString:@""]) return YES;
+	
+	if ([self respondsToSelector:@selector(additionalCSS)])	// May be N/A for page code injection.
+	{
+		aCodeInjection = [self valueForKey:@"additionalCSS"];
+		if (aCodeInjection && ![aCodeInjection isEqualToString:@""]) return YES;
+	}
 	
 	return NO;
 }

@@ -3,7 +3,7 @@
  *  Sandvox
  *
  *  Created by Terrence Talbot on 5/15/07.
- *  Copyright 2007-2009 Karelia Software. All rights reserved.
+ *  Copyright 2007-2011 Karelia Software. All rights reserved.
  *
  */
 
@@ -15,8 +15,6 @@
 #import "NTSUTaskController.h"
 
 #import "RoundedBox.h"
-#import "RYZImagePopUpButton.h"
-#import "RYZImagePopUpButtonCell.h"
 
 // via Apple sample code
 #import "DNDArrayController.h"

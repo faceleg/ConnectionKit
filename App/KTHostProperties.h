@@ -2,7 +2,7 @@
 //  KTStoredDictionary+HostProperties.h
 //  Sandvox
 //
-//  Copyright 2005-2009 Karelia Software. All rights reserved.
+//  Copyright 2005-2011 Karelia Software. All rights reserved.
 //
 //  THIS SOFTWARE IS PROVIDED BY KARELIA SOFTWARE AND ITS CONTRIBUTORS "AS-IS"
 //  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -17,11 +17,13 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import <Cocoa/Cocoa.h>
-#import "KTManagedObject.h"
+#import "KSExtensibleManagedObject.h"
 
 
-@interface KTHostProperties : KTManagedObject
+@class SVDirectoryPublishingRecord, SVPublishingRecord;
+
+
+@interface KTHostProperties : KSExtensibleManagedObject
 
 - (BOOL)remoteSiteURLIsValid;
 - (NSString *)globalBaseURLUsingHome:(BOOL)inHome allowNull:(BOOL)allowNull;
@@ -33,14 +35,23 @@
 - (NSString *)remoteSiteURL;
 - (NSString *)uploadURL;
 
+@property(nonatomic, copy) NSString *stemURL;
+
 // Sane API starts here
 - (NSURL *)siteURL;
 - (NSString *)documentRoot;
 - (NSString *)subfolder;
 
-- (NSURL *)resourcesDirectoryURL;
-- (NSURL *)URLForResourceFile:(NSString *)filename;
-
 - (NSString *)hostPropertiesReport;
+
+
+#pragma mark Publishing Records
+
+@property(nonatomic, retain) SVDirectoryPublishingRecord *rootPublishingRecord;
+
+- (SVPublishingRecord *)publishingRecordForPath:(NSString *)path;
+- (SVPublishingRecord *)regularFilePublishingRecordWithPath:(NSString *)path;
+- (SVPublishingRecord *)publishingRecordForSHA1Digest:(NSData *)digest;
+
 
 @end

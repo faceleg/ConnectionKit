@@ -2,7 +2,7 @@
 //  KTDocument.h
 //  Sandvox
 //
-//  Copyright 2004-2009 Karelia Software. All rights reserved.
+//  Copyright 2004-2011 Karelia Software. All rights reserved.
 //
 //  THIS SOFTWARE IS PROVIDED BY KARELIA SOFTWARE AND ITS CONTRIBUTORS "AS-IS"
 //  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -20,64 +20,64 @@
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
 
-#import "KTDocumentControllerChain.h"
+
+extern NSString *kKTDocumentDidChangeNotification;
+extern NSString *kKTDocumentWillCloseNotification;
 
 
-extern NSString *KTDocumentDidChangeNotification;
-extern NSString *KTDocumentWillCloseNotification;
+extern NSString *kKTDocumentWillSaveNotification;
 
 
-extern NSString *KTDocumentWillSaveNotification;
+@class KTSite;
+@class KTDocWindowController, SVDocumentSavePanelAccessoryViewController;
+@class KTElementPlugInWrapper;
+@protocol SVDocumentFileWrapper;
 
 
-@class KTSite, KTMediaManager, KTLocalPublishingEngine;
-@class KTDocWindowController, KTHTMLInspectorController;
-@class KTAbstractElement, KTPage, KTElementPlugin;
-
-
-@interface KTDocument : NSDocument //<KTDocumentControllerChain>
+@interface KTDocument : NSDocument
 {
-@private
+  @private
 	
 	// Standard document behaviour additions
-    BOOL        _closing;
     NSThread    *_thread;
 	
     
     // KT
     NSManagedObjectContext	*_managedObjectContext;
-	KTSite                  *_site;                   // accessor in category method
+	NSPersistentStore       *_store;
+    KTSite                  *_site;                   // accessor in category method
 	
-	KTMediaManager				*myMediaManager;
+	//KTMediaManager				*_mediaManager;
 		
-	KTDocWindowController		*_mainWindowController;
-	KTHTMLInspectorController	*myHTMLInspectorController;
 	
 	
 	// UI
-	BOOL	myShowDesigns;						// accessor in category method
-	BOOL	myDisplaySiteOutline;				// accessor in category method
 	BOOL	myDisplaySmallPageIcons;			// accessor in category method
-	BOOL	myDisplayStatusBar;					// accessor in category method
-	BOOL	myDisplayEditingControls;			// accessor in category method
 //	short	mySiteOutlineSize;
 	BOOL	myDisplayCodeInjectionWarnings;		// accessor in category method
     
     
     // Saving
-    unsigned            mySaveOperationCount;
-    NSSaveOperationType myLastSavePanelSaveOperation;
+    unsigned                                    mySaveOperationCount;
+    SVDocumentSavePanelAccessoryViewController  *_accessoryViewController;
+    
+    NSMutableDictionary *_filenameReservations;
+    NSString            *_deletedMediaDirectoryName;
     
     WebView             *_quickLookThumbnailWebView;
+    NSWindow            *_quickLookThumbnailWebViewWindow;
     NSLock              *_quickLookThumbnailLock;
+    NSFileWrapper       *_previewResourcesFileWrapper;  // weak, temp ref
+	
+    // Publishing
+	NSURL *_lastExportDirectory;
+
 }
 
-
-// Init
-- (id)initWithType:(NSString *)type rootPlugin:(KTElementPlugin *)plugin error:(NSError **)error;
+@property(nonatomic, copy) NSURL *lastExportDirectory;
 
 
-// Managing the Persistence Objects
+#pragma mark Managing the Persistence Objects
 + (NSManagedObjectModel *)managedObjectModel;
 - (NSManagedObjectContext *)managedObjectContext;
 
@@ -89,40 +89,50 @@ extern NSString *KTDocumentWillSaveNotification;
 
 - (NSString *)persistentStoreTypeForFileType:(NSString *)fileType;
 
-
-// Document URLs etc.
-+ (NSURL *)datastoreURLForDocumentURL:(NSURL *)inURL type:(NSString *)documentUTI;
-+ (NSURL *)siteURLForDocumentURL:(NSURL *)inURL;
-+ (NSURL *)quickLookURLForDocumentURL:(NSURL *)inURL;
-+ (NSURL *)mediaURLForDocumentURL:(NSURL *)inURL;
-
-- (NSURL *)mediaDirectoryURL;
-- (NSString *)temporaryMediaPath;
-- (NSString *)siteDirectoryPath;
+@property(nonatomic, retain) NSPersistentStore *persistentStore;
 
 
+#pragma mark Reading
+- (void)didReadContentsForURL:(NSURL *)URL;
+
+
+#pragma mark Media
+
+@property(nonatomic, copy, readonly) NSDictionary *documentFileWrappers;    // case-sensitive dictionary
+- (BOOL)isFilenameAvailable:(NSString *)filename;
+- (NSString *)keyForDocumentFileWrapper:(id <SVDocumentFileWrapper>)wrapper;
+
+- (NSString *)addDocumentFileWrapper:(id <SVDocumentFileWrapper>)wrapper; // returns the filename reserved
+- (void)setDocumentFileWrapper:(id <SVDocumentFileWrapper>)wrapper forKey:(NSString *)key;
+- (void)unreserveFilename:(NSString *)filename;
+
+- (void)designDidChange;
+
+- (NSSet *)missingMedia;
+
+
+#pragma mark Actions
 - (IBAction)setupHost:(id)sender;
 
-// Controller chain
-- (KTDocWindowController *)mainWindowController;
 
-- (BOOL)isClosing;
+#pragma mark UI
+- (NSOpenPanel *)makeChooseDialog;
 
-- (IBAction)editRawHTMLInSelectedBlock:(id)sender;
 
-// Editing
+#pragma mark Editing
 
 - (void)addScreenshotsToAttachments:(NSMutableArray *)attachments attachmentOwner:(NSString *)attachmentOwner;
 - (BOOL)mayAddScreenshotsToAttachments;
 
-- (void)editSourceObject:(NSObject *)aSourceObject keyPath:(NSString *)aKeyPath  isRawHTML:(BOOL)isRawHTML;
-
 @end
+
+
+#pragma mark -
 
 
 @interface KTDocument (Properties)
 
-- (KTMediaManager *)mediaManager;
+//- (KTMediaManager *)mediaManager;
 
 - (NSThread *)thread;
 - (void)setThread:(NSThread *)thread;
@@ -133,24 +143,9 @@ extern NSString *KTDocumentWillSaveNotification;
 - (id)wrappedInheritedValueForKey:(NSString *)aKey;
 //- (void)setWrappedInheritedValue:(id)aValue forKey:(NSString *)aKey;
 
-- (KTSite *)site;
-
-- (KTHTMLInspectorController *)HTMLInspectorController;
-- (KTHTMLInspectorController *)HTMLInspectorControllerWithoutLoading;
-- (void)setHTMLInspectorController:(KTHTMLInspectorController *)aController;
-
-- (BOOL)showDesigns;
-- (void)setShowDesigns:(BOOL)value;
+@property(nonatomic, retain) KTSite *site;
 
 // Display properties
-- (BOOL)displayEditingControls;
-- (void)setDisplayEditingControls:(BOOL)value;
-
-- (BOOL)displaySiteOutline;
-- (void)setDisplaySiteOutline:(BOOL)value;
-
-- (BOOL)displayStatusBar;
-- (void)setDisplayStatusBar:(BOOL)value;
 
 - (BOOL)displaySmallPageIcons;
 - (void)setDisplaySmallPageIcons:(BOOL)value;
@@ -158,9 +153,30 @@ extern NSString *KTDocumentWillSaveNotification;
 @end
 
 
+#pragma mark -
+
+
 @interface KTDocument (Saving)
 
 - (BOOL)isSaving;
 
+
+@end
+
+
+#pragma mark -
+
+
+// Default implementation does nothing, so implement in subclasses to take action, such as passing the message on to other controllers
+@interface NSWindowController (KTDocumentAdditions)
+- (void)persistUIProperties;
+@end
+
+@interface NSDocument (DatastoreAdditions)
++ (NSURL *)datastoreURLForDocumentURL:(NSURL *)inURL type:(NSString *)documentUTI;
++ (NSURL *)documentURLForDatastoreURL:(NSURL *)datastoreURL;
+
++ (NSURL *)quickLookURLForDocumentURL:(NSURL *)inURL;
++ (NSURL *)quickLookPreviewURLForDocumentURL:(NSURL *)inURL;
 @end
 

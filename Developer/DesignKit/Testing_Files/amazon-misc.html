@@ -1,0 +1,766 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<title>Multiple Layouts and Variations General Test | Amazon.com Layout Tests</title>
+		<meta name="robots" content="all" />
+		<meta name="generator" content="Sandvox Pro 2.0a18 (19796)" />
+		<meta name="viewport" content="width=768" />
+		<link rel="canonical" href="http://foo.bar/" />
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" charset="UTF-8"></script>
+        
+		<link rel="stylesheet" type="text/css" href="http://designerskit.karelia.com/sandvox.css" /> <!-- This is loaded across ALL designs, no matter what - do not remove or replace -->
+		
+		<style type="text/css">
+			/* ----------- Source: amazonlist.css ----------- */
+
+
+
+			/* Div that contains the entire list */
+			div.amazonList
+			{
+				margin-top: 20px;
+				padding: 6px;
+				overflow: auto;
+			}
+
+			div.amazonListPlaceholder
+			{
+				width:140px;
+				height:200px;
+				background:rgba(0,0,0,0.25);
+				margin:auto;
+				padding:10px;
+			}
+
+			div.amazonListWhiteBackground /* additional items for .whiteBackground */
+			{
+				border: 1px solid #AAA;
+				padding: 10px 5px;
+			}
+
+
+			div.amazonListRow
+			{
+				clear:both;
+				margin-bottom: 25px !important;
+			}
+
+
+
+			/* Thumbnails */
+			img.amazonProductThumbnail
+			{
+				margin-bottom: 8px !important;
+			}
+
+			img.amazonProductThumbnailFrame
+			{
+				background-color: white !important;
+				padding: 3px !important;
+				border: 1px solid #AAA;	/* not so important, design may have its own */
+			}
+
+			img.amazonProductThumbnailNoFrame
+			{
+				padding:0 !important;
+				border-style:none !important;
+			}
+
+			p.amazonText {		/* Make sure paragraphs have no top margin or padding so they align with images */
+				margin:0 0 6px 0;
+				padding:0;
+			}
+
+			/* left, right and alternating layout */
+			.amazonListLayoutLeft .amazonProductThumbnail, .amazonListLayoutAlt .o .amazonProductThumbnail { float:left; margin-right:8px; }
+			.amazonListLayoutRight .amazonProductThumbnail, .amazonListLayoutAlt .e .amazonProductThumbnail { float:right; margin-left:8px; }
+
+			.amazonListLayoutLeft p.amazonText, .amazonListLayoutAlt .o p.amazonText { text-align:left !important; }
+			.amazonListLayoutRight p.amazonText, .amazonListLayoutAlt .e p.amazonText { text-align:right !important; }
+
+			.amazonListLayoutLeft div.amazonText div.amazonListShowThumbnails, .amazonListLayoutAlt .o div.amazonText div.amazonListShowThumbnails .amazonTextWithThumbnail
+			{
+				margin-left:65px !important;
+			}
+			.amazonListLayoutRight div.amazonText div.amazonListShowThumbnails, .amazonListLayoutAlt .e div.amazonText div.amazonListShowThumbnails .amazonTextWithThumbnail
+			{
+				margin-right:65px !important;
+			}
+
+
+			/* Centered layout */
+			.amazonListLayoutCenter .amazonListRow { text-align:center; }
+			.amazonListLayoutCenter p.amazonText { text-align:center !important; }
+
+
+			/* twoup layout */
+			.amazonListLayoutTwoUp { margin:0 5px !important; }
+			.amazonListLayoutTwoUp .e { clear:none !important;  }
+			.amazonListLayoutTwoUp .amazonText { text-align:center; }
+			.amazonListLayoutTwoUp .amazonListRow
+			{
+				width:50%;
+				margin:0 0 10px 0;
+				float:left;
+				text-align:center;
+			}
+			.amazonListLayoutTwoUp p.amazonText
+			{
+				margin-left:4px;
+				margin-right:4px;
+			}
+
+			/* Bullets */
+			li.amazonList { margin: 0 0 8px 0; }
+			p.amazonListBulletsParagraph
+			{
+				padding:0;
+				margin-top: 0px;
+				margin-bottom: 0px;
+			}
+
+
+			/* Enhanced */
+			div.amazonListLayoutEnhanced, div.amazonListLayoutRandom { text-align:center; }
+
+			/* ----------- End:    amazonlist.css ----------- */
+</style>
+		
+		
+		
+		<link rel="stylesheet" type="text/css" href="../main.css" title="YOUR_DESIGN_NAME" />  <!-- This will be replaced by the reference to YOUR NEW STYLE SHEET -->
+		<link rel="stylesheet" type="text/css" href="../color.css" />  <!-- Optional load of color variation.  Rename any .css file to "color.css" so that this will load. -->
+        
+	</head>
+	<body class="sandvox has-page-title allow-sidebar no-custom-banner has-text-navigation home-page no-IR" id="foo_bar" >
+		<div id="page-container">
+			<div id="page">
+				<div id="page-top" class="no-logo has-title has-tagline">
+					<div id="title">
+						<h1 class="title"><span class="in">Amazon.com Layout Tests</span></h1>
+						<p class="tagline"><span class="in">design should work with built-in CSS in this HTML page.</span></p>
+					</div><!-- title -->
+					<div id="sitemenu-container">
+						<div id="sitemenu">
+	<h2 class="hidden">Site Navigation<a href="#page-content" rel="nofollow">[Skip]</a></h2>
+	<div id="sitemenu-content">
+		<ul><li class="i1 o"><a title="Positioning Test: Left, Center, Right; Callout" href="positioning-test-left-cente.html" title="Positioning Test: Left, Center, Right; Callout"><span class="in">Positioning Test: Left, Center, Right; Callout</span></a></li><li class="i2 e last"><a title="Main/Callout/Sidebar White-Background Color Test" href="amazon-whitebackground.html" title="Main/Callout/Sidebar White-Background Color Test"><span class="in">Main/Callout/Sidebar White-Background Color Test</span></a></li></ul>
+	</div> <!-- /sitemenu-content -->
+</div> <!-- /sitemenu -->
+					</div> <!-- sitemenu-container -->
+				</div> <!-- page-top -->
+				<div class="clear below-page-top"></div>
+				<div id="page-content" class="has-text-navigation">
+					<div id="sidebar-container">
+	<div id="sidebar">
+  		<div id="sidebar-top"></div>
+		<div id="sidebar-content">
+			<h3 class="hidden">Sidebar<a rel="nofollow" href="#main">[Skip]</a></h3>
+	<div class="pagelet SVPlugInGraphic titled i1 o">
+    
+	<h4 class="title pagelet-title"><span class="in">Layout 1 in Sidebar</span></h4>
+    <div class="pagelet-body">
+        
+        
+	<div><!-- sandvox.AmazonElement -->
+
+<div class="amazonList amazonListLayoutLeft">
+<div class="amazonListRow o">
+<a class="imageLink" href="http://www.amazon.com/exec/obidos/ASIN/1416576142/karelsofwa-20"><img
+	class="amazonProductThumbnail amazonProductThumbnailNoFrame"
+	src="http://ecx.images-amazon.com/images/I/51ohgKCBzrL.jpg"
+	alt="Yes!: 50 Scientifically Proven Ways to Be Persuasive"
+	width="55" /></a>
+<div class="amazonText">
+<div class="amazonListShowThumbnails">
+<div class="amazonTextWithThumbnail">
+<p class="amazonText"><a href="http://www.amazon.com/exec/obidos/ASIN/1416576142/karelsofwa-20">Yes!: 50 Scientifically Proven Ways to Be Persuasive</a></p>
+<p class="amazonText">Noah J. Goldstein, Steve J. Martin, Robert B. Cialdini</p>
+</div>
+</div>
+</div>
+
+<div style="clear:both;"></div>
+</div>
+<div class="amazonListRow e">
+<a class="imageLink" href="http://www.amazon.com/exec/obidos/ASIN/185623035X/karelsofwa-20"><img
+	class="amazonProductThumbnail amazonProductThumbnailNoFrame"
+	src="http://ecx.images-amazon.com/images/I/51bLYBO8uDL._SL160_.jpg"
+	alt="Getting Started In Permaculture: 50 Practical Projects to Build and Design Productive Gardens"
+	width="55" /></a>
+<div class="amazonText">
+<div class="amazonListShowThumbnails">
+<div class="amazonTextWithThumbnail">
+<p class="amazonText"><a href="http://www.amazon.com/exec/obidos/ASIN/185623035X/karelsofwa-20">Getting Started In Permaculture: 50 Practical Projects to Build and Design Productive Gardens</a></p>
+<p class="amazonText">Ross Mars, Jenny Mars</p>
+</div>
+</div>
+</div>
+
+<div style="clear:both;"></div>
+</div>
+<div class="amazonListRow o">
+<a class="imageLink" href="http://www.amazon.com/exec/obidos/ASIN/0307338401/karelsofwa-20"><img
+	class="amazonProductThumbnail amazonProductThumbnailNoFrame"
+	src="http://ecx.images-amazon.com/images/I/51DyBEL8rML._SL160_.jpg"
+	alt="Secrets of Mental Math: The Mathemagician's Guide to Lightning Calculation and Amazing Math Tricks"
+	width="55" /></a>
+<div class="amazonText">
+<div class="amazonListShowThumbnails">
+<div class="amazonTextWithThumbnail">
+<p class="amazonText"><a href="http://www.amazon.com/exec/obidos/ASIN/0307338401/karelsofwa-20">Secrets of Mental Math: The Mathemagician's Guide to Lightning Calculation and Amazing Math Tricks</a></p>
+<p class="amazonText">Arthur Benjamin, Michael Shermer</p>
+</div>
+</div>
+</div>
+
+<div style="clear:both;"></div>
+</div>
+</div>
+<!-- /sandvox.AmazonElement --></div>
+        
+    </div>
+</div>
+	<div class="pagelet SVPlugInGraphic titled i2 e">
+    
+	<h4 class="title pagelet-title"><span class="in">Layout 2 in Sidebar</span></h4>
+    <div class="pagelet-body">
+        
+        
+	<div><!-- sandvox.AmazonElement -->
+
+<div class="amazonList amazonListLayoutRight">
+<div class="amazonListRow o">
+<a class="imageLink" href="http://www.amazon.com/exec/obidos/ASIN/1416576142/karelsofwa-20"><img
+	class="amazonProductThumbnail amazonProductThumbnailFrame"
+	src="http://ecx.images-amazon.com/images/I/51ohgKCBzrL.jpg"
+	alt="Yes!: 50 Scientifically Proven Ways to Be Persuasive"
+	width="47" /></a>
+<div class="amazonText">
+<div class="amazonListShowThumbnails">
+<div class="amazonTextWithThumbnail">
+<p class="amazonText"><a href="http://www.amazon.com/exec/obidos/ASIN/1416576142/karelsofwa-20">Yes!: 50 Scientifically Proven Ways to Be Persuasive</a></p>
+<p class="amazonText">Noah J. Goldstein, Steve J. Martin, Robert B. Cialdini</p>
+</div>
+</div>
+</div>
+
+<div style="clear:both;"></div>
+</div>
+<div class="amazonListRow e">
+<a class="imageLink" href="http://www.amazon.com/exec/obidos/ASIN/185623035X/karelsofwa-20"><img
+	class="amazonProductThumbnail amazonProductThumbnailFrame"
+	src="http://ecx.images-amazon.com/images/I/51bLYBO8uDL._SL160_.jpg"
+	alt="Getting Started In Permaculture: 50 Practical Projects to Build and Design Productive Gardens"
+	width="47" /></a>
+<div class="amazonText">
+<div class="amazonListShowThumbnails">
+<div class="amazonTextWithThumbnail">
+<p class="amazonText"><a href="http://www.amazon.com/exec/obidos/ASIN/185623035X/karelsofwa-20">Getting Started In Permaculture: 50 Practical Projects to Build and Design Productive Gardens</a></p>
+<p class="amazonText">Ross Mars, Jenny Mars</p>
+</div>
+</div>
+</div>
+
+<div style="clear:both;"></div>
+</div>
+<div class="amazonListRow o">
+<a class="imageLink" href="http://www.amazon.com/exec/obidos/ASIN/0307338401/karelsofwa-20"><img
+	class="amazonProductThumbnail amazonProductThumbnailFrame"
+	src="http://ecx.images-amazon.com/images/I/51DyBEL8rML._SL160_.jpg"
+	alt="Secrets of Mental Math: The Mathemagician's Guide to Lightning Calculation and Amazing Math Tricks"
+	width="47" /></a>
+<div class="amazonText">
+<div class="amazonListShowThumbnails">
+<div class="amazonTextWithThumbnail">
+<p class="amazonText"><a href="http://www.amazon.com/exec/obidos/ASIN/0307338401/karelsofwa-20">Secrets of Mental Math: The Mathemagician's Guide to Lightning Calculation and Amazing Math Tricks</a></p>
+<p class="amazonText">Arthur Benjamin, Michael Shermer</p>
+</div>
+</div>
+</div>
+
+<div style="clear:both;"></div>
+</div>
+</div>
+<!-- /sandvox.AmazonElement --></div>
+        
+    </div>
+</div>
+	<div class="pagelet SVPlugInGraphic titled i3 o">
+    
+	<h4 class="title pagelet-title"><span class="in">Layout 4 in Sidebar, with border</span></h4>
+    <div class="pagelet-body">
+        
+        
+	<div><!-- sandvox.AmazonElement -->
+
+<div class="amazonList amazonListLayoutCenter amazonListWhiteBackground whiteBackground">
+<div class="amazonListRow o">
+<a class="imageLink" href="http://www.amazon.com/exec/obidos/ASIN/1416576142/karelsofwa-20"><img
+	class="amazonProductThumbnail"
+	src="http://ecx.images-amazon.com/images/I/51ohgKCBzrL.jpg"
+	alt="Yes!: 50 Scientifically Proven Ways to Be Persuasive"
+	width="100" /></a>
+<div class="amazonText">
+<div class="amazonListShowThumbnails">
+<div class="amazonTextWithThumbnail">
+<p class="amazonText"><a href="http://www.amazon.com/exec/obidos/ASIN/1416576142/karelsofwa-20">Yes!: 50 Scientifically Proven Ways to Be Persuasive</a></p>
+<p class="amazonText">Noah J. Goldstein, Steve J. Martin, Robert B. Cialdini</p>
+</div>
+</div>
+</div>
+
+<div style="clear:both;"></div>
+</div>
+</div>
+<!-- /sandvox.AmazonElement --></div>
+        
+    </div>
+</div>
+	<div class="pagelet SVPlugInGraphic titled i4 e">
+    
+	<h4 class="title pagelet-title"><span class="in">Layout 5 in sidebar</span></h4>
+    <div class="pagelet-body">
+        
+        
+	<div><!-- sandvox.AmazonElement -->
+
+<div class="amazonList amazonListLayoutTwoUp">
+<div class="amazonListRow o">
+<a class="imageLink" href="http://www.amazon.com/exec/obidos/ASIN/1416576142/karelsofwa-20"><img
+	class="amazonProductThumbnail amazonProductThumbnailFrame"
+	src="http://ecx.images-amazon.com/images/I/51ohgKCBzrL.jpg"
+	alt="Yes!: 50 Scientifically Proven Ways to Be Persuasive"
+	width="77" /></a>
+<div class="amazonText">
+<div class="amazonListShowThumbnails">
+<div class="amazonTextWithThumbnail">
+<p class="amazonText"><a href="http://www.amazon.com/exec/obidos/ASIN/1416576142/karelsofwa-20">Yes!: 50 Scientifically Proven Ways to Be Persuasive</a></p>
+<p class="amazonText">Noah J. Goldstein, Steve J. Martin, Robert B. Cialdini</p>
+</div>
+</div>
+</div>
+
+<div style="clear:both;"></div>
+</div>
+<div class="amazonListRow e">
+<a class="imageLink" href="http://www.amazon.com/exec/obidos/ASIN/185623035X/karelsofwa-20"><img
+	class="amazonProductThumbnail amazonProductThumbnailFrame"
+	src="http://ecx.images-amazon.com/images/I/51bLYBO8uDL._SL160_.jpg"
+	alt="Getting Started In Permaculture: 50 Practical Projects to Build and Design Productive Gardens"
+	width="77" /></a>
+<div class="amazonText">
+<div class="amazonListShowThumbnails">
+<div class="amazonTextWithThumbnail">
+<p class="amazonText"><a href="http://www.amazon.com/exec/obidos/ASIN/185623035X/karelsofwa-20">Getting Started In Permaculture: 50 Practical Projects to Build and Design Productive Gardens</a></p>
+<p class="amazonText">Ross Mars, Jenny Mars</p>
+</div>
+</div>
+</div>
+
+<div style="clear:both;"></div>
+</div>
+<div class="amazonListRow o">
+<a class="imageLink" href="http://www.amazon.com/exec/obidos/ASIN/0307338401/karelsofwa-20"><img
+	class="amazonProductThumbnail amazonProductThumbnailFrame"
+	src="http://ecx.images-amazon.com/images/I/51DyBEL8rML._SL160_.jpg"
+	alt="Secrets of Mental Math: The Mathemagician's Guide to Lightning Calculation and Amazing Math Tricks"
+	width="77" /></a>
+<div class="amazonText">
+<div class="amazonListShowThumbnails">
+<div class="amazonTextWithThumbnail">
+<p class="amazonText"><a href="http://www.amazon.com/exec/obidos/ASIN/0307338401/karelsofwa-20">Secrets of Mental Math: The Mathemagician's Guide to Lightning Calculation and Amazing Math Tricks</a></p>
+<p class="amazonText">Arthur Benjamin, Michael Shermer</p>
+</div>
+</div>
+</div>
+
+<div style="clear:both;"></div>
+</div>
+</div>
+<!-- /sandvox.AmazonElement --></div>
+        
+    </div>
+</div>
+	<div class="pagelet SVPlugInGraphic titled i5 o">
+    
+	<h4 class="title pagelet-title"><span class="in">Layout 6 in sidebar</span></h4>
+    <div class="pagelet-body">
+        
+        
+	<div><!-- sandvox.AmazonElement -->
+
+<ul>
+	<li class="amazonList">
+		<p class="amazonListBulletsParagraph"><a href="http://www.amazon.com/exec/obidos/ASIN/1416576142/karelsofwa-20">Yes!: 50 Scientifically Proven Ways to Be Persuasive</a></p>
+		<p class="amazonListBulletsParagraph">Noah J. Goldstein, Steve J. Martin, Robert B. Cialdini</p>
+	</li>
+	<li class="amazonList">
+		<p class="amazonListBulletsParagraph"><a href="http://www.amazon.com/exec/obidos/ASIN/185623035X/karelsofwa-20">Getting Started In Permaculture: 50 Practical Projects to Build and Design Productive Gardens</a></p>
+		<p class="amazonListBulletsParagraph">Ross Mars, Jenny Mars</p>
+	</li>
+	<li class="amazonList">
+		<p class="amazonListBulletsParagraph"><a href="http://www.amazon.com/exec/obidos/ASIN/0307338401/karelsofwa-20">Secrets of Mental Math: The Mathemagician's Guide to Lightning Calculation and Amazing Math Tricks</a></p>
+		<p class="amazonListBulletsParagraph">Arthur Benjamin, Michael Shermer</p>
+	</li>
+</ul>
+<!-- /sandvox.AmazonElement --></div>
+        
+    </div>
+</div>
+	<div class="pagelet SVPlugInGraphic titled i6 e">
+    
+	<h4 class="title pagelet-title"><span class="in">Layout 7 in sidebar</span></h4>
+    <div class="pagelet-body">
+        
+        
+	<div><!-- sandvox.AmazonElement -->
+
+<div class="amazonList amazonListLayoutEnhanced">
+<div class="amazonListRow o">
+<iframe	src="http://rcm.amazon.com/e/cm?o=1&amp;lt1=_top&amp;bg1=FFFFFF&amp;p=8&amp;lc1=0000FF&amp;asins=0307338401&amp;l=as1&amp;IS2=1&amp;t=karelsofwa-20&amp;bc1=CCCCCC&amp;fc1=000000&amp;f=ifr&npa=1"
+	style="width:120px; height:240px;"
+	scrolling="no"
+	marginwidth="0"
+	marginheight="0"
+	frameborder="0">
+</iframe>
+</div>
+</div>
+<!-- /sandvox.AmazonElement --></div>
+        
+    </div>
+</div>
+	<div class="pagelet SVPlugInGraphic untitled i7 o last-item">
+    
+    <div class="pagelet-body">
+        
+        
+	<div><!-- sandvox.BadgeElement --><p style="text-align:center; padding-top:30px; padding-bottom:30px;">
+<a class="imageLink" style="background:none; border:none;" href="http://www.sandvox.com/?utm_source=cust_site&amp;utm_medium=banner&amp;utm_content=b1&amp;utm_campaign=pointback&amp;h=vLykBglvTVCUywG4GhFWNtbLBpA%3D" title="Learn about Sandvox - Build websites, photo albums, and blogs on the Mac"><img src="_Resources/sandvox_icon_white.png" alt="Created with Sandvox - Create websites on the Mac and host them anywhere" /></a>
+</p>
+<!-- /sandvox.BadgeElement --></div>
+        
+    </div>
+</div>
+		</div> <!-- sidebar-content -->
+		<div id="sidebar-bottom"></div>	
+	</div> <!-- sidebar -->
+</div> <!-- sidebar-container -->
+					<div id="main">
+						<div id="main-top"></div>
+                            						<div id="main-content">
+							<h2 class="title"><span class="in">Multiple Layouts and Variations General Test</span></h2>
+							
+
+							<div class="article">
+								<div class="article-content">
+	<div class="RichTextElement">
+		<div><p style="text-align: left; "><span style="color: rgb(255, 40, 70); "><strong>This has some built-in CSS in the HTML file itself. &nbsp;I think that it will be good for almost all designs, but if you think that something should be changed, please let me know.</strong></span></p><p style="text-align: left; ">Layout 1. Thumbs Floated on Left (with margin). &nbsp;Image and Text should be aligned at the top.</p>
+			<div class="first graphic-container wide center">
+				<div style="width:300px" class="graphic">
+					<div class="figure-content"><!-- sandvox.AmazonElement -->
+
+<div class="amazonList amazonListLayoutLeft">
+<div class="amazonListRow o">
+<a class="imageLink" href="http://www.amazon.com/exec/obidos/ASIN/1416576142/karelsofwa-20"><img
+	class="amazonProductThumbnail amazonProductThumbnailFrame"
+	src="http://ecx.images-amazon.com/images/I/51ohgKCBzrL.jpg"
+	alt="Yes!: 50 Scientifically Proven Ways to Be Persuasive"
+	width="47" /></a>
+<div class="amazonText">
+<div class="amazonListShowThumbnails">
+<div class="amazonTextWithThumbnail">
+<p class="amazonText"><a href="http://www.amazon.com/exec/obidos/ASIN/1416576142/karelsofwa-20">Yes!: 50 Scientifically Proven Ways to Be Persuasive</a></p>
+<p class="amazonText">Noah J. Goldstein, Steve J. Martin, Robert B. Cialdini</p>
+</div>
+</div>
+</div>
+
+<div style="clear:both;"></div>
+</div>
+<div class="amazonListRow e">
+<a class="imageLink" href="http://www.amazon.com/exec/obidos/ASIN/185623035X/karelsofwa-20"><img
+	class="amazonProductThumbnail amazonProductThumbnailFrame"
+	src="http://ecx.images-amazon.com/images/I/51bLYBO8uDL._SL160_.jpg"
+	alt="Getting Started In Permaculture: 50 Practical Projects to Build and Design Productive Gardens"
+	width="47" /></a>
+<div class="amazonText">
+<div class="amazonListShowThumbnails">
+<div class="amazonTextWithThumbnail">
+<p class="amazonText"><a href="http://www.amazon.com/exec/obidos/ASIN/185623035X/karelsofwa-20">Getting Started In Permaculture: 50 Practical Projects to Build and Design Productive Gardens</a></p>
+<p class="amazonText">Ross Mars, Jenny Mars</p>
+</div>
+</div>
+</div>
+
+<div style="clear:both;"></div>
+</div>
+<div class="amazonListRow o">
+<a class="imageLink" href="http://www.amazon.com/exec/obidos/ASIN/0307338401/karelsofwa-20"><img
+	class="amazonProductThumbnail amazonProductThumbnailFrame"
+	src="http://ecx.images-amazon.com/images/I/51DyBEL8rML._SL160_.jpg"
+	alt="Secrets of Mental Math: The Mathemagician's Guide to Lightning Calculation and Amazing Math Tricks"
+	width="47" /></a>
+<div class="amazonText">
+<div class="amazonListShowThumbnails">
+<div class="amazonTextWithThumbnail">
+<p class="amazonText"><a href="http://www.amazon.com/exec/obidos/ASIN/0307338401/karelsofwa-20">Secrets of Mental Math: The Mathemagician's Guide to Lightning Calculation and Amazing Math Tricks</a></p>
+<p class="amazonText">Arthur Benjamin, Michael Shermer</p>
+</div>
+</div>
+</div>
+
+<div style="clear:both;"></div>
+</div>
+</div>
+<!-- /sandvox.AmazonElement --></div>
+				</div>
+			</div><p>Layout 2: Thumbs floated on right (with margin!) &nbsp;(No borders on thumbs.)</p>
+			<div class="not-first-item graphic-container wide center">
+				<div style="width:300px" class="graphic">
+					<div class="figure-content"><!-- sandvox.AmazonElement -->
+
+<div class="amazonList amazonListLayoutRight">
+<div class="amazonListRow o">
+<a class="imageLink" href="http://www.amazon.com/exec/obidos/ASIN/1416576142/karelsofwa-20"><img
+	class="amazonProductThumbnail amazonProductThumbnailNoFrame"
+	src="http://ecx.images-amazon.com/images/I/51ohgKCBzrL.jpg"
+	alt="Yes!: 50 Scientifically Proven Ways to Be Persuasive"
+	width="55" /></a>
+<div class="amazonText">
+<div class="amazonListShowThumbnails">
+<div class="amazonTextWithThumbnail">
+<p class="amazonText"><a href="http://www.amazon.com/exec/obidos/ASIN/1416576142/karelsofwa-20">Yes!: 50 Scientifically Proven Ways to Be Persuasive</a></p>
+<p class="amazonText">Noah J. Goldstein, Steve J. Martin, Robert B. Cialdini</p>
+</div>
+</div>
+</div>
+
+<div style="clear:both;"></div>
+</div>
+<div class="amazonListRow e">
+<a class="imageLink" href="http://www.amazon.com/exec/obidos/ASIN/185623035X/karelsofwa-20"><img
+	class="amazonProductThumbnail amazonProductThumbnailNoFrame"
+	src="http://ecx.images-amazon.com/images/I/51bLYBO8uDL._SL160_.jpg"
+	alt="Getting Started In Permaculture: 50 Practical Projects to Build and Design Productive Gardens"
+	width="55" /></a>
+<div class="amazonText">
+<div class="amazonListShowThumbnails">
+<div class="amazonTextWithThumbnail">
+<p class="amazonText"><a href="http://www.amazon.com/exec/obidos/ASIN/185623035X/karelsofwa-20">Getting Started In Permaculture: 50 Practical Projects to Build and Design Productive Gardens</a></p>
+<p class="amazonText">Ross Mars, Jenny Mars</p>
+</div>
+</div>
+</div>
+
+<div style="clear:both;"></div>
+</div>
+<div class="amazonListRow o">
+<a class="imageLink" href="http://www.amazon.com/exec/obidos/ASIN/0307338401/karelsofwa-20"><img
+	class="amazonProductThumbnail amazonProductThumbnailNoFrame"
+	src="http://ecx.images-amazon.com/images/I/51DyBEL8rML._SL160_.jpg"
+	alt="Secrets of Mental Math: The Mathemagician's Guide to Lightning Calculation and Amazing Math Tricks"
+	width="55" /></a>
+<div class="amazonText">
+<div class="amazonListShowThumbnails">
+<div class="amazonTextWithThumbnail">
+<p class="amazonText"><a href="http://www.amazon.com/exec/obidos/ASIN/0307338401/karelsofwa-20">Secrets of Mental Math: The Mathemagician's Guide to Lightning Calculation and Amazing Math Tricks</a></p>
+<p class="amazonText">Arthur Benjamin, Michael Shermer</p>
+</div>
+</div>
+</div>
+
+<div style="clear:both;"></div>
+</div>
+</div>
+<!-- /sandvox.AmazonElement --></div>
+				</div>
+			</div><p>Layout 4: Everything centered; use up full width</p>
+			<div class="not-first-item graphic-container wide center">
+				<div style="width:300px" class="graphic">
+					<div class="figure-content"><!-- sandvox.AmazonElement -->
+
+<div class="amazonList amazonListLayoutCenter">
+<div class="amazonListRow o">
+<a class="imageLink" href="http://www.amazon.com/exec/obidos/ASIN/1416576142/karelsofwa-20"><img
+	class="amazonProductThumbnail amazonProductThumbnailFrame"
+	src="http://ecx.images-amazon.com/images/I/51ohgKCBzrL.jpg"
+	alt="Yes!: 50 Scientifically Proven Ways to Be Persuasive"
+	width="92" /></a>
+<div class="amazonText">
+<div class="amazonListShowThumbnails">
+<div class="amazonTextWithThumbnail">
+<p class="amazonText"><a href="http://www.amazon.com/exec/obidos/ASIN/1416576142/karelsofwa-20">Yes!: 50 Scientifically Proven Ways to Be Persuasive</a></p>
+<p class="amazonText">Noah J. Goldstein, Steve J. Martin, Robert B. Cialdini</p>
+</div>
+</div>
+</div>
+
+<div style="clear:both;"></div>
+</div>
+<div class="amazonListRow e">
+<a class="imageLink" href="http://www.amazon.com/exec/obidos/ASIN/185623035X/karelsofwa-20"><img
+	class="amazonProductThumbnail amazonProductThumbnailFrame"
+	src="http://ecx.images-amazon.com/images/I/51bLYBO8uDL._SL160_.jpg"
+	alt="Getting Started In Permaculture: 50 Practical Projects to Build and Design Productive Gardens"
+	width="92" /></a>
+<div class="amazonText">
+<div class="amazonListShowThumbnails">
+<div class="amazonTextWithThumbnail">
+<p class="amazonText"><a href="http://www.amazon.com/exec/obidos/ASIN/185623035X/karelsofwa-20">Getting Started In Permaculture: 50 Practical Projects to Build and Design Productive Gardens</a></p>
+<p class="amazonText">Ross Mars, Jenny Mars</p>
+</div>
+</div>
+</div>
+
+<div style="clear:both;"></div>
+</div>
+<div class="amazonListRow o">
+<a class="imageLink" href="http://www.amazon.com/exec/obidos/ASIN/0307338401/karelsofwa-20"><img
+	class="amazonProductThumbnail amazonProductThumbnailFrame"
+	src="http://ecx.images-amazon.com/images/I/51DyBEL8rML._SL160_.jpg"
+	alt="Secrets of Mental Math: The Mathemagician's Guide to Lightning Calculation and Amazing Math Tricks"
+	width="92" /></a>
+<div class="amazonText">
+<div class="amazonListShowThumbnails">
+<div class="amazonTextWithThumbnail">
+<p class="amazonText"><a href="http://www.amazon.com/exec/obidos/ASIN/0307338401/karelsofwa-20">Secrets of Mental Math: The Mathemagician's Guide to Lightning Calculation and Amazing Math Tricks</a></p>
+<p class="amazonText">Arthur Benjamin, Michael Shermer</p>
+</div>
+</div>
+</div>
+
+<div style="clear:both;"></div>
+</div>
+</div>
+<!-- /sandvox.AmazonElement --></div>
+				</div>
+			</div><p>Layout 5: Two side-by-side. &nbsp;Each should use up 50% of available width -- full width here! Border &amp; white around it all - inline changes text to black with blue links; design could override those&nbsp;<em>div.amazonListWhiteBackground</em>,&nbsp;<em>div.amazonListWhiteBackground a</em></p>
+			<div class="not-first-item graphic-container wide center">
+				<div style="width:397px" class="graphic">
+					<div class="figure-content"><!-- sandvox.AmazonElement -->
+
+<div class="amazonList amazonListLayoutTwoUp amazonListWhiteBackground whiteBackground">
+<div class="amazonListRow o">
+<a class="imageLink" href="http://www.amazon.com/exec/obidos/ASIN/1416576142/karelsofwa-20"><img
+	class="amazonProductThumbnail"
+	src="http://ecx.images-amazon.com/images/I/51ohgKCBzrL.jpg"
+	alt="Yes!: 50 Scientifically Proven Ways to Be Persuasive"
+	width="85" /></a>
+<div class="amazonText">
+<div class="amazonListShowThumbnails">
+<div class="amazonTextWithThumbnail">
+<p class="amazonText"><a href="http://www.amazon.com/exec/obidos/ASIN/1416576142/karelsofwa-20">Yes!: 50 Scientifically Proven Ways to Be Persuasive</a></p>
+<p class="amazonText">Noah J. Goldstein, Steve J. Martin, Robert B. Cialdini</p>
+</div>
+</div>
+</div>
+
+<div style="clear:both;"></div>
+</div>
+<div class="amazonListRow e">
+<a class="imageLink" href="http://www.amazon.com/exec/obidos/ASIN/185623035X/karelsofwa-20"><img
+	class="amazonProductThumbnail"
+	src="http://ecx.images-amazon.com/images/I/51bLYBO8uDL._SL160_.jpg"
+	alt="Getting Started In Permaculture: 50 Practical Projects to Build and Design Productive Gardens"
+	width="85" /></a>
+<div class="amazonText">
+<div class="amazonListShowThumbnails">
+<div class="amazonTextWithThumbnail">
+<p class="amazonText"><a href="http://www.amazon.com/exec/obidos/ASIN/185623035X/karelsofwa-20">Getting Started In Permaculture: 50 Practical Projects to Build and Design Productive Gardens</a></p>
+<p class="amazonText">Ross Mars, Jenny Mars</p>
+</div>
+</div>
+</div>
+
+<div style="clear:both;"></div>
+</div>
+<div class="amazonListRow o">
+<a class="imageLink" href="http://www.amazon.com/exec/obidos/ASIN/0307338401/karelsofwa-20"><img
+	class="amazonProductThumbnail"
+	src="http://ecx.images-amazon.com/images/I/51DyBEL8rML._SL160_.jpg"
+	alt="Secrets of Mental Math: The Mathemagician's Guide to Lightning Calculation and Amazing Math Tricks"
+	width="85" /></a>
+<div class="amazonText">
+<div class="amazonListShowThumbnails">
+<div class="amazonTextWithThumbnail">
+<p class="amazonText"><a href="http://www.amazon.com/exec/obidos/ASIN/0307338401/karelsofwa-20">Secrets of Mental Math: The Mathemagician's Guide to Lightning Calculation and Amazing Math Tricks</a></p>
+<p class="amazonText">Arthur Benjamin, Michael Shermer</p>
+</div>
+</div>
+</div>
+
+<div style="clear:both;"></div>
+</div>
+</div>
+<!-- /sandvox.AmazonElement --></div>
+				</div>
+			</div><p>Layout 6: Just a list, no thumbnails</p>
+			<div class="not-first-item graphic-container wide center">
+				<div style="width:300px" class="graphic">
+					<div class="figure-content"><!-- sandvox.AmazonElement -->
+
+<ul>
+	<li class="amazonList">
+		<p class="amazonListBulletsParagraph"><a href="http://www.amazon.com/exec/obidos/ASIN/1416576142/karelsofwa-20">Yes!: 50 Scientifically Proven Ways to Be Persuasive</a></p>
+		<p class="amazonListBulletsParagraph">Noah J. Goldstein, Steve J. Martin, Robert B. Cialdini</p>
+	</li>
+	<li class="amazonList">
+		<p class="amazonListBulletsParagraph"><a href="http://www.amazon.com/exec/obidos/ASIN/185623035X/karelsofwa-20">Getting Started In Permaculture: 50 Practical Projects to Build and Design Productive Gardens</a></p>
+		<p class="amazonListBulletsParagraph">Ross Mars, Jenny Mars</p>
+	</li>
+	<li class="amazonList">
+		<p class="amazonListBulletsParagraph"><a href="http://www.amazon.com/exec/obidos/ASIN/0307338401/karelsofwa-20">Secrets of Mental Math: The Mathemagician's Guide to Lightning Calculation and Amazing Math Tricks</a></p>
+		<p class="amazonListBulletsParagraph">Arthur Benjamin, Michael Shermer</p>
+	</li>
+</ul>
+<!-- /sandvox.AmazonElement --></div>
+				</div>
+			</div><p>Layout 7: Amazon.com's contents</p>
+			<div class="not-first-item graphic-container wide center">
+				<div style="width:300px" class="graphic">
+					<div class="figure-content"><!-- sandvox.AmazonElement -->
+
+<div class="amazonList amazonListLayoutEnhanced">
+<div class="amazonListRow o">
+<iframe	src="http://rcm.amazon.com/e/cm?o=1&amp;lt1=_top&amp;bg1=FFFFFF&amp;p=8&amp;lc1=0000FF&amp;asins=0307338401&amp;l=as1&amp;IS2=1&amp;t=karelsofwa-20&amp;bc1=CCCCCC&amp;fc1=000000&amp;f=ifr&npa=1"
+	style="width:120px; height:240px;"
+	scrolling="no"
+	marginwidth="0"
+	marginheight="0"
+	frameborder="0">
+</iframe>
+</div>
+</div>
+<!-- /sandvox.AmazonElement --></div>
+				</div>
+			</div><p><br /></p>
+		</div>
+	</div>
+</div> <!-- /article-content -->
+								<div class="article-info">
+
+
+
+
+								</div> <!-- /article-info -->
+							</div> <!-- /article -->
+						</div> <!-- main-content -->
+
+						<div id="main-bottom"></div>
+					</div> <!-- main -->
+				</div> <!-- content -->
+				<div class="clear below-content"></div>
+				<div id="page-bottom">
+					<div id="page-bottom-contents">
+						<div><span class="in">© Karelia Software 2010</span></div>
+						<div class="hidden"> <a rel="nofollow" href="#title">[Back To Top]</a></div>
+					</div>
+				</div> <!-- page-bottom -->
+			</div> <!-- container -->
+			<div id="extraDiv1"><span></span></div><div id="extraDiv2"><span></span></div><div id="extraDiv3"><span></span></div><div id="extraDiv4"><span></span></div><div id="extraDiv5"><span></span></div><div id="extraDiv6"><span></span></div>
+		</div> <!-- specific body type -->
+	</body>
+</html>

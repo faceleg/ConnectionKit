@@ -2,7 +2,7 @@
 //  KTDataSourceProtocol.h
 //  Sandvox
 //
-//  Copyright 2004-2009 Karelia Software. All rights reserved.
+//  Copyright 2004-2011 Karelia Software. All rights reserved.
 //
 //  THIS SOFTWARE IS PROVIDED BY KARELIA SOFTWARE AND ITS CONTRIBUTORS "AS-IS"
 //  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -17,32 +17,10 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import <Cocoa/Cocoa.h>
-
-
-// Priority
-typedef enum { 
-	KTSourcePriorityNone = 0,				// Can't handle drag clipboard
-	KTSourcePriorityMinimum = 1,			// Bare minimum, for a generic file handler
-	KTSourcePriorityFallback = 10,			// Could handle it, but there are probably better handlers
-	KTSourcePriorityReasonable = 20,		// Reasonable handler, unless there's a better one
-	KTSourcePriorityTypical = 30,			// Relatively specialized handler
-	KTSourcePriorityIdeal = 40,				// More specialized, better equipped than lessers.
-	KTSourcePrioritySpecialized = 50		// Specialized for these data, e.g. Amazon Books URL
-} KTSourcePriority;
+#import "SVPlugIn.h"
 
 
 @protocol KTDataSource
-+ (NSArray *)supportedPasteboardTypesForCreatingPagelet:(BOOL)isCreatingPagelet;
-
-
-+ (unsigned)numberOfItemsFoundOnPasteboard:(NSPasteboard *)pasteboard;
-+ (KTSourcePriority)priorityForItemOnPasteboard:(NSPasteboard *)pboard atIndex:(unsigned)dragIndex creatingPagelet:(BOOL)isCreatingPagelet;
-+ (BOOL)populateDataSourceDictionary:(NSMutableDictionary *)aDictionary
-                      fromPasteboard:(NSPasteboard *)pasteboard
-                             atIndex:(unsigned)dragIndex
-				  forCreatingPagelet:(BOOL)isCreatingPagelet;
-
 @end
 
 

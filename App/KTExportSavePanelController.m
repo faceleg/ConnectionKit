@@ -3,19 +3,19 @@
 //  Marvel
 //
 //  Created by Mike on 15/12/2008.
-//  Copyright 2008-2009 Karelia Software. All rights reserved.
+//  Copyright 2008-2011 Karelia Software. All rights reserved.
 //
 
 #import "KTExportSavePanelController.h"
 
-#import "NSURL+Karelia.h"
+#import "KSURLUtilities.h"
 
 
 @implementation KTExportSavePanelController
 
 - (id)initWithSiteURL:(NSURL *)URL documentURL:(NSURL *)docURL;
 {
-    if (self = [self initWithNibNamed:@"KTTransfer" bundle:nil])
+    if (self = [self initWithNibName:@"KTTransfer" bundle:nil])
     {
         _documentURL = [docURL copy];
         
@@ -65,15 +65,12 @@
             }
         }
         
-        if (!result) NSBeep();  // you'd think so, but NSSavePanel doesn't do this for us
-        
-        
         // Don't allow the user to overwrite document or its contents
         if (result)
         {
             NSURL *exportURL = [panel URL];
             NSURL *docURL = _documentURL;
-            if ([docURL isSubpathOfURL:exportURL] || [exportURL isSubpathOfURL:docURL])
+            if ([docURL ks_isSubpathOfURL:exportURL] || [exportURL ks_isSubpathOfURL:docURL])
             {
                 result = nil;
                 
@@ -85,7 +82,17 @@
                                   modalDelegate:nil
                                  didEndSelector:NULL
                                     contextInfo:NULL];
+				[alert release];	// will be dealloced when alert is dismissed
             }
+        }
+        else
+        {
+            NSBeep();  // you'd think so, but NSSavePanel doesn't do this for us
+            
+            [oSiteURLWarningImageView setHidden:NO];
+            
+            // Give focus to URL field
+            [[oSiteURLField window] makeFirstResponder:oSiteURLField];
         }
     }
     

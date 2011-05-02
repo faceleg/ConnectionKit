@@ -2,7 +2,7 @@
 //  KT.h
 //  Sandvox
 //
-//  Copyright 2004-2009 Karelia Software. All rights reserved.
+//  Copyright 2004-2011 Karelia Software. All rights reserved.
 //
 //  THIS SOFTWARE IS PROVIDED BY KARELIA SOFTWARE AND ITS CONTRIBUTORS "AS-IS"
 //  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -18,32 +18,19 @@
 //
 
 // KT.h lists #defines, enums, and NSStrings that are used throughout Sandvox
-// they can only be #imported once, so they are kept separately from SandvoxPlugin.h
+// they can only be #imported once, so they are kept separately from Sandvox.h
 
-// LocalizedStringInThisBundle should be used by PLUGINS, but WARNING not in category methods
-// as the class will have the wrong bundle. Code in Sandvox.app should always just use standard NSLocalized* macros.
-#define LocalizedStringInThisBundle(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
-
-// Description Forthcoming (corresponds to pop-up tags in Info.nib)
+// Which comments provider (corresponds to pop-up tags in Info.nib)
 typedef enum {
 	KTCommentsProviderNone = 0,
 	KTCommentsProviderHaloscan,
 	KTCommentsProviderJSKit,
 	KTCommentsProviderDisqus,
-	KTCommentsProviderIntenseDebate
+	KTCommentsProviderIntenseDebate,
+    KTCommentsProviderFacebookComments
 } KTCommentsProvider;
 
-// Description Forthcoming
-typedef enum {
-    KTCollectionSortUnspecified = -1,		// used internally
-	KTCollectionUnsorted = 0, 
-    KTCollectionSortAlpha,
-    KTCollectionSortLatestAtBottom,
-	KTCollectionSortLatestAtTop,		// = 3 ... default
-	KTCollectionSortReverseAlpha,
-} KTCollectionSortType;
-
-// Description Forthcoming
+// How to summarize a collection (for its index), based on its contents
 typedef enum {
 	KTSummarizeAutomatic = 1,
 	KTSummarizeMostRecent,
@@ -52,25 +39,19 @@ typedef enum {
 	KTSummarizeFirstItem	// this was added later, that's why it's at the end
 } KTCollectionSummaryType;
 
-// Description Forthcoming
+// How to timestamp an entry
 typedef enum {
 	KTTimestampCreationDate = 1,
 	KTTimestampModificationDate
 } KTTimestampType;
 
-// Description Forthcoming
-typedef enum {
-	KTHTML401DocType = 0,
-	KTXHTMLTransitionalDocType,
-	KTXHTMLStrictDocType,
-	KTXHTML11DocType
-} KTDocType;
-
 // Document
-extern NSString *kKTDocumentType;
-extern NSString *kKTDocumentExtension;
-extern NSString *kKTDocumentUTI; // 1.5+ documents
-extern NSString *kKTDocumentUTI_ORIGINAL; // 1.0-1.2 documents
+extern NSString *kSVDocumentTypeName;  // 2.0 documents
+extern NSString *kSVDocumentTypeName_1_5;
+extern NSString *kSVDocumentPathExtension;
+extern NSString *kSVDocumentPathExtension_1_0;
+extern NSString *kSVDocumentType;           // The UTI
+extern NSString *kSVDocumentType_1_0;   // 1.0-1.2 documents
 
 extern NSString *kKTPageIDDesignator;
 
@@ -128,7 +109,6 @@ extern NSString *kKTDesignExtension;
 // Notifications
 extern NSString *kKTDesignChangedNotification;
 extern NSString *kKTInfoWindowMayNeedRefreshingNotification; // not currently used
-extern NSString *kKTItemSelectedNotification;
 
 // Site Outline
 extern NSString *kKTSelectedObjectsKey;

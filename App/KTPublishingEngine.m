@@ -3,61 +3,72 @@
 //  Marvel
 //
 //  Created by Mike on 12/12/2008.
-//  Copyright 2008-2009 Karelia Software. All rights reserved.
+//  Copyright 2008-2011 Karelia Software. All rights reserved.
 //
 
 #import "KTPublishingEngine.h"
 
-#import "KTAbstractElement+Internal.h"
-#import "KTAbstractPage+Internal.h"
-#import "KTDesign.h"
-#import "KTSite.h"
-#import "KTHTMLTextBlock.h"
-#import "KTMaster+Internal.h"
 #import "KTPage+Internal.h"
+#import "KTDesign.h"
+#import "KTHostProperties.h"
+#import "KTSite.h"
+#import "KTMaster.h"
+#import "SVMediaRequest.h"
+#import "KTPage+Internal.h"
+#import "SVPublishingHTMLContext.h"
+#import "SVPublishingRecord.h"
 #import "KTTranscriptController.h"
 
-#import "KTMediaContainer.h"
-#import "KTMediaFile+Internal.h"
-#import "KTMediaFileUpload.h"
+#import "SVGoogleSitemapPinger.h"
+
+#import "SVImageScalingOperation.h"
 #import "KTImageScalingURLProtocol.h"
 
 #import "NSBundle+KTExtensions.h"
 #import "NSString+KTExtensions.h"
 
 #import "NSData+Karelia.h"
-#import "NSDictionary+Karelia.h"
 #import "NSError+Karelia.h"
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
-#import "NSThread+Karelia.h"
-#import "NSURL+Karelia.h"
+#import "KSURLUtilities.h"
+#import "KSPathUtilities.h"
 
-#import "KSSimpleURLConnection.h"
-#import "KSPlugin.h"
+#import "KSCSSWriter.h"
+#import "KSPlugInWrapper.h"
+#import "KSSHA1Stream.h"
 #import "KSThreadProxy.h"
 
 #import "Debug.h"
 #import "Registration.h"
 
+int kMaxNumberOfFreePublishedPages = 5;	// This is the constant value of how many pages max to publish when it's the free/lite/demo/unlicensed state.
 
 NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 
-#define KTParsingInterval 0.1
+@interface KTPublishingEngine ()
 
+@property(retain) NSOperation *startNextPhaseOperation;
+@property(assign) NSUInteger countOfPublishedItems;
 
-@interface KTPublishingEngine (Private)
+- (void)publishDesign;
+- (void)publishMainCSSToPath:(NSString *)cssUploadPath;
 
 - (void)setRootTransferRecord:(CKTransferRecord *)rootRecord;
 
-- (void)parseAndUploadPageIfNeeded:(KTAbstractPage *)page;
-- (void)_parseAndUploadPageIfNeeded:(KTAbstractPage *)page;
-- (KTPage *)_pageToPublishAfterPageExcludingChildren:(KTAbstractPage *)page;
+- (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath;
+- (CKTransferRecord *)uploadContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath;
+
+- (void)didEnqueueUpload:(CKTransferRecord *)record toDirectory:(CKTransferRecord *)parent;
+
+@end
+
+
+@interface KTPublishingEngine (SubclassSupportPrivate)
 
 // Media
-- (void)queuePendingMedia:(KTMediaFileUpload *)media;
-- (void)dequeuePendingMedia;
+- (void)gatherMedia;
 
 // Resources
 - (void)addResourceFile:(NSURL *)resourceURL;
@@ -74,7 +85,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 @implementation KTPublishingEngine
 
-#pragma mark -
 #pragma mark Init & Dealloc
 
 /*  Subfolder can be either nil (there isn't one), or a path relative to the doc root. Exporting
@@ -90,17 +100,37 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     OBASSERT(docRoot);
     
     
-    if (self = [super init])
+    if (self = [self init])
 	{
 		_site = [site retain];
         
-        _uploadedMedia = [[NSMutableSet alloc] init];
-        _pendingMediaUploads = [[NSMutableArray alloc] init];
-        _resourceFiles = [[NSMutableSet alloc] init];
-        _graphicalTextBlocks = [[NSMutableDictionary alloc] init];
+        _paths = [[NSMutableSet alloc] init];
+        _pathsByDigest = [[NSMutableDictionary alloc] init];
+        _publishedMediaDigests = [[NSMutableDictionary alloc] init];
+        
+        _plugInCSS = [[NSMutableArray alloc] init];
         
         _documentRootPath = [docRoot copy];
         _subfolderPath = [subfolder copy];
+        
+        
+        // As I understand it, Core Image already uses multiple cores (including the GPU!) so trying to render images in parallel with it is a waste (and tends to make GCD spawn crazy number of threads)
+        // I guess really we could make this queue global
+        _coreImageQueue = [[NSOperationQueue alloc] init];
+        [_coreImageQueue setMaxConcurrentOperationCount:1];
+        
+        _diskQueue = [[NSOperationQueue alloc] init];
+        [_diskQueue setMaxConcurrentOperationCount:1];
+        
+        _defaultQueue = [[NSOperationQueue alloc] init];
+        
+        // Name them for debugging
+        if ([NSOperationQueue instancesRespondToSelector:@selector(setName:)])
+        {
+            [_coreImageQueue performSelector:@selector(setName:) withObject:@"KTPublishingEngine: Core Image Queue"];
+            [_diskQueue performSelector:@selector(setName:) withObject:@"KTPublishingEngine: Disk Access Queue"];
+            [_defaultQueue performSelector:@selector(setName:) withObject:@"KTPublishingEngine: Default Queue"];
+        }
 	}
 	
 	return self;
@@ -117,25 +147,20 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	[_documentRootPath release];
     [_subfolderPath release];
     
-    OBASSERT([_pendingMediaUploads count] == 0);
-    [_pendingMediaUploads release];
-    OBASSERT(!_currentPendingMediaConnection);
-    [_uploadedMedia release];
+    [_paths release];
+    [_pathsByDigest release];
+    [_publishedMediaDigests release];
     
-    [_resourceFiles release];
-    [_graphicalTextBlocks release];
+    [_plugInCSS release];
+    
+    [_coreImageQueue release];
+    [_defaultQueue release];
+    [_diskQueue release];
+    [_nextOp release];
 	
 	[super dealloc];
 }
 
-#pragma mark -
-#pragma mark Delegate
-
-- (id <KTPublishingEngineDelegate>)delegate { return _delegate; }
-
-- (void)setDelegate:(id <KTPublishingEngineDelegate>)delegate { _delegate = delegate; }
-
-#pragma mark -
 #pragma mark Simple Accessors
 
 - (KTSite *)site { return _site; }
@@ -152,31 +177,84 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     return result;
 }
 
-#pragma mark -
 #pragma mark Overall flow control
 
 - (void)start
 {
+	self.countOfPublishedItems = 0;
+	
 	if ([self status] != KTPublishingEngineStatusNotStarted) return;
-    _status = KTPublishingEngineStatusParsing;
+    _status = KTPublishingEngineStatusGatheringMedia;
     
-    
+    [self main];
+}
+
+- (void)main
+{
     // Setup connection and transfer records
     [self createConnection];
-    [self setRootTransferRecord:[CKTransferRecord rootRecordWithPath:[[self documentRootPath] standardizedPOSIXPath]]];
+    [self setRootTransferRecord:[CKTransferRecord rootRecordWithPath:[[self documentRootPath] ks_standardizedPOSIXPath]]];
     
     
-    // Start by publishing the home page if setting up connection was successful
+    // Successful?
     if ([self status] <= KTPublishingEngineStatusUploading)
     {
-        [self performSelector:@selector(parseAndUploadPageIfNeeded:)
-                   withObject:[[self site] root]
-                   afterDelay:KTParsingInterval];
+        // Store next operation so it can receive dependencies
+        NSOperation *nextOp = [[NSInvocationOperation alloc]
+                                         initWithTarget:self
+                                         selector:@selector(mainPublishing)
+                                         object:nil];
+        [self setStartNextPhaseOperation:nextOp];
+        
+        
+        // Gather media
+        [self gatherMedia];
+        
+        
+        // Now have most dependencies in place, so can publish for real after that
+        [_coreImageQueue addOperation:nextOp];
+        [nextOp release];
     }
+}
+
+- (void)mainPublishing
+{
+    if (![NSThread isMainThread])
+    {
+        return [[self ks_proxyOnThread:nil waitUntilDone:NO] mainPublishing];
+    }
+    
+    
+    // Store the op ready for dependencies to be added
+    NSOperation *nextOp = [[NSInvocationOperation alloc]
+                                     initWithTarget:self
+                                     selector:@selector(finishPublishing)
+                                     object:nil];
+    
+    [self setStartNextPhaseOperation:nextOp];
+    
+    
+    // Publish pages properly
+    _status = KTPublishingEngineStatusParsing;
+    [self setCountOfPublishedItems:0];  // reset
+    KTPage *home = [[self site] rootPage];
+    [home publish:self recursively:YES];
+    
+    
+    // Publish design
+    [self publishDesign];
+    
+    
+    
+    // Once all is done (the op should now have most dependencies it needs), finish up
+    [_coreImageQueue addOperation:nextOp];
+    [nextOp release];
 }
 
 - (void)cancel
 {
+    [super cancel]; // so -isCancelled returns YES
+    
     // Mark self as finished
     if ([self status] > KTPublishingEngineStatusNotStarted && [self status] < KTPublishingEngineStatusFinished)
     {
@@ -184,9 +262,24 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     }
 }
 
+#pragma mark Counting Published Items
+
+@synthesize countOfPublishedItems = _countOfPublishedItems;
+
+- (NSUInteger)incrementingCountOfPublishedItems;
+{
+	return ++_countOfPublishedItems;
+}
+
 - (KTPublishingEngineStatus)status { return _status; }
 
-#pragma mark -
+@synthesize startNextPhaseOperation = _nextOp;
+
+- (void)addDependencyForNextPhase:(NSOperation *)op;    // can't finish publishing until the op runs
+{
+    [[self startNextPhaseOperation] addDependency:op];
+}
+
 #pragma mark Transfer Records
 
 - (CKTransferRecord *)rootTransferRecord { return _rootTransferRecord; }
@@ -214,6 +307,661 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
    return _baseTransferRecord;
 }
 
+#pragma mark Publishing
+
+- (SVHTMLContext *)beginPublishingHTMLToPath:(NSString *)path;
+{
+    // Don't let data be published twice
+    NSString *fullPath = [[self baseRemotePath] stringByAppendingPathComponent:path];
+    
+    if (![self shouldPublishToPath:fullPath])
+    {
+        path = nil;
+    }
+    
+    // Make context
+    SVPublishingHTMLContext *result = [[SVPublishingHTMLContext alloc] initWithUploadPath:path
+                                                                                publisher:self];
+    
+    return [result autorelease];
+}
+
+/*	Use these methods instead of asking the connection directly. They will handle creating the
+ *  appropriate directories first if needed.
+ */
+- (void)publishContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath
+{
+	[self publishContentsOfURL:localURL toPath:remotePath cachedSHA1Digest:nil object:nil];
+}
+
+- (void)publishContentsOfURL:(NSURL *)localURL
+                      toPath:(NSString *)remotePath
+            cachedSHA1Digest:(NSData *)digest  // save engine the trouble of calculating itself
+                      object:(id <SVPublishedObject>)object;
+{
+    OBPRECONDITION(localURL);
+    OBPRECONDITION(remotePath);
+    
+    if (![self shouldPublishToPath:remotePath]) return;
+    
+    
+    // Non-file URLs need to be uploaded as data
+    if (![localURL isFileURL])
+    {
+        // Ideally this code should be async to improve performance. But right now we're only using it to load banner, which is likely cached, so should be fast enough.
+        NSData *data = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:localURL]
+                                             returningResponse:NULL
+                                                         error:NULL];
+        
+        if (data) [self publishData:data toPath:remotePath];
+        return;
+    }
+    
+    
+    BOOL isDirectory = NO;
+    if ([[NSFileManager defaultManager] fileExistsAtPath:[localURL path] isDirectory:&isDirectory])
+    {
+        // Is the URL actually a directory? If so, upload its contents
+        if (isDirectory)
+        {
+            NSArray *subpaths = [[NSFileManager defaultManager] directoryContentsAtPath:[localURL path]];
+            NSString *aSubPath;
+            for (aSubPath in subpaths)
+            {
+                NSURL *aURL = [localURL ks_URLByAppendingPathComponent:aSubPath isDirectory:NO];
+                NSString *aRemotePath = [remotePath stringByAppendingPathComponent:aSubPath];
+                [self publishContentsOfURL:aURL toPath:aRemotePath];
+            }
+        }
+        else
+        {
+            CKTransferRecord *result = [self uploadContentsOfURL:localURL toPath:remotePath];
+            [self didEnqueueUpload:result toPath:remotePath cachedSHA1Digest:digest contentHash:nil object:object];
+        }
+    }
+    else
+    {
+        NSLog(@"Not uploading contents of %@ as it does not exist", [localURL path]);
+    }
+}
+
+- (void)publishData:(NSData *)data toPath:(NSString *)uploadPath;
+{
+    [self publishData:data toPath:uploadPath cachedSHA1Digest:nil contentHash:nil object:nil];
+}
+
+- (void)publishData:(NSData *)data
+             toPath:(NSString *)remotePath
+   cachedSHA1Digest:(NSData *)digest  // save engine the trouble of calculating itself
+        contentHash:(NSData *)hash
+             object:(id <SVPublishedObject>)object;
+{
+	OBPRECONDITION(data);
+    OBPRECONDITION(remotePath);
+    
+    if (![self shouldPublishToPath:remotePath]) return;
+    
+	CKTransferRecord *result = [self uploadData:data toPath:remotePath];
+    
+    if (result)
+    {
+        [self didEnqueueUpload:result
+                        toPath:remotePath
+              cachedSHA1Digest:digest
+                   contentHash:hash
+                        object:object];
+    }
+}
+    
+- (BOOL)shouldPublishToPath:(NSString *)path;
+{
+    BOOL result = ![_paths containsObject:path];
+    return result;
+}
+
+- (CKTransferRecord *)uploadContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath
+{
+    CKTransferRecord *result = nil;
+    
+    CKTransferRecord *parent = [self willUploadToPath:remotePath];
+    
+    // Need to use -setName: otherwise the record will have the full path as its name            
+    id <CKConnection> connection = [self connection];
+    //OBASSERT(connection); // actually if there's no connection, can't publish, so return nil. Up to client to handle
+    
+    if (connection)
+    {
+        [connection connect];	// Ensure we're connected
+        
+        result = [connection uploadFile:[localURL path]
+                                                   toFile:remotePath
+                                     checkRemoteExistence:NO
+                                                 delegate:nil];
+        
+        [result setName:[remotePath lastPathComponent]];
+        
+        [self didEnqueueUpload:result toDirectory:parent];
+    }
+    
+    return result;
+}
+
+/*  Raw, get me some stuff on the server!
+ */
+- (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath;
+{
+    CKTransferRecord *result = nil;
+    
+    CKTransferRecord *parent = [self willUploadToPath:remotePath];
+    
+    id <CKConnection> connection = [self connection];
+    //OBASSERT(connection); // actually if there's no connection, can't publish, so return nil. Up to client to handle
+    
+    if (connection)
+    {
+        [connection connect];	// ensure we're connected
+        
+        result = [connection uploadFromData:data toFile:remotePath checkRemoteExistence:NO delegate:nil];
+        OBASSERT(result);
+        
+        [result setName:[remotePath lastPathComponent]];
+        
+        if (result)
+        {
+            [self didEnqueueUpload:result toDirectory:parent];
+        }
+        else
+        {
+            NSLog(@"Unable to create transfer record for path:%@ data:%@", remotePath, data); // case 40520 logging
+        }
+    }
+    
+    return result;
+}
+
+- (CKTransferRecord *)willUploadToPath:(NSString *)path;
+{
+    CKTransferRecord *parent = [self createDirectory:[path stringByDeletingLastPathComponent]];
+    return parent;
+}
+
+- (void)didEnqueueUpload:(CKTransferRecord *)record
+                  toPath:(NSString *)path
+        cachedSHA1Digest:(NSData *)digest
+             contentHash:(NSData *)contentHash
+                  object:(id <SVPublishedObject>)object;
+{
+    [_paths addObject:path];
+    if (digest) [_pathsByDigest setObject:path forKey:digest];
+}
+
+- (void)didEnqueueUpload:(CKTransferRecord *)record toDirectory:(CKTransferRecord *)parent;
+{
+    [parent addContent:record];
+    
+    NSString *path = [record path];
+    [[self connection] setPermissions:[self remoteFilePermissions]
+                              forFile:path];
+}
+
+#pragma mark CSS
+
+- (void)addCSSString:(NSString *)css;
+{
+    if (![_plugInCSS containsObject:css]) [_plugInCSS addObject:css];
+}
+
+- (void)addCSSWithURL:(NSURL *)cssURL;
+{
+    cssURL = [cssURL absoluteURL];
+    if (![_plugInCSS containsObject:cssURL]) [_plugInCSS addObject:cssURL];
+}
+
+#pragma mark Design
+
+- (NSString *)designDirectoryPath;
+{
+    KTDesign *design = [[[[self site] rootPage] master] design];
+    NSString *result = [[self baseRemotePath] stringByAppendingPathComponent:[design remotePath]];
+    return result;
+}
+
+- (void)publishDesign;
+{
+    KTPage *rootPage = [[self site] rootPage];
+    KTMaster *master = [rootPage master];
+    KTDesign *design = [master design];
+    
+    SVPublishingHTMLContext *context = [[SVPublishingHTMLContext alloc] initWithUploadPath:nil publisher:self];
+    [context performSelector:@selector(startDocumentWithPage:) withObject:rootPage];   // HACK way to set .page so that CSS can be located properly
+    
+    
+    [master writeCSS:context];
+    [context release];
+    
+    NSString *remoteDesignDirectoryPath = [self designDirectoryPath];
+    
+    // Upload the design's resources
+	for (NSURL *aResource in [design resourceFileURLs])
+	{
+		NSString *filename = [aResource ks_lastPathComponent];
+        NSString *uploadPath = [remoteDesignDirectoryPath stringByAppendingPathComponent:filename];
+        
+        if ([filename isEqualToString:@"main.css"])
+        {
+            [self publishMainCSSToPath:uploadPath];
+        }
+        else
+        {
+            [self publishContentsOfURL:aResource toPath:uploadPath];
+        }
+	}
+}
+
+/*  KTRemotePublishingEngine uses digest to only upload this if it's changed
+ */
+- (void)publishMainCSSToPath:(NSString *)cssUploadPath;
+{
+    NSMutableString *css = [NSMutableString string];
+    KSCSSWriter *cssWriter = [[KSCSSWriter alloc] initWithOutputWriter:css];
+    
+    
+    // Write CSS
+    for (id someCSS in _plugInCSS)
+    {
+        if ([someCSS isKindOfClass:[NSURL class]])
+        {
+            NSString *cssFromURL = [NSString stringWithContentsOfURL:someCSS
+													fallbackEncoding:NSUTF8StringEncoding
+															   error:NULL];
+            
+            if (cssFromURL)
+			{
+#ifndef VARIANT_RELEASE
+				[cssWriter writeCSSString:
+				 [NSString stringWithFormat:@"/* ----------- Source: %@ ----------- */",
+				  [[someCSS path] lastPathComponent]]];
+#endif
+				[cssWriter writeCSSString:cssFromURL];
+
+#ifndef VARIANT_RELEASE
+				[cssWriter writeCSSString:
+				 [NSString stringWithFormat:@"/* ----------- End:    %@ ----------- */",
+				  [[someCSS path] lastPathComponent]]];
+#endif
+			}
+        }
+        else
+        {
+            [cssWriter writeCSSString:someCSS];
+        }
+    }
+    
+    [cssWriter release];
+    
+    
+    
+    // Upload the CSS if needed
+    NSData *mainCSSData = [[css unicodeNormalizedString] dataUsingEncoding:NSUTF8StringEncoding
+                                                      allowLossyConversion:YES];
+    
+    [self publishData:mainCSSData toPath:cssUploadPath];
+}
+
+- (void)addDependencyOnObject:(NSObject *)object keyPath:(NSString *)keyPath { }
+
+#pragma mark Media
+
+- (void)gatherMedia;
+{
+    // Publish any media that has been published before (so it maintains its path). Ignore all else
+    KTPage *homePage = [[self site] rootPage];
+    [homePage publish:self recursively:YES];
+}
+
+- (void)startPublishingMedia:(SVMediaRequest *)request cachedSHA1Digest:(NSData *)cachedDigest;
+{
+    OBPRECONDITION(request);
+    
+    
+    // Put placeholder in dictionary so we don't start calculating digest/data twice while equivalent operation is already queued
+    [_publishedMediaDigests setObject:(cachedDigest ? cachedDigest : (id)[NSNull null])
+                               forKey:request];
+    
+    
+    // Do the calculation on a background thread. Which one depends on the task needed
+    NSOperation *op;
+    if ([request isNativeRepresentation])
+    {
+        NSData *data = [[request media] mediaData];
+        if (data)
+        {
+            // This point shouldn't logically be reached if hash is already known, so it just needs hashing on a CPU-bound queue
+            NSInvocation *invocation = [NSInvocation
+                                        invocationWithSelector:@selector(threaded_publishData:forMedia:)
+                                        target:self
+                                        arguments:NSARRAY(data, request)];
+            
+            op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
+            [[self defaultQueue] addOperation:op];
+        }
+        else
+        {
+            // Read data from disk for hashing
+            NSInvocation *invocation = [NSInvocation
+                                        invocationWithSelector:@selector(threaded_publishMedia:cachedSHA1Digest:)
+                                        target:self
+                                        arguments:NSARRAY(request, cachedDigest)];
+            
+            op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
+            [_diskQueue addOperation:op];
+        }
+    }
+    else
+    {
+        NSInvocation *invocation = [NSInvocation
+                                    invocationWithSelector:@selector(threaded_publishMedia:cachedSHA1Digest:)
+                                    target:self
+                                    arguments:NSARRAY(request, cachedDigest)];
+        
+        op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
+        [_coreImageQueue addOperation:op];  // most of the work should be Core Image's
+    }
+    [self addDependencyForNextPhase:op];
+    [op release];
+}
+
+- (NSString *)publishMediaWithRequest:(SVMediaRequest *)request cachedData:(NSData *)data SHA1Digest:(NSData *)digest
+{
+    OBPRECONDITION(request);
+    OBPRECONDITION(digest);
+    
+    // We pop NSNull in as a placeholder while generating hash, so make sure it doesn't creep into other bits of the system
+    OBPRECONDITION([digest isKindOfClass:[NSData class]]);
+
+    
+    [_publishedMediaDigests setObject:digest forKey:request];
+    
+    // Is there already an existing file on the server? If so, use that
+    NSString *result = [self pathForFileWithSHA1Digest:digest];
+    if (!result)
+    {
+        if ([self status] > KTPublishingEngineStatusGatheringMedia)
+        {
+            //  The media rep does not already exist on the server, so need to assign it a new path
+            result = [[self baseRemotePath] stringByAppendingPathComponent:[request preferredUploadPath]];
+                       
+            NSUInteger count = 1;
+            while (![self shouldPublishToPath:result])
+            {
+                count++;
+                NSString *extension = [result pathExtension];
+                
+                result = [[[result stringByDeletingPathExtension]
+                           stringByAppendingFormat:@"-%u", count]
+                          stringByAppendingPathExtension:extension];
+            }
+            
+            OBASSERT(result);
+        }
+        else
+        {
+            // This is new media. Is its preferred filename definitely available? If so, can go ahead and publish immediately. #111549. Otherwise, wait until all meda is known to figure out the best available path
+            result = [[self baseRemotePath] stringByAppendingPathComponent:[request preferredUploadPath]];
+            
+            if (![self shouldPublishToPath:result]) result = nil;
+        }
+    }
+    
+    
+    // Publish!
+    if (result)
+    {
+        if ([self shouldPublishToPath:result])
+        {
+            // We might already know the data, ready to publish
+            if (!data && [request isNativeRepresentation]) data = [[request media] mediaData];
+            
+            if (data)
+            {
+                [self publishData:data
+                           toPath:result
+                 cachedSHA1Digest:digest
+                      contentHash:nil
+                           object:nil];
+            }
+            else
+            {
+                if ([request isNativeRepresentation])
+                {
+                    // Can publish the file itself
+                    [self publishContentsOfURL:[[request media] mediaURL]
+                                        toPath:result
+                              cachedSHA1Digest:digest
+                                        object:nil];
+                }
+                else
+                {
+                    // Fetching the data is potentially expensive, so do on worker thread again
+                    [self startPublishingMedia:request cachedSHA1Digest:digest];
+                }
+            }
+        }
+    }
+    
+    return result;
+}
+
+- (NSString *)publishMediaWithRequest:(SVMediaRequest *)request;
+{
+    NSString *result = nil;
+    
+    // During media gathering phase we want to:
+    //  A)  Collect digests of all media (e.g. for dupe identification)
+    //  B)  As a head start, queue for upload any media that has previously been published, thus reserving path
+    
+    NSData *cachedDigest = [_publishedMediaDigests objectForKey:request];
+    if (cachedDigest)
+    {
+        if (cachedDigest != (id)[NSNull null])  // nothing to do yet while hash is being calculated
+        {
+            result = [self publishMediaWithRequest:request cachedData:nil SHA1Digest:cachedDigest];
+        }
+    }
+    else
+    {
+        // Calculating where to publish media is actually quite time-consuming, so do on a background thread
+        [self startPublishingMedia:request cachedSHA1Digest:nil];
+    }
+    
+    return result;
+}
+
+- (void)threaded_publishMedia:(SVMediaRequest *)request cachedSHA1Digest:(NSData *)cachedDigest;
+{
+    /*  It is presumed that the call to this method will have been scheduled on an appropriate queue.
+     */
+    OBPRECONDITION(request);
+    
+    
+    BOOL isNative = [request isNativeRepresentation];
+    if (!isNative)
+    {
+        // Time to look closer to see if conversion/scaling is required
+        CGImageSourceRef imageSource = IMB_CGImageSourceCreateWithImageItem((id)[request media], NULL);
+        if (imageSource)
+        {
+            if ([[request type] isEqualToString:(NSString *)CGImageSourceGetType(imageSource)])
+            {
+                // TODO: Should we better take into account a source with multiple images?
+                CFDictionaryRef properties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, NULL);
+                if (properties)
+                {
+                    CFNumberRef width = CFDictionaryGetValue(properties, kCGImagePropertyPixelWidth);
+                    CFNumberRef height = CFDictionaryGetValue(properties, kCGImagePropertyPixelHeight);
+                    
+                    if ([[request width] isEqualToNumber:(NSNumber *)width] &&
+                        [[request height] isEqualToNumber:(NSNumber *)height])
+                    {
+                        isNative = YES;
+                    }
+                    
+                    CFRelease(properties);
+                }
+            }
+            
+            CFRelease(imageSource);
+        }
+    }
+    
+    
+    
+    // Great! No messy scaling work to do!
+    if (isNative)
+    {
+        SVMediaRequest *canonical = [[SVMediaRequest alloc] initWithMedia:[request media]
+                                                      preferredUploadPath:[request preferredUploadPath]];
+        OBASSERT([canonical isNativeRepresentation]);
+        
+        // Calculate hash
+        // TODO: Ideally we could look up the canonical request to see if hash has already been generated (e.g. user opted to publish full-size copy of image too)
+        if (!cachedDigest)
+        {
+            NSData *data = [[request media] mediaData];
+            if (data)
+            {
+                cachedDigest = [data SHA1Digest];
+            }
+            else
+            {
+                NSURL *url = [[request media] mediaURL];
+                cachedDigest = [NSData SHA1DigestOfContentsOfURL:url];
+            
+                if (!cachedDigest) NSLog(@"Unable to hash file: %@", url);
+            }
+        }
+        
+        if (cachedDigest)   // if couldn't be hashed, can't be published
+        {
+            // Publish original image first. Ensures the publishing of real request will be to the same path
+            
+            [[self ks_proxyOnThread:nil]  // wait until done so op isn't reported as finished too early
+             publishMediaWithRequest:canonical cachedData:nil SHA1Digest:cachedDigest];
+            
+            [[self ks_proxyOnThread:nil]  // wait until done so op isn't reported as finished too early
+             publishMediaWithRequest:request cachedData:nil SHA1Digest:cachedDigest];
+        }
+        
+        [canonical release];
+        return;
+    }
+    
+    
+    
+    
+    
+    NSData *fileContents = [SVImageScalingOperation dataWithMediaRequest:request];
+    
+    if (fileContents)
+    {
+        // Since scaling was applied, we need to publish to the path requested. This should NOT affect equality of requests
+        SVMediaRequest *original = request;
+        request = [request requestWithScalingSuffixApplied];
+        OBASSERT([request isEqualToMediaRequest:original]);
+        
+        if (cachedDigest)
+        {
+            // Hashing was done in a previous iteration, so recycle
+            [[self ks_proxyOnThread:nil waitUntilDone:YES]  // wait before reporting op as finished
+             publishMediaWithRequest:request cachedData:fileContents SHA1Digest:cachedDigest];
+        }
+        else
+        {
+            // Hash on a separate thread so this queue is ready to go again quickly
+            NSInvocation *invocation = [NSInvocation
+                                        invocationWithSelector:@selector(threaded_publishData:forMedia:)
+                                        target:self
+                                        arguments:[NSArray arrayWithObjects:fileContents, request, nil]];
+            
+            NSOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
+            [self addDependencyForNextPhase:op];
+            [[self defaultQueue] addOperation:op];
+            [op release];
+        }
+    }
+    else
+    {
+        NSLog(@"Unable to load media request: %@", request);
+    }
+}
+
+- (void)threaded_publishData:(NSData *)data forMedia:(SVMediaRequest *)request;
+{
+    /*  Since all that's needed is to hash the data, presumed you'll call this using -defaultQueue
+     */
+    OBPRECONDITION(data);
+    OBPRECONDITION(request);
+    
+    NSData *digest = [data SHA1Digest];
+    [[self ks_proxyOnThread:nil waitUntilDone:YES]  // wait before reporting op as finished
+     publishMediaWithRequest:request cachedData:data SHA1Digest:digest];
+}
+
+#pragma mark Resource Files
+
+- (NSString *)publishResourceAtURL:(NSURL *)fileURL;
+{
+    NSString *resourcesDirectoryName = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultResourcesPath"];
+    NSString *resourcesDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:resourcesDirectoryName];
+    NSString *resourceRemotePath = [resourcesDirectoryPath stringByAppendingPathComponent:[fileURL ks_lastPathComponent]];
+    
+    [self publishContentsOfURL:fileURL toPath:resourceRemotePath];
+    
+    return resourceRemotePath;
+}
+
+#pragma mark Publishing Records
+
+- (NSString *)pathForFileWithSHA1Digest:(NSData *)digest;
+{
+    OBPRECONDITION(digest);
+    
+    NSString *result = [_pathsByDigest objectForKey:digest];
+    
+    if (!result)
+    {
+        SVPublishingRecord *publishingRecord = [[[self site] hostProperties]
+                                                publishingRecordForSHA1Digest:digest];
+        
+        NSString *publishedPath = [publishingRecord path];
+        if (publishedPath)
+        {
+            // The record's path is for the published site. Correct to account for current pub location
+            
+            KTHostProperties *hostProperties = [[self site] hostProperties];
+            NSString *base = [[hostProperties documentRoot]
+                              stringByAppendingPathComponent:[hostProperties subfolder]];
+            
+            NSString *relativePath = [publishedPath ks_pathRelativeToDirectory:base];
+            result = [[self baseRemotePath] stringByAppendingPathComponent:relativePath];
+        }
+    }
+    
+    return result;
+}
+
+#pragma mark Util
+
+@synthesize defaultQueue = _defaultQueue;
+
+@synthesize sitemapPinger = _sitemapPinger;
+
+#pragma mark Delegate
+
+- (id <KTPublishingEngineDelegate>)delegate { return _delegate; }
+
+- (void)setDelegate:(id <KTPublishingEngineDelegate>)delegate { _delegate = delegate; }
+
 @end
 
 
@@ -222,7 +970,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 @implementation KTPublishingEngine (SubclassSupport)
 
-#pragma mark -
 #pragma mark Overall flow control
 
 /*  Call this method once publishing has ended, whether it be successfully or not.
@@ -237,13 +984,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     if (!didPublish)
     {
         [NSObject cancelPreviousPerformRequestsWithTarget:self];
-        
-        if ([_pendingMediaUploads count] > 0)
-        {
-            [_currentPendingMediaConnection cancel];
-            [_currentPendingMediaConnection release];   _currentPendingMediaConnection = nil;
-            [_pendingMediaUploads removeAllObjects];
-        }
         
         // Disconnect connection
         [[self connection] forceDisconnect];
@@ -265,14 +1005,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     {
         [[self delegate] publishingEngine:self didFailWithError:error];
     }
-    
-    
-    // Case 37891: Wipe the undo stack as we don't want the user to undo back past the publishing changes
-    NSUndoManager *undoManager = [[[self site] managedObjectContext] undoManager];
-    [undoManager removeAllActions];
 }
 
-#pragma mark -
 #pragma mark Connection
 
 /*  Simple accessor for the connection. If we haven't started uploading yet, or have finished, it returns nil.
@@ -391,8 +1125,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	[[[KTTranscriptController sharedControllerWithoutLoading] textStorage] appendAttributedString:attributedString];
 }
 
-#pragma mark -
 #pragma mark Pages
+
 
 /*  Uploads the site map if the site has the option enabled
  */
@@ -405,658 +1139,37 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         NSData *gzipped = [siteMapData compressGzip];
         
         NSString *siteMapPath = [[self baseRemotePath] stringByAppendingPathComponent:@"sitemap.xml.gz"];
-        [self uploadData:gzipped toPath:siteMapPath];
+        self.sitemapPinger = [[[SVGoogleSitemapPinger alloc] init] autorelease];
+        [self publishData:gzipped
+                   toPath:siteMapPath
+         cachedSHA1Digest:nil
+              contentHash:nil
+                   object:self.sitemapPinger];
     }
 }
 
-/*  Semi-public method that parses the page, uploading HTML, media, resources etc. as needed.
- *  It then moves onto the next page after a short delay
- */
-- (void)parseAndUploadPageIfNeeded:(KTAbstractPage *)page
+- (void)finishPublishing;
 {
-    // Generally this method is called from -performSelector:afterDelay: so do our own exception reporting
-    @try
+    if (![NSThread isMainThread])
     {
-        
-        [self _parseAndUploadPageIfNeeded:page];
-        
-        
-        // Continue onto the next page if the app is licensed
-        if (!gLicenseIsBlacklisted && (nil != gRegistrationString))	// License is OK
-        {
-            KTAbstractPage *nextPage = nil;
-            
-            
-            // First try to publish any children or archive pages
-            if ([page isKindOfClass:[KTPage class]])
-            {
-                NSArray *children = [(KTPage *)page sortedChildren];
-                if ([children count] > 0)
-                {
-                    nextPage = [children objectAtIndex:0];
-                }
-                else
-                {
-                    NSArray *archives = [(KTPage *)page sortedArchivePages];
-                    if ([archives count] > 0)
-                    {
-                        nextPage = [children objectAtIndex:0];
-                    }
-                }
-            }
-            
-            
-            // If there are no children, we have to search up the tree
-            if (!nextPage)
-            {
-                nextPage = [self _pageToPublishAfterPageExcludingChildren:page];
-            }
-            
-            
-            if (nextPage)
-            {
-                [self performSelector:@selector(parseAndUploadPageIfNeeded:)
-                           withObject:nextPage
-                           afterDelay:KTParsingInterval];
-                
-                return;
-            }
-        }
-        
-        
-        // Pages are finished, move onto the next
-        
-        // Upload banner image and design
-        KTMaster *master = [[[self site] root] master];
-		NSDictionary *scalingProps = [[master design] imageScalingPropertiesForUse:@"bannerImage"];
-        KTMediaFileUpload *bannerImage = [[[master bannerImage] file] uploadForScalingProperties:scalingProps];
-        if (bannerImage)
-        {
-            [self uploadMediaIfNeeded:bannerImage];
-        }
-        
-        [self uploadDesignIfNeeded];
-        [self uploadMainCSSIfNeeded];
-        
-        
-        // Upload resources. KTLocalPublishingEngine & subclasses use this point to bail out if
-        // there are no changes to publish
-        if ([self uploadResourceFiles])
-        {
-            // Upload sitemap if the site has one
-            [self uploadGoogleSiteMapIfNeeded];
-            
-            
-            // Inform the delegate if there's no pending media. If there is, we'll inform once that is done
-            if ([_pendingMediaUploads count] == 0)
-            {
-                _status = KTPublishingEngineStatusUploading;
-                [[self delegate] publishingEngineDidFinishGeneratingContent:self];
-                
-                [[self connection] disconnect]; // Once everything is uploaded, disconnect
-            }
-            else
-            {
-                _status = KTPublishingEngineStatusLoadingMedia;
-            }
-        }
-    }
-    @catch (NSException *exception)
-    {
-        [NSApp reportException:exception];
-        @throw;
-    }
-}
-
-- (void)_parseAndUploadPageIfNeeded:(KTAbstractPage *)page
-{
-	OBASSERT([NSThread isMainThread]);
-	
-	
-    if ([page isKindOfClass:[KTPage class]])
-	{
-		// This is currently a special case to make sure Download Page media is published
-		// We really ought to generalise this feature if any other plugins actually need it
-		if ([[[[page plugin] bundle] bundleIdentifier] isEqualToString:@"sandvox.DownloadElement"])
-		{
-			KTMediaFileUpload *upload = [[page delegate] performSelector:@selector(mediaFileUpload)];
-			if (upload)
-			{
-				[self uploadMediaIfNeeded:upload];
-			}
-		}
-		
-		// Don't publish drafts or special pages with no direct content
-		if ([(KTPage *)page pageOrParentDraft] || ![(KTPage *)page shouldPublishHTMLTemplate]) return;
-	}
-    
-    
-    
-    // Bail early if the page is not for publishing. This MUST come after testing if the page is a
-    // File Download, as they have no upload path, but still need to process media. Case 40515.
-	NSString *uploadPath = [page uploadPath];
-	if (!uploadPath) return;
-    
-    
-	
-	// Generate HTML data
-	KTPage *masterPage = ([page isKindOfClass:[KTPage class]]) ? (KTPage *)page : [page parent];
-	NSString *HTML = [[page contentHTMLWithParserDelegate:self isPreview:NO] stringByAdjustingHTMLForPublishing];
-	OBASSERT(HTML);
-    
-    if ([self status] > KTPublishingEngineStatusUploading) return; // Engine may be cancelled mid-parse. If so, go no further.
-	
-	NSString *charset = [[masterPage master] valueForKey:@"charset"];
-	NSStringEncoding encoding = [charset encodingFromCharset];
-	NSData *pageData = [HTML dataUsingEncoding:encoding allowLossyConversion:YES];
-	OBASSERT(pageData);
-    
-    
-    // Give subclasses a chance to ignore the upload
-    NSData *digest = nil;
-    if (![self shouldUploadHTML:HTML encoding:encoding forPage:page toPath:uploadPath digest:&digest])
-    {
-        return;
+        return [[self ks_proxyOnThread:nil] finishPublishing];
     }
     
+    // Upload sitemap if the site has one
+    [self uploadGoogleSiteMapIfNeeded];
     
     
-    // Upload page data. Store the page and its digest with the record for processing later
-    NSString *fullUploadPath = [[self baseRemotePath] stringByAppendingPathComponent:uploadPath];
-	if (fullUploadPath)
-    {
-		CKTransferRecord *transferRecord = [self uploadData:pageData toPath:fullUploadPath];
-        OBASSERT(transferRecord);
-        
-        if (digest)
-        {
-            [transferRecord setProperty:page forKey:@"object"];
-            [transferRecord setProperty:digest forKey:@"dataDigest"];
-            [transferRecord setProperty:uploadPath forKey:@"path"];
-        }
-	}
+    // Inform the delegate if there's no pending media. If there is, we'll inform once that is done
+    _status = KTPublishingEngineStatusUploading;
+    [[self delegate] publishingEngineDidFinishGeneratingContent:self];
     
     
-	// Ask the delegate for any extra resource files that the parser didn't catch
-    if ([page isKindOfClass:[KTPage class]])
-    {
-        NSMutableSet *resources = [[NSMutableSet alloc] init];
-        [(KTPage *)page makeComponentsPerformSelector:@selector(addResourcesToSet:forPage:) 
-                                           withObject:resources 
-                                             withPage:(KTPage *)page 
-                                            recursive:NO];
-        
-        NSEnumerator *resourcesEnumerator = [resources objectEnumerator];
-        NSString *aResourcePath;
-        while (aResourcePath = [resourcesEnumerator nextObject])
-        {
-            [self addResourceFile:[NSURL fileURLWithPath:aResourcePath]];
-        }
-        
-        [resources release];
-    }
-	
-	
-    
-	// Generate and publish RSS feed if needed
-	if ([page isKindOfClass:[KTPage class]] &&
-        [(KTPage *)page collectionSyndicate] &&
-        [(KTPage *)page collectionCanSyndicate])
-	{
-		NSString *RSSString = [(KTPage *)page RSSFeedWithParserDelegate:self];
-		if (RSSString)
-		{			
-			// Now that we have page contents in unicode, clean up to the desired character encoding.
-			NSData *RSSData = [RSSString dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-			OBASSERT(RSSData);
-			
-			NSString *RSSFilename = [(KTPage *)page RSSFileName];
-			NSString *RSSUploadPath = [[fullUploadPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:RSSFilename];
-			[self uploadData:RSSData toPath:RSSUploadPath];
-		}
-	}
+    // Once everything is uploaded, disconnect. Mayb be that nothing was published, so end immediately
+    [[self connection] disconnect];
+    if (![[self connection] isConnected]) [self engineDidPublish:YES error:NULL];
 }
 
-/*  Support method for determining which page to publish next. Only searches UP the tree.
- */
-- (KTPage *)_pageToPublishAfterPageExcludingChildren:(KTAbstractPage *)page
-{
-    OBPRECONDITION(page);
-    
-    KTPage *result = nil;
-    
-    // Buld the list of siblings
-    KTPage *parent = [page parent];
-    NSArray *siblings = [[parent sortedChildren] arrayByAddingObjectsFromArray:[parent sortedArchivePages]];
-    
-    // Search for the next sibling. If none is found, publish the parent.
-    unsigned nextIndex = [siblings indexOfObjectIdenticalTo:page] + 1;
-    if (nextIndex < [siblings count])
-    {
-        result = [siblings objectAtIndex:nextIndex];
-    }
-    else if (parent)
-    {
-        result = [self _pageToPublishAfterPageExcludingChildren:parent];
-    }
-    
-    return result;
-}
-
-/*  Slightly messy support method that allows KTPublishingEngine to reject publishing non-stale pages
- */
-- (BOOL)shouldUploadHTML:(NSString *)HTML encoding:(NSStringEncoding)encoding forPage:(KTAbstractPage *)page toPath:(NSString *)uploadPath digest:(NSData **)outDigest;
-{
-    return YES;
-}
-
-#pragma mark -
-#pragma mark Media
-
-- (NSSet *)uploadedMedia
-{
-    return [[_uploadedMedia copy] autorelease];
-}
-
-/*  Adds the media file to the upload queue (if it's not already in it)
- */
-- (void)uploadMediaIfNeeded:(KTMediaFileUpload *)media
-{
-    if (![_uploadedMedia containsObject:media])    // Don't bother if it's already in the queue
-    {
-        KTMediaFile *mediaFile = [media valueForKey:@"file"];
-		NSString *sourcePath = [mediaFile currentPath];
-		if (sourcePath)
-		{
-			NSURL *URL = [mediaFile URLForImageScalingProperties:[media scalingProperties]];
-            OBASSERT(URL);
-            
-            
-            if ([URL isFileURL])
-            {
-                // Upload the media. Store the media object with the transfer record for processing later
-				NSString *uploadPath = [[self baseRemotePath] stringByAppendingPathComponent:[media pathRelativeToSite]];
-                OBASSERT(uploadPath);
-                
-                CKTransferRecord *transferRecord = [self uploadContentsOfURL:[NSURL fileURLWithPath:sourcePath] toPath:uploadPath];
-                [transferRecord setProperty:media forKey:@"object"];
-			}
-            else
-            {
-                // Asynchronously load the data and then upload it
-                [self queuePendingMedia:media];
-            }
-            
-            
-            // Record that we're uploading the object
-            [_uploadedMedia addObject:media];
-		}
-	}
-}
-				
-/*  Upload the media if needed
- */
-- (void)HTMLParser:(KTHTMLParser *)parser didParseMediaFile:(KTMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload;	
-{
-    // It used to be possible for the connection to be cancelled mid-parse. If so, just ignore the media
-    if (upload) // && [self status] <= KTPublishingEngineStatusUploading)
-	{
-		[self uploadMediaIfNeeded:upload];
-	}
-}
-
-- (void)queuePendingMedia:(KTMediaFileUpload *)media
-{
-    [_pendingMediaUploads addObject:media];
-    
-    // Kick off processing if this is the first item on the queue
-    if ([_pendingMediaUploads count] == 1)
-    {
-        [self dequeuePendingMedia];
-    }
-}
-
-- (void)dequeuePendingMedia
-{
-    KTMediaFileUpload *media = [_pendingMediaUploads objectAtIndex:0];
-    KTMediaFile *mediaFile = [media valueForKey:@"file"];
-    NSURLRequest *URLRequest = [mediaFile URLRequestForImageScalingProperties:[media scalingProperties]];
-    OBASSERT(URLRequest);
-    _currentPendingMediaConnection = [[KSSimpleURLConnection alloc] initWithRequest:URLRequest delegate:self];
-}
-
-- (void)connection:(KSSimpleURLConnection *)connection didFinishLoadingData:(NSData *)data response:(NSURLResponse *)response
-{
-    OBPRECONDITION(connection == _currentPendingMediaConnection);
-    
-    
-    KTMediaFileUpload *media = [_pendingMediaUploads objectAtIndex:0];
-    NSString *uploadPath = [[self baseRemotePath] stringByAppendingPathComponent:[media pathRelativeToSite]];
-    OBASSERT(uploadPath);
-    
-    CKTransferRecord *transferRecord = [self uploadData:data toPath:uploadPath];
-    [transferRecord setProperty:media forKey:@"object"];
-    
-    // Tidy up after the connection
-    [self connection:connection didFailWithError:nil];
-}
-
-- (void)connection:(KSSimpleURLConnection *)connection didFailWithError:(NSError *)error
-{
-    if (error)
-    {
-        NSLog(@"Media connection for publishing failed: %@", [error debugDescription]);
-    }
-    
-    
-    OBPRECONDITION(connection == _currentPendingMediaConnection);
-    [_currentPendingMediaConnection release];   _currentPendingMediaConnection = nil;
-    
-    
-    // Remove from the queue and start the next item if available
-    [_pendingMediaUploads removeObjectAtIndex:0];
-    if ([_pendingMediaUploads count] > 0)
-    {
-        [self dequeuePendingMedia];
-    }
-    else if ([self status] == KTPublishingEngineStatusLoadingMedia)
-    {
-        // If all content has been generated and there's no more media to load, queue the final
-        // disconnect command and inform the delegate
-        _status = KTPublishingEngineStatusUploading;
-        [[self delegate] publishingEngineDidFinishGeneratingContent:self];
-        
-        [[self connection] disconnect];
-    }
-}
-
-#pragma mark -
-#pragma mark Design
-
-- (void)uploadDesignIfNeeded
-{
-    KTDesign *design = [[[[self site] root] master] design];
-    
-    
-    // Create the design directory
-	NSString *remoteDesignDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:[design remotePath]];
-	CKTransferRecord *designTransferRecord = [self createDirectory:remoteDesignDirectoryPath];
-    [designTransferRecord setProperty:design forKey:@"object"];
-    
-    
-    // Upload the design's resources
-	NSEnumerator *resourcesEnumerator = [[design resourceFileURLs] objectEnumerator];
-	NSURL *aResource;
-	while (aResource = [resourcesEnumerator nextObject])
-	{
-		NSString *filename = [aResource lastPathComponent];
-        if (![filename isEqualToString:@"main.css"])    // We handle uploading CSS separately
-        {
-            NSString *uploadPath = [remoteDesignDirectoryPath stringByAppendingPathComponent:filename];
-            [self uploadContentsOfURL:aResource toPath:uploadPath];
-        }
-	}
-}
-
-- (void)addGraphicalTextBlock:(KTHTMLTextBlock *)textBlock;
-{
-    KTMediaFileUpload *media = [[[textBlock graphicalTextMedia] file] defaultUpload];
-	if (media)
-	{
-		[self uploadMediaIfNeeded:media];
-        [_graphicalTextBlocks addObject:textBlock forKey:[textBlock graphicalTextCSSID]];
-    }
-}
-
-/*  KTRemotePublishingEngine uses digest to only upload this if it's changed
- */
-- (CKTransferRecord *)uploadMainCSSIfNeeded
-{
-    CKTransferRecord *result = nil;
-    
-    
-    // Load up the CSS from the design
-    KTMaster *master = [[[self site] root] master];     OBASSERT(master);
-    KTDesign *design = [master design];     if (!design) NSLog(@"No design found");
-    NSString *mainCSSPath = [[design bundle] pathForResource:@"main" ofType:@"css"];
-    
-    NSMutableString *mainCSS = nil;
-    if (mainCSSPath)
-    {
-        NSError *error;
-        mainCSS = [[NSMutableString alloc] initWithContentsOfFile:mainCSSPath usedEncoding:NULL error:&error];
-        if (!mainCSS)
-        {
-            NSLog(@"Unable to load CSS from %@, error: %@", mainCSSPath, [[error debugDescription] condenseWhiteSpace]);
-            
-            NSLog(@"Attempting deprecated -initWithContentsOfFile: method instead");
-            mainCSS = [[NSMutableString alloc] initWithContentsOfFile:mainCSSPath];
-            if (!mainCSS)
-            {
-                NSLog(@"And that didn't work either!");
-            }
-        }
-    }
-    else
-    {
-        NSLog(@"main.css file could not be located in design: %@", [[design bundle] bundlePath]);
-    }
-    
-    if (!mainCSS) mainCSS = [[NSMutableString alloc] init];
-    
-    
-    
-    // Append banner CSS
-    NSString *bannerCSS = [master bannerCSSForPurpose:kGeneratingRemote];
-    if (bannerCSS) [mainCSS appendString:bannerCSS];
-    
-    
-    
-    // Append graphical text CSS. Use alphabetical ordering to maintain, er, sameness between publishes
-    NSArray *graphicalTextIDs = [[_graphicalTextBlocks allKeys] sortedArrayUsingSelector:@selector(compare:)];
-    NSArray *graphicalTextBlocks = [_graphicalTextBlocks objectsForKeys:graphicalTextIDs notFoundMarker:[NSNull null]];
-    
-    NSEnumerator *graphicalTextBlocksEnumerator = [graphicalTextBlocks objectEnumerator];
-    KTHTMLTextBlock *aTextBlock;
-    while (aTextBlock = [graphicalTextBlocksEnumerator nextObject])
-    {
-        KTMediaFile *aGraphicalText = [[aTextBlock graphicalTextMedia] file];
-        
-        NSString *path = [[NSBundle mainBundle] overridingPathForResource:@"imageReplacementEntry" ofType:@"txt"];
-        OBASSERT(path);
-        NSURL *url = [NSURL fileURLWithPath:path];
-        
-        NSError *textFileError;
-        NSMutableString *CSS = [NSMutableString stringWithContentsOfURL:url
-                                                       fallbackEncoding:NSUTF8StringEncoding
-                                                                  error:&textFileError];
-        if (CSS)
-        {
-            [CSS replace:@"_UNIQUEID_" with:[aTextBlock graphicalTextCSSID]];
-            [CSS replace:@"_WIDTH_" with:[NSString stringWithFormat:@"%i", [aGraphicalText integerForKey:@"width"]]];
-            [CSS replace:@"_HEIGHT_" with:[NSString stringWithFormat:@"%i", [aGraphicalText integerForKey:@"height"]]];
-            
-            NSString *baseMediaPath = [[aGraphicalText defaultUpload] pathRelativeToSite];
-            NSString *mediaPath = [@".." stringByAppendingPathComponent:baseMediaPath];
-            [CSS replace:@"_URL_" with:mediaPath];
-            
-            [mainCSS appendString:CSS];
-        }
-        else
-        {
-            NSLog(@"Unable to read in image replacement CSS from %@, error: %@",
-                  url,
-                  [[textFileError debugDescription] condenseWhiteSpace]);
-        }
-    }
-    
-    
-    
-    // Upload the CSS if needed
-    NSData *mainCSSData = [[mainCSS unicodeNormalizedString] dataUsingEncoding:NSUTF8StringEncoding
-                                                          allowLossyConversion:YES];
-    
-    NSData *digest = nil;
-    if ([self shouldUploadMainCSSData:mainCSSData digest:&digest])
-    {
-        NSString *remoteDesignDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:[design remotePath]];
-        result = [self uploadData:mainCSSData toPath:[remoteDesignDirectoryPath stringByAppendingPathComponent:@"main.css"]];
-        
-        if (digest)
-        {
-            [result setProperty:master forKey:@"object"];
-            [result setProperty:digest forKey:@"dataDigest"];
-        }
-    }
-    
-    
-    return result;
-}
-
-/*  KTRemotePublishingEngine overrides this to manage staleness
- */
-- (BOOL)shouldUploadMainCSSData:(NSData *)mainCSSData digest:(NSData **)outDigest
-{
-    if (outDigest) *outDigest = nil;
-    return YES;
-}
-
-- (void)HTMLParser:(KTHTMLParser *)parser didParseTextBlock:(KTHTMLTextBlock *)textBlock
-{
-	[self addGraphicalTextBlock:textBlock];
-}
-
-#pragma mark -
-#pragma mark Resource Files
-
-- (NSSet *)resourceFiles
-{
-    return [[_resourceFiles copy] autorelease];
-}
-
-- (void)addResourceFile:(NSURL *)resourceURL
-{
-    resourceURL = [resourceURL absoluteURL];    // Ensures hashing and -isEqual: work right
-    
-    if (![_resourceFiles containsObject:resourceURL])
-    {
-        [_resourceFiles addObject:resourceURL];
-    }
-}
-
-- (void)HTMLParser:(KTHTMLParser *)parser didEncounterResourceFile:(NSURL *)resourceURL
-{
-	OBPRECONDITION(resourceURL);
-    [self addResourceFile:resourceURL];
-}
-
-/*  Takes all the queued up resource files and uploads them. KTRemotePublishingEngine uses this as
- *  the cut-in point for if there are no changes to publish. Return NO to signify publishing should
- *  not continue.
- */
-- (BOOL)uploadResourceFiles
-{
-    NSString *resourcesDirectoryName = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultResourcesPath"];
-    NSString *resourcesDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:resourcesDirectoryName];
-    
-    NSEnumerator *resourcesEnumerator = [[self resourceFiles] objectEnumerator];
-    NSURL *aResource;
-    while (aResource = [resourcesEnumerator nextObject])
-    {
-        NSString *resourceRemotePath = [resourcesDirectoryPath stringByAppendingPathComponent:[aResource lastPathComponent]];
-        
-        [self uploadContentsOfURL:aResource toPath:resourceRemotePath];
-    }
-    
-    return YES;
-}
-
-#pragma mark -
 #pragma mark Uploading Support
-
-/*	Use these methods instead of asking the connection directly. They will handle creating the
- *  appropriate directories first if needed.
- */
-- (CKTransferRecord *)uploadContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath
-{
-	OBPRECONDITION(localURL);
-    OBPRECONDITION([localURL isFileURL]);
-    OBPRECONDITION(remotePath);
-    
-    
-    CKTransferRecord *result = nil;
-    
-	
-	BOOL isDirectory = NO;
-    if ([[NSFileManager defaultManager] fileExistsAtPath:[localURL path] isDirectory:&isDirectory])
-    {
-        // Is the URL actually a directory? If so, upload its contents
-        if (isDirectory)
-        {
-            NSArray *subpaths = [[NSFileManager defaultManager] directoryContentsAtPath:[localURL path]];
-            NSEnumerator *subpathsEnumerator = [subpaths objectEnumerator];
-            NSString *aSubPath;
-            while (aSubPath = [subpathsEnumerator nextObject])
-            {
-                NSURL *aURL = [localURL URLByAppendingPathComponent:aSubPath isDirectory:NO];
-                NSString *aRemotePath = [remotePath stringByAppendingPathComponent:aSubPath];
-                [self uploadContentsOfURL:aURL toPath:aRemotePath];
-            }
-        }
-        else
-        {
-            // Create all required directories. Need to use -setName: otherwise the record will have the full path as its name
-            CKTransferRecord *parent = [self createDirectory:[remotePath stringByDeletingLastPathComponent]];
-            
-            id <CKConnection> connection = [self connection];
-            OBASSERT(connection);
-            [connection connect];	// Ensure we're connected
-            result = [connection uploadFile:[localURL path] toFile:remotePath checkRemoteExistence:NO delegate:nil];
-            [result setName:[remotePath lastPathComponent]];
-            
-            [parent addContent:result];
-            
-            // Also set permissions for the file
-            [[self connection] setPermissions:[self remoteFilePermissions] forFile:remotePath];
-        }
-    }
-    else
-    {
-        NSLog(@"Not uploading contents of %@ as it does not exist", [localURL path]);
-    }
-    
-    
-    return result;    
-}
-
-- (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath
-{
-	OBPRECONDITION(data);
-    OBPRECONDITION(remotePath);
-    
-    
-    CKTransferRecord *parent = [self createDirectory:[remotePath stringByDeletingLastPathComponent]];
-	
-    id <CKConnection> connection = [self connection];
-    OBASSERT(connection);
-    [connection connect];	// Ensure we're connected
-    CKTransferRecord *result = [connection uploadFromData:data toFile:remotePath checkRemoteExistence:NO delegate:nil];
-    OBASSERT(result);
-    [result setName:[remotePath lastPathComponent]];
-    
-    if (result)
-    {
-        [parent addContent:result];
-    
-        [connection setPermissions:[self remoteFilePermissions] forFile:remotePath];
-    }
-    else
-    {
-        NSLog(@"Unable to create transfer record for path:%@ data:%@", remotePath, data); // case 40520 logging
-    }
-    
-    return result;
-}
 
 /*  Creates the specified directory including any parent directories that haven't already been queued for creation.
  *  Returns a CKTransferRecord used to represent the directory during publishing.
@@ -1074,7 +1187,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     // Ensure the parent directory is created first
     NSString *parentDirectoryPath = [remotePath stringByDeletingLastPathComponent];
-    OBASSERT(![parentDirectoryPath isEqualToString:[remotePath standardizedPOSIXPath]]);
+    OBASSERT(![parentDirectoryPath isEqualToString:[remotePath ks_standardizedPOSIXPath]]);
     CKTransferRecord *parent = [self createDirectory:parentDirectoryPath];
     
     

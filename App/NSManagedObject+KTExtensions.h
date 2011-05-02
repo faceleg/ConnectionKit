@@ -2,7 +2,7 @@
 //  NSManagedObject+KTExtensions.h
 //  Sandvox
 //
-//  Copyright 2005-2009 Karelia Software. All rights reserved.
+//  Copyright 2005-2011 Karelia Software. All rights reserved.
 //
 //  THIS SOFTWARE IS PROVIDED BY KARELIA SOFTWARE AND ITS CONTRIBUTORS "AS-IS"
 //  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -37,12 +37,6 @@
 /*! returns all values (changed+committed) */
 - (NSDictionary *)currentValues;
 
-//	TODO: Review if we really need all 4 of these.
-- (BOOL)hasTemporaryObjectID;
-- (BOOL)hasTemporaryURIRepresentation;
-- (BOOL)isTemporaryObject;
-- (BOOL)isNewlyCreatedObject;
-
 - (BOOL)hasChanges;
 
 - (NSUndoManager *)undoManager;
@@ -66,5 +60,19 @@
 
 - (id)transientValueForKey:(NSString *)key persistentArchivedDataKey:(NSString *)dataKey;
 - (void)setTransientValue:(id)value forKey:(NSString *)key persistentArchivedDataKey:(NSString *)dataKey;
+
+
+#pragma mark Serialization
+
+// Default implemention creates a mutable dictionary and passes it to -populateSerializedValues:. Override to use something other than a dictionary, or create a mutable dictionary with the right capacity.
+- (id)serializedProperties;
+
+// Calls [self serializedValueForKey:] with each non-transient attribute. Override to add in any relationships and custom properties
+- (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;   
+
+- (id)serializedValueForKey:(NSString *)key;    // MUST return a plist object. Override to handle invalid types
+- (void)setSerializedValue:(id)serializedValue forKey:(NSString*)key;
+
+- (void)awakeFromPropertyList:(id)propertyList;
 
 @end

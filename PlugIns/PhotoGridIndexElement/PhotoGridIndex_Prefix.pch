@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'PhotoGridIndex' target in the 'PhotoGridIndex' project.
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif

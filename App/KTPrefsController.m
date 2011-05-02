@@ -2,7 +2,7 @@
 //  KTPrefsController.m
 //  Marvel
 //
-//  Copyright 2005-2009 Karelia Software. All rights reserved.
+//  Copyright 2005-2011 Karelia Software. All rights reserved.
 //
 
 // $Id$
@@ -11,7 +11,6 @@
 
 #import "KT.h"
 #import "KTApplication.h"
-#import "KTAppDelegate.h"
 #import "KSEmailAddressComboBox.h"
 #import "CIImage+Karelia.h"
 #import "NSImage+Karelia.h"
@@ -76,7 +75,7 @@
 
 	if (![defaults boolForKey:@"KTPrefersPNGFormat"])	// convert to JPEG to show compression
 	{
-		NSData *jpegData = [sharpenedImage JPEGRepresentationWithQuality:quality];
+		NSData *jpegData = [sharpenedImage JPEGRepresentationWithCompressionFactor:quality];
 		sharpenedImage = [[[NSImage alloc] initWithData:jpegData] autorelease];
 		[sharpenedImage normalizeSize];
 	}
@@ -90,19 +89,19 @@
 
 - (IBAction) updateSampleImage:sender		
 {
-#define WIDTH 100
-#define HEIGHT 75
+#define SAMPLE_WIDTH 100
+#define SAMPLE_HEIGHT 75
 
 	[mySampleImage release];
 	
 	NSImage *newImage = [sender image];
 	NSBitmapImageRep *bitmap = [newImage bitmap];
 	
-	if ( [bitmap pixelsWide] > (1.5 * WIDTH) || [bitmap pixelsHigh] > (1.5 * WIDTH) )
+	if ( [bitmap pixelsWide] > (1.5 * SAMPLE_WIDTH) || [bitmap pixelsHigh] > (1.5 * SAMPLE_WIDTH) )
 	{
 		CIImage *im = [newImage toCIImage];
 		// Show the top/center of the image.  This crop & center it.
-		im = [im scaleToWidth:WIDTH height:HEIGHT behavior:kCoverRect alignment:NSImageAlignCenter opaqueEdges:YES];
+		im = [im scaleToWidth:SAMPLE_WIDTH height:SAMPLE_HEIGHT behavior:kCoverRect alignment:NSImageAlignCenter opaqueEdges:YES];
 		
 		newImage = [im toNSImageBitmap];
 	}
@@ -131,12 +130,6 @@
 	[oCompressionSample setTarget:self];
 	[oCompressionSample setImageScaling:NSScaleNone];	// if we scaled, it would be all wonky
 	
-	// Fix the transparent background
-//	[oHaloscanTextView setDrawsBackground:NO];
-//	NSScrollView *scrollView = [oHaloscanTextView enclosingScrollView];
-//	[scrollView setDrawsBackground:NO];
-//	[[scrollView contentView] setCopiesOnScroll:NO];
-
 	[[self window] center];
 	
 	// Kick things off, initialize image stuff

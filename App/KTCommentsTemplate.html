@@ -1,134 +1,91 @@
-[[if disableComments]][[else]]
 [[if allowComments]]
 									<!-- comments -->
-[[if master.wantsHaloscan]]
-[[if master.haloscanUserName]]
-									<div class="comments">
-										<p>
-											[[if parser.HTMLGenerationPurpose]]<a href="http://www.haloscan.com/comments/[[=&%master.haloscanUserName]]/[[=uniqueID]]/" title="[[`Comment]]" onclick="HaloScan('[[=uniqueID]]'); return false;"><script type="text/javascript">postCount('[[=uniqueID]]'); </script></a>[[else5]][[`Haloscan Comments]][[endif5]]
-[[if master.supportTrackbacks]]
-											<script type="text/javascript">document.write(' | ');</script>
-											[[if parser.HTMLGenerationPurpose]]<a href="http://www.haloscan.com/tb/[[=&%master.haloscanUserName]]/[[=uniqueID]]/" title="[[`Other Posts About This]]" onclick="HaloScanTB('[[=uniqueID]]'); return false;"><script type="text/javascript">postCountTB('[[=uniqueID]]'); </script></a>[[else6]][[`Trackback]][[endif6]]
-	<!-- Begin trackback -->
-	<!-- Auto Discovery RDF Code
-	<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-	xmlns:dc="http://purl.org/dc/elements/1.1/"
-	xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
-	<rdf:Description
-	rdf:about="[[=&URL]]"
-	dc:identifier="[[=&URL]]"
-	dc:title="[[=&titleText]]"
-	trackback:ping="http://haloscan.com/tb/[[=&%master.haloscanUserName]]/[[=uniqueID]]" />
-	</rdf:RDF>
-	-->
-	<!-- End trackback -->
-[[endif5]]
-										</p>
-									</div> <!-- /comments -->
-[[else4]]
-[[if parser.HTMLGenerationPurpose==0]]
-									<div class="comments">
-										<p style="color:red;">[[`To enable Haloscan comments, enter your Haloscan ID into the Site Inspector]]</p>
-									</div>
-[[endif5]]
-[[endif4]]
-[[endif3]]
-[[if master.wantsJSKit]]
-[[if master.JSKitModeratorEmail]]
-									[[if parser.isPublishing]]
-									[[if self==parser.currentPage]]
-									<div class="js-kit-comments" [[if userDefaults.JSKitReverseOrder]]backwards="yes"[[endif7]] [[if userDefaults.JSKitDisableAvatars]]avatars="no"[[endif7]] [[if userDefaults.JSKitDisableThreading]]thread="no"[[endif7]] path="[[=&JSKitPath]]" permalink="[[=&URL]]"></div>
-									[[else6]]
-									<div class="comments">
-										<p><a href="[[=&URL]]"><span class="js-kit-comments-count" path="[[=&JSKitPath]]">0</span> [[`Comments]]</a></p>
-									</div>
-									[[endif6]]
-									[[else5]]
-									<div class="comments">
-										<p>[[`JS-Kit Comments]]</p>
-									</div>
-									[[endif5]]
-[[else4]]
-[[if parser.HTMLGenerationPurpose==0]]
-									<div class="comments">
-										<p style="color:red;">[[`To enable JS-Kit comments, enter your moderator email address into the Site Inspector]]</p>
-									</div>
-[[endif5]]
-[[endif4]]
-[[endif3]]
 [[if master.wantsDisqus]]
 [[if master.disqusShortName]]
 									[[if parser.isPublishing]]
-									[[if self==parser.currentPage]]
-									<div id="disqus_thread">
-										<script type="text/javascript" src="http://disqus.com/forums/[[=&%master.disqusShortName]]/embed.js">
-											var disqus_url = "[[=&URL]]"; 
-											var disqus_title = "[[=&titleText]]";
-										</script>
-									</div>
-									[[else6]]
+									[[if self==parser.HTMLContext.page]]
+                                    <div id="disqus_thread"></div>
+                                        <script type="text/javascript">
+                                            var disqus_shortname = '[[=&%master.disqusShortName]]';
+                                            var disqus_url = '[[=&URL]]'; 
+                                            var disqus_title = '[[=&title]]';
+                                            (function() {
+                                                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                                                dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                                                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                                                })();
+                                        </script>
+									[[else5]]
 									<div class="comments">
 										<p><a href="[[=&URL]]#disqus_thread">View Comments</a></p>
 									</div>
-									[[endif6]]
-									[[else5]]
-									<div class="comments">
-										<p>[[`Disqus Comments]]</p>
-									</div>
 									[[endif5]]
-[[else4]]
-[[if parser.HTMLGenerationPurpose==0]]
-									<div class="comments">
-										<p style="color:red;">[[`To enable Disqus comments, enter the Disqus short name of this site into the Site Inspector]]</p>
+									[[else4]]
+									[[if self==parser.HTMLContext.page]]
+                                    <div class="svx-placeholder">
+										[['Disqus Comments]]
 									</div>
-[[endif5]]
-[[endif4]]
+                                    [[else5]]
+                                    <div class="comments">
+										<p>Comments</p>
+									</div>
+                                    [[endif5]]
+									[[endif4]]
 [[endif3]]
+[[endif2]]
 [[if master.wantsIntenseDebate]]
 [[if master.IntenseDebateAccountID]]
 									[[if parser.isPublishing]]
-									[[if self==parser.currentPage]]
+									[[if self==parser.HTMLContext.page]]
 									<script type="text/javascript">
 										var idcomments_acct = "[[=master.IntenseDebateAccountID]]";
 										var idcomments_post_id = "[[=&URL]]";
 										var idcomments_post_url = "[[=&URL]]";
-										var idcomments_post_title = "[[=&titleText]]";
+										var idcomments_post_title = "[[=&title]]";
 									</script>
 									<span id="IDCommentsPostTitle" style="display:none"></span>
 									<script type="text/javascript" src="http://www.intensedebate.com/js/genericCommentWrapperV2.js"></script>
-									[[else6]]
+									[[else5]]
 									<script type="text/javascript">
 										var idcomments_acct = "[[=master.IntenseDebateAccountID]]";
 										var idcomments_post_id = "[[=&URL]]";
 										var idcomments_post_url = "[[=&URL]]";
 									</script>
 									<script type="text/javascript" src="http://www.intensedebate.com/js/genericLinkWrapperV2.js"></script>
-									[[endif6]]
-									[[else5]]
-									<div class="comments">
-										<p>[[`IntenseDebate Comments]]</p>
-									</div>
 									[[endif5]]
-[[else4]]
-[[if parser.HTMLGenerationPurpose==0]]
-									<div class="comments">
-										<p style="color:red;">[[`To enable IntenseDebate comments, enter the Account ID of this site into the Site Inspector]]</p>
+									[[else4]]
+									[[if self==parser.HTMLContext.page]]
+									<div class="svx-placeholder">
+										<p>[['IntenseDebate Comments]]</p>
 									</div>
-[[endif5]]
-[[endif4]]
+                                    [[else5]]
+                                    <div class="comments">
+										<p>Comments</p>
+									</div>
+                                    [[endif5]]
+									[[endif4]]
 [[endif3]]
+[[endif2]]
+[[if master.wantsFacebookComments]]
+[[if master.facebookAppID]]
+									[[if parser.isPublishing]]
+									[[if self==parser.HTMLContext.page]]
+                                    <fb:comments href="[[=&URL]]" width=[[if parser.HTMLContext.page.showSidebar]]"[[=master.fbSidebarWidth]]"[[else6]]"[[=master.fbPageWidth]]"[[endif6]] num_posts="[[=master.fbNumberOfPosts]]" colorscheme="[[=master.fbColorSchemeString]]"></fb:comments>
+                                    [[else5]]
+                                    <iframe src="http://www.facebook.com/plugins/comments.php?href=[[=&URL]]&permalink=1" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:130px; height:16px;" allowTransparency="true"></iframe>
+                                    [[endif5]]
+                                    [[else4]]
+									[[if self==parser.HTMLContext.page]]
+									<div class="svx-placeholder">
+										[['Facebook Comments]]
+									</div>
+                                    [[else5]]
+                                    <div class="comments">
+										<p>Comments</p>
+									</div>
+                                    [[endif5]]
+                                    [[endif4]]
+[[endif3]]
+[[endif2]]
 									<!-- comments -->
-[[endif2]]
-[[endif]]
-
-[[if disableComments]][[else]]
-[[if allowComments]]
-[[if master.commentsProvider==0]]
-[[if parser.HTMLGenerationPurpose==0]]
-									<div class="comments">
-										<p style="color:red;">[[`To enable comments, please choose a Weblog Comments provider in the Site Inspector]]</p>
-									</div>
-[[endif4]]
-[[endif3]]
-[[endif2]]
 [[endif]]

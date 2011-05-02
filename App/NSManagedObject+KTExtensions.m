@@ -3,14 +3,17 @@
 //  KTComponents
 //
 //  Created by Terrence Talbot on 3/10/05.
-//  Copyright 2005-2009 Karelia Software. All rights reserved.
+//  Copyright 2005-2011 Karelia Software. All rights reserved.
 //
 
 #import "NSManagedObject+KTExtensions.h"
 
-#import "Debug.h"
-#import "NSString+Karelia.h"
+#import "NSEntityDescription+KTExtensions.h"
 #import "NSString+KTExtensions.h"
+
+#import "NSString+Karelia.h"
+
+#import "Debug.h"
 
 
 @interface NSManagedObject (KTExtensionsPrivate)
@@ -36,10 +39,8 @@
 		NSDictionary *attributes = [entity attributesByName]; // key = attribute name
 		NSArray *attributeNames = [[attributes allKeys] copy];
 		
-		unsigned int i;
-		for ( i=0; i<[attributeNames count]; i++ )
+		for ( NSString *name in attributeNames )
 		{
-			NSString *name = [attributeNames objectAtIndex:i];
 			if ( [name isEqualToString:anAttributeName] )
 			{
 				result = YES;
@@ -64,10 +65,8 @@
 		NSDictionary *relationships = [entity relationshipsByName]; // key = relationship name
 		NSArray *relationshipNames = [[relationships allKeys] copy];
 		
-		unsigned int i;
-		for ( i=0 ; i<[relationshipNames count]; i++ )
+		for ( NSString *name in relationshipNames )
 		{
-			NSString *name = [relationshipNames objectAtIndex:i];
 			if ( [name isEqualToString:aRelationshipName] )
 			{
 				result = YES;
@@ -132,26 +131,6 @@
 - (NSString *)URIRepresentationString
 {
 	return [[[self objectID] URIRepresentation] absoluteString];
-}
-
-- (BOOL)hasTemporaryObjectID
-{
-	return [[self objectID] isTemporaryID];
-}
-
-- (BOOL)hasTemporaryURIRepresentation
-{
-	return [self hasTemporaryObjectID];
-}
-
-- (BOOL)isTemporaryObject
-{
-	return [self hasTemporaryObjectID];
-}
-
-- (BOOL)isNewlyCreatedObject
-{
-    return [self hasTemporaryObjectID];
 }
 
 - (BOOL)hasChanges
@@ -526,6 +505,45 @@
 	[self setValue:data forKey:dataKey];
 	
 	//[self unlockPSCAndMOC];
+}
+
+#pragma mark Serialization
+
+- (id)serializedProperties;               // calls [self serializedValueForKey:] with each non-transient attribute
+{
+    NSMutableDictionary *result = [NSMutableDictionary dictionary];
+    [self populateSerializedProperties:result];    
+    return result;
+}
+
+- (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
+{
+    NSDictionary *attributes = [[self entity] propertiesByNameOfClass:[NSAttributeDescription class]
+                                           includeTransientProperties:NO];
+    
+    for (NSString *aKey in attributes)
+    {
+        id serializedValue = [self serializedValueForKey:aKey];
+        if (serializedValue) [propertyList setObject:serializedValue forKey:aKey];
+    }
+}
+
+- (id)serializedValueForKey:(NSString *)key
+{
+    return [self valueForKey:key];
+}
+
+- (void)setSerializedValue:(id)serializedValue forKey:(NSString*)key;
+{
+    [self setValue:serializedValue forKey:key];
+}
+
+- (void)awakeFromPropertyList:(id)propertyList;
+{
+    for (NSString *aKey in [[self entity] attributesByName])
+    {
+        [self setSerializedValue:[propertyList objectForKey:aKey] forKey:aKey];
+    }
 }
 
 @end

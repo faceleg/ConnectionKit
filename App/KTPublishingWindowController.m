@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Mike on 08/12/2008.
-//  Copyright 2008-2009 Karelia Software. All rights reserved.
+//  Copyright 2008-2011 Karelia Software. All rights reserved.
 //
 
 #import "KTPublishingWindowController.h"
@@ -56,7 +56,7 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
 		NSURL *URL = [[NSURL alloc] initWithString:clickContext];
         if (URL)
 		{
-			[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:URL];
+			[KSWORKSPACE attemptToOpenWebURL:URL];
 			[URL release];
 		}
 	}
@@ -118,7 +118,6 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
 	[oInformativeTextLabel setStringValue:[self informativeText]];
 	
     
-    // TODO: Ensure the button is wide enough for e.g. German
     [oFirstButton setTitle:NSLocalizedString(@"Stop", @"Stop publishing button title")];
     
 	
@@ -324,6 +323,20 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
         
         [oInformativeTextLabel setTextColor:[NSColor redColor]];
         NSString *errorDescription = [error localizedDescription];
+        
+        if ( [errorDescription isEqualToString:NSLocalizedString(@"Stream Unavailable", @"connection kit error")] )
+        {
+            NSDictionary *userInfo = [error userInfo];
+            if ( [userInfo objectForKey:@"ConnectionHostKey"] )
+            {
+                errorDescription = [NSString stringWithFormat:NSLocalizedString(@"Unable to connect to %@. Please verify your host connection information or try again later.", @"more informative connection kit error with hostname"), [userInfo objectForKey:@"ConnectionHostKey"]];
+            }
+            else
+            {
+                errorDescription = NSLocalizedString(@"Unable to connect to host. Please verify your host connection information or try again later.", @"more informative connection kit error"); 
+            }
+        }
+        
         [self setInformativeText:errorDescription];
         
         [oProgressIndicator stopAnimation:self];
@@ -461,6 +474,7 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
+	VALIDATION((@"%s %@",__FUNCTION__, menuItem));
 	KTDocWindowController *windowController = [_modalWindow windowController];
 	OBASSERT(windowController); // This is a slightly hacky way to get to the controller, but it works
 	

@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Terrence Talbot on 12/20/07.
-//  Copyright 2007-2009 Karelia Software. All rights reserved.
+//  Copyright 2007-2011 Karelia Software. All rights reserved.
 //
 
 #import "KTDesign.h"
@@ -102,7 +102,7 @@
     if (!fileType)
     {
         NSString *fileExtension = [mediaInfo objectForKey:@"fileExtension"];
-        if (fileExtension) fileType = [NSString UTIForFilenameExtension:fileExtension];
+        if (fileExtension) fileType = [KSWORKSPACE ks_typeForFilenameExtension:fileExtension];
     }
     [result setValue:fileType forKey:@"fileType"];
     

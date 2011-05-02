@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Terrence Talbot on 4/6/05.
-//  Copyright 2005-2009 Karelia Software. All rights reserved.
+//  Copyright 2005-2011 Karelia Software. All rights reserved.
 //
 
 #import "KTDocument.h"
@@ -11,15 +11,12 @@
 #import "Debug.h"
 
 #import "KTDocWindowController.h"
-#import "KTDocSiteOutlineController.h"
 #import "KTSite.h"
-#import "KTHTMLInspectorController.h"
 #import "KTStalenessManager.h"
 
+#import "NSArray+Karelia.h"
 #import "NSIndexSet+Karelia.h"
 #import "NSObject+Karelia.h"
-
-#import <iMediaBrowser/RBSplitView.h>
 
 
 @interface KTDocument (PropertiesPrivate)
@@ -50,81 +47,22 @@
     _thread = thread;
 }
 
-#pragma mark -
-#pragma mark Managers
-
-- (KTMediaManager *)mediaManager
-{
-	return myMediaManager;
-}
-
-#pragma mark -
 #pragma mark Other
 
 - (KTSite *)site { return _site; }
 
-#pragma mark -
-#pragma mark Publishing
-
-- (void)setHTMLInspectorController:(KTHTMLInspectorController *)anHTMLInspectorController
+- (void)setSite:(KTSite *)site
 {
-    [anHTMLInspectorController retain];
-    [myHTMLInspectorController release];
-    myHTMLInspectorController = anHTMLInspectorController;
+    [_site setDocument:nil];    // Disassociate ourself from the site
+    
+    [site retain];
+    [_site release];
+    _site = site;
+    
+    [_site setDocument:self];
 }
 
-- (KTHTMLInspectorController *)HTMLInspectorControllerWithoutLoading	// lazily instantiate
-{
-	return myHTMLInspectorController;
-}
-
-- (KTHTMLInspectorController *)HTMLInspectorController	// lazily instantiate
-{
-	if ( nil == myHTMLInspectorController )
-	{
-		KTHTMLInspectorController *controller = [[[KTHTMLInspectorController alloc] init] autorelease];
-		[self setHTMLInspectorController:controller];
-		[self addWindowController:controller];
-	}
-	return myHTMLInspectorController;
-}
-
-#pragma mark -
 #pragma mark Document Display Properties
-
-- (BOOL)showDesigns
-{
-	return myShowDesigns;
-}
-
-- (void)setShowDesigns:(BOOL)value
-{
-	myShowDesigns = value;
-}
-
-- (BOOL)displaySiteOutline { return myDisplaySiteOutline; }
-
-- (void)setDisplaySiteOutline:(BOOL)value
-{
-	myDisplaySiteOutline = value;
-	[self updateDefaultDocumentProperty:@"displaySiteOutline"];
-}
-
-- (BOOL)displayStatusBar { return myDisplayStatusBar; }
-
-- (void)setDisplayStatusBar:(BOOL)value
-{
-	myDisplayStatusBar = value;
-	[self updateDefaultDocumentProperty:@"displayStatusBar"];
-}
-
-- (BOOL)displayEditingControls { return myDisplayEditingControls; }
-
-- (void)setDisplayEditingControls:(BOOL)value
-{
-	myDisplayEditingControls = value;
-	[self updateDefaultDocumentProperty:@"displayEditingControls"];
-}
 
 - (BOOL)displaySmallPageIcons { return myDisplaySmallPageIcons; }
 
@@ -133,9 +71,9 @@
 	myDisplaySmallPageIcons = aSmall;
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"KTDisplaySmallPageIconsDidChange"
-														object:self];
+														object:self
+													  userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:aSmall] forKey:@"displaySmallPageIcons"]];
 														
-	[[self mainWindowController] updatePopupButtonSizesSmall:aSmall];
 	[self updateDefaultDocumentProperty:@"displaySmallPageIcons"];
 }
 
@@ -176,28 +114,13 @@
  *	Instead, they are kept within KTDocument and then only written out at save-time. If the user
  *  happens to hit undo and change the property, it is ignored.
  */
-- (void)copyDocumentDisplayPropertiesToModel
+- (void)persistUIProperties
 {
-	// Selected pages
-	NSIndexSet *outlineSelectedRowIndexSet = [[[[self mainWindowController] siteOutlineController] siteOutline] selectedRowIndexes];
-	[[self site] setLastSelectedRows:[outlineSelectedRowIndexSet indexSetAsString]];
-	
-	
-	// Source Outline width
-	float width = [[[[self mainWindowController] siteOutlineSplitView] subviewAtPosition:0] dimension];
-	[[self site] setInteger:width forKey:@"sourceOutlineSize"];
-	
-	
 	// Icon size
 	[[self site] setBool:[self displaySmallPageIcons] forKey:@"displaySmallPageIcons"];
 	
 	
-	// Window size
-	NSWindow *window = [[self mainWindowController] window];
-	if (window)
-	{
-		[[self site] setDocWindowContentRect:[window contentRectForFrameRect:[window frame]]];
-	}
+	[[self windowControllers] makeObjectsPerformSelector:@selector(persistUIProperties)];
 }
 
 #pragma mark -
@@ -215,10 +138,7 @@
 			// for now, we're going to specialize support for known entities
 			// in the model that we want to be inheritied.
 			KTSite *site = [self site];
-//				[site lockPSCAndMOC];
 			[site setPrimitiveValue:result forKey:aKey];
-//				[self refreshObjectInAllOtherContexts:(KTManagedObject *)site];
-//				[site unlockPSCAndMOC];
 		}
 	}
 	return result;

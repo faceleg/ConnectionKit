@@ -3,8 +3,11 @@
 # we base the PackageAndDeploySDK target on Sandvox.xcconfig through the Xcode UI
 # this brings in SVN_VERSION and PRODUCT_VARIANT
 
+# hard code PRODUCT_VARIANT as RELEASE so SDK is always put into MANUAL/files
+PRODUCT_VARIANT=RELEASE
+
 echo ""
-echo "Gathering resources for packaging Sandvox Plugins SDK ..."
+echo "Gathering resources for packaging Sandvox SDK ..."
 echo "SVN_VERSION is ${SVN_VERSION}"
 echo "PRODUCT_VARIANT is ${PRODUCT_VARIANT}"
 
@@ -15,7 +18,7 @@ then
 	exit 1
 fi
 
-# the script phase itself brings in APPNAME
+# the script phase itself brings in APPNAME (should be SandvoxSDK)
 echo "APPNAME is ${APPNAME}"
 
 APPNAMENOSPACES=`echo "$APPNAME" | sed 's/ //g'`
@@ -23,58 +26,43 @@ APPNAMELOWER=`echo "$APPNAMENOSPACES" | tr '[A-Z]' '[a-z]'`
 
 PBXCP="${SRCROOT}/../../Shared/Tools/pbxcp"
 
-PLUGINS_DIR="${SRCROOT}/../Plugins"
-XCODE_DIR="${SRCROOT}/../XCode"
+SDK_DIR="${SRCROOT}/../SDK"
+PLUGINS_DIR="${SRCROOT}/../PlugIns"
 
-# the location of BuildSettings comes from the Update Version script
-BUILDSETTINGS_DIR="/private/tmp/build-${APPNAMELOWER}"
-if [ ! -r $BUILDSETTINGS_DIR ]
-then
-	mkdir -p "${BUILDSETTINGS_DIR}"
-fi
+# ------------------------------------------------
 
 # determine which SLA to use
-if [ ${PRODUCT_VARIANT} == "BETA" ]
-	then
-		SLA_ZIP_FILE="${PLUGINS_DIR}/SLA-Plugins-Beta.zip"
-		SLA_FILE="${BUILDSETTINGS_DIR}/SLA-Plugins-Beta"
-	else
-		SLA_ZIP_FILE="${PLUGINS_DIR}/SLA-Plugins.zip"
-		SLA_FILE="${BUILDSETTINGS_DIR}/SLA-Plugins"
-fi
+# determine the name of the dmg to upload and where to upload it
 
-# we keep the .zip of the SLA with the project, then copy it to /tmp and inflate it, if needed
-if test -r ${SLA_FILE}
-then
-	echo "Removing previous SLA file..."
-	rm ${SLA_FILE}
-fi
-
-if [ ! -r $SLA_FILE ]
-then
-	echo "copying ${SLA_ZIP_FILE} to ${SLA_FILE}.zip"
-	cp "${SLA_ZIP_FILE}" "${SLA_FILE}.zip"
-	echo "unarchving ${SLA_FILE}.zip"
-	ditto -x -k --rsrc "${SLA_FILE}.zip" ${BUILDSETTINGS_DIR}
-fi
-
-
-# ------- File Names
-
+SLA_FILE="UNKNOWN_DUDE"
 VARIANTLOWER=`echo "${PRODUCT_VARIANT}" | tr '[A-Z]' '[a-z]'`
 
-# determine the name of the dmg to upload and where to upload it
-if [ "${VARIANTLOWER}" == "beta" ]
+if [ ${VARIANTLOWER} == "beta" ]
 	then
+		SLA_FILE="${SRCROOT}/../Other/SLAs-beta/SLA-SDK.rtf"
+		echo "this is the beta variant ${SLA_FILE}"
 	    VARIANTTAG="-beta"
+elif [ ${VARIANTLOWER} == "alpha" ]
+    then
+	    SLA_FILE="${SRCROOT}/../Other/SLAs-beta/SLA-SDK.rtf"
+	    echo "this is the beta variant ${SLA_FILE} -- using since it's close enough for alpha"
+        VARIANTTAG="-alpha"
 	else
+		SLA_FILE="${SRCROOT}/../Other/SLAs/SLA-SDK.rtf"
+		echo "this is the release variant"
         VARIANTTAG=""
 		VARIANTLOWER="files"
 fi
+echo "SLA file =  ${SLA_FILE}"
 
+# ------------------------------------------------
+
+# compute file names
 # the dmg names that we'll use
 VOLUME_NAME="${APPNAMENOSPACES}"
 DMG_TEMP_NAME="temp"
+
+# prepend _ to the filename to avoid URL rewrite rules
 DMG_FINAL_NAME="_${APPNAMENOSPACES}${VARIANTTAG}-${SVN_VERSION}"
 
 # the directory that will appear on ~/Desktop after download
@@ -86,16 +74,34 @@ DMG_DIR="/Volumes/${VOLUME_NAME}/${SDK_DIR_NAME}"
 # the directory we'll do our work in
 SCRATCH_DIR="/private/tmp/build-${APPNAMELOWER}-dmg"
 
-if test -d "${SCRATCH_DIR}"
+if test -d ${SCRATCH_DIR}
 then
 	echo "Removing old scratch directory..."
-	rm -rf "${SCRATCH_DIR}"
+	rm -rf ${SCRATCH_DIR}
 fi
-mkdir -p "${SCRATCH_DIR}"
+mkdir -p ${SCRATCH_DIR}
 
 echo "Packaging ${APPNAME}..."
-pushd "${SCRATCH_DIR}"
+pushd ${SCRATCH_DIR}
 
+# ------------------------------------------------
+#echo "SDK_DIR = ${SDK_DIR}"
+#echo "PLUGINS_DIR = ${PLUGINS_DIR}"
+#echo "APPNAMENOSPACES = ${APPNAMENOSPACES}"
+#echo "APPNAMELOWER = ${APPNAMELOWER}"
+#echo "SLA_FILE = ${SLA_FILE}"
+#echo "VARIANTLOWER = ${VARIANTLOWER}"
+#echo "VARIANTTAG = ${VARIANTTAG}"
+#echo "SLA file =  ${SLA_FILE}"
+#echo "VOLUME_NAME = ${VOLUME_NAME}"
+#echo "DMG_TEMP_NAME = ${DMG_TEMP_NAME}"
+#echo "DMG_FINAL_NAME = ${DMG_FINAL_NAME}"
+#echo "SDK_DIR_NAME = ${SDK_DIR_NAME}"
+#echo "DMG_DIR = ${DMG_DIR}"
+#echo "SCRATCH_DIR = ${SCRATCH_DIR}"
+# ------------------------------------------------
+
+# .dmg creation
 # create an initial disk image (128 MB)
 echo "Creating initial disk image..."
 hdiutil create -ov -scrub -size 128m -fs HFS+ -volname "${VOLUME_NAME}" "${DMG_TEMP_NAME}.dmg"
@@ -104,29 +110,31 @@ hdiutil create -ov -scrub -size 128m -fs HFS+ -volname "${VOLUME_NAME}" "${DMG_T
 echo "Mounting initial disk image..."
 hdiutil attach ${DMG_TEMP_NAME}.dmg
 
-# create directory
+# create directory on dmg to hold sdk
 echo "DMG_DIR is ${DMG_DIR}"
-#mkdir -pv "${DMG_DIR}"
 pushd "/Volumes/${VOLUME_NAME}"
 mkdir "${SDK_DIR_NAME}"
 popd
 
-# copy READ ME to dmg
-echo "Copying ${READ_ME_FILE} to disk image..."
+# ------------------------------------------------
+
+# copy READ ME from SDK to dmg
 READ_ME_RTF="READ ME.rtf"
-READ_ME_FILE="${PLUGINS_DIR}/${READ_ME_RTF}"
+READ_ME_FILE="${SDK_DIR}/${READ_ME_RTF}"
+echo "Copying ${READ_ME_FILE} to disk image..."
 ${PBXCP} \
 	-resolve-src-symlinks \
 	"${READ_ME_FILE}" "${DMG_DIR}"
 
 # set READ ME's extension to be hidden
+READ_ME_RTF="READ ME.rtf"
 echo "Setting ${READ_ME_RTF} extension to be hidden..."
 /Developer/Tools/SetFile -a E "${DMG_DIR}/${READ_ME_RTF}"
-	
-# copy License to dmg
-echo "Copying ${LICENSE_FILE} to disk image..."
+
+# copy License from PlugIns to dmg
 LICENSE_RTF="License.rtf"
 LICENSE_FILE="${PLUGINS_DIR}/${LICENSE_RTF}"
+echo "Copying ${LICENSE_FILE} to disk image..."
 ${PBXCP} \
 	-resolve-src-symlinks \
 	"${LICENSE_FILE}" "${DMG_DIR}"
@@ -135,20 +143,20 @@ ${PBXCP} \
 echo "Setting ${LICENSE_RTF} extension to be hidden..."
 /Developer/Tools/SetFile -a E "${DMG_DIR}/${LICENSE_RTF}"
 
-# add Sparky .webloc file to dmg
-SPARKY_WEBLOC_PATH="${DMG_DIR}/Check for Updates.webloc"
+## add Sparky .webloc file to dmg
+#SPARKY_WEBLOC_PATH="${DMG_DIR}/Check for Updates.webloc"
 
-echo '<?xml version="1.0" encoding="UTF-8"?>' > "$SPARKY_WEBLOC_PATH"
-echo '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">' >> "$SPARKY_WEBLOC_PATH"
-echo '<plist version="1.0">' >> "$SPARKY_WEBLOC_PATH"
-echo '<dict>' >> "$SPARKY_WEBLOC_PATH"
-echo '    <key>URL</key>' >> "$SPARKY_WEBLOC_PATH"
-echo "    <string>http://launch.karelia.com/changelog.php?rn=1&amp;version=${SVN_VERSION}&amp;product=5&amp;check=1</string>" >> "$SPARKY_WEBLOC_PATH"
-echo '</dict>' >> "$SPARKY_WEBLOC_PATH"
-echo '</plist>' >> "$SPARKY_WEBLOC_PATH"
+#echo '<?xml version="1.0" encoding="UTF-8"?>' > "$SPARKY_WEBLOC_PATH"
+#echo '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">' >> "$SPARKY_WEBLOC_PATH"
+#echo '<plist version="1.0">' >> "$SPARKY_WEBLOC_PATH"
+#echo '<dict>' >> "$SPARKY_WEBLOC_PATH"
+#echo '    <key>URL</key>' >> "$SPARKY_WEBLOC_PATH"
+#echo "    <string>http://launch.karelia.com/changelog.php?rn=1&amp;version=${SVN_VERSION}&amp;product=5&amp;check=1</string>" >> "$SPARKY_WEBLOC_PATH"
+#echo '</dict>' >> "$SPARKY_WEBLOC_PATH"
+#echo '</plist>' >> "$SPARKY_WEBLOC_PATH"
 
 # add Docs .webloc file to dmg
-DOCS_WEBLOC_PATH="${DMG_DIR}/Sandvox Developers Guide.webloc"
+DOCS_WEBLOC_PATH="${DMG_DIR}/Developers Guide.webloc"
 
 echo '<?xml version="1.0" encoding="UTF-8"?>' > "$DOCS_WEBLOC_PATH"
 echo '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">' >> "$DOCS_WEBLOC_PATH"
@@ -160,7 +168,7 @@ echo '</dict>' >> "$DOCS_WEBLOC_PATH"
 echo '</plist>' >> "$DOCS_WEBLOC_PATH"
 
 # add Forum .webloc file to dmg
-FORUM_WEBLOC_PATH="${DMG_DIR}/Sandvox Developer Forum.webloc"
+FORUM_WEBLOC_PATH="${DMG_DIR}/Developers Forum.webloc"
 
 echo '<?xml version="1.0" encoding="UTF-8"?>' > "$FORUM_WEBLOC_PATH"
 echo '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">' >> "$FORUM_WEBLOC_PATH"
@@ -171,18 +179,17 @@ echo "    <string>http://support.karelia.com/?sandvox-dev</string>" >> "$FORUM_W
 echo '</dict>' >> "$FORUM_WEBLOC_PATH"
 echo '</plist>' >> "$FORUM_WEBLOC_PATH"
 
-# copy Plugins to dmg
-echo "Copying Plugins marked BUNDLED_SDK..."
-
-# Elements
-mkdir -p "${DMG_DIR}/Elements"
-pushd "${PLUGINS_DIR}/Elements"
+# copy Examples to dmg
+EXAMPLES_DIR="${SDK_DIR}/Examples"
+echo "Copying ${EXAMPLES_DIR} to disk image..."
+mkdir -p "${DMG_DIR}/Examples"
+pushd "${EXAMPLES_DIR}"
 for i in *
 do
 	if [ -e "${i}/BUNDLED_SDK" ];
     	then
         	# copy to DMG 
-        	echo "PLUGIN: PBXCp \"$i\" ${DMG_DIR}/Elements"
+        	echo "PLUGIN: PBXCp \"$i\" ${DMG_DIR}/Examples"
 
         	${PBXCP} \
 			-exclude .DS_Store \
@@ -192,13 +199,7 @@ do
 	        -exclude *.perspective* \
 			-exclude BUNDLED_SDK \
 			-resolve-src-symlinks \
-			"${PWD}/${i}" "${DMG_DIR}/Elements"
-
-		/usr/bin/gcc -E -P -x c -Wno-trigraphs \
-			-D SANDVOX_VERSION=${SANDVOX_VERSION} \
-			-D SVN_VERSION=${SVN_VERSION} \
-			-C "${PWD}/${i}/Info.plist" \
-			-o "${DMG_DIR}/Elements/${i}/Info.plist"
+			"${PWD}/${i}" "${DMG_DIR}/Examples"
 
    	else
         	echo "--------------  Not including $i"
@@ -206,53 +207,22 @@ do
 done
 popd
 
-# Indexes
-mkdir -p "${DMG_DIR}/Indexes"
-pushd "${PLUGINS_DIR}/Indexes"
+# copy Images to dmg
+IMAGES_DIR="${SDK_DIR}/Images"
+echo "Copying ${IMAGES_DIR} to disk image..."
+mkdir -p "${DMG_DIR}/Images"
+pushd "${IMAGES_DIR}"
 for i in *
 do
-	if [ -e "${i}/BUNDLED_SDK" ];
-    	then
-        	# copy to DMG 
-        	echo "PLUGIN: PBXCp \"$i\" ${DMG_DIR}/Indexes"
-
-        	${PBXCP} \
-			-exclude .DS_Store \
-			-exclude CVS \
-			-exclude .svn \
-			-exclude *.pbxuser \
-	        -exclude *.perspective* \
-			-exclude BUNDLED_SDK \
-			-resolve-src-symlinks \
-			"${PWD}/${i}" "${DMG_DIR}/Indexes"
-
-		/usr/bin/gcc -E -P -x c -Wno-trigraphs \
-			-D SANDVOX_VERSION=${SANDVOX_VERSION} \
-			-D SVN_VERSION=${SVN_VERSION} \
-			-C "${PWD}/${i}/Info.plist" \
-			-o "${DMG_DIR}/Indexes/${i}/Info.plist"
-
-   	else
-        	echo "--------------  Not including $i"
-    	fi
+	# copy to DMG 
+	echo "IMAGE: PBXCp \"$i\" ${DMG_DIR}/Images"
+	${PBXCP} "${PWD}/${i}" "${DMG_DIR}/Images"
 done
 popd
 
-# copy Xcode templates to dmg
-mkdir -p "${DMG_DIR}/Xcode"
+# ------------------------------------------------
 
-pushd "${XCODE_DIR}"
-echo "Copying Xcode stuff..."
-	${PBXCP} \
-		-exclude .DS_Store \
-		-exclude CVS \
-		-exclude .svn \
-		-exclude *.pbxuser \
-		-exclude *.perspective* \
-		-resolve-src-symlinks \
-		"${PWD}/Project Templates" "${DMG_DIR}/Xcode"
-popd
-
+# clean up .dmg
 # obtain device information
 echo "Gathering device information..."
 DEVS=$(hdiutil attach "${DMG_TEMP_NAME}.dmg" | cut -f 1)
@@ -272,40 +242,31 @@ rm "${DMG_TEMP_NAME}.dmg"
 echo "Marking disk image as internet-enabled..."
 hdiutil internet-enable -yes "${DMG_FINAL_NAME}.dmg"
 
-# install license agreement (there isn't one for bonus designs as of 11/6/2007)
+# install license agreement
 echo "Installing License Agreement..."
 hdiutil unflatten ${DMG_FINAL_NAME}.dmg
-/Developer/Tools/DeRez ${SLA_FILE} > sla.r
-/Developer/Tools/Rez -a sla.r -o ${DMG_FINAL_NAME}.dmg
+${SRCROOT}/../../Shared/Tools/RichTextToResource ${SLA_FILE} > sla.r
+/Developer/Tools/Rez ${SRCROOT}/../Other/for_SLA.r sla.r -a -o ${DMG_FINAL_NAME}.dmg
 hdiutil flatten ${DMG_FINAL_NAME}.dmg
-rm sla.r
 
 popd
 
 echo "Packaging Complete!"
 echo ""
-echo "Your ${APPNAME} is waiting for you at ${SCRATCH_DIR}/${DMG_FINAL_NAME}.dmg."
+echo "Your ${APPNAME}-SDK is waiting for you at ${SCRATCH_DIR}/${DMG_FINAL_NAME}.dmg."
 echo ""
+
+# ------------------------------------------------
 
 echo "Deploying..."
 echo ""
 
+# ------- Source Paths
+
 SERVER_PATH="/home/karelia.com/MANUAL/${VARIANTLOWER}"
-BACKUP_SERVER_PATH="/home/kareliasw/dh.karelia.com/${VARIANTLOWER}"
-
 UPLOAD_PATH="${SERVER_PATH}/${DMG_FINAL_NAME}.dmg"
-BACKUP_UPLOAD_PATH="${BACKUP_SERVER_PATH}/${DMG_FINAL_NAME}.dmg"
-
-# ------- Server Info
-
-# SCP assumes public key login through Karelia's (mt) account
-SCP_LOGIN="karelia.com@secure.karelia.com"
-BACKUP_SCP_LOGIN="kareliasw@dh.karelia.com"
-
 DISTRO_PATH="${SCRATCH_DIR}/${DMG_FINAL_NAME}.dmg"
 EMAIL_PATH="${SCRATCH_DIR}/${DMG_FINAL_NAME}-msg.txt"
-
-# set DSA_FILE_PATH name to what addToSparkle.php requires
 DSA_FILE_PATH="${SCRATCH_DIR}/${APPNAMENOSPACES}-${SVN_VERSION}.dsa"
 
 # ------- DSA File Creation
@@ -317,6 +278,11 @@ DSA=`ruby "${SIGN_UPDATE_PATH}" "${DISTRO_PATH}" "${DSA_PRIV_PEM_PATH}"`
 echo "$DSA" > $DSA_FILE_PATH
 DSA_UPLOAD_PATH="/home/karelia.com/DSA"
 
+# ------- Server Info
+
+# SCP assumes public key login through Karelia's slicehost account
+SCP_LOGIN="karelia.com@secure.karelia.com"
+
 # if we don't have a distro ready, exit
 if test -r ${DISTRO_PATH}
 then
@@ -327,10 +293,6 @@ then
 	echo "Uploading ${DISTRO_PATH} ..."
 	echo "... to ${UPLOAD_PATH}"
 	scp "${DISTRO_PATH}" "${SCP_LOGIN}:${UPLOAD_PATH}"
-	echo ""
-	echo "Uploading ${DISTRO_PATH} ..."
-	echo "... to ${BACKUP_UPLOAD_PATH}"
-	scp "${DISTRO_PATH}" "${BACKUP_SCP_LOGIN}:${BACKUP_UPLOAD_PATH}"
 else
 	echo ""
 	echo "Nothing to upload at ${DISTRO_PATH}. Exiting..."
@@ -352,10 +314,11 @@ echo "<http://karelia.com/${VARIANTLOWER}/${DMG_FINAL_NAME}.dmg>" >> $EMAIL_PATH
 echo "" >> $EMAIL_PATH
 echo "If requested, please download and verify this release." >> $EMAIL_PATH
 echo "" >> $EMAIL_PATH
-echo "Thanks!" >> $EMAIL_PATH
+echo "Thanks! (build by ${USER})" >> $EMAIL_PATH
 echo "" >> $EMAIL_PATH
 
-mail -s "${APPNAME} Build ${SVN_VERSION} Now Available" engineering@karelia.com < ${EMAIL_PATH}
+MAIL="${SRCROOT}/../../Shared/Tools/mail_build"
+${MAIL} "${APPNAME}" "${SVN_VERSION}" "${EMAIL_PATH}"
 
 echo ""
 echo "${APPNAME} deployment completed."

@@ -25,7 +25,25 @@
     <div id="mainbox">
         <h1 class="firstHeading">Supported Video Formats</h1>
 
-        <p>When creating a <a href="Video.html" title="Video">Video</a> page or pagelet, Sandvox can handle a wide range of formats. All <a href="http://www.apple.com/quicktime/player/specs.html" class="external text" title="http://www.apple.com/quicktime/player/specs.html">Quicktime compatible formats</a> are supported, as well as Adobe Flash files.</p><a name="Supporting_Additional_Formats" id="Supporting_Additional_Formats"></a>
+        <p>When creating a <a href="Video.html" title="Video">Video</a> page or Media Object, Sandvox can handle a wide range of formats. All <a href="http://www.apple.com/quicktime/player/specs.html" class="external text" title="http://www.apple.com/quicktime/player/specs.html">Quicktime compatible formats</a> are supported, although you will want to make sure that the file is suited for viewing on a wide range of browsers.</p><a name="File_Types" id="File_Types"></a>
+
+        <h2><span class="mw-headline">File Types</span></h2>
+
+        <p>The best file format to use is a .mp4 file, saved with the h.264 codec and the baseline profile. (More <a href="http://diveintohtml5.org/video.html" class="external text" title="http://diveintohtml5.org/video.html">here</a>) Make sure that the video has been exported for iPhone and/or iPad compatibility from the video creation program, if iPhone and iPad compatibility is desired. Also, make sure to test using the iPhone or iPad, so that you know the video is playable. (Apple does not provide a mechanism to verify this from the Mac.)</p>
+
+        <p>Remember, just because you can see a video on your Mac, doesn't mean it will be usable on somebody else's computer or device, such as a Windows PC. It is important to choose the right format for the file. If a good, universally viewable/audio format is chosen, then Sandvox should be able to present it in such as way that almost all browsers can handle.</p>
+
+        <ul>
+            <li>.flv (Flash video) is a usable format, and will work on a number of computers, but will not play on iPad or iPhone.</li>
+
+            <li>.mov (QuickTime) files are good for Macs, and may be viewable on an iPhone/iPad depending on how it was exported, but will not be viewable on PCs unless they have the QuickTime plugin installed.</li>
+
+            <li>.wmv, .avi (Windows Media) formats that are native to Microsoft may be playable on a Mac. (See 'Supporting Additional Formats' below.)</li>
+        </ul>
+
+        <p>Sandvox does not support some formats such as Ogg Theora video, or Webm video. These are supported natively by some browsers like Firefox and Chrome; however they are not supported directly by Mac OS, and won't be viewable on most people's installations of Safari.</p>
+
+        <p><b>The inspector will show a warning when partially-supported file formats have been chosen.</b></p><a name="Supporting_Additional_Formats" id="Supporting_Additional_Formats"></a>
 
         <h2><span class="mw-headline">Supporting Additional Formats</span></h2>
 
@@ -37,25 +55,11 @@
             <li><a href="http://www.divx.com/divx/mac/" class="external text" title="http://www.divx.com/divx/mac/">DivX</a> - adds support for DivX movies.</li>
 
             <li><a href="http://perian.org/" class="external text" title="http://perian.org/">Perian</a> - adds support for FLV, 3ivX, DivX, and more</li>
-        </ul><a name="Viewer_Restrictions_when_using_Plug-ins" id="Viewer_Restrictions_when_using_Plug-ins"></a>
+        </ul><a name="Cross-Platform_Wrapper" id="Cross-Platform_Wrapper"></a>
 
-        <h2><span class="mw-headline">Viewer Restrictions when using Plug-ins</span></h2>
+        <h2><span class="mw-headline">Cross-Platform Wrapper</span></h2>
 
-        <p>When you embed a QuickTime-specific or cross-platform file (MP4, MP3, etc.), the media is "wrapped" in some QuickTime information, meaning that QuickTime will be required to view that page. This is generally not a problem since QuickTime is pre-installed on all Macs and very common on Windows machines.</p>
-
-        <p>If you embed a movie in a <i>special</i> format or encoding such as those listed above, your site visitors may have to install the appropriate component on their computer to view the page. If you use formats that require a specific QuickTime plug-in, you may wish to mention that a special plug-in is required to view your site.</p>
-
-        <p>If you embed a windows-format file, such as AVI or WMV or WMA, then the page does not use a QuickTime "wrapper" but instead uses the standard Windows Media Player wrapper. This allows Windows users to view the media; Mac users will require Flip4Mac installed to view the content.</p><a name="iPhone" id="iPhone"></a>
-
-        <h2><span class="mw-headline">iPhone</span></h2>
-
-        <p>Note that the <a href="http://www.apple.com/iphone" class="external text" title="http://www.apple.com/iphone">iPhone</a> does not support Flash video, so you may wish to avoid using it. For more information, please see "<a href="IPhone_Compatibility.html" title="IPhone Compatibility">iPhone Compatibility</a>."</p><a name="Limitations_within_Sandvox_when_using_Plug-ins" id="Limitations_within_Sandvox_when_using_Plug-ins"></a>
-
-        <h2><span class="mw-headline">Limitations within Sandvox when using Plug-ins</span></h2>
-
-        <p>Some plug-ins provide only limited support to QuickTime, which means that some functionality associated with standard QuickTime movie files will not extend to Sandvox. For example, Flip4Mac cannot extract the thumbnail out of a WMV file. You will need to manually set a thumbnail for WMV files.</p>
-
-        <p>Another limitation with some formats (notably WMV) is that it takes a moment after opening up a <a href="Page.html" title="Page">page</a> with an embedded WMV file for the correct movie dimensions to be loaded. Once loaded, the dimensions are stored. But if you were to attempt to create a number of <a href="Page.html" title="Page">pages</a> with WMV files on them and then immediately publish without viewing the <a href="Page.html" title="Page">pages</a>, the dimensions will not yet have been calculated, and the resulting <a href="Page.html" title="Page">page</a> may not show the movie at the correct size.</p>
+        <p>Sandvox attempts to make sure that videos are watchable on as many platforms as possible. If an appropriate video format is selected, Sandvox will use the HTML5 "video" tag, which is compatible with many modern browsers. But for browsers that cannot handle the "video" tag (such as older Internet Explorer browsers) or the .mp4 format (such as FireFox and Chrome), Sandvox also includes a video player that uses Adobe Flash to deliver the content. The appropriate player will be displayed automatically.</p>
 
         <div class="related">
             <a name="Related_Articles" id="Related_Articles"></a>
@@ -71,7 +75,7 @@
     </div>
 
     <div id='feedback'>
-        How can we improve this page? <a href="http://docs.karelia.com/feedback/?h=Sandvox&amp;p=Supported_Video_Formats.html">Let us know.</a>
+        How can we improve this page? <a href="http://www.karelia.com/sandvox/help/feedback/?h=Sandvox&amp;p=Supported_Video_Formats.html">Let us know.</a>
     </div>
 </body>
 </html>

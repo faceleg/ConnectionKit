@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Mike on 30/05/2008.
-//  Copyright 2008-2009 Karelia Software. All rights reserved.
+//  Copyright 2008-2011 Karelia Software. All rights reserved.
 //
 //
 //  This is a special class of object that the master creates in the event that it cannot locate the

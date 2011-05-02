@@ -1,0 +1,37 @@
+﻿/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "7"; */
+"OtherViews" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Yahoo! Messenger"; ObjectID = "8"; */
+"Yahoo! Messenger" = "Yahoo! Messenger";
+
+/* Class = "NSMenuItem"; title = "Skype"; ObjectID = "9"; */
+"Skype" = "Skype";
+
+/* Class = "NSMenuItem"; title = "iChat (AIM)"; ObjectID = "10"; */
+"iChat (AIM)" = "iChat (AIM)";
+
+/* Class = "NSTextFieldCell"; title = "IM Service"; ObjectID = "75"; */
+"IM Service" = "Service MI";
+
+/* Class = "NSTextFieldCell"; title = "Username:"; ObjectID = "77"; */
+"Username:" = "Nom utilisateur :";
+
+/* Class = "NSTextFieldCell"; title = "Be sure your privacy settings allow web visitors to see your online status."; ObjectID = "78"; */
+"Be sure your privacy settings allow web visitors to see your online status." = "Assurez-vous que vos réglages de confidentialité permettent de voir votre état en ligne.";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "113"; */
+"Box" = "Box";
+
+/* Class = "NSTextFieldCell"; title = "Headline:"; ObjectID = "117"; */
+"Headline:" = "En-tête :";
+
+/* Class = "NSTextFieldCell"; title = "Labels"; ObjectID = "120"; */
+"Labels" = "Étiquettes";
+
+/* Class = "NSTextFieldCell"; title = "Online:"; ObjectID = "124"; */
+"Online:" = "En ligne :";
+
+/* Class = "NSTextFieldCell"; title = "Offline:"; ObjectID = "128"; */
+"Offline:" = "Hors ligne :";
+/* Class = "NSTextFieldCell"; title = "Status is not “live” within Sandvox. An example image is being shown."; ObjectID = "141"; */
+"Status is not “live” within Sandvox. An example image is being shown." = "L’état n’est pas ‘en direct’ dans Sandvox. Un exemple illustré est affiché.";

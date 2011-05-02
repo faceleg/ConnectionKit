@@ -3,14 +3,14 @@
 //  Marvel
 //
 //  Created by Dan Wood on 5/4/05.
-//  Copyright 2005-2009 Karelia Software. All rights reserved.
+//  Copyright 2005-2011 Karelia Software. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
 
-#import "KTDocumentControllerChain.h"
-#import "KTHTMLParser.h"
+#import "KSInspector.h"
+#import "SVWebContentAreaController.h"
 
 
 #define CUT_MENUITEM_TITLE					NSLocalizedString(@"Cut", "Cut MenuItem")
@@ -26,61 +26,31 @@
 #define DELETE_PAGES_MENUITEM_TITLE			NSLocalizedString(@"Delete Pages", "Delete Pages MenuItem")
 
 
-@class CIFilter;
 @class KSBorderlessWindow;
-@class KTInlineImageElement;
-@class KSTextField, KSPopUpButton;
-@class KTDesignPickerView;
+@class KSTextField, KSFancySchmancyBindingsPopUpButton;
 @class RoundedBox;
-@class RBSplitView;
-@class RBSplitSubview;
-@class NTBoxView;
-@class RYZImagePopUpButton;
 @class KTLinkSourceView;
-@class KTPluginInspectorViewsManager;
-@class KTDocViewController, KTDocWebViewController, KTDocSiteOutlineController;
-@class KTPage, KTPagelet;
+@class SVPagesController;
+@class SVSiteOutlineViewController;
+@class KTPage, SVPagesTreeController;
 @class KTCodeInjectionController;
-@class KTAbstractElement;
-@class KSPlaceholderTextView;
+@class SVDesignPickerController;
+@class SVCommentsWindowController;
+@class SVGoogleWindowController;
+@class BWAnchoredPopUpButton;
+@class MAAttachedWindow;
 
 extern NSString *gInfoWindowAutoSaveName;
 
 
-@interface KTDocWindowController : NSWindowController <DOMEventListener, KTDocumentControllerChain>
+@interface KTDocWindowController : NSWindowController <KSInspection, SVWebContentAreaControllerDelegate>
 {
-    IBOutlet RBSplitView				*oSidebarSplitView;
-    IBOutlet RBSplitView				*oDesignsSplitView;
-	IBOutlet WebView					*oWebView;
-	IBOutlet KTDocWebViewController		*webViewController;     // Weak ref
-	IBOutlet KTDocSiteOutlineController	*siteOutlineController;
-	IBOutlet KTDocViewController		*oPageDetailsController;
-	IBOutlet NSObjectController			*oDocumentController;
-		
-	// Status bar below the webview
-    IBOutlet NTBoxView				*oStatusBar;	// below web view
-	IBOutlet NSImageView			*oSplitDragView;
-	IBOutlet NSTextField			*oStatusBarField;	// URL pointed to, expand size to left of visible item(s) below
-	
-	//  Navigation bar above the webview
-	IBOutlet RBSplitSubview			*oDesignsSplitPane;
-    IBOutlet KTDesignPickerView		*oDesignsView;
-    IBOutlet NSButton				*oDesignBackButton;
-    IBOutlet NSButton				*oDesignForwardButton;
-    IBOutlet NSButton				*oDesignCloseButton;
-	
-    //  TOOLBARS
+	IBOutlet BWAnchoredPopUpButton 	*oActionPopup;
+	//  TOOLBARS
    	NSMutableDictionary				*myToolbars;			// dict of document toolbars
-	RYZImagePopUpButton             *myAddPagePopUpButton;       // constructed via toolbar code
-    RYZImagePopUpButton             *myAddPageletPopUpButton;       // constructed via toolbar code
-    RYZImagePopUpButton             *myAddCollectionPopUpButton;    // constructed via toolbar code
 	
 	// WEBVIEW STUFF ....
-	NSString						*myWebViewTitle;
-	@public
-	BOOL							myHasSavedVisibleRect;
-	NSRect							myDocumentVisibleRect;
-	
+  @public
 	
     NSMutableDictionary				*myContextElementInformation;
 	IBOutlet KSBorderlessWindow		*oLinkPanel;
@@ -95,122 +65,86 @@ extern NSString *gInfoWindowAutoSaveName;
 	IBOutlet KSBorderlessWindow		*oMessageWindow;
 	IBOutlet NSTextField			*oMessageTextField;
 	
-	// selection
-	KTInlineImageElement			*mySelectedInlineImageElement;
-	KTPagelet						*mySelectedPagelet;
-	
 	// oWebView selection
-	DOMRange						*mySelectedDOMRange;
 	NSPoint							myLastClickedPoint;
 	NSRect							mySelectionRect;
 	
-	// Code Injection
-	KTCodeInjectionController	*myMasterCodeInjectionController;
-	KTCodeInjectionController	*myPageCodeInjectionController;
-
-
-	KTPluginInspectorViewsManager	*myPluginInspectorViewsManager;
-	
-	NSButton *myBuyNowButton;
-    
 @private
-    // Controller Chain
-    NSMutableArray  *_childControllers;
+    NSString    *_contentTitle;
+    
+	SVWebContentAreaController  *_webContentAreaController;     // Weak ref — why?
+	SVSiteOutlineViewController *_siteOutlineViewController;
+    SVPagesTreeController       *_pagesController;
+		
+	// Raw HTML
+	KTHTMLEditorController      *_HTMLEditorController;
+    KTCodeInjectionController	*myMasterCodeInjectionController;
+	KTCodeInjectionController	*myPageCodeInjectionController;
+    
+    // Design Chooser
+    SVDesignPickerController *_designChooserWindowController;
+    
+    // Comments
+    SVCommentsWindowController *_commentsWindowController;
+    
+    // Google
+    SVGoogleWindowController *_googleWindowController;
+	
+	NSMenuItem						*_rawHTMLMenuItem;		// like an outlet
+	NSMenuItem						*_HTMLTextPageMenuItem;		// like an outlet
+
+	MAAttachedWindow						*_designIdentityWindow;
+	NSTextField								*_designIdentityTitle;
+	NSImageView								*_designIdentityThumbnail;
+
 }
 
-#pragma mark Controller Chain
-- (NSArray *)childControllers;
-- (void)addChildController:(KTDocViewController *)controller;
-- (void)removeChildController:(KTDocViewController *)controller;
+#pragma mark Window Title
+@property(nonatomic, copy) NSString *contentTitle;
 
-- (KTDocSiteOutlineController *)siteOutlineController;
-- (void)setSiteOutlineController:(KTDocSiteOutlineController *)controller;
+#pragma mark View Controllers
+@property(nonatomic, retain) IBOutlet SVSiteOutlineViewController *siteOutlineViewController;
+@property(nonatomic, retain, readonly) IBOutlet SVWebContentAreaController *webContentAreaController;
+@property(nonatomic, retain) IBOutlet SVPagesTreeController *pagesController;
 
-- (KTDocWebViewController *)webViewController;
-- (void)setWebViewController:(KTDocWebViewController *)controller;
+#pragma mark Raw HTML
+@property (nonatomic, retain) KTHTMLEditorController *HTMLEditorController;
+@property(nonatomic, retain) NSMenuItem *rawHTMLMenuItem;
+@property(nonatomic, retain) NSMenuItem *HTMLTextPageMenuItem;
 
+@property(nonatomic, retain) SVCommentsWindowController *commentsWindowController;
+@property(nonatomic, retain) SVGoogleWindowController *googleWindowController;
 
-#pragma mark Other
-- (BOOL)addPagesViaDragToCollection:(KTPage *)aCollection atIndex:(int)anIndex draggingInfo:(id <NSDraggingInfo>)info;
-
-// Getters
-- (BOOL) sidebarIsCollapsed;
-
-// Other public functions
-
-- (void)updatePopupButtonSizesSmall:(BOOL)aSmall;
-
-- (void)setStatusField:(NSString *)string;
-- (NSString *)status;
+@property(nonatomic, retain) MAAttachedWindow *designIdentityWindow;
 
 //- (void)updateEditMenuItems;
-- (void) updateBuyNow:(NSNotification *)aNotification;
+- (void) updateDocWindowLicenseStatus:(NSNotification *)aNotification;
 
 // Actions
-
-- (IBAction)visitPublishedSite:(id)sender;
-- (IBAction)visitPublishedPage:(id)sender;
-- (IBAction)submitSiteToDirectory:(id)sender;
+- (IBAction)toggleSmallPageIcons:(id)sender;
 
 - (IBAction)windowHelp:(id)sender;
-- (IBAction)addPage:(id)sender;
-- (IBAction)addPagelet:(id)sender;
-- (IBAction)addCollection:(id)sender;
-- (IBAction)group:(id)sender;
-- (IBAction)remove:(id)sender;
 
-- (IBAction)toggleDesignsShown:(id)sender;
+@property(nonatomic, retain) SVDesignPickerController *designChooserWindowController;
+- (IBAction)chooseDesign:(id)sender;
+- (IBAction)nextDesign:(id)sender;
+- (IBAction)previousDesign:(id)sender;
+- (IBAction)showChooseDesignSheet:(id)sender;
 
-- (void)postSelectionAndUpdateNotificationsForItem:(id)aSelectableItem;
-- (IBAction)reloadOutline:(id)sender;
+- (IBAction)editRawHTMLInSelectedBlock:(id)sender;
+- (IBAction)showPageCodeInjection:(id)sender;
+- (IBAction)showSiteCodeInjection:(id)sender;
 
-- (void)insertPage:(KTPage *)aPage parent:(KTPage *)aCollection;
-- (void)insertPagelet:(KTPagelet *)aPagelet toSelectedItem:(KTPage *)selectedItem;
+- (IBAction)groupAsCollection:(id)sender;
 
-// clean up at document close
-- (void)selectionDealloc;
-- (void)documentControllerDeallocSupport;
+- (IBAction)reload:(id)sender;
 
-- (void)showInfo:(BOOL)inShow;
-
-// Plugin Inspector Views
-- (KTPluginInspectorViewsManager *)pluginInspectorViewsManager;
 
 @end
 
-@interface KTDocWindowController ( SplitViews )
-- (RBSplitView *)siteOutlineSplitView;
-@end
 
-@interface KTDocWindowController ( Pasteboard )
-- (BOOL)canPastePages;
-- (BOOL)canPastePagelets;
+#pragma mark -
 
-- (IBAction)cut:(id)sender;
-- (IBAction)cutViaContextualMenu:(id)sender;
-- (IBAction)cutPages:(id)sender;
-- (IBAction)cutPagelets:(id)sender;
-
-- (IBAction)copy:(id)sender;
-- (IBAction)copyViaContextualMenu:(id)sender;
-- (IBAction)copyPages:(id)sender;
-- (IBAction)copyPagelets:(id)sender;
-
-- (IBAction)paste:(id)sender;
-- (IBAction)pasteViaContextualMenu:(id)sender;
-- (IBAction)pastePages:(id)sender;
-- (IBAction)pastePagelets:(id)sender;
-
-- (IBAction)deleteViaContextualMenu:(id)sender;
-- (IBAction)deletePages:(id)sender;
-- (IBAction)deletePagelets:(id)sender;
-
-- (IBAction)duplicate:(id)sender;
-- (IBAction)duplicateSelectedPages:(id)sender;
-- (KTPage *)duplicatePage:(KTPage *)page;
-- (IBAction)duplicatePagelets:(id)sender;
-- (IBAction)duplicateViaContextualMenu:(id)sender;
-@end
 
 @interface KTDocWindowController ( Toolbar )
 
@@ -219,87 +153,11 @@ extern NSString *gInfoWindowAutoSaveName;
 
 @end
 
-@interface KTDocWindowController ( WebView )
 
-- (NSWindow *)linkPanel;
-- (void)closeLinkPanel;
-
-- (void)linkPanelDidLoad;
-
-- (IBAction)showLinkPanel:(id)sender;
-- (IBAction)finishLinkPanel:(id)sender;
-- (IBAction)clearLinkDestination:(id)sender;
-
-- (KTAbstractElement *) selectableItemAtPoint:(NSPoint)aPoint itemID:(NSString **)outIDString;
-
-- (void)webViewDidLoad;
-
-- (id)itemForDOMNodeID:(NSString *)anID;
-
-- (NSMutableDictionary *)contextElementInformation;
-- (void)setContextElementInformation:(NSMutableDictionary *)aContextElementInformation;
-
-- (BOOL)selectedDOMRangeIsEditable;
-- (BOOL)selectedDOMRangeIsLinkableButNotRawHtmlAllowingEmpty:(BOOL)canBeEmpty;
-
-- (BOOL)acceptDropOfURLsFromDraggingInfo:(id <NSDraggingInfo>)sender;
-
-- (BOOL)isEditableElement:(DOMHTMLElement *)aDOMHTMLElement;
-- (NSString *)propertyNameForDOMNodeID:(NSString *)anID;
-
-- (KTPagelet *)pageletEnclosing:(DOMNode *)aDomNode;
-- (DOMHTMLElement *)pageletElementEnclosing:(DOMNode *)aNode;
-
-@end
+#pragma mark -
 
 
-extern NSString *kKTLocalLinkPboardType;
 extern NSString *KTSelectedDOMRangeKey;
-
-@interface KTDocWindowController ( Accessors )
-
-- (KTInlineImageElement *)selectedInlineImageElement;
-- (void)setSelectedInlineImageElement:(KTInlineImageElement *)anElement;
-
-- (KTPage *)nearestParent:(NSManagedObjectContext *)aManagedObjectContext;
-
-- (KTPagelet *)selectedPagelet;
-- (void)setSelectedPagelet:(KTPagelet *)aSelectedPagelet;
-
-- (NSString *)webViewTitle;
-- (void)setWebViewTitle:(NSString *)aWebViewTitle;
-
-//- (DOMNode *)selectedDomNode;
-
-- (DOMRange *)selectedDOMRange;
-- (void)setSelectedDOMRange:(DOMRange *)aSelectedDOMRange;
-
-- (NSRect)selectionRect;
-- (void)setSelectionRect:(NSRect)aSelectionRect;
-
-- (NSPoint)lastClickedPoint;
-- (void)setLastClickedPoint:(NSPoint)aLastClickedPoint;
-
-//- (id)selectedBlockItem;
-//- (void)setSelectedBlockItem:(id)aSelectedBlockItem;
-
-//- (NSString *)selectedBlockItemProperty;
-//- (void)setSelectedBlockItemProperty:(NSString *)aSelectedBlockItemProperty;
-
-- (NSMutableDictionary *)toolbars;
-- (void)setToolbars:(NSMutableDictionary *)aToolbars;
-
-- (RYZImagePopUpButton *)addPagePopUpButton;
-- (void)setAddPagePopUpButton:(RYZImagePopUpButton *)anAddPagePopUpButton;
-
-- (RYZImagePopUpButton *)addPageletPopUpButton;
-- (void)setAddPageletPopUpButton:(RYZImagePopUpButton *)anAddPageletPopUpButton;
-
-- (RYZImagePopUpButton *)addCollectionPopUpButton;
-- (void)setAddCollectionPopUpButton:(RYZImagePopUpButton *)anAddCollectionPopUpButton;
-
-@end
-
 
 @interface KTDocWindowController (Publishing)
 
@@ -309,6 +167,10 @@ extern NSString *KTSelectedDOMRangeKey;
 
 - (IBAction)exportSite:(id)sender;
 - (IBAction)exportSiteAgain:(id)sender;
+
+- (IBAction)visitPublishedSite:(id)sender;
+- (IBAction)visitPublishedPage:(id)sender;
+- (IBAction)submitSiteToDirectory:(id)sender;
 
 @end
 

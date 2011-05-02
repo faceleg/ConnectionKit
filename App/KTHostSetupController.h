@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Dan Wood on 11/10/04.
-//  Copyright 2004-2009 Karelia Software. All rights reserved.
+//  Copyright 2004-2011 Karelia Software. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
@@ -102,6 +102,7 @@ NO LONGER	save
 	IBOutlet NSTextField *oStepLabel;
 	IBOutlet NSTextView *oIntroductionTextView;
 	IBOutlet NSTextView *oSummaryTextView;
+	IBOutlet NSTextField *oRecommendation;
 
 	CKAbstractConnection *myTestConnection;
 	NSColor *myConnectionStatusColor;

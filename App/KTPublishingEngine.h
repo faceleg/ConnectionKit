@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Mike on 12/12/2008.
-//  Copyright 2008-2009 Karelia Software. All rights reserved.
+//  Copyright 2008-2011 Karelia Software. All rights reserved.
 //
 
 
@@ -20,6 +20,13 @@
 
 #import <Cocoa/Cocoa.h>
 #import <Connection/Connection.h>
+#import "SVPublisher.h"
+
+
+extern int kMaxNumberOfFreePublishedPages;
+
+
+#pragma mark -
 
 
 extern NSString *KTPublishingEngineErrorDomain;
@@ -31,36 +38,45 @@ enum {
 
 typedef enum {
     KTPublishingEngineStatusNotStarted,
+    KTPublishingEngineStatusGatheringMedia,
     KTPublishingEngineStatusParsing,        // Pages are being parsed one-by-one
     KTPublishingEngineStatusLoadingMedia,   // Parsing has finished, but there is still media to load
     KTPublishingEngineStatusUploading,      // All content has been generated, just waiting for queued uploads now
     KTPublishingEngineStatusFinished,
 } KTPublishingEngineStatus;
 
-@class KTSite, KTAbstractPage, KTMediaFileUpload, KTHTMLTextBlock, KSSimpleURLConnection;
+@class KTSite, KTPage;
 @protocol KTPublishingEngineDelegate;
 
 
-@interface KTPublishingEngine : NSObject
+@interface KTPublishingEngine : NSOperation <SVPublisher>
 {
-@private
-    KTSite	*_site;
-    NSString        *_documentRootPath;
-    NSString        *_subfolderPath;    // nil if there is no subfolder
+  @private
+	KTSite      *_site;
+    NSString    *_documentRootPath;
+    NSString    *_subfolderPath;    // nil if there is no subfolder
     
     KTPublishingEngineStatus            _status;
+    NSUInteger                          _countOfPublishedItems;
+    NSOperation                         *_nextOp;
     id <KTPublishingEngineDelegate>     _delegate;
     
 	id <CKConnection>	_connection;
     CKTransferRecord    *_rootTransferRecord;
     CKTransferRecord    *_baseTransferRecord;
     
-    NSMutableSet            *_uploadedMedia;
-    NSMutableArray          *_pendingMediaUploads;
-    KSSimpleURLConnection   *_currentPendingMediaConnection;
+    NSMutableSet        *_paths;    // all the paths which are in use by the site
+    NSMutableDictionary *_pathsByDigest;
+    NSMutableDictionary *_publishedMediaDigests;
     
-    NSMutableSet        *_resourceFiles;
-    NSMutableDictionary *_graphicalTextBlocks;
+    NSMutableArray      *_plugInCSS;    // mixture of string CSS snippets, and CSS URLs
+    
+    // Worker queues
+    NSOperationQueue    *_defaultQueue;
+    NSOperationQueue    *_coreImageQueue;
+    NSOperationQueue    *_diskQueue;
+    
+    id<SVPublishedObject> _sitemapPinger;   
 }
 
 - (id)initWithSite:(KTSite *)site
@@ -78,14 +94,39 @@ typedef enum {
 - (NSString *)baseRemotePath;
 
 // Control
-- (void)start;
-- (void)cancel;
 - (KTPublishingEngineStatus)status;
+- (void)addDependencyForNextPhase:(NSOperation *)op;    // can't finish publishing until the op runs. threadsafe
+
+- (NSUInteger)incrementingCountOfPublishedItems;
 
 // Tranfer records
 - (CKTransferRecord *)rootTransferRecord;
 - (CKTransferRecord *)baseTransferRecord;
 
+
+#pragma mark Uploads
+- (CKTransferRecord *)willUploadToPath:(NSString *)path;  // for subclasses. Returns parent dir
+- (void)didEnqueueUpload:(CKTransferRecord *)record
+                  toPath:(NSString *)path
+        cachedSHA1Digest:(NSData *)digest
+             contentHash:(NSData *)contentHash
+                  object:(id <SVPublishedObject>)object;
+
+
+#pragma mark Publishing Records
+
+// Returns no if an upload has already been queued to the path
+- (BOOL)shouldPublishToPath:(NSString *)path;
+
+// Given a file's digest, where should it be placed? This is likely to be because the file has already been queued for upload; test with -shouldPublishToPath:
+- (NSString *)pathForFileWithSHA1Digest:(NSData *)digest;
+
+
+#pragma mark
+// A standard operation queue that will run as many operations as the system sees fit. Generally, use for CPU-bound operations (e.g. hashing)
+@property(retain, readonly) NSOperationQueue *defaultQueue; // want this to be threadsafe
+
+@property(retain) id<SVPublishedObject> sitemapPinger;
 @end
 
 
@@ -104,32 +145,13 @@ typedef enum {
 
 // Control
 - (void)engineDidPublish:(BOOL)didPublish error:(NSError *)error;
+- (void)finishPublishing;
 
 // Connection
 - (id <CKConnection>)connection;
 - (void)setConnection:(id <CKConnection>)connection;
 - (void)createConnection;
 
-- (CKTransferRecord *)uploadContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath;
-- (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath;
-
-// Pages
-- (BOOL)shouldUploadHTML:(NSString *)HTML encoding:(NSStringEncoding)encoding forPage:(KTAbstractPage *)page toPath:(NSString *)uploadPath digest:(NSData **)outDigest;
-
-// Media
-- (NSSet *)uploadedMedia;
-- (void)uploadMediaIfNeeded:(KTMediaFileUpload *)media;
-
-// Design
-- (void)uploadDesignIfNeeded;
-
-- (void)addGraphicalTextBlock:(KTHTMLTextBlock *)textBlock;
-- (CKTransferRecord *)uploadMainCSSIfNeeded;
-- (BOOL)shouldUploadMainCSSData:(NSData *)mainCSSData digest:(NSData **)outDigest;
-
-// Resources
-- (NSSet *)resourceFiles;
-- (BOOL)uploadResourceFiles;
 
 @end
 

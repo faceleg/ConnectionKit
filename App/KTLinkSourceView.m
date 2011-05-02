@@ -3,26 +3,57 @@
 //  Marvel
 //
 //  Created by Greg Hulands on 20/03/06.
-//  Copyright 2006-2009 Karelia Software. All rights reserved.
+//  Copyright 2006-2011 Karelia Software. All rights reserved.
 //
 
+
 #import "KTLinkSourceView.h"
+
+#import "SVLink.h"
 #import "KTLinkConnector.h"
+
+
+NSString *kKTLocalLinkPboardReturnType = @"kKTLocalLinkPboardReturnType";
+NSString *kKTLocalLinkPboardAllowedType = @"kKTLocalLinkPboardAllowedType";
+
 
 @implementation KTLinkSourceView
 
-- (id)initWithFrame:(NSRect)frame {
+@synthesize collectionsOnly = _collectionsOnly;
+@synthesize targetWindow = _targetWindow;
+@synthesize connectedPage = _connectedPage;
+@synthesize delegate = _delegate;
+@synthesize enabled = _enabled;
+
+- (void) setEnabled:(BOOL)anEnabled;
+{
+	_enabled = anEnabled;
+	[self setNeedsDisplay:YES];
+}
+
+- (id)initWithFrame:(NSRect)frame
+{
     self = [super initWithFrame:frame];
     if (self) 
 	{
-		myFlags.begin = NO;
-		myFlags.end = NO;
-		myFlags.ui = NO;
-		myFlags.isConnecting = NO;
-		myFlags.isConnecting = NO;
+		_flags.begin = NO;
+		_flags.end = NO;
+		_flags.isConnecting = NO;
+		_flags.isConnected = NO;
+        
+        _enabled = YES;
     }
     return self;
 }
+
+- (void)dealloc
+{
+	self.targetWindow = nil;
+	self.connectedPage = nil;
+
+	[super dealloc];
+}
+
 
 - (BOOL)acceptsFirstMouse:(NSEvent *)theEvent
 {
@@ -45,28 +76,28 @@ static NSImage *sTargetSetImage = nil;
 		[sTargetSetImage setSize:NSMakeSize(16,16)];
 	}
 	
-	NSRect centeredRect = NSMakeRect(NSMidX(rect) - 8, NSMidY(rect) - 8, 16, 16);
-
+	NSRect centeredRect = NSMakeRect(roundf(NSMidX(rect)) - 8, roundf(NSMidY(rect)) - 8, 16, 16);
 	[NSGraphicsContext saveGraphicsState];
 
-	if (!myFlags.isConnecting)	// no shadow when we're connecting
+	if (!_flags.isConnecting)	// no shadow when we're connecting
 	{
 		NSShadow *aShadow = [[[NSShadow alloc] init] autorelease];
-		[aShadow setShadowOffset:NSMakeSize(1,-3)];
-		[aShadow setShadowBlurRadius:3.0];
-		[aShadow setShadowColor:[NSColor colorWithCalibratedWhite:0.0 alpha:0.75]];
+		[aShadow setShadowOffset:NSMakeSize(0,-1)];
+		[aShadow setShadowBlurRadius:1.5];
+		[aShadow setShadowColor:[NSColor colorWithCalibratedWhite:0.0 alpha:0.33]];
 		[aShadow set];
 	}
-	[(myFlags.isConnected ? sTargetSetImage : sTargetImage)
+	
+	[sTargetImage
 		drawInRect:centeredRect
 		  fromRect:NSZeroRect
 		 operation:NSCompositeSourceOver
-		  fraction:myFlags.isConnecting ? 0.5 : 1.0];		// Transparent while dragging
+		  fraction:_flags.isConnecting||(!_enabled) ? 0.5 : 1.0];		// Transparent while dragging
 	[NSGraphicsContext restoreGraphicsState];
 	
-	if (myFlags.isConnecting)	// while connecting, draw a rectangle around it
+	if (_flags.isConnecting)	// while connecting, draw a rectangle around it
 	{
-		NSRect anOutline = NSInsetRect(centeredRect, -2, -2);
+		NSRect anOutline = NSInsetRect(centeredRect, -1.5, -1.5);
 		
 		NSBezierPath *path = [NSBezierPath bezierPathWithRect:anOutline];
 		[path setLineWidth:1.0];
@@ -77,59 +108,62 @@ static NSImage *sTargetSetImage = nil;
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
-	myFlags.isConnecting = YES;
-	[self setNeedsDisplay:YES];
-	NSPasteboard *pboard = nil;
-	NSCursor *target = [[NSCursor alloc] initWithImage:sTargetImage
-											   hotSpot:NSMakePoint(8,8)];
-	[target push];
+	if (!_enabled) return;
 	
-	if (myFlags.begin)
+	_flags.isConnecting = YES;
+	[self setNeedsDisplay:YES];
+	NSCursor *targetCursor = [[NSCursor alloc] initWithImage:sTargetImage
+											   hotSpot:NSMakePoint(8,8)];
+	[targetCursor push];
+	
+	NSPasteboard *pboard = [NSPasteboard pasteboardWithName:NSDragPboard];
+	[pboard declareTypes:[NSArray arrayWithObject:kKTLocalLinkPboardAllowedType] owner:nil];
+	if (self.collectionsOnly)
 	{
-		pboard = [delegate linkSourceDidBeginDrag:self];
+		[pboard setString:@"KTCollection" forType:kKTLocalLinkPboardAllowedType];	// target will reject drop if it's not a collection
 	}
-			
+	else
+	{
+		[pboard setString:@"KTPage" forType:kKTLocalLinkPboardAllowedType];	// just put something else to indicate
+	}
+	
 	NSRect bounds = [self bounds];
 	NSPoint center = NSMakePoint(NSMidX(bounds), NSMidY(bounds));
 	NSPoint p = [[self window] convertBaseToScreen:[self convertPoint:center toView:nil]];
-	id ui = nil;
-	if (myFlags.ui)
-	{
-		ui = [delegate userInfoForLinkSource:self];
-	}
 	
-	[[KTLinkConnector sharedConnector] startConnectionWithPoint:p pasteboard:pboard userInfo:ui];
+    KTLinkConnector *connector = [KTLinkConnector sharedConnector];
+    [connector setLink:nil];
+	[connector startConnectionWithPoint:p pasteboard:pboard targetWindow:self.targetWindow];
 	
-	myFlags.isConnecting = NO;
+	_flags.isConnecting = NO;
 	[self setNeedsDisplay:YES];
 	
-	if (myFlags.end)
+	// Get the page from the pasteboard
+	id targetPage = [[connector link] page];
+
+	[targetCursor pop];
+	[targetCursor release];
+
+	self.connectedPage = targetPage;		// bindings could pick this up
+	if (_flags.end)
 	{
-		[delegate linkSourceDidEndDrag:self withPasteboard:pboard];
+		[_delegate linkSourceConnectedTo:targetPage];
 	}
 	
-	[target pop];
-	[target release];
 }
 
 
 
-- (void)setDelegate:(id)aDelegate
+- (void)setDelegate:(id <KTLinkSourceViewDelegate>)aDelegate;
 {
-	myFlags.begin = [aDelegate respondsToSelector:@selector(linkSourceDidBeginDrag:)] ? YES : NO;
-	myFlags.end = [aDelegate respondsToSelector:@selector(linkSourceDidEndDrag:withPasteboard:)] ? YES : NO;
-	myFlags.ui = [aDelegate respondsToSelector:@selector(userInfoForLinkSource:)] ? YES : NO;
-	delegate = aDelegate;
+	_flags.end = [aDelegate respondsToSelector:@selector(linkSourceConnectedTo:)] ? YES : NO;
+	_delegate = aDelegate;
 }
 
-- (id)delegate
-{
-	return delegate;
-}
 
 - (void)setConnected:(BOOL)isConnected;
 {
-	myFlags.isConnected = isConnected;
+	_flags.isConnected = isConnected;
 	[self setNeedsDisplay:YES];
 }
 @end

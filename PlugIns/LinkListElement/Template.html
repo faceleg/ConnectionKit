@@ -1,0 +1,25 @@
+[[if linkList]]
+[[if layout==1]]
+<dl>
+	[[foreach linkList oneItem]]
+	<dt>
+		[[if oneItem.url]]<a href="[[=&oneItem.url]]"[[if openLinksInNewWindow]] target="_blank"[[endif4]]>[[endif3]][[if oneItem.title]][[=&oneItem.title]][[endif3]][[if oneItem.url]]</a>[[endif3]]
+	</dt>
+	[[if oneItem.comment]]<dd><span style="font-size:75%;">[[=&oneItem.comment]]</span></dd>[[endif3]]
+	[[endForEach]]
+</dl>
+
+[[else2]]
+<ul>
+	[[foreach linkList oneItem]]
+	<li>
+		[[if oneItem.url]]<a href="[[=&oneItem.url]]"[[if openLinksInNewWindow]] target="_blank"[[endif4]]>[[endif3]]
+			[[if oneItem.title]][[=&oneItem.title]][[endif3]]
+		[[if oneItem.url]]</a>[[endif3]]
+		[[if oneItem.comment]]<br />[[=&oneItem.comment]][[endif3]]
+	</li>
+	[[endForEach]]
+</ul>
+
+[[endif2]]
+[[endif]]

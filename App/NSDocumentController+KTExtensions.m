@@ -3,7 +3,7 @@
 //  KTComponents
 //
 //  Created by Terrence Talbot on 5/17/05.
-//  Copyright 2005-2009 Karelia Software. All rights reserved.
+//  Copyright 2005-2011 Karelia Software. All rights reserved.
 //
 
 #import "NSDocumentController+KTExtensions.h"
@@ -19,13 +19,10 @@
 - (NSPersistentDocument *)documentForManagedObjectContext:(NSManagedObjectContext *)aContext
 {
 	NSArray *documents = [self documents];
-	int i;
 	
-	for ( i=0; i<[documents count]; i++ )
+	for ( NSPersistentDocument *document in documents )
 	{
-		NSPersistentDocument *document = [documents objectAtIndex:i];
-		if ([[document managedObjectContext] isEqual:aContext] ||
-			([document isKindOfClass:[KTDocument class]] && [[(KTDocument *)document mediaManager] managedObjectContext] == aContext))
+		if ([[document managedObjectContext] isEqual:aContext])
 		{
 			return document;
 		}

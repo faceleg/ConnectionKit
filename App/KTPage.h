@@ -2,7 +2,7 @@
 //  KTPage.h
 //  Sandvox
 //
-//  Copyright 2005-2009 Karelia Software. All rights reserved.
+//  Copyright 2005-2011 Karelia Software. All rights reserved.
 //
 //  THIS SOFTWARE IS PROVIDED BY KARELIA SOFTWARE AND ITS CONTRIBUTORS "AS-IS"
 //  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -19,206 +19,230 @@
 
 #import "KT.h"
 
-#import "KTAbstractPage.h"
-#import "KTPagelet.h"
+#import "SVSiteItem.h"
 #import "NSManagedObject+KTExtensions.h"
 
 
-@class KTDesign, KTAbstractHTMLPlugin;
-@class KTArchivePage, KTAbstractIndex, KTMaster, KTCodeInjection;
-@class WebView;
-@class KTMediaContainer;
+typedef enum {
+	SVCollectionSortManually,   // default as of 2.0
+    SVCollectionSortAlphabetically,
+    SVCollectionSortByDateCreated,
+	SVCollectionSortByDateModified,
+    SVCollectionSortOrderUnspecified = -1,		// used internally
+} SVCollectionSortOrder;
 
-@interface KTPage : KTAbstractPage	<KTExtensiblePluginPropertiesArchiving>
-{
-	@private
-    // these ivars are only set if the page is root
-	BOOL myIsNewPage;		// accessor is in category
-}
 
-// Awake
-- (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject;
+@class SVArticle, KTMaster, SVSidebar, SVPageTitle, SVRichText, SVGraphic, SVMediaRecord, KTCodeInjection, SVHTMLContext;
 
-// Debugging
+
+@interface KTPage : SVSiteItem
+
+#pragma mark Site/Master
+@property(nonatomic, retain, readwrite) KTMaster *master;
+- (void)setMaster:(KTMaster *)master recursive:(BOOL)recursive; // calls -pageDidChange: on graphics
+
+
+#pragma mark Title
+@property(nonatomic, retain) SVPageTitle *titleBox;  // you can use inherited .title property for ease of use too
+- (BOOL)canEditTitle;
+
+
+#pragma mark Body
+@property(nonatomic, retain, readonly) SVArticle *article;
+@property(nonatomic, copy) NSString *masterIdentifier;
+
+
+#pragma mark Properties
+@property(nonatomic, retain, readonly) SVSidebar *sidebar;
+@property(nonatomic, copy) NSNumber *showSidebar;
+
+
+#pragma mark Paths
+@property(nonatomic, copy) NSString *customPathExtension;
+@property(nonatomic, copy) NSString *customIndexAndPathExtension;
+
+
+#pragma mark Thumbnail
+@property(nonatomic, retain) SVGraphic *thumbnailSourceGraphic;
+- (void)guessThumbnailSourceGraphic;
+
+
+#pragma mark Debugging
 - (NSString *)shortDescription;
 
 @end
 
 
+#pragma mark -
+
+
 @interface KTPage (Accessors)
 
-- (BOOL)disableComments;
-- (void)setDisableComments:(BOOL)disableComments;
+#pragma mark Comments
+@property(nonatomic, copy, readwrite) NSNumber *allowComments;
 
-// Title
-- (BOOL)shouldUpdateFileNameWhenTitleChanges;
-- (void)setShouldUpdateFileNameWhenTitleChanges:(BOOL)autoUpdate;
 
-// Draft
-- (void)setIsDraft:(BOOL)flag;
-- (BOOL)pageOrParentDraft;
-- (void)setPageOrParentDraft:(BOOL)inDraft;
-- (BOOL)includeInIndexAndPublish;
-- (BOOL)excludedFromSiteMap;
+#pragma mark Title
+@property(nonatomic) BOOL shouldUpdateFileNameWhenTitleChanges;
 
-// Site menu
-- (BOOL)includeInSiteMenu;
-- (void)setIncludeInSiteMenu:(BOOL)include;
 
-- (NSString *)menuTitle;
-- (void)setMenuTitle:(NSString *)newTitle;
-- (NSString *)menuTitleOrTitle;
+#pragma mark Timestamp
 
-// Timestamps
-- (NSDate *)editableTimestamp;
-- (void)setEditableTimestamp:(NSDate *)aDate;
 - (NSString *)timestamp;
+- (NSDate *)timestampDate;
 
-// Thumbnail
-- (KTMediaContainer *)thumbnail;
-- (void)setThumbnail:(KTMediaContainer *)thumbnail;
-- (void)generateCollectionThumbnail;
-- (KTPage *)pageToUseForCollectionThumbnail;
+@property(nonatomic, copy) NSNumber *includeTimestamp;
 
-// Keywords
-- (NSArray *)keywords;
-- (void)setKeywords:(NSArray *)aStoredArray;
+@property(nonatomic, copy) NSNumber *timestampType; // KTTimestampType
+- (NSString *)timestampTypeLabel;   // not KVO-compliant yet, but could easily be
+
+
+#pragma mark Keywords
 - (NSString *)keywordsList;
 
-// Site Outline
-- (KTMediaContainer *)customSiteOutlineIcon;
-- (void)setCustomSiteOutlineIcon:(KTMediaContainer *)icon;
 
-- (KTCodeInjection *)codeInjection;
+#pragma mark Search Engines
+@property(nonatomic, copy) NSString *metaDescription;
+@property(nonatomic, copy) NSString *windowTitle;
+
 
 @end
+
+
+#pragma mark -
 
 
 @interface KTPage (Children)
-// Basic Accessors
-- (KTCollectionSortType)collectionSortOrder;
-- (void)setCollectionSortOrder:(KTCollectionSortType)sorting;
 
-- (BOOL)isCollection;
+#pragma mark Children
+@property(nonatomic, copy, readonly) NSSet *childItems;
 
-- (void)moveToIndex:(unsigned)index;
 
-// Unsorted Children
-- (NSSet *)children;
-- (void)addPage:(KTPage *)page;
-- (void)removePage:(KTPage *)page;
-- (void)removePages:(NSSet *)pages;
+#pragma mark Sorting Properties
 
-// Sorted Children
+@property(nonatomic, copy) NSNumber *collectionSortOrder;  // SVCollectionSortOrder or nil
+- (BOOL)isSortedChronologically;
+
+@property(nonatomic, copy) NSNumber *collectionSortAscending;    // BOOL
+
+
+#pragma mark Sorted Children
 - (NSArray *)sortedChildren;
-- (NSArray *)childrenWithSorting:(KTCollectionSortType)sortType inIndex:(BOOL)ignoreDrafts;
+- (void)moveChild:(SVSiteItem *)child toIndex:(NSUInteger)index;
 
-// Hierarchy Queries
+
+#pragma mark Sorting Support
+- (NSArray *)childrenWithSorting:(SVCollectionSortOrder)sortType
+                       ascending:(BOOL)ascending
+                         inIndex:(BOOL)ignoreDrafts;
+
+- (NSArray *)childItemsSortDescriptors;
+
++ (NSArray *)unsortedPagesSortDescriptors;
++ (NSArray *)alphabeticalTitleTextSortDescriptorsAscending:(BOOL)ascending;
++ (NSArray *)dateCreatedSortDescriptorsAscending:(BOOL)ascending;
++ (NSArray *)dateModifiedSortDescriptorsAscending:(BOOL)ascending;
+
+
+#pragma mark Hierarchy Queries
+- (BOOL)isRootPage; // like NSTreeNode, the root page is defined to be one with no parent. This is just a convenience around that
 - (KTPage *)parentOrRoot;
 - (BOOL)hasChildren;
+@property(nonatomic) BOOL isCollection;
+@property(nonatomic, readonly) BOOL willPublishAsCollection;    // dummy setter for binding to
 
-- (NSIndexPath *)indexPath;
+
+#pragma mark Navigation Arrows
+@property(nonatomic, copy) NSNumber *navigationArrowsStyle; // collection property
+
+
 @end
+
+
+#pragma mark -
 
 
 @interface KTPage (Indexes)
-// Simple Accessors
-- (KTCollectionSummaryType)collectionSummaryType;
-- (void)setCollectionSummaryType:(KTCollectionSummaryType)type;
 
-- (BOOL)includeInIndex;
-- (void)setIncludeInIndex:(BOOL)flag;
+@property(nonatomic, copy) NSNumber *collectionSummaryType;  // KTCollectionSummaryType
 
-// Index
-- (KTAbstractIndex *)index;
-- (NSArray *)pagesInIndex;
-- (void)invalidatePagesInIndexCache;
+#pragma mark Navigation Arrows
 
-// Navigation Arrows
 - (NSArray *)navigablePages;
+
+// NOT KVO-compliant, but do register the required dependencies with current context
 - (KTPage *)previousPage;
 - (KTPage *)nextPage;
 
-
-// RSS Feed
-- (BOOL)collectionCanSyndicate;
-- (BOOL)collectionSyndicate;
-- (void)setCollectionSyndicate:(BOOL)syndicate;
-
-- (NSString *)RSSFileName;
-- (void)setRSSFileName:(NSString *)file;
-- (NSURL *)feedURL;
-
-- (NSString *)RSSFeedWithParserDelegate:(id)parserDelegate;
++ (SVTruncationType) chooseTruncTypeFromMaxItemLength:(NSUInteger)maxItemLength;
 
 
-// Summary
-- (NSString *)summaryHTMLWithTruncation:(unsigned)truncation;
+#pragma mark Syndication
 
-- (NSString *)customSummaryHTML;
-- (void)setCustomSummaryHTML:(NSString *)HTML;
+@property(nonatomic, copy) NSNumber *collectionSyndicationType;  // SVSyndicationType, mandatory
 
-- (NSString *)titleListHTMLWithSorting:(KTCollectionSortType)sortType;
+// Mandatory for collections, nil otherwise:
+@property(nonatomic, copy) NSNumber *collectionMaxSyndicatedPagesCount;   
 
-// Archive
-- (BOOL)collectionGenerateArchives;
-- (void)setCollectionGenerateArchives:(BOOL)generateArchive;
-- (KTArchivePage *)archivePageForTimestamp:(NSDate *)timestamp createIfNotFound:(BOOL)flag;
-- (NSArray *)sortedArchivePages;
+@property(nonatomic, copy) NSNumber *collectionTruncateFeedItems;   // BOOL, mandatory
+@property(nonatomic, copy) NSNumber *collectionMaxFeedItemLength;
+
+@property(nonatomic, copy) NSString *RSSFileName;
+@property(nonatomic, readonly) NSURL *feedURL;  // KVO-compliant
+
+- (NSString *)RSSFeed;
+- (void)writeRSSFeed:(SVHTMLContext *)context;
+- (void)writeRSSFeedItemDescription;
+
+
+#pragma mark RSS Enclosures
+- (NSArray *)feedEnclosures;
+- (void)guessEnclosures;    // searches for enclosures if feed expects them
+
+//@property(nonatomic, copy) NSNumber *collectionSyndicateWithParent;  // "the idea is that you would have a blog collection with a blog collection *inside* -- sort of a sub-blog.  If this is checked, it would mean that we want the contents of that sub-blog to also show up in the RSS feed for the enclosing blog. I think it's a cool idea, just never got around to making it work!"
+
+
+#pragma mark Summary
+
+
+#pragma mark Archive
+@property(nonatomic, copy) NSNumber *collectionGenerateArchives;    // BOOL, required
+
+
 @end
 
 
-@interface KTPage (Pagelets)
-// General accessors
-- (BOOL)includeSidebar;
-- (void)setIncludeSidebar:(BOOL)flag;
-- (BOOL)includeCallout;
-
-- (BOOL)sidebarChangeable;
-- (void)setSidebarChangeable:(BOOL)flag;
-
-// Pagelet accessors
-- (NSSet *)pagelets;	// IMPORTANT: Never try to use -mutableSetValueForKey:@"pagelets"
-
-- (NSArray *)pageletsInLocation:(KTPageletLocation)location;
-- (void)insertPagelet:(KTPagelet *)pagelet atIndex:(unsigned)index;
-- (void)addPagelet:(KTPagelet *)pagelet;
-- (void)removePagelet:(KTPagelet *)pagelet;
-
-- (NSArray *)callouts;	// KVO-compliant
-- (void)invalidateCalloutsCache;
-
-// All sidebar pagelets that will appear in the HTML. i.e. Our sidebars plus any inherited ones
-- (NSArray *)sidebarPagelets;
-- (void)invalidateSidebarPageletsCache:(BOOL)invalidateCache recursive:(BOOL)recursive;
-
-// Support
-+ (void)updatePageletOrderingsFromArray:(NSArray *)pagelets;
-@end
+#pragma mark -
 
 
 @interface KTPage (Web)
+
+- (NSString *)markupString;   // HTML for publishing/viewing. Calls -writeDocumentWithPage: on a temp context
+- (NSString *)markupStringForEditing;   // for viewing source for debugging purposes.
 + (NSString *)pageTemplate;
 
-- (NSString *)contentHTMLWithParserDelegate:(id)delegate isPreview:(BOOL)isPreview;
-- (BOOL)pluginHTMLIsFullPage;
-- (void)setPluginHTMLIsFullPage:(BOOL)fullPage;
-- (BOOL)shouldPublishHTMLTemplate;
+@property(nonatomic, assign) NSString *comboTitleText;
 
-- (NSString *)javascriptURLPath;
-- (NSString *)comboTitleText;
+- (void)write:(SVHTMLContext *)context codeInjectionSection:(NSString *)aKey masterFirst:(BOOL)aMasterFirst;
 
-- (NSString *)DTD;
++ (NSString *)stringFromDocType:(NSString *)docType local:(BOOL)isLocal;		// UTILITY
+
+
+#pragma mark Site Menu
+- (NSArray *)createSiteMenuForestIsHierarchical:(BOOL *)outHierarchical;
+
+
+#pragma mark Comments
+- (NSString *)commentsTemplate;	// instance method too for key paths to work in tiger
+
+
 @end
 
 
-@interface NSObject (KTPageDelegate)
-- (BOOL)pageShouldClearThumbnail:(KTPage *)page;
-- (BOOL)shouldMaskCustomSiteOutlinePageIcon:(KTPage *)page;
-- (NSArray *)pageWillReturnFeedEnclosures:(KTPage *)page;
+#pragma mark -
 
-- (BOOL)pageShouldPublishHTMLTemplate:(KTPage *)page;
 
-- (NSString *)summaryHTMLKeyPath;
-- (BOOL)summaryHTMLIsEditable;
+@interface KTPage (Serialization)
++ (KTPage *)deserializingPageForIdentifier:(NSString *)identifier;
 @end
+

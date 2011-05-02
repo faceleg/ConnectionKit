@@ -3,39 +3,110 @@
 //  Marvel
 //
 //  Created by Mike on 04/01/2009.
-//  Copyright 2009 Karelia Software. All rights reserved.
+//  Copyright 2009-2011 Karelia Software. All rights reserved.
 //
 
-#import "KTDocViewController.h"
+#import <Cocoa/Cocoa.h>
+#import <BWToolkitFramework/BWToolkitFramework.h>
 
 
-@class NTBoxView, KSPopUpButton, KTPageDetailsBoxView;
+enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSiteItemType, kPageSiteItemType, kMixedSiteItemType = -1 };
+
+@class SVSiteOutlineViewController, SVPagesTreeController, KSFancySchmancyBindingsPopUpButton, KTPageDetailsBoxView, MAAttachedWindow, SVWebContentAreaController, KSFocusingTextField;
 
 
-@interface KTPageDetailsController : KTDocViewController
+@interface KTPageDetailsController : NSViewController
 {
-	IBOutlet NSTextField			*oWindowTitleField;
-	IBOutlet NSTextField			*oMetaDescriptionField;
+	IBOutlet KSFocusingTextField	*oWindowTitleField;
+	IBOutlet KSFocusingTextField	*oMetaDescriptionField;
+	IBOutlet KSFocusingTextField	*oExternalURLField;
+	IBOutlet KSFocusingTextField	*oFileNameField;		// binds to fileName
+	IBOutlet KSFocusingTextField	*oMediaFilenameField;	// binds to filename
 
-	IBOutlet NSTextField			*oPageFileNameField;
-	IBOutlet NSTextField			*oCollectionFileNameField;
-	IBOutlet NSTokenField			*oKeywordsField;
-	IBOutlet KSPopUpButton			*oFileExtensionPopup;
-	IBOutlet KSPopUpButton			*oCollectionIndexExtensionButton;
+	IBOutlet NSTextField			*oWindowTitlePrompt;
+	IBOutlet NSTextField			*oMetaDescriptionPrompt;
+	IBOutlet NSTextField			*oFilePrompt;
+
 	
-	IBOutlet KTPageDetailsBoxView	*oBoxView;
-	
-	IBOutlet NSObjectController		*oPagesController;
-	
+	IBOutlet NSTextField			*oBaseURLField;
+	IBOutlet NSTextField			*oDotSeparator;
+
+	IBOutlet NSTextField			*oSlashSeparator;
+	IBOutlet KSFancySchmancyBindingsPopUpButton			*oExtensionPopup;
+	IBOutlet KSFancySchmancyBindingsPopUpButton			*oIndexAndExtensionPopup;
+	IBOutlet NSTextField			*oMultiplePagesField;
+
+
+	IBOutlet NSButton				*oFollowButton;
+	IBOutlet NSButton				*oChooseFileButton;
+	IBOutlet NSButton				*oEditTextButton;
+
+    IBOutlet SVSiteOutlineViewController *oSiteOutlineController;
+	IBOutlet SVPagesTreeController	*oPagesTreeController;
+    
+	IBOutlet BWIWorkPopUpButton		*oPublishAsCollectionPopup;
+
+	IBOutlet NSView					*oAttachedWindowView;
+	IBOutlet NSTextField			*oAttachedWindowTextField;
+	IBOutlet NSTextField			*oAttachedWindowExplanation;
+	IBOutlet NSButton				*oAttachedWindowHelpButton;
+		
 @private
-	NSNumber	*_metaDescriptionCountdown;
-	NSNumber	*_windowTitleCountdown;
+    SVWebContentAreaController  *_contentArea;
+    
+	NSNumber	*_metaDescriptionCount;
+	NSNumber	*_windowTitleCount;
+	NSNumber	*_fileNameCount;
+	
+	NSTextField	*_activeTextField;
+	MAAttachedWindow *_attachedWindow;
+
+	int     _whatKindOfItemsAreSelected;
+	int		_maxFileCharacters;
+	
+	BOOL _alreadyHandlingControlTextDidChange;
+	
+	NSDictionary *_initialWindowTitleBindingOptions;
+	NSDictionary *_initialMetaDescriptionBindingOptions;
+
+	BOOL _awokenFromNib;
+	
+	NSTrackingArea *_windowTitleTrackingArea;
+	NSTrackingArea *_metaDescriptionTrackingArea;
+	NSTrackingArea *_externalURLTrackingArea;
+	NSTrackingArea *_fileNameTrackingArea;
+	NSTrackingArea *_mediaFilenameTrackingArea;
+	
 }
 
-- (NTBoxView *)pageDetailsPanel;
+@property (nonatomic, retain) NSTrackingArea *windowTitleTrackingArea;
+@property (nonatomic, retain) NSTrackingArea *metaDescriptionTrackingArea;
+@property (nonatomic, retain) NSTrackingArea *externalURLTrackingArea;
+@property (nonatomic, retain) NSTrackingArea *fileNameTrackingArea;
+@property (nonatomic, retain) NSTrackingArea *mediaFilenameTrackingArea;
+
+@property(nonatomic, retain) IBOutlet SVWebContentAreaController *webContentAreaController;
+
+- (IBAction) pageDetailsHelp:(id)sender;
+- (IBAction) preview:(id)sender;
+- (IBAction) chooseFile:(id)sender;
+
+
+// Publish as Collection
+- (IBAction)popupSetPageOrCollection:(NSButton *)sender;
+
 
 // Meta description
-- (NSNumber *)metaDescriptionCountdown;
-- (NSNumber *)windowTitleCountdown;
+- (NSNumber *)metaDescriptionCount;
+- (NSNumber *)windowTitleCount;
+- (NSNumber *)fileNameCount;
+
+@property (nonatomic, retain) 	NSDictionary *initialWindowTitleBindingOptions;
+@property (nonatomic, retain) 	NSDictionary *initialMetaDescriptionBindingOptions;
+
+@property (nonatomic, retain) NSTextField *activeTextField;
+@property (nonatomic, retain) MAAttachedWindow *attachedWindow;
+
+@property (nonatomic, assign) int whatKindOfItemsAreSelected;
 
 @end

@@ -3,38 +3,45 @@
 //  KTComponents
 //
 //  Created by Terrence Talbot on 3/10/05.
-//  Copyright 2005-2009 Karelia Software. All rights reserved.
+//  Copyright 2005-2011 Karelia Software. All rights reserved.
 //
 
-#import "KTPage+Internal.h"
+#import "KTPage+Paths.h"
 
-#import "KSContainsObjectValueTransformer.h"
-#import "Debug.h"
-#import "KTAbstractIndex.h"
-#import "KTAppDelegate.h"
+#import "SVArticle.h"
 #import "KTDesign.h"
 #import "KTDocWindowController.h"
 #import "KTDocument.h"
-#import "KTElementPlugin.h"
-#import "KTIndexPlugin.h"
 #import "KTMaster.h"
+#import "SVMediaGraphic.h"
+#import "SVMediaRecord.h"
+#import "SVPageTitle.h"
+#import "SVPagesController.h"
+#import "SVTextAttachment.h"
+
+#import "NSBundle+KTExtensions.h"
+#import "NSManagedObject+KTExtensions.h"
+#import "NSManagedObjectContext+KTExtensions.h"
+#import "NSString+KTExtensions.h"
 
 #import "NSArray+Karelia.h"
 #import "NSAttributedString+Karelia.h"
-#import "NSBundle+KTExtensions.h"
 #import "NSBundle+Karelia.h"
-#import "NSDocumentController+KTExtensions.h"
 #import "NSError+Karelia.h"
-#import "NSManagedObject+KTExtensions.h"
-#import "NSManagedObjectContext+KTExtensions.h"
-#import "NSSet+Karelia.h"
 #import "NSObject+Karelia.h"
-#import "NSString+KTExtensions.h"
+#import "NSSet+Karelia.h"
+#import "NSSortDescriptor+Karelia.h"
 #import "NSString+Karelia.h"
+#import "NSURL+Karelia.h"
+#import "KSContainsObjectValueTransformer.h"
+#import "KTSite.h"
+
+#import "Debug.h"
 
 
-@interface KTPage (Private)
-- (BOOL)validateForInsertOrUpdate:(NSError **)error;
+@interface KTPage ()
+@property(nonatomic, retain, readwrite) SVSidebar *sidebar;
+@property(nonatomic, retain, readwrite) SVArticle *article;
 @end
 
 
@@ -43,49 +50,27 @@
 
 @implementation KTPage
 
-#pragma mark -
+#ifdef DEBUG
+- (NSString *)description
+{
+	if ([NSUserName() isEqualToString:@"dwood"])
+	{
+		return [NSString stringWithFormat:@"%p %@", self, [self title]];
+	}
+	return [super description];
+}
+#endif
+
+
 #pragma mark Class Methods
 
-/*!	Make sure that changes to titleHTML generate updates for new values of titleText, fileName
+/*!	Make sure that changes to titleHTML generate updates for new values of title, fileName
 */
 + (void)initialize
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-
-	[self setKey:@"root" triggersChangeNotificationsForDependentKey:@"isRoot"];
-	[self setKey:@"isRoot" triggersChangeNotificationsForDependentKey:@"canEditTitle"];
     
-    // Title
-                                [self setKeys:[NSArray arrayWithObjects:@"menuTitle", @"titleHTML", nil]
-    triggerChangeNotificationsForDependentKey:@"menuTitleOrTitle"];
-    
-    // Timestamp
-    [self setKey:@"editableTimestamp" triggersChangeNotificationsForDependentKey:@"timestamp"];
-    
-    // Collection
-	[self setKey:@"collectionSummaryType" triggersChangeNotificationsForDependentKey:@"thumbnail"];
-	[self setKey:@"collectionSummaryType" triggersChangeNotificationsForDependentKey:@"summaryHTML"];
-    
-	
-	// this is so we get notification of updaates to any properties that affect index type.
-	// This is a fake attribute -- we don't actually have this accessor since it's more UI related
-	[self setKeys:[NSArray arrayWithObjects:
-		@"collectionShowPermanentLink",
-		@"collectionHyperlinkPageTitles",
-		@"collectionIndexBundleIdentifier",
-		@"collectionSyndicate", 
-		@"collectionMaxIndexItems", 
-		@"collectionSortOrder", 
-		nil]
-        triggerChangeNotificationsForDependentKey: @"indexPresetDictionary"];
-	
-	
-	
-	// Paths
-	[self setKey:@"customFileExtension" triggersChangeNotificationsForDependentKey:@"fileExtension"];
-	
-	
-	// Register transformers
+    // Register transformers
 	NSSet *collectionTypes = [NSSet setWithObjects:[NSNumber numberWithInt:KTSummarizeRecentList],
 												   [NSNumber numberWithInt:KTSummarizeAlphabeticalList],
 												   nil];
@@ -95,107 +80,16 @@
 	[transformer release];
 	
 	
-	// Pagelets
-	[self performSelector:@selector(initialize_pagelets)];
-	
 	[pool release];
+}
+
++ (NSSet *)keyPathsForValuesAffectingSummaryHTML
+{
+    return [NSSet setWithObject:@"collectionSummaryType"];
 }
 
 + (NSString *)entityName { return @"Page"; }
 
-+ (KTPage *)rootPageWithDocument:(KTDocument *)aDocument bundle:(NSBundle *)aBundle
-{
-	OBPRECONDITION([aBundle bundleIdentifier]);
-	
-	id root = [NSEntityDescription insertNewObjectForEntityForName:@"Root" 
-											inManagedObjectContext:[aDocument managedObjectContext]];
-	
-	if ( nil != root )
-	{
-		[root setValue:[aDocument site] forKey:@"site"];	// point to yourself
-		
-		[root setValue:[aBundle bundleIdentifier] forKey:@"pluginIdentifier"];
-		[root setBool:YES forKey:@"isCollection"];	// root is automatically a collection
-		[root setBool:NO forKey:@"allowComments"];
-		[root awakeFromBundleAsNewlyCreatedObject:YES];
-	}
-
-	return root;
-}
-
-#pragma mark -
-#pragma mark Initialisation
-
-/*	Private support method that creates a generic, blank page.
- *	It gets created either by unarchiving or the user creating a new page.
- */
-+ (KTPage *)_insertNewPageWithParent:(KTPage *)parent pluginIdentifier:(NSString *)pluginIdentifier
-{
-	OBPRECONDITION([parent managedObjectContext]);		OBPRECONDITION(pluginIdentifier);
-	
-	
-	// Create the page
-	KTPage *result = [NSEntityDescription insertNewObjectForEntityForName:@"Page"
-                                                   inManagedObjectContext:[parent managedObjectContext]];
-	
-	
-	// Store the plugin identifier. This HAS to be done before attaching the parent or Site Outline icon caching fails.
-	[result setValue:pluginIdentifier forKey:@"pluginIdentifier"];
-	
-	
-	// Attach to parent & other relationships
-	[result setValue:[parent master] forKey:@"master"];
-	[result setValue:[parent valueForKeyPath:@"site"] forKey:@"site"];
-	[parent addPage:result];	// Must use this method to correctly maintain ordering
-	
-	return result;
-}
-
-+ (KTPage *)insertNewPageWithParent:(KTPage *)aParent plugin:(KTElementPlugin *)aPlugin
-{
-	// Figure out nearest sibling/parent
-    KTPage *previousPage = aParent;
-	NSArray *children = [aParent childrenWithSorting:KTCollectionSortLatestAtTop inIndex:NO];
-	if ([children count] > 0)
-	{
-		previousPage = [children firstObjectKS];
-	}
-	
-	
-    // Create the page
-	KTPage *page = [self _insertNewPageWithParent:aParent pluginIdentifier:[[aPlugin bundle] bundleIdentifier]];
-	
-	
-	// Load properties from parent/sibling
-	[page setBool:[previousPage boolForKey:@"allowComments"] forKey:@"allowComments"];
-	[page setBool:[previousPage boolForKey:@"includeTimestamp"] forKey:@"includeTimestamp"];
-	
-	
-	// And we're finally ready to let normal initalisation take over
-	[page awakeFromBundleAsNewlyCreatedObject:YES];
-
-	return page;
-}
-
-+ (KTPage *)pageWithParent:(KTPage *)aParent
-				dataSourceDictionary:(NSDictionary *)aDictionary
-	  insertIntoManagedObjectContext:(NSManagedObjectContext *)aContext;
-{
-	OBPRECONDITION(nil != aParent);
-
-	KTElementPlugin *plugin = [aDictionary objectForKey:kKTDataSourcePlugin];
-	OBASSERTSTRING((nil != plugin), @"drag dictionary does not have a real plug-in");
-	
-	id page = [self insertNewPageWithParent:aParent plugin:plugin];
-	
-	// anything else to do with the drag source dictionary other than to get the bundle?
-	// should the delegate be passed the dictionary and have an opportunity to use it?
-	[page awakeFromDragWithDictionary:aDictionary];
-	
-	return page;
-}
-
-#pragma mark -
 #pragma mark Awake
 
 /*!	Early initialization.  Note that we don't know our bundle yet!  Use awakeFromBundle for later init.
@@ -203,18 +97,32 @@
 - (void)awakeFromInsert
 {
 	[super awakeFromInsert];
+    
+    
+    // Create a corresponding sidebar
+    SVSidebar *sidebar = [NSEntityDescription insertNewObjectForEntityForName:@"Sidebar"
+                                                       inManagedObjectContext:[self managedObjectContext]];
+    
+    [self setSidebar:sidebar];
 	
+    
+    // Placeholder text
+    [self setTitle:NSLocalizedString(@"Untitled", "placeholder text")];
 	
-	// attributes
-	NSDate *now = [NSDate date];
-	[self setValue:now forKey:@"creationDate"];
-	[self setValue:now forKey:@"lastModificationDate"];
-	
+    
+    // Body text. Give it a starting paragraph
+    SVArticle *body = [SVArticle insertPageBodyIntoManagedObjectContext:[self managedObjectContext]];
+    [body setString:@"<p><br /></p>"];
+    [self setArticle:body];
+    
+    
 	id maxTitles = [[NSUserDefaults standardUserDefaults] objectForKey:@"MaximumTitlesInCollectionSummary"];
     if ([maxTitles isKindOfClass:[NSNumber class]])
     {
-        [self setValue:maxTitles forKey:@"collectionSummaryMaxPages"];
+        [self setPrimitiveValue:maxTitles forKey:@"collectionMaxSyndicatedPagesCount"];
     }
+    
+    [self setPrimitiveValue:@"index.rss" forKey:@"RSSFileName"];
     
     
     // Code Injection
@@ -223,56 +131,9 @@
     [self setValue:codeInjection forKey:@"codeInjection"];
 }
 
-/*!	Initialization that happens after awakeFromFetch or awakeFromInsert
-*/
-- (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject
-{
-	if ( isNewlyCreatedObject )
-	{
-		// Initialize this required value from the info dictionary
-		NSNumber *includeSidebar = [[self plugin] pluginPropertyForKey:@"KTPageShowSidebar"];
-		[self setValue:includeSidebar forKey:@"includeSidebar"];
-			
-		NSString *titleText = [[self plugin] pluginPropertyForKey:@"KTPageUntitledName"];
-		[self setTitleText:titleText];
-		// Note: there won't be a site title set for a newly created object.
-		
-		KTPage *parent = [self parent];
-		// Set includeInSiteMenu if this page's parent is root, and not too many siblings
-		if (nil != parent && [parent isRoot] && [[parent valueForKey:@"children"] count] < 7)
-		{
-			[self setIncludeInSiteMenu:YES];
-		}
-	}
-	else	// Loading from disk
-	{
-		NSString *identifier = [self valueForKey:@"collectionIndexBundleIdentifier"];
-		if (nil != identifier)
-		{
-			KTIndexPlugin *plugin = [KTIndexPlugin pluginWithIdentifier:identifier];
-			Class indexToAllocate = [[plugin bundle] principalClassIncludingOtherLoadedBundles:YES];
-			KTAbstractIndex *theIndex = [[((KTAbstractIndex *)[indexToAllocate alloc]) initWithPage:self plugin:plugin] autorelease];
-			[self setIndex:theIndex];
-		}
-	}
-		
-	[self setNewPage:isNewlyCreatedObject];		// for benefit of webkit editing only
-	
-	
-	// Default values pulled from the plugin's Info.plist
-	[self setDisableComments:[[[self plugin] pluginPropertyForKey:@"KTPageDisableComments"] boolValue]];
-	[self setSidebarChangeable:[[[self plugin] pluginPropertyForKey:@"KTPageSidebarChangeable"] boolValue]];
-	
-	
-	// I moved this below the above, in order to give the delegates a chance to override the
-	// defaults.
-	[super awakeFromBundleAsNewlyCreatedObject:isNewlyCreatedObject];
-}
-
 - (void)awakeFromDragWithDictionary:(NSDictionary *)aDictionary
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	[super awakeFromDragWithDictionary:aDictionary];
     NSString *title = [aDictionary valueForKey:kKTDataSourceTitle];
     if ( nil == title )
 	{
@@ -282,10 +143,10 @@
 	}
 	if (nil != title)
 	{
-		NSString *titleHTML = [self titleHTML];
-		if (nil == titleHTML || [titleHTML isEqualToString:@""] || [titleHTML isEqualToString:[[self plugin] pluginPropertyForKey:@"KTPluginUntitledName"]])
+		NSString *titleHTML = [[self titleBox] textHTMLString];
+		if (nil == titleHTML || [titleHTML isEqualToString:@""])
 		{
-			[self setTitleText:title];
+			[self setTitle:title];
 		}
 	}
 	if ([defaults boolForKey:@"SetDateFromSourceMaterial"])
@@ -306,7 +167,176 @@
 	}
 }
 
-#pragma mark -
+- (void)awakeFromFetch
+{
+	[super awakeFromFetch];
+}
+
+#pragma mark Title
+
+@dynamic titleBox;
+
+- (NSString *)title
+{
+    return [[self titleBox] text];
+}
+- (void)setTitle:(NSString *)title;
+{
+    SVPageTitle *titleBox = [self titleBox];
+    if (!titleBox)
+    {
+        titleBox = [NSEntityDescription insertNewObjectForEntityForName:@"PageTitle" inManagedObjectContext:[self managedObjectContext]];
+        [self setTitleBox:titleBox];
+    }
+    [titleBox setText:title];
+}
++ (NSSet *)keyPathsForValuesAffectingTitle { return [NSSet setWithObject:@"titleBox.text"]; }
+
+- (BOOL)showsTitle;
+{
+    return ![[[self titleBox] hidden] boolValue];
+}
+
+// For bindings.  We can edit title if we aren't root;
+- (BOOL)canEditTitle
+{
+	BOOL result = ![self isRoot];
+	return result;
+}
+
+- (NSString *)titleHTMLString
+{
+    return [[self titleBox] textHTMLString];
+}
+
+- (void)writeTitle:(id <SVPlugInContext>)context;   // uses rich txt/html when available
+{
+    [context writeHTMLString:[self titleHTMLString]];
+}
+
+- (BOOL)usesExtensiblePropertiesForUndefinedKey:(NSString *)key;
+{
+    return ([key isEqualToString:@"titleAlignment"] ?
+            YES :
+            [super usesExtensiblePropertiesForUndefinedKey:key]);
+}
+
+- (void)addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context;
+{
+    // Make sure .titleBox is already faulted in before observing title. #108418
+    if ([keyPath isEqualToString:@"title"] && [self isFault])
+    {
+        [self willAccessValueForKey:nil];
+    }
+    
+    [super addObserver:observer forKeyPath:keyPath options:options context:context];
+}
+
+#pragma mark Body
+
+@dynamic article;
+
+- (void)writeContent:(SVHTMLContext *)context recursively:(BOOL)recursive;
+{
+    [super writeContent:context recursively:recursive];
+    
+    
+    // Custom window title if specified
+    NSString *windowTitle = [self windowTitle];
+    if (windowTitle)
+    {
+        [context writeCharacters:windowTitle];
+        [context writeString:@"\n"];
+    }
+    
+    // Custom meta description if specified
+    NSString *meta = [self metaDescription];
+    if (meta)
+    {
+        [context writeCharacters:meta];
+        [context writeString:@"\n"];
+    }
+    
+    // Body
+    [[self article] writeText:context];
+    
+    // Children
+    if (recursive)
+    {
+        for (SVSiteItem *anItem in [self sortedChildren])
+        {
+            [anItem writeContent:context recursively:recursive];
+        }
+    }
+}
+
+@dynamic masterIdentifier;
+
+#pragma mark Site/Master
+
+- (void)setSite:(KTSite *)site recursively:(BOOL)recursive;
+{
+    [super setSite:site recursively:recursive];
+    
+    if (recursive)
+    {
+        for (SVSiteItem *anItem in [self childItems])
+        {
+            [anItem setSite:site recursively:recursive];
+        }
+    }
+}
+
+@dynamic master;
+
+- (void)setMaster:(KTMaster *)master recursive:(BOOL)recursive; // calls -pageDidChange: on graphics
+{
+    [self setMaster:master];
+    
+    // When adding via the pboard, graphics need to fit within the page
+    NSSet *graphics = [[[self article] attachments] valueForKey:@"graphic"];
+    [graphics makeObjectsPerformSelector:@selector(pageDidChange:) withObject:self];
+    
+    // Carry on down the tree
+    if (recursive)
+    {
+        for (id anItem in [self childItems])
+        {
+            if ([anItem respondsToSelector:@selector(setMaster:recursive:)])
+            {
+                [anItem setMaster:master recursive:recursive];
+            }
+        }
+    }
+}
+
+#pragma mark Properties
+
+@dynamic sidebar;
+
+@dynamic showSidebar;
+- (void)setShowSidebar:(NSNumber *)showSidebar;
+{
+    [self willChangeValueForKey:@"showSidebar"];
+    [self setPrimitiveValue:showSidebar forKey:@"showSidebar"];
+    
+    
+    // Resize graphics. #116747
+    NSSet *articleGraphics = [[[self article] attachments] valueForKey:@"graphic"];
+    [articleGraphics makeObjectsPerformSelector:@selector(pageDidChange:) withObject:self];
+    
+    
+    [self didChangeValueForKey:@"showSidebar"];
+}
+
+#pragma mark Master
+
+- (NSString *)language { return [[self master] language]; }
++ (NSSet *)keyPathsForValuesAffectingLanguage;
+{
+    return [NSSet setWithObject:@"master.language"];
+}
+
 #pragma mark Dates
 
 /*  When updating one of the plug-in's properties, also update the modification date
@@ -329,112 +359,230 @@
     
     if (![excludedKeys containsObject:key])
     {
-        [self setValue:[NSDate date] forKey:@"lastModificationDate"];
+        [self setModificationDate:[NSDate date]];
     }
 }
 
-#pragma mark -
-#pragma mark Master
-
-- (KTMaster *)master { return [self wrappedValueForKey:@"master"]; }
-
-#pragma mark -
 #pragma mark Paths
+
+/*	A custom file extension of nil signifies that the value should be taken from the user defaults.
+ */
+- (NSString *)customPathExtension
+{
+	NSString *result = [self wrappedValueForKey:@"customFileExtension"];
+	return result;
+}
+
+- (void)setCustomPathExtension:(NSString *)extension
+{
+	[self setWrappedValue:extension forKey:@"customFileExtension"];
+	[self recursivelyInvalidateURL:NO];
+}
+
+// Derived
+- (NSString *)customIndexAndPathExtension
+{
+	NSString *result = [self wrappedValueForKey:@"customFileExtension"];
+	if (result)
+	{
+		NSString *indexFileName = [[[self site] hostProperties] valueForKey:@"htmlIndexBaseName"];
+		result = [indexFileName stringByAppendingPathExtension:result];
+	}
+	return result;
+}
+
+- (void)setCustomIndexAndPathExtension:(NSString *)indexAndExtension
+{
+	NSString *extensionOnly = [indexAndExtension pathExtension];
+	[self setCustomPathExtension:extensionOnly];
+}
 
 /*	KTAbstractPage doesn't support recursive operations, so we do instead
  */
 - (void)recursivelyInvalidateURL:(BOOL)recursive
 {
-	[super recursivelyInvalidateURL:recursive];
+	[self willChangeValueForKey:@"URL"];
+	[self setPrimitiveValue:nil forKey:@"URL"];
+    
+    [super recursivelyInvalidateURL:recursive];
 	
 	// Children should be affected last since they depend on parents' path
 	if (recursive)
 	{
-		NSSet *children = [self children];
-		NSEnumerator *pageEnumerator = [children objectEnumerator];
-		KTPage *aPage;
-		while (aPage = [pageEnumerator nextObject])
+		NSSet *children = [self childItems];
+		for (SVSiteItem *anItem in children)
 		{
-			OBASSERT(![self isDescendantOfPage:aPage]); // lots of assertions for #44139
-            OBASSERT(aPage != self);
-            OBASSERT(![[aPage children] containsObject:self]);
+			OBASSERT(![self isDescendantOfItem:anItem]); // lots of assertions for #44139
+            OBASSERT(anItem != self);
+            OBASSERT(![[anItem childItems] containsObject:self]);
             
-            [aPage recursivelyInvalidateURL:YES];
-		}
-		
-		NSSet *archives = [self valueForKey:@"archivePages"];
-		pageEnumerator = [archives objectEnumerator];
-		while (aPage = [pageEnumerator nextObject])
-		{
-			OBASSERT(![aPage isKindOfClass:[KTPage class]]);
-            [aPage recursivelyInvalidateURL:YES];
+            [anItem recursivelyInvalidateURL:YES];
 		}
 	}
+    
+	[self didChangeValueForKey:@"URL"];
 }
 
-#pragma mark -
-#pragma mark contextual menu validation
+#pragma mark Thumbnail
 
-- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
+- (NSURL *)addImageRepresentationToContext:(SVHTMLContext *)context
+                                      type:(SVThumbnailType)type
+                                     width:(NSUInteger)width
+                                    height:(NSUInteger)height
+                                   options:(SVPageImageRepresentationOptions)options
+                  pushSizeToCurrentElement:(BOOL)push;
 {
-	OFF((@"KTPage validateMenuItem:%@ %@", [menuItem title], NSStringFromSelector([menuItem action])));
-    if ( [menuItem action] == @selector(movePageletToSidebar:) )
+    switch (type)
     {
-        return YES;
+        case SVThumbnailTypePickFromPage:
+        {
+            // Grab thumbnail from appropriate graphic and write that
+            SVGraphic *source = [self thumbnailSourceGraphic];
+            if ([source imageRepresentation])
+            {
+                return [source addImageRepresentationToContext:context
+                                                         width:width
+                                                        height:height
+                                                       options:options];
+            }
+            else
+            {
+                // Write placeholder if desired
+                return [super addImageRepresentationToContext:context type:type width:width height:height options:options pushSizeToCurrentElement:push];
+            }
+        }
+            
+        case SVThumbnailTypeFirstChildItem:
+        {
+            // Just ask the page in question to write its thumbnail
+            NSArrayController *controller = [SVPagesController
+                                             controllerWithPagesToIndexInCollection:self
+                                             bind:YES];
+            
+            SVSiteItem *page = [[controller arrangedObjects] firstObjectKS];
+            [context addDependencyOnObject:controller keyPath:@"arrangedObjects"];
+            
+            return [page addImageRepresentationToContext:context
+                                                    type:[[page thumbnailType] intValue]
+                                                   width:width
+                                                  height:height
+                                                 options:options
+                                pushSizeToCurrentElement:push];
+        }
+            
+        case SVThumbnailTypeLastChildItem:
+        {
+            // Just ask the page in question to write its thumbnail
+            NSArrayController *controller = [SVPagesController
+                                             controllerWithPagesToIndexInCollection:self
+                                             bind:YES];
+            
+            SVSiteItem *page = [[controller arrangedObjects] lastObject];
+            [context addDependencyOnObject:controller keyPath:@"arrangedObjects"];
+            
+            return [page addImageRepresentationToContext:context
+                                                    type:[[page thumbnailType] intValue]
+                                                   width:width
+                                                  height:height
+                                                 options:options
+                                pushSizeToCurrentElement:push];
+        }
+            
+        default:
+            // Hand off to super for custom/no thumbnail
+            return [super addImageRepresentationToContext:context
+                                                     type:type
+                                                    width:width
+                                                   height:height
+                                                  options:options
+                                 pushSizeToCurrentElement:push];
     }
-    else if ( [menuItem action] == @selector(movePageletToCallouts:) )
+}
+
+@dynamic thumbnailSourceGraphic;
+
+- (void)guessThumbnailSourceGraphic;
+{
+    NSArray *descriptors = [NSSortDescriptor sortDescriptorArrayWithKey:@"graphic.area" ascending:NO];
+    NSArray *attachments = [[[self article] attachments] KS_sortedArrayUsingDescriptors:descriptors];
+    
+    for (SVTextAttachment *anAttachment in attachments)
     {
-        return YES;
+        if ([[anAttachment graphic] isKindOfClass:[SVMediaGraphic class]])
+        {
+            [self setThumbnailSourceGraphic:[anAttachment graphic]];
+            return;
+        }
     }
     
-    return YES;
+    [self setThumbnailSourceGraphic:nil];
 }
 
-#pragma mark -
-#pragma mark Media
-
-/*	Each page adds a number of possible required media to the default. e.g. thumbnail
- */
-- (NSSet *)requiredMediaIdentifiers
+- (BOOL)validateThumbnailType:(NSNumber **)outType error:(NSError **)error;
 {
-	NSMutableSet *result = [NSMutableSet setWithSet:[super requiredMediaIdentifiers]];
-	
-	// Inclue our thumbnail and site outline image
-	[result addObjectIgnoringNil:[self valueForKey:@"thumbnailMediaIdentifier"]];
-	[result addObjectIgnoringNil:[self valueForKey:@"customSiteOutlineIconIdentifier"]];
-	
-	// Include anything our index requires?
-	NSSet *indexMediaIDs = [[self index] requiredMediaIdentifiers];
-	if (indexMediaIDs)
-	{
-		[result unionSet:indexMediaIDs];
-	}
-	
-	return result;
+    SVThumbnailType maxType = ([self isCollection] ? 
+                               SVThumbnailTypeLastChildItem : 
+                               SVThumbnailTypePickFromPage);
+    
+    BOOL result = ([*outType intValue] <= maxType);
+    if (!result && error)
+    {
+        *error = [KSError errorWithDomain:NSCocoaErrorDomain code:NSValidationNumberTooLargeError localizedDescription:@"thumbnailType is too large for this type of page"];
+    }
+    
+    return result;
 }
 
-#pragma mark -
-#pragma mark Archiving
-
-+ (id)objectWithArchivedIdentifier:(NSString *)identifier inDocument:(KTDocument *)document
+- (id)imageRepresentation;
 {
-	id result = [KTAbstractPage pageWithUniqueID:identifier inManagedObjectContext:[document managedObjectContext]];
-	return result;
+    id result;
+    if ([[self thumbnailType] integerValue] == SVThumbnailTypePickFromPage)
+    {
+        result = [[self thumbnailSourceGraphic] imageRepresentation];
+    }
+    else
+    {
+        result = [super imageRepresentation];
+    }
+    
+    // Fallback to regular icon
+    if (!result)
+    {
+        result = [NSImage imageNamed:@"newPage.tiff"];
+    }
+    
+    return result;
 }
 
-- (NSString *)archiveIdentifier { return [self uniqueID]; }
-
-#pragma mark -
-#pragma mark Inspector
-
-/*!	True if this page type should put the inspector in the third inspector segment -- use sparingly.
-*/
-- (BOOL)separateInspectorSegment
+- (NSString *)imageRepresentationType;
 {
-	return [[[self plugin] pluginPropertyForKey:@"KTPageSeparateInspectorSegment"] boolValue];
+    id result = nil;
+    if ([[self thumbnailType] integerValue] == SVThumbnailTypePickFromPage)
+    {
+        SVGraphic *graphic = [self thumbnailSourceGraphic];
+        if ([graphic imageRepresentation])
+        {
+            result = [graphic imageRepresentationType];
+        }
+    }
+    else
+    {
+        result = [super imageRepresentationType];
+    }
+    
+    // Fallback to regular icon
+    if (!result)
+    {
+        result = IKImageBrowserNSImageRepresentationType;
+    }
+    
+    return result;
 }
 
-#pragma mark -
+#pragma mark Editing
+
+- (KTPage *)pageRepresentation { return self; }
+
 #pragma mark Debugging
 
 // More human-readable description

@@ -3,15 +3,16 @@
 //  Marvel
 //
 //  Created by Mike on 13/09/2007.
-//  Copyright 2007-2009 Karelia Software. All rights reserved.
+//  Copyright 2007-2011 Karelia Software. All rights reserved.
 //
 
 #import "KTHTMLParserMasterCache.h"
 
-#import "KTTemplateParser.h"
+#import "SVHTMLTemplateParser.h"
+#import "SVHTMLContext.h"
 
 
-@interface KTHTMLParserMasterCache (Private)
+@interface KTHTMLParserMasterCache ()
 // Requested key paths
 - (void)registerRequestedKeyPath:(NSString *)keyPath forObject:(NSObject *)object;
 @end
@@ -22,14 +23,11 @@
 #pragma mark -
 #pragma mark Init & Dealloc
 
-- (id)initWithProxyObject:(NSObject *)proxyObject parser:(KTTemplateParser *)parser
+- (id)initWithProxyObject:(NSObject *)proxyObject
 {
-	OBASSERTSTRING(proxyObject, @"-[KTHTMLParserMasterCahce initWithProxyObject:parser:] Attempt with nil proxy object");
-	
 	[super initWithProxyObject:proxyObject];
 	
 	myOverrides = [[NSMutableDictionary alloc] init];
-	myParser = parser;		// Weak ref
 	
 	return self;
 }
@@ -41,10 +39,10 @@
 	[super dealloc];
 }
 
-#pragma mark -
-#pragma mark Accessors
-
-- (KTTemplateParser *)parser { return myParser; }
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"%@ %@", [super description], myOverrides];
+}
 
 #pragma mark -
 #pragma mark KVC
@@ -162,12 +160,13 @@
 
 - (void)registerRequestedKeyPath:(NSString *)keyPath forObject:(NSObject *)object
 {
-	// Alert the parser's delegate
-	id delegate = [[self parser] delegate];
-	if (delegate && [delegate respondsToSelector:@selector(parser:didEncounterKeyPath:ofObject:)])
-	{
-		[delegate parser:[self parser] didEncounterKeyPath:keyPath ofObject:object];
-	}
+	// Alert the context
+    SVTemplateParser *parser = [self overridingValueForKey:@"parser"];
+    if ([parser respondsToSelector:@selector(HTMLContext)])
+    {
+        [[(id)parser HTMLContext] addDependencyOnObject:object
+                                                keyPath:keyPath];
+    }
 }
 
 @end

@@ -2,7 +2,7 @@
 //  KTDocument.m
 //  Marvel
 //
-//  Copyright 2004-2009 Karelia Software. All rights reserved.
+//  Copyright 2004-2011 Karelia Software. All rights reserved.
 //
 
 /*
@@ -38,51 +38,50 @@
 
 #import "KTDocument.h"
 
-#import "KSAbstractBugReporter.h"
-#import "KSSilencingConfirmSheet.h"
+#import "SVRichText.h"
 #import "KT.h"
-#import "KTAbstractIndex.h"
-#import "KTAppDelegate.h"
-#import "KTElementPlugin.h"
-#import "KTCodeInjectionController.h"
+#import "KTElementPlugInWrapper.h"
 #import "KTDesign.h"
-#import "KTDocSiteOutlineController.h"
-#import "KTDocWebViewController.h"
+#import "SVPagesController.h"
+#import "SVDocumentFileWrapper.h"
 #import "KTDocWindowController.h"
 #import "KTDocumentController.h"
+#import "SVDocumentUndoManager.h"
 #import "KTSite.h"
-#import "KTElementPlugin.h"
-#import "KTHTMLInspectorController.h"
+#import "KTElementPlugInWrapper.h"
+#import "SVGraphicFactory.h"
 #import "KTHostProperties.h"
 #import "KTHostSetupController.h"
-#import "KTIndexPlugin.h"
-#import "KTInfoWindowController.h"
-#import "KTMaster+Internal.h"
-#import "KTMediaManager+Internal.h"
+#import "SVInspector.h"
+#import "KTMaster.h"
+#import "SVMediaRecord.h"
 #import "KTPage+Internal.h"
-#import "KTPluginInspectorViewsManager.h"
-#import "KTStalenessManager.h"
+#import "SVPageTemplate.h"
+#import "SVPublishingRecord.h"
+#import "SVSidebar.h"
 #import "KTSummaryWebViewTextBlock.h"
+#import "SVTextBox.h"
 #import "KTLocalPublishingEngine.h"
-#import "KTUtilities.h"
+#import "KTDesignPlaceholder.h"
 
-#import "NSApplication+Karelia.h"       // Karelia Cocoa additions
+#import "NSManagedObjectContext+KTExtensions.h"
+
+#import "KSAbstractBugReporter.h"
+#import "KSCaseInsensitiveDictionary.h"
+#import "KSSilencingConfirmSheet.h"
+
 #import "NSArray+Karelia.h"
 #import "NSBundle+Karelia.h"
 #import "NSDate+Karelia.h"
+#import "NSError+Karelia.h"
 #import "NSFileManager+Karelia.h"
 #import "NSImage+Karelia.h"
 #import "NSObject+Karelia.h"
-#import "NSManagedObjectContext+KTExtensions.h"
 #import "NSString+Karelia.h"
-#import "NSThread+Karelia.h"
 #import "NSWindow+Karelia.h"
-#import "NSURL+Karelia.h"
-
-#import <iMediaBrowser/iMediaBrowser.h> // External frameworks
+#import "KSURLUtilities.h"
 
 #import "Debug.h"                       // Debugging
-#import "KTPersistentStoreCoordinator.h"
 
 #import "Registration.h"                // Licensing
 
@@ -102,13 +101,80 @@
 // NSLocalizedStringWithDefaultValue(@"navigateMainHTML",		nil, [NSBundle mainBundle], @"Main",		@"text of navigation button"),		@"navigateMainHTML",
 
 
-NSString *KTDocumentDidChangeNotification = @"KTDocumentDidChange";
-NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
+NSString *kKTDocumentDidChangeNotification = @"KTDocumentDidChange";
+NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 
-@interface KTDocument (Private)
+#define SVPersistentStoreFilename @"index"
 
-- (void)setClosing:(BOOL)aFlag;
+
+@implementation NSDocument (DatastoreAdditions)
+
+// These are made category methods so Shared code can work generically. These determine document types and URLs.
+
+/*	Returns the URL to the primary document persistent store. This differs dependent on the document UTI.
+ *	You can pass in nil to use the default UTI for new documents.
+ */
++ (NSURL *)datastoreURLForDocumentURL:(NSURL *)inURL type:(NSString *)typeName
+{
+	OBPRECONDITION(inURL);
+	
+	NSURL *result = nil;
+	
+	if ([typeName isEqualToString:kSVDocumentTypeName_1_5] || [typeName isEqualToString:kSVDocumentType])
+	{
+		result = [inURL ks_URLByAppendingPathComponent:@"datastore.sqlite3" isDirectory:NO];
+	}
+	else if ([typeName isEqualToString:kSVDocumentType_1_0])
+	{
+		result = inURL;
+	}
+	else
+	{
+		result = [inURL ks_URLByAppendingPathComponent:SVPersistentStoreFilename isDirectory:NO];
+	}
+	
+	
+	return result;
+}
+
++ (NSURL *)documentURLForDatastoreURL:(NSURL *)datastoreURL;
+{
+    OBPRECONDITION(datastoreURL);
+    OBPRECONDITION([[datastoreURL ks_lastPathComponent] isEqualToString:SVPersistentStoreFilename]);
+    
+    NSURL *result = [datastoreURL ks_URLByDeletingLastPathComponent];
+    return result;
+}
+
++ (NSURL *)quickLookURLForDocumentURL:(NSURL *)inURL
+{
+	OBASSERT(inURL);
+	
+	NSURL *result = [inURL ks_URLByAppendingPathComponent:@"QuickLook" isDirectory:YES];
+	
+	OBPOSTCONDITION(result);
+	return result;
+}
+
++ (NSURL *)quickLookPreviewURLForDocumentURL:(NSURL *)inURL;
+{
+    NSURL *quickLookDirectory = [KTDocument quickLookURLForDocumentURL:inURL];
+    NSURL *result = [quickLookDirectory ks_URLByAppendingPathComponent:@"Preview.html"
+                                                        isDirectory:NO];
+    
+    return result;
+}
+
+@end
+
+
+
+@interface KTDocument ()
+
+- (void)setURLForPersistentStoreUsingFileURL:(NSURL *)absoluteURL;
+
+- (KTPage *)makeRootPage;
 
 - (void)setupHostSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 
@@ -119,6 +185,12 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 
 @implementation KTDocument
+
+#pragma mark -
+#pragma mark Synthesized properties, can't be in category
+
+@synthesize lastExportDirectory = _lastExportDirectory;
+
 
 #pragma mark -
 #pragma mark Init & Dealloc
@@ -144,30 +216,23 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		[[self managedObjectContext] setMergePolicy:NSOverwriteMergePolicy]; // Standard document-like behaviour
 		
 		NSManagedObjectModel *model = [[self class] managedObjectModel];
-		KTPersistentStoreCoordinator *PSC = [[KTPersistentStoreCoordinator alloc] initWithManagedObjectModel:model];
-		[PSC setDocument:self];
+		NSPersistentStoreCoordinator *PSC = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:model];
 		[[self managedObjectContext] setPersistentStoreCoordinator:PSC];
 		[PSC release];
         
+        NSUndoManager *undoManager = [[SVDocumentUndoManager alloc] init];
+        [[self managedObjectContext] setUndoManager:undoManager];
+        [undoManager release];
         [super setUndoManager:[[self managedObjectContext] undoManager]];
         
         
+        // Other ivars
+        _filenameReservations = [[KSCaseInsensitiveDictionary alloc] init];
+        
+        
         // Init UI accessors
-		NSNumber *tmpValue = [self wrappedInheritedValueForKey:@"displaySiteOutline"];
-		[self setDisplaySiteOutline:(tmpValue) ? [tmpValue boolValue] : YES];
-		
-		tmpValue = [self wrappedInheritedValueForKey:@"displayStatusBar"];
-		[self setDisplayStatusBar:(tmpValue) ? [tmpValue boolValue] : YES];
-		
-		tmpValue = [self wrappedInheritedValueForKey:@"displayEditingControls"];
-		[self setDisplayEditingControls:(tmpValue) ? [tmpValue boolValue] : YES];
-		
-		tmpValue = [self wrappedInheritedValueForKey:@"displaySmallPageIcons"];
+		id tmpValue = [self wrappedInheritedValueForKey:@"displaySmallPageIcons"];
 		[self setDisplaySmallPageIcons:(tmpValue) ? [tmpValue boolValue] : NO];
-		
-		
-        // Create media manager
-        myMediaManager = [[KTMediaManager alloc] initWithDocument:self];
     }
 	
     return self;
@@ -178,33 +243,46 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
  */
 - (id)initWithType:(NSString *)type error:(NSError **)error
 {
- 	NOTYETIMPLEMENTED;
-    return nil;
-}
-    
-- (id)initWithType:(NSString *)type rootPlugin:(KTElementPlugin *)plugin error:(NSError **)error
-{
 	self = [super initWithType:type error:error];
     
     if (self)
     {
-        // Make a new site to store document properties
+        // We really don't want the doc being marked as edited as soon as it's created, so suppress registration
+        NSUndoManager *undoManager = [self undoManager];
+        [undoManager disableUndoRegistration];
+        
+        
+		// Make a new site to store document properties
         NSManagedObjectContext *context = [self managedObjectContext];
-        _site = [[NSEntityDescription insertNewObjectForEntityForName:@"Site" inManagedObjectContext:context] retain];
+        
+        KTSite *site = [NSEntityDescription insertNewObjectForEntityForName:@"Site"
+                                                     inManagedObjectContext:context];
+        [self setSite:site];
         
         NSDictionary *docProperties = [[NSUserDefaults standardUserDefaults] objectForKey:@"defaultDocumentProperties"];
         if (docProperties)
         {
-            [[self site] setValuesForKeysWithDictionary:docProperties];
+			NSMutableDictionary *repairedDocProperties = [NSMutableDictionary dictionaryWithDictionary:docProperties];
+			[repairedDocProperties removeObjectForKey:@"displayEditingControls"];
+			[repairedDocProperties removeObjectForKey:@"displaySiteOutline"];
+			[repairedDocProperties removeObjectForKey:@"displayStatusBar"];
+
+// In case there are others, catch the errors
+            @try
+            {
+                [[self site] setValuesForKeysWithDictionary:repairedDocProperties];
+            }
+            @catch (NSException *exception)
+            {
+                if (![[exception name] isEqualToString:NSUndefinedKeyException]) @throw exception;
+            }
         }
         
         
         // make a new root
         // POSSIBLE PROBLEM -- THIS WON'T WORK WITH EXTERALLY LOADED BUNDLES...
-        [[plugin bundle] load];
-        KTPage *root = [KTPage rootPageWithDocument:self bundle:[plugin bundle]];
+        KTPage *root = [self makeRootPage]; // no need to assign it; -makeRootPage effectively does that
         OBASSERTSTRING((nil != root), @"root page is nil!");
-        [[self site] setValue:root forKey:@"root"];
         
         
         // Create the site Master object
@@ -213,14 +291,15 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
         
         
         // Set the design
-        KTDesign *design = [[KSPlugin sortedPluginsWithFileExtension:kKTDesignExtension] firstObjectKS];
-        [master setDesign:design];
-		[self setShowDesigns:YES];
+        NSArray *designs = [KSPlugInWrapper sortedPluginsWithFileExtension:kKTDesignExtension];
+		NSArray *newRangesOfGroups;
+		designs = [KTDesign reorganizeDesigns:designs familyRanges:&newRangesOfGroups];
+		
+        [master setDesign:[designs firstObjectKS]];
         
         
         // Set up root properties that used to come from document defaults
         [master setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"author"] forKey:@"author"];
-        [root setBool:YES forKey:@"isCollection"];
         
         // This probably should use -[NSBundle preferredLocalizationsFromArray:forPreferences:]
         // http://www.cocoabuilder.com/archive/message/cocoa/2003/4/24/84070
@@ -234,18 +313,107 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
                                                                                     language:language
                                                                                     fallback:
                                               NSLocalizedStringWithDefaultValue(@"defaultRootPageTitleText", nil, [NSBundle mainBundle], @"Home Page", @"Title of initial home page")];
-        [root setTitleText:defaultRootPageTitleText];
-     }
+        [root setTitle:defaultRootPageTitleText];
+        
+        
+        // Create a starter pagelet
+        SVGraphicFactory *factory = [[KTElementPlugInWrapper pluginWithIdentifier:@"sandvox.BadgeElement"] graphicFactory];
+		if (factory)
+		{
+			SVGraphic *badge = [factory insertNewGraphicInManagedObjectContext:[self managedObjectContext]];
+			[badge setSortKey:[NSNumber numberWithShort:0]];
+			
+			[badge awakeFromNew];
+			[[root sidebar] addPageletsObject:badge];
+		}
+		else
+		{
+			LOG((@"Could not find badge element to add to initial document."));
+		}
+
+        
+        
+        // Finish up
+        [[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerCheckpointNotification
+                                                            object:undoManager];
+        [undoManager enableUndoRegistration];
+    }
 	
 	
     return self;
+}
+
+- (id)initWithContentsOfURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
+{
+    if (self = [super initWithContentsOfURL:absoluteURL ofType:typeName error:outError])
+    {
+        [self didReadContentsForURL:absoluteURL];
+    }
+    
+    return self;
+}
+
+- (id)initForURL:(NSURL *)absoluteDocumentURL withContentsOfURL:(NSURL *)absoluteDocumentContentsURL ofType:(NSString *)typeName error:(NSError **)outError
+{
+	// This is our first chance to notice that an autosaved document is being reopened.  Abort if option key is held down.
+	if (NSNotFound != [[absoluteDocumentContentsURL path] rangeOfString:@"Autosave Information"].location)
+	{
+		if (GetCurrentEventKeyModifiers() & optionKey)	// Option key -- prevent opening of autosaved document.
+		{
+			[self release];
+			return nil;
+		}
+	}
+    if (self = [super initForURL:absoluteDocumentURL withContentsOfURL:absoluteDocumentContentsURL ofType:typeName error:outError])
+    {
+        // Correct persistent store URL now that it's finished reading
+        [self setURLForPersistentStoreUsingFileURL:absoluteDocumentURL];
+        
+        
+        // Correct media URLs
+        //  #61400
+        
+        
+        // Finish up
+        [self didReadContentsForURL:absoluteDocumentURL];
+    }
+    
+    return self;
+}
+
+- (KTPage *)makeRootPage
+{
+    // Create page
+    SVPagesController *controller = [[SVPagesController alloc] init];
+    [controller setManagedObjectContext:[self managedObjectContext]];
+    [controller setEntityName:@"Page"];
+    
+    SVPageTemplate *template = [[SVPageTemplate alloc] initWithCollectionPreset:[NSDictionary dictionary]];
+    [controller setEntityNameWithPageTemplate:template];
+    [template release];
+    
+    KTPage *result = [controller newObject];
+	OBASSERT(result);
+    [controller release];
+	
+    
+    // Configure
+	[result setValue:[self site] forKey:@"site"];	// point to yourself
+    
+    
+	return [result autorelease];
 }
 
 - (void)dealloc
 {
 	[_site release];
     
-    [myMediaManager release];
+    [_accessoryViewController release];
+    
+    [_store release];
+    [_filenameReservations release];
+    [_deletedMediaDirectoryName release];
+    [_lastExportDirectory release];
 	
 	// release context
 	[_managedObjectContext release];
@@ -267,7 +435,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	if (!result)
 	{
 		// grab only Sandvox.mom (ignoring "previous moms" in KTComponents/Resources)
-		NSBundle *componentsBundle = [NSBundle bundleForClass:[KTAbstractElement class]];
+		NSBundle *componentsBundle = [NSBundle mainBundle];
         OBASSERT(componentsBundle);
 		
         NSString *modelPath = [componentsBundle pathForResource:@"Sandvox" ofType:@"mom"];
@@ -297,103 +465,111 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	OBPRECONDITION([[storeCoordinator persistentStores] count] == 0);   // This method should only be called the once
     
     
-    BOOL result = YES;
-	
-	/// and we compute the sqlite URL here for both read and write
-	NSURL *storeURL = [KTDocument datastoreURLForDocumentURL:URL type:nil];
-	
+    
 	// these two lines basically take the place of sending [super configurePersistentStoreCoordinatorForURL:ofType:error:]
 	// NB: we're not going to use the supplied configuration or options here, though we could in a Leopard-only version
-	result = (nil != [storeCoordinator addPersistentStoreWithType:[self persistentStoreTypeForFileType:fileType]
-									   configuration:nil
-												 URL:storeURL
-											 options:nil
-											   error:outError]);
-	
-	// Also configure media manager's store
-	if (result)
-	{
-		NSPersistentStoreCoordinator *mediaPSC = [[[self mediaManager] managedObjectContext] persistentStoreCoordinator];
-		result = (nil != [mediaPSC addPersistentStoreWithType:NSXMLStoreType
-												configuration:nil
-														  URL:[KTMediaManager mediaStoreURLForDocumentURL:URL]
-													  options:nil
-														error:outError]);
-	}
-	
-	
-	return result;
+	NSPersistentStore *store = [storeCoordinator addPersistentStoreWithType:[self persistentStoreTypeForFileType:fileType]
+                                                              configuration:nil
+                                                                        URL:URL
+                                                                    options:nil
+                                                                      error:outError];
+    [self setPersistentStore:store];
+    
+	return (store != nil);
 }
 
 - (NSString *)persistentStoreTypeForFileType:(NSString *)fileType
 {
-	return NSSQLiteStoreType;
+	return NSBinaryStoreType;
 }
 
-- (void)setFileURL:(NSURL *)absoluteURL
+#pragma mark Reading From and Writing to URLs
+
+- (void)openDesignChooser
 {
-    NSURL *oldURL = [[self fileURL] copy];
-    [super setFileURL:absoluteURL];
-    
-    
-    if (oldURL)
-    {
-        // Also reset the persistent stores' DB connection if needed
-        NSPersistentStoreCoordinator *PSC = [[self managedObjectContext] persistentStoreCoordinator];
-        OBASSERT([[PSC persistentStores] count] <= 1);
-        NSPersistentStore *store = [PSC persistentStoreForURL:[[self class] datastoreURLForDocumentURL:oldURL type:nil]];
-        if (store)
-        {
-            NSURL *newStoreURL = [[self class] datastoreURLForDocumentURL:absoluteURL type:nil];
-            [PSC setURL:newStoreURL forPersistentStore:store];
-        }
-        
-        PSC = [[[self mediaManager] managedObjectContext] persistentStoreCoordinator];
-        OBASSERT([[PSC persistentStores] count] <= 1);
-        store = [PSC persistentStoreForURL:[KTMediaManager mediaStoreURLForDocumentURL:oldURL]];
-        if (store)
-        {
-            NSURL *newStoreURL = [KTMediaManager mediaStoreURLForDocumentURL:absoluteURL];
-            [PSC setURL:newStoreURL forPersistentStore:store];
-        }
-        
-        [oldURL release];
-    }
+	[[self windowForSheet] doCommandBySelector:@selector(chooseDesign:)];
 }
 
-#pragma mark -
-#pragma mark Undo Support
-
-/*  These methods are overridden in the same fashion as NSPersistentDocument
+/*!
+ *  If the media is not marked as autosaved, returns the URL it should have. Otherwise returns nil.
  */
-
-- (BOOL)hasUndoManager { return YES; }
-
-- (void)setHasUndoManager:(BOOL)flag { }
-
-- (void)setUndoManager:(NSUndoManager *)undoManager
+- (NSURL *)URLForMediaRecord:(SVMediaRecord *)media
+                    filename:(NSString *)path
+       inDocumentWithFileURL:(NSURL *)docURL;
 {
-    // The correct undo manager is stored at initialisation time and can't be changed
+    NSURL *result = nil;
+    
+    if (/*![media autosaveAlias] &&*/ path)
+    {
+        if ([path hasPrefix:@"Shared/"] || [path hasPrefix:@"shared/"])
+        {
+            // Special case; design placeholder image
+            // This is kind of a hack to jump to the placeholder I admit; will fix up if we need more
+			KTDesign *design = [[[[self site] rootPage] master] design];
+			if ([design isKindOfClass:[KTDesignPlaceholder class]])
+			{
+				// Force design chooser sheet to open if we don't have a design
+				[self performSelector:@selector(openDesignChooser) withObject:nil afterDelay:0.0];
+			}
+			
+            NSBundle *bundle = [design bundle];
+            NSString *filename = [path lastPathComponent];
+            
+            NSString *resultPath = [bundle pathForResource:[filename stringByDeletingPathExtension] 
+                                                    ofType:[filename pathExtension]];
+            
+            if (!resultPath)
+            {
+                resultPath = [[NSBundle mainBundle] pathForResource:[filename stringByDeletingPathExtension] 
+                                                             ofType:[filename pathExtension]];
+            }
+            
+            if (resultPath) result = [NSURL fileURLWithPath:resultPath];
+        }
+        else
+        {
+            result = [docURL ks_URLByAppendingPathComponent:path isDirectory:NO];
+        }
+    }
+    
+    return result;
 }
-
-#pragma mark -
-#pragma mark Document Content Management
 
 /*  Supplement the usual read behaviour by logging host properties and loading document display properties
  */
 - (BOOL)readFromURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
 {
+    // Make sure the file exists! #118559
+    if (![[NSFileManager defaultManager] fileExistsAtPath:[absoluteURL path]])
+    {
+        if (outError) *outError = [NSError errorWithDomain:NSCocoaErrorDomain
+                                                      code:NSFileNoSuchFileError
+                                                  userInfo:nil];
+        return NO;
+    }
+    
+    
 	// Should only be called the once
-    BOOL result = [self configurePersistentStoreCoordinatorForURL:absoluteURL ofType:typeName modelConfiguration:nil storeOptions:nil error:outError];
+    NSURL *newStoreURL = [[self class] datastoreURLForDocumentURL:absoluteURL type:nil];
+    
+    BOOL result = [self configurePersistentStoreCoordinatorForURL:newStoreURL
+                                                           ofType:typeName
+                                               modelConfiguration:nil
+                                                     storeOptions:nil
+                                                            error:outError];
     
     
     // Grab the site object
+    NSManagedObjectContext *context = [self managedObjectContext];
     if (result)
 	{
-        _site = [[[self managedObjectContext] site] retain];
-        if (!_site)
+        KTSite *site = [context site];
+        [self setSite:site];
+        if (!site)
         {
-            if (outError) *outError = nil;  // TODO: Return a proper error object
+            if (outError) *outError = [KSError errorWithDomain:NSCocoaErrorDomain
+                                                          code:NSFileReadCorruptFileError
+                                          localizedDescription:NSLocalizedString(@"Site not found", "doc open error")];
             result = NO;
         }
     }
@@ -412,182 +588,341 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 			NSLog(@"hostProperties = %@", [[hostProperties hostPropertiesReport] condenseWhiteSpace]);
 		}
 	}
+	
+	if (result)
+	{
+        NSString *path = [[self site] lastExportDirectoryPath];
+        if (path) self.lastExportDirectory = [NSURL fileURLWithPath:path];
+	}
+    
+    
+    // Reserve all the media filenames already in use    
+    NSFetchRequest *request = [[[self class] managedObjectModel] fetchRequestTemplateForName:@"MediaInDocument"];
+    NSArray *media = [context executeFetchRequest:request error:NULL];
+    
+    for (SVMediaRecord *aMediaRecord in media)
+    {
+        // Media needs to be told its location to be useful
+        // Use [self fileURL] instead of absoluteURL since it accounts for autosave properly
+        NSString *path = [aMediaRecord filename];
+        
+        NSURL *mediaURL = [self URLForMediaRecord:aMediaRecord 
+                                         filename:path
+                            inDocumentWithFileURL:[self fileURL]];
+        
+        if (mediaURL) [aMediaRecord forceUpdateFromURL:mediaURL];
+        
+        if (![path hasPrefix:@"Shared/"] && ![path hasPrefix:@"shared/"])
+        {
+            // Does this match some media already loaded? 
+            // Can't call -isFilenameReserved: since it will find the file on disk and return YES
+            id <SVDocumentFileWrapper> fileWrapper = [_filenameReservations objectForKey:path]; 
+            if (fileWrapper) [aMediaRecord setNextObject:fileWrapper];
+            
+            [self setDocumentFileWrapper:aMediaRecord forKey:path];
+        }
+    }
+    
     
     return result;
+}
+
+- (void)didReadContentsForURL:(NSURL *)URL;
+{
+    // We really don't want the doc being marked as edited as soon as it's created, so suppress registration
+    NSUndoManager *undoManager = [self undoManager];
+    [undoManager disableUndoRegistration];
+    
+    /*
+    // Insert media records for any unknown files in the package. #62243
+    NSArray *directoryContents = [[NSFileManager defaultManager]
+                                  contentsOfDirectoryAtPath:[URL path] error:NULL];
+    
+    for (NSString *aFilename in directoryContents)
+    {
+        if ([self isFilenameAvailable:aFilename])
+        {
+            // Create media record
+            NSManagedObjectContext *context = [self managedObjectContext];
+            
+            SVMediaRecord *record = [SVMediaRecord
+                                     mediaByReferencingURL:[URL ks_URLByAppendingPathComponent:aFilename isDirectory:NO]
+                                     entityName:@"MediaRecord"
+                                     insertIntoManagedObjectContext:context
+                                     error:NULL];
+            [record setFilename:aFilename]; // mark as already copied into doc
+            
+            // Record
+            [self addDocumentFileWrapper:record];
+            
+            // Delete immediately so as to dispose of at next save
+            [context deleteObject:record];
+        }
+    }
+    */
+    
+    // Finish up
+    [[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerCheckpointNotification
+                                                        object:undoManager];
+    [undoManager enableUndoRegistration];
+}
+
+- (void)setFileURL:(NSURL *)absoluteURL
+{
+    // Mark persistent store as moved
+    [self setURLForPersistentStoreUsingFileURL:absoluteURL];
+    
+    
+    [super setFileURL:absoluteURL];
+    
+    
+    // Update media etc. to match
+    [[self managedObjectContext] processPendingChanges];
+    [[self undoManager] disableUndoRegistration];
+    
+    NSDictionary *media = [self documentFileWrappers];
+    for (NSString *key in media)
+    {
+        id <SVDocumentFileWrapper> fileWrapper = [media objectForKey:key];
+        if (![fileWrapper isDeletedFromDocument])
+        {
+            NSURL *URL = [self URLForMediaRecord:(SVMediaRecord *)fileWrapper
+                                        filename:key
+                           inDocumentWithFileURL:absoluteURL];
+            
+            [fileWrapper forceUpdateFromURL:URL];
+        }
+    }
+    
+    [[self managedObjectContext] processPendingChanges];
+    [[self undoManager] enableUndoRegistration];
+}
+
+- (void)setAutosavedContentsFileURL:(NSURL *)absoluteURL;
+{
+    [super setAutosavedContentsFileURL:absoluteURL];
+    
+    // If this the only copy, tell the store its new location
+    if (absoluteURL && ![self fileURL])
+    {
+        [self setURLForPersistentStoreUsingFileURL:absoluteURL];
+    }
+}
+
+@synthesize persistentStore = _store;
+
+- (void)setURLForPersistentStoreUsingFileURL:(NSURL *)absoluteURL;
+{
+    NSPersistentStore *store = [self persistentStore];
+    if (!store) return;
+    
+    NSPersistentStoreCoordinator *coordinator = [[self managedObjectContext] persistentStoreCoordinator];
+    OBASSERT([[coordinator persistentStores] containsObject:store]);
+    
+    NSURL *storeURL = nil;
+    if (absoluteURL) storeURL = [[self class] datastoreURLForDocumentURL:absoluteURL type:nil];
+    
+    [coordinator setURL:storeURL forPersistentStore:store];
+}
+
+#pragma mark Undo Support
+
+/*  These methods are overridden in the same fashion as NSPersistentDocument
+ */
+
+- (BOOL)hasUndoManager { return YES; }
+
+- (void)setHasUndoManager:(BOOL)flag { }
+
+- (void)setUndoManager:(NSUndoManager *)undoManager
+{
+    // The correct undo manager is stored at initialisation time and can't be changed
+}
+
+#pragma mark Managing Document Windows
+
+- (NSString *)displayName
+{
+    NSString *result = [super displayName];
+    
+    // For a new document, we want to guess from the site title
+    if (![self fileURL])
+    {
+        NSString *siteTitle = [[[[[self site] rootPage] master] siteTitle] text];
+        if ([siteTitle length] > 0)
+        {
+            result = siteTitle;
+        }
+    }
+    
+    return result;
+}
+
+#pragma mark Media
+
+- (NSDictionary *)documentFileWrappers; { return [[_filenameReservations copy] autorelease]; }
+
+- (NSString *)keyForDocumentFileWrapper:(id <SVDocumentFileWrapper>)wrapper;
+{
+    NSArray *keys = [[self documentFileWrappers] allKeysForObject:wrapper];
+    return [keys lastObject];
+}
+
+- (NSString *)addDocumentFileWrapper:(id <SVDocumentFileWrapper>)wrapper; // returns the filename reserved
+{
+    NSString *preferredFilename = [wrapper preferredFilename];
+    NSString *result = preferredFilename;
+    
+    NSUInteger count = 1;
+    while (![self isFilenameAvailable:result])
+    {
+        // Adjust the filename ready to try again
+        count++;
+		NSString *numberedName = [NSString stringWithFormat:
+                                  @"%@-%u",
+                                  [preferredFilename stringByDeletingPathExtension],
+                                  count];
+        
+		result = [numberedName stringByAppendingPathExtension:[preferredFilename pathExtension]];
+    }
+    
+    // Reserve it
+    [self setDocumentFileWrapper:wrapper forKey:result];
+    
+    return result;
+}
+
+- (void)setDocumentFileWrapper:(id <SVDocumentFileWrapper>)wrapper forKey:(NSString *)key;
+{
+    [_filenameReservations setObject:wrapper forKey:key];
+}
+
+- (BOOL)isFilenameAvailable:(NSString *)filename;
+{
+    OBPRECONDITION(filename);
+    
+    
+    // Consult both cache to see if the name is taken
+    BOOL result = ([[self documentFileWrappers] objectForKey:filename] == nil);
+    
+    
+    // The document also reserves some special cases itself
+    if (result)
+    {
+        if ([[filename stringByDeletingPathExtension] isEqualToString:@"index"] ||
+            [filename isEqualToString:@"quicklook"] ||
+            [filename isEqualToString:@"contents"] ||
+            [filename isEqualToString:@"shared"] ||
+            [filename isEqualToString:@"theme-files"] ||
+            [filename isEqualToString:@"thumbs"])
+        {
+            result = NO;
+        }
+    }
+    
+    
+    // Finally, see if there's already an item on disk (such as .svn directory)
+    if (result)
+    {
+        NSURL *docURL = [self fileURL];
+        NSURL *url = [docURL ks_URLByAppendingPathComponent:filename isDirectory:NO];
+        if ([url isFileURL])
+        {
+            result = ![[NSFileManager defaultManager] fileExistsAtPath:[url path]];
+        }
+    }
+    
+    return result;
+}
+
+- (void)unreserveFilename:(NSString *)filename;
+{
+    [_filenameReservations removeObjectForKey:filename];
+}
+
+- (void)designDidChange;
+{
+    // Placeholder/shared/bundled media
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:
+                              @"filename beginswith[c] 'Shared/'"];
+    
+    NSArray *sharedMedia = [[self managedObjectContext]
+                            fetchAllObjectsForEntityForName:@"GraphicMedia"
+                            predicate:predicate
+                            error:NULL];
+    
+    KTMaster *master = [[[self site] rootPage] master];
+    
+    for (SVMediaRecord *aMediaRecord in sharedMedia)
+    {
+        // Replace with a new record
+        SVMediaRecord *media = [master makePlaceholdImageMediaWithEntityName:@"GraphicMedia"];
+        SVGraphic *graphic = [aMediaRecord valueForKey:@"graphic"];
+        [graphic replaceMedia:media forKeyPath:@"media"];
+    }
+    
+    
+    // Let all graphics know of the change. Size any embedded images to fit. #105069
+	NSArray *graphics = [[self managedObjectContext] fetchAllObjectsForEntityForName:@"Graphic" error:NULL];
+	for (SVGraphic *aGraphic in graphics)
+	{
+		for (id <SVPage> aPage in [aGraphic pages])
+		{
+			[aGraphic pageDidChange:aPage];
+		}
+	}
+    
+    KTPage *root = [[self site] rootPage];
+    SVLogoImage *logo = [[root master] logo];
+    [logo pageDidChange:root];
+}
+
+- (NSSet *)missingMedia;
+{
+    NSManagedObjectModel *model = [[self class] managedObjectModel];
+	NSFetchRequest *request = [model fetchRequestTemplateForName:@"ExternalMedia"];
+    NSArray *externalMedia = [[self managedObjectContext] executeFetchRequest:request error:NULL];
+    
+    NSMutableSet *result = [NSMutableSet set];
+    
+	for (SVMediaRecord *aRecord in externalMedia)
+	{
+		NSString *path = [[aRecord fileURL] path];
+		if (!path ||
+            [path isEqualToString:@""] ||
+            [path isEqualToString:[[NSBundle mainBundle] pathForImageResource:@"MissingMediaQMark"]] ||
+            ![[NSFileManager defaultManager] fileExistsAtPath:path])
+		{
+			[result addObject:aRecord];
+		}
+	}
+	
+	return result;
 }
 
 /*  Saving a document is somewhat complicated, so it's implemented in a dedicated category:
  *  KTDocument+Saving.m
  */
 
-#pragma mark -
-#pragma mark Document paths
-
-/*	Returns the URL to the primary document persistent store. This differs dependent on the document UTI.
- *	You can pass in nil to use the default UTI for new documents.
- */
-+ (NSURL *)datastoreURLForDocumentURL:(NSURL *)inURL type:(NSString *)documentUTI
-{
-	OBPRECONDITION(inURL);
-	
-	NSURL *result = nil;
-	
-	
-	if (!documentUTI || [documentUTI isEqualToString:kKTDocumentUTI])
-	{
-		result = [inURL URLByAppendingPathComponent:@"datastore.sqlite3" isDirectory:NO];
-	}
-	else if ([documentUTI isEqualToString:kKTDocumentUTI_ORIGINAL])
-	{
-		result = inURL;
-	}
-	else
-	{
-		OBASSERT_NOT_REACHED("Unknown document UTI");
-	}
-	
-	
-	return result;
-}
-
-/*	Returns /path/to/document/Site
- */
-+ (NSURL *)siteURLForDocumentURL:(NSURL *)inURL
-{
-	OBPRECONDITION(inURL);
-	
-	NSURL *result = [inURL URLByAppendingPathComponent:@"Site" isDirectory:YES];
-	
-	OBPOSTCONDITION(result);
-	return result;
-}
-
-+ (NSURL *)quickLookURLForDocumentURL:(NSURL *)inURL
-{
-	OBASSERT(inURL);
-	
-	NSURL *result = [inURL URLByAppendingPathComponent:@"QuickLook" isDirectory:YES];
-	
-	OBPOSTCONDITION(result);
-	return result;
-}
-
-/*! Returns /path/to/document/Site/_Media
- */
-+ (NSURL *)mediaURLForDocumentURL:(NSURL *)inURL
-{
-	OBASSERT(inURL);
-	
-	NSURL *result = [[self siteURLForDocumentURL:inURL] URLByAppendingPathComponent:@"_Media" isDirectory:YES];
-	
-	OBPOSTCONDITION(result);
-	return result;
-}
-
-- (NSURL *)mediaDirectoryURL;
-{
-	/// This could be calculated from [self fileURL], but that doesn't work when making the very first save
-	NSPersistentStoreCoordinator *storeCordinator = [[self managedObjectContext] persistentStoreCoordinator];
-	NSURL *storeURL = [storeCordinator URLForPersistentStore:[[storeCordinator persistentStores] firstObjectKS]];
-	NSURL *docURL = [storeURL URLByDeletingLastPathComponent];
-	
-    NSURL *result = [[self class] mediaURLForDocumentURL:docURL];
-	return result;
-}
-
-/*	Temporary media is stored in:
- *	
- *		Application Support -> Sandvox -> Temporary Media Files -> Document ID -> a file
- *
- *	This method returns the path to that directory, creating it if necessary.
- */
-- (NSString *)temporaryMediaPath;
-{
-	NSFileManager *fileManager = [NSFileManager defaultManager];
-	NSString *sandvoxSupportDirectory = [NSApplication applicationSupportPath];
-
-	NSString *mediaFilesDirectory = [sandvoxSupportDirectory stringByAppendingPathComponent:@"Temporary Media Files"];
-	NSString *result = [mediaFilesDirectory stringByAppendingPathComponent:[[self site] siteID]];
-	
-	// Create the directory if needs be
-	if (![fileManager fileExistsAtPath:result])
-	{
-		[fileManager createDirectoryPath:result attributes:nil];
-	}
-		
-	OBPOSTCONDITION(result);
-	return result;
-}
-
-- (NSString *)siteDirectoryPath;
-{
-	NSURL *docURL = [self fileURL];
-	
-	if (!docURL)
-	{
-		NSPersistentStoreCoordinator *storeCordinator = [[self managedObjectContext] persistentStoreCoordinator];
-		NSURL *storeURL = [storeCordinator URLForPersistentStore:[[storeCordinator persistentStores] firstObjectKS]];
-		docURL = [storeURL URLByDeletingLastPathComponent];
-	}
-	
-	NSString *result = [[KTDocument siteURLForDocumentURL:docURL] path];
-	return result;
-}
-
-#pragma mark -
 #pragma mark Controller Chain
-
-- (KTDocWindowController *)mainWindowController { return _mainWindowController; }
 
 /*!	Force KTDocument to use a custom subclass of NSWindowController
  */
 - (void)makeWindowControllers
 {
-    _mainWindowController = [[KTDocWindowController alloc] init];
-    [self addWindowController:_mainWindowController];
+    if ([[self fileType] isEqualToString:kSVDocumentTypeName])
+    {
+        NSWindowController *windowController = [[KTDocWindowController alloc] init];
+        [self addWindowController:windowController];
+        [windowController release];
+    }
+    else
+    {
+        [super makeWindowControllers];
+    }
 }
 
-- (void)addWindowController:(NSWindowController *)windowController
-{
-	if ( nil != windowController )
-    {
-		[super addWindowController:windowController];
-	}
-}
 
-- (void)removeWindowController:(NSWindowController *)windowController
-{
-	//LOG((@"KTDocument -removeWindowController"));
-	if ( [windowController isKindOfClass:[KTDocWindowController class]] )
-    {
-		// cleanup
-
-		[[self mainWindowController] selectionDealloc];
-		
-		// suspend webview updating
-		//[[[self windowController] webViewController] setSuspendNextWebViewUpdate:SUSPEND];
-		//[NSObject cancelPreviousPerformRequestsWithTarget:[[self windowController] webViewController] selector:@selector(doDelayedRefreshWebViewOnMainThread) object:nil];
-		[[self mainWindowController] setSelectedPagelet:nil];
-		
-		// suspend outline view updating
-		///[[self windowController] siteOutlineDeallocSupport];
-				
-		// final clean up, we're done
-		[(KTDocWindowController *)windowController documentControllerDeallocSupport];
-		
-		// balance retain in makeWindowControllers
-		[_mainWindowController release]; _mainWindowController = nil;
-	}
-    else if ( [windowController isEqual:myHTMLInspectorController] )
-    {
-		[self setHTMLInspectorController:nil];
-	}
-		
-	
-    [super removeWindowController:windowController];
-}
-
-#pragma mark -
 #pragma mark Changes
 
 /*  Supplement NSDocument by broadcasting a notification that the document did change
@@ -598,80 +933,26 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     
     if (changeType == NSChangeDone || changeType == NSChangeUndone)
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:KTDocumentDidChangeNotification object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kKTDocumentDidChangeNotification object:self];
     }
 }
 
-// TODO: Is this method strictly necessary? Seems kinda hackish to me
-- (void)processPendingChangesAndClearChangeCount
-{
-	LOGMETHOD;
-	[[self managedObjectContext] processPendingChanges];
-	[[self undoManager] removeAllActions];
-	[self updateChangeCount:NSChangeCleared];
-}
-
-#pragma mark -
 #pragma mark Closing Documents
 
 - (void)close
 {	
-	LOGMETHOD;
-    
-    
-    [self setClosing:YES];
-	
 	// Allow anyone interested to know we're closing. e.g. KTDocWebViewController uses this
-	[[NSNotificationCenter defaultCenter] postNotificationName:KTDocumentWillCloseNotification object:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:kKTDocumentWillCloseNotification object:self];
 
 	
-	[[[self mainWindowController] pluginInspectorViewsManager] removeAllPluginInspectorViews];
-	
-	
-	// Close link panel
-	if ([[[self mainWindowController] linkPanel] isVisible])
-	{
-		[[self mainWindowController] closeLinkPanel];
-	}
-	
-    
-    /// clear Info window before changing selection to try to avoid an odd zombie issue (Case 18771)
-	// tell info window to release inspector views and object controllers
-	if ([[KTInfoWindowController sharedControllerWithoutLoading] associatedDocument] == self)
-	{
-		// close info window
-		[[KTInfoWindowController sharedController] clearAll];
-	}
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:(NSString *)kKTItemSelectedNotification object:nil];	// select nothing
-
-    // is the media browser up?
-    if ( nil != [iMediaBrowser sharedBrowserWithoutLoading] )
-    {
-        // are we closing the last open document?
-        if ( [[[KTDocumentController sharedDocumentController] documents] count] == 1 )
-        {
-            // close media window
-            [[NSApp delegate] setDisplayMediaMenuItemTitle:KTShowMediaMenuItemTitle];
-            [[iMediaBrowser sharedBrowser] close];
-        }
-    }
-	
-	
-
 	// Remove temporary media files
-	[[self mediaManager] deleteTemporaryMediaFiles];
-	
+    [[self undoManager] removeDeletedMediaDirectory:NULL];
+    
 	[super close];
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"KTDocumentDidClose" object:self];
 }
 
-- (BOOL)isClosing { return _closing; }
-
-- (void)setClosing:(BOOL)aFlag { _closing = aFlag; }
-
-#pragma mark -
 #pragma mark Error Presentation
 
 /*! we override willPresentError: here largely to deal with
@@ -695,25 +976,23 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 			if ( detailedErrors != nil ) 
 			{
 				unsigned numErrors = [detailedErrors count];							
-				NSMutableString *errorString = [NSMutableString stringWithFormat:@"%u validation errors have occurred", numErrors];
+				NSMutableString *errorString = [NSMutableString stringWithFormat:@"%u validation errors have occurred.", numErrors];
+				NSMutableString *secondary = [NSMutableString string];
 				if ( numErrors > 3 )
 				{
-					[errorString appendFormat:@".\nThe first 3 are:\n"];
-				}
-				else
-				{
-					[errorString appendFormat:@":\n"];
+					[secondary appendFormat:NSLocalizedString(@"The first 3 are:\n", @"To be followed by 3 error messages")];
 				}
 				
 				unsigned i;
 				for ( i = 0; i < ((numErrors > 3) ? 3 : numErrors); i++ ) 
 				{
-					[errorString appendFormat:@"%@\n", [[detailedErrors objectAtIndex:i] localizedDescription]];
+					[secondary appendFormat:@"%@\n", [[detailedErrors objectAtIndex:i] localizedDescription]];
 				}
 				
 				NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithDictionary:[inError userInfo]];
 				[userInfo setObject:errorString forKey:NSLocalizedDescriptionKey];
-				
+				[userInfo setObject:secondary forKey:NSLocalizedRecoverySuggestionErrorKey];
+
 				result = [NSError errorWithDomain:[inError domain] code:[inError code] userInfo:userInfo];
 			} 
 		}
@@ -726,72 +1005,14 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 #pragma mark -
 #pragma mark UI validation
 
-- (BOOL)validateToolbarItem:(NSToolbarItem *)toolbarItem
-{
-	// Enable the Edit Raw HTML for blocks of editable HTML, or if the selected pagelet or page is HTML.
-	if ( [toolbarItem action] == @selector(editRawHTMLInSelectedBlock:) )
-	{
-		if ([[[[self mainWindowController] webViewController] currentTextEditingBlock] DOMNode]) return YES;
-		
-		KTPagelet *selPagelet = [[self mainWindowController] selectedPagelet];
-		if (nil != selPagelet)
-		{
-			if ([@"sandvox.HTMLElement" isEqualToString:[selPagelet valueForKey:@"pluginIdentifier"]])
-			{
-				return YES;
-			}
-		}
-		KTPage *selPage = [[[self mainWindowController] siteOutlineController] selectedPage];
-		if ([@"sandvox.HTMLElement" isEqualToString:[selPage valueForKey:@"pluginIdentifier"]])
-		{
-			return YES;
-		}
-		
-		return NO;	// not one of the above conditions
-	}
-    return YES;
-}
-
-
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
-	OFF((@"KTDocument validateMenuItem:%@ %@", [menuItem title], NSStringFromSelector([menuItem action])));
-	
-	// File menu	
-	// "Save As..." saveDocumentAs:
-	if ( [menuItem action] == @selector(saveDocumentAs:) )
+	VALIDATION((@"%s %@",__FUNCTION__, menuItem));
+		
+    // "Save a Copy As..." saveDocumentTo:  – why does this need special checking? Mike.
+	if ( [menuItem action] == @selector(saveDocumentTo:) )
 	{
 		return YES;
-	}
-	
-	// "Save a Copy As..." saveDocumentTo:
-	else if ( [menuItem action] == @selector(saveDocumentTo:) )
-	{
-		return YES;
-	}
-	
-	// Site menu	
-	else if ( [menuItem action] == @selector(editRawHTMLInSelectedBlock:) )
-	{
-		// Yes if:  we are in a block of editable HTML, or if the selected pagelet or page is HTML.
-		
-		if ([[[[self mainWindowController] webViewController] currentTextEditingBlock] DOMNode]) return YES;
-		
-		KTPagelet *selPagelet = [[self mainWindowController] selectedPagelet];
-		if (nil != selPagelet)
-		{
-			if ([@"sandvox.HTMLElement" isEqualToString:[selPagelet valueForKey:@"pluginIdentifier"]])
-			{
-				return YES;
-			}
-		}
-		KTPage *selPage = [[[self mainWindowController] siteOutlineController] selectedPage];
-		if ([@"sandvox.HTMLElement" isEqualToString:[selPage valueForKey:@"pluginIdentifier"]])
-		{
-			return YES;
-		}
-		
-		return NO;	// not one of the above conditions
 	}
 	
 	return [super validateMenuItem:menuItem]; 
@@ -800,30 +1021,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 #pragma mark -
 #pragma mark Actions
 
-- (void)cleanupBeforePublishing
-{
-	[[[self mainWindowController] webViewController] commitEditing];
-	if (nil == gRegistrationString)
-	{
-		[KSSilencingConfirmSheet alertWithWindow:[[self mainWindowController] window] silencingKey:@"shutUpDemoUploadWarning" title:NSLocalizedString(@"Sandvox Demo: Restricted Publishing", @"title of alert") format:NSLocalizedString(@"You are running a demo version of Sandvox. Only the home page (watermarked) will be exported or uploaded. To publish additional pages, you will need to purchase a license.",@"")];
-	}
-	
-	// Make sure both localHosting and remoteHosting are set to true
-	KTHostProperties *hostProperties = [self valueForKeyPath:@"site.hostProperties"];
-	if ([[hostProperties valueForKey:@"localHosting"] intValue] == 1 && 
-		[[hostProperties valueForKey:@"remoteHosting"] intValue] == 1)
-	{
-		[hostProperties setValue:[NSNumber numberWithInt:0] forKey:@"localHosting"];
-	}
-	
-	// force the current page to be the selection, deselecting any inline image.
-	[[NSNotificationCenter defaultCenter] postNotificationName:(NSString *)kKTItemSelectedNotification
-	object:[[[self mainWindowController] siteOutlineController] selectedPage]];
-	
-	// no undo after publishing
-	[[self undoManager] removeAllActions];
-}
-
 - (IBAction)setupHost:(id)sender
 {
 	KTHostSetupController* sheetController
@@ -831,107 +1028,28 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		// LEAKING ON PURPOSE, THIS WILL BE AUTORELEASED IN setupHostSheetDidEnd:
 	
 	[NSApp beginSheet:[sheetController window]
-	   modalForWindow:[[self mainWindowController] window]
+	   modalForWindow:[self windowForSheet]
 	modalDelegate:self
 	   didEndSelector:@selector(setupHostSheetDidEnd:returnCode:contextInfo:)
 		  contextInfo:sheetController];
 	[NSApp cancelUserAttentionRequest:NSCriticalRequest];
 }
 
+#pragma mark UI
 
-- (void)editSourceObject:(NSObject *)aSourceObject keyPath:(NSString *)aKeyPath  isRawHTML:(BOOL)isRawHTML;
+- (NSOpenPanel *)makeChooseDialog;
 {
-	[[self HTMLInspectorController] setHTMLSourceObject:aSourceObject];	// saves will put back into this node
-	[[self HTMLInspectorController] setHTMLSourceKeyPath:aKeyPath];
-	
-	
-	NSString *title = @"";
-	if (isRawHTML)
-	{
-		// Get title of page/pagelet we are editing
-		if ([aSourceObject respondsToSelector:@selector(titleText)])
-		{
-			NSString *itsTitle = [((KTAbstractElement *)aSourceObject) titleText];
-			if (nil != itsTitle && ![itsTitle isEqualToString:@""])
-			{
-				title = itsTitle;
-			}
-		}
-	}
-	[[self HTMLInspectorController] setTitle:title];
-	[[self HTMLInspectorController] setFromEditableBlock:!isRawHTML];
-
-	[[self HTMLInspectorController] showWindow:nil];
+    NSOpenPanel *result = [NSOpenPanel openPanel];
+    
+	[result setCanChooseDirectories:NO];
+	[result setTreatsFilePackagesAsDirectories:NO];	// We don't want to descend into packages
+	[result setAllowsMultipleSelection:NO];
+    
+	[result setPrompt:NSLocalizedString(@"Insert", "open panel prompt button")];
+    
+    return result;
 }
 
-
-- (IBAction)editRawHTMLInSelectedBlock:(id)sender
-{
-	BOOL result = [[[self mainWindowController] webViewController] commitEditing];
-
-	if (result)
-	{
-		BOOL isRawHTML = NO;
-		KTHTMLTextBlock *textBlock = [self valueForKeyPath:@"windowController.webViewController.currentTextEditingBlock"];
-		id sourceObject = [textBlock HTMLSourceObject];
-        
-        NSString *sourceKeyPath = [textBlock HTMLSourceKeyPath];                   // Account for custom summaries which use
-		if ([textBlock isKindOfClass:[KTSummaryWebViewTextBlock class]])    // a special key path
-        {
-            KTPage *page = sourceObject;
-            if ([page customSummaryHTML] || ![page summaryHTMLKeyPath])
-            {
-                sourceKeyPath = @"customSummaryHTML";
-            }
-        }
-        
-        
-        // Fallback for non-text blocks
-		if (!textBlock)
-		{
-			isRawHTML = YES;
-			sourceKeyPath = @"html";	// raw HTML
-			KTPagelet *selPagelet = [[self mainWindowController] selectedPagelet];
-			if (nil != selPagelet)
-			{
-				if (![@"sandvox.HTMLElement" isEqualToString:[selPagelet valueForKey:@"pluginIdentifier"]])
-				{
-					sourceObject = nil;		// no, don't try to edit a non-rich text
-				}
-				else
-				{
-					sourceObject = selPagelet;
-				}
-			}
-			
-			if (nil == sourceObject)	// no appropriate pagelet selected, try page
-			{
-				sourceObject = [[[self mainWindowController] siteOutlineController] selectedPage];
-				if (![@"sandvox.HTMLElement" isEqualToString:[sourceObject valueForKey:@"pluginIdentifier"]])
-				{
-					sourceObject = nil;		// no, don't try to edit a non-rich text
-				}
-				else
-				{
-				}
-			}
-
-			
-		}
-		
-		if (sourceObject)
-		{
-            
-			[self editSourceObject:sourceObject keyPath:sourceKeyPath isRawHTML:isRawHTML];
-		}
-	}
-	else
-	{
-		NSLog(@"Cannot commit editing to edit HTML");
-	}
-}
-
-#pragma mark -
 #pragma mark Delegate Methods
 
 - (void)setupHostSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
@@ -940,10 +1058,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	if (returnCode)
 	{
 		// init code only for new documents
-		NSUndoManager *undoManager = [self undoManager];
 		
-		//[undoManager beginUndoGrouping];
-		//KTStoredDictionary *hostProperties = [[self site] wrappedValueForKey:@"hostProperties"];
 		KTHostProperties *hostProperties = [sheetController properties];
 		[self setValue:hostProperties forKeyPath:@"site.hostProperties"];
 
@@ -952,24 +1067,21 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		{
 			NSLog(@"new hostProperties = %@", [[hostProperties hostPropertiesReport] condenseWhiteSpace]);		
 		}
-		
-		// Mark designs and media as stale (pages are handled automatically)
-		NSArray *designs = [[self managedObjectContext] allObjectsWithEntityName:@"DesignPublishingInfo" error:NULL];
-		[designs setValue:nil forKey:@"versionLastPublished"];
-        
-        [[[[self site] root] master] setPublishedDesignCSSDigest:nil];
-		
-		NSArray *media = [[[self mediaManager] managedObjectContext] allObjectsWithEntityName:@"MediaFileUpload" error:NULL];
-		[media setBool:YES forKey:@"isStale"];
         
         
-        // All page and sitemap URLs are now invalid
-        [[[self site] root] recursivelyInvalidateURL:YES];
-        [self willChangeValueForKey:@"publishedSitemapURL"];
-        [self didChangeValueForKey:@"publishedSitemapURL"];
+        // Reset publishing records
+        for (SVPublishingRecord *aRecord in [[hostProperties rootPublishingRecord] contentRecords])
+        {
+            [[self managedObjectContext] deleteObject:aRecord]; // context should recurse and delete descendants
+        }
+        
+		
+		// All page and sitemap URLs are now invalid
+        [[[self site] rootPage] recursivelyInvalidateURL:YES];
 		
 		
 		
+		NSUndoManager *undoManager = [self undoManager];
 		[undoManager setActionName:NSLocalizedString(@"Host Settings", @"Undo name")];
 				
 		// Check encoding from host properties
@@ -978,7 +1090,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		NSString *hostCharset = [hostProperties valueForKey:@"encoding"];
 		if ((nil != hostCharset) && ![hostCharset isEqualToString:@""])
 		{
-			NSString *rootCharset = [[[[self site] root] master] valueForKey:@"charset"];
+			NSString *rootCharset = [[[[self site] rootPage] master] valueForKey:@"charset"];
 			if (![[hostCharset lowercaseString] isEqualToString:[rootCharset lowercaseString]])
 			{
 				[self performSelector:@selector(warnThatHostUsesCharset:) withObject:hostCharset afterDelay:0.0];
@@ -990,7 +1102,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (void)warnThatHostUsesCharset:(NSString *)hostCharset
 {
-	[KSSilencingConfirmSheet alertWithWindow:[[self mainWindowController] window] silencingKey:@"ShutUpCharsetMismatch" title:NSLocalizedString(@"Host Character Set Mismatch", @"alert title when the character set specified on the host doesn't match settings") format:NSLocalizedString(@"The host you have chosen always serves its text encoded as '%@'.  In order to prevent certain text from appearing incorrectly, we suggest that you set your site's 'Character Encoding' property to match this, using the inspector.",@""), [hostCharset uppercaseString]];
+	[KSSilencingConfirmSheet alertWithWindow:[self windowForSheet] silencingKey:@"ShutUpCharsetMismatch" title:NSLocalizedString(@"Host Character Set Mismatch", @"alert title when the character set specified on the host doesn't match settings") format:NSLocalizedString(@"The host you have chosen always serves its text encoded as '%@'.  In order to prevent certain text from appearing incorrectly, we suggest that you set your site's 'Character Encoding' property to match this, using the inspector.",@""), [hostCharset uppercaseString]];
 }
 
 #pragma mark -
@@ -998,7 +1110,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (BOOL)mayAddScreenshotsToAttachments;
 {
-	NSWindow *window = [[[[NSApp delegate] currentDocument] mainWindowController] window];
+	NSWindow *window = [self windowForSheet];
 	return (window && [window isVisible]);
 }
 
@@ -1010,7 +1122,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 - (void)addScreenshotsToAttachments:(NSMutableArray *)attachments attachmentOwner:(NSString *)attachmentOwner;
 {
 	
-	NSWindow *window = [[[[NSApp delegate] currentDocument] mainWindowController] window];
+	NSWindow *window = [self windowForSheet];
 	NSImage *snapshot = [window snapshotShowingBorder:NO];
 	if ( nil != snapshot )
 	{
@@ -1043,7 +1155,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	}
 	
 	// Attach inspector, if visible
-	KTInfoWindowController *sharedController = [KTInfoWindowController sharedControllerWithoutLoading];
+	NSWindowController *sharedController = [[[KSDocumentController sharedDocumentController] inspectors] lastObject];
 	if ( nil != sharedController )
 	{
 		NSWindow *infoWindow = [sharedController window];

@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Mike on 24/01/2008.
-//  Copyright 2008-2009 Karelia Software. All rights reserved.
+//  Copyright 2008-2011 Karelia Software. All rights reserved.
 //
 
 #import "KTCollectionIndexFilenameButton.h"
@@ -20,7 +20,7 @@
 	
 	if (!result)
 	{
-		result = [[NSImage imageNamed:@"action12"] retain];
+		result = [[NSImage imageNamed:NSImageNameActionTemplate] retain];
 		[result setSize:NSMakeSize(12.0, 12.0)];
 	}
 	

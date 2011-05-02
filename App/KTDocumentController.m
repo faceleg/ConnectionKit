@@ -3,26 +3,23 @@
 //  Marvel
 //
 //  Created by Terrence Talbot on 9/20/05.
-//  Copyright 2005-2009 Karelia Software. All rights reserved.
+//  Copyright 2005-2011 Karelia Software. All rights reserved.
 //
 
 #import "KTDocumentController.h"
 
 #import "KT.h"
-#import "KTAbstractIndex.h"
-#import "KTAbstractPage+Internal.h"
-#import "KTAppDelegate.h"
-#import "KTDataMigrator.h"
-#import "KTDataMigrationDocument.h"
+#import "SVDesignPickerController.h"
+#import "KTDesign.h"
 #import "KTDocument.h"
 #import "KTSite.h"
-#import "KTElementPlugin.h"
-#import "KTIndexPlugin.h"
-#import "KTMediaManager.h"
+#import "KTElementPlugInWrapper.h"
+#import "SVInspector.h"
 #import "KTMaster.h"
+#import "SVMigrationDocument.h"
+#import "SVMigrationManager.h"
 #import "KTPage+Internal.h"
-#import "KTPagelet+Internal.h"
-#import "KTPlaceholderController.h"
+#import "SVWelcomeController.h"
 #import "KTPluginInstaller.h"
 
 #import "NSArray+Karelia.h"
@@ -38,6 +35,7 @@
 #import "KSApplication.h"
 #import "KSProgressPanel.h"
 #import "KSRegistrationController.h"
+#import "SVApplicationController.h"
 
 #import "Debug.h"
 
@@ -49,7 +47,7 @@
 #pragma mark -
 #pragma mark Document placeholder window
 
-- (IBAction)showDocumentPlaceholderWindow:(id)sender
+- (void)showDocumentPlaceholderWindowInitial:(BOOL)firstTimeSoReopenSavedDocuments;
 {
     if (gLicenseViolation)		// license violation dialog should open, not the new/open
     {
@@ -57,7 +55,8 @@
     }
     else
     {
-		[[KTPlaceholderController sharedController] showWindowAndBringToFront:NO];
+		// Open recent documents, maybe show welcome window.
+		[[SVWelcomeController sharedController] showWindowAndBringToFront:NO initial:firstTimeSoReopenSavedDocuments];
     }
 }
 
@@ -66,14 +65,57 @@
 
 - (IBAction)newDocument:(id)sender
 {
-    NSError *error = nil;
-    if (![self openUntitledDocumentAndDisplay:YES error:&error])
+    // Display design chooser
+    if (_designChooser)
     {
-        if (![[error domain] isEqualToString:NSCocoaErrorDomain] || [error code] != NSUserCancelledError)
+        [[_designChooser window] makeKeyAndOrderFront:self];
+    }
+    else
+    {
+        _designChooser = [[SVDesignPickerController alloc] init];
+        
+        NSArray *designs = [KSPlugInWrapper sortedPluginsWithFileExtension:kKTDesignExtension];
+        NSArray *newRangesOfGroups;
+        designs = [KTDesign reorganizeDesigns:designs familyRanges:&newRangesOfGroups];
+        [_designChooser setDesign:[designs firstObjectKS]];
+        
+        SVWelcomeController *welcomeWindow = [SVWelcomeController sharedController];
+        if ([[welcomeWindow window] isVisible])
         {
-            [self presentError:error];
+            [_designChooser beginDesignChooserForWindow:[welcomeWindow window]
+                                               delegate:self
+                                         didEndSelector:@selector(designChooserDidEnd:returnCode:)];
+        }
+        else
+        {
+            [_designChooser beginWithDelegate:self
+                               didEndSelector:@selector(designChooserDidEnd:returnCode:)];
         }
     }
+}
+
+- (void)designChooserDidEnd:(SVDesignPickerController *)designChooser returnCode:(NSInteger)returnCode;
+{
+    OBPRECONDITION(designChooser == _designChooser);
+    
+    
+    [_designChooser autorelease]; _designChooser = nil;
+    if (returnCode == NSAlertAlternateReturn) return;
+    
+    
+    // Create doc
+    KTDesign *design = [designChooser design];
+    KTDocument *doc = [self openUntitledDocumentAndDisplay:NO error:NULL];
+    [[[[doc site] rootPage] master] setDesign:design];
+    [doc designDidChange];
+    
+    
+    // Present the doc as if new
+    [[doc managedObjectContext] processPendingChanges];
+    [[doc undoManager] removeAllActions];
+    
+    [doc makeWindowControllers];
+    [doc showWindows];
 }
 
 - (id)makeUntitledDocumentOfType:(NSString *)typeName error:(NSError **)outError
@@ -83,265 +125,24 @@
 		NSBeep();
 		if (outError)
 		{
-			*outError = nil;	// Otherwise we crash	// TODO: Perhaps actually return an error
+			*outError = nil;	// otherwise we crash
 		}
 		return nil;
 	}
 	
-    
-	
-	Class docClass = [self documentClassForType:typeName];
-    if (![docClass isSubclassOfClass:[KTDocument class]])
-    {
-        return [super makeUntitledDocumentOfType:typeName error:outError];
-    }
-        
-        
-        
-    // Ask the user for the location and home page type of the document
-    NSSavePanel *savePanel = [NSSavePanel savePanel];
-    [savePanel setTitle:NSLocalizedString(@"New Site", @"Save Panel Title")];
-	[savePanel setPrompt:NSLocalizedString(@"Create", @"Create Button")];
-	[savePanel setCanSelectHiddenExtension:YES];
-	[savePanel setRequiredFileType:kKTDocumentExtension];
-	[savePanel setCanCreateDirectories:YES];
-	
-	[[NSBundle mainBundle] loadNibNamed:@"NewDocumentAccessoryView" owner:self];
-	
-	NSButton *helpButton = [[[NSButton alloc] initWithFrame:NSMakeRect(20, 20, 21, 23)] autorelease];
-	[helpButton setBezelStyle:NSHelpButtonBezelStyle];
-	[helpButton setTitle:@""];
-	[helpButton setTarget:self];
-	[helpButton setAction:@selector(newDocShowHelp:)];
-
-	[savePanel setAccessoryView:oNewDocAccessoryView];
-
-	NSView *view = [oNewDocAccessoryView superview];		// we want this to be ABOVE the accessory view.
-	[view addSubview:helpButton];
-	
-    
-    // Offer all available page types except External Link and File Download. BUGSID:38542
-	NSMutableSet *pagePlugins = [[KTElementPlugin pagePlugins] mutableCopy];
-    [pagePlugins removeObject:[KSPlugin pluginWithIdentifier:@"sandvox.DownloadElement"]];
-    [pagePlugins removeObject:[KSPlugin pluginWithIdentifier:@"sandvox.LinkElement"]];
-    
-	[KTElementPlugin addPlugins:pagePlugins
-						 toMenu:[oNewDocHomePageTypePopup menu]
-						 target:nil
-						 action:nil
-					  pullsDown:NO
-					  showIcons:YES smallIcons:YES smallText:NO];
-	[pagePlugins release];
-    
-    
-	int saveResult = [savePanel runModalForDirectory:nil file:nil];
-	if (saveResult == NSFileHandlingPanelCancelButton)
-    {
-		if (outError) *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSUserCancelledError userInfo:nil];
-		return nil;
-	}
-    
-	
-	//  Put up a progress bar
-	NSImage *newDocumentImage = [NSImage imageNamed:@"document.icns"];
-	NSString *progressMessage = NSLocalizedString(@"Creating Site...",@"Creating Site...");
-	
-    KSProgressPanel *progressPanel = [[KSProgressPanel alloc] init];
-    [progressPanel setMessageText:progressMessage];
-    [progressPanel setInformativeText:nil];
-    [progressPanel setIcon:newDocumentImage];
-    [progressPanel makeKeyAndOrderFront:self];
-        
-	
-    KTDocument *result = nil;
-    @try    // To remove the progress bar if something goes wrong
-	{
-        // Do we already have a file there? Remove it.
-		NSURL *saveURL = [savePanel URL];
-		if ([[NSFileManager defaultManager] fileExistsAtPath:[saveURL path]])
-		{
-			// is saveURL path writeable?
-			if (![[NSFileManager defaultManager] isWritableFileAtPath:[saveURL path]])
-			{
-				NSMutableDictionary *errorInfo = [NSMutableDictionary dictionary];
-				[errorInfo setObject:[NSString stringWithFormat:
-                                      NSLocalizedString(@"Unable to create new document.",@"Alert: Unable to create new document.")]
-							  forKey:NSLocalizedDescriptionKey]; // message text
-				[errorInfo setObject:[NSString stringWithFormat:
-                                      NSLocalizedString(@"The path %@ is not writeable.",@"Alert: The path %@ is not writeable."), [saveURL path]]
-							  forKey:NSLocalizedFailureReasonErrorKey]; // informative text
-				if (outError)
-				{
-					*outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileWriteNoPermissionError userInfo:errorInfo];
-				}
-				
-				return nil;
-			}
-			
-			if (![[NSFileManager defaultManager] removeFileAtPath:[saveURL path] handler:nil])
-			{
-				
-				//  put up an error that the previous file could not be overwritten
-				NSMutableDictionary *errorInfo = [NSMutableDictionary dictionary];
-				[errorInfo setObject:[NSString stringWithFormat:
-                                      NSLocalizedString(@"Unable to create new document.",@"Alert: Unable to create new document.")]
-							  forKey:NSLocalizedDescriptionKey]; // message text
-				[errorInfo setObject:[NSString stringWithFormat:
-                                      NSLocalizedString(@"Could not remove pre-existing file at path %@.",@"Alert: Could not remove pre-existing file at path %@."), [saveURL path]]
-							  forKey:NSLocalizedFailureReasonErrorKey]; // informative text
-				
-				if (outError)
-				{
-					*outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileWriteNoPermissionError userInfo:errorInfo];
-				}
-				
-				return nil;
-			}
-		}
-		
-		
-        
-        // Create the doc
-        result = [[docClass alloc] initWithType:typeName
-                                     rootPlugin:[[oNewDocHomePageTypePopup selectedItem] representedObject]
-                                          error:outError];
-        [result autorelease];
-        
-        KTPage *root = [[result site] root];
-        KTMaster *master = [root master];
-        
-        
-        // Give the site a subtitle too
-        NSString *subtitle = [[NSBundle mainBundle] localizedStringForString:@"siteSubtitleHTML"
-                                                                    language:[master valueForKey:@"language"]
-                                                                    fallback:NSLocalizedStringWithDefaultValue(@"siteSubtitleHTML", nil, [NSBundle mainBundle],
-                                                                                                               @"This is the subtitle for your site.",
-                                                                                                               @"Default introduction statement for a page")];
-        [master setValue:subtitle forKey:@"siteSubtitleHTML"];
-        
-        
-        // FIXME: we should load up the properties from a KTPreset
-        [root setBool:NO forKey:@"includeTimestamp"];
-        [root setInteger:KTCollectionUnsorted forKey:@"collectionSortOrder"];
-        [root setCollectionSyndicate:NO];
-        [root setInteger:0 forKey:@"collectionMaxIndexItems"];
-        [root setBool:NO forKey:@"collectionShowPermanentLink"];
-        [root setBool:YES forKey:@"collectionHyperlinkPageTitles"];		
-        
-        
-        NSString *defaultRootIndexIdentifier = [[NSUserDefaults standardUserDefaults] stringForKey:@"DefaultRootIndexBundleIdentifier"];
-        if (nil != defaultRootIndexIdentifier && ![defaultRootIndexIdentifier isEqualToString:@""])
-        {
-            KTAbstractHTMLPlugin *plugin = [KTIndexPlugin pluginWithIdentifier:defaultRootIndexIdentifier];
-            if (nil != plugin)
-            {
-                NSBundle *bundle = [plugin bundle];
-                [root setValue:defaultRootIndexIdentifier forKey:@"collectionIndexBundleIdentifier"];
-                
-                Class indexToAllocate = [bundle principalClassIncludingOtherLoadedBundles:YES];
-                KTAbstractIndex *theIndex = [[((KTAbstractIndex *)[indexToAllocate alloc]) initWithPage:root plugin:plugin] autorelease];
-                [root setIndex:theIndex];
-            }
-        }
-        
-        // Give it a Site Title based on the location
-        NSString *siteName = [[NSFileManager defaultManager] displayNameAtPath:[[saveURL path] stringByDeletingPathExtension]];
-        [master setSiteTitleHTML:siteName];
-        
-        
-        // Set the Favicon
-        NSString *faviconPath = [[NSBundle mainBundle] pathForImageResource:@"32favicon"];
-        KTMediaContainer *faviconMedia = [[root mediaManager] mediaContainerWithPath:faviconPath];
-        [master setValue:[faviconMedia identifier] forKey:@"faviconMediaIdentifier"];
-        
-        
-        // Make the initial Sandvox badge
-        NSString *initialBadgeBundleID = [[NSUserDefaults standardUserDefaults] objectForKey:@"DefaultBadgeBundleIdentifier"];
-        if (nil != initialBadgeBundleID && ![initialBadgeBundleID isEqualToString:@""])
-        {
-            KTElementPlugin *badgePlugin = [KTElementPlugin pluginWithIdentifier:initialBadgeBundleID];
-            if (badgePlugin)
-            {
-                KTPagelet *pagelet = [KTPagelet pageletWithPage:root plugin:badgePlugin];
-                [pagelet setPrefersBottom:YES];
-            }
-        }
-        
-        
-        
-        // Is this path a currently open document? if yes, close it!
-		NSDocument *openDocument = [[NSDocumentController sharedDocumentController] documentForURL:saveURL];
-		[openDocument close];   // Has no effect if openDocument is nil
-        
-        
-        // We want the doc to have a presence on-disk before the user works with it
-        if (![result saveToURL:saveURL ofType:[result fileType] forSaveOperation:NSSaveAsOperation error:outError])
-        {
-            result = nil;
-        }
-    }
-    @finally
-	{
-		// Hide the progress window
-		[progressPanel performClose:self];
-        [progressPanel release];
-	}
-    
-        
-    
-    return result;
+    return [super makeUntitledDocumentOfType:typeName error:outError];
 }
     
-- (IBAction)newDocShowHelp:(id)sender
-{
-	[[NSApp delegate] showHelpPage:@"Replacing_the_Home_Page_with_an_alternative_page_type"];		// HELPSTRING
-}
-
 - (BOOL)alertShowHelp:(NSAlert *)alert
 {
 	NSString *helpString = @"Document";		// HELPSTRING
 	return [NSHelpManager gotoHelpAnchor:helpString];
 }
 
-#pragma mark -
-#pragma mark Document Closing
-
-/*  Normally, if there are 2 or more edited docs open, NSDocumentController asks the user what they want to do.
- *  We override this method to jump straight to asking each individual doc to close.
- */
-- (void)reviewUnsavedDocumentsWithAlertTitle:(NSString *)title
-                                 cancellable:(BOOL)cancellable
-                                    delegate:(id)delegate
-                        didReviewAllSelector:(SEL)didReviewAllSelector
-                                 contextInfo:(void *)contextInfo
+- (NSError *)willPresentError:(NSError *)error
 {
-    // Act as if the user had chosen "Review..."
-    if (delegate)
-    {
-        BOOL result = NO;
-        
-        NSInvocation *callback = [NSInvocation invocationWithMethodSignature:[delegate methodSignatureForSelector:didReviewAllSelector]];
-        [callback setTarget:delegate];
-        [callback setSelector:didReviewAllSelector];
-        [callback setArgument:&self atIndex:2];                         // documentController:
-        [callback setArgument:&result atIndex:3];                       // didReviewAll:
-        if (contextInfo) [callback setArgument:&contextInfo atIndex:4]; // contextInfo:
-        
-        [callback invoke];
-    }
-    
-    [self closeAllDocumentsWithDelegate:self didCloseAllSelector:@selector(documentController:didCloseAll:contextInfo:) contextInfo:NULL];
-}
-
-/*  The user tried to quit, and in response, all documents tried to close themselves. If that was successful and there are now no edited
- *  documents open, we can quit.
- */
-- (void)documentController:(NSDocumentController *)docController didCloseAll:(BOOL)didCloseAll contextInfo:(void *)contextInfo
-{
-    if (didCloseAll && ![self hasEditedDocuments])
-    {
-        [NSApp terminate:self];
-    }
+	NSError *result = [super willPresentError:error];
+	return result;
 }
 
 #pragma mark -
@@ -349,9 +150,13 @@
 
 - (Class)documentClassForType:(NSString *)documentTypeName
 {
-    if ([kKTDocumentUTI_ORIGINAL isEqualToString:documentTypeName])
+    if ([kSVDocumentType_1_0 isEqualToString:documentTypeName])
     {
-        return [KTDataMigrationDocument class];
+        return nil;//[KTDataMigrationDocument class];
+    }
+    else if ([documentTypeName isEqualToString:kSVDocumentTypeName_1_5])
+    {
+        return [SVMigrationDocument class];
     }
     else
     {
@@ -363,18 +168,21 @@
  */
 - (NSString *)typeForContentsOfURL:(NSURL *)inAbsoluteURL error:(NSError **)outError
 {
+    // Consult plist first
     NSString *result = [super typeForContentsOfURL:inAbsoluteURL error:outError];
     
-    if ([inAbsoluteURL isFileURL])
+    if ([result isEqualToString:kSVDocumentTypeName_1_5] && [inAbsoluteURL isFileURL])
     {
         BOOL fileIsDirectory = YES;
         BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[inAbsoluteURL path] isDirectory:&fileIsDirectory];
                            
-        if (fileExists &&
-            [[NSString UTIForFileAtPath:[inAbsoluteURL path]] conformsToUTI:kKTDocumentUTI_ORIGINAL] &&
-            !fileIsDirectory)
+        if (fileExists)
         {
-            result = kKTDocumentUTI_ORIGINAL;
+            if ([[KSWORKSPACE ks_typeOfFileAtURL:inAbsoluteURL] conformsToUTI:kSVDocumentType_1_0] &&
+                !fileIsDirectory)
+            {
+                result = kSVDocumentType_1_0;
+            }
         }
     }
     
@@ -383,28 +191,42 @@
 
 - (id)openDocumentWithContentsOfURL:(NSURL *)absoluteURL display:(BOOL)displayDocument error:(NSError **)outError
 {
-	LOG((@"opening document %@", [absoluteURL path]));
-	// first, close any modal windows
-	if ( nil != [NSApp modalWindow] )
-	{
-		[NSApp stopModalWithCode:NSAlertSecondButtonReturn]; // cancel
-	}	
-	
 	NSString *requestedPath = [absoluteURL path];
-    NSString *fileType = [self typeForContentsOfURL:absoluteURL error:outError];
+	// General error description to use if there are problems
+	NSError *subError = nil;
+	
+    NSString *type = [self typeForContentsOfURL:absoluteURL error:outError];	// Should we ignore this error?
 	
 	// are we opening a KTDocument?
-	if (fileType && ([fileType isEqualToString:kKTDocumentType] || [fileType isEqualToString:kKTDocumentUTI_ORIGINAL]))
-	{		
+	if ([type isEqualToString:kSVDocumentTypeName] ||
+        [type isEqualToString:kSVDocumentTypeName_1_5] ||
+        [type isEqualToString:kSVDocumentType_1_0])
+	{
+        // Make sure the doc exists. Normally NSDocument would do this for us, but we need to read metadata first
+        
+        
+        
 		// check compatibility with KTModelVersion
 		NSDictionary *metadata = nil;
 		@try
 		{
-			NSURL *datastoreURL = [KTDocument datastoreURLForDocumentURL:absoluteURL
-                                                                    type:([fileType isEqualToString:kKTDocumentUTI_ORIGINAL] ? kKTDocumentUTI_ORIGINAL : kKTDocumentUTI)];
+			NSURL *sourceStoreURL = [KTDocument datastoreURLForDocumentURL:absoluteURL
+                                                                    type:type];
             
-			metadata = [NSPersistentStoreCoordinator metadataForPersistentStoreWithURL:datastoreURL
-                                                                                 error:outError];
+			metadata = [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:nil
+                                                                                  URL:sourceStoreURL
+                                                                                error:&subError];
+            
+            // Might be a 2.0 beta doc that had new format, but old extension
+            if (!metadata && [type isEqualToString:kSVDocumentTypeName_1_5])
+            {
+                sourceStoreURL = [KTDocument datastoreURLForDocumentURL:absoluteURL
+                                                                   type:kSVDocumentTypeName];
+                
+                metadata = [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:nil
+                                                                                      URL:sourceStoreURL
+                                                                                    error:&subError];
+            }
 		}
 		@catch (NSException *exception)
 		{
@@ -413,67 +235,78 @@
 			metadata = nil;
 		}
 		
-		if (!metadata)
-		{
-			NSLog(@"error: ***Can't open %@ : unable to read metadata!", requestedPath);
-			NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
-			
-			NSString *description = NSLocalizedString(@"Unable to read document metadata.",
-													  "error description: document metadata is unreadable");
-			[userInfo setObject:description forKey:NSLocalizedDescriptionKey];
-			
-			NSString *reason = NSLocalizedString(@"\n\nSandvox was not able to read the document metadata.\n\nPlease contact Karelia Software by sending feedback from the 'Help' menu.",
-												 "error reason: document metadata is unreadable");
-			[userInfo setObject:reason forKey:NSLocalizedFailureReasonErrorKey];
-			
-			[userInfo setObject:[absoluteURL path] forKey:NSFilePathErrorKey];
-			
-			if (outError)
-			{
-				*outError = [NSError errorWithDomain:NSCocoaErrorDomain 
-												code:NSPersistentStoreInvalidTypeError 
-											userInfo:userInfo];
-			}
-			return nil;
-		}
 		
 		NSString *modelVersion = [metadata valueForKey:kKTMetadataModelVersionKey];
-		if (!modelVersion || [modelVersion isEqualToString:@""])
+        if (![modelVersion length])
 		{
-			NSLog(@"error: ***Can't open %@ : no model version!", requestedPath);
-			
-			NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
-			
-			NSString *description = NSLocalizedString(@"Unable to read document model information.",
-													  "error description: document model version is unknown");
-			[userInfo setObject:description forKey:NSLocalizedDescriptionKey];
-			
-			NSString *reason = NSLocalizedString(@"\n\nThis document appears to have an unknown document model.\n\nPlease contact Karelia Software by sending feedback from the 'Help' menu.",
-												 "error reason: document model version is unknown");
-			[userInfo setObject:reason forKey:NSLocalizedFailureReasonErrorKey];
-			
-			[userInfo setObject:[absoluteURL path] forKey:NSFilePathErrorKey];
-			
-			if (outError)
-			{
-				*outError = [NSError errorWithDomain:NSCocoaErrorDomain 
-												code:NSPersistentStoreInvalidTypeError 
-											userInfo:userInfo];	
-			}
-			return nil;
+            // If failed to read in metadata, assume it's a regular document and try to open it. The document itself will probably then report a failure because the doc is corrupt in some way. #118559
+            if (metadata)   
+            {
+                NSLog(@"error: ***Can't open %@ : no model version!", requestedPath);
+                
+                NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+                            
+                NSString *secondary = NSLocalizedString(@"This document appears to have an unknown document model.\n\nPlease contact Karelia Software by sending feedback from the 'Sandvox' menu.",
+                                                     "error reason: document model version is unknown");
+                [userInfo setObject:NSLocalizedString(@"Document model error.", @"brief description of error") forKey:NSLocalizedDescriptionKey];
+                [userInfo setObject:secondary forKey:NSLocalizedRecoverySuggestionErrorKey];
+                [userInfo setObject:requestedPath forKey:NSFilePathErrorKey];
+                
+                if (outError)
+                {
+                    *outError = [NSError errorWithDomain:NSCocoaErrorDomain 
+                                                    code:NSPersistentStoreInvalidTypeError 
+                                                userInfo:userInfo];	
+                }
+                return nil;
+            }
 		}
-
-		
-		if (![modelVersion isEqualToString:kKTModelVersion] && NO)
-		{
-			
-		}
-	}
-	
-	// by now, absoluteURL should be a good file, open it
+        
+        
+        
+        // Migrate?
+        if (![type isEqualToString:kSVDocumentTypeName])
+        {
+            NSDocument *doc = [super openDocumentWithContentsOfURL:absoluteURL
+                                                           display:NO
+                                                             error:outError];
+            [doc saveDocumentAs:self];
+            return doc;
+        }
+    }
+    
+    
+    
+    // by now, absoluteURL should be a good file, open it
 	id document = [super openDocumentWithContentsOfURL:absoluteURL
 											   display:displayDocument
-												 error:outError];
+												 error:&subError];
+	if (!document && subError && outError)
+	{
+		NSString *reasonOfSubError = [subError localizedFailureReason];
+		if (!reasonOfSubError)	// Note:  above returns nil!
+		{
+			reasonOfSubError = [[subError userInfo] objectForKey:@"reason"];
+			// I'm not sure why but emperically the "reason" key has been set.
+		}
+		if (!reasonOfSubError)
+		{
+			reasonOfSubError = [NSString stringWithFormat:NSLocalizedString(@"Error type: %@, code %d", @"information for an error"), [subError domain], [subError code]];
+		}
+
+		NSMutableDictionary *errorInfo = [NSMutableDictionary dictionary];
+		[errorInfo setValue:NSLocalizedString(@"There is a problem with the document.", @"brief description of error.") forKey:NSLocalizedDescriptionKey];
+		[errorInfo setValue:reasonOfSubError forKey:NSLocalizedRecoverySuggestionErrorKey];
+		[errorInfo setValue:subError forKey:NSUnderlyingErrorKey];
+		[errorInfo setObject:requestedPath forKey:NSFilePathErrorKey];
+
+		if (outError)
+		{
+			*outError = [NSError errorWithDomain:[subError domain] 
+											code:[subError code] 
+										userInfo:errorInfo];
+		}
+	}
 	
 	if ([document isKindOfClass:[KTPluginInstaller class]])
 	{
@@ -482,7 +315,6 @@
 					   withObject:nil 
 					   afterDelay:0.0];
 	}
-
 	
 	return document;
 }
@@ -499,10 +331,10 @@
     {
 		if ([document isKindOfClass:[KTDocument class]])	// make sure it's a KTDocument
 		{
-			if ( [[[document fileName] pathExtension] isEqualToString:kKTDocumentExtension] 
+			if ( [[[document fileName] pathExtension] isEqualToString:kSVDocumentPathExtension] 
 				&& ![[document fileName] hasPrefix:[[NSBundle mainBundle] bundlePath]]  )
 			{
-				BDAlias *alias = [BDAlias aliasWithSubPath:[document fileName] relativeToPath:[NSHomeDirectory() stringByResolvingSymlinksInPath]];
+				BDAlias *alias = [BDAlias aliasWithPath:[document fileName] relativeToPath:[NSHomeDirectory() stringByResolvingSymlinksInPath]];
 				if (nil == alias)
 				{
 					// couldn't find relative to home directory, so just do absolute
@@ -531,8 +363,7 @@
 {
 	[super addDocument:document];
     
-    [[KTPlaceholderController sharedController] hideWindow:self];
-	[self synchronizeOpenDocumentsUserDefault];
+    [[SVWelcomeController sharedController] hideWindow:self];
 }
 
 /*	When a document is removed we don't want to reopen on launch, unless the close was part of the app quitting
@@ -543,19 +374,20 @@
     
     if (![NSApp isTerminating])
 	{
+		[self synchronizeOpenDocumentsUserDefault];	// do this (again) here -- in removeDocument, it doesn't actually remove it!
+		
 		// Show the placeholder window when there are no docs open
         if ([[self documents] count] == 0)
         {
-            [self showDocumentPlaceholderWindow:self];
+            [self showDocumentPlaceholderWindowInitial:NO];
         }
-        
-        // Record open doc list
-        [self synchronizeOpenDocumentsUserDefault];
-	}
+    }
 }
 
 #pragma mark -
 #pragma mark Recent Documents
+
+// N.B.: This is called by -[NSDocumentController removeDocument:] so we will have to sync later too.
 
 - (void)noteNewRecentDocument:(NSDocument *)aDocument
 {
@@ -580,8 +412,39 @@
 		if (noteDocument)
 		{
 			[super noteNewRecentDocument:aDocument];
+            
+            if (![NSApp isTerminating])
+            {
+                [self synchronizeOpenDocumentsUserDefault];
+            }
 		}
 	}
 }
+
+#pragma mark Inspectors
+
+- (Class)inspectorClass;
+{
+    return [SVInspector class];
+}
+
+#pragma mark validation
+
+
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
+{
+	OBPRECONDITION(menuItem);
+	VALIDATION((@"%s %@",__FUNCTION__, menuItem));
+	
+		// default to YES so we don't have to do special validation for each action. Some actions might say NO.
+	
+	if (gLicenseViolation || [[NSApp delegate] appIsExpired])
+	{
+		return NO;	// No, don't let stuff be done if expired.
+	}
+	
+	return [super validateMenuItem:menuItem];
+}
+
 
 @end

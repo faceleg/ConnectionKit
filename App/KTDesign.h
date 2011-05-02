@@ -2,27 +2,57 @@
 //  KTDesign.h
 //  Marvel
 //
-//  Copyright 2004-2009 Karelia Software. All rights reserved.
+//  Copyright 2004-2011 Karelia Software. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "KSPlugin.h"
+#import "KSPlugInWrapper.h"
 
 
-@class KTImageScalingSettings;
+typedef enum { HIER_MENU_NONE, HIER_MENU_HORIZONTAL, HIER_MENU_VERTICAL, HIER_MENU_VERTICAL_IF_SIDEBAR } HierMenuType;
+// Horizontal: Usual horizontal layout, submenus spew down vertically
+// Vertical: Vertical layout of menus (e.g. in sidebar), submenus spew out vertically to the right
+
+@class KTImageScalingSettings, KTDesignFamily, SVHTMLContext;
+
+@protocol IKImageBrowserItem <NSObject> @end    // weirdly ImageKit only declares it as an informal protocol
+
+extern const int kDesignThumbWidth;
+extern const int kDesignThumbHeight;
 
 
-@interface KTDesign : KSPlugin
+@interface KTDesign : KSPlugInWrapper <IKImageBrowserItem>
 {
     @protected
-    NSImage *myThumbnail;
-	NSSet	*myResourceFileURLs;
+    NSImage *_thumbnail;
+	CGImageRef  _thumbnailCG;  // CGImageRefs aren't supposed to be pointers
+	NSSet	*_resourceFileURLs;
+	KTDesign *_familyPrototype;
+	KTDesignFamily *_family;
+	NSMutableDictionary *_thumbnails;	// keyed by nsnumber for version so it can be arbitrary sized
 	
-	BOOL myFontsLoaded;
+	BOOL _fontsLoaded;
+	BOOL _contracted;
+	NSUInteger _imageVersion;
+	NSUInteger _variationIndex;
 }
 
-- (int)numberOfSubDesigns;
-- (NSArray *)subDesigns;
+@property (nonatomic, copy) NSImage *thumbnail;
+@property (nonatomic) CGImageRef thumbnailCG;
+@property (nonatomic, copy) NSSet *resourceFileURLs;
+@property (nonatomic, retain) KTDesign *familyPrototype;
+@property (nonatomic, retain) KTDesignFamily *family;
+@property (nonatomic, retain) NSMutableDictionary *thumbnails;
+@property (nonatomic) BOOL fontsLoaded;
+@property (nonatomic, assign, getter=isContracted) BOOL contracted;
+@property (nonatomic) NSUInteger imageVersion;
+@property (nonatomic) NSUInteger variationIndex;
+
++ (NSArray *)reorganizeDesigns:(NSArray *)designs familyRanges:(NSArray **)outRanges;
+- (NSString *)parentBundleIdentifier;
+
++ (NSArray *)genreValues;
++ (NSArray *)colorValues;
++ (NSArray *)widthValues;
 
 + (NSString *)remotePathForDesignWithIdentifier:(NSString *)identifier;
 - (NSString *)remotePath;
@@ -30,33 +60,54 @@
 - (NSString *)contributor;		// externally visible author's name, shows up in design chooser
 - (NSURL *)URL;
 - (int)textWidth;
+- (HierMenuType)hierMenuType;
 - (NSDictionary *)imageReplacementTags;	// returns a dictionary, key is the tag (h3, #sitemenu li, etc.), value is URL to pull apart with options for renderer.
 - (NSString *)sidebarBorderable;
 - (NSString *)calloutBorderable;
+- (NSString *)genre;	
+- (NSString *)color;	// dark, light, or colorful
+- (NSString *)width;	// standard, wide, or flexible
 - (BOOL)menusUseNonBreakingSpaces;
+
+// Graphics
+- (NSString *)inlineGraphicClearValue;
 
 // Images
 - (NSImage *)thumbnail;
+- (CGImageRef)thumbnailCG;
 
-- (NSImage *)replacementImageForCode:(NSString *)aCode string:(NSString *)aString size:(NSNumber *)aSize;
-
-- (NSString *)placeholderImagePath;
+- (NSURL *)placeholderImageURL;
++ (NSURL *)placeholderImageURLForDesign:(KTDesign *)design; //  uses default if design doesn't supply it's own
 
 - (BOOL)allowsBannerSubstitution;
 - (NSString *)bannerCSSSelector;
 - (BOOL)hasLocalFonts;
+- (BOOL)isFamilyPrototype;
+- (void) scrub:(float)howFar;
+- (NSArray *)imports;
+- (NSDictionary *)conditionalCommentsForIE;
 
+
+#pragma mark Image Replacement
+
+- (NSImage *)replacementImageForCode:(NSString *)aCode
+                              string:(NSString *)aString
+                                size:(NSNumber *)aSize;
+
+- (NSURL *)URLForCompositionForImageReplacementCode:(NSString *)code;
+
+   
 // Viewport
 - (unsigned)viewport;	// Mainly used by the iPhone to know a page's optimum width
 
 // Other
 - (NSComparisonResult)compareTitles:(KTDesign *)aDesign;
 - (void) loadLocalFontsIfNeeded;
+- (NSString *)titleOrParentTitle;
 
 // Resource data
 - (NSSet *)resourceFileURLs;
-- (NSData *)dataForResourceAtPath:(NSString *)path MIMEType:(NSString **)mimeType error:(NSError **)error;
-- (NSData *)mainCSSData;
+- (void)writeCSS:(SVHTMLContext *)context;
 
 @end
 

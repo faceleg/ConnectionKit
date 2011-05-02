@@ -3,12 +3,11 @@
 //  Marvel
 //
 //  Created by Mike on 04/02/2008.
-//  Copyright 2008-2009 Karelia Software. All rights reserved.
+//  Copyright 2008-2011 Karelia Software. All rights reserved.
 //
 
 #import "KTSummaryWebViewTextBlock.h"
 
-#import "KTWebKitCompatibility.h"
 #import "KTPage.h"
 
 #import "NSObject+Karelia.h"
@@ -85,7 +84,6 @@
 		}
 	}
 	
-	myIsEditing = YES;
 	return YES;
 }
 
@@ -100,7 +98,7 @@
 		KTPage *page = [self HTMLSourceObject];
 		if (![page customSummaryHTML] && [page summaryHTMLKeyPath])
 		{
-			[[self DOMNode] setInnerHTML:[self innerHTML]];
+			[[self DOMNode] setInnerHTML:[self innerHTMLString]];
 		}
 	}
 	
@@ -126,7 +124,7 @@
 #pragma mark -
 #pragma mark Support
 
-- (NSString *)innerHTML
+- (NSString *)innerHTMLString
 {
 	KTPage *page = [self HTMLSourceObject];
 	
@@ -172,7 +170,7 @@
 - (IBAction)overrideSummary:(id)sender		// respond to menu
 {
 	KTPage *page = [self HTMLSourceObject];
-	[page setCustomSummaryHTML:[self innerHTML]];
+	[page setCustomSummaryHTML:[self innerHTMLString]];
 	[[self DOMNode] setInnerHTML:[self innerEditingHTML]];
 }
 

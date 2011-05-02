@@ -1,0 +1,7 @@
+[[if feedURL]]
+    [[if currentContext.liveDataFeeds]]
+    <script src="http://service.karelia.com/feed.js.php?url=[[=%URLAsHTTP]]&amp;[[if max]]max=[[=%max]]&amp;[[endif3]]k=[[=%key]][[if openLinksInNewWindow]]&amp;n=1[[endif3]][[if summaryChars]]&amp;s=[[=summaryChars]][[endif3]]" type="text/javascript"></script>
+    [[else2]]
+        [[=writeOfflinePreviews]]
+    [[endif2]]
+[[endif]]

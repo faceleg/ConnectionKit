@@ -3,31 +3,69 @@
 //  Marvel
 //
 //  Created by Mike on 04/01/2009.
-//  Copyright 2009 Karelia Software. All rights reserved.
+//  Copyright 2009-2011 Karelia Software. All rights reserved.
 //
 
 #import "KTPageDetailsController.h"
 
+#import "KTDocWindowController.h"
+#import "KTDocument.h"
+#import "SVDownloadSiteItem.h"
+#import "SVMediaRecord.h"
+#import "SVMediaProtocol.h"
+#import "SVPagesTreeController.h"
+#import "SVSiteOutlineViewController.h"
+#import "SVURLPreviewViewController.h"
+
+#import "KSFocusingTextField.h"
 #import "KSPopUpButton.h"
+#import "KSShadowedRectView.h"
+#import "KSURLFormatter.h"
 #import "KSValidateCharFormatter.h"
 
+#import "BDAlias.h"
+#import "MAAttachedWindow.h"
 #import "NTBoxView.h"
 
 #import "NSCharacterSet+Karelia.h"
+#import "NSImage+Karelia.h"
 #import "NSObject+Karelia.h"
+#import "NSString+Karelia.h"
+#import "NSWorkspace+Karelia.h"
 
-#import "KTPageDetailsBoxView.h"
-#import <iMediaBrowser/RBSplitView.h>
+#import <QuartzCore/QuartzCore.h>
+
+NSString* kTrackerKey = @"whichTracker";
+
 
 static NSString *sMetaDescriptionObservationContext = @"-metaDescription observation context";
 static NSString *sWindowTitleObservationContext = @"-windowTitle observation context";
-static NSString *sTitleTextObservationContext = @"-titleText observation context";
+static NSString *sFileNameObservationContext = @"-fileName observation context";
+static NSString *sBaseExampleURLStringObservationContext = @"-baseExampleURLString observation context";
+static NSString *sExternalURLStringObservationContext = @"-externalURLString observation context";
+static NSString *sSelectedObjectsObservationContext = @"-selectedObjects observation context";
+static NSString *sSelectedViewControllerObservationContext = @"-selectedViewController observation context";
+static NSString *sCharacterDescription0Count = nil;
+static NSString *sCharacterDescription1Count = nil;
+static NSString *sCharacterDescriptionPluralCountFormat = nil;
 
+#define ATTACHED_WINDOW_TRANSP 0.6
 
-@interface KTPageDetailsController (Private)
+enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePageDetailsContext, kMetaDescriptionPageDetailsContext
+};
+
+@interface KTPageDetailsController ()
 - (void)metaDescriptionDidChangeToValue:(id)value;
 - (void)windowTitleDidChangeToValue:(id)value;
-- (void) resetPlaceholderToComboTitleText:(NSString *)comboTitleText;
+- (void)fileNameDidChangeToValue:(id)value;
+- (void) resetDescriptionPlaceholder:(NSString *)metaDescriptionText;
+- (void) layoutPageURLComponents;
+- (NSColor *)metaDescriptionCharCountColor;
+- (NSColor *)windowTitleCharCountColor;
+- (NSColor *)fileNameCharCountColor;
+- (void) updateFieldsBasedOnSelectedSiteOutlineObjects:(NSArray *)selObjects;
+- (void)updateWidthForActiveTextField:(NSTextField *)textField;
+- (void) rebindWindowTitleAndMetaDescriptionFields;
 @end
 
 
@@ -36,19 +74,139 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 
 @implementation KTPageDetailsController
 
++ (void)initialize
+{
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
+	sCharacterDescription0Count = NSLocalizedString(@"0 characters", @"format string for showing that ZERO characters have been typed");
+	sCharacterDescription1Count = NSLocalizedString(@"1 character", @"format string for showing that ONE character has been typed");
+	sCharacterDescriptionPluralCountFormat = NSLocalizedString(@"%d characters", @"format string for showing how many characters have been typed");
+
+	[pool release];
+}
+
+@synthesize activeTextField = _activeTextField;
+@synthesize attachedWindow = _attachedWindow;
+@synthesize whatKindOfItemsAreSelected = _whatKindOfItemsAreSelected;
+@synthesize initialWindowTitleBindingOptions = _initialWindowTitleBindingOptions;
+@synthesize initialMetaDescriptionBindingOptions = _initialMetaDescriptionBindingOptions;
+
+#pragma mark -
+#pragma mark Tracking Areas
+
+@synthesize windowTitleTrackingArea		= _windowTitleTrackingArea;
+@synthesize metaDescriptionTrackingArea = _metaDescriptionTrackingArea;
+@synthesize externalURLTrackingArea		= _externalURLTrackingArea;
+@synthesize fileNameTrackingArea		= _fileNameTrackingArea;
+@synthesize mediaFilenameTrackingArea	= _mediaFilenameTrackingArea;
+
+- (void) setWindowTitleTrackingArea: (NSTrackingArea *) aWindowTitleTrackingArea
+{
+	if (_windowTitleTrackingArea)
+	{
+		[oWindowTitleField removeTrackingArea:_windowTitleTrackingArea];
+	}
+
+    [aWindowTitleTrackingArea retain];
+    [_windowTitleTrackingArea release];
+    _windowTitleTrackingArea = aWindowTitleTrackingArea;
+
+	if (_windowTitleTrackingArea)
+	{
+		[oWindowTitleField addTrackingArea:_windowTitleTrackingArea];
+	}
+}
+- (void) setMetaDescriptionTrackingArea: (NSTrackingArea *) aMetaDescriptionTrackingArea	// w/ oMetaDescriptionField
+{
+	if (_metaDescriptionTrackingArea)
+	{
+		[oMetaDescriptionField removeTrackingArea:_metaDescriptionTrackingArea];
+	}
+	
+    [aMetaDescriptionTrackingArea retain];
+    [_metaDescriptionTrackingArea release];
+    _metaDescriptionTrackingArea = aMetaDescriptionTrackingArea;
+
+	if (_metaDescriptionTrackingArea)
+	{
+		[oMetaDescriptionField addTrackingArea:_metaDescriptionTrackingArea];
+	}
+}
+- (void) setExternalURLTrackingArea: (NSTrackingArea *) anExternalURLTrackingArea
+{
+	if (_externalURLTrackingArea)
+	{
+		[oExternalURLField removeTrackingArea:_externalURLTrackingArea];
+	}
+
+    [anExternalURLTrackingArea retain];
+    [_externalURLTrackingArea release];
+    _externalURLTrackingArea = anExternalURLTrackingArea;
+
+	if (_externalURLTrackingArea)
+	{
+		[oExternalURLField addTrackingArea:_externalURLTrackingArea];
+	}
+}
+- (void) setFileNameTrackingArea: (NSTrackingArea *) aFileNameTrackingArea
+{
+	if (_fileNameTrackingArea)
+	{
+		[oFileNameField removeTrackingArea:_fileNameTrackingArea];
+	}
+
+    [aFileNameTrackingArea retain];
+    [_fileNameTrackingArea release];
+    _fileNameTrackingArea = aFileNameTrackingArea;
+
+	if (_fileNameTrackingArea)
+	{
+		[oFileNameField addTrackingArea:_fileNameTrackingArea];
+	}
+}
+- (void) setMediaFilenameTrackingArea: (NSTrackingArea *) aMediaFilenameTrackingArea
+{
+	if (_mediaFilenameTrackingArea)
+	{
+		[oMediaFilenameField removeTrackingArea:_mediaFilenameTrackingArea];
+	}
+
+    [aMediaFilenameTrackingArea retain];
+    [_mediaFilenameTrackingArea release];
+    _mediaFilenameTrackingArea = aMediaFilenameTrackingArea;
+
+	if (_mediaFilenameTrackingArea)
+	{
+		[oMediaFilenameField addTrackingArea:_mediaFilenameTrackingArea];
+	}
+}
+
+
 #pragma mark -
 #pragma mark Init & Dealloc
 
-+ (void)initialize
-{
-	[self setKey:@"metaDescriptionCountdown" triggersChangeNotificationsForDependentKey:@"metaDescriptionCharCountColor"];
-	[self setKey:@"windowTitleCountdown" triggersChangeNotificationsForDependentKey:@"windowTitleCharCountColor"];
-}
-	
 - (void)dealloc
 {
-	[_metaDescriptionCountdown release];
-	[_windowTitleCountdown release];
+	[[NSNotificationCenter defaultCenter] removeObserver:self
+												 name:NSViewFrameDidChangeNotification
+											   object:[self view]];
+    
+    self.view = nil;		// stop observing early.
+    self.webContentAreaController = nil;
+
+	self.windowTitleTrackingArea		= nil;
+	self.metaDescriptionTrackingArea	= nil;
+	self.externalURLTrackingArea		= nil;
+	self.fileNameTrackingArea			= nil;
+	self.mediaFilenameTrackingArea		= nil;
+	
+	self.activeTextField = nil;
+	[_metaDescriptionCount release];
+	[_windowTitleCount release];
+	[_fileNameCount release];
+	self.initialWindowTitleBindingOptions = nil;
+	self.initialMetaDescriptionBindingOptions = nil;
+	
 	[super dealloc];
 }
 
@@ -56,22 +214,36 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 #pragma mark View
 
 - (void)setView:(NSView *)aView
-{
-	if (aView) OBPRECONDITION([aView isKindOfClass:[NTBoxView class]]);
-	
+{	
 	// Remove observers
 	if (!aView)
 	{
-		[oPagesController removeObserver:self forKeyPath:@"selection.metaDescription"];
-		[oPagesController removeObserver:self forKeyPath:@"selection.windowTitle"];
+		[oPagesTreeController removeObserver:self forKeyPath:@"selection.metaDescription"];
+		[oPagesTreeController removeObserver:self forKeyPath:@"selection.windowTitle"];
+		[oPagesTreeController removeObserver:self forKeyPath:@"selection.fileName"];
+        [oPagesTreeController removeObserver:self forKeyPath:@"selection.filename"];    // 101628
+		[oPagesTreeController removeObserver:self forKeyPath:@"selection.baseExampleURLString"];
+        [oPagesTreeController removeObserver:self forKeyPath:@"selection.URL"];
+		//[oPagesTreeController removeObserver:self forKeyPath:@"selection.title"];
+		[oPagesTreeController removeObserver:self forKeyPath:@"selectedObjects"];
+
 	}
 	
 	[super setView:aView];
 }
 
-- (NTBoxView *)pageDetailsPanel
+@synthesize webContentAreaController = _contentArea;
+- (void)setWebContentAreaController:(SVWebContentAreaController *)controller;
 {
-	return (NTBoxView *)[self view];
+    [_contentArea removeObserver:self forKeyPath:@"selectedViewController"];
+    
+    [controller retain];
+    [_contentArea release]; _contentArea = controller;
+    
+    [controller addObserver:self
+                 forKeyPath:@"selectedViewController"
+                    options:NSKeyValueObservingOptionNew
+                    context:sSelectedViewControllerObservationContext];
 }
 
 #pragma mark -
@@ -79,63 +251,96 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 
 - (void)awakeFromNib
 {
-	// Detail panel needs the right appearance
-	[[self pageDetailsPanel] setDrawsFrame:YES];
-	[[self pageDetailsPanel] setBorderMask:(NTBoxRight | NTBoxBottom)];
-	
-	
-	// Observe changes to the meta description and fake an initial observation
-	[oPagesController addObserver:self
-					   forKeyPath:@"selection.metaDescription"
-						  options:NSKeyValueObservingOptionNew
-						  context:sMetaDescriptionObservationContext];
-	[self metaDescriptionDidChangeToValue:[oPagesController valueForKeyPath:@"selection.metaDescription"]];
-	[oPagesController addObserver:self
-					   forKeyPath:@"selection.windowTitle"
-						  options:NSKeyValueObservingOptionNew
-						  context:sWindowTitleObservationContext];
-	[self windowTitleDidChangeToValue:[oPagesController valueForKeyPath:@"selection.windowTitle"]];
+	if (!_awokenFromNib)
+	{		
+		[oExternalURLField setFormatter:[[[KSURLFormatter alloc] init] autorelease]];
+		
+		// Detail panel needs the right appearance
+		
+		[[self view] setPostsFrameChangedNotifications:YES];
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(backgroundFrameChanged:)
+													 name:NSViewFrameDidChangeNotification
+												   object:[self view]];
 
-	[oPagesController addObserver:self
-					   forKeyPath:@"selection.titleText"
-						  options:NSKeyValueObservingOptionNew
-						  context:sTitleTextObservationContext];
-	[self resetPlaceholderToComboTitleText:[oPagesController valueForKeyPath:@"selection.comboTitleText"]];
-	
-	
-	
-	/// turn off undo within the cell to avoid exception
-	/// -[NSBigMutableString substringWithRange:] called with out-of-bounds range
-	/// this still leaves the setting of keywords for the page undo'able, it's
-	/// just now that typing inside the field is now not undoable
-	[[oKeywordsField cell] setAllowsUndo:NO];
-	
-	
-	// Limit entry in file name fields
-	NSCharacterSet *illegalCharSetForPageTitles = [[NSCharacterSet legalPageTitleCharacterSet] invertedSet];
-	NSFormatter *formatter = [[[KSValidateCharFormatter alloc]
-							   initWithIllegalCharacterSet:illegalCharSetForPageTitles] autorelease];
-	[oPageFileNameField setFormatter:formatter];
-	[oCollectionFileNameField setFormatter:formatter];
-	
-	
-	// Prepare the collection index.html popup
-	[oCollectionIndexExtensionButton bind:@"defaultValue"
-								 toObject:oPagesController
-							  withKeyPath:@"selection.defaultIndexFileName"
-								  options:nil];
-	
-	[oCollectionIndexExtensionButton setMenuTitle:NSLocalizedString(@"Index file name",
-																	"Popup menu title for setting the index.html file's extensions")];
-	
-	[oFileExtensionPopup bind:@"defaultValue"
-					 toObject:oPagesController
+		OFF((@"Gonna call layoutPageURLComponents from awakeFromNib"));
+		[self layoutPageURLComponents];
+		
+		// Observe changes to the meta description and fake an initial observation
+		[oPagesTreeController addObserver:self
+						   forKeyPath:@"selection.metaDescription"
+							  options:NSKeyValueObservingOptionNew
+							  context:sMetaDescriptionObservationContext];
+		[self metaDescriptionDidChangeToValue:[oPagesTreeController valueForKeyPath:@"selection.metaDescription"]];
+		[self resetDescriptionPlaceholder:[oPagesTreeController valueForKeyPath:@"selection.metaDescription"]];
+		
+		[oPagesTreeController addObserver:self
+						   forKeyPath:@"selection.windowTitle"
+							  options:NSKeyValueObservingOptionNew
+							  context:sWindowTitleObservationContext];
+		[self windowTitleDidChangeToValue:[oPagesTreeController valueForKeyPath:@"selection.windowTitle"]];
+		[oPagesTreeController addObserver:self
+						   forKeyPath:@"selection.fileName"
+							  options:NSKeyValueObservingOptionNew
+							  context:sFileNameObservationContext];
+		[oPagesTreeController addObserver:self
+						   forKeyPath:@"selection.filename"
+							  options:NSKeyValueObservingOptionNew
+							  context:sFileNameObservationContext];
+		[self fileNameDidChangeToValue:[oPagesTreeController valueForKeyPath:@"selection.fileName"]];	// pre-launch with which?
+		
+		[oPagesTreeController addObserver:self
+						   forKeyPath:@"selection.baseExampleURLString"
+							  options:NSKeyValueObservingOptionNew
+							  context:sBaseExampleURLStringObservationContext];
+
+		[oPagesTreeController addObserver:self
+							   forKeyPath:@"selection.URL"
+								  options:NSKeyValueObservingOptionNew
+								  context:sExternalURLStringObservationContext];
+		
+		[oPagesTreeController addObserver:self
+						   forKeyPath:@"selectedObjects"
+							  options:NSKeyValueObservingOptionNew
+							  context:sSelectedObjectsObservationContext];
+		[self updateFieldsBasedOnSelectedSiteOutlineObjects:[oPagesTreeController selectedObjects]];
+		
+		[self rebindWindowTitleAndMetaDescriptionFields];
+		
+		
+		/// turn off undo within the cell to avoid exception
+		/// -[NSBigMutableString substringWithRange:] called with out-of-bounds range
+		/// this still leaves the setting of keywords for the page undo'able, it's
+		/// just now that typing inside the field is now not undoable
+		//[[oKeywordsField cell] setAllowsUndo:NO];
+		
+		
+		// Limit entry in file name fields
+		NSCharacterSet *illegalCharSetForPageTitles = [[NSCharacterSet legalPageTitleCharacterSet] invertedSet];
+		NSFormatter *formatter = [[[KSValidateCharFormatter alloc]
+								   initWithIllegalCharacterSet:illegalCharSetForPageTitles] autorelease];
+		[oFileNameField setFormatter:formatter];
+		[oMediaFilenameField setFormatter:formatter];
+
+		[oExtensionPopup bind:@"defaultValue"
+					 toObject:oPagesTreeController
 				  withKeyPath:@"selection.defaultFileExtension"
 					  options:nil];
+		// popup is bound to availablePathExtensions, selection is bound to customPathExtension.
+        
+		[oIndexAndExtensionPopup bind:@"defaultValue"
+					 toObject:oPagesTreeController
+				  withKeyPath:@"selection.defaultIndexAndPathExtension"
+					  options:nil];
+		// popup is bound to availableIndexFilenames, selection is bound to customIndexAndPathExtension.
+		
+        
+        _awokenFromNib = YES;
+	}
 }
 
 #pragma mark -
-#pragma mark Meta Description
+#pragma mark Count fields
 
 /*  This code manages the meta description field in the Page Details panel. It's a tad complicated,
  *  so here's how it works:
@@ -144,12 +349,12 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
  *  Site Outline selection. i.e. The meta description field is bound this way. Its contents are
  *  saved back to the model ater the user ends editing
  *
- *  To complicate matters, we have a countdown label. This is derived from whatever is currently
+ *  To complicate matters, we have a count label. This is derived from whatever is currently
  *  entered into the description field. It does NOT map directly to what is in the model. The
- *  countdown label is bound directly to the -metaDescriptionCountdown property of
- *  KTPageDetailsController. To update the GUI, you need to call -setMetaDescriptionCountdown:
+ *  count label is bound directly to the -metaDescriptionCount property of
+ *  KTPageDetailsController. To update the GUI, you need to call -setMetaDescriptionCount:
  *  This property is an NSNumber as it needs to return NSMultipleValuesMarker sometimes. We update
- *  the countdown in response to either:
+ *  the count in response to either:
  *
  *      A)  The selection/model changing. This is detected by observing the Site Outline controller's
  *          selection.metaDescription property
@@ -157,36 +362,133 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
  *          delegate methods. We do NOT store these changes into the model immediately as this would
  *          conflict with the user's expectations of how undo/redo should work.
  *
- * This countdown behavior is reflected similarly with the windowTitle property.
+ * This count behavior is reflected similarly with the windowTitle property.
  */
 
-- (NSNumber *)metaDescriptionCountdown { return _metaDescriptionCountdown; }
+- (NSNumber *)metaDescriptionCount { return _metaDescriptionCount; }
 
-- (void)setMetaDescriptionCountdown:(NSNumber *)countdown
+- (void)setMetaDescriptionCount:(NSNumber *)count
 {
-	[countdown retain];
-	[_metaDescriptionCountdown release];
-	_metaDescriptionCountdown = countdown;
+	[count retain];
+	[_metaDescriptionCount release];
+	_metaDescriptionCount = count;
 }
 
-- (NSNumber *)windowTitleCountdown { return _windowTitleCountdown; }
+- (NSNumber *)windowTitleCount { return _windowTitleCount; }
 
-- (void)setWindowTitleCountdown:(NSNumber *)countdown
+- (void)setWindowTitleCount:(NSNumber *)count
 {
-	[countdown retain];
-	[_windowTitleCountdown release];
-	_windowTitleCountdown = countdown;
+	[count retain];
+	[_windowTitleCount release];
+	_windowTitleCount = count;
+}
+
+- (NSNumber *)fileNameCount { return _fileNameCount; }
+
+- (void)setFileNameCount:(NSNumber *)count
+{
+	[count retain];
+	[_fileNameCount release];
+	_fileNameCount = count;
+}
+
+// Properly pluralizing character count strings
+
+- (NSString *)metaDescriptionCountString
+{
+	int intValue = [self.metaDescriptionCount intValue];
+	switch(intValue)
+	{
+		case 0:
+			return sCharacterDescription0Count;
+		case 1:
+			return sCharacterDescription1Count;
+		default:
+			return [NSString stringWithFormat:sCharacterDescriptionPluralCountFormat, intValue];
+	}
+}
+
+- (NSString *)fileNameCountString
+{
+	int intValue = [self.fileNameCount intValue];
+	switch(intValue)
+	{
+		case 0:
+			return sCharacterDescription0Count;
+		case 1:
+			return sCharacterDescription1Count;
+		default:
+			return [NSString stringWithFormat:sCharacterDescriptionPluralCountFormat, intValue];
+	}
+}
+
+- (NSString *)windowTitleCountString
+{
+	int intValue = [self.windowTitleCount intValue];
+	switch(intValue)
+	{
+		case 0:
+			return sCharacterDescription0Count;
+		case 1:
+			return sCharacterDescription1Count;
+		default:
+			return [NSString stringWithFormat:sCharacterDescriptionPluralCountFormat, intValue];
+	}
+}
+
++ (NSSet *)keyPathsForValuesAffectingMetaDescriptionCountString
+{
+    return [NSSet setWithObject:@"metaDescriptionCount"];
+}
+
++ (NSSet *)keyPathsForValuesAffectingFileNameCountString
+{
+    return [NSSet setWithObject:@"fileNameCount"];
+}
+
++ (NSSet *)keyPathsForValuesAffectingWindowTitleCountString
+{
+    return [NSSet setWithObject:@"windowTitleCount"];
 }
 
 
 /*	Called in response to a change of selection.metaDescription or the user typing
- *	We update our own countdown property in response
+ *	We update our own count property in response
  */
 - (void)metaDescriptionDidChangeToValue:(id)value
 {
 	if (value)
 	{
-		if ([value isSelectionMarker])
+		if (NSIsControllerMarker(value))
+		{
+			value = nil;
+		}
+		else
+		{
+			OBASSERT([value isKindOfClass:[NSString class]]);
+			value = [NSNumber numberWithInt:[value length]];
+		}
+	}
+	else
+	{
+		value = [NSNumber numberWithInt:0];
+	}
+
+	[self setMetaDescriptionCount:value];
+
+	NSColor *windowColor = [self metaDescriptionCharCountColor];
+	[self.attachedWindow setBackgroundColor:windowColor];
+
+}
+
+/*	Called in response to a change of selection.windowTitle or the user typing
+ *	We update our own count property in response
+ */
+- (void)windowTitleDidChangeToValue:(id)value
+{
+	if (value)
+	{
+		if (NSIsControllerMarker(value))
 		{
 			value = nil;
 		}
@@ -201,30 +503,135 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 		value = [NSNumber numberWithInt:0];
 	}
 	
-	[self setMetaDescriptionCountdown:value];
+	[self setWindowTitleCount:value];
+
+	NSColor *windowColor = [self windowTitleCharCountColor];
+	[self.attachedWindow setBackgroundColor:windowColor];
 }
+
+- (void)fileNameDidChangeToValue:(id)newFileName
+{
+	NSNumber *count = nil;
+	if (newFileName)
+	{
+		if (NSIsControllerMarker(newFileName))
+		{
+			count = nil;
+		}
+		else
+		{
+			OBASSERT([newFileName isKindOfClass:[NSString class]]);
+			count = [NSNumber numberWithInt:[newFileName length]];
+		}
+	}
+	else
+	{
+		count = [NSNumber numberWithInt:0];
+	}
+	
+	[self setFileNameCount:count];
+
+	NSColor *windowColor = [self fileNameCharCountColor];
+	[self.attachedWindow setBackgroundColor:windowColor];
+}
+
+
+- (void) resetDescriptionPlaceholder:(NSString *)metaDescriptionText;
+{
+	NSDictionary *infoForBinding;
+	NSDictionary *bindingOptions;
+	NSString *bindingKeyPath;
+	id observedObject;
+	
+	// The Meta description field ... re-bind the null placeholder.
+	
+	infoForBinding	= [oMetaDescriptionField infoForBinding:NSValueBinding];
+	bindingOptions	= [[[infoForBinding valueForKey:NSOptionsKey] retain] autorelease];
+	bindingKeyPath	= [[[infoForBinding valueForKey:NSObservedKeyPathKey] retain] autorelease];
+	observedObject	= [[[infoForBinding valueForKey:NSObservedObjectKey] retain] autorelease];
+	
+	if ([observedObject respondsToSelector:@selector(selectedObjects)] && [[observedObject selectedObjects] count] > 1)
+	{
+		NSMutableDictionary *newBindingOptions = [NSMutableDictionary dictionaryWithDictionary:bindingOptions];
+		
+		// Move the multiple values placeholder to the null value, so that we see that when the values are empty
+		[newBindingOptions setObject:[bindingOptions objectForKey:NSMultipleValuesPlaceholderBindingOption] forKey:NSNullPlaceholderBindingOption];
+		
+		[oMetaDescriptionField unbind:NSValueBinding];
+		[oMetaDescriptionField bind:NSValueBinding toObject:observedObject withKeyPath:bindingKeyPath options:newBindingOptions];
+	}
+}	
+
+- (void) updateFieldsBasedOnSelectedSiteOutlineObjects:(NSArray *)selObjects;
+{
+	OFF((@"updateFieldsBasedOnSelectedSiteOutlineObjects: %@", [[selObjects description] condenseWhiteSpace] ));
+	if (NSIsControllerMarker(selObjects))
+	{
+		NSLog(@"Controller marker:  %@", selObjects);
+	}
+	else
+	{
+		// Start with unknown, break and set to mixed if we find different types
+		
+		int combinedType = kUnknownSiteItemType;
+		for (SVSiteItem *item in selObjects)
+		{
+			SVMediaRecord *media = nil;
+			int type = kUnknownSiteItemType;
+			if (nil != [item externalLinkRepresentation]) { type = kLinkSiteItemType; }
+			else if (nil != (media =[item mediaRepresentation]))
+			{
+				type = kFileSiteItemType;
+				// But now see if it's actually editable text
+				if ([media isEditableText])
+				{
+					type = kTextSiteItemType;
+				}
+			}
+			else if (nil != [item pageRepresentation]) type = kPageSiteItemType;
+			
+			if (kUnknownSiteItemType != combinedType && type != combinedType)
+			{
+				combinedType = kMixedSiteItemType;
+				break;	// stop looking -- this is a combination of types
+			}
+			else
+			{
+				combinedType = type;	// keep looking, so far collecting a single type.
+			}
+		}
+		char *typestrings[] =  { "kMixedSiteItemType", "kUnknownSiteItemType", "kLinkSiteItemType", "kTextSiteItemType", "kFileSiteItemType", "kPageSiteItemType" };
+#pragma unused (typestrings)
+
+		OFF((@"whatKindOfItemsAreSelected => %s", typestrings[combinedType+1]));
+		self.whatKindOfItemsAreSelected = combinedType;
+		
+		OFF((@"Gonna call layoutPageURLComponents from updateFieldsBasedOnSelectedSiteOutlineObjects:"));
+		[self layoutPageURLComponents];
+	}
+}
+
+
+#pragma mark -
+#pragma mark Count colors
 
 #define META_DESCRIPTION_WARNING_ZONE 10
 #define MAX_META_DESCRIPTION_LENGTH 156
 
-- (NSColor *)metaDescriptionCharCountColor
+- (NSColor *)metaDescriptionCharCountColor;
 {
-	int charCount = [[self metaDescriptionCountdown] intValue];
-	NSColor *result = [NSColor colorWithCalibratedWhite:0.75 alpha:1.0];
+	int charCount = [[self metaDescriptionCount] intValue];
+	NSColor *result = [NSColor colorWithCalibratedWhite:0.0 alpha:ATTACHED_WINDOW_TRANSP];
 	int remaining = MAX_META_DESCRIPTION_LENGTH - charCount;
 	
-	if (0 == charCount)
-	{
-		result = [NSColor clearColor];
-	}
-	else if (remaining > META_DESCRIPTION_WARNING_ZONE )		// out of warning zone: a nice light gray
+	if (remaining > META_DESCRIPTION_WARNING_ZONE )		// out of warning zone: a nice HUD color
 	{
 		;
 	}
 	else if (remaining >= 0 )							// get closer to black-red
 	{
 		float howRed = (float) remaining / META_DESCRIPTION_WARNING_ZONE;
-		result = [[NSColor colorWithCalibratedRed:0.4 green:0.0 blue:0.0 alpha:1.0] blendedColorWithFraction:howRed ofColor:result];		// blend with default gray
+		result = [[NSColor colorWithCalibratedRed:0.4 green:0.0 blue:0.0 alpha:1.0] blendedColorWithFraction:howRed ofColor:result];		// blend with default black
 	}
 	else		// overflow: pure red.
 	{
@@ -233,68 +640,16 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 	return result;
 }
 
-- (void) resetPlaceholderToComboTitleText:(NSString *)comboTitleText
-{
-	NSDictionary *infoForBinding;
-	NSDictionary *bindingOptions;
-	NSString *bindingKeyPath;
-	id observedObject;
-			
-	// The Window Title field ... re-bind the null placeholder.
-		
-	infoForBinding	= [oWindowTitleField infoForBinding:NSValueBinding];
-	bindingOptions	= [[[infoForBinding valueForKey:NSOptionsKey] retain] autorelease];
-	bindingKeyPath	= [[[infoForBinding valueForKey:NSObservedKeyPathKey] retain] autorelease];
-	observedObject	= [[[infoForBinding valueForKey:NSObservedObjectKey] retain] autorelease];
-	
-	if (![[bindingOptions objectForKey:NSMultipleValuesPlaceholderBindingOption] isEqualToString:comboTitleText])
-	{
-		NSMutableDictionary *newBindingOptions = [NSMutableDictionary dictionaryWithDictionary:bindingOptions];
-		[newBindingOptions setObject:comboTitleText forKey:NSNullPlaceholderBindingOption];
-		
-		[oWindowTitleField unbind:NSValueBinding];
-		[oWindowTitleField bind:NSValueBinding toObject:observedObject withKeyPath:bindingKeyPath options:newBindingOptions];
-	}
-}
-
-/*	Called in response to a change of selection.windowTitle or the user typing
- *	We update our own countdown property in response
- */
-- (void)windowTitleDidChangeToValue:(id)value
-{
-	if (value)
-	{
-		if ([value isSelectionMarker])
-		{
-			value = nil;
-		}
-		else
-		{
-			OBASSERT([value isKindOfClass:[NSString class]]);
-			value = [NSNumber numberWithInt:[value length]];
-		}
-	}
-	else
-	{
-		value = [NSNumber numberWithInt:0];
-	}
-	
-	[self setWindowTitleCountdown:value];
-}
 
 #define MAX_WINDOW_TITLE_LENGTH 65
 #define WINDOW_TITLE_WARNING_ZONE 8
 - (NSColor *)windowTitleCharCountColor
 {
-	int charCount = [[self windowTitleCountdown] intValue];
-	NSColor *result = [NSColor colorWithCalibratedWhite:0.75 alpha:1.0];
+	int charCount = [[self windowTitleCount] intValue];
+	NSColor *result = [NSColor colorWithCalibratedWhite:0.0 alpha:ATTACHED_WINDOW_TRANSP];
 	int remaining = MAX_WINDOW_TITLE_LENGTH - charCount;
 	
-	if (0 == charCount)
-	{
-		result = [NSColor clearColor];
-	}
-	else if (remaining > WINDOW_TITLE_WARNING_ZONE )		// out of warning zone: a nice light gray
+	if (remaining > WINDOW_TITLE_WARNING_ZONE )		// out of warning zone: a nice light gray
 	{
 		;
 	}
@@ -309,22 +664,84 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 	}	
 	return result;
 }
+#define FILE_NAME_WARNING_ZONE 5
+- (NSColor *)fileNameCharCountColor
+{
+	int charCount = [[self fileNameCount] intValue];
+	NSColor *result = [NSColor colorWithCalibratedWhite:0.0 alpha:ATTACHED_WINDOW_TRANSP];
+	int remaining = _maxFileCharacters - charCount;
+	
+	if (remaining > FILE_NAME_WARNING_ZONE )		// out of warning zone: a nice light gray
+	{
+		;
+	}
+	else if (remaining >= 0 )							// get closer to black-red
+	{
+		float howRed = (float) remaining / WINDOW_TITLE_WARNING_ZONE;
+		result = [[NSColor colorWithCalibratedRed:0.4 green:0.0 blue:0.0 alpha:1.0] blendedColorWithFraction:howRed ofColor:result];		// blend with default gray
+	}
+	else		// overflow: pure red.  Not actually possible here (theoretically)
+	{
+		result = [NSColor redColor];
+	}	
+	return result;
+}
 
 
++ (NSSet *)keyPathsForValuesAffectingWindowTitleCharCountColor
+{
+    return [NSSet setWithObject:@"windowTitleCount"];
+}
+
++ (NSSet *)keyPathsForValuesAffectingFileNameCharCountColor
+{
+    return [NSSet setWithObject:@"fileNameCount"];
+}
+
++ (NSSet *)keyPathsForValuesAffectingMetaDescriptionCharCountColor
+{
+    return [NSSet setWithObject:@"metaDescriptionCount"];
+}
+
+
+#pragma mark -
+#pragma mark KVO
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
+{	
+//	NSLog(@"object = %@", object);
+	
+	OFF((@"Gonna call layoutPageURLComponents from observeValueForKeyPath:%@ %@", keyPath, context));
+	[self layoutPageURLComponents];
+
 	if (context == sMetaDescriptionObservationContext)
 	{
 		[self metaDescriptionDidChangeToValue:[object valueForKeyPath:keyPath]];
+		[self resetDescriptionPlaceholder:[object valueForKeyPath:@"selection.metaDescription"]];
 	}
 	else if (context == sWindowTitleObservationContext)
 	{
 		[self windowTitleDidChangeToValue:[object valueForKeyPath:keyPath]];
 	}
-	else if (context == sTitleTextObservationContext)
+	else if (context == sFileNameObservationContext)
 	{
-		[self resetPlaceholderToComboTitleText:[object valueForKeyPath:@"selection.comboTitleText"]];	// go ahead and get the combo title
+		[self fileNameDidChangeToValue:[object valueForKeyPath:keyPath]];
+	}
+	else if (context == sBaseExampleURLStringObservationContext)
+	{
+		; // base URL changed, so re-layout
+	}
+	else if (context == sExternalURLStringObservationContext)
+	{
+		; // OFF((@"context == sExternalURLStringObservationContext")); // external URL changed, so re-layout
+	}
+	else if (context == sSelectedViewControllerObservationContext)
+	{
+		[self rebindWindowTitleAndMetaDescriptionFields];
+	}
+	else if (context == sSelectedObjectsObservationContext)
+	{
+		[self updateFieldsBasedOnSelectedSiteOutlineObjects:[object selectedObjects]];
 	}
 	else
 	{
@@ -332,97 +749,820 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 	}
 }
 
-/*	Sent when the user is typing in the meta description box.
- */
-- (void)controlTextDidChange:(NSNotification *)aNotification
+#pragma mark -
+#pragma mark URL view layout
+
+- (void) rebindWindowTitleAndMetaDescriptionFields;
 {
-	NSTextField *textField = (NSTextField *) [aNotification object];
-	NSString *newValue = [textField stringValue]; // Do NOT try to modify this string!
-	if (textField == oWindowTitleField)
+	// Kind of hackish.  Re-bind the window title and meta description to the model object if it's a real page, or the controller if it's an external link.
+	
+	id selViewController = [[self webContentAreaController] selectedViewController];
+	if ([selViewController isKindOfClass:[SVWebEditorViewController class]])
 	{
-		[self windowTitleDidChangeToValue:newValue];
+		NSDictionary *currentWindowTitleBinding = [oWindowTitleField     infoForBinding:NSValueBinding];
+		NSDictionary *currentMetaDescripBinding = [oMetaDescriptionField infoForBinding:NSValueBinding];
+		
+		if ([[currentMetaDescripBinding objectForKey:NSObservedKeyPathKey] isEqualToString:@"selection.metaDescription"])
+		{
+			// Already the binding we want.  Just hang onto the options.  Do this each time through in case localization affected this.
+			self.initialMetaDescriptionBindingOptions = [currentMetaDescripBinding valueForKey:NSOptionsKey];
+		}
+		else
+		{
+			OBASSERT(self.initialMetaDescriptionBindingOptions);		// we should already have this stored from an earlier pass
+			[oMetaDescriptionField unbind:NSValueBinding];
+			[oMetaDescriptionField bind:NSValueBinding
+							   toObject:oPagesTreeController
+							withKeyPath:@"selection.metaDescription"
+								options:self.initialMetaDescriptionBindingOptions];
+		}
+		
+		
+		if ([[currentWindowTitleBinding objectForKey:NSObservedKeyPathKey] isEqualToString:@"selection.comboTitleText"])
+		{
+			// Already the binding we want.  Just hang onto the options.  Do this each time through in case localization affected this.
+			self.initialWindowTitleBindingOptions = [currentWindowTitleBinding valueForKey:NSOptionsKey];
+		}
+		else
+		{
+			OBASSERT(self.initialWindowTitleBindingOptions);		// we should already have this stored from an earlier pass
+			[oWindowTitleField unbind:NSValueBinding];
+			[oWindowTitleField bind:NSValueBinding
+						   toObject:oPagesTreeController
+						withKeyPath:@"selection.comboTitleText"
+							options:self.initialWindowTitleBindingOptions];			
+		}
 	}
-	else if (textField == oMetaDescriptionField)
+	else if ([selViewController isKindOfClass:[SVURLPreviewViewController class]])
 	{
-		[self metaDescriptionDidChangeToValue:newValue];
+		[oWindowTitleField unbind:NSValueBinding];
+		[oWindowTitleField bind:NSValueBinding
+					   toObject:selViewController
+					withKeyPath:@"title"
+						options:nil];
+		
+		[oMetaDescriptionField unbind:NSValueBinding];
+		[oMetaDescriptionField bind:NSValueBinding
+						   toObject:selViewController
+						withKeyPath:@"metaDescription"
+							options:nil];
+	}
+}
+
+- (NSTrackingArea *) createTrackingArea:(NSTextField *)aTextField;
+{
+	NSDictionary *userInfoDict = NSDICT(aTextField, kTrackerKey);
+	NSTrackingArea *result = [[[NSTrackingArea alloc]
+							   initWithRect:[aTextField bounds]
+							   options:NSTrackingActiveInKeyWindow | NSTrackingActiveInActiveApp | NSTrackingInVisibleRect | NSTrackingMouseEnteredAndExited
+							   owner:self
+							   userInfo:userInfoDict] autorelease];
+	return result;
+}
+
+/*
+ Algorithm 
+ Calculate how much each of the variable fields oBaseURLField and oPageFileNameField *want* to be
+ Don't truncate oPageFileNameField - this is limited by character count and we want to see the whole thing
+ So we will truncate oBaseURLField as much as we need.
+ 
+ We also need to call this when the observed page changes.
+ 
+ */
+
+- (void) layoutPageURLComponents;
+{
+#define IS_ROOT_STATE -99
+	// Only visible for page types
+	// TODO: deal with downloads, where we keep the base URL but have a special field for the whole filename
+	
+	BOOL arePagesSelected = (kPageSiteItemType == self.whatKindOfItemsAreSelected); 
+	BOOL areLinksSelected = (kLinkSiteItemType == self.whatKindOfItemsAreSelected);
+	BOOL areFilesSelected = (kFileSiteItemType == self.whatKindOfItemsAreSelected);
+	BOOL areTextsSelected = (kTextSiteItemType == self.whatKindOfItemsAreSelected);
+	BOOL areMultiSelected = (kMixedSiteItemType == self.whatKindOfItemsAreSelected);
+
+	int selectedObjectsCount = [[oPagesTreeController selectedObjects] count];
+	NSInteger pageIsCollectionState = NSMixedState;
+	if (arePagesSelected)
+	{
+		pageIsCollectionState = [oPagesTreeController selectedItemsAreCollections];
+
+		// And also check if it's a root
+		if (NSOnState == pageIsCollectionState)
+		{
+			id isRootMarker = [oPagesTreeController valueForKeyPath:@"selection.isRoot"];
+			if ([isRootMarker respondsToSelector:@selector(boolValue)] && [isRootMarker boolValue])
+			{
+				pageIsCollectionState =  IS_ROOT_STATE;		// special marker indicating root, and only root, is selected.
+			}
+		}
+		
+		BOOL anyArePublished = [oPagesTreeController selectedItemsHaveBeenPublished];
+				
+		NSMenuItem *collMenuItem = [[oPublishAsCollectionPopup menu] itemWithTag:1];
+		NSMenuItem *pageMenuItem = [[oPublishAsCollectionPopup menu] itemWithTag:0];
+
+		NSString *pageTitle = nil;
+		NSString *collTitle = nil;
+		
+		if (NSOnState == pageIsCollectionState || IS_ROOT_STATE == pageIsCollectionState)
+		{
+			collTitle = NSLocalizedString(@"Collection", "menu title, NO ellipses");
+			pageTitle = anyArePublished	? NSLocalizedString(@"Single Page…", "menu title with ellipses")
+										 : NSLocalizedString(@"Single Page", "menu title, NO ellipses");
+		}
+		else if (NSOffState == pageIsCollectionState)
+		{
+			pageTitle = NSLocalizedString(@"Single Page", "menu title, NO ellipses");
+			collTitle = anyArePublished	? NSLocalizedString(@"Collection…", "menu title with ellipses")
+										 : NSLocalizedString(@"Collection", "menu title, NO ellipses");
+		}
+		else	// mixed state, perhaps both or neither will get ellipses
+		{
+			pageTitle = anyArePublished	? NSLocalizedString(@"Single Page…", "menu title with ellipses")
+										 : NSLocalizedString(@"Single Page", "menu title, NO ellipses");
+			collTitle = anyArePublished	? NSLocalizedString(@"Collection…", "menu title with ellipses")
+											   : NSLocalizedString(@"Collection", "menu title, NO ellipses");
+		}
+		[collMenuItem setTitle:collTitle];
+		[pageMenuItem setTitle:pageTitle];
+	}
+	
+	
+	// Prompts
+	[oWindowTitlePrompt		setHidden:!arePagesSelected && !areLinksSelected];
+	[oMetaDescriptionPrompt	setHidden:!arePagesSelected && !areLinksSelected];
+	[oFilePrompt setHidden:(!areFilesSelected && !areTextsSelected)];
+	
+	if (arePagesSelected)
+	{
+		if (!_metaDescriptionTrackingArea)
+		{
+			self.metaDescriptionTrackingArea = [self createTrackingArea:oMetaDescriptionField];
+		}
+		if (!_windowTitleTrackingArea)
+		{
+			self.windowTitleTrackingArea = [self createTrackingArea:oWindowTitleField];
+		}
+	}
+	else
+	{
+		self.metaDescriptionTrackingArea = nil;
+		self.windowTitleTrackingArea = nil;
+	}
+	
+	if (areLinksSelected)
+	{
+		if (!_externalURLTrackingArea)
+		{
+			self.externalURLTrackingArea = [self createTrackingArea:oExternalURLField];
+		}
+	}
+	else
+	{
+		self.externalURLTrackingArea = nil;
+	}
+	
+	// Additional Lines
+	[oWindowTitleField		setHidden:!arePagesSelected];
+	[oMetaDescriptionField	setHidden:!arePagesSelected];
+	[oWindowTitleField		setHidden:!arePagesSelected && !areLinksSelected];
+	[oMetaDescriptionField	setHidden:!arePagesSelected && !areLinksSelected];
+	[oWindowTitleField		setEditable:arePagesSelected];
+	[oMetaDescriptionField	setEditable:arePagesSelected];
+	[oChooseFileButton		setHidden:(!areFilesSelected && !areTextsSelected)];
+	[oEditTextButton		setHidden:!areTextsSelected];
+	
+	// If active text field, update the visibility of the edit button
+	if (oMediaFilenameField == self.activeTextField)
+	{
+		NSTextView *fieldEditor = (NSTextView *)[self.activeTextField currentEditor];
+		if (fieldEditor)
+		{
+			OBASSERT([fieldEditor isKindOfClass:[NSTextView class]]);
+			NSTextStorage *ts = [fieldEditor textStorage];
+			NSString *newFileName = [ts string];
+
+			NSString *type = [KSWORKSPACE ks_typeForFilenameExtension:[newFileName pathExtension]];
+			BOOL isEditableTextUTI = ([type conformsToUTI:(NSString *)kUTTypePlainText] ||
+									  [type conformsToUTI:(NSString *)kUTTypeHTML] ||
+									  [type conformsToUTI:(NSString *)kUTTypeXML]);
+			
+			[oEditTextButton setHidden:!isEditableTextUTI];
+		}
+	}
+
+	// First line, external URL field
+	[oExternalURLField setHidden:!areLinksSelected];
+
+	// First line, complex pieces that make up the URL components
+	BOOL hasLocalPath = (	arePagesSelected
+						||	areTextsSelected
+						||	areFilesSelected);
+	
+	[oBaseURLField setHidden:!hasLocalPath || selectedObjectsCount > 1];
+	[oFileNameField setHidden:!arePagesSelected
+							   || (arePagesSelected && IS_ROOT_STATE == pageIsCollectionState)
+								|| selectedObjectsCount > 1];
+	BOOL hideMediaFilename = (!areFilesSelected && !areTextsSelected) || selectedObjectsCount > 1;
+	[oMediaFilenameField setHidden:hideMediaFilename];
+//	OFF((@"oMediaFilenameField hidden? %d", hideMediaFilename));
+	
+//	
+//	NSArray *exposedBindings = [oMediaFilenameField exposedBindings];
+//	if (exposedBindings) {
+//		for (NSString *exposedBinding in exposedBindings)
+//		{
+//			NSDictionary *bindingInfo = [oMediaFilenameField infoForBinding:exposedBinding];
+//			if (bindingInfo)
+//			{
+//				NSLog(@"%@: %@", exposedBinding, [[bindingInfo description] condenseWhiteSpace]);
+//			}
+//		}
+//	}
+
+	
+	
+	
+	if (![oFileNameField isHidden])
+	{
+		if (!_fileNameTrackingArea)
+		{
+			self.fileNameTrackingArea = [self createTrackingArea:oFileNameField];
+		}
+	}
+	else
+	{
+		self.fileNameTrackingArea = nil;
+	}
+	if (![oMediaFilenameField isHidden])
+	{
+		if (!_mediaFilenameTrackingArea)
+		{
+			self.mediaFilenameTrackingArea = [self createTrackingArea:oMediaFilenameField];
+		}
+	}
+	else
+	{
+		self.mediaFilenameTrackingArea = nil;
+	}
+
+	[oDotSeparator setHidden:(!arePagesSelected  || NSOffState != pageIsCollectionState || selectedObjectsCount > 1 || areMultiSelected)];
+	[oSlashSeparator setHidden:!arePagesSelected || NSOnState != pageIsCollectionState || selectedObjectsCount > 1];
+
+	[oMultiplePagesField setHidden: selectedObjectsCount == 1];
+	
+	[oExtensionPopup setHidden:!arePagesSelected  || NSOffState != pageIsCollectionState];
+	[oIndexAndExtensionPopup setHidden:!arePagesSelected || (NSOnState != pageIsCollectionState && IS_ROOT_STATE != pageIsCollectionState)];
+	
+	[oPublishAsCollectionPopup setHidden: !arePagesSelected || NSMixedState == pageIsCollectionState];
+
+	
+	// Follow button only enabled when there is one item ?
+	[oFollowButton setHidden: selectedObjectsCount != 1];
+	
+	if (areLinksSelected)
+	{
+		int newLeft = [oBaseURLField frame].origin.x;		// starting point for left of next item
+		const int rightMargin = 20;
+		int availableForAll = [[self view] bounds].size.width - rightMargin - newLeft - [oFollowButton frame].size.width - 8;
+		NSRect frame = [oExternalURLField frame];
+		frame.origin.x = newLeft;
+		
+		NSSize extURLSize = NSZeroSize;
+		if (oExternalURLField == self.activeTextField)
+		{
+			NSTextView *fieldEditor = (NSTextView *)[self.activeTextField currentEditor];
+			if (fieldEditor)
+			{
+				OBASSERT([fieldEditor isKindOfClass:[NSTextView class]]);
+				extURLSize = [[fieldEditor textStorage] size];
+			}
+		}
+		else
+		{
+			// OFF((@"%@", [oExternalURLField stringValue]));
+			extURLSize = [[oExternalURLField attributedStringValue] size];
+		}
+        
+		int width = ceilf(extURLSize.width)  + 3;
+		if (width < 100) width = 100;	// make sure there is some width there so hover can be found
+		if (width > availableForAll) width = availableForAll;	// make sure a really long URL will fit
+		frame.size.width = width;
+        
+		[oExternalURLField setFrame:frame];
+
+		// Move the follow button over
+		frame = [oFollowButton frame];
+		frame.origin.x = NSMaxX([oExternalURLField frame])+8;
+		[oFollowButton setFrame:frame];
+		// OFF((@"set oFollowButton to %@", NSStringFromRect(frame)));
+	}
+	else if (hasLocalPath || areMultiSelected)
+	{
+		NSArray *itemsToLayOut = nil;
+		int *theExtraX = nil;
+		int *theMarginsAfter = nil;
+		
+		NSArray *pageItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oFileNameField,oDotSeparator,oExtensionPopup,oFollowButton,oPublishAsCollectionPopup,nil];
+		int pageExtraX [] = {4,5,6,8,0,0};
+		int pageMarginsAfter[] = {0,-1,0,8,12,0};
+		
+		NSArray *collectionItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oFileNameField,oSlashSeparator,oIndexAndExtensionPopup,oFollowButton,oPublishAsCollectionPopup,nil];
+		int collectionExtraX [] = {4,5,1,0,0,0};
+		int collectionMarginsAfter[] = {0,-1,2,8,12,0};
+		
+		NSArray *markerItemsToLayOut = [NSArray arrayWithObjects:oMultiplePagesField,oDotSeparator,oExtensionPopup,oPublishAsCollectionPopup,nil];
+		int markerExtraX [] = {4,6,8,0,0};
+		int markerMarginsAfter[] = {0,0,8,12,0};
+			
+		NSArray *rootItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oIndexAndExtensionPopup,oFollowButton,oPublishAsCollectionPopup,nil];
+		int rootExtraX [] = {0,8,0,0};
+		int rootMarginsAfter[] = {4,8,12,0};
+		
+		NSArray *mediaItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oMediaFilenameField,oFollowButton,nil];
+		int mediaExtraX [] = {4,0,0};
+		int mediaMarginsAfter[] = {0,4,12};
+
+		NSArray *multipleTypesToLayOut = [NSArray arrayWithObjects:oMultiplePagesField,nil];
+		int multiTypeExtraX [] = {2};
+		int multiTypeMarginsAfter[] = {0};
+		
+		if (arePagesSelected)
+		{
+			if (selectedObjectsCount > 1)
+			{
+				itemsToLayOut = markerItemsToLayOut;
+				theExtraX = markerExtraX;
+				theMarginsAfter = markerMarginsAfter;
+			}
+			else
+			{
+				switch (pageIsCollectionState)
+				{
+					case IS_ROOT_STATE:
+						itemsToLayOut = rootItemsToLayOut;
+						theExtraX = rootExtraX;
+						theMarginsAfter = rootMarginsAfter;
+						break;
+					case NSMixedState:
+						itemsToLayOut = markerItemsToLayOut;
+						theExtraX = markerExtraX;
+						theMarginsAfter = markerMarginsAfter;
+						break;
+					case NSOnState:
+						itemsToLayOut = collectionItemsToLayOut;
+						theExtraX = collectionExtraX;
+						theMarginsAfter = collectionMarginsAfter;
+						break;
+					case NSOffState:
+						itemsToLayOut = pageItemsToLayOut;
+						theExtraX = pageExtraX;
+						theMarginsAfter = pageMarginsAfter;
+						break;
+				}
+			}
+		}
+		else if (selectedObjectsCount > 1)
+		{
+			itemsToLayOut = multipleTypesToLayOut;
+			theExtraX = multiTypeExtraX;
+			theMarginsAfter = multiTypeMarginsAfter;
+		}
+		else
+		{
+			// kTextSiteItemType or kFileSiteItemType
+			itemsToLayOut = mediaItemsToLayOut;
+			theExtraX = mediaExtraX;
+			theMarginsAfter = mediaMarginsAfter;
+			
+			// bindings: baseExampleURLString, fileName.  Are these coming through on media?
+		}
+	
+		OFF((@"items to layout = %@", itemsToLayOut));
+		int widths[6] = { 0 }; // filled in below. Make sure we have enough items for array above
+		int i = 0;
+		// Collect up the widths that these items *want* to be
+		for (NSView *fld in itemsToLayOut)
+		{
+			// Editable File Name
+			NSRect frame = [fld frame];
+			
+			if ([fld isKindOfClass:[NSTextField class]])
+			{
+				NSTextField *txtFld = (NSTextField *)fld;
+				NSSize fldSize = NSZeroSize;
+				if (fld == self.activeTextField)
+				{
+					NSTextView *fieldEditor = (NSTextView *)[self.activeTextField currentEditor];
+					OBASSERT([fieldEditor isKindOfClass:[NSTextView class]]);
+					fldSize = [[fieldEditor textStorage] size];
+				}
+				else
+				{
+					fldSize = [[txtFld attributedStringValue] size];
+				}
+
+				
+				int width = ceilf(fldSize.width);
+				width += theExtraX[i];
+				width += theMarginsAfter[i];
+				frame.size.width = width;
+			}
+			widths[i++] = frame.size.width;
+		}
+		
+		int newLeft = [oBaseURLField frame].origin.x;		// starting point for left of next item
+		const int rightMargin = 20;
+		int availableForAll = [[self view] bounds].size.width - rightMargin - newLeft;
+		
+		// Calculate a new width for base URL
+		int availableForBaseURL = availableForAll -
+			(theExtraX[0]
+			 + widths[1]
+			 + widths[2]
+			 + widths[3]
+			 + widths[4]
+			 + widths[5]);
+#define MINIMUM_BASE_URL 60
+		if (availableForBaseURL < MINIMUM_BASE_URL)	// is file name field getting way long?
+		{
+			widths[0] = MINIMUM_BASE_URL;		// give base URL field a minimum size to show something there
+			int fileNameFieldAdjustment = availableForBaseURL - MINIMUM_BASE_URL;
+			widths[1] += fileNameFieldAdjustment;	// take away from the file name field
+		}
+		else if (widths[0] > availableForBaseURL)	// is base URL field allotment greater than what's available?
+		{
+			widths[0] = availableForBaseURL;	// truncate base URL
+		}
+		// Now set the new frames
+		i = 0;
+		for (NSView *fld2 in itemsToLayOut)
+		{
+			// Editable File Name
+			NSRect frame = [fld2 frame];
+			frame.origin.x = newLeft;
+			frame.size.width = widths[i];
+			[fld2 setFrame:frame];
+			// NSLog(@"set %@ to %@", [fld2 class], NSStringFromRect(frame));
+
+			newLeft = NSMaxX(frame);
+			if (fld2 == oBaseURLField)	// special case -- move file name over to left to adjoin previous field
+			{							// (which we left wide enough so it wouldn't get clipped)
+				newLeft -= 4;
+			}
+			if (fld2 == oFileNameField || fld2 == oMediaFilenameField)	// special case -- move file name over to left to adjoin previous field
+			{							// (which we left wide enough so it wouldn't get clipped)
+				newLeft -= 1;
+			}
+			newLeft += theMarginsAfter[i];
+			i++;
+		}
+	}
+	// Now that widths have been recalculated, update the width for the active field, for the shadow background
+	[self updateWidthForActiveTextField:self.activeTextField];
+
+}
+
+// -------------------------------------------------------------------------------
+//  mouseEntered:event
+// -------------------------------------------------------------------------------
+//  Because we installed NSTrackingArea with "NSTrackingMouseEnteredAndExited"
+//  as an option, this method will be called.
+// -------------------------------------------------------------------------------
+- (void)mouseEntered:(NSEvent*)event
+{	
+	NSView *hiliteView = [[[event trackingArea] userInfo] objectForKey:kTrackerKey];
+	KSShadowedRectView *superview = (KSShadowedRectView *)[hiliteView superview];
+	OBASSERT([superview isKindOfClass:[KSShadowedRectView class]]);
+	
+	NSRect fieldRect = [hiliteView frame];
+	[superview setHiliteRect:fieldRect];
+}
+
+// -------------------------------------------------------------------------------
+//  mouseExited:event
+// -------------------------------------------------------------------------------
+//  Because we installed NSTrackingArea with "NSTrackingMouseEnteredAndExited",
+//  as an option, this method will be called.
+// -------------------------------------------------------------------------------
+- (void)mouseExited:(NSEvent*)event
+{
+	NSView *hiliteView = [[[event trackingArea] userInfo] objectForKey:kTrackerKey];
+
+	KSShadowedRectView *superview = (KSShadowedRectView *)[hiliteView superview];
+	OBASSERT([superview isKindOfClass:[KSShadowedRectView class]]);
+	[superview setHiliteRect:NSZeroRect];
+}
+
+
+
+
+
+- (void)updateWidthForActiveTextField:(NSTextField *)textField;
+{
+	if (!textField) return;	// we may have no active text field
+	
+	KSShadowedRectView *view = (KSShadowedRectView *)[textField superview];
+	OBASSERT([view isKindOfClass:[KSShadowedRectView class]]);
+	
+	NSTextView *fieldEditor = (NSTextView *)[textField currentEditor];
+	if (fieldEditor)
+	{
+		OBASSERT([fieldEditor isKindOfClass:[NSTextView class]]);
+		
+		
+		NSRect textRect = [[fieldEditor layoutManager]
+						   usedRectForTextContainer:[fieldEditor textContainer]];
+		
+		NSRect fieldRect = [textField frame];
+		float textWidth = textRect.size.width;
+		float fieldWidth = fieldRect.size.width;
+		int width = ceilf(MIN(textWidth, fieldWidth));
+		width = MAX(width, 7);		// make sure it's at least 7 pixels wide
+		// NSLog(@"'%@' widths: text = %.2f, field = %.2f => %d", [textField stringValue], textWidth, fieldWidth, width);
+		fieldRect.size.width = width;
+		[view setFocusRect:fieldRect];
+	}
+}
+
+- (void) backgroundFrameChanged:(NSNotification *)notification
+{
+	OFF((@"Gonna call layoutPageURLComponents from backgroundFrameChanged"));
+	[self layoutPageURLComponents];
+}
+
+#pragma mark Publish as Collection
+
+- (IBAction)popupSetPageOrCollection:(NSPopUpButton *)sender;
+{
+	NSUInteger tag = [[sender selectedItem] tag];
+    [oSiteOutlineController
+     setToCollection:(1 == tag) withDelegate:self
+     didToggleSelector:@selector(siteOutlineController:didToggleIsCollection:)];
+}
+
+- (void)siteOutlineController:(SVSiteOutlineViewController *)controller didToggleIsCollection:(BOOL)success;
+{
+    // If user cancelled, repair binding value
+    if (!success)
+    {
+		NSCellStateValue isCollection = [oPagesTreeController selectedItemsAreCollections];
+        [oPublishAsCollectionPopup selectItemWithTag:(NSOnState == isCollection?1:0)];
 	}
 }
 
 #pragma mark -
-#pragma mark RBSplitView delegate methods
+#pragma mark Text editing notifications
 
-- (void)didAdjustSubviews:(RBSplitView*)sender;
+/*	Sent when the user is typing in the meta description box.
+ */
+
+- (void)controlTextDidChange:(NSNotification *)notification
 {
-	[oBoxView rebindSubviewPlaceholdersAccordingToSize];
-}
+	// For some stupid reason, this is getting called twice, all within the text system.
+	// So I set a flag so we don't do anything in the second invocation.
+	if (!_alreadyHandlingControlTextDidChange)
+	{
+		_alreadyHandlingControlTextDidChange = YES;
 
-- (BOOL)splitView:(RBSplitView*)sender shouldHandleEvent:(NSEvent*)theEvent inDivider:(unsigned int)divider betweenView:(RBSplitSubview*)leading andView:(RBSplitSubview*)trailing;
-{
-	[RBSplitView setCursor:RBSVDragCursor toCursor:[NSCursor resizeUpDownCursor]];
-	return YES;
-}
-
-- (void)willAdjustSubviews:(RBSplitView*)sender;
-{
-	[RBSplitView setCursor:RBSVDragCursor toCursor:[NSCursor resizeUpDownCursor]];
-}
-
-// Keep the details view at the same size or shrink slightly?
-
-- (void)splitView:(RBSplitView*)sender wasResizedFrom:(float)oldDimension to:(float)newDimension
-{
-	RBSplitSubview *detailsSplit = [sender subviewAtPosition:1];
-	
-	// Try to resize details 1/3 the speed of the main
-	//[detailsSplit changeDimensionBy:((newDimension-oldDimension) / 3) mayCollapse:NO move:NO];
-
-	// Or keep details the same size
-	[sender adjustSubviewsExcepting:detailsSplit];
-}
-
-
-#define DIM(x) (((float*)&(x))[ishor])
-#define WIDEN (5)
-
-
- 
- - (unsigned int)splitView:(RBSplitView*)sender dividerForPoint:(NSPoint)point inSubview:(RBSplitSubview*)subview
-{
-	NSRect lead = [subview frame];
-	NSRect trail = lead;
-	unsigned pos = [subview position];
-	BOOL ishor = [sender isHorizontal];
-	float dim = DIM(trail.size);
-	DIM(trail.origin) += dim-WIDEN;
-	DIM(trail.size) = WIDEN;
-	DIM(lead.size) = WIDEN;
-	if ([sender mouse:point inRect:lead]&&(pos>0)) {
-		return pos-1;
-	} else if ([sender mouse:point inRect:trail]&&(pos<[sender numberOfSubviews]-1)) {
-		return pos;
+		NSTextField *textField = (NSTextField *) [notification object];
+		// This VERY important: Do NOT ask a cell for its -stringValue unless you actually need it. If the cell has a formatter, calling -stringValue will invoke that, and format the entered text, even though the user probably wasn't ready for it.
+		NSTextView *fieldEditor = [[notification userInfo] objectForKey: @"NSFieldEditor"];
+		NSAttributedString *newAttrString = [fieldEditor textStorage];
+		NSString *newString = [newAttrString string];
+		
+		if (textField == oWindowTitleField)
+		{
+			[self windowTitleDidChangeToValue:newString];
+		}
+		else if (textField == oMetaDescriptionField)
+		{
+			[self metaDescriptionDidChangeToValue:newString];
+		}
+		else if (textField == oFileNameField || textField == oMediaFilenameField)
+		{
+			[self fileNameDidChangeToValue:newString];
+		}
+		OFF((@"Gonna call layoutPageURLComponents from controlTextDidChange:"));
+		[self layoutPageURLComponents];		
+		_alreadyHandlingControlTextDidChange = NO;
 	}
-	return NSNotFound;
- }
- 
-
-// Cursor rectangle for slop
-
-- (NSRect)splitView:(RBSplitView*)sender cursorRect:(NSRect)rect forDivider:(unsigned int)divider
-{
-	RBSplitSubview *sidebarSplit = [sender subviewAtPosition:0];
-	NSRect bounds = [sidebarSplit bounds];
-	bounds.origin.y += bounds.size.height;
-	bounds.size.height = 1;	// fake width, since we are really zero width
-	
-	// Widen the main split
-	BOOL ishor = [sender isHorizontal];	// used in the macros below
-	DIM(bounds.origin) -= WIDEN;
-	DIM(bounds.size) += WIDEN*2;
-	
-	[sender addCursorRect:bounds cursor:[RBSplitView cursor:RBSVHorizontalCursor]];
-	
-	return rect;
 }
 
+// Special responders to the subclass of the text field
+
+- (void)controlTextDidBecomeFirstResponder:(NSNotification *)notification;
+{
+	KSShadowedRectView *view = (KSShadowedRectView *)[[notification object] superview];
+	NSTextField *field = [notification object];
+	OBASSERT([view isKindOfClass:[KSShadowedRectView class]]);
+
+	self.activeTextField = field;
+	[self updateWidthForActiveTextField:field];
+
+	// Can't think of a better way to do this...
+	
+	NSString *bindingName = nil;
+	NSString *explanation = @"";
+	int tagForHelp = kUnknownPageDetailsContext;
+	if (field == oFileNameField || field == oMediaFilenameField)
+	{
+		_maxFileCharacters = field == oFileNameField ? 27 : 32;
+		tagForHelp = kFileNamePageDetailsContext;
+		bindingName = @"fileNameCountString";
+		explanation = [NSString stringWithFormat:NSLocalizedString(@"Maximum %d characters",@"brief indication of maximum length of file name"), _maxFileCharacters];
+	}
+	else if (field == oMetaDescriptionField)
+	{	
+		tagForHelp = kMetaDescriptionPageDetailsContext;
+		bindingName = @"metaDescriptionCountString";
+		explanation = NSLocalizedString(@"More than 156 characters will be truncated",@"brief indication of maximum length of text");
+	}
+	else if (field == oWindowTitleField)
+	{
+		tagForHelp = kWindowTitlePageDetailsContext;
+		bindingName = @"windowTitleCountString";
+		explanation = NSLocalizedString(@"More than 65 characters will be truncated",@"brief indication of maximum length of text");
+	}
+	
+
+	if (bindingName)
+	{
+		[oAttachedWindowHelpButton setTag:tagForHelp];
+		
+		if (!self.attachedWindow)
+		{
+			// We are cheating here .. there is only ONE active text field, help button, etc. ... 
+			// We fade out the window when we leave the field, but we immediately put these fields
+			// into a new attached window.  I think nobody is going to notice that though.
+			[oAttachedWindowTextField unbind:NSValueBinding];
+			
+			[oAttachedWindowTextField setStringValue:sCharacterDescriptionPluralCountFormat];
+			const int widthExtra = 25;	// Fudge a little bit for longer numbers bigger than the width of the placeholder string
+			float rightSide = ceilf([[oAttachedWindowTextField attributedStringValue] size].width) + widthExtra;
+
+			[oAttachedWindowTextField bind:NSValueBinding toObject:self withKeyPath:bindingName options:nil];
+            
+			[oAttachedWindowExplanation setStringValue:explanation];
+			
+			int height = [oAttachedWindowView frame].size.height;	// also size of question mark
+			const int buttonSize = 14;
+			const int textHeight = 14;
+			const int secondLineY = 15;
+			int windowWidth = MAX(rightSide+8+height,
+				ceilf([[oAttachedWindowExplanation attributedStringValue] size].width) + widthExtra );
+			
+			[oAttachedWindowView setFrame:NSMakeRect(0,0,windowWidth,height)];	// set view first, then subviews		
+			[oAttachedWindowTextField setFrame:NSMakeRect(0,secondLineY,rightSide, textHeight)];
+			[oAttachedWindowHelpButton setFrame:NSMakeRect(windowWidth-buttonSize,secondLineY,buttonSize,buttonSize)];
+			[oAttachedWindowExplanation setFrame:NSMakeRect(0,0,windowWidth,textHeight)];
+			NSPoint arrowTip = NSMakePoint([field frame].origin.x + 10, NSMidY([field frame]) );
+			arrowTip = [view convertPoint:arrowTip toView:nil];
+			
+			self.attachedWindow = [[MAAttachedWindow alloc] initWithView:oAttachedWindowView 
+													attachedToPoint:arrowTip 
+														   inWindow:[view window] 
+															 onSide:MAPositionLeft 
+														 atDistance:10.0];
+			self.attachedWindow.delegate = self;
+			self.attachedWindow.alphaValue = 0.0;
+			[self.attachedWindow setReleasedWhenClosed:YES];
+
+			[self.attachedWindow setBorderColor:[NSColor colorWithCalibratedWhite:1.0 alpha:0.8]];
+			[oAttachedWindowTextField setTextColor:[NSColor whiteColor]];
+			[oAttachedWindowExplanation setTextColor:[NSColor whiteColor]];
+			[[oAttachedWindowHelpButton image] setTemplate:YES];
+			
+			static NSImage *sTintedHelpButtonImage = nil;
+			if (!sTintedHelpButtonImage)
+			{
+				sTintedHelpButtonImage = [[[oAttachedWindowHelpButton image] tintedImageWithColor:[NSColor lightGrayColor]] retain];
+			}
+			[oAttachedWindowHelpButton setAlternateImage:sTintedHelpButtonImage];
+
+			[self.attachedWindow setBackgroundColor:[NSColor colorWithCalibratedWhite:0.0 alpha:ATTACHED_WINDOW_TRANSP]];
+			[self.attachedWindow setViewMargin:6];
+			[self.attachedWindow setCornerRadius:6];	// set after arrow base width?  before?
+			[self.attachedWindow setBorderWidth:0];
+			[self.attachedWindow setHasArrow:YES];
+			[self.attachedWindow setDrawsRoundCornerBesideArrow:NO];
+			[self.attachedWindow setArrowBaseWidth:15];
+			[self.attachedWindow setArrowHeight:8];
+			[self.attachedWindow setCornerRadius:6];	// set after arrow base width?  before?
+
+			[[view window] addChildWindow:self.attachedWindow ordered:NSWindowAbove];
+
+			// Set up the animation for this window so we will get delegate methods
+			CAAnimation *anim = [CABasicAnimation animation];
+			// [anim setDuration:3.0];
+			[anim setValue:self.attachedWindow forKey:@"myOwnerWindow"];
+			[anim setDelegate:self];
+			[self.attachedWindow setAnimations:[NSDictionary dictionaryWithObject:anim forKey:@"alphaValue"]];
+
+			[self.attachedWindow.animator setAlphaValue:1.0];	// animate open
+		}
+	}
+}
+
+- (void)controlTextDidResignFirstResponder:(NSNotification *)notification;
+{
+	KSShadowedRectView *view = (KSShadowedRectView *)[[notification object] superview];
+	OBASSERT([view isKindOfClass:[KSShadowedRectView class]]);
+	[view setFocusRect:NSZeroRect];
+	self.activeTextField = nil;
+	
+	if (self.attachedWindow)
+	{
+		[self.attachedWindow.animator setAlphaValue:0.0];
+		[[[self view] window] removeChildWindow:self.attachedWindow];
+		self.attachedWindow = nil;
+	}
+}
+
+- (void)animationDidStop:(CAAnimation *)animation finished:(BOOL)flag 
+{
+	NSWindow *animationWindow = [animation valueForKey:@"myOwnerWindow"];
+	if(animationWindow.alphaValue <= 0.01)
+	{
+		[animationWindow orderOut:nil];
+		[animationWindow close];
+	}
+}
+
+
+// If you tab out of last text field to something else, we don't lose first responder?
+// Unfortunately this doesn't do what we want if you hit *return* in the field.  We want this to
+// happen when it ends editing with tab, but not when you use return.  Oh well.
+- (void)controlTextDidEndEditing:(NSNotification *)notification;
+{
+	[self controlTextDidResignFirstResponder:notification];
+}
+
+
+#pragma mark -
+#pragma mark Actions
+
+// We will need to open up the appropriate help topic based on the tag
+
+- (IBAction) pageDetailsHelp:(id)sender;
+{
+	NSLog(@"%s -- help variant = %d",__FUNCTION__, [sender tag]);
+}
+
+- (IBAction) preview:(id)sender;
+{
+	NSArray *selectedObjects = [oPagesTreeController selectedObjects];
+	id item = [selectedObjects lastObject];
+	if (item)
+	{
+		[KSWORKSPACE attemptToOpenWebURL:[item URL]];
+	}
+}
+
+- (IBAction) chooseFile:(id)sender;
+{
+	
+	NSArray *selectedObjects = [oPagesTreeController selectedObjects];
+	id item = [selectedObjects lastObject];
+	KTSite *site = [item site];
+
+	NSOpenPanel *panel = [[site document] makeChooseDialog];
+    
+    NSString *path = [[[item mediaRepresentation] alias] lastKnownPath];
+    
+	[panel beginSheetForDirectory:[path stringByDeletingLastPathComponent]
+                             file:[path lastPathComponent]
+                            types:[panel allowedFileTypes]
+                   modalForWindow:[[self view] window]
+                    modalDelegate:self
+                   didEndSelector:@selector(chooseFilePanelDidEnd:returnCode:contextInfo:)
+                      contextInfo:NULL];
+}
+
+- (void)chooseFilePanelDidEnd:(NSOpenPanel *)panel returnCode:(int)returnCode contextInfo:(void *)context;
+{
+    if (returnCode == NSOKButton && [[panel URLs] count])
+	{
+		SVDownloadSiteItem *downloadPage = [[oPagesTreeController selectedObjects] lastObject];
+		NSManagedObjectContext *context = [downloadPage managedObjectContext];
+		NSURL *url = [[panel URLs] lastObject];		// we have just one
+		NSError *error = nil;
+		SVMediaRecord *record = [SVMediaRecord mediaByReferencingURL:url
+                                                          entityName:@"FileMedia"
+                                      insertIntoManagedObjectContext:context				/// where to we get our MOC?
+                                                               error:&error];
+		if (error)
+		{
+			[[NSApplication sharedApplication] presentError:error];
+		}
+		else
+		{
+			// Success: delete old media, store new:
+			[downloadPage replaceMedia:record forKeyPath:@"media"];
+		}
+	}
+}
 
 @end

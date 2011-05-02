@@ -3,7 +3,7 @@
 //  KTComponents
 //
 //  Created by Dan Wood on 9/20/05.
-//  Copyright 2005-2009 Karelia Software. All rights reserved.
+//  Copyright 2005-2011 Karelia Software. All rights reserved.
 //
 
 #import "ImageCropperController.h"

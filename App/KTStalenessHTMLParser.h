@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Mike on 11/02/2008.
-//  Copyright 2008-2009 Karelia Software. All rights reserved.
+//  Copyright 2008-2011 Karelia Software. All rights reserved.
 //
 
 //	A subclass of KTHTML parser that is optimised to run as fast as possible
@@ -11,10 +11,10 @@
 //	but the returned HTML is not guaranteed to be suitable for display/publishing.
 
 #import <Cocoa/Cocoa.h>
-#import "KTHTMLParser.h"
+#import "SVHTMLTemplateParser.h"
 
 
-@interface KTStalenessHTMLParser : KTHTMLParser
+@interface KTStalenessHTMLParser : SVHTMLTemplateParser
 {
 }
 

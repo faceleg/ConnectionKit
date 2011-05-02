@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Dan Wood on 3/10/08.
-//  Copyright 2008-2009 Karelia Software. All rights reserved.
+//  Copyright 2008-2011 Karelia Software. All rights reserved.
 //
 
 #import <WebKit/WebKit.h>

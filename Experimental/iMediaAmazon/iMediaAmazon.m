@@ -3,7 +3,7 @@
 //  iMediaAmazon
 //
 //  Created by Dan Wood on 1/1/07.
-//  Copyright 2007 Karelia Software. All rights reserved.
+//  Copyright 2007-2011 Karelia Software. All rights reserved.
 //
 
 /* CACHING
@@ -127,7 +127,7 @@ I assume 1 month?
 	if (!myCachedLibrary || !reuseCachedData)
 	{
 		myPlaceholderChild = [[iMBLibraryNode alloc] init];
-		[myPlaceholderChild setName:LocalizedStringInThisBundle(@"loading...", @"placeholder name while loading")];
+		[myPlaceholderChild setName:LocalizedStringInThisBundle(@"loading…", @"placeholder name while loading")];
 
 		myCachedLibrary = [[iMBLibraryNode alloc] init];
 		[myCachedLibrary setName:LocalizedStringInThisBundle(@"Amazon", @"Amazon name")];

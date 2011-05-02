@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleExecutable</key>
+	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleGetInfoString</key>
+	<string>${SANDVOX_VERSION} (${SVN_VERSION}), © 2004-2011 Karelia Software</string>
+	<key>CFBundleIdentifier</key>
+	<string>sandvox.${PROJECT_NAME}</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>${PRODUCT_NAME}</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>${SANDVOX_VERSION}</string>
+	<key>CFBundleSignature</key>
+	<string>Svox</string>
+	<key>CFBundleVersion</key>
+	<string>${SVN_VERSION}</string>
+	<key>SVMinimumAppVersion</key>
+	<string>2.0</string>
+	<key>KTCSSClassName</key>
+	<string>general-index</string>
+	<key>SVPlugInIsIndex</key>
+	<true/>
+	<key>KTPageIconName</key>
+	<string>page_blog_sb.tiff</string>
+	<key>SVPlugInIconPath</key>
+	<string>object_summaries.tiff</string>
+	<key>KTPluginName</key>
+	<string>Tiles &amp; Summaries</string>
+	<key>KTPluginPriority</key>
+	<integer>1</integer>
+	<key>KTPluginInitialProperties</key>
+	<dict>
+		<key>hyperlinkTitles</key>
+		<true/>
+		<key>showPermaLinks</key>
+		<true/>
+		<key>showTimestamps</key>
+		<true/>
+		<key>maxItemLength</key>
+		<integer>999999</integer>
+		<key>indexLayoutType</key>
+		<integer>275</integer>
+	</dict>
+	<key>SVIndexMasters</key>
+	<array>
+		<dict>
+			<key>SVIndexFirstPageProperties</key>
+			<dict>
+				<key>allowComments</key>
+				<true/>
+				<key>includeTimestamp</key>
+				<true/>
+				<key>pluginIdentifier</key>
+				<string>sandvox.RichTextElement</string>
+				<key>richTextHTML</key>
+				<string>&lt;p&gt;This is your first blog entry. What are you waiting for? Replace this text with some of your own and start blogging!&lt;/p&gt;</string>
+				<key>title</key>
+				<string>First Post</string>
+			</dict>
+			<key>SVPageProperties</key>
+			<dict>
+				<key>navigationArrowsStyle</key>
+				<integer>2</integer>
+				<key>collectionSortOrder</key>
+				<integer>2</integer>
+				<key>collectionSortAscending</key>
+				<false/>
+				<key>collectionSyndicationType</key>
+				<true/>
+			</dict>
+			<key>SVMasterDisplayName</key>
+			<string>Blog</string>
+			<key>SVMasterPageTitle</key>
+			<string>Blog</string>
+		</dict>
+	</array>
+	<key>NSPrincipalClass</key>
+	<string>${PROJECT_NAME}</string>
+</dict>
+</plist>

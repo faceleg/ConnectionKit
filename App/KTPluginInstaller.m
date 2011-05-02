@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Dan Wood on 3/9/06.
-//  Copyright 2006-2009 Karelia Software. All rights reserved.
+//  Copyright 2006-2011 Karelia Software. All rights reserved.
 //
 //
 // THIS IS A PSEUDO-DOCUMENT TO HANDLE OPENING OF PLUGINS.... IT COPIES THEM TO THE APP SUPPORT DIR.
@@ -11,14 +11,16 @@
 #import "KTPluginInstaller.h"
 
 #import "Debug.h"
-#import "NSApplication+Karelia.h"
-#import "NSHelpManager+Karelia.h"
-#import "NSError+Karelia.h"
 #import "KSAppDelegate.h"
-#import "KSPlugin.h"
+#import "KSPlugInWrapper.h"
 #import "KSProgressPanel.h"
 
+#import "NSApplication+Karelia.h"
+#import "NSError+Karelia.h"
+#import "NSHelpManager+Karelia.h"
 #import "NSObject+Karelia.h"
+
+#import "KSWorkspaceUtilities.h"
 
 
 static KTPluginInstaller *sSharedPluginInstaller = nil;
@@ -56,9 +58,9 @@ NSLog(@"%@", aURL);
 	if (0 == [myURLs count] && !myProgressPanel)
 	{
         myProgressPanel = [[KSProgressPanel alloc] init];
-        [myProgressPanel setMessageText:NSLocalizedString(@"Installing Plug-ins...", @"")];
+        [myProgressPanel setMessageText:NSLocalizedString(@"Installing Plug-ins…", @"")];
         [myProgressPanel setInformativeText:nil];
-        [myProgressPanel setIcon:[[NSWorkspace sharedWorkspace] iconForFile:[aURL path]]];
+        [myProgressPanel setIcon:[KSWORKSPACE iconForFile:[aURL path]]];
         
         [myProgressPanel makeKeyAndOrderFront:self];
 	}
@@ -74,16 +76,15 @@ NSLog(@"%@", aURL);
 		// we are going to copy directly into the app's app support folder, but if the file already
 		// exists there, or in a subfolder of this app support folder, then we won't.
 	
-	NSEnumerator *enumerator = [myURLs objectEnumerator];
-	NSURL *url;
+	NSURL *url = nil;
 	NSMutableArray *errorURLs   = [NSMutableArray array];		// queue up BAD copies
 	NSMutableArray *successURLs = [NSMutableArray array];		// queue up GOOD copies.  URLs of *destination* now.
 
-	while ((url = [enumerator nextObject]) != nil)
+	for (url in myURLs)
 	{
 		NSString *urlPath = [url path];
 		NSString *extension = [urlPath pathExtension];
-		Class pluginClass = [KSPlugin registeredPluginClassForFileExtension:extension];
+		Class pluginClass = [KSPlugInWrapper registeredPluginClassForFileExtension:extension];
 		NSString *pluginSubfolder = [pluginClass pluginSubfolder];
 		NSString *altDestFolder = [[[[NSApplication applicationSupportPath] stringByAppendingPathComponent:pluginSubfolder]
 								  stringByResolvingSymlinksInPath] stringByStandardizingPath];
@@ -91,6 +92,14 @@ NSLog(@"%@", aURL);
 		NSString *destPath = [destFolder stringByAppendingPathComponent:[sourcePath lastPathComponent]];
 		NSString *altDestPath = [altDestFolder stringByAppendingPathComponent:[sourcePath lastPathComponent]];
 
+		NSString *appPath = [[NSBundle mainBundle] bundlePath];	// so we can recognize if we are copying a plugin already in app
+		appPath = [[appPath stringByResolvingSymlinksInPath] stringByStandardizingPath];
+		
+		if ([sourcePath hasPrefix:appPath])
+		{
+			NSLog(@"Installing a COPY of a plugin that is in the application bundle.");
+		}
+		
 		if ([sourcePath isEqualToString:destPath] || [sourcePath isEqualToString:altDestPath])
 		{
 			NSLog(@"Not moving; already %@ is already installed.", sourcePath);
@@ -108,7 +117,8 @@ NSLog(@"%@", aURL);
 				(void) [fm removeFileAtPath:destPath handler:nil];
 			}
 			
-			BOOL shouldMove = [fm isDeletableFileAtPath:sourcePath];
+			// Move if we can delete the source file, and if the source path is not within the application path
+			BOOL shouldMove = [fm isDeletableFileAtPath:sourcePath] && ![sourcePath hasPrefix:appPath];
 
 			BOOL copiedOrMoved = shouldMove ? [fm movePath:sourcePath toPath:destPath handler:nil] : [fm copyPath:sourcePath toPath:destPath handler:nil];
 			if (copiedOrMoved)
@@ -141,10 +151,9 @@ NSLog(@"%@", aURL);
 
 		}
 		NSMutableString *pluginList = [NSMutableString string];
-		NSEnumerator *successEnum = [successURLs objectEnumerator];
 		NSURL *url;
 
-		while ((url = [successEnum nextObject]) != nil)
+		for (url in successURLs)
 		{
 			[pluginList appendFormat:@"\t%@\n", [[url path] lastPathComponent]];
 		}
@@ -155,7 +164,7 @@ NSLog(@"%@", aURL);
 		[alert setShowsHelp:YES];
 		[alert setDelegate:self];
 		
-		[alert setIcon:[[NSWorkspace sharedWorkspace] iconForFile:[[successURLs lastObject] path]]];
+		[alert setIcon:[KSWORKSPACE iconForFile:[[successURLs lastObject] path]]];
 		[alert setAlertStyle:NSInformationalAlertStyle];
 		[alert runModal];
 	}
@@ -174,10 +183,9 @@ NSLog(@"%@", aURL);
 			
 		}
 		NSMutableString *pluginList = [NSMutableString string];
-		NSEnumerator *errorEnum = [errorURLs objectEnumerator];
-		NSURL *url;
+		NSURL *url = nil;
 		
-		while ((url = [errorEnum nextObject]) != nil)
+		for (url in errorURLs)
 		{
 			[pluginList appendFormat:@"\t%@\n", [[url path] lastPathComponent]];
 		}
@@ -188,7 +196,7 @@ NSLog(@"%@", aURL);
 		[alert setShowsHelp:YES];
 		[alert setDelegate:self];
 		
-		[alert setIcon:[[NSWorkspace sharedWorkspace] iconForFile:[[errorURLs lastObject] path]]];
+		[alert setIcon:[KSWORKSPACE iconForFile:[[errorURLs lastObject] path]]];
 		[alert setAlertStyle:NSCriticalAlertStyle];
 		[alert runModal];
 	}
@@ -201,7 +209,7 @@ NSLog(@"%@", aURL);
 
 - (BOOL)alertShowHelp:(NSAlert *)alert
 {
-	NSString *helpString = @"Installing_Sandvox_Plugins_and_Designs";		// HELPSTRING
+	NSString *helpString = @"Installing Sandvox Plug-ins and Designs";		// HELPSTRING
 	return [NSHelpManager gotoHelpAnchor:helpString];
 }
 

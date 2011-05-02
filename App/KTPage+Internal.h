@@ -3,43 +3,25 @@
 //  Marvel
 //
 //  Created by Mike on 21/10/2008.
-//  Copyright 2008-2009 Karelia Software. All rights reserved.
+//  Copyright 2008-2011 Karelia Software. All rights reserved.
 //
 
 
 #import "KTPage.h"
-#import "KTAbstractElement+Internal.h"
+
+
+@class KTElementPlugInWrapper;
 
 
 @interface KTPage (Internal)
 
-// Creation
-+ (KTPage *)insertNewPageWithParent:(KTPage *)aParent plugin:(KTElementPlugin *)aPlugin;
-
-+ (KTPage *)pageWithParent:(KTPage *)aParent
-	  dataSourceDictionary:(NSDictionary *)aDictionary insertIntoManagedObjectContext:(NSManagedObjectContext *)aContext;
-
-+ (KTPage *)rootPageWithDocument:(KTDocument *)aDocument bundle:(NSBundle *)aBundle;
-
-// Inspector
-- (BOOL)separateInspectorSegment;
-
 // Hierarchy
-- (BOOL)containsDescendant:(KTPage *)aPotentialDescendant;	// DEPRECATED.  FASTER TO USE isDescendantOfPage:
-- (BOOL)isDescendantOfPage:(KTPage *)aPotentialAncestor;
-
 - (int)proposedOrderingForProposedChild:(id)aProposedChild
-							   sortType:(KTCollectionSortType)aSortType;
+							   sortType:(SVCollectionSortOrder)aSortType
+                              ascending:(BOOL)ascending;
+
 - (int)proposedOrderingForProposedChildWithTitle:(NSString *)aTitle;
 
-// Index
-- (void)setIndex:(KTAbstractIndex *)anIndex;
-- (void)setIndexFromPlugin:(KTAbstractHTMLPlugin *)aBundle;
-
-
-// New page
-- (BOOL)isNewPage;
-- (void)setNewPage:(BOOL)flag;
 
 @end
 
@@ -48,16 +30,9 @@
 
 - (void)setValue:(id)value forKey:(NSString *)key recursive:(BOOL)recursive;
 
-// Perform selector
-- (void)makeComponentsPerformSelector:(SEL)selector
-						   withObject:(void *)anObject
-							 withPage:(KTPage *)page
-							recursive:(BOOL)recursive;
-
 - (void)addDesignsToSet:(NSMutableSet *)aSet forPage:(KTPage *)aPage;
 - (void)addStaleToSet:(NSMutableSet *)aSet forPage:(KTPage *)aPage;
 - (void)addRSSCollectionsToArray:(NSMutableArray *)anArray forPage:(KTPage *)aPage;
-- (NSString *)spotlightHTML;
 
 
 @end

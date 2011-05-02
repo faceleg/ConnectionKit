@@ -3,30 +3,43 @@
 //  Marvel
 //
 //  Created by Mike on 30/01/2008.
-//  Copyright 2008-2009 Karelia Software. All rights reserved.
+//  Copyright 2008-2011 Karelia Software. All rights reserved.
 //
 
-#import "KTPage.h"
+#import <CoreFoundation/CoreFoundation.h>
 
-#import "KTAbstractElement+Internal.h"
-#import "KTAbstractIndex.h"
-#import "KTArchivePage.h"
-#import "KTHTMLParser.h"
-#import "KTIndexPlugin.h"
+#import "KTPage+Paths.h"
+
+#import "SVArticle.h"
+#import "SVArchivePage.h"
+#import "SVAttributedHTML.h"
+#import "SVHTMLContext.h"
+#import "SVHTMLTemplateParser.h"
+#import "SVMediaGraphic.h"
+#import "SVPagesController.h"
+#import "SVProxyHTMLContext.h"
+#import "SVTextAttachment.h"
+#import "SVWebEditorHTMLContext.h"
+
+#import "NSString+KTExtensions.h"
 
 #import "NSArray+Karelia.h"
 #import "NSBundle+Karelia.h"
 #import "NSBundle+KTExtensions.h"
 #import "NSCharacterSet+Karelia.h"
+#import "NSError+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSObject+Karelia.h"
+#import "NSSet+Karelia.h"
 #import "NSSortDescriptor+Karelia.h"
-#import "NSString+KTExtensions.h"
-#import "NSURL+Karelia.h"
-#import "NSXMLElement+Karelia.h"
+#import "NSString+Karelia.h"
+
+#import "KSStringHTMLEntityUnescaping.h"
+#import "KSStringXMLEntityEscaping.h"
+#import "KSURLUtilities.h"
 
 
-@interface KTAbstractPage (PathsPrivate)
+@interface KTPage (IndexesPrivate)
 - (NSString *)pathRelativeToSiteWithCollectionPathStyle:(KTCollectionPathStyle)collectionPathStyle;
 @end
 
@@ -36,120 +49,22 @@
 
 @implementation KTPage (Indexes)
 
-#pragma mark -
-#pragma mark Basic Accessors
+#pragma mark Basic Properties
 
-- (KTCollectionSummaryType)collectionSummaryType { return [self wrappedIntegerForKey:@"collectionSummaryType"]; }
+@dynamic collectionSummaryType;
 
-- (void)setCollectionSummaryType:(KTCollectionSummaryType)type
-{
-	[self setWrappedInteger:type forKey:@"collectionSummaryType"];
-	
-	//  This setting affects the thumbnail, so update it
-	if ([self isCollection])
-	{
-		[self generateCollectionThumbnail];
-	}
-}
-
-- (void)setCollectionMaxIndexItems:(NSNumber *)max
-{
-	[self setWrappedValue:max forKey:@"collectionMaxIndexItems"];
-	
-	// Clearly this operation affects the list
-	[self invalidatePagesInIndexCache];
-}
-
-- (BOOL)includeInIndex { return [self wrappedBoolForKey:@"includeInIndex"]; }
-
-- (void)setIncludeInIndex:(BOOL)flag
-{
-	// Mark our old archive page (if there is one) stale
-	KTArchivePage *oldArchivePage = [[self parent] archivePageForTimestamp:[self editableTimestamp] createIfNotFound:flag];
-	
-	
-	[self setWrappedBool:flag forKey:@"includeInIndex"];
-	
-	
-	// Delete the old archive page if it has nothing on it now
-	if (oldArchivePage)
-	{
-		NSArray *pages = [oldArchivePage sortedPages];
-		if (!pages || [pages count] == 0) [[self managedObjectContext] deleteObject:oldArchivePage];
-	}
-	
-	
-	// We must update the parent's list of pages
-	[[self parent] invalidatePagesInIndexCache];
-}
-
-#pragma mark -
 #pragma mark Index
-
-- (KTAbstractIndex *)index { return [self wrappedValueForKey:@"index"]; }
-
-- (void)setIndex:(KTAbstractIndex *)anIndex { [self setWrappedValue:anIndex forKey:@"index"]; }
-
-- (void)setIndexFromPlugin:(KTAbstractHTMLPlugin *)plugin
-{
-	if (plugin)
-	{
-		NSBundle *bundle = [plugin bundle];
-		[self setValue:[bundle bundleIdentifier] forKey:@"collectionIndexBundleIdentifier"];
-		
-		Class indexClass = [bundle principalClassIncludingOtherLoadedBundles:YES];
-		KTAbstractIndex *theIndex = [[[indexClass alloc] initWithPage:self plugin:plugin] autorelease];
-		[self setIndex:theIndex];
-	}
-	else
-	{
-		[self setValue:nil forKey:@"collectionIndexBundleIdentifier"];
-		[self setIndex:nil];
-	}
-}
-
-/*	Takes our -sortedChildren property and filters out:
- *		* Pages excluded from the index
- *		* Unpublished draft pages
- *		* Pages outside the maxPages limit
- */
-- (NSArray *)pagesInIndex
-{
-	NSArray *result = [self wrappedValueForKey:@"pagesInIndex"];
-	
-	if (!result)
-	{
-		result = [self navigablePages];
-        
-        NSNumber *maxPages = [self valueForKey:@"collectionMaxIndexItems"];
-        if (maxPages && [maxPages intValue] > 0)
-        {
-            result = [result subarrayToIndex:[maxPages intValue]];
-        }
-        
-		[self setPrimitiveValue:result forKey:@"pagesInIndex"];
-	}
-	
-	return result;
-}
-
-- (void)invalidatePagesInIndexCache
-{
-	[self setValue:nil forKey:@"pagesInIndex"];
-}
 
 - (BOOL)pagesInIndexAllowComments
 {
 	BOOL result = NO;
 	
-	if ( [self isCollection] && (nil != [self index]) )
+	if ([self isCollection])
 	{
-		NSArray *pages = [self pagesInIndex];
-		int i;
-		for ( i=0; i<[pages count]; i++ )
+		NSArray *pages = [[SVPagesController controllerWithPagesToIndexInCollection:self bind:NO] arrangedObjects];
+		for ( id page in pages )
 		{
-			KTPage *page = [pages objectAtIndex:i];
-			if ( [page wrappedBoolForKey:@"allowComments"] )
+			if ([page isKindOfClass:[KTPage class]] && [[page allowComments] boolValue])
 			{
 				result = YES;
 				break;
@@ -167,130 +82,151 @@
  */
 - (NSArray *)navigablePages;
 {
-	NSArray *result = [self childrenWithSorting:[self collectionSortOrder] inIndex:YES];
+	// How to sort the pages? Generally this is the same as usual, but for chronological collections, the arrows need to always be the same. #32341
+    SVCollectionSortOrder sorting = [[self collectionSortOrder] integerValue];
+    BOOL ascending = [self isSortedChronologically] ? NO : [[self collectionSortAscending] boolValue];
+    
+    NSArray *result = [self childrenWithSorting:sorting ascending:ascending inIndex:YES];
 	return result;
 }
 
-/*	Both return nil if there isn't a suitable sibling.
- *	-sortedChildren caching takes care of KVO for these properties.
- */
 - (KTPage *)previousPage
 {
-	KTPage *result = nil;
-	
-	NSArray *siblings = [[self parent] navigablePages];
+    SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
+    
+	NSArray *siblings = [[self parentPage] childPages];
+    [context addDependencyOnObject:self keyPath:@"parentPage.childPages"];
+    
 	unsigned index = [siblings indexOfObjectIdenticalTo:self];
-	if (index > 0 && index < [siblings count])
-	{
-		result = [siblings objectAtIndex:index - 1];
-	}
+    if (index != NSNotFound)
+    {
+        while (index > 0)
+        {
+            index--;
+            
+            KTPage *result = [siblings objectAtIndex:index];
+            [context addDependencyOnObject:result keyPath:@"shouldIncludeInIndexes"];
+            
+            if ([result shouldIncludeInIndexes]) return result;
+        }
+    }
 	
-	return result;
+	return nil;
 }
++ (NSSet *) keyPathsForValuesAffectingPreviousPage; { return [NSSet setWithObject:@"parentPage.childPages"]; }
 
 - (KTPage *)nextPage
 {
-	KTPage *result = nil;
-	
-	NSArray *siblings = [[self parent] navigablePages];
-	unsigned index = [siblings indexOfObjectIdenticalTo:self];
-	if (index != NSNotFound && index < ([siblings count] - 1))
+	SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
+    
+	NSArray *siblings = [[self parentPage] childPages];
+	[context addDependencyOnObject:self keyPath:@"parentPage.childPages"];
+    
+	unsigned index = [siblings indexOfObjectIdenticalTo:self] + 1;
+	while (index < [siblings count])
 	{
-		result = [siblings objectAtIndex:index + 1];
+		KTPage *result = [siblings objectAtIndex:index];
+        [context addDependencyOnObject:result keyPath:@"shouldIncludeInIndexes"];
+
+        if ([result shouldIncludeInIndexes]) return result;
+        
+        index++;
 	}
 	
-	return result;
+	return nil;
 }
++ (NSSet *) keyPathsForValuesAffectingNextPage; { return [NSSet setWithObject:@"parentPage.childPages"]; }
 
-#pragma mark -
-#pragma mark RSS Feed
+#pragma mark Syndication
 
-/*!	Can the collection syndicate? A few things have to be set....
-If this is true, the RSS button is enabled.
-If this, and "collectionSyndicate" are true, then feed is referenced and uploaded.
-*/
-- (BOOL)collectionCanSyndicate
+@dynamic collectionSyndicationType;
+- (void)setCollectionSyndicationType:(NSNumber *)type;
 {
-	return [self isCollection]
-	&& nil != [self wrappedValueForKey:@"collectionIndexBundleIdentifier"]
-	;
-	// TAKE OUT FOR NOW ... NOT USING THIS SETTING, UNTIL/UNLESS WE HAVE MULTIPLE FORMATS TO CHOOSE FROM
-	// (which we would put in the site settings)
-	// && ([self boolForKey:@"collectionGenerateAtom"] || [self boolForKey:@"collectionGenerateRSS"]) ;
-}
-
-- (BOOL)collectionSyndicate { return [self wrappedBoolForKey:@"collectionSyndicate"]; }
-
-- (void)setCollectionSyndicate:(BOOL)syndicate
-{
-    [self setWrappedBool:syndicate forKey:@"collectionSyndicate"];
+    [self willChangeValueForKey:@"collectionSyndicationType"];
+    [self setPrimitiveValue:type forKey:@"collectionSyndicationType"];
+    [self didChangeValueForKey:@"collectionSyndicationType"];
     
-    // For Sandvox 1.6 and onwards, once the user makes a definitive decision, finalise the filename
-    // Until then, we stick with the default Sandvox 1.5 + earlier name. case 40230.
-    if (![self valueForUndefinedKey:@"RSSFileName"])
+    
+    // #93646
+    if ([type boolValue])
     {
-        [self setRSSFileName:(syndicate ? @"index.rss" : [self RSSFileName])];
-    }
-}
-
-- (NSString *)RSSFileName
-{
-    NSString *result = [self valueForUndefinedKey:@"RSSFileName"];
-    if (!result)
-    {
-        // We don't want to upset existing RSS feeds, so stick to default filename for those
-        result = [[NSUserDefaults standardUserDefaults] objectForKey:@"RSSFileName"];
+        if ([[self collectionMaxSyndicatedPagesCount] integerValue] < 1)
+        {
+            [self setCollectionMaxSyndicatedPagesCount:[NSNumber numberWithUnsignedInteger:20]];
+        }
     }
     
-    return result;
+    
+    [[self childItems] ks_tryToMakeObjectsPerformSelector:@selector(guessEnclosures)];
 }
 
-- (void)setRSSFileName:(NSString *)file
+@dynamic collectionMaxSyndicatedPagesCount;
+- (BOOL)validateCollectionMaxSyndicatedPagesCount:(NSNumber **)max error:(NSError **)outError;
 {
-    [self setValue:file forUndefinedKey:@"RSSFileName"];
+    // Mandatory for syndicated collections, optional otherwise
+    if ([self isCollection] && [[self collectionSyndicationType] boolValue])
+    {
+        if (!*max)
+        {
+            if (outError) *outError = [KSError errorWithDomain:NSCocoaErrorDomain
+                                                          code:NSValidationMissingMandatoryPropertyError
+                                          localizedDescription:@"collectionMaxSyndicatedPagesCount is non-optional for collections"];
+            
+            return NO;
+        }
+    }
+    
+    return YES;
 }
+
+@dynamic collectionTruncateFeedItems;
+@dynamic collectionMaxFeedItemLength;
+
+@dynamic RSSFileName;
 
 - (NSURL *)feedURL
 {
 	NSURL *result = nil;
 	
-	if ([self collectionSyndicate] && [self collectionCanSyndicate])
+	if ([[self collectionSyndicationType] boolValue])
 	{
-		result = [NSURL URLWithPath:[self RSSFileName] relativeToURL:[self URL] isDirectory:NO];
+		result = [NSURL ks_URLWithPath:[self RSSFileName] relativeToURL:[self URL] isDirectory:NO];
 	}
 	
 	return result;
 }
-
-/*  The pages that will go into the RSS feed. This is just -pagesInIndex, sorted chronologically
- */
-- (NSArray *)sortedReverseChronoChildrenInIndex
++ (NSString *)keyPathsForValuesAffectingFeedURL;
 {
-	NSArray *sortDescriptors = [NSSortDescriptor reverseChronologicalSortDescriptors];
-    NSArray *result = [[self pagesInIndex] sortedArrayUsingDescriptors:sortDescriptors];
+    return [NSSet setWithObjects:@"collectionSyndicationType", @"URL", @"RSSFileName", nil];
+}
+
+- (BOOL)hasFeed; { return [self feedURL] != nil; }
++ (NSString *)keyPathsForValuesAffectingHasFeed; { return [NSSet setWithObject:@"feedURL"]; }
+
+/*  The pages that will go into the RSS feed. Sort chronologically and apply the limit
+ */
+- (NSArray *)pagesInRSSFeed
+{
+	NSArray *result = [self childrenWithSorting:SVCollectionSortByDateCreated ascending:NO inIndex:YES];
+    
+    NSUInteger max = [[self collectionMaxSyndicatedPagesCount] unsignedIntegerValue];
+    if ([result count] > max)
+    {
+        result = [result subarrayToIndex:max];
+    }
+    
 	return result;
 }
 
 /*!	Return the HTML.
  */
-- (NSString *)RSSFeedWithParserDelegate:(id)parserDelegate
+- (NSString *)RSSFeed;
 {
-	// Find the template
-	NSString *template = [[[self plugin] bundle] templateRSSAsString];
-	if (!template)
-	{
-		// No special template for this bundle, so look for the generic one in the app
-		template = [[NSBundle mainBundle] templateRSSAsString];
-	}
-	OBASSERT(template);
-	
-	
-	KTHTMLParser *parser = [[KTHTMLParser alloc] initWithTemplate:template component:self];
-	[parser setDelegate:parserDelegate];
-	[parser setHTMLGenerationPurpose:kGeneratingRemote];
-	
-	NSString *result = [parser parseTemplate];
-	[parser release];
+	NSMutableString *result = [NSMutableString string];
+    SVHTMLContext *context = [[SVHTMLContext alloc] initWithOutputWriter:result];
+    
+    [self writeRSSFeed:context];
+	[context release];
 		
 	// We won't do any "stringByEscapingCharactersOutOfEncoding" since we are using UTF8, which means everything is OK, and we
 	// don't want to introduce any entities into the XML anyhow.
@@ -299,27 +235,308 @@ If this, and "collectionSyndicate" are true, then feed is referenced and uploade
     return result;
 }
 
+
+// This will be a private API for use by General index
+- (void)writeComments:(SVHTMLContext *)context;
+{
+	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:self.commentsTemplate component:self];
+    [parser parseIntoHTMLContext:context];
+	[parser release];
+}
+
+- (void)writeRSSFeed:(SVHTMLContext *)context;
+{
+    // Find the template
+	NSString *template = [[NSBundle mainBundle] templateRSSAsString];
+	OBASSERT(template);
+	
+	
+    // Generate XML
+	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:template component:self];
+	
+    [parser parseIntoHTMLContext:context];
+    [parser release];
+}
+
 - (NSSize)RSSFeedThumbnailsSize { return NSMakeSize(128.0, 128.0); }
+
+- (void)writeRSSFeedItemDescription
+{
+	SVHTMLContext *feedContext = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
+
+	KSEscapedXMLEntitiesWriter *xmlWriter = [[KSEscapedXMLEntitiesWriter alloc]
+											 initWithOutputXMLWriter:feedContext];
+	
+	SVHTMLContext *xmlContext = [[SVProxyHTMLContext alloc] initWithOutputWriter:xmlWriter target:feedContext];
+	
+	NSUInteger truncationLength = [self.parentPage.collectionMaxFeedItemLength intValue];
+	
+    (void) [self writeSummary:xmlContext
+									 truncation:truncationLength
+										 plugIn:nil	// not an issue with RSS feed
+										options:0];	// not excluding thumbnails
+	
+	// Do we want to insert anything into the feed if it is truncated?
+	[xmlContext release];
+	[xmlWriter release];
+}
+
+#pragma mark RSS Enclosures
 
 - (NSArray *)feedEnclosures
 {
-	NSArray *result = nil;
-	
-	id delegate = [self delegate];
-	if (delegate && [delegate respondsToSelector:@selector(pageWillReturnFeedEnclosures:)])
-	{
-		result = [delegate pageWillReturnFeedEnclosures:self];
-	}
-	
+    NSSet *attachments = [[self article] attachments];
+    
+    NSSet *graphics = [[attachments valueForKey:@"graphic"] filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"includeAsRSSEnclosure == 1"]];
+    
+	NSMutableArray *result = [NSMutableArray arrayWithCapacity:[attachments count]];
+    
+    for (SVGraphic *anAttachment in graphics)
+    {
+        id <SVEnclosure> enclosure = [anAttachment enclosure];
+        if (enclosure) [result addObject:enclosure];
+    }
+    
 	return result;
 }
 
+- (void)guessEnclosures;    // searches for enclosures if feed expects them
+{
+    if ([[[self parentPage] collectionSyndicationType] intValue] > 1)
+    {
+        NSArray *enclosures = [self feedEnclosures];
+        if ([enclosures count] == 0)
+        {
+            for (SVTextAttachment *anAttachment in [[self article] attachments])
+            {
+                SVGraphic *graphic = [anAttachment graphic];
+                if ([graphic isKindOfClass:[SVMediaGraphic class]])
+                {
+                    [graphic setIncludeAsRSSEnclosure:[NSNumber numberWithBool:YES]];
+                    break;
+                }
+            }
+        }
+    }
+}
+
+- (void)writeEnclosures;
+{
+    NSArray *enclosures = [self feedEnclosures];
+    
+    for (id <SVEnclosure> anEnclosure in enclosures)
+    {
+        SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
+        [context writeEnclosure:anEnclosure];
+    }
+}
+
 #pragma mark -
+#pragma mark Raw Char Count (exp of slider) <--> Truncate Count & Units
+
+// A larger "per" value means that we are more likely to have a reversal (rather than a gap) wen we cange from one truncation mode to another.
+// 
+#define kCharsPerWord 5
+#define kWordsPerSentence 10
+#define kSentencesPerParagraph 5
+#define kMaxTruncationParagraphs 10
+// 5 * 10 * 5 * 10 = 5000 characters in 20 paragraphs, so this is our range
+
+#define LOGFUNCTION log2
+#define EXPFUNCTION(x) exp2(x)
+
+const NSUInteger kTruncationMin = kWordsPerSentence * kCharsPerWord;
+const NSUInteger kTruncationMax = kMaxTruncationParagraphs * kSentencesPerParagraph * kWordsPerSentence * kCharsPerWord;
+double kTruncationMinLog;
+double kTruncationMaxLog;
+
+double kOneThirdTruncationLog;
+double kTwoThirdsTruncationLog;
+
+NSUInteger kOneThirdTruncation;
+NSUInteger kTwoThirdsTruncation;
+
++ (void) initialize
+{
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+
+	kTruncationMinLog = LOGFUNCTION(kTruncationMin);
+	kTruncationMaxLog = LOGFUNCTION(kTruncationMax);
+	
+	kOneThirdTruncationLog = kTruncationMinLog + (kTruncationMaxLog - kTruncationMinLog)/3.0;
+	kTwoThirdsTruncationLog = kTruncationMinLog + (kTruncationMaxLog - kTruncationMinLog)/3.0*2.0;
+	
+	kOneThirdTruncation = EXPFUNCTION(kOneThirdTruncationLog);
+	kTwoThirdsTruncation = EXPFUNCTION(kTwoThirdsTruncationLog);
+		
+	[pool release];
+}
+
+// Figure out units based on which third of the slider is in range.
+// Convert slider floating value to approprate truncation types.
+// Depending on which third the value is in, we round to a count of words, sentence, or paragraphs.
+
++ (SVTruncationType) chooseTruncTypeFromMaxItemLength:(NSUInteger)maxItemLength;
+{
+	
+	SVTruncationType type = 0;
+	if (maxItemLength < kOneThirdTruncation)
+	{
+		type = kTruncateWords;			// First third: truncate words
+	}
+	else if (maxItemLength < kTwoThirdsTruncation)
+	{
+		type = kTruncateSentences;		// Second third: truncate sentences
+	}
+	else if (maxItemLength > 0.99 * kTruncationMax)		// If at the end, 99th percentile, 
+	{
+		type = kTruncateNone;
+	}
+	else
+	{
+		type = kTruncateParagraphs;		// Third third, truncate paragraphs.
+	}
+	return type;
+}
+
 #pragma mark Standard Summary
+
+
+// Returns YES if truncated.
+
+- (BOOL)writeSummary:(SVHTMLContext *)context
+		  truncation:(NSUInteger)maxItemLength
+			  plugIn:(SVPlugIn *)plugInToExclude
+			 options:(SVPageTruncationOptions)options;
+{
+//    NSParameterAssert(plugInToExclude);
+    
+    
+	OFF((@"writeSummary: iteratedPage = %@, Page we are writing to = %@  .... exclude %@", self, [context page], plugInToExclude));
+	
+	BOOL includeLargeMedia = ![context isWritingPagelet];		// do not allow large media if writing pagelet.
+	
+	SVGraphic *thumbnailToExclude = (options & SVExcludeThumbnailInTruncation) ? [self thumbnailSourceGraphic] : nil;		// CORRECT FOR ALL CASES?
+	
+	SVTruncationType truncationType = [[self class] chooseTruncTypeFromMaxItemLength:maxItemLength];
+	BOOL result = NO;
+	
+	[context willWriteSummaryOfPage:self];
+    [context startElement:@"div" className:@"article-summary"];
+
+	// do we have a custom summary? if so just write it
+    if ( nil != [self customSummaryHTML] )
+    {
+        [super writeSummary:context truncation:maxItemLength plugIn:plugInToExclude options:options];
+		result = YES;		// A custom summary means we want to make an obvious link to more
+    }
+    else
+	{
+		NSAttributedString *html = nil;
+		
+		if ( maxItemLength > 0 && kTruncateNone != truncationType )
+		{
+			html = [[[self article] attributedHTMLString] attributedHTMLStringWithTruncation:maxItemLength
+																						type:truncationType
+																		   includeLargeMedia:includeLargeMedia
+																				 didTruncate:&result];
+		}
+		else
+		{
+			// no truncation, just process the complete, normal summary
+			html = [[self article] attributedHTMLString];
+		}
+		NSMutableAttributedString *summary = [html mutableCopy];		// RETAINED HERE
+		
+		NSUInteger location = 0;
+		NSUInteger countOfAttachments = 0;
+		
+		while (location < summary.length)
+		{
+			NSRange effectiveRange;
+			SVTextAttachment *attachment = [summary attribute:@"SVAttachment"
+													  atIndex:location
+											   effectiveRange:&effectiveRange];			
+			if (attachment)
+			{
+				countOfAttachments++;
+				
+				BOOL shouldKeepAttachment = (includeLargeMedia && attachment && [[attachment causesWrap] boolValue]);
+				SVGraphic *graphic = [attachment graphic];
+				
+				if (thumbnailToExclude == graphic)
+				{
+					OFF((@"Excluding thumbnail %@", thumbnailToExclude));
+					shouldKeepAttachment = NO;
+				}
+				
+				SVPlugIn *plugInOfGraphic = (void *) -1;	// illegal value, never going to match
+				if ([graphic respondsToSelector:@selector(plugIn)])
+				{
+					plugInOfGraphic = [((SVPlugInGraphic *)graphic) plugIn];
+				}
+				if (plugInToExclude == plugInOfGraphic)
+				{
+					OFF((@"Excluding plugin %@", plugInToExclude));
+					shouldKeepAttachment = NO;
+				}
+				
+				if (!shouldKeepAttachment)
+				{
+					[summary deleteCharactersInRange:effectiveRange];
+					countOfAttachments--;		// DELETING, SO LOWER THE COUNT WE JUST INCREMENTED.
+				}
+				else
+				{
+					location = location + effectiveRange.length;
+				}
+			}
+			else
+			{
+				location = location + effectiveRange.length;
+			}
+		}
+
+		// TODO -- WHAT ABOUT CAPTION SETTING?
+		
+		
+		if (0 == countOfAttachments)
+		{
+			// Are we left with only whitespace? If so, fallback to caption of thumbnail's image
+			
+			NSString *text = [[summary string] stringByConvertingHTMLToPlainText];
+			if ([text isWhitespace])
+			{
+				[summary release]; summary = nil;
+				
+				if ([thumbnailToExclude showsCaption])
+				{
+					summary = [[[thumbnailToExclude caption] attributedHTMLString] retain];
+				}
+			}			
+		}
+		
+		// Write it
+        if ([summary length])
+        {
+            [context writeAttributedHTMLString:summary];
+        }
+        else
+        {
+			[super writeSummary:context truncation:maxItemLength plugIn:plugInToExclude options:options];
+        }
+		
+		[summary release];
+	}
+
+    [context endElement];
+
+	return result;
+}
 
 /*!	Here is the main information about how summaryHTML works.
 
-A page is asked for its summaryHTML to populate its parent's general index page, if it exists.
+A page is asked for ds summaryHTML to populate its parent's general index page, if it exists.
 Exactly how that summary is generated is a bit complex.
 
 First off -- if this is a collection (with some children), there is a behavior flag which is
@@ -429,127 +646,12 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 }
 */
 
-- (NSString *)preTruncationSummaryHTML
-{
-	// TODO: Handle collections
-	
-	NSString *result = @"";
-	
-	NSString *summaryHTMLKeyPath = [self summaryHTMLKeyPath];
-	if (summaryHTMLKeyPath)
-	{
-		result = [self valueForKeyPath:summaryHTMLKeyPath];
-	}
-
-	return result;
-}
-
-- (NSString *)summaryHTMLWithTruncation:(unsigned)truncation
-{
-	NSString *result = [self preTruncationSummaryHTML];
-	
-	
-	// Truncate to the specified no. characters.
-	// This is tricky because we want to truncate to number of visible characters, not HTML characters.
-	// Also, this might leave us in the middle of an open tag.  
-// TODO: figure out how to truncate gracefully
-	if (truncation && [result length] > truncation)
-	{
-//						result = [NSString stringWithFormat:@"%@%C", 
-//							[result substringToIndex:truncateCharacters], 0x2026];
-		
-		// NOTE: I STILL NEED TO TRUNCATE BY CHARACTERS, NOT BY MARKUP
-		// I could do it by making a doc of the whole thing, then scan through the XML doc for text, and 
-		// stop when I reach the Nth character.  Then dump the rest of the tree,
-		// then output the tree and XSLT remove the HTML, HEAD, BODY tags.
-		
-		// Now, tidy this HTML
-		NSError *theError = NULL;
-		NSXMLDocument *xmlDoc = [[[NSXMLDocument alloc] initWithXMLString:result options:NSXMLDocumentTidyHTML error:&theError] autorelease];
-		NSArray *theNodes = [xmlDoc nodesForXPath:@"/html/body" error:&theError];
-		NSXMLNode *node = [theNodes lastObject];
-		NSXMLElement *theBody = [theNodes lastObject];
-		int accumulator = 0;
-		while (nil != node)
-		{
-			if ([node kind] == NSXMLTextKind)
-			{
-				NSString *thisString = [node stringValue];	// renders &amp; etc.
-				int thisLength = [thisString length];
-				unsigned int newAccumulator = accumulator + thisLength;
-				if (newAccumulator >= truncation)	// will we need to prune?
-				{
-					int truncateIndex = truncation - accumulator;
-					// Now back up just a few more characters if we can hit whitespace.
-					NSRange whereWhitespace = [thisString rangeOfCharacterFromSet:[NSCharacterSet fullWhitespaceAndNewlineCharacterSet]
-																		  options:NSBackwardsSearch
-																			range:NSMakeRange(0,truncateIndex)];
-					
-#define REASONABLE_WORD_LENGTH 15
-					/*
-					 Might be NSNotFound which means we want to truncate the whole thing?
-					 Perhaps if it's small.  If we have japanese with no spaces, I don't
-					 want to lose anything like that.  Maybe if the length > N and we
-					 couldn't truncate, don't trucate at all. 
-					 */
-					if (NSNotFound == whereWhitespace.location)
-					{
-						if (truncateIndex < REASONABLE_WORD_LENGTH)		truncateIndex = 0;	// remove this segment entirely
-						// else, just truncate at character; this might be no-space text.
-					}
-					else
-					{
-						// Would we truncate a whole bunch extra (meaning a long long word or few/no spaces text?
-						if (truncateIndex - whereWhitespace.location < REASONABLE_WORD_LENGTH)
-						{
-							// only reset the truncate index if we won't chop off TOO much.
-							truncateIndex = whereWhitespace.location;
-						}
-					}
-					NSString *truncd = [thisString substringToIndex:truncateIndex];
-					// Trucate, plus add on an ellipses
-					NSString *newString = [NSString stringWithFormat:@"%@%C", 
-						truncd, 0x2026];
-
-					[node setStringValue:newString];	// re-escapes &amp; etc.
-					
-					break;		// we will now remove everything after "node"
-				}
-				accumulator = newAccumulator;
-			}
-			node = [node nextNode];
-		}
-		
-		[theBody removeAllNodesAfter:(NSXMLElement *)node];
-
-		result = [theBody XMLStringWithOptions:NSXMLDocumentTidyXML];
-		// DON'T use NSXMLNodePreserveAll -- it converted " to ' and ' to &apos;  !!!
-							
-		NSRange rangeOfBodyStart = [result rangeOfString:@"<body>" options:0];
-		NSRange rangeOfBodyEnd   = [result rangeOfString:@"</body>" options:NSBackwardsSearch];
-		if (NSNotFound != rangeOfBodyStart.location && NSNotFound != rangeOfBodyEnd.location)
-		{
-			int sPos = NSMaxRange(rangeOfBodyStart);
-			int len  = rangeOfBodyEnd.location - sPos;
-			result = [result substringWithRange:NSMakeRange(sPos,len)];
-		}
-	}
-	
-	
-	return result;
-}
 
 /*	The key path to generate a summary from. If the delegate does not implement this we return nil
  */
 - (NSString *)summaryHTMLKeyPath
 {
-	NSString *result = @"captionHTML";
-	
-	id delegate = [self delegate];
-	if (delegate && [delegate respondsToSelector:@selector(summaryHTMLKeyPath)])
-	{
-		result = [delegate summaryHTMLKeyPath];
-	}
+	NSString *result = @"titleHTMLString";
 	
 	return result;
 }
@@ -562,163 +664,55 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 {
 	BOOL result = NO;
 	
-	id delegate = [self delegate];
-	if (delegate && [delegate respondsToSelector:@selector(summaryHTMLIsEditable)])
-	{
-		result = [delegate summaryHTMLIsEditable];
-	}
-    else if (!delegate || ![delegate respondsToSelector:@selector(summaryHTMLKeyPath)])
-    {
-        result = YES;
-    }
-	
 	return result;
 }
 
-#pragma mark custom summary
-
-/*	Returns nil if there is no custom summary
- */
-- (NSString *)customSummaryHTML { return [self wrappedValueForKey:@"customSummaryHTML"]; }
-
-- (void)setCustomSummaryHTML:(NSString *)HTML { [self setWrappedValue:HTML forKey:@"customSummaryHTML"]; }
-
-#pragma mark title list
-
-/*	Constructs the HTML for a title list-style summary using the specified ordering
- */
-- (NSString *)titleListHTMLWithSorting:(KTCollectionSortType)sortType;
-{
-	NSMutableString *result = [NSMutableString stringWithString:@"<ul>\n"];
-	
-	NSArray *allSortedChildren = [self childrenWithSorting:sortType inIndex:NO];
-	NSRange childrenRange = NSMakeRange(0, MIN([allSortedChildren count], [self integerForKey:@"collectionSummaryMaxPages"]));
-	NSArray *sortedChildren = [allSortedChildren subarrayWithRange:childrenRange];
-	
-	NSEnumerator *pagesEnumerator = [sortedChildren objectEnumerator];
-	KTPage *aPage;
-	while (aPage = [pagesEnumerator nextObject])
-	{
-		[result appendFormat:@"\t<li>%@</li>\n", [aPage titleHTML]];
-	}
-	
-	[result appendFormat:@"</ul>"];
-	
-	return result;
-}
-
-#pragma mark -
 #pragma mark Archives
 
-/*	This is a transient NOT persistent property. When accessed for the first time, we look for any pagelets requesting archive
- *	generation and set the value accordingly.
- */
-- (BOOL)collectionGenerateArchives
-{
-	NSNumber *result = [self wrappedValueForKey:@"collectionGenerateArchives"];
-	
-	if (!result)
-	{
-		result = [NSNumber numberWithBool:NO];
-		
-		NSArray *archivePagelets = [[self managedObjectContext] pageletsWithPluginIdentifier:@"sandvox.CollectionArchiveElement"];
-		NSEnumerator *pageletsEnumerator = [archivePagelets objectEnumerator];
-		KTPagelet *aPagelet;
-		while (aPagelet = [pageletsEnumerator nextObject])
-		{
-			if ([[aPagelet valueForKey:@"collection"] isEqual:self])
-			{
-				result = [NSNumber numberWithBool:YES];
-				break;
-			}
-		}
-		
-		[self setPrimitiveValue:result forKey:@"collectionGenerateArchives"];
-	}
-	
-	return [result boolValue];
-}
+@dynamic collectionGenerateArchives;
 
-- (void)setCollectionGenerateArchives:(BOOL)generateArchive
+- (NSArray *)archivePages;
 {
-	// Ignore requests that will do nothing
-	//BOOL noChange = (generateArchive == [self collectionGenerateArchives]);
-	[self setWrappedBool:generateArchive forKey:@"collectionGenerateArchives"];
-	//if (noChange) return;
-	
-	
-	// Delete or add archive pages as needed
-	if (generateArchive)
-	{
-		NSArray *children = [self navigablePages];
-		NSEnumerator *pageEnumerator = [children objectEnumerator];
-		KTPage *aPage;
-		
-		while (aPage = [pageEnumerator nextObject])
-		{
-			// Create any archives that are required
-			[self archivePageForTimestamp:[aPage editableTimestamp] createIfNotFound:YES];
-		}
-	}
-	else
-	{
-		NSSet *archivePages = [self valueForKey:@"archivePages"];
-		[[self managedObjectContext] deleteObjectsInCollection:archivePages];
-	}
-}
-
-/*	Searches through our archive pages for one containing the specified date.
- *	If archives are disabled, always returns nil.
- */
-- (KTArchivePage *)archivePageForTimestamp:(NSDate *)timestamp createIfNotFound:(BOOL)flag
-{
-	OBPRECONDITION(timestamp);
-	
-	if (![self collectionGenerateArchives]) return nil;
-	
-	
-	NSArray *archives = [[self valueForKey:@"archivePages"] allObjects];
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"archiveStartDate <= %@ AND archiveEndDate > %@", timestamp, timestamp];
-	KTArchivePage *result = [[archives filteredArrayUsingPredicate:predicate] firstObjectKS];
-	
-	if (!result && flag)
-	{
-		// Figure out the range of the timestamp
-		NSCalendar *calendar = [NSCalendar currentCalendar];
-		unsigned calendarComponents = (NSEraCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit);
-		NSDateComponents *timestampComponents = [calendar components:calendarComponents fromDate:timestamp];
-		NSDate *monthStart = [calendar dateFromComponents:timestampComponents];
-		
-		NSDateComponents *oneMonthDateComponent = [[[NSDateComponents alloc] init] autorelease];
-		[oneMonthDateComponent setMonth:1];
-		NSDate *monthEnd = [calendar dateByAddingComponents:oneMonthDateComponent toDate:monthStart options:0];
-		
-		
-		// Create the archive.
-		result = [KTArchivePage pageWithParent:self entityName:@"ArchivePage"];
-		[result setValue:monthStart forKey:@"archiveStartDate"];
-		[result setValue:monthEnd forKey:@"archiveEndDate"];
-		
-		
-		// Give the archive a decent title
-		[result updateTitle];
-	}
-	
-	return result;
-}
-
-- (NSArray *)sortedArchivePages
-{
-    static NSArray *sortDescriptors;
-    if (!sortDescriptors)
+    if (![[self collectionGenerateArchives] boolValue]) return nil;
+    
+    
+    NSMutableArray *result = [NSMutableArray array];
+    NSMutableArray *currentPages = [NSMutableArray array];
+    NSDateComponents *currentMonth = nil;
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    
+    NSArray *pages = [self childrenWithSorting:SVCollectionSortByDateCreated ascending:NO inIndex:YES];
+    for (SVSiteItem *anItem in pages)
     {
-        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"archiveStartDate" ascending:NO];
-        sortDescriptors = [[NSArray alloc] initWithObject:sortDescriptor];
-        [sortDescriptor release];
+        // If this page is into a different archive period, generate an archive for the pages processed so far
+        NSDateComponents *components = [calendar components:(kCFCalendarUnitYear | kCFCalendarUnitMonth)
+                                                   fromDate:[anItem creationDate]];
+        
+        if (![components isEqual:currentMonth] && currentMonth)
+        {
+            SVArchivePage *archivePage = [[SVArchivePage alloc] initWithPages:currentPages];
+            [currentPages removeAllObjects];
+            
+            [result addObject:archivePage];
+            [archivePage release];
+        }
+        
+        [currentPages addObject:anItem];
+        currentMonth = components;
     }
     
     
-    NSArray *result = [[[self valueForKey:@"archivePages"] allObjects] sortedArrayUsingDescriptors:sortDescriptors];
+    // Create an archive page for the remaining pages
+    if ([currentPages count])
+    {
+        SVArchivePage *archivePage = [[SVArchivePage alloc] initWithPages:currentPages];
+        [currentPages removeAllObjects];
+        
+        [result addObject:archivePage];
+        [archivePage release];
+    }
+    
+    
     return result;
 }
 

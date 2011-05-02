@@ -22,7 +22,7 @@ if [ -e "$2/Contents" ]; then
 cd ~/Desktop
 
 WD=`pwd`;
-VERBOSE='v';        #make it 'v' if verbose; '' if not verbose
+VERBOSE='';        #make it 'v' if verbose; '' if not verbose
 
 if [ -e "Subversion" ]; then
     mv Subversion Subversion.old
@@ -38,35 +38,55 @@ pushd "$2" > /dev/null
 
 # frameworks
 
-mkdir -p$VERBOSE $WD/Subversion/imedia
-cp -R$VERBOSE ./Contents/Frameworks/iMediaBrowser.framework/Versions/A/Resources/$1.lproj $WD/Subversion/imedia
+echo "Frameworks..."
 
-mkdir -p$VERBOSE $WD/Subversion/connection/branches/sandvox1.6
-cp -R$VERBOSE ./Contents/Frameworks/Connection.framework/Versions/A/Resources/$1.lproj $WD/Subversion/connection/branches/sandvox1.6
+mkdir -p$VERBOSE $WD/Subversion/imedia
+cp -R$VERBOSE ./Contents/Frameworks/iMedia.framework/Versions/A/Resources/$1.lproj $WD/Subversion/imedia
+
+mkdir -p$VERBOSE $WD/Subversion/connection
+cp -R$VERBOSE ./Contents/Frameworks/Connection.framework/Versions/A/Resources/$1.lproj $WD/Subversion/connection
 
 mkdir -p$VERBOSE $WD/Subversion/Shared/Code/AmazonSupport
 cp -R$VERBOSE ./Contents/Frameworks/AmazonSupport.framework/Versions/A/Resources/$1.lproj $WD/Subversion/Shared/Code/AmazonSupport
 
 # App & Spotlight
 
+echo "MetaMarvel..."
+
 mkdir -p$VERBOSE $WD/Subversion/Sandvox$CURRENTBRANCH/Code/MetaMarvel
 cp -R$VERBOSE ./Contents/Library/Spotlight/MetaSandvox.mdimporter/Contents/Resources/$1.lproj $WD/Subversion/Sandvox$CURRENTBRANCH/Code/MetaMarvel
+
+echo "App..."
 
 # Put things NOT beginning with KS in the app, and things beginning with KS into Shared.
 
 mkdir -p$VERBOSE $WD/Subversion/Sandvox$CURRENTBRANCH/App
 mkdir -p$VERBOSE $WD/Subversion/Sandvox$CURRENTBRANCH/App/$1.lproj
 
-# silly hack: copy in all the files, then remove the KS* files
+echo "Copy all then remove KS Files...."
+
+# silly hack: copy in all the files, then remove the KS* files and Shared.strings
 cp -R$VERBOSE ./Contents/Resources/$1.lproj/* $WD/Subversion/Sandvox$CURRENTBRANCH/App/$1.lproj/
 rm -rf$VERBOSE $WD/Subversion/Sandvox$CURRENTBRANCH/App/$1.lproj/KS*
+rm -rf$VERBOSE $WD/Subversion/Sandvox$CURRENTBRANCH/App/$1.lproj/Shared.strings
+
+echo "Shared strings...."
+
+mkdir -p$VERBOSE $WD/Subversion/Shared/$1.lproj
+cp -R$VERBOSE ./Contents/Resources/$1.lproj/Shared.strings $WD/Subversion/Shared/$1.lproj/
+
+
+
+
+echo "Shared KS Files...."
 
 mkdir -p$VERBOSE $WD/Subversion/Shared/Interfaces
 mkdir -p$VERBOSE $WD/Subversion/Shared/Interfaces/$1.lproj
-echo ./Contents/Resources/$1.lproj/KS*
-echo $WD/Subversion/Shared/Interfaces/$1.lproj/
+# echo ./Contents/Resources/$1.lproj/KS*
+# echo $WD/Subversion/Shared/Interfaces/$1.lproj/
 cp -R$VERBOSE ./Contents/Resources/$1.lproj/KS* $WD/Subversion/Shared/Interfaces/$1.lproj/
 
+echo "Plugins..."
 
 # plugins with their own project
 
@@ -76,19 +96,8 @@ do
     BASE=`echo $PLUGIN | sed 's/.svxElement//'`
     if [ ! -z "$PLUGIN/Contents/Resources/$1.lproj" ]; then
         echo "$BASE:"
-        mkdir -p$VERBOSE $WD/Subversion/Sandvox$CURRENTBRANCH/Plugins/Elements/${BASE}Element
-        cp -R$VERBOSE $PLUGIN/Contents/Resources/$1.lproj $WD/Subversion/Sandvox$CURRENTBRANCH/Plugins/Elements/${BASE}Element
-    else
-        echo "Not copying $PLUGIN - no $1.lproj"
-    fi
-done
-for PLUGIN in *.svxIndex
-do
-    BASE=`echo $PLUGIN | sed 's/.svxIndex//'`
-    if [ ! -z "$PLUGIN/Contents/Resources/$1.lproj" ]; then
-        echo "$BASE:"
-        mkdir -p$VERBOSE $WD/Subversion/Sandvox$CURRENTBRANCH/Plugins/Indexes/${BASE}Index
-        cp -R$VERBOSE $PLUGIN/Contents/Resources/$1.lproj $WD/Subversion/Sandvox$CURRENTBRANCH/Plugins/Indexes/${BASE}Index
+        mkdir -p$VERBOSE $WD/Subversion/Sandvox$CURRENTBRANCH/Plugins/${BASE}Element
+        cp -R$VERBOSE $PLUGIN/Contents/Resources/$1.lproj $WD/Subversion/Sandvox$CURRENTBRANCH/Plugins/${BASE}Element
     else
         echo "Not copying $PLUGIN - no $1.lproj"
     fi
@@ -99,7 +108,21 @@ popd > /dev/null
 
 popd > /dev/null
 
-find Subversion -name '*~.nib' -exec rm -rf {} \;  2> /dev/null
+echo "Removing nibs and backups..."
+
+# Remove nib backup files, and nib files (since we don't localize those)
+find Subversion -name '*~.nib' -exec rm -rf {} \;  2> /dev/null      
+find Subversion -name '*.nib' -exec rm -rf {} \;  2> /dev/null
+
+echo "Removing graphics...."
+
+# Remove any graphics ... they would not have been translated (e.g. Sandvox badges) ... those are handled manually
+find Subversion -name '*.png' -delete
+find Subversion -name '*.gif' -delete
+find Subversion -name '*.jpg' -delete
+find Subversion -name '*.jpeg' -delete
+find Subversion -name '*.tif' -delete
+find Subversion -name '*.tiff' -delete
 
 mv Subversion $FILENAME
 

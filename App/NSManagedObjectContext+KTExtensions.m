@@ -3,16 +3,13 @@
 //  KTComponents
 //
 //  Created by Terrence Talbot on 6/28/05.
-//  Copyright 2005-2009 Karelia Software. All rights reserved.
+//  Copyright 2005-2011 Karelia Software. All rights reserved.
 //
 
 #import "NSManagedObjectContext+KTExtensions.h"
 
-#import "KTAbstractElement+Internal.h"
 #import "KTSite.h"
-#import "KTManagedObject.h"
 #import "KTPage.h"
-#import "KTPagelet.h"
 #import "NSDocumentController+KTExtensions.h"
 #import "NSFetchRequest+KTExtensions.h"
 #import "NSString+KTExtensions.h"
@@ -20,7 +17,37 @@
 #import "Debug.h"
 
 
+NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
+
+
 @implementation NSManagedObjectContext (KTExtensions)
+
+/*! returns an autoreleased core data stack with file at aStoreURL */
++ (NSManagedObjectContext *)contextWithStoreType:(NSString *)storeType
+                                             URL:(NSURL *)aStoreURL
+                                           model:(NSManagedObjectModel *)aModel
+                                           error:(NSError **)outError;
+{
+	NSPersistentStoreCoordinator *coordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:aModel];
+	
+    NSPersistentStore *store = [coordinator addPersistentStoreWithType:storeType
+                                                         configuration:nil
+                                                                   URL:aStoreURL
+                                                               options:nil
+                                                                 error:outError];
+	
+	NSManagedObjectContext *result = nil;
+    if (store)
+	{
+		result = [[[NSManagedObjectContext alloc] init] autorelease];
+        [result setPersistentStoreCoordinator:coordinator];
+	}
+    
+    // Tidy up
+	[coordinator release];
+	
+	return result;	
+}
 
 - (void)deleteObjectsInCollection:(id)collection   // Assume objects conform to -objectEnumerator
 {
@@ -28,7 +55,14 @@
 	NSManagedObject *anObject;
 	while (anObject = [enumerator nextObject])
 	{
-		[self deleteObject:anObject];
+		if ([anObject isKindOfClass:[KTPage class]])
+        {
+            [self deletePage:(KTPage *)anObject];
+        }
+        else
+        {
+            [self deleteObject:anObject];
+        }
 	}
 }
 
@@ -55,60 +89,20 @@
 	return fetchedObjects;
 }
 
-- (NSArray *)objectsWithEntityName:(NSString *)anEntityName
-						 predicate:(NSPredicate *)aPredicate
-							 error:(NSError **)anError
-{
-	OBASSERTSTRING((nil != anEntityName), @"anEntityName cannot be nil");
-	// nil predicate means "return all objects of anEntityName"
-	
-	NSArray *fetchedObjects = nil;
-	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-	NSError *localError = nil;
-	
-	NSEntityDescription *entity = [NSEntityDescription entityForName:anEntityName
-											  inManagedObjectContext:self];
-	OBASSERTSTRING((nil != entity), @"entity should not be nil");
-	[fetchRequest setEntity:entity];
-	
-	if ( nil != aPredicate )
-	{
-		[fetchRequest setPredicate:aPredicate];
-	}
-	
-	// note to future debuggers: we ALWAYS need to lock the context here to prevent
-	// a "statement is still active" error. if we only lockIfNecessary, it's possible
-	// that this method could be called on the main thread while another thread is
-	// doing the same. DO NOT REMOVE THIS LOCK. DO NOT MAKE IT CONDITIONAL.
-	//[self lockPSCAndSelf];
-	fetchedObjects = [self executeFetchRequest:fetchRequest error:&localError];
-	
-	return fetchedObjects;
-}
-
 #pragma mark convenience methods that message workhorse
-
-- (NSArray *)allObjectsWithEntityName:(NSString *)anEntityName
-								error:(NSError **)anError
-{
-	return [self objectsWithEntityName:anEntityName
-							 predicate:nil
-								 error:anError];
-}
 
 // return array of unique values for aColumnName for all instances of anEntityName
 - (NSArray *)objectsForColumnName:(NSString *)aColumnName entityName:(NSString *)anEntityName
 {
     NSError *localError = nil;
-    NSArray *allInstances = [self allObjectsWithEntityName:anEntityName error:&localError];
+    NSArray *allInstances = [self fetchAllObjectsForEntityForName:anEntityName error:&localError];
     
     if ( [allInstances count] > 0 )
     {
         NSMutableSet *objects = [NSMutableSet setWithCapacity:[allInstances count]];
         
-        NSEnumerator *e = [allInstances objectEnumerator];
         NSManagedObject *instance;
-        while ( instance  = [e nextObject] )
+        for ( instance in allInstances )
         {
 			id object = [instance valueForKey:aColumnName];
 			if (object)
@@ -123,37 +117,18 @@
     return nil;
 }
 
-- (KTManagedObject *)objectWithUniqueID:(NSString *)aUniqueID entityNames:(NSArray *)aNamesArray
-{
-	OBASSERTSTRING((nil != aUniqueID), @"aUniqueID cannot be nil");
-	OBASSERTSTRING((nil != aNamesArray), @"aNamesArray cannot be nil");
-	
-	NSEnumerator *e = [aNamesArray objectEnumerator];
-	NSString *entityName;
-	while ( entityName = [e nextObject] )
-	{
-		NSManagedObject *matchingObject = [self objectWithUniqueID:aUniqueID entityName:entityName];
-		if ( nil != matchingObject )
-		{
-			return (KTManagedObject *)matchingObject;
-		}
-	}
-	
-	return nil;
-}
-
-- (KTManagedObject *)objectWithUniqueID:(NSString *)aUniqueID entityName:(NSString *)anEntityName
+- (NSManagedObject *)objectWithUniqueID:(NSString *)aUniqueID entityName:(NSString *)anEntityName
 {
 	OBASSERTSTRING((nil != aUniqueID), @"aUniqueID cannot be nil");
 	OBASSERTSTRING((nil != anEntityName), @"anEntityName cannot be nil");
 	
-	KTManagedObject *result = nil;
+	NSManagedObject *result = nil;
     
     NSString *searchID = [aUniqueID copy];
 	
 	NSError *localError = nil;
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"uniqueID == %@", searchID];
-	NSArray *fetchedObjects = [self objectsWithEntityName:anEntityName
+	NSArray *fetchedObjects = [self fetchAllObjectsForEntityForName:anEntityName
 												predicate:predicate
 													error:&localError];
 	
@@ -172,48 +147,6 @@
 	}
 
 	[searchID release];
-	
-	return result;
-}
-
-- (KTManagedObject *)objectWithUniqueID:(NSString *)aUniqueID
-{
-	OBASSERTSTRING((nil != aUniqueID), @"aUniqueID cannot be nil");
-	
-	// we have to search in Root, Page, Pagelet, Element, and Media
-	NSArray *entityNames = [NSArray arrayWithObjects:
-		@"Page", 
-		@"Pagelet", 
-		nil];
-	
-	return (KTManagedObject *)[self objectWithUniqueID:aUniqueID entityNames:entityNames];
-}
-
-- (KTAbstractElement *)pluginWithUniqueID:(NSString *)pluginID
-{
-	OBASSERT(pluginID);		OBASSERT([pluginID length] > 0);
-	
-	static NSArray *entityNames;
-	if (!entityNames)
-	{
-		entityNames = [[NSArray alloc] initWithObjects:@"Pagelet", @"Page", nil];
-	}
-	
-	KTAbstractElement *result = (KTAbstractElement *)[self objectWithUniqueID:pluginID entityNames:entityNames];
-	return result;
-}
-
-- (NSArray *)pageletsWithPluginIdentifier:(NSString *)pluginIdentifier
-{
-	NSArray *result = nil;
-	
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pluginIdentifier == %@", pluginIdentifier];
-	
-	NSError *error = nil;
-	result = [self objectsWithEntityName:@"Pagelet" predicate:predicate error:&error];
-	if (error) {
-		[[NSAlert alertWithError:error] runModal];
-	}
 	
 	return result;
 }
@@ -250,7 +183,7 @@
 - (KTSite *)site
 {
 	NSError *localError = nil;
-	NSArray *fetchedObjects = [self objectsWithEntityName:@"Site"
+	NSArray *fetchedObjects = [self fetchAllObjectsForEntityForName:@"Site"
 												predicate:nil
 													error:&localError];
 	
@@ -262,19 +195,23 @@
 	return nil;
 }
 
-- (KTPage *)root
+- (void)willDeletePage:(KTPage *)page;
 {
-	NSError *localError = nil;
-	NSArray *fetchedObjects = [self objectsWithEntityName:@"Root"
-												predicate:nil
-													error:&localError];
-		
-	if ( (nil != fetchedObjects) && ([fetchedObjects count] == 1)  )
-	{
-		return [fetchedObjects objectAtIndex:0];
-	}
-        
-	return nil;
+    // Let plug-ins know
+    [[NSNotificationCenter defaultCenter] postNotificationName:SVPageWillBeDeletedNotification
+                                                        object:page];
+    
+    // Repeat for any children that are going the same way
+    for (KTPage *aPage in [page childItems])
+    {
+        [self willDeletePage:aPage];
+    }
+}
+
+- (void)deletePage:(KTPage *)page;  // Please ALWAYS call this for pages as it posts a notification first
+{
+    [self willDeletePage:page];
+    [self deleteObject:page];
 }
 
 - (void)lockPSCAndSelf
@@ -289,6 +226,20 @@
 	//[self checkPublishingModeAndThread];
 	//[self unlock];
 	//[[self persistentStoreCoordinator] unlock];
+}
+
+#pragma mark Undo
+
+- (void)disableUndoRegistration;
+{
+    [self processPendingChanges];
+    [[self undoManager] disableUndoRegistration];
+}
+
+- (void)enableUndoRegistration;
+{
+    [self processPendingChanges];
+    [[self undoManager] enableUndoRegistration];
 }
 
 #pragma mark debugging support
@@ -309,25 +260,6 @@
 {
 	return NO;	// Disabled for 1.5
 	return [self isEqual:[[self document] managedObjectContext]];
-}
-
-- (void)makeAllPluginsPerformSelector:(SEL)selector withObject:(id)object withPage:(KTPage *)page
-{
-	NSArray *pages = [self allObjectsWithEntityName:@"Page" error:NULL];
-	NSArray *pagelets = [self allObjectsWithEntityName:@"Pagelet" error:NULL];
-	
-	NSMutableArray *plugins = [[NSMutableArray alloc] initWithCapacity:[pages count] + [pagelets count]];
-	[plugins addObjectsFromArray:pages];
-	[plugins addObjectsFromArray:pagelets];
-	
-	NSEnumerator *pluginsEnumerator = [plugins objectEnumerator];
-	KTAbstractElement *aPlugin;
-	while (aPlugin = [pluginsEnumerator nextObject])
-	{
-		[aPlugin makeSelfOrDelegatePerformSelector:selector withObject:object withPage:page recursive:NO];
-	}
-	
-	[plugins release];
 }
 
 @end

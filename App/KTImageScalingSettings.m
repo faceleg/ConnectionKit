@@ -3,13 +3,13 @@
 //  Marvel
 //
 //  Created by Mike on 09/01/2008.
-//  Copyright 2008-2009 Karelia Software. All rights reserved.
+//  Copyright 2008-2011 Karelia Software. All rights reserved.
 //
 
 #import "KTImageScalingSettings.h"
 
 
-@interface KTImageScalingSettings (Private)
+@interface KTImageScalingSettings ()
 - (void)setBehavior:(KTMediaScalingOperation)behaviour;
 - (void)setSize:(NSSize)size;
 - (void)setScaleFactor:(float)scale;
@@ -242,7 +242,8 @@
 
 - (unsigned)hash
 {
-	return 0;	// TODO: Return something more sensible!
+    // Not especially unique, but a decent start
+	return [self size].width * [self size].height;
 }
 
 #pragma mark -
@@ -330,13 +331,14 @@
 - (float)_fitToSizeScaleFactor:(CGSize)size
 {
 	float result;
+	NSSize mySize = [self size];
 	
 	// If the user specified 0 for either dimension, base the result purely on that
-	if ([self size].width <= 0.0)
+	if (mySize.width <= 0.0)
 	{
 		result = [self _scaleFactorToFitHeight:size.height];
 	}
-	else if ([self size].height <= 0.0)
+	else if (mySize.height <= 0.0)
 	{
 		result = [self _scaleFactorToFitWidth:size.width];
 	}

@@ -1,22 +1,11 @@
-[[if parser.isPublishing]]				[[comment Code Injection here is only for publishing]]
-[[if master.codeInjectionBeforeHTML]]
-[[=master.codeInjectionBeforeHTML]]
-[[endif2]]
-[[if codeInjectionBeforeHTML]]
-[[=codeInjectionBeforeHTML]]
-[[endif2]]
-[[endif]]
-
-[[=DTD]]
-<html [[if isXHTML]]xmlns="http://www.w3.org/1999/xhtml" xml:lang="[[=&master.language]]" [[endif]]lang="[[=&master.language]]">
+<html [[if parser.HTMLContext.isXHTML]]xmlns="http://www.w3.org/1999/xhtml" xml:lang="[[=&parser.outputWriter.language]]" [[endif]]lang="[[=&parser.outputWriter.language]]">
 	<head>
+[[if parser.HTMLContext.docType=4]]
+		<meta charset="[[=&master.charset]]" />
+[[else]]
 		<meta http-equiv="content-type" content="text/html; charset=[[=&master.charset]]" />
-[[if master.codeInjectionEarlyHead]]
-[[=master.codeInjectionEarlyHead]]
 [[endif]]
-[[if codeInjectionEarlyHead]]
-[[=codeInjectionEarlyHead]]
-[[endif]]
+[[=writeCodeInjectionEarlyHead]]
 [[if parser.currentPage.windowTitle]]
 		<title>[[=&parser.currentPage.windowTitle]]</title>
 [[else]]
@@ -31,196 +20,116 @@
 [[if metaDescription]]
 		<meta name="description" content="[[=&parser.currentPage.metaDescription]]" />
 [[endif]]
-		<meta name="robots" content="[[=&userDefaults.metaRobots]]" />
-		<meta name="generator" content="[[=&site.appNameVersion]]" />
+		<meta name="robots" content="[[=&userDefaults.metaRobots]]" />[[=parser.context.disableChangeTracking]]
+		<meta name="generator" content="[[=&site.appNameVersion]]" />[[=parser.context.enableChangeTracking]]
 		<meta name="viewport" content="width=[[=master.design.viewport]]" />
-[[if site.googleSiteVerification]]
-		[[=site.googleSiteVerification]]
+[[if master.wantsFacebookComments]]
+		<meta property="fb:app_id" content="[[=master.facebookAppID]]" />
+		<meta property="fb:admins" content="[[=master.facebookAppID]]" />
 [[endif]]
-[[if parser.HTMLGenerationPurpose]][[if master.favicon]]
-		<link rel="Shortcut Icon" type="image/x-icon" href="[[mediainfo info:path media:master.favicon sizeName:faviconImage]]" />
+[[if parser.HTMLContext.isForPublishing]][[if currentContext.canWriteProMarkup]][[if site.googleSiteVerification]]
+		[[=site.googleSiteVerification]]
+[[endif3]][[endif2]][[endif]]
+[[if !parser.HTMLContext.isForEditing]][[if master.favicon]]
+		<link rel="Shortcut Icon" type="image/x-icon" href="[[=&master.writeFavicon]]" />
 [[endif2]][[endif]]
-[[if feedURL]]
-		<link rel="alternate" type="application/rss+xml" title="RSS: [[=&titleText]]" href="[[=&feedURL]]" />
+[[if !parser.HTMLContext.isForEditing]][[if feedURL]]
+		<link rel="alternate" type="application/rss+xml" title="RSS: [[=&title]]" href="[[=&feedURL]]" charset="UTF-8" />
+[[endif2]][[endif]]
+[[if !parser.HTMLContext.isForEditing]]
+[[=writeThumbnailRel]][[comment HTML Context will take care of whitespace for thumbnail]]
 [[endif]]
 		<link rel="canonical" href="[[=&parser.currentPage.URL]]" />
-[[if parser.includeStyling]][[stylesheet]][[endif]]
-<!--
-Photo credits for this website's design: <[[=&master.designDirectoryURL]]Credits.rtf>
-Licensing for this website's design:     <[[=&master.designDirectoryURL]]License.rtf>
--->
-[[if javascriptURLPath]]
-<script src="[[=&javascriptURLPath]]" type="text/javascript"></script>
+[[if parser.includeStyling]]
+[[=writeHierMenuCSS]]
+		[[=writeStylesheetLinks]]
+		<!--
+		Photo credits for this website's design: <[[=-master.designDirectoryURL]]Credits.rtf>
+		Licensing for this website's design:     <[[=-master.designDirectoryURL]]License.rtf>
+		-->
 [[endif]]
-[[if parser.isPublishing]]
-[[if master.wantsHaloscan]]
-[[if master.haloscanUserName]]
-<script type="text/javascript" src="http://www.haloscan.com/load/[[=&%master.haloscanUserName]]"> </script>
-[[endif3]]
-[[endif2]]
-[[endif]]
-[[extraheaders]]
-
-[[if master.codeInjectionHeadArea]]
-[[=master.codeInjectionHeadArea]]
-[[endif]]
-[[if codeInjectionHeadArea]]
-[[=codeInjectionHeadArea]]
-[[endif]]
+[[=parser.outputWriter.writeExtraHeaders]]
+[[comment ESCAPE THE URL SO THAT ANY DOUBLE-DASH FROM AN IDN DOESNT PRODUCE ILLEGAL MARKUP]]
+		[[=parser.HTMLContext.writeJQueryImport]]
+[[=writeHierMenuScript]]
+[[=writeDesignJavascript]]
+[[=writeCodeInjectionHeadArea]]
+[[if parser.HTMLContext.isForPublishing]][[if currentContext.canWriteProMarkup]][[if site.googleAnalyticsCode]]
+[[=site.googleAnalyticsCode]]
+[[endif3]][[endif2]][[endif]]
 	</head>
-	<body class="sandvox [[if includeSidebar]]allow-sidebar[[else]]no-sidebar[[endif]][[if master.bannerImage]] has-custom-banner[[else]] no-custom-banner[[endif]][[if isRoot]] home-page[[endif]][[if master.enableImageReplacement]] IR[[else]] no-IR[[endif]]" id="[[=&site.hostProperties.domainNameDashes]]" [[if master.codeInjectionBodyTag]][[=master.codeInjectionBodyTag]][[endif]][[if codeInjectionBodyTag]][[=codeInjectionBodyTag]][[endif]]>
-[[if master.codeInjectionBodyTagStart]]
-[[=master.codeInjectionBodyTagStart]]
-[[endif]]
-[[if codeInjectionBodyTagStart]]
-[[=codeInjectionBodyTagStart]]
-[[endif]]
-		<div id="page-container"[[if cssClassName]] class="[[=&cssClassName]]"[[endif]]>
+	<body class="sandvox [[if !titleBox.hidden]]has-page-title[[else]]no-page-title[[endif]] [[if showSidebar]]allow-sidebar[[else]]no-sidebar[[endif]] [[if master.bannerType]]has-custom-banner[[else]]no-custom-banner[[endif]] [[if showNavigationArrows]][[if parentPage.navigationArrowsStyle==1]]has-photo-navigation[[else2]]has-text-navigation[[endif2]][[else]]no-navigation[[endif]][[if isRootPage]] home-page[[endif]][[if master.enableImageReplacement]] IR[[else]] no-IR[[endif]]" id="[[=&site.hostProperties.domainNameDashes]]" [[=writeCodeInjectionBodyTag]]>
+[[=writeCodeInjectionBodyTagStart]]
+		<div id="page-container">
 			<div id="page">
-				<div id="page-top" class="[[if master.logoImage]]has-logo[[else]]no-logo[[endif]]">
+				<div id="page-top" class="[[if master.logo.hidden]]no-logo[[else]]has-logo[[endif]] [[if !master.siteTitle.hidden]]has-title[[else]]no-title[[endif]] [[if !master.siteSubtitle.hidden]]has-tagline[[else]]no-tagline[[endif]]">
 					<div id="title">
-[[if isRoot]]
-[[if master.logoImage]]
-						<span id="logo-container"><img id="logo"
-							src="[[mediainfo info:path media:master.logoImage sizeName:pageHeaderImage]]"
-							[[if master.headerImageDescription]]alt="[[=&master.headerImageDescription]]"[[endif3]]
-							width="[[mediainfo info:width media:master.logoImage sizeName:pageHeaderImage]]"
-							height="[[mediainfo info:height media:master.logoImage sizeName:pageHeaderImage]]" /></span>
+[[if isRootPage]]
+[[if !master.logo.hidden]]
+						<span id="logo-container">[[=master.logo.writeHTML]]</span>
 [[endif2]]
-[[if master.headerImageHidesH1]]
-						<h1 class="hidden">[[=master.siteTitleHTML]]</h1>
+[[if master.siteTitle.hidden]]
+						<h1 class="title hidden">[[=master.siteTitleHTMLString]]</h1>
 [[else2]]
-						[[textblock property:master.siteTitleHTML flags:"line" tag:h1 graphicalTextCode:h1h]]
+						[[if master.siteTitle]][[textblock property:master.siteTitle flags:"line" tag:h1 placeholder:"Site Title" class:"title"]][[endif3]]
 [[endif2]]
 [[else]]
-[[if master.logoImage]]
-						<a class="imageLink" href="[[path site.root]]"><span id="logo-container"><img id="logo"
-							src="[[mediainfo info:path media:master.logoImage sizeName:pageHeaderImage]]"
-							alt="[[=&master.headerImageDescription]]"
-							width="[[mediainfo info:width media:master.logoImage sizeName:pageHeaderImage]]"
-							height="[[mediainfo info:height media:master.logoImage sizeName:pageHeaderImage]]" /></span></a>
-[[endif2]]
-[[if master.headerImageHidesH1]][[comment WE HAVE TO QUERY ROOT -  THE PROPERTY IS NOT OPTIONAL PER PAGE.]]
-						<h1 class="hidden"><a href="[[path site.root]]">[[=master.siteTitleHTML]]</a></h1>
+[[if master.logo.hidden]]
 [[else2]]
-						[[textblock property:master.siteTitleHTML flags:"line" tag:h1 graphicalTextCode:h1 hyperlink:site.root]]
+						<a class="imageLink" href="[[path site.rootPage]]"><span id="logo-container">[[=master.logo.writeHTML]]</span></a>
+[[endif2]]
+[[if master.siteTitle.hidden]][[comment WE HAVE TO QUERY ROOT -  THE PROPERTY IS NOT OPTIONAL PER PAGE.]]
+						<h1 class="title hidden"><a href="[[path site.rootPage]]">[[=master.siteTitleHTMLString]]</a></h1>
+[[else2]]
+						[[if master.siteTitle]][[textblock property:master.siteTitle flags:"line" tag:h1 hyperlink:site.rootPage class:"title"]][[endif3]]
 [[endif2]]
 [[endif]]
-						[[textblock property:master.siteSubtitleHTML flags:"line" tag:p graphicalTextCode:st]]
+						[[if !master.siteSubtitle.hidden]][[textblock property:master.siteSubtitle flags:"line" tag:p id:tagline placeholder:"Site Tagline"]][[endif]]
 					</div><!-- title -->
 					<div id="sitemenu-container">
-[[if site.pagesInSiteMenu]]
-						<div id="sitemenu">
-							<h2 class="hidden">[[`skipNavigationTitleHTML]]<a rel="nofollow" href="#page-content">[[`skipNavigationLinkHTML]]</a></h2>
-							<div id="sitemenu-content">
-								<ul>
-[[forEach site.pagesInSiteMenu toplink]]
-
-[[if toplink==parser.currentPage]]
-									<li class="[[i]] [[eo]][[last]] currentPage">
-										[[textblock property:toplink.menuTitleOrTitle graphicalTextCode:mc tag:span]]
-									</li>
-[[else2]]
-									<li class="[[i]] [[eo]][[last]][[if parser.currentPage.includeInSiteMenu]][[else3]][[if toplink==parser.currentPage.parent]][[if parser.currentPage.parent.index]] currentParent[[endif5]][[endif4]][[endif3]]">
-										<a [[target toplink]]href="[[path toplink]]" title="[[=&toplink.titleText]]">
-											[[textblock property:toplink.menuTitleOrTitle graphicalTextCode:m tag:span]]</a>
-									</li>
-[[endif2]]
-[[endForEach]]
-								</ul>
-							</div> <!-- sitemenu-content -->
-						</div> <!-- sitemenu -->
-[[endif]]
+						[[=writeSiteMenu]]
 					</div> <!-- sitemenu-container -->
 				</div> <!-- page-top -->
-				<div class="clear"></div>
-				<div id="page-content" class="[[if includeInIndex]][[if parent.collectionShowNavigationArrows]][[if parent.index.navigationArrowsStyle==1]]has-photo-navigation[[else3]]has-text-navigation[[endif3]][[else2]]no-navigation[[endif2]][[endif]]">
-[[if includeSidebar]]
-					<div id="sidebar-container">
-[[if sidebarPagelets|editing]]
-						<div id="sidebar">
-					  		<div id="sidebar-top"></div>
-							<div id="sidebar-content">
-								<h3 class="hidden">[[`skipSidebarsTitleHTML]]<a rel="nofollow" href="#main">[[`skipSidebarsLinkHTML]]</a></h3>
-[[forEach sidebarPagelets aPagelet]]
-								<div class="pagelet [[if aPagelet.showBorder]]bordered [[endif3]][[if aPagelet.titleHTML]]titled[[else3]]untitled[[endif3]] [[i]] [[eo]][[last]]"  id="k-[[=aPagelet.uniqueID]]">
-
-[[if aPagelet.canHaveTitle]]
-[[if aPagelet.titleHTML|editing]]
-									[[textblock property:aPagelet.titleHTML flags:"line" tag:h4 graphicalTextCode:h4s]]
-[[endif4]]
-[[endif3]]
-									<div class="pagelet-body">
-[[parsecomponent aPagelet elementTemplate]]
-									</div>
-								</div>
-[[endForEach]]
-							</div> <!-- sidebar-content -->
-							<div id="sidebar-bottom"></div>	
-						</div> <!-- sidebar -->
-[[endif2]]
-					</div> <!-- sidebar-container -->
-[[endif]]
+				<div class="clear below-page-top"></div>
+				<div id="page-content" class="[[if showNavigationArrows]][[if parentPage.navigationArrowsStyle==1]]has-photo-navigation[[else2]]has-text-navigation[[endif2]][[else]]no-navigation[[endif]]">
+					[[if showSidebar]][[=sidebar.writeHTML]][[endif]]
 					<div id="main">
 						<div id="main-top"></div>
-[[parsecomponent parser.currentPage parser.currentPage.pageMainContentTemplate]]	[[comment use .currentPage, not "self" to handle archive pages]]
+                            [[=writeMainContent]]
 						<div id="main-bottom"></div>
 					</div> <!-- main -->
 				</div> <!-- content -->
-				<div class="clear"></div>
-
+				<div class="clear below-content"></div>
 				<div id="page-bottom">
 					<div id="page-bottom-contents">
-						[[textblock property:master.copyrightHTML flags:"block"]]
+						[[if !master.footer.hidden]][[textblock property:master.footer flags:"line" placeholder:"Footer"]][[endif]]
 						<div class="hidden">[[`backToTopTitleHTML]]<a rel="nofollow" href="#title">[[`backToTopLinkHTML]]</a></div>
 					</div>
 				</div> <!-- page-bottom -->
 			</div> <!-- container -->
 			<div id="extraDiv1"><span></span></div><div id="extraDiv2"><span></span></div><div id="extraDiv3"><span></span></div><div id="extraDiv4"><span></span></div><div id="extraDiv5"><span></span></div><div id="extraDiv6"><span></span></div>
 		</div> <!-- specific body type -->
-[[endBody]]
-
-[[if parser.isPublishing]]
-[[if site.googleAnalyticsCode]]
-[[=site.googleAnalyticsCode]]
-[[endif2]]
-[[if !=disableComments]]
-[[if master.wantsJSKit]]
-[[if pagesInIndexAllowComments]]
-        <div style="display:none;"><script type="text/javascript" src="http://js-kit.com/comments-count.js"></script></div>
-[[endif4]]
-[[if allowComments]]
-		<script type="text/javascript" src="http://js-kit.com/comments.js"></script>
-[[endif4]]
-[[endif3]]
+[[=parser.outputWriter.writeEndBodyString]]
+[[if parser.HTMLContext.isForPublishing]]
 [[if master.wantsDisqus]]
-		<script type="text/javascript">
-		//<![CDATA[
-		(function() {
-				var links = document.getElementsByTagName('a');
-				var query = '?';
-				for(var i = 0; i < links.length; i++) {
-					if(links[i].href.indexOf('#disqus_thread') >= 0) {
-						query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
-					}
-				}
-				document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/[[=&%master.disqusShortName]]/get_num_replies.js' + query + '"></' + 'script>');
-			})();
-		//]]>
-		</script>
+[[if pagesInIndexAllowComments]]
+        <script type="text/javascript">
+            var disqus_shortname = '[[=&%master.disqusShortName]]';
+            (function () {
+                var s = document.createElement('script'); s.async = true;
+                s.type = 'text/javascript';
+                s.src = 'http://disqus.com/forums/' + disqus_shortname + '/count.js';
+                (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+                }());
+        </script>
 [[endif3]]
 [[endif2]]
+[[if master.wantsFacebookComments]]
+        <script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
+[[endif2]]
 [[endif]]
-
-[[if codeInjectionBodyTagEnd]]
-[[=codeInjectionBodyTagEnd]]
-[[endif]]
-
-[[if master.codeInjectionBodyTagEnd]]
-[[=master.codeInjectionBodyTagEnd]]
-[[endif]]
-
-[[if parser.HTMLGenerationPurpose==10]]
+[[=writeCodeInjectionBodyTagEnd]]
+[[if parser.HTMLContext.isForQuickLookPreview]]
 <!-- Quick Look preview sticky-note -->
 	<style type="text/css">
 		#quick-look-sticky-note
@@ -275,7 +184,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 			</tr>[[endif2]]
 			<tr>
 				<td class="quick-look-key">[['Language]]</td>
-				<td class="quick-look-value">[[=&master.language]]</td>
+				<td class="quick-look-value">[[=&parser.outputWriter.language]]</td>
 			</tr>
 			<tr>
 				<td class="quick-look-key">[['Pages]]</td>
@@ -285,6 +194,5 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 	</div>
 <!-- /Quick Look preview sticky-note -->
 [[endif]]
-
 	</body>
 </html>

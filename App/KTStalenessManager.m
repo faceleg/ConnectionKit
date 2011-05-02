@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Mike on 28/11/2007.
-//  Copyright 2007-2009 Karelia Software. All rights reserved.
+//  Copyright 2007-2011 Karelia Software. All rights reserved.
 //
 
 
@@ -35,10 +35,9 @@
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
-#import "NSThread+Karelia.h"
 
 
-@interface KTStalenessManager (Private)
+@interface KTStalenessManager ()
 - (NSMutableDictionary *)nonStalePages;
 - (void)addNonStalePage:(KTAbstractPage *)page;
 - (void)removeNonStalePage:(KTAbstractPage *)page;
@@ -208,7 +207,7 @@
 	if (![[self nonStalePages] objectForKey:page])
 	{
 		// Parse the page as quickly as possible. The parser delegate (us) will pick up observation info.
-		KTHTMLParser *parser = [[KTStalenessHTMLParser alloc] initWithPage:page];
+		SVHTMLTemplateParser *parser = [[KTStalenessHTMLParser alloc] initWithPage:page];
 		[parser setDelegate:self];
 		[parser setHTMLGenerationPurpose:kGeneratingRemote];
 		
@@ -259,12 +258,12 @@
 #pragma mark -
 #pragma mark Parser Delegate
 
-- (void)parser:(KTHTMLParser *)parser didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object
+- (void)parser:(SVHTMLTemplateParser *)parser didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object
 {
 	[self beginObservingKeyPath:keyPath ofObject:object onNonStalePage:[parser currentPage]];
 }
 
-- (void)HTMLParser:(KTHTMLParser *)parser didParseTextBlock:(KTWebViewTextBlock *)textBlock
+- (void)HTMLParser:(SVHTMLTemplateParser *)parser didParseTextBlock:(KTWebViewTextBlock *)textBlock
 {
     [self beginObservingKeyPath:[textBlock HTMLSourceKeyPath]
                        ofObject:[textBlock HTMLSourceObject]

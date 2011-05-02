@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Mike on 29/12/2008.
-//  Copyright 2008-2009 Karelia Software. All rights reserved.
+//  Copyright 2008-2011 Karelia Software. All rights reserved.
 //
 
 #import "KTRemotePublishingEngine.h"
@@ -80,7 +80,7 @@
             {
                 [[challenge sender] cancelAuthenticationChallenge:challenge];
                 
-                NSError *error = [NSError errorWithDomain:KTPublishingEngineErrorDomain
+                NSError *error = [KSError errorWithDomain:KTPublishingEngineErrorDomain
                                                      code:KTPublishingEngineErrorNoCredentialForAuthentication
                                      localizedDescription:NSLocalizedString(@"Username or password could not be found.", @"Publishing engine authentication error")
                               localizedRecoverySuggestion:NSLocalizedString(@"Please run the Host Setup Assistant and re-enter your host's login credentials.", @"Publishing engine authentication error")
@@ -94,7 +94,7 @@
     {
         [[challenge sender] cancelAuthenticationChallenge:challenge];
         
-        NSError *error = [NSError errorWithDomain:KTPublishingEngineErrorDomain
+        NSError *error = [KSError errorWithDomain:KTPublishingEngineErrorDomain
 											 code:KTPublishingEngineErrorAuthenticationFailed
 							 localizedDescription:NSLocalizedString(@"Authentication failed.", @"Publishing engine authentication error")
 					  localizedRecoverySuggestion:NSLocalizedString(@"Please run the Host Setup Assistant again to test your host setup.", @"Publishing engine authentication error")

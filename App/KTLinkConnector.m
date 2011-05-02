@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Greg Hulands on 19/03/06.
-//  Copyright 2006-2009 Karelia Software. All rights reserved.
+//  Copyright 2006-2011 Karelia Software. All rights reserved.
 //
 
 #import "KTLinkConnector.h"
@@ -23,6 +23,7 @@ typedef enum {
 	KTLinkConnectorRightBottomStyle
 } KTLinkConnectorStyle;
 
+
 @interface KTLinkConnectorView : NSView
 {
 	KTLinkConnectorStyle _style;
@@ -32,26 +33,30 @@ typedef enum {
 
 @end
 
+
 NSRect KTRectFromPoints(NSPoint point1, NSPoint point2) {
     return NSMakeRect(((point1.x <= point2.x) ? point1.x : point2.x), ((point1.y <= point2.y) ? point1.y : point2.y), ((point1.x <= point2.x) ? point2.x - point1.x : point1.x - point2.x), ((point1.y <= point2.y) ? point2.y - point1.y : point1.y - point2.y));
 }
 
-static KTLinkConnector *_sharedConnector = nil;
 
-@interface KTLinkConnector ( Private )
+#pragma mark -
 
+
+@interface KTLinkConnector ()
 - (NSDate *)startTime;
 - (void)setStartTime:(NSDate *)aStartTime;
-
-
-
 @end
+
+
+#pragma mark -
+
 
 @implementation KTLinkConnector
 
 + (id)sharedConnector
 {
-	if (!_sharedConnector)
+	static KTLinkConnector *_sharedConnector = nil;
+    if (!_sharedConnector)
 		_sharedConnector = [[KTLinkConnector alloc] init];
 	return _sharedConnector;
 }
@@ -81,10 +86,10 @@ static KTLinkConnector *_sharedConnector = nil;
 - (void)dealloc
 {
 	// Don't worry about leaking, this is a singleton
+    [_link release];
 	[super dealloc];
 }
 
-#pragma mark -
 #pragma mark Overrides
 
 - (BOOL)acceptsFirstResponder { return YES; }
@@ -92,10 +97,9 @@ static KTLinkConnector *_sharedConnector = nil;
 - (BOOL)resignFirstResponder { return YES; }
 - (BOOL)ignoresMouseEvents { return YES; }
 
-#pragma mark -
 #pragma mark Methods
 
-- (void)startConnectionWithPoint:(NSPoint)point pasteboard:(NSPasteboard *)pasteboard userInfo:(id)ui
+- (void)startConnectionWithPoint:(NSPoint)point pasteboard:(NSPasteboard *)pasteboard targetWindow:(NSWindow *)aWindow
 {
 	pboard = [pasteboard retain];
 	NSEvent *theEvent;
@@ -125,9 +129,9 @@ static KTLinkConnector *_sharedConnector = nil;
 		
 		while (curWindow = [winEnum nextObject])
 		{
-			if ([[[curWindow windowController] document] site] != ui)
+			if (aWindow && (curWindow != aWindow))
 			{
-				continue; // we only want to allow links to the same document
+				continue; // if target window specified, disallow test if to another window
 			}
 			contentView = [curWindow contentView];
 			pointInWindow = [contentView convertPoint:[curWindow convertScreenToBase:curPoint] fromView:nil];
@@ -314,7 +318,7 @@ static KTLinkConnector *_sharedConnector = nil;
 
 - (id)draggingSource
 {
-	return nil;
+	return self;
 }
 
 - (int)draggingSequenceNumber
@@ -332,10 +336,9 @@ static KTLinkConnector *_sharedConnector = nil;
 	return nil;
 }
 
-#pragma mark -
 #pragma mark Accessors
 
-
+@synthesize link = _link;
 
 - (NSDate *)startTime
 {
@@ -352,7 +355,9 @@ static KTLinkConnector *_sharedConnector = nil;
 
 @end
 
+
 #pragma mark -
+
 
 @implementation KTLinkConnectorView
 

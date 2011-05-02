@@ -3,7 +3,7 @@
 //  KTComponents
 //
 //  Created by Dan Wood on 4/11/07.
-//  Copyright (c) 2007 Karelia Software. All rights reserved.
+//  Copyright (c) 2007-2011 Karelia Software. All rights reserved.
 //
 
 #import "NSHelpManager+KTExtensions.h"

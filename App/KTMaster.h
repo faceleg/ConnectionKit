@@ -2,7 +2,7 @@
 //  KTMaster.h
 //  Sandvox
 //
-//  Copyright 2007-2009 Karelia Software. All rights reserved.
+//  Copyright 2007-2011 Karelia Software. All rights reserved.
 //
 //  THIS SOFTWARE IS PROVIDED BY KARELIA SOFTWARE AND ITS CONTRIBUTORS "AS-IS"
 //  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -17,67 +17,101 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import <Cocoa/Cocoa.h>
+
+#import "KSExtensibleManagedObject.h"
+
 #import "KT.h"
-#import "KTHTMLParser.h"
-#import "KTManagedObject.h"
+#import "SVMediaRecord.h"
 
 
-@class KTDesign;
-@class KTMediaContainer;
+@class KTDesign, SVTitleBox, SVRichText, SVLogoImage, KTCodeInjection, SVHTMLContext;
 
-@interface KTMaster : KTManagedObject 
 
-- (NSString *)siteTitleText;
-- (void)setSiteTitleHTML:(NSString *)value;
+@interface KTMaster : KSExtensibleManagedObject 
 
-- (NSString *)copyrightHTML;
-- (void)setCopyrightHTML:(NSString *)copyrightHTML;
-- (NSString *)defaultCopyrightHTML;
+#pragma mark Text
 
+@property(nonatomic, retain) SVTitleBox *siteTitle;
+@property(nonatomic, retain) SVTitleBox *siteSubtitle;
+
+@property(nonatomic, retain) SVRichText *footer;
+
+
+#pragma mark Design
+- (KTDesign *)design;
+- (void)setDesign:(KTDesign *)design;
+- (void)setDesignBundleIdentifier:(NSString *)identifier;
 - (NSURL *)designDirectoryURL;
+- (void)writeCSS:(SVHTMLContext *)context;
 
-- (KTMediaContainer *)bannerImage;
-- (void)setBannerImage:(KTMediaContainer *)banner;
 
-- (KTMediaContainer *)logoImage;
-- (void)setLogoImage:(KTMediaContainer *)logo;
+#pragma mark Banner
 
-- (KTMediaContainer *)favicon;
-- (void)setFavicon:(KTMediaContainer *)favicon;
+@property(nonatomic, retain) SVMediaRecord *banner;
+- (void)setBannerWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
+
+@property(nonatomic, copy) NSNumber *bannerType;    // treat like BOOL for now
+
+- (void)writeBannerCSS:(SVHTMLContext *)context;
+- (void)writeCodeInjectionCSS:(SVHTMLContext *)context;
+
+
+#pragma mark Logo
+@property(nonatomic, retain, readonly) SVLogoImage *logo;
+
+
+#pragma mark Favicon
+@property(nonatomic, readonly) SVMedia *favicon;
+@property(nonatomic, copy) NSNumber *faviconType;   // mandatory
+@property(nonatomic, retain) SVMediaRecord *faviconMedia;
+- (void)setFaviconWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
+
+
+#pragma mark Graphical Text
+@property(nonatomic, copy) NSNumber *enableImageReplacement;    // BOOL, mandatory
+@property(nonatomic, copy) NSNumber *graphicalTitleSize;        // float
+
 
 #pragma mark Timestamp
-- (KTTimestampType)timestampType;
-- (void)setTimestampType:(KTTimestampType)timestampType;
+@property(nonatomic) NSDateFormatterStyle timestampFormat;
+@property(nonatomic, copy) NSNumber *timestampShowTime;
 
-- (NSDateFormatterStyle)timestampFormat;
-- (void)setTimestampFormat:(NSDateFormatterStyle)format;
 
-#pragma mark Language
-- (NSString *)language;
+#pragma mark Language & Charset
+@property(nonatomic, copy) NSString *language;
+@property(nonatomic, copy) NSString *charset;
 
-#pragma mark Placeholder
-- (KTMediaContainer *)placeholderImage;
 
 #pragma mark Comments
-- (KTCommentsProvider)commentsProvider;
-- (void)setCommentsProvider:(KTCommentsProvider)aKTCommentsProvider;
+@property(nonatomic, assign) NSNumber *commentsProvider;
+@property(nonatomic, readonly) NSString *commentsSummary;
 
+// convenciences for examining KTCommentsProvider
 - (BOOL)wantsDisqus;
-- (void)setWantsDisqus:(BOOL)aBool;
-
-- (NSString *)disqusShortName;
-- (void)setDisqusShortName:(NSString *)aString;
-
-
-- (BOOL)wantsHaloscan;
-- (void)setWantsHaloscan:(BOOL)aBool;
-
+- (BOOL)wantsHaloscan;  // for backward compatibility with KTCommentsProvider enum
+- (BOOL)wantsIntenseDebate;
 - (BOOL)wantsJSKit;
-- (void)setWantsJSKit:(BOOL)aBool;
+- (BOOL)wantsFacebookComments;
 
-- (NSString *)JSKitModeratorEmail;
-- (void)setJSKitModeratorEmail:(NSString *)aString;
+// extensible properties
+@property(nonatomic, retain) NSString *disqusShortName;
+@property(nonatomic, retain) NSString *JSKitModeratorEmail;
+@property(nonatomic, retain) NSString *IntenseDebateAccountID;
+@property(nonatomic, retain) NSString *facebookAppID;
+@property(nonatomic, retain) NSNumber *fbNumberOfPosts;
+@property(nonatomic, retain) NSNumber *fbColorScheme;
+
+// derived
+- (NSString *)fbColorSchemeString;
+- (NSString *)fbSidebarWidth;
+- (NSString *)fbPageWidth;
+
+#pragma mark Placeholder Image
+- (SVMediaRecord *)makePlaceholdImageMediaWithEntityName:(NSString *)entityName;
+
+
+#pragma mark Site Outline
+- (KTCodeInjection *)codeInjection;
 
 @end
 

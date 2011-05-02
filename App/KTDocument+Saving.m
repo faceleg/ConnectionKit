@@ -3,46 +3,50 @@
 //  Marvel
 //
 //  Created by Mike on 26/02/2008.
-//  Copyright 2008-2009 Karelia Software. All rights reserved.
+//  Copyright 2008-2011 Karelia Software. All rights reserved.
 //
 
 #import "KTDocument.h"
 #import "NSDocument+KTExtensions.h"
 
-#import "KTAbstractElement+Internal.h"
-#import "KTAppDelegate.h"
 #import "KTDesign.h"
 #import "KTDocumentController.h"
+#import "SVDocumentFileWrapper.h"
+#import "SVDocumentSavePanelAccessoryViewController.h"
 #import "KTDocWindowController.h"
-#import "KTDocSiteOutlineController.h"
+#import "SVDocumentUndoManager.h"
 #import "KTSite.h"
-#import "KTHTMLParser.h"
 #import "KTPage.h"
-#import "KTMaster+Internal.h"
-#import "KTMediaManager+Internal.h"
-#import "KTUtilities.h"
+#import "KTMaster.h"
+#import "SVMediaRecord.h"
+#import "SVQuickLookPreviewHTMLContext.h"
+#import "SVTextContentHTMLContext.h"
+#import "SVTitleBox.h"
+#import "SVWebEditorHTMLContext.h"
+#import "KSStringHTMLEntityUnescaping.h"
 
-#import "KTWebKitCompatibility.h"
+#import "KSSilencingConfirmSheet.h"
+#import "KSThreadProxy.h"
+
+#import "NSImage+KTExtensions.h"
+#import "NSManagedObjectContext+KTExtensions.h"
+#import "NSManagedObject+KTExtensions.h"
 
 #import "NSApplication+Karelia.h"
 #import "NSDate+Karelia.h"
 #import "NSError+Karelia.h"
 #import "NSFileManager+Karelia.h"
 #import "NSImage+Karelia.h"
-#import "NSImage+KTExtensions.h"
 #import "NSInvocation+Karelia.h"
-#import "NSManagedObjectContext+KTExtensions.h"
-#import "NSManagedObject+KTExtensions.h"
 #import "NSSet+Karelia.h"
-#import "NSThread+Karelia.h"
 #import "NSView+Karelia.h"
 #import "NSWorkspace+Karelia.h"
-#import "NSURL+Karelia.h"
+
+#import "KSFileWrapperExtensions.h"
+#import "KSURLUtilities.h"
+#import "KSPathUtilities.h"
 
 #import "CIImage+Karelia.h"
-
-#import "KSSilencingConfirmSheet.h"
-#import "KSThreadProxy.h"
 
 #import "Registration.h"
 #import "Debug.h"
@@ -52,7 +56,7 @@
 #include <sys/mount.h>
 
 
-NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
+NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
 
 
 /*	These strings are used for generating Quick Look preview sticky-note text
@@ -65,7 +69,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 
 
 @interface KTDocument (PropertiesPrivate)
-- (void)copyDocumentDisplayPropertiesToModel;
+- (void)persistUIProperties;
 @end
 
 
@@ -81,22 +85,36 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 		   forSaveOperation:(NSSaveOperationType)inSaveOperation
 					  error:(NSError **)outError;
 
-- (BOOL)writeMOCToURL:(NSURL *)inURL 
-			   ofType:(NSString *)inType 
-	 forSaveOperation:(NSSaveOperationType)inSaveOperation
-  originalContentsURL:(NSURL *)inOriginalContentsURL
-				error:(NSError **)outError;
+- (BOOL)writeDatastoreToURL:(NSURL *)URL
+                     ofType:(NSString *)typeName
+           forSaveOperation:(NSSaveOperationType)saveOp
+        originalContentsURL:(NSURL *)originalContentsURL
+                      error:(NSError **)outError;
 
-- (BOOL)migrateToURL:(NSURL *)URL ofType:(NSString *)typeName originalContentsURL:(NSURL *)originalContentsURL error:(NSError **)outError;
+- (BOOL)writeMediaRecords:(NSArray *)media
+                    toURL:(NSURL *)docURL
+         forSaveOperation:(NSSaveOperationType)saveOp
+                    error:(NSError **)outError;
+- (BOOL)writeMediaRecord:(SVMediaRecord *)media
+           toDocumentURL:(NSURL *)docURL
+        forSaveOperation:(NSSaveOperationType)saveOp
+                   error:(NSError **)outError;
+
 
 // Metadata
 - (BOOL)setMetadataForStoreAtURL:(NSURL *)aStoreURL error:(NSError **)outError;
+- (NSString *)documentTextContent;
+
 
 // Quick Look
-- (void)startGeneratingQuickLookThumbnail;
-- (BOOL)writeQuickLookThumbnailToDocumentURLIfPossible:(NSURL *)docURL error:(NSError **)error;
-- (NSImage *)_quickLookThumbnail;
-- (NSString *)quickLookPreviewHTML;
+- (void)startGeneratingThumbnail;
+- (BOOL)tryToWriteThumbnailToDocumentURL:(NSURL *)docURL error:(NSError **)error;
+- (WebView *)thumbnailGeneratorWebView;
+- (NSImage *)makeThumbnail;
+
+- (void)writePreviewHTML:(SVHTMLContext *)context;
+- (void)writePreviewHTMLString:(NSString *)htmlString toURL:(NSURL *)previewURL;
+- (void)addPreviewResourceWithData:(NSData *)data relativePath:(NSString *)path;
 
 @end
 
@@ -106,7 +124,6 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 
 @implementation KTDocument (Saving)
 
-#pragma mark -
 #pragma mark Save to URL
 
 - (BOOL)saveToURL:(NSURL *)absoluteURL
@@ -116,10 +133,37 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 {
 	OBPRECONDITION([absoluteURL isFileURL]);
 	
+    
+    // Ignore attempts to autosave docs that aren't actually registered with the doc controller
+    if (saveOperation == NSAutosaveOperation &&
+        [[[NSDocumentController sharedDocumentController] documents] indexOfObjectIdenticalTo:self] == NSNotFound)
+    {
+        return YES;
+    }
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:KTDocumentWillSaveNotification object:self];
+    
+    // Let anyone interested know
+	[[NSNotificationCenter defaultCenter] postNotificationName:kKTDocumentWillSaveNotification object:self];
     
     
+    // Store media referencing behaviour. Primitive so as not to affect undo stack
+    if (saveOperation == NSSaveAsOperation || saveOperation == NSSaveToOperation)
+    {
+        [[self site] setPrimitiveValue:[NSNumber numberWithBool:[_accessoryViewController copyMoviesIntoDocument]]
+                                forKey:@"copyMoviesIntoDocument"];
+    }
+    
+    
+    // Record display properties
+    NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
+    [managedObjectContext processPendingChanges];
+    [[managedObjectContext undoManager] disableUndoRegistration];
+    [self persistUIProperties];
+    [managedObjectContext processPendingChanges];
+    [[managedObjectContext undoManager] enableUndoRegistration];
+    
+    
+    // Normal save behaviour
     BOOL result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation error:outError];
     OBASSERT(result || !outError || (nil != *outError)); // make sure we didn't return NO with an empty error
     
@@ -132,50 +176,30 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     return (mySaveOperationCount > 0);
 }
 
-#pragma mark -
 #pragma mark Save Panel
 
-- (void)runModalSavePanelForSaveOperation:(NSSaveOperationType)saveOperation
-                                 delegate:(id)delegate
-                          didSaveSelector:(SEL)didSaveSelector
-                              contextInfo:(void *)contextInfo
+- (BOOL)prepareSavePanel:(NSSavePanel *)savePanel;
 {
-    myLastSavePanelSaveOperation = saveOperation;
-    [super runModalSavePanelForSaveOperation:saveOperation
-                                    delegate:delegate
-                             didSaveSelector:didSaveSelector
-                                 contextInfo:contextInfo];
+    BOOL result = [super prepareSavePanel:savePanel];
+	[savePanel setExtensionHidden:NO];
+	return result;
 }
 
-- (BOOL)prepareSavePanel:(NSSavePanel *)savePanel
+/*  We were putting up an iWork-esque control over whether audio & video get copied in. Changed mind on that. #63782
+- (BOOL)prepareSavePanel:(NSSavePanel *)savePanel;
 {
-	BOOL result = [super prepareSavePanel:savePanel];
+    BOOL result = [super prepareSavePanel:savePanel];
     
-    if (result)
+    if (!_accessoryViewController)
     {
-        switch (myLastSavePanelSaveOperation)
-        {
-            case NSSaveOperation:
-                [savePanel setTitle:NSLocalizedString(@"New Site","Save Panel Title")];
-                [savePanel setPrompt:NSLocalizedString(@"Create","Create Button")];
-                [savePanel setTreatsFilePackagesAsDirectories:NO];
-                [savePanel setCanSelectHiddenExtension:YES];
-                [savePanel setRequiredFileType:(NSString *)kKTDocumentExtension];
-                break;
-                
-            case NSSaveToOperation:
-                [savePanel setTitle:NSLocalizedString(@"Save a Copy As...", @"Save a Copy As...")];
-                [savePanel setNameFieldLabel:NSLocalizedString(@"Save Copy:", @"Save sheet name field label")];
-                
-                break;
-                
-            default:
-                break;
-        }
+        _accessoryViewController = [[SVDocumentSavePanelAccessoryViewController alloc]
+                                    initWithNibName:@"DocumentSavePanelAccessoryView" bundle:nil];
     }
     
+    [savePanel setAccessoryView:[_accessoryViewController view]];
+    
     return result;
-}
+}*/
 
 - (NSArray *)writableTypesForSaveOperation:(NSSaveOperationType)saveOperation
 {
@@ -183,7 +207,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     // not allow the user to pick a persistence store format and confuse the app.
     //
     // BUGSID:37280 If you don't specify a string the document framework recognises, hidden file extensions won't work right
-	return [NSArray arrayWithObject:kKTDocumentType];
+	return [NSArray arrayWithObject:kSVDocumentTypeName];
 }
 
 #pragma mark -
@@ -199,78 +223,53 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 {
 	BOOL result = NO;
     
-    switch (saveOperation)
+    
+    if (saveOperation == NSSaveOperation &&
+        [typeName isEqualToString:[self fileType]]) // during migration want standard saving
+        //(saveOperation == NSAutosaveOperation && [absoluteURL isEqual:[self autosavedContentsFileURL]]))
     {
-        case NSSaveAsOperation:
-        {
-            // We'll need a path for various operations below
-            NSAssert2([absoluteURL isFileURL], @"-%@ called for non-file URL: %@", NSStringFromSelector(_cmd), [absoluteURL absoluteString]);
-            NSString *path = [absoluteURL path];
-            
-            
-            // If a file already exists at the desired location move it out of the way
-            NSString *backupPath = nil;
-            if ([[NSFileManager defaultManager] fileExistsAtPath:path])
-            {
-                backupPath = [self backupExistingFileForSaveAsOperation:path error:outError];
-                if (!backupPath) return NO;
-            }
-            
-            
-            // We want to catch all possible errors so that the save can be reverted. We cover exceptions & errors. Sadly crashers can't
-            // be dealt with at the moment.
-            @try
-            {
-                // Write to the new URL
-                result = [self writeToURL:absoluteURL
-                                   ofType:typeName
-                         forSaveOperation:saveOperation
-                      originalContentsURL:[self fileURL]
-                                    error:outError];
-                OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
-            }
-            @finally
-            {
-                if (!result && backupPath)
-                {
-                    // There was an error saving, recover from it
-                    [self recoverBackupFile:backupPath toURL:absoluteURL];
-                }
-            }
-            
-            if (result)
-            {
-                // The save was successful, delete the backup file
-                if (backupPath)
-                {
-                    [[NSFileManager defaultManager] removeFileAtPath:backupPath handler:nil];
-                }
-            }
-            
-            break;
-        }
-            
-            
-            
         // NSDocument attempts to write a copy of the document out at a temporary location.
         // Core Data cannot support this, so we override it to save directly.
-        case NSSaveOperation:
-            result = [self writeToURL:absoluteURL
-                               ofType:typeName
-                     forSaveOperation:saveOperation 
-                  originalContentsURL:[self fileURL]
-                                error:outError];
-            
-            break;
+        result = [self writeToURL:absoluteURL
+                           ofType:typeName
+                 forSaveOperation:saveOperation 
+              originalContentsURL:[self fileURL]
+                            error:outError];
         
-            
-            
-        // Other save types are fine to go through the regular channels
-        default:
-            result = [super writeSafelyToURL:absoluteURL 
-                                      ofType:typeName 
-                            forSaveOperation:saveOperation 
-                                       error:outError];
+        
+        
+    }
+    // Other situations are basically fine to go through the regular channels
+    else
+    {
+        result = [super writeSafelyToURL:absoluteURL 
+                                  ofType:typeName 
+                        forSaveOperation:saveOperation 
+                                   error:outError];
+		
+		
+		/*
+		 
+		 Strange problem being logged here....
+		 
+		 Downstream from the above method, the following methods get called.
+		 #1	0x9115dc6b in +[NSFileWrapper(NSInternal) _removeTemporaryDirectoryAtURL:]
+		 #2	0x91130bcb in -[NSDocument _writeSafelyToURL:ofType:forSaveOperation:error:]
+		 #3	0x9112f916 in -[NSDocument writeSafelyToURL:ofType:forSaveOperation:error:]
+		 #4	0x70067614 in -[KTDocument(Saving) writeSafelyToURL:ofType:forSaveOperation:error:] at KTDocument+Saving.m:229
+		 
+		 And the URL that _removeTemporaryDirectoryAtURL apparently trying to remove is:
+		 file://localhost/Volumes/dwood/.TemporaryItems/folders.502/TemporaryItems/(A%20Document%20Being%20Saved%20By%20Sandvox)/
+		 
+		 However I think that there is still a file in that directory: Unsaved Sandvox Document.svxSite
+		 
+		 We get the following NSLog message:
+		 
+		 AppKit called rmdir("/Volumes/dwood/.TemporaryItems/folders.502/TemporaryItems/(A Document Being Saved By Sandvox)"), it didn't return 0, and errno was set to 66.
+		 
+		 66 means directory not empty.  So I think that what is happening is that internally, it's supposed to be deleting the Sandvox first!
+		 
+		 */
     }
     
     OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
@@ -297,9 +296,9 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 		// The backup failed, construct an error
 		result = nil;
 		
-		NSString *failureReason = [NSString stringWithFormat:@"Could not remove the existing file at:\n%@", path];
+		NSString *secondary = [NSString stringWithFormat:@"Could not remove the existing file at:\n%@", path];
 		NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:@"Unable to save document", NSLocalizedDescriptionKey,
-																			failureReason, NSLocalizedFailureReasonErrorKey,
+																			secondary, NSLocalizedRecoverySuggestionErrorKey,
 																			path, NSFilePathErrorKey, nil];
 		if (error)
 		{
@@ -337,10 +336,11 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 
 /*	The low level NSDocument method responsible for actually getting a document onto disk
  */
-- (BOOL)writeToURL:(NSURL *)inURL 
-			ofType:(NSString *)inType 
-  forSaveOperation:(NSSaveOperationType)saveOperation originalContentsURL:(NSURL *)inOriginalContentsURL
-			 error:(NSError **)outError 
+ - (BOOL)writeToURL:(NSURL *)inURL 
+             ofType:(NSString *)inType 
+   forSaveOperation:(NSSaveOperationType)saveOperation
+originalContentsURL:(NSURL *)inOriginalContentsURL
+              error:(NSError **)outError
 {
 	OBPRECONDITION([NSThread currentThread] == [self thread]);
     
@@ -348,14 +348,20 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	OBPRECONDITION([inURL isFileURL]);
 	
 	// We don't support any of the other save ops here.
-	OBPRECONDITION(saveOperation == NSSaveOperation || saveOperation == NSSaveAsOperation);
+	//OBPRECONDITION(saveOperation == NSSaveOperation || saveOperation == NSSaveAsOperation);
+    
+    
+    BOOL result = NO;
+	NSManagedObjectContext *context = [self managedObjectContext];
+    
 	
-	
-	BOOL result = NO;
-	
-	
-    // Kick off thumbnail generation
-    [self startGeneratingQuickLookThumbnail];
+@try
+{
+    if (saveOperation != NSAutosaveOperation && [NSThread isMainThread])
+    {
+        // Kick off thumbnail generation
+        [self startGeneratingThumbnail];
+    }
     
     
     
@@ -368,38 +374,158 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	
     
 	
-	if (result)
-	{
-		// Generate Quick Look preview HTML
-        NSString *quickLookPreviewHTML = [self quickLookPreviewHTML];
-        
-        
-        // Save the context
-		result = [self writeMOCToURL:inURL
-                              ofType:inType
-                    forSaveOperation:saveOperation
-                 originalContentsURL:inOriginalContentsURL
-                               error:outError];
-		OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
-		
-        
-        // Write out Quick Look preview
-        if (result && quickLookPreviewHTML)
+	SVHTMLContext *previewContext = nil;
+    NSMutableArray *filesToDelete = [[NSMutableArray alloc] init];
+    
+    if (result)
+    {
+        if (saveOperation == NSAutosaveOperation)
         {
-            NSURL *previewURL = [[KTDocument quickLookURLForDocumentURL:inURL] URLByAppendingPathComponent:@"preview.html" isDirectory:NO];
-            result = [quickLookPreviewHTML writeToURL:previewURL
-                                           atomically:NO
-                                             encoding:NSUTF8StringEncoding
-                                                error:outError];
+            // Mark media as autosaved. #61400
+            //NSArray *media = [[self documentFileWrappers] allValues];
+            //[media makeObjectsPerformSelector:@selector(willAutosave)];
+        }
+        else
+        {
+            // Build a list of all media to copy into the document
+            NSString *requestName = (saveOperation == NSSaveAsOperation) ? @"MediaToCopyIntoDocument" : @"MediaAwaitingCopyIntoDocument";
+            NSFetchRequest *request = [[[self class] managedObjectModel] fetchRequestTemplateForName:requestName];
+            NSArray *mediaToWriteIntoDocument = [context executeFetchRequest:request error:NULL];
+            
+            [self writeMediaRecords:mediaToWriteIntoDocument
+                              toURL:inURL
+                   forSaveOperation:saveOperation
+                              error:NULL];
+        }
+         
+            
+            
+            
+        if (saveOperation != NSAutosaveOperation)
+        {
+            // Generate Quick Look preview HTML. Do this AFTER processing media so their URLs now point to a file inside the doc
+            previewContext = [[SVQuickLookPreviewHTMLContext alloc] init];
+            [previewContext setBaseURL:[KTDocument quickLookPreviewURLForDocumentURL:inURL]];
+            [self writePreviewHTML:previewContext];
+            [previewContext flush];
         }
     }
     
     
-    if (result && _quickLookThumbnailWebView)
+    if (result)
     {
-        [self writeQuickLookThumbnailToDocumentURLIfPossible:inURL error:outError];
-	}
-	
+        // Save the context
+        NSURL *originalDatastoreURL = (inOriginalContentsURL ? [KTDocument datastoreURLForDocumentURL:inOriginalContentsURL type:nil] : nil);
+        
+		result = [self writeDatastoreToURL:[KTDocument datastoreURLForDocumentURL:inURL type:nil]
+                                    ofType:inType
+                          forSaveOperation:saveOperation
+                       originalContentsURL:originalDatastoreURL
+                                     error:outError];
+        
+		OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
+    }
+    
+    
+    if (result && saveOperation == NSSaveOperation)
+    {
+        NSURL *deletedMediaDirectory = [[self undoManager] deletedMediaDirectory];
+        NSDictionary *wrappers = [self documentFileWrappers];
+        
+        for (NSString *aKey in wrappers)
+        {
+            id <SVDocumentFileWrapper> record = [wrappers objectForKey:aKey];
+            NSURL *mediaURL = [record fileURL];
+            
+            if ([record shouldRemoveFromDocument])
+            {
+                // Delete media which is no longer needed. MUST happen after searching for new media. #72736
+                if ([[mediaURL path] ks_isSubpathOfPath:[inOriginalContentsURL path]])
+                {
+                    NSURL *deletionURL = [deletedMediaDirectory ks_URLByAppendingPathComponent:aKey
+                                                                                   isDirectory:NO];
+                    
+                    // Internally, -write… method changes the record's URL, potentially deallocate mediaURL. Removing the file at that URL will then crash. I think this is what happens in #103509
+                    mediaURL = [mediaURL copy];
+                    
+                    // Could fail because:
+                    // A)   The destination isn't writeable. Unlikely, but leave the file in the package and a future release will spot the orphaned file and offer to delete it upon opening the doc
+                    // B)   The source isn't readable (probably necause it doesn't exist). Much the same as A)!
+                    //
+                    BOOL written = [(SVMediaRecord *)record writeToURL:deletionURL
+                                                         updateFileURL:YES
+                                                                 error:NULL];
+                    
+                    if (written)
+                    {
+                        // TODO: Log any error
+                        [[NSFileManager defaultManager] removeItemAtPath:[mediaURL path] error:NULL];
+                    }
+                    [mediaURL release];
+                }
+            }
+            else
+            {
+                // Move undeleted media back into the doc. #97429
+                if (![[mediaURL path] ks_isSubpathOfPath:[inOriginalContentsURL path]])
+                {
+                    NSURL *undeletionURL = [inURL ks_URLByAppendingPathComponent:[record filename]
+                                                                     isDirectory:NO];
+                    [(SVMediaRecord *)record writeToURL:undeletionURL
+                                          updateFileURL:YES
+                                                  error:NULL];
+                }
+            }
+        }
+    }
+    [filesToDelete release];
+    
+    
+    if (saveOperation != NSAutosaveOperation && result)
+    {
+        // Make sure there's a directory to save Quick Look data into
+        NSURL *quickLookDirectory = [KTDocument quickLookURLForDocumentURL:inURL];
+        [[NSFileManager defaultManager] createDirectoryAtPath:[quickLookDirectory path]
+                                  withIntermediateDirectories:NO
+                                                   attributes:nil
+                                                        error:NULL];
+        
+        
+        // Prepare file wrapper for preview resources
+        _previewResourcesFileWrapper = [[NSFileWrapper alloc] initDirectoryWithFileWrappers:nil];
+        [_previewResourcesFileWrapper setPreferredFilename:@"Resources"];
+        
+        
+        // Write Quick Look thumbnail, building up preview resources along the way
+        if ([self thumbnailGeneratorWebView])
+        {
+            NSError *qlThumbnailError;
+            if (![self tryToWriteThumbnailToDocumentURL:inURL error:&qlThumbnailError])
+            {
+                NSLog(@"Error saving Quick Look thumbnail: %@",
+                      [[qlThumbnailError debugDescription] condenseWhiteSpace]);
+            }
+        }
+        
+        
+		// Write out Quick Look preview
+        if (previewContext)
+        {
+            [self writePreviewHTMLString:[[previewContext outputStringWriter] string]
+                                   toURL:[previewContext baseURL]];
+            
+            [previewContext release];
+        }
+        [_previewResourcesFileWrapper release]; _previewResourcesFileWrapper = nil;
+    }
+    
+}
+@finally
+{
+    // MUST make sure the thumbnail webview has been unloaded, otherwise we'll fail an assertion come the next save. This call does that. #61947
+    [self makeThumbnail];
+}	
+
 	
 	return result;
 }
@@ -438,239 +564,213 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	
 	
 	// For the first save of a document, create the wrapper paths on disk before we do anything else
-	if (saveOperation == NSSaveAsOperation)
+    BOOL result = YES;
+	if (saveOperation == NSSaveAsOperation || saveOperation == NSAutosaveOperation)
 	{
-		[[NSFileManager defaultManager] createDirectoryAtPath:[inURL path] attributes:nil];
-		[[NSWorkspace sharedWorkspace] setBundleBit:YES forFile:[inURL path]];
-		
-		[[NSFileManager defaultManager] createDirectoryAtPath:[[KTDocument siteURLForDocumentURL:inURL] path] attributes:nil];
-		[[NSFileManager defaultManager] createDirectoryAtPath:[[KTMediaManager mediaURLForDocumentURL:inURL] path] attributes:nil];
-		[[NSFileManager defaultManager] createDirectoryAtPath:[[KTDocument quickLookURLForDocumentURL:inURL] path] attributes:nil];
+		result = [[NSFileManager defaultManager] createDirectoryAtPath:[inURL path]
+                                           withIntermediateDirectories:NO
+                                                            attributes:nil
+                                                                 error:outError];
+        
+		if (result) [KSWORKSPACE ks_setBundleBit:YES forFileAtURL:inURL];
 	}
 	
 	
-	// Make sure we have a persistent store coordinator properly set up
-	NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
-	NSPersistentStoreCoordinator *storeCoordinator = [managedObjectContext persistentStoreCoordinator];
-	NSURL *persistentStoreURL = [KTDocument datastoreURLForDocumentURL:inURL type:nil];
-	
-	if ([[storeCoordinator persistentStores] count] < 1)
-	{ 
-		BOOL didConfigure = [self configurePersistentStoreCoordinatorForURL:inURL // not newSaveURL as configurePSC needs to be consistent
-																	 ofType:inType
-                                                         modelConfiguration:nil
-                                                               storeOptions:nil
-																	  error:outError];
-		
-		OBASSERT( (YES == didConfigure) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
-
-		id newStore = [storeCoordinator persistentStoreForURL:persistentStoreURL];
-		if ( !newStore || !didConfigure )
-		{
-			NSLog(@"error: unable to create document: %@", (outError ? [*outError description] : nil) );
-			return NO; // bail out and display outError
-		}
-	} 
-	
-	
-    // Set metadata
-    if ([storeCoordinator persistentStoreForURL:persistentStoreURL])
+    
+    if (!result)
     {
-        if (![self setMetadataForStoreAtURL:persistentStoreURL error:outError])
-        {
-			OBASSERT( (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
-            return NO; // couldn't setMetadata, but we should have, bail...
-        }
-    }
-    else
-    {
-        if (saveOperation != NSSaveAsOperation)
-        {
-			OBASSERT( (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
-			LOG((@"error: wants to setMetadata during save but no persistent store at %@", persistentStoreURL));
-            return NO; // this case should not happen, stop
-        }
+        NSURL *persistentStoreURL = [KTDocument datastoreURLForDocumentURL:inURL type:nil];
+#pragma unused (persistentStoreURL)
+       OBASSERT( (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
+        LOG((@"error: wants to setMetadata during save but no persistent store at %@", persistentStoreURL));
     }
     
     
-    // Record display properties
-    [managedObjectContext processPendingChanges];
-    [[managedObjectContext undoManager] disableUndoRegistration];
-    [self copyDocumentDisplayPropertiesToModel];
-    [managedObjectContext processPendingChanges];
-    [[managedObjectContext undoManager] enableUndoRegistration];
-    
-    
-    // Move external media in-document if the user requests it
-    KTSite *docInfo = [self site];
-    if ([docInfo copyMediaOriginals] != [[docInfo committedValueForKey:@"copyMediaOriginals"] intValue])
-    {
-        [[self mediaManager] moveApplicableExternalMediaInDocument];
-    }
-	
-	
-	return YES;
+    return result;
 }
 
-- (BOOL)writeMOCToURL:(NSURL *)inURL 
-			   ofType:(NSString *)inType 
-	 forSaveOperation:(NSSaveOperationType)inSaveOperation
-  originalContentsURL:(NSURL *)inOriginalContentsURL
-				error:(NSError **)outError;
+- (BOOL)writeDatastoreToURL:(NSURL *)URL
+                     ofType:(NSString *)typeName
+           forSaveOperation:(NSSaveOperationType)saveOp
+        originalContentsURL:(NSURL *)originalContentsURL
+                      error:(NSError **)outError;
 
 {
 	OBASSERT([NSThread currentThread] == [self thread]);
     
     
+    NSManagedObjectContext *context = [self managedObjectContext];
+	NSPersistentStoreCoordinator *coordinator = [context persistentStoreCoordinator];
+	OBASSERT(coordinator);
+        
+    
     BOOL result = YES;
-	NSError *error = nil;
+    NSError *error = nil;
 	
-	
-	if (result)
+    
+    // Setup persistent store appropriately
+	NSPersistentStore *store = [self persistentStore];
+    if (!store)
     {
-        NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
-	
-	
-        
-        // Handle the user choosing "Save As" for an EXISTING document
-        if (inSaveOperation == NSSaveAsOperation && [self fileURL])
-        {
-            result = [self migrateToURL:inURL ofType:inType originalContentsURL:inOriginalContentsURL error:&error];
-            if (!result)
-            {
-                if (outError)
-                {
-                    *outError = error;
-                }
-                return NO; // bail out and display outError
-            }
-            else
-            {
-                result = [self setMetadataForStoreAtURL:[KTDocument datastoreURLForDocumentURL:inURL type:nil]
-                                                  error:&error];
-            }
-        }
-        
-        if (result)	// keep going if OK
-        {
-            result = [managedObjectContext save:&error];
-        }
-        if (result)
-        {
-            result = [[[self mediaManager] managedObjectContext] save:&error];
-        }
+        result = [self configurePersistentStoreCoordinatorForURL:URL
+                                                          ofType:typeName
+                                              modelConfiguration:nil
+                                                    storeOptions:nil
+                                                           error:&error];
+        store = [self persistentStore];
     }
+    else if (saveOp != NSSaveOperation)
+    {
+        // Fake a placeholder file ready for the store to save over
+        result = [[NSData data] writeToURL:URL options:0 error:&error];
+        if (result) [coordinator setURL:URL forPersistentStore:store];
+    }
+    
+    
+    // Now we're sure store is available, can give it some metadata.
+    if (result && saveOp != NSAutosaveOperation)
+    {
+        result = [self setMetadataForStoreAtURL:URL error:&error];
+    }
+    
+    
+    // Do the save
+    if (result) result = [context save:&error];
+    
+    
+    // Restore persistent store URL after Save To-type operations. Even if save failed (just to be on the safe side)
+    if (saveOp == NSAutosaveOperation || saveOp == NSSaveToOperation)
+    {
+        [coordinator setURL:originalContentsURL forPersistentStore:store];
+    }
+    
     
     // Return, making sure to supply appropriate error info
     if (!result && outError) *outError = error;
-    OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
+    OBASSERT( (result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
     
     return result;
 }
 
-/*	Called when performing a "Save As" operation on an existing document
- */
-- (BOOL)migrateToURL:(NSURL *)URL ofType:(NSString *)typeName originalContentsURL:(NSURL *)originalContentsURL error:(NSError **)outError
+#pragma mark Media
+
+- (id <SVDocumentFileWrapper>)duplicateOfMediaRecord:(SVMediaRecord *)mediaRecord;
 {
-	// Build a list of the media files that will require copying/moving to the new doc
-	NSManagedObjectContext *mediaMOC = [[self mediaManager] managedObjectContext];
-	NSArray *mediaFiles = [mediaMOC allObjectsWithEntityName:@"AbstractMediaFile" error:NULL];
-	NSMutableSet *pathsToCopy = [NSMutableSet setWithCapacity:[mediaFiles count]];
-	NSMutableSet *pathsToMove = [NSMutableSet setWithCapacity:[mediaFiles count]];
-	
-	NSEnumerator *mediaFilesEnumerator = [mediaFiles objectEnumerator];
-	KTMediaFile *aMediaFile;
-	while (aMediaFile = [mediaFilesEnumerator nextObject])
-	{
-		NSString *path = [aMediaFile currentPath];
-		if ([aMediaFile isTemporaryObject])
-		{
-			[pathsToMove addObjectIgnoringNil:path];
-		}
-		else
-		{
-			[pathsToCopy addObjectIgnoringNil:path];
-		}
-	}
-	
-	
-	// Migrate the main document store
-	NSURL *storeURL = [KTDocument datastoreURLForDocumentURL:URL type:nil];
-	NSPersistentStoreCoordinator *storeCoordinator = [[self managedObjectContext] persistentStoreCoordinator];
-    OBASSERT(storeCoordinator);
-	
-	NSURL *oldDataStoreURL = [KTDocument datastoreURLForDocumentURL:originalContentsURL type:nil];
-    OBASSERT(oldDataStoreURL);
+    OBPRECONDITION(mediaRecord);
     
-    id oldDataStore = [storeCoordinator persistentStoreForURL:oldDataStoreURL];
-    NSAssert5(oldDataStore,
-              @"No persistent store found for URL: %@\nPersistent stores: %@\nDocument URL:%@\nOriginal contents URL:%@\nDestination URL:%@",
-              [oldDataStoreURL absoluteString],
-              [storeCoordinator persistentStores],
-              [self fileURL],
-              originalContentsURL,
-              URL);
+    //  Look through out existing media to see if there is one with the same data
     
-    if (![storeCoordinator migratePersistentStore:oldDataStore
-										    toURL:storeURL
-										  options:nil
-										 withType:[self persistentStoreTypeForFileType:typeName]
-										    error:outError])
-	{
-		OBASSERT( (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
-		return NO;
-	}
-	
+    id <SVDocumentFileWrapper> result = nil;
     
-	// Set the new metadata
-	if ( ![self setMetadataForStoreAtURL:storeURL error:outError] )
-	{
-		OBASSERT( (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
-		return NO;
-	}	
-	
     
-	// Migrate the media store
-	storeURL = [KTMediaManager mediaStoreURLForDocumentURL:URL];
-	storeCoordinator = [[[self mediaManager] managedObjectContext] persistentStoreCoordinator];
-	
-	NSURL *oldMediaStoreURL = [KTMediaManager mediaStoreURLForDocumentURL:originalContentsURL];
-    OBASSERT(oldMediaStoreURL);
-    id oldMediaStore = [storeCoordinator persistentStoreForURL:oldMediaStoreURL];
-    OBASSERT(oldMediaStore);
-    if (![storeCoordinator migratePersistentStore:oldMediaStore
-										    toURL:storeURL
-										  options:nil
-										 withType:[KTMediaManager defaultMediaStoreType]
-										    error:outError])
-	{
-		OBASSERT( (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
-		return NO;
-	}
-	
-	
-	// Copy/Move media files
-	NSFileManager *fileManager = [NSFileManager defaultManager];
-	NSString *newDocMediaPath = [[KTMediaManager mediaURLForDocumentURL:URL] path];
-	
-	NSEnumerator *pathsEnumerator = [pathsToCopy objectEnumerator];
-	NSString *aPath;	NSString *destinationPath;
-	while (aPath = [pathsEnumerator nextObject])
-	{
-		destinationPath = [newDocMediaPath stringByAppendingPathComponent:[aPath lastPathComponent]];
-		[fileManager copyPath:aPath toPath:destinationPath handler:nil];
-	}
-	
-	pathsEnumerator = [pathsToMove objectEnumerator];
-	while (aPath = [pathsEnumerator nextObject])
-	{
-		destinationPath = [newDocMediaPath stringByAppendingPathComponent:[aPath lastPathComponent]];
-		[fileManager movePath:aPath toPath:destinationPath handler:nil];
-	}
-	return YES;
+    NSDictionary *wrappers = [self documentFileWrappers];
+    for (NSString *aKey in wrappers)
+    {
+        SVMediaRecord *aMediaRecord = [wrappers objectForKey:aKey];
+        if ([[mediaRecord media] fileContentsEqualMedia:[aMediaRecord media]])
+        {
+            result = aMediaRecord;
+            break;
+        }
+    }
+    
+    
+    return result;
 }
 
-#pragma mark -
+- (BOOL)writeMediaRecords:(NSArray *)record
+                    toURL:(NSURL *)docURL
+         forSaveOperation:(NSSaveOperationType)saveOp
+                    error:(NSError **)outError;
+{
+    OBPRECONDITION(record);
+    
+    BOOL result = YES;
+    
+    
+    // Disable undo as this belongs outside the regular stack
+    NSManagedObjectContext *context = [self managedObjectContext];
+    [context disableUndoRegistration];
+    
+    
+    // Process each file
+    for (SVMediaRecord *aMediaRecord in record)
+    {
+        result = [self writeMediaRecord:aMediaRecord
+                          toDocumentURL:docURL
+                       forSaveOperation:saveOp
+                                  error:outError];
+    }
+    
+    
+    [context enableUndoRegistration];
+    
+    
+    return result;
+}
+
+- (BOOL)writeMediaRecord:(SVMediaRecord *)aMediaRecord
+           toDocumentURL:(NSURL *)docURL
+        forSaveOperation:(NSSaveOperationType)saveOp
+                   error:(NSError **)outError;
+{
+    BOOL result = YES;
+    
+    
+    // Reserve filename if needed first.
+    NSString *filename = [aMediaRecord committedValueForKey:@"filename"];
+    if (!filename)
+    {
+        // Is there already a media record with the same data? If so can shortcut usual mechanism
+        SVMediaRecord *dupe = (SVMediaRecord *)[self duplicateOfMediaRecord:aMediaRecord];
+        if (dupe)
+        {
+            if (dupe == aMediaRecord)
+            {
+                NSLog(@"Hmm, record is trying to be copied into document twice. This can't be good!");
+            }
+            else
+            {
+                // Don't try to access -[dupe filename] as it may be a deleted object, and therefore unable to fulfil the fault
+                NSURL *fileURL = [dupe fileURL];
+                [aMediaRecord readFromURL:fileURL options:0 error:NULL];
+                [aMediaRecord setFilename:[fileURL ks_lastPathComponent]];
+                
+                NSString *key = [self keyForDocumentFileWrapper:dupe];
+                OBASSERT(key);
+                [aMediaRecord setNextObject:dupe];
+                [self setDocumentFileWrapper:aMediaRecord forKey:key];
+            }
+            
+            return YES;
+        }
+        else
+        {
+            filename = [self addDocumentFileWrapper:aMediaRecord];
+        }
+    }
+    OBASSERT(filename);
+    
+    
+    // Try write
+    NSURL *mediaURL = [docURL ks_URLByAppendingPathComponent:filename isDirectory:NO];
+    if ([aMediaRecord writeToURL:mediaURL updateFileURL:YES error:outError])
+    {
+        // I was experimenting with not updating the file URL straight away. I'm not sure why, but I think it was to account for the idea that you might be doing a Save-To op. Unfortunately that breaks Quick Look previews if the home page contains a new image. So I've switched to updating the URL straight off, so it's ready to generate correct preview HTML.
+        
+        // Writing does not update filename, so do it here
+        [aMediaRecord setFilename:filename];  // don't need to when updating file URL
+    }
+    else
+    {
+        result = NO;
+        [self unreserveFilename:filename];
+    }
+    
+    
+    return result;
+}
+
 #pragma mark Metadata
 
 /*! setMetadataForStoreAtURL: sets all metadata for the store all at once */
@@ -686,7 +786,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	@try
 	{
 		id theStore = [coordinator persistentStoreForURL:aStoreURL];
-		if ( nil != theStore )
+		if (theStore)
 		{
 			// grab whatever data is already there (at least NSStoreTypeKey and NSStoreUUIDKey)
 			NSMutableDictionary *metadata = [[[coordinator metadataForPersistentStore:theStore] mutableCopy] autorelease];
@@ -701,7 +801,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 			// set ALL of our metadata for this store
 			
 			//  kMDItemAuthors
-			NSString *author = [[[[self site] root] master] valueForKey:@"author"];
+			NSString *author = [[[[self site] rootPage] master] valueForKey:@"author"];
 			if ( (nil == author) || [author isEqualToString:@""] )
 			{
 				[metadata removeObjectForKey:(NSString *)kMDItemAuthors];
@@ -709,6 +809,28 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 			else
 			{
 				[metadata setObject:[NSArray arrayWithObject:author] forKey:(NSString *)kMDItemAuthors];
+			}
+			
+			// kMDItemLanguages
+			NSString *language = [[[[self site] rootPage] master] valueForKey:@"language"];
+			if ( (nil == language) || [language isEqualToString:@""] )
+			{
+				[metadata removeObjectForKey:(NSString *)kMDItemLanguages];
+			}
+			else
+			{
+				[metadata setObject:[NSArray arrayWithObject:language] forKey:(NSString *)kMDItemLanguages];
+			}
+			
+			// kMDItemHeadline  -- tagline/subtitle
+			NSString *subtitle = [[[[[self site] rootPage] master] siteSubtitle] text];
+			if ( (nil == subtitle) || [subtitle isEqualToString:@""] )
+			{
+				[metadata removeObjectForKey:(NSString *)kMDItemHeadline];
+			}
+			else
+			{
+				[metadata setObject:subtitle forKey:(NSString *)kMDItemHeadline];
 			}
 			
 			//  kMDItemCreator (Sandvox is the creator of this site document)
@@ -721,7 +843,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 			NSAutoreleasePool *localPool = [[NSAutoreleasePool alloc] init];
 			
 			//  kMDItemNumberOfPages
-			NSArray *pages = [[self managedObjectContext] allObjectsWithEntityName:@"Page" error:NULL];
+			NSArray *pages = [[self managedObjectContext] fetchAllObjectsForEntityForName:@"Page" error:NULL];
 			unsigned int pageCount = 0;
 			if ( nil != pages )
 			{
@@ -729,47 +851,18 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 			}
 			[metadata setObject:[NSNumber numberWithUnsignedInt:pageCount] forKey:(NSString *)kMDItemNumberOfPages];
 			
-			//  kMDItemTextContent (free-text account of content)
-			//  for now, we'll make this site subtitle, plus all unique page titles, plus spotlightHTML
-			NSString *subtitle = [[[[self site] root] master] valueForKey:@"siteSubtitleHTML"];
-			if ( nil == subtitle )
-			{
-				subtitle = @"";
-			}
-			subtitle = [subtitle stringByConvertingHTMLToPlainText];
-			
-			// add unique page titles
-			NSMutableString *textContent = [NSMutableString stringWithString:subtitle];
-			NSArray *pageTitles = [[self managedObjectContext] objectsForColumnName:@"titleHTML" entityName:@"Page"];
-			unsigned int i;
-			for ( i=0; i<[pageTitles count]; i++ )
-			{
-				NSString *pageTitle = [pageTitles objectAtIndex:i];
-				pageTitle = [pageTitle stringByConvertingHTMLToPlainText];
-				if ( nil != pageTitle )
-				{
-					[textContent appendFormat:@" %@", pageTitle];
-				}
-			}
             
-			// spotlightHTML as part of textContent
-			for ( i=0; i<[pages count]; i++ )
-			{
-				KTPage *page = [pages objectAtIndex:i];
-				NSString *spotlightText = [page spotlightHTML];
-				if ( (nil != spotlightText) && ![spotlightText isEqualToString:@""] )
-				{
-					spotlightText = [spotlightText stringByConvertingHTMLToPlainText];
-					[textContent appendFormat:@" %@", spotlightText];
-				}
-			}
-			[metadata setObject:textContent forKey:(NSString *)kMDItemTextContent];
+            
+			//  kMDItemTextContent (free-text account of content)
+			[metadata setObject:[self documentTextContent]
+                         forKey:(NSString *)kMDItemTextContent];
 			
+            
 			//  kMDItemKeywords (keywords of all pages)
 			NSMutableSet *keySet = [NSMutableSet set];
-			for (i=0; i<[pages count]; i++)
+			for (id loopItem in pages)
 			{
-				[keySet addObjectsFromArray:[[pages objectAtIndex:i] keywords]];
+				[keySet addObjectsFromArray:[loopItem keywords]];
 			}
             
 			if ( (nil == keySet) || ([keySet count] == 0) )
@@ -782,8 +875,9 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 			}
 			[localPool release];
 			
+            
 			//  kMDItemTitle
-			NSString *siteTitle = [[[[self site] root] master] valueForKey:@"siteTitleHTML"];        
+			NSString *siteTitle = [[[[[self site] rootPage] master] siteTitle] textHTMLString];        
 			if ( (nil == siteTitle) || [siteTitle isEqualToString:@""] )
 			{
 				[metadata removeObjectForKey:(NSString *)kMDItemTitle];
@@ -849,20 +943,59 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	return result;
 }
 
+- (NSString *)documentTextContent;
+{
+    //  For now, we'll make this the tagline, plus all unique page titles, plus spotlightHTML
+    
+    // Start with footer
+    NSMutableString *result = [NSMutableString string];
+    
+    
+    NSString *footer = [[[[[[self site] rootPage] master] footer] string] stringByConvertingHTMLToPlainText];
+    if (footer)
+    {
+        [result writeString:footer];
+        [result appendUnichar:'\n'];
+    }
+    
+    
+    // Use an HTML context for reading in content
+    SVTextContentHTMLContext *context = [[SVTextContentHTMLContext alloc] initWithOutputWriter:result];
+    
+    
+    // Sidebar pagelets
+    NSManagedObjectContext *moc = [self managedObjectContext];
+    NSManagedObjectModel *model = [[moc persistentStoreCoordinator] managedObjectModel];
+    NSFetchRequest *request = [model fetchRequestTemplateForName:@"SidebarPagelets"];
+    NSArray *sidebarPagelets = [moc executeFetchRequest:request error:NULL];
+    
+    [context writeGraphics:sidebarPagelets];
+    
+    
+    // Page contents
+    [[[self site] rootPage] writeContent:context recursively:YES];
+    [context release];
+    
+    
+    return result;
+}
+
 #pragma mark -
 #pragma mark Quick Look Thumbnail
 
-- (void)startGeneratingQuickLookThumbnail
+- (void)startGeneratingThumbnail
 {
 	OBASSERT([NSThread currentThread] == [self thread]);
     
     // Put together the HTML for the thumbnail
-	KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[[self site] root]];
-	[parser setHTMLGenerationPurpose:kGeneratingPreview];
-	[parser setLiveDataFeeds:NO];
-	NSString *thumbnailHTML = [parser parseTemplate];
-	[parser release];
+    SVHTMLContext *context = [[SVWebEditorHTMLContext alloc] init];
+    [context setLiveDataFeeds:NO];
+    
+    [context writeDocumentWithPage:[[self site] rootPage]];
 	
+    NSString *thumbnailHTML = [[context outputStringWriter] string];
+    [context release];
+    
 	
     // Load into webview
     [self performSelectorOnMainThread:@selector(_startGeneratingQuickLookThumbnailWithHTML:)
@@ -877,38 +1010,38 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     
     
 	// Create the webview's offscreen window
-	unsigned designViewport = [[[[[self site] root] master] design] viewport];	// Ensures we don't clip anything important
+	unsigned designViewport = [[[[[self site] rootPage] master] design] viewport];	// Ensures we don't clip anything important
 	NSRect frame = NSMakeRect(0.0, 0.0, designViewport+20, designViewport+20);	// The 20 keeps scrollbars out the way
 	
-	NSWindow *window = [[NSWindow alloc]
-                        initWithContentRect:frame styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO];
-	[window setReleasedWhenClosed:NO];	// Otherwise we crash upon quitting - I guess NSApplication closes all windows when terminatating?
+	_quickLookThumbnailWebViewWindow = [[NSWindow alloc]
+                                        initWithContentRect:frame styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO];
+	[_quickLookThumbnailWebViewWindow setReleasedWhenClosed:NO];	// Otherwise we crash upon quitting - I guess NSApplication closes all windows when terminatating?
 	
     
     // Create the webview
-    OBASSERT(!_quickLookThumbnailWebView);
+    OBASSERT(![self thumbnailGeneratorWebView]);
 	_quickLookThumbnailWebView = [[WebView alloc] initWithFrame:frame];
     
     [_quickLookThumbnailWebView setResourceLoadDelegate:self];
-	[window setContentView:_quickLookThumbnailWebView];
+	[_quickLookThumbnailWebViewWindow setContentView:_quickLookThumbnailWebView];
     
     
     // We want to know when it's finished loading.
     _quickLookThumbnailLock = [[NSLock alloc] init];
     [_quickLookThumbnailLock lock];
     
-    OBASSERT(_quickLookThumbnailWebView);
+    OBASSERT([self thumbnailGeneratorWebView]);
 	[[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(webViewDidFinishLoading:)
                                                  name:WebViewProgressFinishedNotification
-                                               object:_quickLookThumbnailWebView];
+                                               object:[self thumbnailGeneratorWebView]];
 	
 	
 	// Go ahead and begin building the thumbnail
-    [[_quickLookThumbnailWebView mainFrame] loadHTMLString:thumbnailHTML baseURL:nil];
+    [[[self thumbnailGeneratorWebView] mainFrame] loadHTMLString:thumbnailHTML baseURL:nil];
 }
 
-- (BOOL)writeQuickLookThumbnailToDocumentURLIfPossible:(NSURL *)docURL error:(NSError **)error
+- (BOOL)tryToWriteThumbnailToDocumentURL:(NSURL *)docURL error:(NSError **)error
 {
     BOOL result = YES;
     
@@ -932,15 +1065,38 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     }
         
     
+    // Copy subresources across for preview
+    WebView *webView = [self thumbnailGeneratorWebView];
+    NSString *designPath = [[[[[[[self site] rootPage] master] design] bundle] bundlePath] stringByResolvingSymlinksInPath];
+    
+    for (WebResource *aResource in [[[webView mainFrame] dataSource] subresources])
+    {
+        NSURL *URL = [aResource URL];
+        if ([URL isFileURL])
+        {
+            if (![URL ks_isSubpathOfURL:docURL])
+            {
+                NSString *path = [[URL path] stringByResolvingSymlinksInPath];
+                NSString *resourcePath = [path lastPathComponent];
+                if ([path ks_isSubpathOfPath:designPath])
+                {
+                    resourcePath = [path ks_pathRelativeToDirectory:designPath];
+                }
+                
+                [self addPreviewResourceWithData:[aResource data] relativePath:resourcePath];
+            }
+        }
+    }
+    
         
     // Save the thumbnail to disk
-    NSImage *thumbnail = [[self proxyForThread:nil] _quickLookThumbnail];
+    NSImage *thumbnail = [[self ks_proxyOnThread:nil] makeThumbnail];
     if (thumbnail)
     {
-        NSURL *thumbnailURL = [[KTDocument quickLookURLForDocumentURL:docURL] URLByAppendingPathComponent:@"thumbnail.png" isDirectory:NO];
+        NSURL *thumbnailURL = [[KTDocument quickLookURLForDocumentURL:docURL] ks_URLByAppendingPathComponent:@"Thumbnail.png" isDirectory:NO];
         OBASSERT(thumbnailURL);	// shouldn't be nil, right?
         
-        result = [[thumbnail PNGRepresentation] writeToURL:thumbnailURL options:NSAtomicWrite error:error];
+        result = [[thumbnail PNGRepresentation] writeToURL:thumbnailURL options:0 error:error];
         OBASSERT(result || !error || *error != nil); // make sure we don't return NO with an empty error
     }        
         
@@ -948,60 +1104,61 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     return result;
 }
 
+- (WebView *)thumbnailGeneratorWebView; { return _quickLookThumbnailWebView; }
+
 /*  Captures the Quick Look thumbnail from the webview if it's finished loading. MUST happen on the main thread.
  *  Has the side effect of disposing of the webview once done.
  */
-- (NSImage *)_quickLookThumbnail
+- (NSImage *)makeThumbnail
 {
     NSImage *result = nil;
     
-    
-    if (_quickLookThumbnailWebView)
+    WebView *webView = [self thumbnailGeneratorWebView];
+    if (webView)
     {
         OBASSERT([NSThread isMainThread]);
         
         
-        if (![_quickLookThumbnailWebView isLoading])
+        if (![webView isLoading])
         {
             // Draw the view
-            [_quickLookThumbnailWebView displayIfNeeded];	// Otherwise we'll be capturing a blank frame!
-            NSImage *snapshot = [[[[_quickLookThumbnailWebView mainFrame] frameView] documentView] snapshot];
+            [webView displayIfNeeded];	// Otherwise we'll be capturing a blank frame!
+            NSImage *snapshot = [[[[webView mainFrame] frameView] documentView] snapshot];
             
             result = [snapshot imageWithMaxWidth:512 height:512 
                                                       behavior:([snapshot width] > [snapshot height]) ? kFitWithinRect : kCropToRect
                                                      alignment:NSImageAlignTop];
             // Now composite "SANDVOX" at the bottom
-            NSFont* font = [NSFont boldSystemFontOfSize:95];				// Emperically determine font size
-            NSShadow *aShadow = [[[NSShadow alloc] init] autorelease];
-            [aShadow setShadowOffset:NSMakeSize(0,0)];
-            [aShadow setShadowBlurRadius:32.0];
-            [aShadow setShadowColor:[NSColor colorWithCalibratedWhite:1.0 alpha:1.0]];	// white glow
-            
-            NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                               font, NSFontAttributeName, 
-                                               aShadow, NSShadowAttributeName, 
-                                               [NSColor colorWithCalibratedWhite:0.25 alpha:1.0], NSForegroundColorAttributeName,
-                                               nil];
-            NSString *s = @"SANDVOX";	// No need to localize of course
-            
-            NSSize textSize = [s sizeWithAttributes:attributes];
-            float left = ([result size].width - textSize.width) / 2.0;
-            float bottom = 7;		// empirically - seems to be a good offset for when shrunk to 32x32
-            
-            [result lockFocus];
-            [s drawAtPoint:NSMakePoint(left, bottom) withAttributes:attributes];
-            [result unlockFocus];
+//            NSFont* font = [NSFont boldSystemFontOfSize:95];				// Emperically determine font size
+//            NSShadow *aShadow = [[[NSShadow alloc] init] autorelease];
+//            [aShadow setShadowOffset:NSMakeSize(0,0)];
+//            [aShadow setShadowBlurRadius:32.0];
+//            [aShadow setShadowColor:[NSColor colorWithCalibratedWhite:1.0 alpha:1.0]];	// white glow
+//            
+//            NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+//                                               font, NSFontAttributeName, 
+//                                               aShadow, NSShadowAttributeName, 
+//                                               [NSColor colorWithCalibratedWhite:0.25 alpha:1.0], NSForegroundColorAttributeName,
+//                                               nil];
+//            NSString *s = @"SANDVOX";	// No need to localize of course
+//            
+//            NSSize textSize = [s sizeWithAttributes:attributes];
+//            float left = ([result size].width - textSize.width) / 2.0;
+//            float bottom = 7;		// empirically - seems to be a good offset for when shrunk to 32x32
+//            
+//            [result lockFocus];
+//            [s drawAtPoint:NSMakePoint(left, bottom) withAttributes:attributes];
+//            [result unlockFocus];
         }
         
         
         
         // Dump the webview and window
-        [_quickLookThumbnailWebView setResourceLoadDelegate:nil];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:WebViewProgressFinishedNotification object:_quickLookThumbnailWebView];
+        [webView setResourceLoadDelegate:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:WebViewProgressFinishedNotification object:webView];
         
-        NSWindow *webViewWindow = [_quickLookThumbnailWebView window];
         [_quickLookThumbnailWebView release];   _quickLookThumbnailWebView = nil;
-        [webViewWindow release];    // we allocate the window object when creating it but never autorelease. It stays attached to the webview until we release it here
+        [_quickLookThumbnailWebViewWindow release]; _quickLookThumbnailWebViewWindow = nil;
         
         
         // Remove the lock. In the event that loading the webview timed out, it will still be locked.
@@ -1027,9 +1184,8 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	NSURLRequest *result = request;
     
     NSURL *requestURL = [request URL];
-	if ([requestURL hasNetworkLocation] && ![[requestURL scheme] isEqualToString:@"svxmedia"])
+	if ([requestURL ks_hasNetworkLocation] && ![[requestURL scheme] isEqualToString:@"svxmedia"])
 	{
-		result = nil;
 		NSMutableURLRequest *mutableRequest = [[request mutableCopy] autorelease];
 		[mutableRequest setCachePolicy:NSURLRequestReturnCacheDataDontLoad];	// don't load, but return cached value
 		result = mutableRequest;
@@ -1046,57 +1202,61 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     [_quickLookThumbnailLock unlock];
 }
 
-#pragma mark -
 #pragma mark Quick Look preview
 
 /*  Parses the home page to generate a Quick Look preview
  */
-- (NSString *)quickLookPreviewHTML
+- (void)writePreviewHTML:(SVHTMLContext *)context;
 {
     OBASSERT([NSThread currentThread] == [self thread]);
-    
-    KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[[self site] root]];
-    [parser setHTMLGenerationPurpose:kGeneratingQuickLookPreview];
-    NSString *result = [parser parseTemplate];
-    [parser release];
-    
-    return result;
+    [context writeDocumentWithPage:[[self site] rootPage]];
 }
+
+- (void)writePreviewHTMLString:(NSString *)htmlString toURL:(NSURL *)previewURL;
+{
+    OBPRECONDITION(htmlString);
+    
+    // We don't actually care if the preview gets written out successfully or not, since it's not critical to the consistency of the document.
+    // It might be nice to warn the user one day though.
+    NSError *qlPreviewError;
+    if ([htmlString writeToURL:previewURL
+                    atomically:NO
+                      encoding:NSUTF8StringEncoding
+                         error:&qlPreviewError])
+    {
+        // Write resources too
+        NSURL *resourcesDirectory = [NSURL URLWithString:@"Resources/" relativeToURL:previewURL];
+        
+        [_previewResourcesFileWrapper writeToFile:[resourcesDirectory path]
+                                       atomically:NO
+                                  updateFilenames:YES];
+    }
+    else
+    {
+        NSLog(@"Error saving Quick Look preview: %@",
+              [[qlPreviewError debugDescription] condenseWhiteSpace]);
+    }
+}
+
+- (void)addPreviewResourceWithData:(NSData *)data relativePath:(NSString *)path;
+{
+    // Create a wrapper for the file itself
+    NSFileWrapper *wrapper = [[NSFileWrapper alloc] initRegularFileWithContents:data];
+    [wrapper setPreferredFilename:[path lastPathComponent]];
+    
+    [_previewResourcesFileWrapper addFileWrapper:wrapper
+                                    subdirectory:[path stringByDeletingLastPathComponent]];
+    
+    [wrapper release];
+}
+
+@end
+
+
 
 #pragma mark -
-#pragma mark Backup
 
-- (NSURL *)backupURL
-{
-	NSURL *result = nil;
-	
-    NSURL *originalURLWithoutFileName = [[self fileURL] URLByDeletingLastPathComponent];
-    
-    NSString *fileName = [[[self fileURL] lastPathComponent] stringByDeletingPathExtension];
-    NSString *fileExtension = [[self fileURL] pathExtension];
-    
-    NSString *backupFileName = NSLocalizedString(@"Backup of ", "Prefix for backup copy of document");
-    OBASSERT(fileName);
-    backupFileName = [backupFileName stringByAppendingString:fileName];
-    OBASSERT(fileExtension);
-    backupFileName = [backupFileName stringByAppendingPathExtension:fileExtension];
-    result = [originalURLWithoutFileName URLByAppendingPathComponent:backupFileName isDirectory:NO];
-	
-	return result;
-}
 
-/*  A) Recursively creates required directories
- *  B) Copies the doc to the location
- */
-- (BOOL)backupToURL:(NSURL *)URL error:(NSError **)error
-{
-    BOOL result = [KTUtilities createPathIfNecessary:[[URL path] stringByDeletingLastPathComponent] error:error];
-    if (result)
-    {
-        result = [self copyDocumentToURL:URL recycleExistingFiles:YES error:error];
-    }
-    
-    return result;
-}
-
+@implementation NSWindowController (KTDocumentAdditions)
+- (void)persistUIProperties { }
 @end

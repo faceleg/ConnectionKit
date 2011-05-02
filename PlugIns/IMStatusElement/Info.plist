@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleExecutable</key>
+	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleGetInfoString</key>
+	<string>${SANDVOX_VERSION} (${SVN_VERSION}), © 2004-2011 Karelia Software</string>
+	<key>CFBundleIdentifier</key>
+	<string>sandvox.${PROJECT_NAME}</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>${PRODUCT_NAME}</string>
+	<key>CFBundleDisplayName</key>
+	<string>IM Status</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>${SANDVOX_VERSION}</string>
+	<key>CFBundleSignature</key>
+	<string>Svox</string>
+	<key>CFBundleVersion</key>
+	<string>${SVN_VERSION}</string>
+	<key>IMServices</key>
+	<array>
+		<dict>
+			<key>livePreviewHTML</key>
+			<string>&lt;img src=&quot;#ONLINE#&quot; width=&quot;175&quot; height=&quot;75&quot; border=&quot;0&quot; /&gt;</string>
+			<key>nonLivePreviewHTML</key>
+			<string>&lt;img src=&quot;#ONLINE#&quot; width=&quot;175&quot; height=&quot;75&quot; border=&quot;0&quot; /&gt;</string>
+			<key>publishingHTML</key>
+			<string>&lt;a class=&quot;imageLink&quot; href=&quot;aim:goim?screenname=#USER#&quot;&gt;&lt;img src=&quot;http://big.oscar.aol.com/#USER#?on_url=#ONLINE#&amp;amp;off_url=#OFFLINE#&quot; alt=&quot;#HEADLINE#&quot; width=&quot;175&quot; height=&quot;75&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;</string>
+			<key>serviceIdentifier</key>
+			<string>aim</string>
+			<key>serviceName</key>
+			<string>iChat (AIM)</string>
+		</dict>
+		<dict>
+			<key>livePreviewHTML</key>
+			<string>&lt;div style=&quot;padding:2px 0; border:1px solid #CCC; background:white;&quot;&gt;&lt;img src=&quot;http://mystatus.skype.com/bigclassic/#USER#&quot; style=&quot;border:none;&quot; width=&quot;182&quot; height=&quot;44&quot; alt=&quot;#HEADLINE#&quot; /&gt;&lt;/div&gt;</string>
+			<key>nonLivePreviewHTML</key>
+			<string>&lt;div style=&quot;padding:2px 0; border:1px solid #CCC; background:white;&quot;&gt;&lt;img src=&quot;#ONLINE#&quot; style=&quot;border:none;&quot; width=&quot;182&quot; height=&quot;44&quot; alt=&quot;#HEADLINE#&quot; /&gt;&lt;/div&gt;</string>
+			<key>onlineImage</key>
+			<string>online_skype.png</string>
+			<key>publishingHTML</key>
+			<string>&lt;div style=&quot;padding:2px 0; border:1px solid #CCC; background:white;&quot;&gt;&lt;script type=&quot;text/javascript&quot; src=&quot;http://download.skype.com/share/skypebuttons/js/skypeCheck.js&quot;&gt;&lt;/script&gt;&lt;a class=&quot;imageLink&quot; href=&quot;skype:#USER#?call&quot;&gt;&lt;img src=&quot;http://mystatus.skype.com/bigclassic/#USER#&quot; style=&quot;border:none;&quot; width=&quot;182&quot; height=&quot;44&quot; alt=&quot;#HEADLINE#&quot; /&gt;&lt;/a&gt;&lt;/div&gt;</string>
+			<key>serviceIdentifier</key>
+			<string>skype</string>
+			<key>serviceName</key>
+			<string>Skype</string>
+		</dict>
+		<dict>
+			<key>livePreviewHTML</key>
+			<string>&lt;img border=0 src=&quot;http://opi.yahoo.com/online?u=#USER#&amp;m=g&amp;t=1&amp;l=us&quot;&gt;</string>
+			<key>nonLivePreviewHTML</key>
+			<string>&lt;img border=0 src=&quot;#ONLINE#&quot;&gt;</string>
+			<key>onlineImage</key>
+			<string>online_yahoo.gif</string>
+			<key>publishingHTML</key>
+			<string>&lt;a href=&quot;http://edit.yahoo.com/config/send_webmesg?.target=#USER#&amp;.src=pg&quot;&gt;&lt;img border=0 src=&quot;http://opi.yahoo.com/online?u=#USER#&amp;m=g&amp;t=1&amp;l=us&quot;&gt;&lt;/a&gt;</string>
+			<key>serviceIdentifier</key>
+			<string>yahoo</string>
+			<key>serviceName</key>
+			<string>Yahoo! Messenger</string>
+		</dict>
+	</array>
+	<key>SVMinimumAppVersion</key>
+	<string>2.0</string>
+	<key>SVPlugInIconPath</key>
+	<string>toolbar_imstatus.tiff</string>
+	<key>NSPrincipalClass</key>
+	<string>IMStatusPlugIn</string>
+</dict>
+</plist>

@@ -1,0 +1,8 @@
+/* Class = "NSTextFieldCell"; title = "Full URL of external page"; ObjectID = "111"; */
+"Full URL of external page" = "URL complète de la page externe";
+
+/* Class = "NSButtonCell"; title = "Show border"; ObjectID = "119"; */
+"Show border" = "Afficher une bordure";
+
+/* Class = "IBBindingConnection"; designableIsNilPlaceholder = "http://"; ObjectID = "123"; */
+"http://" = "http://";

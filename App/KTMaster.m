@@ -3,24 +3,23 @@
 //  Marvel
 //
 //  Created by Mike on 23/10/2007.
-//  Copyright 2007-2009 Karelia Software. All rights reserved.
+//  Copyright 2007-2011 Karelia Software. All rights reserved.
 //
 
-#import "KTMaster+Internal.h"
+#import "KTMaster.h"
 
 #import "KT.h"
-#import "KTAppDelegate.h"
-#import "KTArchivePage.h"
 #import "KTDesignPlaceholder.h"
 #import "KTDocument.h"
 #import "KTSite.h"
 #import "KTHostProperties.h"
+#import "SVHTMLContext.h"
+#import "SVHTMLTemplateParser.h"
 #import "KTImageScalingSettings.h"
-#import "KTPersistentStoreCoordinator.h"
-
-#import "KTMediaManager.h"
-#import "KTMediaContainer.h"
-#import "KTMediaFile+Internal.h"
+#import "KTImageScalingURLProtocol.h"
+#import "SVLogoImage.h"
+#import "SVMediaRecord.h"
+#import "SVTitleBox.h"
 
 #import "NSArray+Karelia.h"
 #import "NSAttributedString+Karelia.h"
@@ -32,19 +31,23 @@
 #import "NSSet+Karelia.h"
 #import "NSString+KTExtensions.h"
 #import "NSString+Karelia.h"
-#import "NSURL+Karelia.h"
+#import "KSURLUtilities.h"
+
+#import <AddressBook/AddressBook.h>
 
 
-@interface KTMaster (Private)
-- (KTMediaManager *)mediaManager;
-
-- (void)generatePlaceholderImage;
+@interface KTMaster ()
+@property(nonatomic, copy) NSString *designIdentifier;
+@property(nonatomic, retain, readwrite) SVLogoImage *logo;
+- (NSString *)copyrightStatementWithAuthor:(NSString *)author;
 @end
+
+
+#pragma mark -
 
 
 @implementation KTMaster
 
-#pragma mark -
 #pragma mark Initialization
 
 - (void)awakeFromInsert
@@ -53,13 +56,15 @@
 	
 	
 	// Prepare our continue reading link
+	// This should probably use LocalizedStringForString, though, since it's in the target language
 	NSString *continueReadingLink =
 		NSLocalizedString(@"Continue reading @@", "Link to read a full article. @@ is replaced with the page title");
-	[self setValue:continueReadingLink forKey:@"continueReadingLinkFormat"];
+	[self setPrimitiveValue:continueReadingLink forKey:@"continueReadingLinkFormat"];
 	
 	
 	// Enable/disable graphical text
-	[self setBool:[[NSUserDefaults standardUserDefaults] boolForKey:@"enableImageReplacement"] forKey:@"enableImageReplacement"];
+    BOOL imageReplacement = [[NSUserDefaults standardUserDefaults] boolForKey:@"enableImageReplacement"];
+	[self setEnableImageReplacement:[NSNumber numberWithBool:imageReplacement]];
 	
 	
 	// Timestamp
@@ -70,123 +75,100 @@
     KTCodeInjection *codeInjection = [NSEntityDescription insertNewObjectForEntityForName:@"MasterCodeInjection"
                                                                    inManagedObjectContext:[self managedObjectContext]];
     [self setValue:codeInjection forKey:@"codeInjection"];
+    
+    
+    
+    // Site Title. Guess from a variery of sources
+    SVTitleBox *box = [NSEntityDescription insertNewObjectForEntityForName:@"SiteTitle" inManagedObjectContext:[self managedObjectContext]];
+    
+    ABPerson *person = [[ABAddressBook sharedAddressBook] me];
+    NSString *title = [person valueForProperty:kABOrganizationProperty];
+    if ([title length] <= 0)
+    {
+        NSMutableArray *names = [[NSMutableArray alloc] initWithCapacity:2];
+        NSString *aName = [person valueForProperty:kABFirstNameProperty];
+        if (aName) [names addObject:aName];
+        aName = [person valueForProperty:kABLastNameProperty];
+        if (aName) [names addObject:aName];
+        
+        title = [names componentsJoinedByString:@" "];
+        [names release];
+    }
+    
+    if ([title length] <= 0)
+    {
+        title = NSFullUserName();
+    }
+    
+    if ([title length] <= 0)
+    {
+        title = NSLocalizedString(@"My Website", "site title");
+    }
+    
+    [box setText:title];
+    [self setSiteTitle:box];
+    
+    
+    
+    // Tagline
+    box = [NSEntityDescription insertNewObjectForEntityForName:@"SiteSubtitle" inManagedObjectContext:[self managedObjectContext]];
+    [box setText:NSLocalizedString(@"A website thoughtfully crafted with Sandvox", "placeholder")];
+    [self setSiteSubtitle:box];
+
+    
+    // Footer
+    SVRichText *richText = [NSEntityDescription insertNewObjectForEntityForName:@"Footer" inManagedObjectContext:[self managedObjectContext]];
+    [richText setString:[self copyrightStatementWithAuthor:title]];
+    [self setFooter:richText];
+    
+    
+    // Logo
+    SVLogoImage *logo = [NSEntityDescription insertNewObjectForEntityForName:@"Logo"
+                                                      inManagedObjectContext:[self managedObjectContext]];
+    [logo loadPlugInAsNew:YES];
+    [logo makeOriginalSize];
+    [logo setConstrainsProportions:YES];
+    [self setLogo:logo];
+    
+    // Facebook
+    [self setFbNumberOfPosts:[NSNumber numberWithUnsignedInt:5]];
 }
 
 - (void)awakeFromFetch
 {
 	[super awakeFromFetch];
 	
-	// Sort site title
-	NSString *html = [self valueForKey:@"siteTitleHTML"];	// just in case there is a site title set here
-	if (nil != html)
-	{
-		NSString *flattenedTitle = [html stringByConvertingHTMLToPlainText];
-		NSAttributedString *attrString = [NSAttributedString systemFontStringWithString:flattenedTitle];
-		[self setPrimitiveValue:[attrString archivableData] forKey:@"siteTitleAttributed"];
-	}
 	
-	// Existing sites may not have their timestamp format set properly
+    // Existing sites may not have their timestamp format set properly
 	if (![self timestampFormat])
 	{
 		[self setTimestampFormat:[[NSUserDefaults standardUserDefaults] integerForKey:@"timestampFormat"]];
 	}
-	
-	
-	// Placeholder
-	if (![self placeholderImage])
-	{
-		[self generatePlaceholderImage];
-	}
 }
 
-#pragma mark -
-#pragma mark Site Title & Subtitle
+#pragma mark Site Title
 
-- (NSString *)siteTitleText	// get title, but without attributes
+@dynamic siteTitle;
+@dynamic siteSubtitle;
+
+#pragma mark Footer
+
+@dynamic footer;
+
+- (NSString *)copyrightStatementWithAuthor:(NSString *)author;
 {
-	NSAttributedString *attrString = nil;
-	
-	id value = [self wrappedValueForKey:@"siteTitleAttributed"];
-	if ( nil != value )
-	{
-		if ( [value isKindOfClass:[NSData class]] )
-		{
-			attrString = [NSAttributedString attributedStringWithArchivedData:value];
-		}
-		else if ( [value isKindOfClass:[NSAttributedString class]] )
-		{
-			attrString = value;
-		}
-	}
-	
-    return [attrString string];
-}
-
-// Equivalent to above, but where we know it's text that we're getting
-
-// We set attributed title, but since we're giving it plain text, it's just an attributed version of that.
-
-- (void)setSiteTitleText:(NSString *)value
-{
-	NSString *escaped = [value stringByEscapingHTMLEntities];
-	[self setWrappedValue:escaped forKey:@"siteTitleHTML"];
-	
-	NSAttributedString *attrString = [NSAttributedString systemFontStringWithString:value];
-	
-	[self setWrappedValue:[attrString archivableData] forKey:@"siteTitleAttributed"];
-}
-
-- (NSString *)siteSubtitleText	// get subtitle, but without attributes ... by flattening the HTML
-{
-	NSString *result = [[self valueForKey:@"siteSubtitleHTML"] stringByConvertingHTMLToPlainText];
-	if (!result)
-	{
-		result = @"";
-	}
-	
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"y"];
+    
+    NSString *result = [NSString stringWithFormat:
+                            @"© %@ %@",
+                            author,
+                            [formatter stringFromDate:[NSDate date]]];
+    [formatter release];
+    
     return result;
 }
 
-// Flatten the string and just store a fake attributed string.
-
-- (void)setSiteTitleHTML:(NSString *)value
-{
-	[self setWrappedValue:value forKey:@"siteTitleHTML"];
-	// set siteTitleAttributed LAST
-	NSString *siteTitleText = [value stringByConvertingHTMLToPlainText];
-	NSAttributedString *attrString = [NSAttributedString systemFontStringWithString:siteTitleText];
-	
-	[self setPrimitiveValue:[attrString archivableData] forKey:@"siteTitleAttributed"];
-}
-
-#pragma mark -
-#pragma mark Footer
-
-- (NSString *)copyrightHTML
-{
-	NSString *result = [self wrappedValueForKey:@"copyrightHTML"];
-	if (!result)
-	{
-		result = [self defaultCopyrightHTML];
-	}
-	
-	return result;
-}
-
-- (void)setCopyrightHTML:(NSString *)copyrightHTML
-{
-	if (!copyrightHTML) copyrightHTML = @"";
-	[self setWrappedValue:copyrightHTML forKey:@"copyrightHTML"];
-}
-
-- (NSString *)defaultCopyrightHTML
-{
-	NSString *result = [[NSBundle mainBundle] localizedStringForString:@"copyrightHTML" language:[self valueForKey:@"language"]
-		fallback:NSLocalizedStringWithDefaultValue(@"copyrightHTML", nil, [NSBundle mainBundle], @"Parting Words (copyright, contact information, etc.)", @"Default text for page bottom")];
-	return result;
-}
-
-#pragma mark -
 #pragma mark Design
 
 - (KTDesign *)design
@@ -197,7 +179,7 @@
 	
 	if (!result)
 	{
-		NSString *identifier = [self valueForKeyPath:@"designPublishingInfo.identifier"];
+		NSString *identifier = [self designIdentifier];
         if (identifier)
         {
             result = [KTDesign pluginWithIdentifier:identifier];
@@ -215,34 +197,11 @@
 	return result;
 }
 
-- (NSManagedObject *)_designPublishInfoWithIdentifier:(NSString *)identifier
-{
-	NSManagedObjectContext *moc = [self managedObjectContext];
-	
-	// Look to see if there is an existing DesignPublishingInfo object
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"identifier == %@", identifier];
-	NSError *error = nil;
-	NSArray *existingDesigns = [moc objectsWithEntityName:@"DesignPublishingInfo" predicate:predicate error:&error];
-	if (error) {
-		[[NSAlert alertWithError:error] runModal];
-	}
-	NSManagedObject *result = [existingDesigns lastObject];
-	
-	
-	// If no existing design was found, create a new object
-	if (!result)
-	{
-		result = [NSEntityDescription insertNewObjectForEntityForName:@"DesignPublishingInfo" inManagedObjectContext:moc];
-		[result setValue:identifier forKey:@"identifier"];
-	}
-	
-	
-	return result;
-}
+@dynamic designIdentifier;
 
 /*  Special private method where you supply ONE of the parameters
  */
-- (void)_setDesignBundleIdentifier:(NSString *)identifier xorDesign:(KTDesign *)design
+- (void)_setDesignIdentifier:(NSString *)identifier xorDesign:(KTDesign *)design
 {
     if (!identifier)
     {
@@ -264,11 +223,7 @@
 	[self setPrimitiveValue:design forKey:@"design"];
 	[self didChangeValueForKey:@"design"];
 	
-	[self setValue:[self _designPublishInfoWithIdentifier:identifier] forKey:@"designPublishingInfo"];
-	
-	
-	// Changing design affects placeholder image
-	[self generatePlaceholderImage];
+	[self setDesignIdentifier:identifier];
 }
 
 - (void)setDesign:(KTDesign *)design
@@ -276,7 +231,7 @@
 	OBASSERT(design);
     
     // Currently, we operate this as a neat cover 
-	[self _setDesignBundleIdentifier:nil xorDesign:design];
+	[self _setDesignIdentifier:nil xorDesign:design];
 }
 
 /*  This method is used when a design's identifier is known, but the design itself is unavailable. (e.g. importing old docs)
@@ -285,7 +240,7 @@
 {
     OBPRECONDITION(identifier); 
     
-    [self _setDesignBundleIdentifier:identifier xorDesign:nil];
+    [self _setDesignIdentifier:identifier xorDesign:nil];
 }
 
 - (NSURL *)designDirectoryURL
@@ -295,7 +250,7 @@
     OBASSERT(designDirectoryName);
     
     NSURL *siteURL = [[[[(NSSet *)[self valueForKey:@"pages"] anyObject] site] hostProperties] siteURL];	// May be nil
-    NSURL *result = [NSURL URLWithPath:designDirectoryName relativeToURL:siteURL isDirectory:YES];
+    NSURL *result = [NSURL ks_URLWithPath:designDirectoryName relativeToURL:siteURL isDirectory:YES];
 	
     OBPOSTCONDITION(result);
 	return result;
@@ -308,188 +263,148 @@
 	return result;
 }
 
-#pragma mark -
+- (void)writeCSS:(SVHTMLContext *)context;
+{
+    [[self design] writeCSS:context];
+    
+    
+    [self writeBannerCSS:context];
+	[self writeCodeInjectionCSS:context];
+}
+
 #pragma mark Banner
 
-- (KTMediaContainer *)bannerImage
+@dynamic banner;
+
+- (void)setBannerWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
 {
-	[self willAccessValueForKey:@"bannerImage"];
-	KTMediaContainer *result = [self primitiveValueForKey:@"bannerImage"];
-	[self didAccessValueForKey:@"bannerImage"];
-	
-	if (!result)
-	{
-		NSString *mediaID = [self valueForKey:@"bannerImageMediaIdentifier"];
-		if (mediaID)
-		{
-			result = [[self mediaManager] mediaContainerWithIdentifier:mediaID];
-			[self setPrimitiveValue:result forKey:@"bannerImage"];
-		}
-		else
-		{
-			[self setPrimitiveValue:[NSNull null] forKey:@"bannerImage"];
-		}
-	}
-	else if ((id)result == [NSNull null])
-	{
-		result = nil;
-	}
-	
-	return result;
+    SVMediaRecord *media = [SVMediaRecord mediaByReferencingURL:URL entityName:@"Banner" insertIntoManagedObjectContext:[self managedObjectContext] error:NULL];
+    
+    [self replaceMedia:media forKeyPath:@"banner"];
 }
 
-- (void)setBannerImage:(KTMediaContainer *)banner
-{
-	[self willChangeValueForKey:@"bannerImage"];
-	[self setPrimitiveValue:banner forKey:@"bannerImage"];
-	[self setValue:[banner identifier] forKey:@"bannerImageMediaIdentifier"];
-	[self didChangeValueForKey:@"bannerImage"];
-}
+@dynamic bannerType;
 
-- (NSString *)bannerCSSForPurpose:(KTHTMLGenerationPurpose)generationPurpose
-{
-	NSString *result = nil;
-	
+- (void)writeBannerCSS:(SVHTMLContext *)context;
+{	
 	// If the user has specified a custom banner and the design supports it, load it in
-	KTMediaContainer *banner = [self bannerImage];
-	if (banner)
-	{
-		NSDictionary *scalingProperties = [[self design] imageScalingPropertiesForUse:@"bannerImage"];
-		OBASSERT(scalingProperties);
-		
-		// Find the right path
-        NSString *bannerURLString = nil;
-        if (generationPurpose == kGeneratingPreview)
-        {
-            bannerURLString = [[[banner file] URLForImageScalingProperties:scalingProperties] absoluteString];
-        }
-        else
-        {
-            // FIXME: Update this to new image scaling system
-			NSURL *masterCSSURL = [NSURL URLWithString:@"main.css" relativeToURL:[self designDirectoryURL]];
-            NSURL *mediaURL = [[[banner file] uploadForScalingProperties:scalingProperties] URL];
-            bannerURLString = [mediaURL stringRelativeToURL:masterCSSURL];
-        }
+	if ([[self bannerType] boolValue])
+    {
+        SVMediaRecord *banner = [self banner];
+        NSURL *bannerURL = [banner fileURL];
         
-        NSString *bannerCSSSelector = [[self design] bannerCSSSelector];
-        result = [bannerCSSSelector stringByAppendingFormat:@" { background-image: url(%@); }\n", bannerURLString];
+        if (bannerURL)
+        {
+            NSString *bannerCSSSelector = [[self design] bannerCSSSelector];
+            if (bannerCSSSelector)
+            {
+                NSMutableDictionary *scalingProperties = [[[self design] imageScalingPropertiesForUse:@"bannerImage"] mutableCopy];
+                OBASSERT(scalingProperties);
+                
+                NSString *type = [KSWORKSPACE typeOfFile:[bannerURL path] error:NULL];
+                if (![type isEqualToString:(NSString *)kUTTypePNG]) type = (NSString *)kUTTypeJPEG;
+                [scalingProperties setObject:type forKey:@"fileType"];
+                
+                
+                NSURL *URL = [NSURL sandvoxImageURLWithFileURL:bannerURL scalingProperties:scalingProperties];
+                [scalingProperties release];
+                
+                NSString *destination = [[SVDestinationDesignDirectory stringByAppendingPathComponent:@"banner"] stringByAppendingPathExtension:[KSWORKSPACE preferredFilenameExtensionForType:type]];
+                
+                URL = [context addResourceAtURL:URL destination:destination options:0];
+                NSString *relativeString = [URL ks_stringRelativeToURL:[context mainCSSURL]];
+                
+                NSString *css = [bannerCSSSelector stringByAppendingFormat:@" { background-image: url(\"%@\"); }\n", relativeString];
+                
+                
+                [context addCSSString:css];
+            }
+        }
+        [context addDependencyOnObject:self keyPath:@"banner"];
 	}
-	
-	
-	return result;
+    [context addDependencyOnObject:self keyPath:@"bannerType"];
 }
 
-#pragma mark -
+- (void)writeCodeInjectionCSS:(SVHTMLContext *)context;
+{
+	NSString *codeInjection = [self.codeInjection valueForKey:@"additionalCSS"];
+    
+    // If the user has specified a custom banner and the design supports it, load it in
+    if ([codeInjection length] && [context canWriteCodeInjection])
+    {
+        [context addCSSString:codeInjection];
+    }
+}
+
+
 #pragma mark Logo
 
-- (KTMediaContainer *)logoImage
-{
-	[self willAccessValueForKey:@"logoImage"];
-	KTMediaContainer *result = [self primitiveValueForKey:@"logoImage"];
-	[self didAccessValueForKey:@"logoImage"];
-	
-	// The media may not have been fetched from the store yet. If so, do it!
-	if (!result)
-	{
-		NSString *mediaID = [self valueForKey:@"logoImageMediaIdentifier"];
-		if (mediaID)
-		{
-			result = [[self mediaManager] mediaContainerWithIdentifier:mediaID];
-			[self setPrimitiveValue:result forKey:@"logoImage"];
-		}
-		else
-		{
-			[self setPrimitiveValue:[NSNull null] forKey:@"logoImage"];
-		}
-	}
-	else if ((id)result == [NSNull null])
-	{
-		result = nil;
-	}
-	
-	return result;
-}
+@dynamic logo;
 
-- (void)setLogoImage:(KTMediaContainer *)logo
-{
-	[self willChangeValueForKey:@"logoImage"];
-	[self setPrimitiveValue:logo forKey:@"logoImage"];
-	[self setValue:[logo identifier] forKey:@"logoImageMediaIdentifier"];
-	[self didChangeValueForKey:@"logoImage"];
-}
-
-#pragma mark -
 #pragma mark Favicon
 
-- (KTMediaContainer *)favicon
+- (SVMedia *)favicon
 {
-	[self willAccessValueForKey:@"favicon"];
-	KTMediaContainer *result = [self primitiveValueForKey:@"favicon"];
-	[self didAccessValueForKey:@"favicon"];
-	
-	// The media may not have been fetched from the store yet. If so, do it!
-	if (!result)
-	{
-		NSString *mediaID = [self valueForKey:@"faviconMediaIdentifier"];
-		if (mediaID)
-		{
-			result = [[self mediaManager] mediaContainerWithIdentifier:mediaID];
-			[self setPrimitiveValue:result forKey:@"favicon"];
-		}
-		else
-		{
-			[self setPrimitiveValue:[NSNull null] forKey:@"favicon"];
-		}
-	}
-	else if ((id)result == [NSNull null])
-	{
-		result = nil;
-	}
-	
-	return result;
+    SVMedia *result = nil;
+    
+    if ([[self faviconType] integerValue] > 0)
+    {
+        result = [[self faviconMedia] media];
+    }
+    else if ([[self faviconType] integerValue] == -1)
+    {
+        NSString *faviconPath = [[NSBundle mainBundle] pathForResource:@"favicon" ofType:@"icns"];
+        if (faviconPath)
+        {
+            result = [[SVMedia alloc] initByReferencingURL:[NSURL fileURLWithPath:faviconPath]];
+            [result autorelease];
+        }
+    }
+    
+    return result;
 }
 
-- (void)setFavicon:(KTMediaContainer *)favicon;
++ (NSSet *)keyPathsForValuesAffectingFavicon;
 {
-	[self willChangeValueForKey:@"favicon"];
-	[self setPrimitiveValue:favicon forKey:@"favicon"];
-	[self setValue:[favicon identifier] forKey:@"faviconMediaIdentifier"];
-	[self didChangeValueForKey:@"favicon"];
+    return [NSSet setWithObjects:@"faviconType", @"faviconMedia", nil];
 }
 
-/*	If anyone tries to clear the favicon, actually reset it to the default instead
- */
-- (BOOL)mediaContainerShouldRemoveFile:(KTMediaContainer *)mediaContainer
-{
-	BOOL result = YES;
-	
-	if ([mediaContainer isEqual:[self favicon]])
-	{
-		NSString *faviconPath = [[NSBundle mainBundle] pathForImageResource:@"32favicon"];
-		KTMediaContainer *defaultFavicon = [[self mediaManager] mediaContainerWithPath:faviconPath];
-		[self setFavicon:defaultFavicon];
-		
-		result = NO;
-	}
-	
-	return result;
+@dynamic faviconType;
+@dynamic faviconMedia;
+
+- (void)setFaviconWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
+{    
+    SVMediaRecord *media = [SVMediaRecord mediaByReferencingURL:URL entityName:@"Favicon" insertIntoManagedObjectContext:[self managedObjectContext] error:NULL];
+    
+    [self replaceMedia:media forKeyPath:@"faviconMedia"];
 }
 
-#pragma mark -
+- (NSString *)writeFavicon;
+{
+    SVMedia *favicon = [self favicon];
+    if (favicon)
+    {
+        SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
+        
+        NSURL *url = [context addImageMedia:favicon
+                                      width:nil
+                                     height:nil
+                                       type:(NSString *)kUTTypeICO
+                          preferredFilename:@"../favicon.ico"   // dirty HACK to get it at top-level
+                              scalingSuffix:nil];
+        
+        if (url) return [context relativeStringFromURL:url];
+    }
+    
+    return nil;
+}
+
+#pragma mark Graphical Text
+
+@dynamic enableImageReplacement;
+@dynamic graphicalTitleSize;
+
 #pragma mark Timestamp
-
-- (KTTimestampType)timestampType { return [self wrappedIntegerForKey:@"timestampType"]; }
-
-- (void)setTimestampType:(KTTimestampType)timestampType
-{
-	OBPRECONDITION(timestampType == KTTimestampCreationDate || timestampType == KTTimestampModificationDate);
-	
-	[self setWrappedInteger:timestampType forKey:@"timestampType"];
-	
-	// Update pages to the new style
-	NSSet *pages = [self valueForKey:@"pages"];
-	[pages makeObjectsPerformSelector:@selector(reloadEditableTimestamp)];
-}
 
 - (NSDateFormatterStyle)timestampFormat { return [self wrappedIntegerForKey:@"timestampFormat"]; }
 
@@ -498,34 +413,21 @@
 	[self setWrappedInteger:format forKey:@"timestampFormat"];
 }
 
-#pragma mark -
+@dynamic timestampShowTime;
+
 #pragma mark Language
 
-- (NSString *)language { return [self wrappedValueForKey:@"language"]; }
-
-- (void)setLanguage:(NSString *)language
+@dynamic language;
+- (BOOL)validateLanguage:(NSString **)language error:(NSError **)error;
 {
-    [self setWrappedValue:language forKey:@"language"];
+    // Attempts at nil are coerced back to current value. Little bit of a hack. #78003
+    if (!*language) *language = [self language];
     
-    // Also update archive page titles to match
-    NSArray *archivePages = [KTArchivePage allPagesInManagedObjectContext:[self managedObjectContext]];
-    [archivePages makeObjectsPerformSelector:@selector(updateTitle)];
+    return YES;
 }
 
-#pragma mark -
-#pragma mark CSS
+@dynamic charset;
 
-- (NSData *)publishedDesignCSSDigest
-{
-    return [self valueForUndefinedKey:@"publishedDesignCSSDigest"];
-}
-
-- (void)setPublishedDesignCSSDigest:(NSData *)digest
-{
-    [self setValue:digest forUndefinedKey:@"publishedDesignCSSDigest"];
-}
-
-#pragma mark -
 #pragma mark Site Outline
 
 - (KTCodeInjection *)codeInjection
@@ -533,170 +435,294 @@
     return [self wrappedValueForKey:@"codeInjection"];
 }
 
-#pragma mark -
-#pragma mark Media
-
-- (KTMediaManager *)mediaManager
-{
-	KTPersistentStoreCoordinator *PSC = (id)[[self managedObjectContext] persistentStoreCoordinator];
-	OBASSERT(PSC);
-	
-	KTMediaManager *result = nil;
-	if ([PSC isKindOfClass:[KTPersistentStoreCoordinator class]])
-	{
-		result = [[PSC document] mediaManager];
-	}
-	return result;
-}
-
-- (NSSet *)requiredMediaIdentifiers
-{
-	NSMutableSet *result = [NSMutableSet set];
-	
-	[result addObjectIgnoringNil:[[self bannerImage] identifier]];
-	[result addObjectIgnoringNil:[self valueForKey:@"logoImageMediaIdentifier"]];
-	[result addObjectIgnoringNil:[self valueForKey:@"faviconMediaIdentifier"]];
-	[result addObjectIgnoringNil:[[self placeholderImage] identifier]];
-	
-	return result;
-}
-
-#pragma mark -
-#pragma mark Placeholder Image
-
-- (KTMediaContainer *)placeholderImage
-{
-	return [self valueForUndefinedKey:@"placeholderImage"];
-}
-
-- (void)generatePlaceholderImage
-{
-	// What base image should we use?
-	NSString *imagePath = [[self design] placeholderImagePath];
-	if (!imagePath || [imagePath isEqualToString:@""])
-	{
-		imagePath = [[[KSPlugin pluginWithIdentifier:@"sandvox.ImageElement"] bundle]
-					 pathForImageResource:@"placeholder"];
-	}
-	
-	
-	// Emboss the image
-	NSImage *placeholderImage = [[NSImage alloc] initWithContentsOfFile:imagePath];
-    if (placeholderImage)
-    {
-        [placeholderImage embossPlaceholder];
-        
-        // Create a media container and store it
-        KTMediaContainer *placeholderMedia = [[self mediaManager] mediaContainerWithImage:placeholderImage];
-        [self setValue:placeholderMedia forKey:@"placeholderImage"];
-        
-        [placeholderImage release];
-    }
-}
-
-#pragma mark -
 #pragma mark Comments
 
-// TODO: this is kind of hacky, for Sandvox 2 all should be combined
-// into the fewest, flexible attributes possible
-- (KTCommentsProvider)commentsProvider
+@dynamic commentsProvider;
+
+- (NSString *)commentsSummary
 {
-	return (KTCommentsProvider)[[self valueForUndefinedKey:@"commentsProvider"] intValue];
+    NSString *result = NSLocalizedString(@"None", @"no comments provider selected");
+    
+    switch ( [[self commentsProvider] unsignedIntValue] )
+    {
+        case KTCommentsProviderDisqus:
+            if ( [self disqusShortName] )
+            {
+                result = [NSString stringWithFormat:@"Disqus, %@", [self disqusShortName]];
+            }
+            else
+            {
+                result = NSLocalizedString(@"Disqus, shortname not set", @"do not localize Disqus");
+            }
+            break;
+        case KTCommentsProviderIntenseDebate:
+            if ( [self IntenseDebateAccountID] )
+            {
+                // Account ID is cryptic and long, don't display it
+                result = @"IntenseDebate";
+            }
+            else
+            {
+                result = NSLocalizedString(@"IntenseDebate, no Account ID", @"do not localize IntenseDebate");
+            }
+            break;
+        case KTCommentsProviderJSKit:
+            if ( [self JSKitModeratorEmail] )
+            {
+                NSString *email = [[[self JSKitModeratorEmail] componentsSeparatedByString:@"@"] objectAtIndex:0];
+                result = [NSString stringWithFormat:@"Echo/JS-Kit, %@", email];
+            }
+            else
+            {
+                result = NSLocalizedString(@"Echo/JS-Kit, no moderator", @"do not localize Echo/JS-Kit");
+            }
+            break;
+        case KTCommentsProviderFacebookComments:
+            if ( [self facebookAppID] )
+            {
+                // App ID is cryptic and long, don't display it
+                result = @"Facebook";
+            }
+            else
+            {
+                result = NSLocalizedString(@"Facebook, no App ID", @"do not localize Facebook");
+            }
+            break;
+        default:
+            break;
+    }
+    
+    return result;
 }
 
-- (void)setCommentsProvider:(KTCommentsProvider)aKTCommentsProvider
++ (NSSet *)keyPathsForValuesAffectingCommentsSummary
 {
-	NSSet *keys = [NSSet setWithObjects:@"wantsDisqus", @"wantsJSKit", @"wantsHaloscan", @"wantsIntenseDebate", nil];
-	[self willChangeValuesForKeys:keys];
-	[self setValue:[NSNumber numberWithInt:aKTCommentsProvider] forUndefinedKey:@"commentsProvider"];
-	[self didChangeValuesForKeys:keys];
-	
-	// for backward compatibility with 1.5.4
-	if ( KTCommentsProviderJSKit == aKTCommentsProvider )
-	{
-		[self setValue:[NSNumber numberWithBool:YES] forUndefinedKey:@"wantsJSKit"];
-		[self setValue:[NSNumber numberWithBool:NO] forUndefinedKey:@"wantsHaloscan"];
-	}
-	else if ( KTCommentsProviderHaloscan == aKTCommentsProvider )
-	{
-		[self setValue:[NSNumber numberWithBool:YES] forUndefinedKey:@"wantsHaloscan"];
-		[self setValue:[NSNumber numberWithBool:NO] forUndefinedKey:@"wantsJSKit"];
-	}
-	else
-	{
-		[self setValue:[NSNumber numberWithBool:NO] forUndefinedKey:@"wantsHaloscan"];
-		[self setValue:[NSNumber numberWithBool:NO] forUndefinedKey:@"wantsJSKit"];
-	}
-}
-
-- (BOOL)wantsIntenseDebate
-{
-	return (KTCommentsProviderIntenseDebate == [self commentsProvider]);
-}
-
-- (void)setWantsIntenseDebate:(BOOL)aBool
-{
-	[self setCommentsProvider:KTCommentsProviderIntenseDebate];
-}
-
-- (NSString *)IntenseDebateAccountID
-{
-	return [self valueForUndefinedKey:@"IntenseDebateAccountID"];
-}
-
-- (void)setIntenseDebateAccountID:(NSString *)aString
-{
-	[self setValue:aString forUndefinedKey:@"IntenseDebateAccountID"];
+	return [NSSet setWithObjects:
+            @"commentsProvider", 
+            @"disqusShortName", 
+            @"IntenseDebateAccountID", 
+            @"JSKitModeratorEmail", 
+            @"facebookAppID", 
+            nil];
 }
 
 - (BOOL)wantsDisqus
 {
-	return (KTCommentsProviderDisqus == [self commentsProvider]);
+	return (KTCommentsProviderDisqus == [[self commentsProvider] unsignedIntValue]);
 }
 
-- (void)setWantsDisqus:(BOOL)aBool
++ (NSSet *)keyPathsForValuesAffectingWantsDisqus
 {
-	[self setCommentsProvider:KTCommentsProviderDisqus];
-}
-
-- (NSString *)disqusShortName
-{
-	return [self valueForUndefinedKey:@"disqusShortName"];
-}
-
-- (void)setDisqusShortName:(NSString *)aString
-{
-	[self setValue:aString forUndefinedKey:@"disqusShortName"];
+    return [NSSet setWithObject:@"commentsProvider"];
 }
 
 - (BOOL)wantsHaloscan
 {
-	return (KTCommentsProviderHaloscan == [self commentsProvider]);
+    NSLog(@"warning: Haloscan is no longer supported.");
+	return (KTCommentsProviderHaloscan == [[self commentsProvider] unsignedIntValue]);
 }
 
-- (void)setWantsHaloscan:(BOOL)aBool
++ (NSSet *)keyPathsForValuesAffectingWantsHaloscan
 {
-	[self setCommentsProvider:KTCommentsProviderHaloscan];
+    return [NSSet setWithObject:@"commentsProvider"];
+}
+
+- (BOOL)wantsIntenseDebate
+{
+	return (KTCommentsProviderIntenseDebate == [[self commentsProvider] unsignedIntValue]);
+}
+
++ (NSSet *)keyPathsForValuesAffectingWantsIntenseDebate
+{
+    return [NSSet setWithObject:@"commentsProvider"];
 }
 
 - (BOOL)wantsJSKit
 {
-	return (KTCommentsProviderJSKit == [self commentsProvider]);
+    NSLog(@"warning: JSKit/Echo is no longer supported.");
+	return (KTCommentsProviderJSKit == [[self commentsProvider] unsignedIntValue]);
 }
 
-- (void)setWantsJSKit:(BOOL)aBool
++ (NSSet *)keyPathsForValuesAffectingWantsJSKit
 {
-	[self setCommentsProvider:KTCommentsProviderJSKit];
+    return [NSSet setWithObject:@"commentsProvider"];
+}
+
+- (BOOL)wantsFacebookComments
+{
+    return (KTCommentsProviderFacebookComments == [[self commentsProvider] unsignedIntValue]);
+}
+
++ (NSSet *)keyPathsForValuesAffectingWantsFacebookComments
+{
+    return [NSSet setWithObject:@"commentsProvider"];
+}
+
+- (BOOL)usesExtensiblePropertiesForUndefinedKey:(NSString *)key
+{
+    if ( [key isEqualToString:@"disqusShortName"]
+        || [key isEqualToString:@"IntenseDebateAccountID"]
+        || [key isEqualToString:@"JSKitModeratorEmail"] 
+        || [key isEqualToString:@"facebookAppID"] 
+        || [key isEqualToString:@"fbNumberOfPosts"] 
+        || [key isEqualToString:@"fbColorScheme"] )
+    {
+        return YES;
+    }
+    else
+    {
+        return [super usesExtensiblePropertiesForUndefinedKey:key];
+    }
+}
+
+- (NSString *)disqusShortName
+{
+    return [self extensiblePropertyForKey:@"disqusShortName"];
+}
+
+- (void)setDisqusShortName:(NSString *)aString
+{
+    [self willChangeValueForKey:@"disqusShortName"];
+    if ( aString )
+    {
+        [self setExtensibleProperty:aString forKey:@"disqusShortName"];
+    }
+    else
+    {
+        [self removeExtensiblePropertyForKey:@"disqusShortName"];
+    }
+    [self didChangeValueForKey:@"disqusShortName"];
 }
 
 - (NSString *)JSKitModeratorEmail
 {
-	return [self valueForUndefinedKey:@"JSKitModeratorEmail"];
+    return [self extensiblePropertyForKey:@"JSKitModeratorEmail"];
 }
 
 - (void)setJSKitModeratorEmail:(NSString *)aString
 {
-	[self setValue:aString forUndefinedKey:@"JSKitModeratorEmail"];
+    [self willChangeValueForKey:@"JSKitModeratorEmail"];
+    if ( aString )
+    {
+        [self setExtensibleProperty:aString forKey:@"JSKitModeratorEmail"];
+    }
+    else
+    {
+        [self removeExtensiblePropertyForKey:@"JSKitModeratorEmail"];
+    }
+    [self didChangeValueForKey:@"JSKitModeratorEmail"];
+}
+
+- (NSString *)IntenseDebateAccountID
+{
+    return [self extensiblePropertyForKey:@"IntenseDebateAccountID"];
+}
+
+- (void)setIntenseDebateAccountID:(NSString *)aString
+{
+    [self willChangeValueForKey:@"IntenseDebateAccountID"];
+    if ( aString )
+    {
+        [self setExtensibleProperty:aString forKey:@"IntenseDebateAccountID"];
+    }
+    else
+    {
+        [self removeExtensiblePropertyForKey:@"IntenseDebateAccountID"];
+    }
+    [self didChangeValueForKey:@"IntenseDebateAccountID"];
+}
+
+- (NSString *)facebookAppID
+{
+    return [self extensiblePropertyForKey:@"facebookAppID"];
+}
+
+- (void)setFacebookAppID:(NSString *)aString
+{
+    [self willChangeValueForKey:@"facebookAppID"];
+    if ( aString )
+    {
+        [self setExtensibleProperty:aString forKey:@"facebookAppID"];
+    }
+    else 
+    {
+        [self removeExtensiblePropertyForKey:@"facebookAppID"];
+    }
+    [self didChangeValueForKey:@"facebookAppID"];
+}
+
+- (NSNumber *)fbNumberOfPosts
+{
+    return [self extensiblePropertyForKey:@"fbNumberOfPosts"];
+}
+
+- (void)setFbNumberOfPosts:(NSNumber *)value
+{
+    [self setExtensibleProperty:value forKey:@"fbNumberOfPosts"];
+}
+
+- (NSNumber *)fbColorScheme
+{
+    return [self extensiblePropertyForKey:@"fbColorScheme"];
+}
+
+- (void)setFbColorScheme:(NSNumber *)value
+{
+    [self setExtensibleProperty:value forKey:@"fbColorScheme"];
+}
+
+- (NSString *)fbColorSchemeString
+{
+    // light or dark
+    if ( [[self fbColorScheme] unsignedIntValue] == 1 )
+    {
+        return @"dark";
+    }
+    else
+    {
+        return @"light";
+    }
+}
+
+- (NSString *)fbSidebarWidth
+{
+    KTImageScalingSettings *settings = [[self design] imageScalingSettingsForUse:@"KTSidebarPageMedia"];
+    if ( settings )
+    {
+        CGFloat width = [settings size].width;
+        return [[NSNumber numberWithFloat:width] stringValue];
+    }
+    else
+    {
+        return @"425";
+    }
+}
+
+- (NSString *)fbPageWidth
+{
+    KTImageScalingSettings *settings = [[self design] imageScalingSettingsForUse:@"KTPageMedia"];
+    if ( settings )
+    {
+        CGFloat width = [settings size].width;
+        return [[NSNumber numberWithFloat:width] stringValue];
+    }
+    else
+    {
+        return @"635";
+    }
+}
+
+#pragma mark Placeholder Image
+
+- (SVMediaRecord *)makePlaceholdImageMediaWithEntityName:(NSString *)entityName;
+{
+    NSURL *URL = [KTDesign placeholderImageURLForDesign:[self design]];
+    OBASSERT(URL);
+    
+    
+    return [SVMediaRecord mediaWithBundledURL:URL
+                                       entityName:entityName
+                   insertIntoManagedObjectContext:[self managedObjectContext]];
 }
 
 @end
@@ -713,6 +739,68 @@
 - (NSDictionary *)imageScalingPropertiesForUse:(NSString *)mediaUse
 {
     return [[self design] imageScalingPropertiesForUse:mediaUse];
+}
+
+@end
+
+
+#pragma mark -
+
+
+@implementation KTMaster (Deprecated)
+
+#pragma mark Site Title
+
+- (NSString *)siteTitleHTMLString
+{
+    return [[self siteTitle] textHTMLString];
+}
+
++ (NSSet *)keyPathsForValuesAffectingSiteTitleHTMLString
+{
+    return [NSSet setWithObject:@"siteTitle.textHTMLString"];
+}
+
+- (NSString *)siteTitleText	// get title, but without attributes
+{
+	return [[self siteTitle] text];
+}
+
+- (void)setSiteTitleText:(NSString *)value
+{
+	[[self siteTitle] setText:value];
+}
+
++ (NSSet *)keyPathsForValuesAffectingSiteTitleText
+{
+    return [NSSet setWithObject:@"siteTitle.textHTMLString"];
+}
+
+#pragma mark Site Subtitle
+
+- (NSString *)siteSubtitleHTMLString
+{
+    return [[self siteSubtitle] textHTMLString];
+}
+
++ (NSSet *)keyPathsForValuesAffectingSiteSubtitleHTMLString
+{
+    return [NSSet setWithObject:@"siteSubtitle.textHTMLString"];
+}
+
+- (NSString *)siteSubtitleText	// get title, but without attributes
+{
+	return [[self siteSubtitle] text];
+}
+
+- (void)setSiteSubtitleText:(NSString *)value
+{
+	[[self siteSubtitle] setText:value];
+}
+
++ (NSSet *)keyPathsForValuesAffectingSiteSubtitleText
+{
+    return [NSSet setWithObject:@"siteSubtitle.textHTMLString"];
 }
 
 @end

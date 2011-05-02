@@ -1,0 +1,87 @@
+﻿/* Class = "NSComboBox"; gToolTip = "Enter email address, like user@domain.com. To send message to more than one address, enter two emails separated by commas."; ObjectID = "13"; */
+"Enter email address, like user@domain.com. To send message to more than one address, enter two emails separated by commas." = "Saisir l'adresse email, comme user@domain.com. Pour envoyer le message à plus d'une adresse, saisir deux adresses séparées par des virgules.";
+
+/* Class = "NSTabViewItem"; label = "Message"; ObjectID = "81"; */
+"Message" = "Message";
+
+/* Class = "NSTabViewItem"; label = "Fields"; ObjectID = "117"; */
+"Fields" = "Champs";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "125"; */
+"OtherViews" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Popup"; ObjectID = "126"; */
+"Popup" = "Popup";
+
+/* Class = "NSMenuItem"; title = "Text area"; ObjectID = "127"; */
+"Text area" = "Zone texte";
+
+/* Class = "NSMenuItem"; title = "Text field"; ObjectID = "128"; */
+"Text field" = "Champ texte";
+
+/* Class = "NSMenuItem"; title = "Check box"; ObjectID = "129"; */
+"Check box" = "Case à cocher";
+
+/* Class = "NSMenuItem"; title = "Radio buttons"; ObjectID = "130"; */
+"Radio buttons" = "Boutons radio";
+
+/* Class = "NSMenuItem"; title = "Hidden"; ObjectID = "134"; */
+"Hidden" = "Masqué";
+/* Class = "NSTabViewItem"; label = "Text"; ObjectID = "140"; */
+"Text" = "Texte";
+
+/* Class = "NSTabViewItem"; label = "Multiple"; ObjectID = "143"; */
+"Multiple" = "Multiple";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "182"; */
+" " = " ";
+/* Class = "NSTabViewItem"; label = "Tab"; ObjectID = "246"; */
+"Tab" = "Onglet";
+/* Class = "NSMenuItem"; title = "Send button"; ObjectID = "390"; */
+"Send button" = "Bouton Envoyer";
+
+/* Class = "NSTextFieldCell"; title = "Send to:"; ObjectID = "512"; */
+"Send to:" = "Envoyer à :";
+
+/* Class = "NSTextFieldCell"; title = "Be sure to send yourself a test message from the published site, from time to time, to verify operation."; ObjectID = "513"; */
+"Be sure to send yourself a test message from the published site, from time to time, to verify operation." = "Assurez-vous de vous envoyer, de temps en temps, un message d'essai du site publié pour en vérifier l'exécution.";
+
+/* Class = "NSTextFieldCell"; title = "Your address will be encrypted."; ObjectID = "514"; */
+"Your address will be encrypted." = "Votre adresse sera chiffrée.";
+
+/* Class = "NSButtonCell"; title = "Copy to sender"; ObjectID = "515"; */
+"Copy to sender" = "Copie à l'expéditeur";
+
+/* Class = "NSTextFieldCell"; title = "This service is provided by Karelia as a courtesy only. Karelia cannot and does not guarantee the delivery of email through its relay, any spam filters, or other third party systems."; ObjectID = "516"; */
+"This service is provided by Karelia as a courtesy only. Karelia cannot and does not guarantee the delivery of email through its relay, any spam filters, or other third party systems." = "Ce service est fourni par Karelia à titre gracieux seulement. Karelia ne peut pas garantir la livraison du courrier électronique via ses relais, les filtres anti-spam, ou d'autres systèmes tiers.";
+
+/* Class = "NSTextFieldCell"; title = "Type"; ObjectID = "517"; */
+"Type" = "Type";
+
+/* Class = "NSTextFieldCell"; title = "Label"; ObjectID = "519"; */
+"Label" = "Étiquette";
+
+/* Class = "NSTextFieldCell"; title = "Value"; ObjectID = "521"; */
+"Value" = "Valeur";
+
+/* Class = "NSButtonCell"; title = "On by default"; ObjectID = "523"; */
+"On by default" = "Actif par défaut";
+
+/* Class = "NSTextFieldCell"; title = "Default value"; ObjectID = "524"; */
+"Default value" = "Valeur par défaut";
+
+/* Class = "NSTextFieldCell"; title = "Choices"; ObjectID = "526"; */
+"Choices" = "Choix";
+
+/* Class = "NSTextFieldCell"; placeholderString = "Specify items, separated by commas"; ObjectID = "527"; */
+"Specify items, separated by commas" = "Spécifiez les éléments, séparés par des virgules";
+/* Class = "NSBox"; title = "Box"; ObjectID = "562"; */
+"Box" = "Box";
+
+/* Class = "NSTextFieldCell"; title = "Label Position"; ObjectID = "564"; */
+"Label Position" = "Position de l’intitulé";
+/* Class = "NSMenuItem"; title = "Above"; ObjectID = "568"; */
+"Above" = "Au-dessus";
+
+/* Class = "NSMenuItem"; title = "Side"; ObjectID = "569"; */
+"Side" = "Bord";

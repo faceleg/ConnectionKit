@@ -2,7 +2,7 @@
 //  KTMediaManager.h
 //  Sandvox
 //
-//  Copyright 2007-2009 Karelia Software. All rights reserved.
+//  Copyright 2007-2011 Karelia Software. All rights reserved.
 //
 //  THIS SOFTWARE IS PROVIDED BY KARELIA SOFTWARE AND ITS CONTRIBUTORS "AS-IS"
 //  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -24,33 +24,44 @@ extern NSString *KTMediaLogDomain;
 
 
 @class KTDocument, KTAbstractElement;
-@class KTMediaContainer;
+@class KTMediaContainer, KTMediaFile;
+
 
 @interface KTMediaManager : NSObject
 {
-	KTDocument				*myDocument;    // Weak ref
-	NSManagedObjectContext	*myMOC;
+	KTDocument  *_document;    // weak ref
     
     NSMutableDictionary *myMediaContainerIdentifiersCache;
 }
 
-// Basic Accesors
-+ (NSString *)defaultMediaStoreType;
-+ (NSURL *)mediaURLForDocumentURL:(NSURL *)inURL;
-+ (NSURL *)mediaStoreURLForDocumentURL:(NSURL *)inURL;
-+ (NSManagedObjectModel *)managedObjectModel;
+// designated initializer
+- (id)initWithDocument:(KTDocument *)document;
 
+// Basic Accesors
 - (KTDocument *)document;
-- (NSManagedObjectContext *)managedObjectContext;
-- (NSString *)mediaPath;
-- (NSString *)temporaryMediaPath;
+
+// Missing media
+- (NSSet *)missingMediaFiles;
 
 @end
 
 
 @interface KTMediaManager (MediaFiles)
+
 - (BOOL)mediaFileShouldBeExternal:(NSString *)path;
 + (BOOL)fileConstitutesIMedia:(NSString *)path;
+
+// Queries
+- (NSArray *)externalMediaFiles;
+- (KTMediaFile *)mediaFileWithIdentifier:(NSString *)identifier;
+
+// MediaFile creation/re-use
+- (KTMediaFile *)mediaFileWithPath:(NSString *)path;
+- (KTMediaFile *)mediaFileWithPath:(NSString *)path preferExternalFile:(BOOL)preferExternal;
+- (KTMediaFile *)mediaFileWithData:(NSData *)data preferredFilename:(NSString *)filename;
+- (KTMediaFile *)mediaFileWithImage:(NSImage *)image;
+- (KTMediaFile *)mediaFileWithDraggingInfo:(id <NSDraggingInfo>)info preferExternalFile:(BOOL)preferExternal;
+
 @end
 
 
@@ -70,21 +81,4 @@ extern NSString *KTMediaLogDomain;
 // Scaling
 - (BOOL)scaledImageContainersShouldGenerateMediaFiles;
 
-@end
-
-
-@interface KTMediaManager (LegacySupport)
-
-- (KTMediaContainer *)mediaContainerWithMediaRefNamed:(NSString *)oldMediaRefName element:(NSManagedObject *)oldElement;
-
-- (NSString *)importLegacyMediaFromString:(NSString *)oldText
-                      scalingSettingsName:(NSString *)scalingSettings
-                               oldElement:(NSManagedObject *)oldElement
-                               newElement:(KTAbstractElement *)newElement;
-
-@end
-
-
-@interface NSManagedObject (MediaManagerGarbageCollector)
-- (NSSet *)requiredMediaIdentifiers;
 @end

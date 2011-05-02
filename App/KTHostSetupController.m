@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Dan Wood on 11/10/04.
-//  Copyright 2004-2009 Karelia Software. All rights reserved.
+//  Copyright 2004-2011 Karelia Software. All rights reserved.
 //
 
 /*
@@ -25,13 +25,12 @@ TO DO:
 #import "Debug.h"
 #import "KSUtilities.h"
 #import "KT.h"
-#import "KTAppDelegate.h"
-#import "KTApplication.h"
+#import "SVApplicationController.h"
 #import "KTBackgroundTabView.h"
 #import "KTDocument.h"
-#import "KTHost.h"
 #import "KTHostProperties.h"
 #import "KTTranscriptController.h"
+
 #import "NSApplication+Karelia.h"
 #import "NSAttributedString+Karelia.h"
 #import "NSBundle+Karelia.h"
@@ -42,9 +41,11 @@ TO DO:
 #import "NSObject+Karelia.h"
 #import "NSString+KTExtensions.h"
 #import "NSString+Karelia.h"
-#import "NSURL+Karelia.h"
+#import "KSURLUtilities.h"
 #import "NSWorkspace+Karelia.h"
+
 #import "NTSUTaskController.h"
+#import "KSURLFormatter.h"
 
 #import <AddressBook/AddressBook.h>
 #import <Connection/Connection.h> // for CKAbstractConnection, ConnectionOpenPanel, EMKeychainItem, and EMKeychainProxy
@@ -113,15 +114,17 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	theTransformer = [[[ProtocolToIndexTransformer alloc] init] autorelease];
 	[NSValueTransformer setValueTransformer:theTransformer
 									forName:@"ProtocolToIndexTransformer"];
-    [KTHostSetupController setKeys:
+    
+	
+	// Deprecated .... should use keyPathsForValuesAffectingValueForKey
+	
+	[KTHostSetupController setKeys:
         [NSArray arrayWithObjects: @"localSubFolder", @"localSharedMatrix", nil]
         triggerChangeNotificationsForDependentKey: @"localURL"];
+    
     [KTHostSetupController setKeys:
         [NSArray arrayWithObjects: @"localHostName", @"localSubFolder", @"localSharedMatrix", nil]
         triggerChangeNotificationsForDependentKey: @"globalSiteURL"];
-    [KTHostSetupController setKeys:
-        [NSArray arrayWithObjects: @"subFolder", @"userName", @"docRoot", @"remoteHosting", @"stemURL", @"domainName", nil]
-        triggerChangeNotificationsForDependentKey: @"remoteSiteURL"];
 
 	[KTHostSetupController setKeys:
 			[NSArray arrayWithObjects: @"hostName", @"port", @"docRoot", @"stemURL", @"protocol", @"subFolder", @"userName", nil]
@@ -160,6 +163,11 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	[pool release];
 }
 
++ (NSSet *)keyPathsForValuesAffectingRemoteSiteURL
+{
+    return [NSSet setWithObjects:@"subFolder", @"userName", @"docRoot", @"remoteHosting", @"stemURL", @"domainName", nil];
+}
+
 - (id)initWithHostProperties:(KTHostProperties *)hostProperties
 {
 	[super initWithWindowNibName:@"HostSetup" owner:self];
@@ -184,8 +192,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	if ([[self valueForKey:@"protocol"] isEqualToString:@".Mac"] 
 		&& nil == [self valueForKey:@"dotMacDomainStyle"])
 	{
-		// It was not set, so assume it's a legacy document, which is homepage.mac.com
-		[self setValue:[NSNumber numberWithInt:HOMEPAGE_MAC_COM] forKey:@"dotMacDomainStyle"];
+		[self setValue:[NSNumber numberWithInt:WEB_ME_COM] forKey:@"dotMacDomainStyle"];
 	}
 	
 	// Try to reach localhost when localHosting checkbox is checked -- and abort it when unchecked.
@@ -266,6 +273,26 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	
 	// turn off the radio group
 	[oHostTypeMatrix deselectAllCells];
+	
+	NSString *rec = NSLocalizedString(@"Karelia Recommends A2 Hosting", @"Headline for recommendation in host setup.  'A2 Hosting' will be hyperlinked, and should not be translated.");
+	NSFont *recFont = [NSFont boldSystemFontOfSize:[NSFont systemFontSize]];
+	NSMutableAttributedString *recAttr = [[[NSMutableAttributedString alloc] initWithString:rec attributes:[NSDictionary dictionaryWithObjectsAndKeys:recFont, NSFontAttributeName, nil]] autorelease];
+	[recAttr setAlignment:NSCenterTextAlignment range:NSMakeRange(0,[rec length])];
+
+	NSRange whereA2 = [rec rangeOfString:@"A2 Hosting"];
+	if (NSNotFound != whereA2.location)
+	{
+		[recAttr addAttribute:NSForegroundColorAttributeName value:[NSColor linkColor]
+						   range:whereA2];
+		[recAttr addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:1]
+						   range:whereA2];
+		[recAttr addAttribute:NSCursorAttributeName value:[NSCursor pointingHandCursor]
+						   range:whereA2];
+		[recAttr addAttribute:NSLinkAttributeName value:[NSURL URLWithString:@"http://c.karelia.com/113"]
+							range:whereA2];
+	}
+	//[oRecommendation setAttributedTitle:recAttr];
+	[oRecommendation setAttributedStringValue:recAttr];
 }
 
 
@@ -306,13 +333,13 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 - (IBAction) openPreferredHost:(id)sender;
 {
-	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:[sender title]]];
+	[KSWORKSPACE attemptToOpenWebURL:[NSURL URLWithString:[sender title]]];
 	
 }
 
 - (IBAction) settingUpDotMacPersnalDomains:(id)sender;
 {
-	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:@"http://docs.info.apple.com/article.html?path=MobileMe/Account/en/acct17114.html"]];
+	[KSWORKSPACE attemptToOpenWebURL:[NSURL URLWithString:@"http://docs.info.apple.com/article.html?path=MobileMe/Account/en/acct17114.html"]];
 }
 
 - (IBAction) windowHelp:(id)sender
@@ -323,9 +350,8 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		@"Publishing_to_your_Computer", @"apache",
 		@"Publishing_to_your_Computer", @"local",
 		@"Publishing_to_your_Computer", @"localError",
-		@"Publishing_to_.Mac", @"mac",
-		@"Entering_Your_Host_Settings", @"host",
-		@"Entering_Your_Account_Details", @"account",
+		@"Publishing to MobileMe", @"mac",
+		@"Publishing_to_a_Remote_Host", @"host",
 		@"Testing_Your_Connection", @"test",
 		@"Host_Summary", @"summary",
 		nil];
@@ -336,7 +362,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	if (myShouldShowConnectionTroubleshooting
 		&& ([myCurrentState isEqualToString:@"summary"] || [myCurrentState isEqualToString:@"introduction"]) )
 	{
-		pageName = @"Troubleshooting_Publishing_and_Connections";	// HELPSTRING
+		pageName = @"Testing_my_connection_fails";	// HELPSTRING
 	}
 	if (nil == pageName) pageName = @"Setting_Up_Your_Host";	// HELPSTRING
 
@@ -349,7 +375,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	[self setValue:[NSNumber numberWithInt:0] forKey:@"remoteHosting"];	// choose NEITHER
 	[self setValue:[NSNumber numberWithInt:0] forKey:@"localHosting"];
 	[self setValue:[NSNumber numberWithInt:0] forKey:@"hostTypeMatrix"];
-	[self setValue:[NSNumber numberWithInt:WEB_ME_COM] forKey:@"dotMacDomainStyle"];	// initially homepage.mac.com
+	[self setValue:[NSNumber numberWithInt:WEB_ME_COM] forKey:@"dotMacDomainStyle"];	// initially web.me.com
 	[self doNext:sender];
 }
 
@@ -449,7 +475,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		
 	// Connect at the chosen document root if possible. iDisk is odd though and CANNOT connect at the root dir
 	NSString *documentRoot = [self valueForKey:@"docRoot"];
-	if ([host isEqualToStringCaseInsensitive:@"idisk.mac.com"] &&
+	if ([host isEqualToStringCaseInsensitive:@"idisk.me.com"] &&
 		[protocol isEqualToString:@"WebDAV"] &&
 		(!documentRoot || [documentRoot isEqualToString:@""] || [documentRoot isEqualToString:@"/"]))
 	{
@@ -478,6 +504,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 									   alternateButton:nil 
 										   otherButton:nil
 							 informativeTextWithFormat:@""];
+		[alert setIcon:[NSApp applicationIconImage]];
 		(void)[alert runModal];
 		
 	}
@@ -692,14 +719,13 @@ static NSCharacterSet *sIllegalSubfolderSet;
 			NSString *account = [[self properties] valueForKey:@"userName"];
 			
 			if ([urlString rangeOfString:account].location != NSNotFound) {
-				NSURL *url = [NSURL URLWithUnescapedString:urlString];
+				NSURL *url = [KSURLFormatter URLFromString:urlString];
 				NSString *urlHost = [url host];
 				NSArray *hostComponents = [urlHost componentsSeparatedByString:@"."];
 				NSMutableArray *newHostComponents = [NSMutableArray array];
-				NSEnumerator *e = [hostComponents objectEnumerator];
 				NSString *cur;
 				
-				while (cur = [e nextObject])
+				for (cur in hostComponents)
 				{
 //					if ([cur isEqualToString:account])
 //					{
@@ -726,53 +752,6 @@ static NSCharacterSet *sIllegalSubfolderSet;
 			[self setValue:@"" forKey:@"docRoot"];
 		}
 	}
-	else if ([stateWeAreComingFrom isEqualToString:@"account"])
-	{
-		if ([[self valueForKey:@"selectNewHost"] boolValue])
-		{
-			nextState = @"host";
-			[self setValue:[NSNumber numberWithBool:NO] forKey:@"selectNewHost"]; //turn it off for when we come back to this screen
-		}
-		else if (nil == [[self properties] valueForKey:@"userName"]
-			|| nil ==  [[self properties] valueForKey:@"hostName"]
-			|| ![self remoteSiteURLIsValid]) //we can have an empty password for sftp as it uses authorized_keys2 mechanism
-		{
-			nextState = @"summary";	// done, can't do the test
-		}
-		else
-		{
-			// see if we can substitute the account name in the stemURL
-			NSMutableString *urlString = [NSMutableString stringWithString:[[self properties] valueForKey:@"stemURL"]];
-			NSString *account = [[self properties] valueForKey:@"userName"];
-			
-			if ([urlString rangeOfString:account].location != NSNotFound) {
-				NSURL *url = [NSURL URLWithUnescapedString:urlString];
-				NSString *urlHost = [url host];
-				NSArray *hostComponents = [urlHost componentsSeparatedByString:@"."];
-				NSMutableArray *newHostComponents = [NSMutableArray array];
-				NSEnumerator *e = [hostComponents objectEnumerator];
-				NSString *cur;
-				
-				while (cur = [e nextObject])
-				{
-//					if ([cur isEqualToString:account])
-//					{
-//						[newHostComponents addObject:@"?"];
-//					}
-//					else
-//					{
-						[newHostComponents addObject:cur];
-//					}
-				}
-				NSString *newHost = [newHostComponents componentsJoinedByString:@"."];
-				[urlString replaceOccurrencesOfString:urlHost withString:newHost options:NSLiteralSearch range:NSMakeRange(0, [urlString length])];
-				// [urlString replaceOccurrencesOfString:account withString:@"?" options:NSLiteralSearch range:NSMakeRange([newHost length], [urlString length] - [newHost length])];
-				LOG((@"setting stemURL to %@ after subbing username", urlString));
-				[self setValue:urlString forKey:@"stemURL"]; 
-			}
-			nextState = @"test";	// do the test to see if we can connect
-		}
-	}
 	else if ([stateWeAreComingFrom isEqualToString:@"test"])
 	{
 		nextState = @"summary";
@@ -782,7 +761,6 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	// If not yet set, initialize .mac style to Mobile Me for new sites
 	if ([nextState isEqualToString:@"mac"] && nil == [self valueForKey:@"dotMacDomainStyle"])
 	{
-		// It was not set, so assume it's a legacy document, which is homepage.mac.com
 		[self setValue:[NSNumber numberWithInt:WEB_ME_COM] forKey:@"dotMacDomainStyle"];
 	}
 	
@@ -878,7 +856,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		{
 			NSString *pass = [self password];
 			if (pass && ![pass isEqualToString:@""] 
-				&& !([[myProperties valueForKey:@"hostName"] isEqualToString:@"idisk.mac.com"] 
+				&& !([[myProperties valueForKey:@"hostName"] isEqualToString:@"idisk.me.com"] 
 					 && [[[self properties] valueForKey:@"protocol"] isEqualToString:@".Mac"]) )  // TODO - excise .Mac by name from this code
 			{
 				[self setKeychainPassword:pass];		// finally, store the password in the keychain
@@ -906,7 +884,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 - (IBAction) doGetDotMacAccount:(id)sender
 {
-	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:@"http://www.apple.com/mobileme/"]];		// this is our link URL
+	[KSWORKSPACE attemptToOpenWebURL:[NSURL URLWithString:@"http://www.apple.com/mobileme/"]];		// this is our link URL
 }
 
 
@@ -915,10 +893,10 @@ static NSCharacterSet *sIllegalSubfolderSet;
 {
 	if ([[self properties] valueForKey:@"homePageURL"] != nil)
 	{
-		NSURL *url = [NSURL URLWithUnescapedString:[[self properties] valueForKey:@"homePageURL"]];	// BETA: This used to be in a @try block. Are certain URL strings failing?
+		NSURL *url = [KSURLFormatter URLFromString:[[self properties] valueForKey:@"homePageURL"]];	// BETA: This used to be in a @try block. Are certain URL strings failing?
 		
 		if (url) {
-			[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:url];
+			[KSWORKSPACE attemptToOpenWebURL:url];
 		}
 		else
 		{
@@ -931,10 +909,10 @@ static NSCharacterSet *sIllegalSubfolderSet;
 {
 	if ([[self properties] valueForKey:@"setupURL"] != nil)
 	{
-		NSURL *url = [NSURL URLWithUnescapedString:[[self properties] valueForKey:@"setupURL"]];		// BETA: This used to be in a @try block. Are certain URL strings failing?
+		NSURL *url = [KSURLFormatter URLFromString:[[self properties] valueForKey:@"setupURL"]];		// BETA: This used to be in a @try block. Are certain URL strings failing?
 		
 		if (url != nil) {
-			[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:url];
+			[KSWORKSPACE attemptToOpenWebURL:url];
 		}
 		else
 		{
@@ -965,7 +943,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	[connection setName:@"Host Setup Test"];
 	[self setTestConnection:connection];
 	[connection setDelegate:self];
-	[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Contacting %@... ", "status message for test connection"), [[self properties] valueForKey:@"hostName"]];
+	[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Contacting %@… ", "status message for test connection"), [[self properties] valueForKey:@"hostName"]];
 
 	// Delay calling this so that we see the above message before the actual connect method is called, since this takes a moment in the foreground.
 	[self performSelector:@selector(actuallyConnect:) withObject:nil afterDelay:0.0];
@@ -973,7 +951,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 - (void)actuallyConnect:(id)bogus
 {
-	[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Establishing %@ connection... ", "status message for test connection"), [KSUtilities displayNameForProtocol:[[self properties] valueForKey:@"protocol"]]];
+	[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Establishing %@ connection… ", "status message for test connection"), [KSUtilities displayNameForProtocol:[[self properties] valueForKey:@"protocol"]]];
 
 //	NSLog(@"Queuing timeout test from actuallyConnect");
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(timeoutTest:) object:nil];
@@ -1021,7 +999,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 // Support method to now upload the test file
 - (void)uploadTestFileAtPath:(NSString *)dirPath
 {
-	[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Attempting to upload a test file... ", @"status message for test connection")];
+	[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Attempting to upload a test file… ", @"status message for test connection")];
 	
 	[myRemotePath autorelease];
 	myRemotePath = [dirPath copy];
@@ -1034,7 +1012,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		[myTestConnection setPermissions:0644 forFile:remoteFile];
 	}
 	
-	LOG((remoteFile));
+	LOG((@"%@", remoteFile));
 	
 	//		NSLog(@"Queuing timeout test before upload, from didChangeToDir");
 	[self performSelector:@selector(timeoutTest:) withObject:nil afterDelay:[self connectionTimeoutValue]];
@@ -1064,15 +1042,14 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		if (	(path && ![path isEqualToString:@""])
 				||	(subFolder  && ![subFolder isEqualToString:@""]) )
 		{
-			[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Creating Directories... ", "status message for test connection")];
+			[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Creating Directories… ", "status message for test connection")];
 			[self performSelector:@selector(timeoutTest:) withObject:nil afterDelay:[self connectionTimeoutValue]];
 
 			NSArray *pathComponents = [path pathComponents];	///[path componentsSeparatedByString:@"/"];
 			NSString *builtupPath = @"";
-			NSEnumerator *pathEnum = [pathComponents objectEnumerator];
 			NSString *curPath;
 			
-			while (curPath = [pathEnum nextObject]) {
+			for (curPath in pathComponents) {
 				//[builtupPath appendFormat:@"%@/", curPath];	/// Old way that resulted in an erroneous trailing slash
 				builtupPath = [builtupPath stringByAppendingPathComponent:curPath];
 				LOG((@"Creating Directory: %@", builtupPath));
@@ -1135,7 +1112,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	NSString *fullURLString = [self testFileRemoteURL];
 	NSLog(@"remote URL = %@", fullURLString);
 	NSURLRequest *theRequest
-		=	[NSURLRequest requestWithURL:[NSURL URLWithUnescapedString:fullURLString]
+		=	[NSURLRequest requestWithURL:[KSURLFormatter URLFromString:fullURLString]
 							 cachePolicy:NSURLRequestReloadIgnoringCacheData
 						 timeoutInterval:20.0];
 	// create the connection with the request and start loading the data
@@ -1144,7 +1121,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	if (theConnection)
 	{
 		[self appendConnectionProgressLine:NO format:NSLocalizedString(@"Done.", @"status message for test connection")];
-		[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Attempting to download the test file... ", @"status message for test connection")];
+		[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Attempting to download the test file… ", @"status message for test connection")];
 
 		[self setDownloadTestConnection:theConnection];
 		// Create the NSMutableData that will hold the received data
@@ -1167,7 +1144,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 {
 	NSLog(@"= %@", NSStringFromSelector(_cmd));
 	[self appendConnectionProgressLine:NO format:NSLocalizedString(@"Done.", @"status message for test connection")];
-	[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Attempting to delete the test file... ", @"status message for test connection")];
+	[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Attempting to delete the test file… ", @"status message for test connection")];
 
 //	NSLog(@"Queuing timeout test from testConnectionDidFinishLoading");
 	[self performSelector:@selector(timeoutTest:) withObject:nil afterDelay:[self connectionTimeoutValue]];
@@ -1190,7 +1167,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	NSLog(@"= %@%@", NSStringFromSelector(_cmd), path);
 	[self appendConnectionProgressLine:NO format:NSLocalizedString(@"Done.", @"status message for test connection")];
 
-	[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Disconnecting... ", @"status message for test connection")];
+	[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Disconnecting… ", @"status message for test connection")];
 	[myTestConnection disconnect];
 
 	[self setValue:[self uploadURL] forKey:@"passedUploadURL"];
@@ -1241,7 +1218,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	{
 		// Next step, almost the same as connection:didCreateDirectory:
 		[self appendConnectionProgressLine:NO format:NSLocalizedString(@"Failed.", @"status message for test connection")];
-		//[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Attempting to change to directory... ", @"status message for test connection")];
+		//[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Attempting to change to directory… ", @"status message for test connection")];
 		// Directory created; now change to the directory
 
 		//we need to kill the test here and now
@@ -1441,13 +1418,14 @@ static NSCharacterSet *sIllegalSubfolderSet;
 // the supported way to do this.
 //
 
+// Note: We ought to be using [NSImage imageForOSType] to get at these images in a more official way. :-)
 
 - (NSString *) serverImagePath
 {
 	// We have our own copy of the "globe in a cube" becuase this changed to a hard disk kind of icon in Leopard.  Not what we wanted.
 	// I think we just have to have our own copy of this.
 	
-	return [[NSBundle mainBundle] pathForImageResource:@"GenericFileServerIcon.icns"];	// kGenericFileServerIcon
+	return [[NSBundle mainBundle] pathForImageResource:@"toolbar_setup_host.tiff"];
 }
 
 - (NSString *) sharingImagePath
@@ -1456,14 +1434,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 }
 - (NSString *) iDiskImagePath
 {
-	if (floor(NSAppKitVersionNumber) <= 824)		// Tiger
-	{
-		return @"/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/iDiskGenericIcon.icns";
-	}
-	else
-	{
-		return @"/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/dotMacLogo.icns";		// becomes 'macn' or 'idsk' (or 'mymc', Leopard-only?) -- not sure which 
-	}
+	return @"/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/dotMacLogo.icns";		// becomes 'macn' or 'idsk' (or 'mymc', Leopard-only?) -- not sure which 
 }
 - (NSString *) iMacImagePath
 {
@@ -1807,11 +1778,11 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		
 		// Put .Mac-specific properties into general properties
 		NSDictionary *ispInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-			@"mac.com", @"domainName",
-			@"http://www.mac.com/", @"homePageURL",
-			@"idisk.mac.com", @"hostName",
+			@"me.com", @"domainName",
+			@"http://web.me.com/", @"homePageURL",
+			@"idisk.me.com", @"hostName",
 			@"webDAV", @"protocol",
-			nil];
+			nil];        
 				
 		[[self properties] setValuesForKeysWithDictionary:ispInfo];
 		[self setValuesForKeysWithDictionary:ispInfo];
@@ -1831,7 +1802,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		[self setDotMacTimer:nil];
 	}
 
-	// Special: If we are at the Apache panel, start checking for changes in the .Mac status
+	// Special: If we are at the Apache panel, start checking for changes in the Apache status
 	if ([aCurrentState isEqualToString:@"apache"])
 	{
 		// Now start checking for any changes in Apache
@@ -1946,9 +1917,9 @@ static NSCharacterSet *sIllegalSubfolderSet;
         NSDictionary *userInfoDict =
 			[NSDictionary dictionaryWithObject:errorString
 										forKey:NSLocalizedDescriptionKey];
-        NSError *error = [[[NSError alloc] initWithDomain:kKTHostSetupErrorDomain
-													 code:1
-												 userInfo:userInfoDict] autorelease];
+        NSError *error = [NSError errorWithDomain:kKTHostSetupErrorDomain
+                                             code:1
+                                         userInfo:userInfoDict];
 		if (outError)
 		{
 			*outError = error;
@@ -1963,9 +1934,16 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	// URL
 	if ([sUrlKeySet containsObject:key])
 	{
-		newValue = [newValue trim];
-		newValue = [newValue stringWithValidURLScheme];
-		NSString *testURL = newValue;
+		newValue = [newValue stringByTrimmingWhitespace];
+		
+        KSURLFormatter *formatter = [[KSURLFormatter alloc] init];
+        NSURL *newValueURL = [formatter URLFromString:newValue];
+        [formatter release];
+        
+        if (newValueURL) newValue = [newValueURL absoluteString];
+		
+        
+        NSString *testURL = newValue;
 		// special case: with stemURL, we temporarily convert "?" into "userid" to make it seem valid
 		if ([key isEqualToString:@"stemURL"])
 		{
@@ -1979,7 +1957,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 			[newString replaceOccurrencesOfString:@"?" withString:@"userID" options:0 range:NSMakeRange(0, [newString length])];
 			testURL = newString;		// use this instead for the test
 		}
-		NSURL *url = [NSURL URLWithUnescapedString:testURL];
+		NSURL *url = [KSURLFormatter URLFromString:testURL];
 
 		errorString
 			= NSLocalizedString(@"Illegal characters found in URL. A URL must look something like http://www.domain.com/path/", @"validation error message for illegal URL");
@@ -2011,8 +1989,12 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		errorString
 			= NSLocalizedString(@"Illegal characters were found in the folder name.  Please limit the folder name to letters, numbers, dashes, and underscores.", @"validation error message for illegal subfolder");
 
-		NSRange whereBad
-			= [newValue rangeOfCharacterFromSet:sIllegalSubfolderSet];
+		NSRange whereBad = NSMakeRange(NSNotFound, 0);
+		if (newValue)
+		{
+			whereBad = [newValue rangeOfCharacterFromSet:sIllegalSubfolderSet];	// be sure not to call this when receiver may be nil
+
+		}
 		result = (NSNotFound == whereBad.location);
 	}
 
@@ -2089,9 +2071,9 @@ static NSCharacterSet *sIllegalSubfolderSet;
         NSDictionary *userInfoDict =
 			[NSDictionary dictionaryWithObject:errorString
 										forKey:NSLocalizedDescriptionKey];
-        NSError *error = [[[NSError alloc] initWithDomain:kKTHostSetupErrorDomain
-													 code:2
-												 userInfo:userInfoDict] autorelease];
+        NSError *error = [NSError errorWithDomain:kKTHostSetupErrorDomain
+                                             code:2
+                                         userInfo:userInfoDict];
  		if (outError)
 		{
 			*outError = error;
@@ -2142,7 +2124,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 		if (homeDirectory)
 		{
-			sitesPath = [[NSWorkspace sharedWorkspace] userSitesDirectory];
+			sitesPath = [KSWORKSPACE userSitesDirectory];
 		}
 		else
 		{
@@ -2264,10 +2246,10 @@ static NSCharacterSet *sIllegalSubfolderSet;
 			NSString *testURL = [[self globalBaseURLUsingHome:homeDirectory  allowNull:YES] stringByAppendingString:[myTemporaryTestFilePath lastPathComponent]];
 			if (nil != testURL)
 			{
-				NSString *urlString = [NSString stringWithFormat:@"%@reachable.plist?timeout=%d&url=%@", homeBaseURL, [[defaults objectForKey:@"LocalHostVerifyTimeout"] intValue], [testURL stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES]];
+				NSString *urlString = [NSString stringWithFormat:@"%@reachable.plist?timeout=%d&url=%@", homeBaseURL, [[defaults objectForKey:@"LocalHostVerifyTimeout"] intValue], [testURL ks_stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES]];
 
 				NSURLRequest *theRequest
-				=	[NSURLRequest requestWithURL:[NSURL URLWithUnescapedString:urlString]
+				=	[NSURLRequest requestWithURL:[KSURLFormatter URLFromString:urlString]
 									 cachePolicy:NSURLRequestReloadIgnoringCacheData
 								 timeoutInterval:20.0];
 				// create the connection with the request and start loading the data
@@ -2518,7 +2500,9 @@ static NSCharacterSet *sIllegalSubfolderSet;
 {
 	NSString *iToolsMember = nil;
 	NSString *iToolsPassword = nil;
-	
+
+	[NSUserDefaults resetStandardUserDefaults];		// try to get fresh values
+
 	if (![CKDotMacConnection getDotMacAccountName:&iToolsMember password:&iToolsPassword] || [iToolsMember isEqualToString:@""] || [iToolsPassword isEqualToString:@""])
 	{
 		[oDotMacLabel setStringValue:[NSString stringWithFormat:NSLocalizedString(@"This website cannot be published until you have set up your MobileMe account.", @"")]];
@@ -2530,6 +2514,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		[oDotMacLabel setStringValue:[NSString stringWithFormat:NSLocalizedString(@"This website will be published on your \\U201C%@\\U201D account.", "format for summary of dot mac account"), iToolsMember]];
 		[self setValue:iToolsMember forKey:@"userName"];
 		[oGetDotMacButton setHidden:YES];
+        [self setDotMacTimer:nil];
 	}
 }
 
@@ -3054,6 +3039,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 				[self setValue:@"/Sites/" forKey:@"docRoot"];
 				[self setValue:@"http://homepage.mac.com/?/" forKey:@"stemURL"];
 				[self setValue:@"mac.com" forKey:@"domainName"];
+                NSLog(@"warning: .Mac HomePage is no longer supported, by Apple or Karelia");
 				break;
 		}
 	}

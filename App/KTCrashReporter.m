@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Dan Wood on 4/22/06.
-//  Copyright 2006 Karelia Software. All rights reserved.
+//  Copyright 2006-2011 Karelia Software. All rights reserved.
 //
 
 #import "KTCrashReporter.h"

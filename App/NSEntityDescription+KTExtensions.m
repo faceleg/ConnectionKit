@@ -3,7 +3,7 @@
 //  ModelTester
 //
 //  Created by Terrence Talbot on 3/2/05.
-//  Copyright 2005-2009 Karelia Software. All rights reserved.
+//  Copyright 2005-2011 Karelia Software. All rights reserved.
 //
 
 #import "NSEntityDescription+KTExtensions.h"

@@ -2,7 +2,7 @@
 //  KTLinkSourceView.h
 //  Sandvox
 //
-//  Copyright 2006-2009 Karelia Software. All rights reserved.
+//  Copyright 2006-2011 Karelia Software. All rights reserved.
 //
 //  THIS SOFTWARE IS PROVIDED BY KARELIA SOFTWARE AND ITS CONTRIBUTORS "AS-IS"
 //  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -20,9 +20,22 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface KTLinkSourceView : NSView 
+@protocol KTLinkSourceViewDelegate;
+@protocol SVPage;
+
+
+@interface KTLinkSourceView : NSView
 {
-	IBOutlet id					delegate; // not retained
+  @private
+	BOOL _collectionsOnly;	// controller should set this in awakeFromNib.
+	BOOL _enabled;
+	NSWindow *_targetWindow;	// NSWindow that we are allowed to drag into.
+
+	id<SVPage> _connectedPage;	// set when done connecting, use bindings or delegate method to find out
+	
+	
+	
+	id <KTLinkSourceViewDelegate> _delegate; // not retained
 	
 	struct __ktDelegateFlags {
 		unsigned begin: 1;
@@ -31,19 +44,25 @@
 		unsigned isConnecting: 1;
 		unsigned isConnected: 1;
 		unsigned unused: 27;
-	} myFlags;
+	} _flags;
 }
+
+@property(nonatomic, assign) BOOL enabled;
+@property(nonatomic, assign) BOOL collectionsOnly;
+@property(nonatomic, retain) NSWindow *targetWindow;
+@property(nonatomic, retain) id<SVPage> connectedPage;
+@property(nonatomic, assign) IBOutlet id <KTLinkSourceViewDelegate> delegate;
 
 - (void)setConnected:(BOOL)isConnected;
 
-- (void)setDelegate:(id)delegate;
-- (id)delegate;
-
 @end
 
 
-@interface NSObject (KTLinkSourceViewDelegate)
-- (NSPasteboard *)linkSourceDidBeginDrag:(KTLinkSourceView *)link;
-- (void)linkSourceDidEndDrag:(KTLinkSourceView *)link withPasteboard:(NSPasteboard *)pboard;
-- (id)userInfoForLinkSource:(KTLinkSourceView *)link;
+@protocol KTLinkSourceViewDelegate <NSObject>
+- (void)linkSourceConnectedTo:(id<SVPage>)aPage;
 @end
+
+
+extern NSString *kKTLocalLinkPboardReturnType;
+extern NSString *kKTLocalLinkPboardAllowedType;
+

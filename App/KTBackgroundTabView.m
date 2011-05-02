@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Dan Wood on 11/16/04.
-//  Copyright 2004-2009 Karelia Software. All rights reserved.
+//  Copyright 2004-2011 Karelia Software. All rights reserved.
 //
 
 /*
@@ -57,11 +57,11 @@ TO DO:
 - (void)drawRect:(NSRect)aRect
 {
 	// Draw background color
-	[myBackgroundColor set];
+	[_backgroundColor set];
 	[NSBezierPath fillRect:aRect];
 
 	// Draw border on the bounds (which will clip if that's all we want)
-	[myBorderColor set];
+	[_borderColor set];
 	[NSBezierPath strokeRect:[self bounds]];
 
 	[super drawRect:aRect];
@@ -70,24 +70,24 @@ TO DO:
 
 - (NSColor *)backgroundColor
 {
-    return myBackgroundColor;
+    return _backgroundColor;
 }
 - (void)setBackgroundColor:(NSColor *)aBackgroundColor
 {
     [aBackgroundColor retain];
-    [myBackgroundColor release];
-    myBackgroundColor = aBackgroundColor;
+    [_backgroundColor release];
+    _backgroundColor = aBackgroundColor;
 }
 
 - (NSColor *)borderColor
 {
-    return myBorderColor;
+    return _borderColor;
 }
 - (void)setBorderColor:(NSColor *)aBorderColor
 {
     [aBorderColor retain];
-    [myBorderColor release];
-    myBorderColor = aBorderColor;
+    [_borderColor release];
+    _borderColor = aBorderColor;
 }
 
 

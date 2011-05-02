@@ -1,0 +1,101 @@
+/* Editing text should have gray outline, not standard focus ring */
+.kLine {
+    outline: rgba(127,127,127,0) solid 1px;
+    -webkit-transition: outline-color 0.1s linear;
+}
+
+.kLine[contenteditable=true]:hover {
+    outline-color: rgba(127,127,127,1);
+}
+
+.kLine:focus {
+    outline-color: rgba(127,127,127,1);
+    -webkit-transition: none;
+}
+
+/* Sidebar should be a min-height so content can be dropped in it
+ */
+#sidebar { min-height: 190px; }
+
+
+img { -webkit-user-select:none; }
+
+/*  By default, graphics & callouts in article aren't selectable… */
+[contenteditable] .graphic-container,
+[contenteditable] .graphic-container *,
+[contenteditable] .callout-container,
+[contenteditable] .callout-container * {
+    -webkit-user-select: none;
+}
+
+/*  Flickr (and potentially other code) uses an offscreen invisible image. This can ruin dragging */
+img[width="0"], img[height="0"] { display:none; }
+
+
+/* Give inline graphics a min height so they can be selected and maniuplated */
+/*.graphic { min-height:16px; }   #91772*/
+
+
+/* Regular placeholders are gray with white, inset text */
+.svx-placeholder
+{
+	/*min-height: 50px;*/
+    color: white; 
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #AEAEAE), color-stop(1, #CBCBCB));
+    padding:5px !important;
+    border:1px solid #404040;
+    text-align: center !important;  /* used to be in .svx-placeholder > div only. no idea why */
+}
+.svx-placeholder > div
+{
+    margin:0px;
+    padding: 12px;
+    font-weight: bold;
+    font-family: "Lucida Grande";
+    font-size: 13px;
+}
+
+/* Little badge to indicate invisible content */
+.svx-invisibadge
+{
+	background:rgb(0,127,255);
+	-webkit-border-radius:3px;
+	padding:2px 5px;
+	color:white;
+	font-size:80%;
+}
+
+.svx-warning
+{
+	background:rgb(205,0,0) !important;
+}
+
+/* When inside a size-bound element, adjust to fill it */
+div.svx-size-bound {
+    position:relative;
+}
+div.svx-size-bound .svx-placeholder {
+    position:absolute;
+    top:0px;
+    bottom:0px;
+    left:0px;
+    right:0px;
+}
+div.svx-size-bound .svx-placeholder > div {
+    position:absolute;
+    top:8px;
+    bottom:8px;
+    left:8px;
+    right:8px;
+}
+
+/* Drop targets get the dashed border */
+div.svx-dragging-destination .svx-placeholder > div
+{
+    border-color: white; 
+    border-width: 4px; 
+    border-style: dashed; 
+    border-radius: 16px;
+    padding-top:16px;
+    padding-bottom:16px;
+}

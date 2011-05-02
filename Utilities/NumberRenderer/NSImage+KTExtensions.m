@@ -2,7 +2,7 @@
 //  NSImage+KTExtensions.m
 //  KTComponents
 //
-//  Copyright 2004-2009 Karelia Software. All rights reserved.
+//  Copyright 2004-2011 Karelia Software. All rights reserved.
 //
 
 // $Id: NSImage+KTExtensions.m 3183 2007-03-30 07:48:35Z dwood $

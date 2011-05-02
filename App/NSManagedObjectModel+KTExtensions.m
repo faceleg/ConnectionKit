@@ -3,17 +3,15 @@
 //  ModelTester
 //
 //  Created by Terrence Talbot on 2/28/05.
-//  Copyright 2005-2009 Karelia Software. All rights reserved.
+//  Copyright 2005-2011 Karelia Software. All rights reserved.
 //
 
 #import "NSManagedObjectModel+KTExtensions.h"
 
 #import "KT.h"
-#import "KTAbstractElement.h"
 
 #import "NSException+Karelia.h"
 
-static NSManagedObjectModel *sKTComponentsModel;
 
 @implementation NSManagedObjectModel (KTExtensions)
 
@@ -43,6 +41,43 @@ static NSManagedObjectModel *sKTComponentsModel;
 	}
 	
 	return nil;
+}
+
+/*! Returns an autoreleaed model from KTComponents_aVersion.mom.
+ *  Passing in nil for aVersion will return the standard KTComponents model.
+ */
++ (NSManagedObjectModel *)modelWithVersion:(NSString *)aVersion
+{
+	NSManagedObjectModel *result = nil;
+	
+    
+    // Figure out the name of the model.
+	NSString *modelName = nil;
+	if (!aVersion || [aVersion isEqualToString:kKTModelVersion])
+	{
+		modelName = @"Sandvox";
+	}
+    else if ([aVersion isEqualToString:kKTModelVersion_ORIGINAL])
+    {
+        modelName = @"KTComponents";
+    }
+    
+    
+    // Try to locate the model
+    if (modelName)
+    {
+        NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+        NSString *path = [bundle pathForResource:modelName
+                                          ofType:@"mom"];
+        //inDirectory:@"Models"];
+        
+        if (path)
+        {
+            result = [NSManagedObjectModel modelWithPath:path];
+        }
+	}
+	
+	return result;
 }
 
 #pragma mark -
@@ -92,31 +127,14 @@ static NSManagedObjectModel *sKTComponentsModel;
 	return (nil != [[self entitiesByName] objectForKey:aString]) ? YES : NO;
 }
 
-+ (BOOL)componentsFrameworkModelContainsEntityNamed:(NSString *)aString
-{
-	if ( nil == sKTComponentsModel )
-	{
-		NSBundle *bundle = [NSBundle bundleForClass:[KTAbstractElement class]];
-		NSString *modelPath = [bundle pathForResource:@"KTComponents" ofType:@"mom"];
-		sKTComponentsModel = [[NSManagedObjectModel modelWithPath:modelPath] retain];
-		if ( nil == sKTComponentsModel )
-		{
-			[NSException raise:kKareliaGeneralException format:@"unable to construct model at path: %@", modelPath];
-		}
-	}
-	
-	return [sKTComponentsModel hasEntityNamed:aString];
-}
-
 - (void)prettyPrintDescription
 {
 	NSLog(@"\n----------------------------model----------------------------\n");
 	
 	NSArray *entities = [self entities];
 	
-	NSEnumerator *e = [entities objectEnumerator];
 	NSEntityDescription *entity;
-	while ( entity = [e nextObject] )
+	for ( entity in entities )
 	{
 		NSLog(@"Entity: %@", [entity name]);
 		NSLog(@"Super Entity: %@", [[entity superentity] name]);

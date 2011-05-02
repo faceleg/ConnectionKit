@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Dan Wood on 4/13/07.
-//  Copyright 2007-2009 Karelia Software. All rights reserved.
+//  Copyright 2007-2011 Karelia Software. All rights reserved.
 //
 
 // Based on the guts of UKSyntaxColoredTextDocument by Uli K.
@@ -17,13 +17,9 @@
 #import "NSColor+Karelia.h"
 #import "NSScanner+Karelia.h"
 
-@interface NSTextView ( Private )
+@interface NSTextView ()
 
 -(NSDictionary*)	syntaxDefinitionDictionary;
--(NSDictionary*)	defaultTextAttributes;
-
-
--(void) recolorRange: (NSRange) range;
 
 
 -(void)	recolorSyntaxTimer: (NSTimer*) sender;
@@ -229,11 +225,19 @@ static NSMutableDictionary *sDefaultTextAttributesPerInstance = nil;
 		float pointSize = [defaults floatForKey:@"HTMLViewPointSize"];
 		
 		NSFont *font = nil;
-		if (fontName) {
+		if (fontName)
+		{
 			font = [NSFont fontWithName:fontName size:pointSize];
 		}
-		if (!font) {
-			font = [NSFont userFixedPitchFontOfSize:10.0];
+		if (!font)
+		{
+			// For some reason, Snow Leopard gives us Menlo but doesn't use it by default!
+			NSFont *menlo = [NSFont fontWithName:@"Menlo-Regular" size:12.0];
+			if (menlo)
+			{
+				[NSFont setUserFixedPitchFont: menlo];
+			}
+			font = [NSFont userFixedPitchFontOfSize:12.0];
 		}
 		
 		result = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];

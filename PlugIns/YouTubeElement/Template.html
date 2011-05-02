@@ -1,0 +1,13 @@
+[[if videoID]]
+<div class="VideoElement">
+    <div class="video">
+        [[if currentContext.liveDataFeeds]]
+            [[=writeIFrameEmbed]]
+        [[else2]]
+            [[=writePlaceholderDiv]]
+        [[endif2]]
+	</div>
+</div>
+[[else]]
+    [[=writePlaceholderDiv]]
+[[endif]]

@@ -1,0 +1,11 @@
+<div class="callout-container left right center"[[if parser.HTMLGenerationPurpose==0]] id="[[=editingElementID]]"[[endif]]>
+    <div class="callout">
+        <div class="callout-top"></div>
+        <div class="callout-content">
+[[foreach pagelets aPagelet]]
+            [[=aPagelet.HTMLString]]
+[[endforeach]]
+        </div> <!-- callout-content -->
+        <div class="callout-bottom"></div>	
+    </div> <!-- callout -->
+</div> <!-- callout-container -->

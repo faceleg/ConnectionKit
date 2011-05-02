@@ -3,15 +3,16 @@
 //  Marvel
 //
 //  Created by Mike on 15/12/2008.
-//  Copyright 2008-2009 Karelia Software. All rights reserved.
+//  Copyright 2008-2011 Karelia Software. All rights reserved.
 //
 
 #import "KSViewController.h"
 
 
-@interface KTExportSavePanelController : KSViewController
+@interface KTExportSavePanelController : NSViewController
 {
     IBOutlet NSTextField    *oSiteURLField;
+    IBOutlet NSImageView    *oSiteURLWarningImageView;
     
   @private
     NSURL   *_documentURL;

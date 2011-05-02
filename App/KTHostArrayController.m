@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Dan Wood on 11/10/04.
-//  Copyright 2004-2009 Karelia Software. All rights reserved.
+//  Copyright 2004-2011 Karelia Software. All rights reserved.
 //
 
 /*
@@ -58,10 +58,9 @@ TO DO:
     }
 
     NSMutableArray *filteredObjects = [NSMutableArray arrayWithCapacity:[objects count]];
-    NSEnumerator *objectsEnumerator = [objects objectEnumerator];
     id item;
 
-    while (item = [objectsEnumerator nextObject])
+    for (item in objects)
 	{
 		NSString *name = [item valueForKeyPath:@"provider"];
 		NSString *area = [item valueForKeyPath:@"regions"];

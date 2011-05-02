@@ -1,9 +1,11 @@
 
 // Document
-NSString *kKTDocumentType = @"Sandvox Document";
-NSString *kKTDocumentExtension = @"svxSite";
-NSString *kKTDocumentUTI = @"com.karelia.sandvox.site-document";
-NSString *kKTDocumentUTI_ORIGINAL = @"com.karelia.sandvox.document";
+NSString *kSVDocumentTypeName = @"Sandvox Document";
+NSString *kSVDocumentTypeName_1_5 = @"Sandvox 1.5 Document";
+NSString *kSVDocumentPathExtension = @"sandvox";
+NSString *kSVDocumentPathExtension_1_0 = @"svxSite";
+NSString *kSVDocumentType = @"com.karelia.Sandvox.svxSite";
+NSString *kSVDocumentType_1_0 = @"com.karelia.sandvox.document";
 
 NSString *kKTPageIDDesignator = @"~PAGEID~";
 
@@ -61,7 +63,6 @@ NSString *kKTDesignExtension = @"svxDesign";
 // Notifications
 NSString *kKTDesignChangedNotification = @"kKTDesignChangedNotification";
 NSString *kKTInfoWindowMayNeedRefreshingNotification = @"KTInfoWindowMayNeedRefreshingNotification";
-NSString *kKTItemSelectedNotification = @"kKTItemSelectedNotification";
 
 // Site Publication
 NSString *kKTDefaultMediaPath = @"_Media";

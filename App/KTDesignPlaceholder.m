@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Mike on 30/05/2008.
-//  Copyright 2008-2009 Karelia Software. All rights reserved.
+//  Copyright 2008-2011 Karelia Software. All rights reserved.
 //
 
 #import "KTDesignPlaceholder.h"
@@ -15,7 +15,7 @@
 {
     OBPRECONDITION(identifier);
     
-    // We are being incredibly cheeky and sidestepping KSPlugin's usual initialization in order
+    // We are being incredibly cheeky and sidestepping KSPlugInWrapper's usual initialization in order
     // to accomodate having a nil bundle.
     self = [super init];
     

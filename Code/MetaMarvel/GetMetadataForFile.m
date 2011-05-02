@@ -18,9 +18,9 @@ Boolean GetMetadataForFile(
 	datastorePath = [datastorePath stringByAppendingPathExtension:@"sqlite3"];
 	
 	NSURL *datastoreURL = [NSURL fileURLWithPath:datastorePath];
-	
+    	
 	// we're just going to return all of our document's Core Data metadata
-	NSDictionary *metadata = [NSPersistentStoreCoordinator metadataForPersistentStoreWithURL:datastoreURL error:NULL];
+    NSDictionary *metadata = [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:nil URL:datastoreURL error:NULL];
 	if ( nil != metadata )
 	{
 		[(NSMutableDictionary *)attributes addEntriesFromDictionary:metadata];

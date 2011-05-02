@@ -2,7 +2,7 @@
 //  KTMediaFileUpload.h
 //  Sandvox
 //
-//  Copyright 2007-2009 Karelia Software. All rights reserved.
+//  Copyright 2007-2011 Karelia Software. All rights reserved.
 //
 //  THIS SOFTWARE IS PROVIDED BY KARELIA SOFTWARE AND ITS CONTRIBUTORS "AS-IS"
 //  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -18,12 +18,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KTWebPathsProtocol.h"
 
 
 @class KTPage;
 
-@interface KTMediaFileUpload : NSManagedObject <KTWebPaths>
+@interface KTMediaFileUpload : NSManagedObject
 
 - (NSString *)pathRelativeToSite;
 

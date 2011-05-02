@@ -1,20 +1,24 @@
 
 // define some strings for genstrings and localization (is there a better directive?)
 
-#define TOOLBAR_ADD_PAGE NSLocalizedStringWithDefaultValue(@"TOOLBAR_ADD_PAGE", nil, [NSBundle mainBundle], @"Pages", @"")
-#define PALETTE_ADD_PAGE NSLocalizedStringWithDefaultValue(@"PALETTE_ADD_PAGE", nil, [NSBundle mainBundle], @"Pages", @"")
-#define PALETTE_ADD_PAGE_POPUP NSLocalizedStringWithDefaultValue(@"PALETTE_ADD_PAGE_POPUP", nil, [NSBundle mainBundle], @"Pages", @"")
+#define TOOLBAR_ADD_PAGE NSLocalizedStringWithDefaultValue(@"TOOLBAR_ADD_PAGE", nil, [NSBundle mainBundle], @"New", @"")
+#define PALETTE_ADD_PAGE NSLocalizedStringWithDefaultValue(@"PALETTE_ADD_PAGE", nil, [NSBundle mainBundle], @"New Page", @"")
+#define PALETTE_ADD_PAGE_POPUP NSLocalizedStringWithDefaultValue(@"PALETTE_ADD_PAGE_POPUP", nil, [NSBundle mainBundle], @"New", @"")
 #define TOOLTIP_ADD_PAGE NSLocalizedStringWithDefaultValue(@"TOOLTIP_ADD_PAGE", nil, [NSBundle mainBundle], @"Add a new page to your site.", @"tooltip")
 
-#define TOOLBAR_ADD_PAGELET NSLocalizedStringWithDefaultValue(@"TOOLBAR_ADD_PAGELET", nil, [NSBundle mainBundle], @"Pagelets", @"")
-#define PALETTE_ADD_PAGELET NSLocalizedStringWithDefaultValue(@"PALETTE_ADD_PAGELET", nil, [NSBundle mainBundle], @"Pagelets", @"")
-#define PALETTE_ADD_PAGELET_POPUP NSLocalizedStringWithDefaultValue(@"PALETTE_ADD_PAGELET_POPUP", nil, [NSBundle mainBundle], @"Pagelets", @"")
-#define TOOLTIP_ADD_PAGELET NSLocalizedStringWithDefaultValue(@"TOOLTIP_ADD_PAGELET", nil, [NSBundle mainBundle], @"Add a new pagelet to the current page.", @"tooltip")
+#define TOOLBAR_INSERT_TEXT_BOX NSLocalizedStringWithDefaultValue(@"TOOLBAR_INSERT_TEXT_BOX", nil, [NSBundle mainBundle], @"Text Box", @"")
+#define PALETTE_INSERT_TEXT_BOX NSLocalizedStringWithDefaultValue(@"PALETTE_INSERT_TEXT_BOX", nil, [NSBundle mainBundle], @"Text Box", @"")
+#define TOOLTIP_INSERT_TEXT_BOX NSLocalizedStringWithDefaultValue(@"TOOLTIP_INSERT_TEXT_BOX", nil, [NSBundle mainBundle], @"Add a new text box to the current page.", @"tooltip")
 
-#define TOOLBAR_ADD_COLLECTION NSLocalizedStringWithDefaultValue(@"TOOLBAR_ADD_COLLECTION", nil, [NSBundle mainBundle], @"Collections", @"")
-#define PALETTE_ADD_COLLECTION NSLocalizedStringWithDefaultValue(@"PALETTE_ADD_COLLECTION", nil, [NSBundle mainBundle], @"Collections", @"")
-#define PALETTE_ADD_COLLECTION_POPUP NSLocalizedStringWithDefaultValue(@"PALETTE_ADD_COLLECTION_POPUP", nil, [NSBundle mainBundle], @"Collections", @"")
-#define TOOLTIP_ADD_COLLECTION NSLocalizedStringWithDefaultValue(@"TOOLTIP_ADD_COLLECTION", nil, [NSBundle mainBundle], @"Add a new collection to your site.", @"tooltip")
+#define TOOLBAR_ADD_PAGELET NSLocalizedStringWithDefaultValue(@"TOOLBAR_ADD_PAGELET", nil, [NSBundle mainBundle], @"Objects", @"")
+#define PALETTE_ADD_PAGELET NSLocalizedStringWithDefaultValue(@"PALETTE_ADD_PAGELET", nil, [NSBundle mainBundle], @"Objects", @"")
+#define PALETTE_ADD_PAGELET_POPUP NSLocalizedStringWithDefaultValue(@"PALETTE_ADD_PAGELET_POPUP", nil, [NSBundle mainBundle], @"Objects", @"")
+#define TOOLTIP_ADD_PAGELET NSLocalizedStringWithDefaultValue(@"TOOLTIP_ADD_PAGELET", nil, [NSBundle mainBundle], @"Add a new object to the current page.", @"tooltip")
+
+#define TOOLBAR_INSERT_INDEX NSLocalizedStringWithDefaultValue(@"TOOLBAR_INSERT_INDEX", nil, [NSBundle mainBundle], @"Indexes", @"")
+#define PALETTE_INSERT_INDEX NSLocalizedStringWithDefaultValue(@"PALETTE_INSERT_INDEX", nil, [NSBundle mainBundle], @"Indexes", @"")
+#define PALETTE_ADD_COLLECTION_POPUP NSLocalizedStringWithDefaultValue(@"PALETTE_ADD_COLLECTION_POPUP", nil, [NSBundle mainBundle], @"Indexes", @"")
+#define TOOLTIP_INSERT_INDEX NSLocalizedStringWithDefaultValue(@"TOOLTIP_INSERT_INDEX", nil, [NSBundle mainBundle], @"Add a new index to your site.", @"tooltip")
 
 #define TOOLBAR_GROUP_COLLECTION NSLocalizedStringWithDefaultValue(@"TOOLBAR_GROUP_COLLECTION", nil, [NSBundle mainBundle], @"Group", @"")
 #define PALETTE_GROUP_COLLECTION NSLocalizedStringWithDefaultValue(@"PALETTE_GROUP_COLLECTION", nil, [NSBundle mainBundle], @"Group", @"")
@@ -30,6 +34,11 @@
 #define TOOLBAR_PUBLISH_ALL NSLocalizedStringWithDefaultValue(@"TOOLBAR_PUBLISH_ALL", nil, [NSBundle mainBundle], @"Publish All", @"")
 #define PALETTE_PUBLISH_ALL NSLocalizedStringWithDefaultValue(@"PALETTE_PUBLISH_ALL", nil, [NSBundle mainBundle], @"Publish All", @"")
 #define TOOLTIP_PUBLISH_ALL NSLocalizedStringWithDefaultValue(@"TOOLTIP_PUBLISH_ALL", nil, [NSBundle mainBundle], @"Send entire site to your ISP.", @"tooltip")
+
+#define TOOLBAR_EXPORT NSLocalizedStringWithDefaultValue(@"TOOLBAR_EXPORT", nil, [NSBundle mainBundle], @"Export", @"")
+#define PALETTE_EXPORT NSLocalizedStringWithDefaultValue(@"PALETTE_EXPORT", nil, [NSBundle mainBundle], @"Export", @"")
+#define TOOLTIP_EXPORT NSLocalizedStringWithDefaultValue(@"TOOLTIP_EXPORT", nil, [NSBundle mainBundle], @"Export site to your local hard drive.", @"tooltip")
+
 
 #define TOOLBAR_TOGGLE_MEDIA NSLocalizedStringWithDefaultValue(@"TOOLBAR_TOGGLE_MEDIA", nil, [NSBundle mainBundle], @"Media", @"")
 #define PALETTE_TOGGLE_MEDIA NSLocalizedStringWithDefaultValue(@"PALETTE_TOGGLE_MEDIA", nil, [NSBundle mainBundle], @"Media", @"")

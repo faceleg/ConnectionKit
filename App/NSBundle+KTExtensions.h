@@ -2,7 +2,7 @@
 //  NSBundle+KTExtensions.h
 //  KTComponents
 //
-//  Copyright 2005-2009 Karelia Software. All rights reserved.
+//  Copyright 2005-2011 Karelia Software. All rights reserved.
 //
 //  THIS SOFTWARE IS PROVIDED BY KARELIA SOFTWARE AND ITS CONTRIBUTORS "AS-IS"
 //  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -18,7 +18,6 @@
 //
 
 #import <Foundation/Foundation.h>
-
 
 @interface NSBundle ( KTExtensions )
 

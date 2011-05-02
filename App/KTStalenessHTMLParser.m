@@ -3,14 +3,14 @@
 //  Marvel
 //
 //  Created by Mike on 11/02/2008.
-//  Copyright 2008-2009 Karelia Software. All rights reserved.
+//  Copyright 2008-2011 Karelia Software. All rights reserved.
 //
 
 #import "KTStalenessHTMLParser.h"
-#import "KTHTMLParser+Private.h"
+#import "SVHTMLTemplateParser+Private.h"
 
 #import "KTSite.h"
-#import "KTHTMLTextBlock.h"
+#import "SVHTMLTextBlock.h"
 #import "NSScanner+Karelia.h"
 
 
@@ -27,14 +27,15 @@
 
 /*	In addition to the usual behaviour, we want to pass out keypaths to the delegate which account for how to thingy
  */
-- (KTHTMLTextBlock *)textblockForKeyPath:(NSString *)keypath ofObject:(id)object
+- (SVHTMLTextBlock *)textblockForKeyPath:(NSString *)keypath ofObject:(id)object
 									  flags:(NSArray *)flags
 								    HTMLTag:(NSString *)tag
+							      className:(NSString *)className
 						  graphicalTextCode:(NSString *)GTCode
 								  hyperlink:(KTAbstractPage *)hyperlink
 {
-	KTHTMLTextBlock *result =
-		[super textblockForKeyPath:keypath ofObject:object flags:flags HTMLTag:tag graphicalTextCode:GTCode hyperlink:hyperlink];
+	SVHTMLTextBlock *result =
+	[super textblockForKeyPath:keypath ofObject:object flags:flags HTMLTag:tag class:className graphicalTextCode:GTCode hyperlink:hyperlink];
 	
 	
 	if ([result isRichText])

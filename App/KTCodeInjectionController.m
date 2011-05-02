@@ -3,14 +3,12 @@
 //  Marvel
 //
 //  Created by Terrence Talbot on 4/5/07.
-//  Copyright 2007-2009 Karelia Software. All rights reserved.
+//  Copyright 2007-2011 Karelia Software. All rights reserved.
 //
 
 #import "KTCodeInjectionController.h"
-
-#import "KTCodeInjectionSplitView.h"
 #import "KTDocWindowController.h"
-#import "KTDocSiteOutlineController.h"
+#import "SVPagesController.h"
 
 #import "KTApplication.h"
 #import "KTPage.h"
@@ -18,25 +16,19 @@
 #import "KSAppDelegate.h"
 
 #import "Registration.h"
+#import "NSTextView+KTExtensions.h"
 
-@interface KTCodeInjectionController (Private)
+@interface KTCodeInjectionController ()
 @end
 
 
 @implementation KTCodeInjectionController
 
-- (id)initWithSiteOutlineController:(KTDocSiteOutlineController *)siteOutline
-							 master:(BOOL)isMaster;
-{
-	if ( !(gIsPro || (nil == gRegistrationString)) )	// don't allow this to be created if we're not pro
-	{
-		NSBeep();
-		[self release];
-		return nil;
-	}
-	
-	mySiteOutlineController = siteOutline;
-	myIsMaster = isMaster;
+- (id)initWithPagesController:(id <KSCollectionController>)controller
+                       master:(BOOL)isMaster;
+{	
+	_pagesController = controller;
+	_isMaster = isMaster;
 	
 	[super initWithWindowNibName:@"CodeInjection"];
 	
@@ -57,53 +49,87 @@
 
 - (void)awakeFromNib
 {
-	NSFont *font = [NSFont systemFontOfSize:[NSFont systemFontSizeForControlSize:NSSmallControlSize]];
+	NSDictionary *attr = [oPreludeTextView defaultTextAttributes];
+	NSFont *font = [attr objectForKey:NSFontAttributeName];
+	NSSize inset = NSMakeSize(0.0, 4.0);
+	
 	[oPreludeTextView setFont:font];
 	[oEarlyHeadTextView setFont:font];
 	[oHeadTextView setFont:font];
 	[oBodyStartTextView setFont:font];
 	[oBodyEndTextView setFont:font];
-	[oBodyTagTextField setFont:font];
+	[oCSSTextView setFont:font];
 	
+	[oPreludeTextView setUsesFontPanel:NO];
+	[oEarlyHeadTextView setUsesFontPanel:NO];
+	[oHeadTextView setUsesFontPanel:NO];
+	[oBodyStartTextView setUsesFontPanel:NO];
+	[oBodyEndTextView setUsesFontPanel:NO];
+	[oCSSTextView setUsesFontPanel:NO];
+
+	[oPreludeTextView setTextContainerInset:inset];
+	[oEarlyHeadTextView setTextContainerInset:inset];
+	[oHeadTextView setTextContainerInset:inset];
+	[oBodyStartTextView setTextContainerInset:inset];
+	[oBodyEndTextView setTextContainerInset:inset];
+	[oCSSTextView setTextContainerInset:inset];
+
 	
-	// Bind our text fields to the right controller.
-	KTDocSiteOutlineController *pagesController = [[mySiteOutlineController windowController] siteOutlineController];
-	
+	// Bind our text fields to the right controller.	
 	NSString *baseKeyPath = @"selection";
 	if ([self isMaster])
 	{
 		baseKeyPath = [baseKeyPath stringByAppendingString:@".master"];
+
+		// Only CSS for master (whole site)
+		[oCSSTextView bind:NSValueBinding
+				  toObject:_pagesController
+			   withKeyPath:[baseKeyPath stringByAppendingString:@".codeInjection.additionalCSS"]
+				   options:nil];
+	}
+	else
+	{
+		// Not the master (the document) so take out this tab
+		NSInteger cssIndex = [oTabView indexOfTabViewItemWithIdentifier:@"css"];
+		if (NSNotFound != cssIndex)
+		{
+			NSTabViewItem *item = [oTabView tabViewItemAtIndex:cssIndex];
+			[oTabView removeTabViewItem:item];
+			oCSSTextView = nil;	// shouldn't be using this
+		}
 	}
 	
-	[oPreludeTextView bind:@"value"
-				  toObject:pagesController
+	[oPreludeTextView bind:NSValueBinding
+				  toObject:_pagesController
 			   withKeyPath:[baseKeyPath stringByAppendingString:@".codeInjection.beforeHTML"]
 				   options:nil];
 	
-	[oEarlyHeadTextView bind:@"value"
-					toObject:pagesController
+	[oEarlyHeadTextView bind:NSValueBinding
+					toObject:_pagesController
 				 withKeyPath:[baseKeyPath stringByAppendingString:@".codeInjection.earlyHead"]
 				     options:nil];
 	
-	[oHeadTextView bind:@"value"
-				  toObject:pagesController
+	[oHeadTextView bind:NSValueBinding
+				  toObject:_pagesController
 			   withKeyPath:[baseKeyPath stringByAppendingString:@".codeInjection.headArea"]
 				   options:nil];
 	
-	[oBodyStartTextView bind:@"value"
-				    toObject:pagesController
+	[oBodyStartTextView bind:NSValueBinding
+				    toObject:_pagesController
 			     withKeyPath:[baseKeyPath stringByAppendingString:@".codeInjection.bodyTagStart"]
 				     options:nil];
 	
-	[oBodyEndTextView bind:@"value"
-				  toObject:pagesController
+	[oBodyEndTextView bind:NSValueBinding
+				  toObject:_pagesController
 			   withKeyPath:[baseKeyPath stringByAppendingString:@".codeInjection.bodyTagEnd"]
 				   options:nil];
 	
-	[oBodyTagTextField bind:@"value"
-				  toObject:pagesController
+	[oBodyTagTextField bind:NSValueBinding
+				  toObject:_pagesController
 			   withKeyPath:[baseKeyPath stringByAppendingString:@".codeInjection.bodyTag"]
 				   options:nil];
+	
+	
 }
 
 - (void)windowDidLoad
@@ -112,15 +138,24 @@
 	
 	
 	// Editing notifications
-	NSSet *textViews = [NSSet setWithObjects:oPreludeTextView, oHeadTextView, oEarlyHeadTextView, oBodyStartTextView, oBodyEndTextView, nil];
-	NSEnumerator *textViewsEnumerator = [textViews objectEnumerator];
-	NSTextView *aTextView;
-	while (aTextView = [textViewsEnumerator nextObject])
+	NSSet *textViews = nil;
+	
+	if ([self isMaster])
 	{
+		textViews = [NSSet setWithObjects:oPreludeTextView, oHeadTextView, oEarlyHeadTextView, oBodyStartTextView, oBodyEndTextView, oCSSTextView, nil];
+	}
+	else	// no CSS view
+	{
+		textViews = [NSSet setWithObjects:oPreludeTextView, oHeadTextView, oEarlyHeadTextView, oBodyStartTextView, oBodyEndTextView, nil];
+	}
+	NSTextView *aTextView;
+	for (aTextView in textViews)
+	{
+		NSTextStorage *textStorage = [aTextView textStorage];
 		[[NSNotificationCenter defaultCenter] addObserver:self 
 												 selector:@selector(textViewDidProcessEditing:)
 													 name:NSTextStorageDidProcessEditingNotification
-												   object:[aTextView textStorage]];
+												   object:textStorage];
 	}
 	
 	
@@ -147,14 +182,7 @@
 	}
 	[oCodeInjectionDescriptionLabel setStringValue:description];
 	
-	
-	// Localize other text
-	[oHeadSplitView setDividerDescription:
-		NSLocalizedString(@"Sandvox will insert its content between these fields", "Code Injection information")];
-	
-	[oBodySplitView setDividerDescription:
-		NSLocalizedString(@"Sandvox will insert its content between these fields", "Code Injection information")];
-	
+
 	[oPreludeTextView setPlaceholderString:NSLocalizedString(
 		@"Use this field to insert code at the very beginning of the document, before the opening <html> tag. This is never any HTML or Javascript code; it's only for server-side scripts (such as PHP code) to affect the headers, set cookies, etc.",
 		"Code Injection placeholder text")];
@@ -178,6 +206,13 @@
 	[oBodyEndTextView setPlaceholderString:NSLocalizedString(
 		@"Use this field to insert code at the end of the page, right before the </body> tag. This is generally used to include JavaScript that processes the preceding page contents.",
 		"Code Injection placeholder text")];
+
+	if ([self isMaster])
+	{
+		[oCSSTextView setPlaceholderString:NSLocalizedString(
+		 @"Use this field to insert CSS styles on every page, to override the styles provided by the current design.",
+		 "Code Injection placeholder text")];
+	}
 }
 
 - (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName
@@ -230,6 +265,17 @@
 				{
 					[oTabView selectTabViewItemWithIdentifier:@"body"];
 				}
+				else
+				{
+					if ([self isMaster])
+					{
+						stringValue = [[oCSSTextView textStorage] string];
+						if (stringValue && ![stringValue isEqualToString:@""])
+						{					
+							[oTabView selectTabViewItemWithIdentifier:@"css"];
+						}
+					}
+				}
 			}
 		}
 	}
@@ -237,7 +283,7 @@
 	[super showWindow:sender];
 }
 
-- (BOOL)isMaster { return myIsMaster; }
+- (BOOL)isMaster { return _isMaster; }
 
 - (IBAction)showHelp:(id)sender
 {

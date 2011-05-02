@@ -2,7 +2,7 @@
 //  KTImageView.m
 //  KTComponents
 //
-//  Copyright 2004-2009 Karelia Software. All rights reserved.
+//  Copyright 2004-2011 Karelia Software. All rights reserved.
 //
 
 
@@ -21,7 +21,12 @@
 #import <WebKit/WebKit.h>
 
 
-@interface KTImageView ( Private )
+@interface NSImageView (KTImageView)
+- (IBAction)paste:(id)sender;
+@end
+
+
+@interface KTImageView ()
 //- (void)setFileName:(NSString *)aPath;
 //- (void)pickSomeoneWithNewCropper:(id)sender;
 - (id)delegateForSelector:(SEL)aSelector;
@@ -31,14 +36,9 @@
 
 @implementation KTImageView
 
-#pragma mark awake
-
-- (void)awakeFromNib
-{
-	[self setAllowsCutCopyPaste:NO];
-}
-
 #pragma mark accessors
+
+- (NSPasteboard *)editPasteboard; { return _pasteboard; }
 
 - (NSDictionary *)dataSourceDictionary
 {
@@ -158,33 +158,19 @@
 	[dataSourceDelegate imageView:self setWithDataSourceDictionary:myDataSourceDictionary];	
 }
 
-#pragma mark Dragging
+#pragma mark Dragging Destination
 
-- (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)draggingInfo
+- (BOOL) prepareForDragOperation:(id <NSDraggingInfo>)sender;
 {
-	NSDragOperation result = NSDragOperationNone;
-	
-	if ([self isEnabled])	// If we are enabled, have a look to see if the drag source is suitable
-	{
-		NSArray *acceptedTypes = [NSArray arrayWithObjects:
-			WebArchivePboardType,	// drags from safari, includes links and such
-			NSFilenamesPboardType,
-			NSTIFFPboardType,
-			NSPICTPboardType,
-			NSPDFPboardType,
-			//		@"Apple PNG pasteboard type",		// not defined in headers, but it's on screenshots!
-			nil];
-		
-		NSPasteboard *pboard = [draggingInfo draggingPasteboard];
-		if ([pboard availableTypeFromArray:acceptedTypes]) {
-			result = NSDragOperationCopy;
-		}
-	}
-	
-	return result;
+    BOOL result = [super prepareForDragOperation:sender];
+    if (result)
+    {
+        _pasteboard = [sender draggingPasteboard];
+    }
+    return result;
 }
 
-- (void)concludeDragOperation:(id <NSDraggingInfo>)draggingInfo
+- (void)XconcludeDragOperation:(id <NSDraggingInfo>)draggingInfo
 {
     NSPasteboard *pboard = [draggingInfo draggingPasteboard];
     (void)[pboard types]; // we always have to call types
@@ -236,6 +222,15 @@
 	}
 	
     //[super concludeDragOperation:draggingInfo];
+}
+
+#pragma mark Paste
+
+- (void)paste:(id)sender;
+{
+    _pasteboard = [NSPasteboard generalPasteboard];
+    [super paste:(id)sender];
+    _pasteboard = nil;
 }
 
 @end
@@ -340,14 +335,14 @@ the indexed value into NSFilenamesPboardType.
 		NSData *webArchiveData = [pasteboard dataForType:WebArchivePboardType];
 		WebArchive *webArchive = [[[WebArchive alloc] initWithData:webArchiveData] autorelease];
 		WebResource *resource = [webArchive mainResource];
-		UTI = [NSString UTIForMIMEType:[resource MIMEType]];
-		if ( ![NSString UTI:UTI conformsToUTI:(NSString *)kUTTypeImage])
+		UTI = [KSWORKSPACE ks_typeForMIMEType:[resource MIMEType]];
+		if ( ![KSWORKSPACE type:UTI conformsToType:(NSString *)kUTTypeImage])
 		{
 			NSArray *subresources = [webArchive subresources];
 			if ([subresources count])
 			{
 				resource = [subresources objectAtIndex:0];
-				UTI = [NSString UTIForMIMEType:[resource MIMEType]];
+				UTI = [KSWORKSPACE ks_typeForMIMEType:[resource MIMEType]];
 			}
 			else
 			{
@@ -399,7 +394,7 @@ the indexed value into NSFilenamesPboardType.
 				[aDictionary setValue:[filePath lastPathComponent] forKey:kKTDataSourceFileName];
 
 				filePath = [[NSFileManager defaultManager] resolvedAliasPath:filePath];
-				UTI = [NSString UTIForFileAtPath:filePath];
+				UTI = [KSWORKSPACE ks_typeOfFileAtURL:[NSURL fileURLWithPath:filePath]];
 				[aDictionary setValue:filePath forKey:kKTDataSourceFilePath];
 				if (!hasiPhotoData)
 				{
@@ -471,7 +466,7 @@ the indexed value into NSFilenamesPboardType.
 					NSString *dataFilePath = nil;
 					if (nil == imageData
 						&& nil != (dataFilePath = [aDictionary valueForKey:kKTDataSourceFilePath])
-						&& ([[NSString UTIForFileAtPath:dataFilePath] isEqualToString:(NSString *)kUTTypeJPEG])
+						&& ([[KSWORKSPACE ks_typeOfFileAtURL:[NSURL fileURLWithPath:dataFilePath]] isEqualToString:(NSString *)kUTTypeJPEG])
 						)
 					{
 						CGImageSourceRef source = nil;

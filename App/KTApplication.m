@@ -3,7 +3,7 @@
 //  Marvel
 //
 //  Created by Terrence Talbot on 10/2/04.
-//  Copyright 2004-2009 Karelia Software. All rights reserved.
+//  Copyright 2004-2011 Karelia Software. All rights reserved.
 //
 
 /*
@@ -18,12 +18,24 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
  */
 
+
 #import "KTApplication.h"
-#import "KTAppDelegate.h"
+
+
+NSString *KTApplicationDidSendFlagsChangedEvent = @"KTApplicationDidSendFlagsChangedEvent";
 
 
 @implementation KTApplication
 
+- (void)sendEvent:(NSEvent *)theEvent
+{
+    [super sendEvent:theEvent];
+    
+    if ([theEvent type] == NSFlagsChanged)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:KTApplicationDidSendFlagsChangedEvent object:self];
+    }
+}
 
 @end
 

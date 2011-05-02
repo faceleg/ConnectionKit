@@ -2,7 +2,7 @@
 //  NSString+KTExtensions.m
 //  KTComponents
 //
-//  Copyright 2004-2009 Karelia Software. All rights reserved.
+//  Copyright 2004-2011 Karelia Software. All rights reserved.
 //
 
 #import "NSString+Karelia.h"
@@ -17,7 +17,8 @@
 
 
 // TEMPORARY FOR BETA -- HOW IS NSSTRING BEING PASSED THIS METHOD?
-#ifdef VARIANT_BETA
+// Think I fixed this in r1518 - Mike
+#ifndef VARIANT_RELEASE
 - (NSString *)identifier
 {
 	[NSException raise:NSInternalInconsistencyException format:@"calling identifier on %@", self];
@@ -170,22 +171,37 @@
 //}
 
 
-/*!	Normalizes Unicode composition of HTML.  Puts additional HTML code to indicate a trial license.  
- */
-- (NSString *)stringByAdjustingHTMLForPublishing
+@end
+
+
+@implementation NSAttributedString (KTExtensions)
+
++ (NSAttributedString *)attributedMenuTitle:(NSString *)aTitle subtitle:(NSString *)aSubtitle;
 {
-	NSString *result = [self unicodeNormalizedString];
-	if ((nil == gRegistrationString) || gLicenseIsBlacklisted)
+	static NSDictionary *sTitleAttributes = nil;
+	static NSDictionary *sSubtitleAttributes = nil;
+	if (!sTitleAttributes || !sSubtitleAttributes)
 	{
-		NSString *sandvoxTrialFormat = NSLocalizedString(@"This page was created by a trial version of %@. (Sandvox must be purchased to publish multiple pages.)",@"Warning for a published home page; the placeholder is replaced with 'Sandvox' as a hyperlink.");
-		
-		NSString *sandvoxToReplace = @"<a style=\"color:blue;\" href=\"http://www.sandvox.com/?utm_source=demo_site&amp;utm_medium=link&amp;utm_campaign=trial\">Sandvox</a>";
-		NSString *sandvoxText = [NSString stringWithFormat:sandvoxTrialFormat, sandvoxToReplace];
-		NSString *endingBodyText = [NSString stringWithFormat: @"<div style=\"z-index:999; position:fixed; bottom:0; left:0; right:0; margin:10px; padding:10px; background-color:yellow; border: 2px dashed gray; color:black; text-align:center; font:150%% 'Lucida Grande', sans-serif;\">%@</div></body>", sandvoxText];
-		
-		result = [result stringByReplacing:@"</body>" with:endingBodyText];
+		sTitleAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
+							[NSFont systemFontOfSize:[NSFont smallSystemFontSize]], NSFontAttributeName,
+							nil];
+		sSubtitleAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
+							   [NSFont systemFontOfSize:[NSFont labelFontSize]], NSFontAttributeName,
+							   [NSColor colorWithCalibratedWhite:0.0 alpha:0.4], NSForegroundColorAttributeName, 
+							   nil];
 	}
-	return result;
+	NSMutableAttributedString *nameAndDescription
+	= [[[NSMutableAttributedString alloc]
+		initWithString:aTitle
+		attributes:sTitleAttributes] autorelease];
+	if (aSubtitle && ![aSubtitle isEqualToString:@""])
+	{
+		[nameAndDescription appendAttributedString:
+		 [[[NSAttributedString alloc]
+		   initWithString:[NSString stringWithFormat:@"\n%@", aSubtitle]
+		   attributes:sSubtitleAttributes] autorelease]];
+	}
+	return nameAndDescription;
 }
 
 @end

@@ -3,20 +3,20 @@
 //  Marvel
 //
 //  Created by Mike on 01/11/2007.
-//  Copyright 2007-2009 Karelia Software. All rights reserved.
+//  Copyright 2007-2011 Karelia Software. All rights reserved.
 //
 
 #import "KTMissingMediaController.h"
 
-#import "KTMediaFile.h"
-#import "KTExternalMediaFile.h"
-#import "KTMediaManager+Internal.h"
+#import "KTMediaManager.h"
+#import "SVMediaRecord.h"
 
 #import "NSArray+Karelia.h"
 #import "NSHelpManager+Karelia.h"
 #import "NSObject+Karelia.h"
 
 #import "BDAlias.h"
+#import "KSWorkspaceUtilities.h"
 
 
 @interface NSString (KTMissingMediaController)
@@ -116,7 +116,7 @@
 
 /*	Try to locate similar missing media
  */
-- (void)offerToLocateSimilarMissingMedia:(KTExternalMediaFile *)originalMediaFile newPath:(NSString *)newPath;
+- (void)offerToLocateSimilarMissingMedia:(KTMediaFile *)originalMediaFile newPath:(NSString *)newPath;
 {
 	NSMutableSet *mediaToMigrate = [NSMutableSet setWithObject:originalMediaFile];
 	
@@ -137,11 +137,10 @@
 	// Look for other missing media with the same path prefix and that exist in the possible new location
 	NSMutableSet *similarMissingMedia = [NSMutableSet set];
 	NSEnumerator *missingMediaEnumerator = [[self missingMedia] objectEnumerator];
-	KTExternalMediaFile *aMediaFile;
+	KTMediaFile *aMediaFile;
 	while (aMediaFile = [missingMediaEnumerator nextObject])
 	{
-		if ([aMediaFile isKindOfClass:[KTExternalMediaFile class]])
-        {
+		{
             NSString *lastKnownPath = [[aMediaFile alias] lastKnownPath];
             NSArray *lastKnownPathComponents = [lastKnownPath pathComponents];
             
@@ -196,8 +195,7 @@
 	
 	
 	// Do the migration
-	NSEnumerator *migrationEnumerator = [mediaToMigrate objectEnumerator];
-	while (aMediaFile = [migrationEnumerator nextObject])
+	for (aMediaFile in mediaToMigrate)
 	{
 		NSString *lastKnownPath = [[aMediaFile alias] lastKnownPath];
 		NSArray *lastKnownPathComponents = [lastKnownPath pathComponents];
@@ -234,12 +232,12 @@
 	[panel setTreatsFilePackagesAsDirectories:YES];
 
 	
-	NSString *fileExtension = [mediaFile filenameExtension];
+	NSString *fileExtension = [[mediaFile filename] pathExtension];
 	int returnCode = [panel runModalForTypes:[NSArray arrayWithObject:fileExtension]];
 	
-	if (returnCode == NSOKButton && [mediaFile isKindOfClass:[KTExternalMediaFile class]])
+	if (returnCode == NSOKButton)
 	{
-		[self offerToLocateSimilarMissingMedia:(KTExternalMediaFile *)mediaFile newPath:[panel filename]];
+		[self offerToLocateSimilarMissingMedia:mediaFile newPath:[panel filename]];
 	}
 }
 
@@ -294,9 +292,9 @@
 {
 	NSImage *result = nil;
 	
-	if (!value || [value isEqual:[[NSBundle mainBundle] pathForImageResource:@"qmark"]])
+	if (!value || [value isEqual:[[NSBundle mainBundle] pathForImageResource:@"MissingMediaQMark"]])
 	{
-		result = [[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kAlertCautionIcon)];
+		result = [KSWORKSPACE iconForFileType:NSFileTypeForHFSTypeCode(kAlertCautionIcon)];
 	}
 	else
 	{

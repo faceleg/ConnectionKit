@@ -3,13 +3,13 @@
 //  Marvel
 //
 //  Created by Terrence Talbot on 1/6/06.
-//  Copyright 2006-2009 Karelia Software. All rights reserved.
+//  Copyright 2006-2011 Karelia Software. All rights reserved.
 //
 #import <Cocoa/Cocoa.h>
 #import "KTReleaseNotesController.h"
 #import <Sparkle/Sparkle.h>
 #import "NSString+Karelia.h"
-#import "NSURL+Karelia.h"
+#import "KSURLUtilities.h"
 #import "NSBundle+Karelia.h"
 #import "Debug.h"
 #import "KSAppDelegate.h"
@@ -23,9 +23,8 @@
 		// we want to convert this into a simple dicationary.
 	
 	NSMutableDictionary *simpleParameters = [NSMutableDictionary dictionary];
-	NSEnumerator *theEnum = [feedParams objectEnumerator];
 	NSDictionary *oneParamDict;
-	while ((oneParamDict = [theEnum nextObject]))
+	for (oneParamDict in feedParams)
 	{
 		[simpleParameters setObject:[oneParamDict objectForKey:@"value"] forKey:[oneParamDict objectForKey:@"key"]];
 	}	
@@ -33,9 +32,9 @@
 	[simpleParameters setObject:@"1" forKey:@"rn"];
 
 	NSURL *baseURL = [NSURL URLWithString:@"changelog.php" relativeToURL:[[NSApp delegate] homeBaseURL]];
-	NSURL *result = [NSURL URLWithBaseURL:baseURL parameters:simpleParameters];
+	NSURL *result = [baseURL ks_URLWithQueryParameters:simpleParameters];
 	
-	DJW((@"release notes URL = %@", result));
+	OFF((@"release notes URL = %@", result));
 	return result;
 }
 

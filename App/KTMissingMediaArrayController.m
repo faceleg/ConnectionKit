@@ -3,14 +3,13 @@
 //  Marvel
 //
 //  Created by Mike on 10/11/2007.
-//  Copyright 2007-2009 Karelia Software. All rights reserved.
+//  Copyright 2007-2011 Karelia Software. All rights reserved.
 //
 
 #import "KTMissingMediaArrayController.h"
 #import "KTMissingMediaController.h"
 
-#import "KTMediaManager+Internal.h"
-#import "KTExternalMediaFile.h"
+#import "KTMediaManager.h"
 #import "NSArray+Karelia.h"
 #import "NSString+Karelia.h"
 
@@ -77,7 +76,7 @@
 	return result;
 }
 
-- (NSDragOperation)dragOperationForDrop:(id <NSDraggingInfo>)info toRepairMediaFile:(KTExternalMediaFile *)mediaFile
+- (NSDragOperation)dragOperationForDrop:(id <NSDraggingInfo>)info toRepairMediaFile:(KTMediaFile *)mediaFile
 {
 	NSDragOperation result = NSDragOperationNone;
 	
@@ -94,7 +93,7 @@
 			if (path)
 			{
 				// Is the file type suitable?
-				if ([NSString UTI:[NSString UTIForFileAtPath:path] conformsToUTI:[mediaFile fileType]])
+				if ([KSWORKSPACE type:[KSWORKSPACE ks_typeOfFileAtURL:[NSURL fileURLWithPath:path]] conformsToType:[mediaFile fileType]])
 				{
 					result = [self dragOperationForPath:path draggingMask:[info draggingSourceOperationMask]];
 				}
@@ -125,7 +124,7 @@
 	{
 		[tableView setDropRow:dropRow dropOperation:NSTableViewDropOn];
 		
-		KTExternalMediaFile *mediaFile = [[self arrangedObjects] objectAtIndex:dropRow];
+		KTMediaFile *mediaFile = [[self arrangedObjects] objectAtIndex:dropRow];
 		result = [self dragOperationForDrop:info toRepairMediaFile:mediaFile];
 	}
 	
@@ -144,7 +143,7 @@
 	dropOperation:(NSTableViewDropOperation)operation
 {
 	// Insert a new media file for the replacement media
-	KTExternalMediaFile *mediaFile = [[self arrangedObjects] objectAtIndex:row];
+	KTMediaFile *mediaFile = [[self arrangedObjects] objectAtIndex:row];
 		NSDragOperation dragOperation = [self dragOperationForDrop:info  toRepairMediaFile:mediaFile];
 	BOOL fileShouldBeExternal = NO;
 	if (dragOperation & NSDragOperationLink)
@@ -156,7 +155,7 @@
 																	preferExternalFile:fileShouldBeExternal];
 	
 	// Move the old media containers to the new media file
-	KTExternalMediaFile *oldMediaFile = [[self arrangedObjects] objectAtIndex:row];
+	KTMediaFile *oldMediaFile = [[self arrangedObjects] objectAtIndex:row];
 	if (oldMediaFile)
 	{
 		[[replacementMediaFile mutableSetValueForKey:@"containers"] unionSet:[oldMediaFile valueForKey:@"containers"]];
