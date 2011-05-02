@@ -70,7 +70,7 @@
 [[if master.facebookAppID]]
 									[[if parser.isPublishing]]
 									[[if self==parser.HTMLContext.page]]
-                                    <fb:comments href="[[=&URL]]" width="100%" num_posts="[[=master.fbNumberOfPosts]]" colorscheme="[[=master.fbColorScheme]]"></fb:comments>
+                                    <fb:comments href="[[=&URL]]" width=[[if parser.HTMLContext.page.showSidebar]]"[[=master.fbSidebarWidth]]"[[else6]]"[[=master.fbPageWidth]]"[[endif6]] num_posts="[[=master.fbNumberOfPosts]]" colorscheme="[[=master.fbColorScheme]]"></fb:comments>
                                     [[else5]]
                                     <iframe src="http://www.facebook.com/plugins/comments.php?href=[[=&URL]]&permalink=1" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:130px; height:16px;" allowTransparency="true"></iframe>
                                     [[endif5]]
