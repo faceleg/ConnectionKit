@@ -162,11 +162,6 @@
         // write <script> to endBody
         [context addMarkupToEndOfBody:@"<script type=\"text/javascript\" src=\"http://platform.twitter.com/widgets.js\"></script>"];
     }
-    else 
-    {
-        NSString *noLiveFeeds = SVLocalizedString(@"Tweet Button visible only when loading data from the Internet.", "");
-        [context writePlaceholderWithText:noLiveFeeds options:0];
-    }
     
     // add dependencies
     [context addDependencyForKeyPath:@"tweetButtonStyle" ofObject:self];
@@ -175,6 +170,12 @@
     [context addDependencyForKeyPath:@"tweetVia" ofObject:self];
     [context addDependencyForKeyPath:@"tweetRelated1" ofObject:self];
     [context addDependencyForKeyPath:@"tweetRelated2" ofObject:self];
+}
+
+- (NSString *)placeholderString
+{
+    NSAssert(![[self currentContext] liveDataFeeds], @"placeholder should only be visible if no live feeds");
+    return SVLocalizedString(@"Tweet Button visible only when loading data from the Internet", "");
 }
 
 #pragma mark Properties
