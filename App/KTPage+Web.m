@@ -251,24 +251,27 @@
 #pragma mark thumbnail
 
 - (void)writeThumbnailRel	// For facebook, digg, Yahoo, MySpace, etc.
-{
+{	
     SVHTMLContext *context = [[SVHTMLTemplateParser currentTemplateParser] HTMLContext];
-	NSURL *URL = [context URLForImageRepresentationOfPage:self
-													width:90 height:90	// This seems to be largest size used by facebook. Yahoo is 98x54?
-												  options:0];
-	if (URL)
+	if ([context isForPublishing])
 	{
-		NSString *href = [URL absoluteString];	// leave it an absolute URL for Facebook's benefit
-		
-		NSString *pathExtension = [[URL path] pathExtension];
-		NSString *UTI = [KSWORKSPACE ks_typeForFilenameExtension:pathExtension];
-		NSString *mimeType = [KSWORKSPACE ks_MIMETypeForType:UTI];
-		
-		[context pushAttribute:@"rel" value:@"image_src"];
-		[context pushAttribute:@"href" value:href];
-		[context pushAttribute:@"type" value:mimeType];
-		[context startElement:@"link"];
-		[context endElement];
+		NSURL *URL = [context URLForImageRepresentationOfPage:self
+														width:90 height:90	// This seems to be largest size used by facebook. Yahoo is 98x54?
+													  options:0];
+		if (URL)
+		{
+			NSString *href = [URL absoluteString];	// leave it an absolute URL for Facebook's benefit
+			
+			NSString *pathExtension = [[URL path] pathExtension];
+			NSString *UTI = [KSWORKSPACE ks_typeForFilenameExtension:pathExtension];
+			NSString *mimeType = [KSWORKSPACE ks_MIMETypeForType:UTI];
+			
+			[context pushAttribute:@"rel" value:@"image_src"];
+			[context pushAttribute:@"href" value:href];
+			[context pushAttribute:@"type" value:mimeType];
+			[context startElement:@"link"];
+			[context endElement];
+		}
 	}
 }
 
