@@ -52,10 +52,9 @@ typedef NSUInteger SVPageTruncationOptions;
 - (NSString *)timestampDescriptionWithDate:(NSDate *)date;
 
 
-#pragma mark Children
+#pragma mark Hierarchy
 
 @property(nonatomic, readonly) BOOL isCollection;
-- (NSArray *)childPages;
 - (id <SVPage>)parentPage;
 - (id <SVPage>)rootPage;
 

@@ -66,7 +66,7 @@
         [sDateFormatter setLocale:locale];
     }
 	
-	NSDate *date = [[[self childPages] lastObject] creationDate];
+	NSDate *date = [[[(SVSiteItem *)self childPages] lastObject] creationDate];
 	NSString *result = [sDateFormatter stringFromDate:date];
 	return result;
 }

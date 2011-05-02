@@ -82,7 +82,7 @@
     // if any children have children, return NO
     for ( id<SVPage> page in children )
     {
-        if ( [[page childPages] count] )
+        if ( [[page performSelector:@selector(childPages)] count] )
         {
             return NO;
         }
@@ -125,7 +125,7 @@
         
         // figure out what children, if any, should be included        
 		NSMutableArray *children = [NSMutableArray array];
-        for ( id<SVPage> childPage in [aPage childPages] )
+        for ( id<SVPage> childPage in [aPage performSelector:@selector(childPages)] )
         {
             if ( [childPage shouldIncludeInSiteMaps] ) [children addObject:childPage];
         }
@@ -214,7 +214,7 @@
         }
         
         // recursively map each top-level page        
-        NSArray *topLevelPages = [rootPage childPages];
+        NSArray *topLevelPages = [rootPage performSelector:@selector(childPages)];
         if ( topLevelPages.count > 0 )
         {
             if ( !self.sections ) [context startElement:@"ul" attributes:nil];
