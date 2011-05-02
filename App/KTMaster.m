@@ -130,9 +130,8 @@
     [logo setConstrainsProportions:YES];
     [self setLogo:logo];
     
-    // Facebook defaults
+    // Facebook
     [self setFbNumberOfPosts:[NSNumber numberWithUnsignedInt:5]];
-    [self setFbColorScheme:[NSNumber numberWithUnsignedInt:0]];
 }
 
 - (void)awakeFromFetch

@@ -94,18 +94,14 @@
 - (BOOL)wantsFacebookComments;
 
 // extensible properties
-- (NSString *)disqusShortName;
-- (void)setDisqusShortName:(NSString *)aString;
+@property(nonatomic, retain) NSString *disqusShortName;
+@property(nonatomic, retain) NSString *JSKitModeratorEmail;
+@property(nonatomic, retain) NSString *IntenseDebateAccountID;
+@property(nonatomic, retain) NSString *facebookAppID;
+@property(nonatomic, retain) NSNumber *fbNumberOfPosts;
+@property(nonatomic, retain) NSNumber *fbColorScheme;
 
-- (NSString *)JSKitModeratorEmail;
-- (void)setJSKitModeratorEmail:(NSString *)aString;
-
-- (NSString *)IntenseDebateAccountID;
-- (void)setIntenseDebateAccountID:(NSString *)aString;
-
-- (NSString *)facebookAppID;
-- (NSNumber *)fbNumberOfPosts;
-- (NSNumber *)fbColorScheme;
+// derived
 - (NSString *)fbColorSchemeString;
 - (NSString *)fbSidebarWidth;
 - (NSString *)fbPageWidth;
