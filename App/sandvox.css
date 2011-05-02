@@ -67,7 +67,6 @@ div.text-navigation div { display:inline; margin:0px 0.5em; }
 .photo-navigation a:focus, .replaced a:focus {overflow:hidden;}
 
 /* JS-Kit hacks */
-
 .js-kit-comments * { clear: none!important; }
 .js-kit-comments .js-commentFieldLabel { clear:left !important; }
 * html .js-kit-comments  {width:90%;}
@@ -78,11 +77,3 @@ div.text-navigation div { display:inline; margin:0px 0.5em; }
 #dsq-content .dsq-by { margin: 4px 6px 0px 0px; }
 #dsq-content .dsq-by a, #dsq-content .dsq-by a:hover { border: 0px none; }
 #dsq-content h3 { margin:0px; }
-
-/* Facebook Comments corrections */
-.generic_dialog_popup { overflow:visible !important; z-index:500 !important; }
-.pop_container_advanced { overflow:visible !important; z-index:500 !important; }
-.gigaboxx_composer { overflow:visible !important; z-index:500 !important; }
-.generic_dialog.pop_dialog.MessageComposerDialog.omitDialogFooter { overflow:visible !important; z-index:500 !important; }
-.fb_iframe_widget, .fb_iframe_widget iframe { width: 100%!important; }
-
