@@ -227,7 +227,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 
 - (NSInteger) requiredLicenseVersion
 {
-	return 1;		// this is version 2 of Sandvox, so we need a Sandvox 2 license. We'll fail if Sandvox 1.
+	return 2;		// this is version 2 of Sandvox, so we need a Sandvox 2 license. We'll fail if Sandvox 1.
 }
 
 
