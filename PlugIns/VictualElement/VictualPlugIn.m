@@ -170,11 +170,11 @@
             [context endElement]; // </ul>    
         }
     }
-    else 
-    {
-        [context writePlaceholderWithText:SVLocalizedString(@"Enter an RSS Feed URL in the Inspector.", "no URL placeholder")
-                                  options:0];
-    }
+}
+
+- (NSString *)placeholderString
+{
+    return SVLocalizedString(@"Enter an RSS Feed URL in the Inspector.", "no URL placeholder");
 }
 
 
