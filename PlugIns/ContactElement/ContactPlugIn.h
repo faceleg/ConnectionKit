@@ -59,6 +59,8 @@
     BOOL        _sideLabels;
     NSInteger   _subjectType;
     NSString    *_subjectText;
+    
+    NSString *_uniqueID;
 }
 
 - (NSString *)encodedRecipient;
@@ -80,6 +82,7 @@
 // New stuff
 @property(nonatomic, copy) NSArray *fields;
 
-- (NSString *)uniqueID;
+// instance-wide unique id
+@property(nonatomic, copy) NSString *uniqueID;
 
 @end

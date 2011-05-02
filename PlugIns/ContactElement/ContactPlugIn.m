@@ -134,6 +134,21 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 }
 
 
+@synthesize uniqueID = _uniqueID;
+
+- (void)writeUniqueElement
+{
+    self.uniqueID = [[self currentContext] startElement:@"div"
+                                        preferredIdName:@"contactform"
+                                              className:nil
+                                             attributes:nil];
+}
+
+- (void)endUniqueElement
+{
+    [[self currentContext] endElement];
+}
+
 #pragma mark Labels
 
 /*	All of these accessor methods fallback to using the -languageDictionary if no
@@ -221,8 +236,6 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 
 
 #pragma mark Derived Accessors
-
-- (NSString *)uniqueID; { return @"contactform"; }
 
 - (NSString *)CSSURLs
 {
