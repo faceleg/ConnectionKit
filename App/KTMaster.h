@@ -106,7 +106,6 @@
 - (NSString *)facebookAppID;
 - (NSString *)fbNumberOfPosts;
 - (NSString *)fbColorScheme;
-- (NSString *)fbPublishFeed;
 - (NSString *)fbSidebarWidth;
 - (NSString *)fbPageWidth;
 

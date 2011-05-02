@@ -667,20 +667,6 @@
     return @"light"; // light or dark
 }
 
-- (NSString *)fbPublishFeed
-{
-    NSString *result = @"true";
-    if ( [[NSUserDefaults standardUserDefaults] objectForKey:@"FacebookCommentsPublishFeed"] )
-    {
-        if ( ![[NSUserDefaults standardUserDefaults] boolForKey:@"FacebookCommentsPublishFeed"] )
-        {
-            result = @"false";
-        }
-    }
-
-    return result;
-}
-
 - (NSString *)fbSidebarWidth
 {
     KTImageScalingSettings *settings = [[self design] imageScalingSettingsForUse:@"KTSidebarPageMedia"];
