@@ -662,6 +662,11 @@
     return result;
 }
 
+- (NSString *)fbColorScheme
+{
+    return @"light"; // light or dark
+}
+
 - (NSString *)fbPublishFeed
 {
     NSString *result = @"true";
