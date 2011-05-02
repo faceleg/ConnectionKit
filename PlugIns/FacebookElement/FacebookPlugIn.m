@@ -231,11 +231,6 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
         [context endElement]; // </iframe>
         [context endElement]; // </div>
     }
-    else 
-    {
-        NSString *noLiveFeeds = SVLocalizedString(@"Facebook Button visible only when loading data from the Internet.", "");
-        [context writePlaceholderWithText:noLiveFeeds options:0];
-    }
     
     // add dependencies
     [context addDependencyForKeyPath:@"showFaces" ofObject:self];
@@ -244,6 +239,11 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
     [context addDependencyForKeyPath:@"layout" ofObject:self];
     [context addDependencyForKeyPath:@"urlType" ofObject:self];
     [context addDependencyForKeyPath:@"urlString" ofObject:self];
+}
+
+- (NSString *)placeholderString
+{
+    return SVLocalizedString(@"Facebook Button visible only when loading data from the Internet.", "");
 }
 
 // facebook wants width and height specified, so we need to calculate those explicitly
