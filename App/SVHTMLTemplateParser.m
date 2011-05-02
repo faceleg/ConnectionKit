@@ -167,11 +167,6 @@
 {
     SVHTMLTemplateParser *result = [[[[NSThread currentThread] threadDictionary] objectForKey:@"SVHTMLTemplateParserStack"] lastObject];
     
-    if (!result)
-    {
-        NSLog(@"+currentTemplateParser returning nil");
-    }
-    
     return result;
 }
 
