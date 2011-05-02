@@ -437,7 +437,9 @@
 
 - (void)loadRecentDocumentList;
 {
+	[[NSDocumentController sharedDocumentController] clearRecentDocumentsInTrash];
 	NSArray *urls = [[NSDocumentController sharedDocumentController] recentDocumentURLs];
+	
 #if 0
 	// TESTING HARNESS ... I HAVE A BUNCH OF DOCUMENTS IN THERE.
 	NSFileManager *fm = [NSFileManager defaultManager];
@@ -517,6 +519,7 @@
 // the sticky window because that's weird if our welcome window is not in front.
 - (void)windowDidBecomeKey:(NSNotification *)notification
 {
+	[self loadRecentDocumentList];		// recent document may have moved to trash
 	[self setupStickyWindow];
 	[self updateLicenseStatus:nil];
 }
