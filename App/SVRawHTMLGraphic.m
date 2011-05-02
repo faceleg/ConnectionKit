@@ -130,7 +130,8 @@
     [context endElement];
 }
 
-- (BOOL)canWriteHTMLInline { return YES; }
+// Don't allow non-inline objects to become inline. #118038
+- (BOOL)canWriteHTMLInline { return [self shouldWriteHTMLInline] && [super canWriteHTMLInline]; }
 
 + (SVTemplate *)placeholderTemplate;
 {

@@ -99,7 +99,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 {
     BOOL result = NO;
     
-    if ([self canWriteHTMLInline] && ![self isPagelet])
+    if (/*[self canWriteHTMLInline] && */![self isPagelet])
     {
         SVTextAttachment *attachment = [self textAttachment];
         if (attachment)
