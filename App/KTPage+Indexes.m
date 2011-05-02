@@ -273,7 +273,7 @@
 	
     (void) [self writeSummary:xmlContext
 									 truncation:truncationLength
-										 plugIn:nil	// not an issue with RSS feed
+										 plugIn:(SVPlugIn *)[NSNull null]	// not an issue with RSS feed
 										options:0];	// not excluding thumbnails
 	
 	// Do we want to insert anything into the feed if it is truncated?
@@ -409,7 +409,7 @@ NSUInteger kTwoThirdsTruncation;
 			  plugIn:(SVPlugIn *)plugInToExclude
 			 options:(SVPageTruncationOptions)options;
 {
-//    NSParameterAssert(plugInToExclude);
+	NSParameterAssert(plugInToExclude);
     
     
 	OFF((@"writeSummary: iteratedPage = %@, Page we are writing to = %@  .... exclude %@", self, [context page], plugInToExclude));
