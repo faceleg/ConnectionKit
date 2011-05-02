@@ -662,22 +662,6 @@
     [self setExtensibleProperty:value forKey:@"fbNumberOfPosts"];
 }
 
-//- (NSString *)fbNumberOfPosts
-//{
-//    NSString *result = @"10";
-//    
-//    if ( [[NSUserDefaults standardUserDefaults] objectForKey:@"FacebookCommentsNumberOfPosts"] )
-//    {
-//        NSInteger num = [[NSUserDefaults standardUserDefaults] integerForKey:@"FacebookCommentsNumberOfPosts"];
-//        if ( num > 0 && num < 501 )
-//        {
-//            result = [[NSUserDefaults standardUserDefaults] stringForKey:@"FacebookCommentsNumberOfPosts"];
-//        }
-//    }
-//    
-//    return result;
-//}
-
 - (NSNumber *)fbColorScheme
 {
     return [self extensiblePropertyForKey:@"fbColorScheme"];
