@@ -208,17 +208,21 @@
                              [self.height stringValue]];
             [context addMarkupToEndOfBody:map];
         }
-        else 
-        {
-            [context writePlaceholderWithText:SVLocalizedString(@"Google Map", "placeholder")
-                                      options:0];
-        }
     }
-    else 
+}
+
+- (NSString *)placeholderString
+{
+    NSString *result = nil;
+    if ( !self.locations )
     {
-        [context writePlaceholderWithText:SVLocalizedString(@"Enter a location in the Inspector", "")
-                                  options:0];
+        result = SVLocalizedString(@"Enter a location in the Inspector", "");
     }
+    else if ( ![[self currentContext] liveDataFeeds] )
+    {
+        result = SVLocalizedString(@"Google Map", "placeholder");
+    }
+    return result;
 }
 
 
