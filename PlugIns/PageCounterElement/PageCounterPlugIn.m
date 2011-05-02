@@ -62,6 +62,12 @@ NSString *PCSampleImageKey = @"sampleImage";
 NSString *PCFilenameKey = @"filename";
 
 
+//FIXME: API for styling text as SVPlaceholderInvisible? 
+@protocol SandvoxPrivate
+- (void)writePlaceholderWithText:(NSString *)text options:(NSUInteger)options;
+@end
+
+
 @interface PageCounterPlugIn ()
 - (NSURL *)resourcesURL:(id <SVPlugInContext>)context;
 @end
@@ -240,7 +246,7 @@ NSString *PCFilenameKey = @"filename";
 
 #pragma mark HTML Generation
 
-- (void)writeHTML:(id <SVPlugInContext>)context
+- (void)writeHTML:(id <SVPlugInContext, SandvoxPrivate>)context
 {
     // write replaceable div
     NSDictionary *attrs = [NSDictionary dictionaryWithObject:@"text-align: center;" forKey:@"style"];
