@@ -107,12 +107,9 @@
 
 #pragma mark HTML Generation
 
-
-- (void)writePlaceholder
+- (NSString *)placeholderString
 {
-    id <SVPlugInContext> context = [self currentContext];
-    [context writePlaceholderWithText:SVLocalizedString(@"Drag URLs here", "String_On_Page_Template")
-                              options:0];
+    return SVLocalizedString(@"Drag URLs here", "");
 }
 
 
