@@ -190,7 +190,6 @@
 				3C8544AA12061D69000A19C3 /* PBXTargetDependency */,
 				3C042AC51307167D00D9F2A7 /* PBXTargetDependency */,
 				3C7C1E401219B5DA005D75B1 /* PBXTargetDependency */,
-				CE15E155133C095700D9963F /* PBXTargetDependency */,
 				3C9CF9B0121201D8005CFDD4 /* PBXTargetDependency */,
 				3C85B31C13023F8A00690048 /* PBXTargetDependency */,
 				274E82800D627180004F89C2 /* PBXTargetDependency */,
@@ -1862,13 +1861,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = TwitterElement;
-		};
-		CE15E154133C095700D9963F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CE541507133C08DA003F635A /* GalleryIndex.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = GalleryIndex;
 		};
 		CE2556D20D3432AF003A5B5E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -8220,11 +8212,6 @@
 			isa = PBXTargetDependency;
 			name = TwitterElement;
 			targetProxy = 3CFEF268122C3452005A08FC /* PBXContainerItemProxy */;
-		};
-		CE15E155133C095700D9963F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = GalleryIndex;
-			targetProxy = CE15E154133C095700D9963F /* PBXContainerItemProxy */;
 		};
 		CE559B621085296D008870B5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
