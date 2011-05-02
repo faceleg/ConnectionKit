@@ -20,7 +20,7 @@ EXPIRY_TIMESTAMP = '@\"2011-05-10 11:59:59 -0800\"'
 
 
 // iMedia
-IMEDIA_REVISION = 1577
+IMEDIA_REVISION = 1578
 
 // Building -- common settings across all configurations
 
