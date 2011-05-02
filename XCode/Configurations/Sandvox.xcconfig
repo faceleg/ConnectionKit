@@ -3,7 +3,7 @@
 #include "/private/tmp/build-sandvox/BuildSettings.xcconfig"
 
 // the "marketing" version is baked into CFBundleShortVersionString
-SANDVOX_VERSION = 2.0b51
+SANDVOX_VERSION = 2.0.1dp
 
 // the SLA variant to wrap around the .dmg [ALPHA,BETA,RELEASE]
 // Also determines if VARIANT_ALPHA or VARIANT_BETA or VARIANT_RELEASE is defined.
@@ -14,7 +14,7 @@ PRODUCT_VARIANT_WITH_SECRET_KEY_FOR_SPARKLE = BETA_C3PO
 
 
 // expiry for beta
-EXPIRY_TIMESTAMP = '@\"2011-05-10 11:59:59 -0800\"'
+EXPIRY_TIMESTAMP = '@\"2011-05-30 11:59:59 -0800\"'
 
 // Release builds checkout and use these specific revisions
 
