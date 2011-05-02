@@ -28,6 +28,12 @@ typedef enum {
 } KTHTMLGenerationPurpose;
 
 
+enum {
+    SVPlaceholderInvisible = 1 << 0,    // placeholder represents content visible only on published site
+};
+typedef NSUInteger SVPlaceholderOptions;
+
+
 #pragma mark -
 
 
