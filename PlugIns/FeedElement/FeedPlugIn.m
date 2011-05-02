@@ -118,11 +118,9 @@
     [context endElement]; // </ul>    
 }
 
-- (void)writePlaceholder
+- (NSString *)placeholderString
 {
-    id <SVPlugInContext> context = [self currentContext];
-    [context writePlaceholderWithText:SVLocalizedString(@"Drag feed URL here", "String_On_Page_Template - placeholder")
-                              options:0];
+    return SVLocalizedString(@"Drag feed URL here", "placeholder");
 }
 
 - (NSURL *)URLAsHTTP		// server requires http:// scheme
