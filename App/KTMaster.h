@@ -104,8 +104,9 @@
 - (void)setIntenseDebateAccountID:(NSString *)aString;
 
 - (NSString *)facebookAppID;
-- (NSString *)fbNumberOfPosts;
-- (NSString *)fbColorScheme;
+- (NSNumber *)fbNumberOfPosts;
+- (NSNumber *)fbColorScheme;
+- (NSString *)fbColorSchemeString;
 - (NSString *)fbSidebarWidth;
 - (NSString *)fbPageWidth;
 

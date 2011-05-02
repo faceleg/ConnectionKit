@@ -129,6 +129,10 @@
     [logo makeOriginalSize];
     [logo setConstrainsProportions:YES];
     [self setLogo:logo];
+    
+    // Facebook defaults
+    [self setFbNumberOfPosts:[NSNumber numberWithUnsignedInt:5]];
+    [self setFbColorScheme:[NSNumber numberWithUnsignedInt:0]];
 }
 
 - (void)awakeFromFetch
@@ -560,7 +564,9 @@
     if ( [key isEqualToString:@"disqusShortName"]
         || [key isEqualToString:@"IntenseDebateAccountID"]
         || [key isEqualToString:@"JSKitModeratorEmail"] 
-        || [key isEqualToString:@"facebookAppID"] )
+        || [key isEqualToString:@"facebookAppID"] 
+        || [key isEqualToString:@"fbNumberOfPosts"] 
+        || [key isEqualToString:@"fbColorScheme"] )
     {
         return YES;
     }
@@ -646,25 +652,53 @@
     [self didChangeValueForKey:@"facebookAppID"];
 }
 
-- (NSString *)fbNumberOfPosts
+- (NSNumber *)fbNumberOfPosts
 {
-    NSString *result = @"10";
-    
-    if ( [[NSUserDefaults standardUserDefaults] objectForKey:@"FacebookCommentsNumberOfPosts"] )
-    {
-        NSInteger num = [[NSUserDefaults standardUserDefaults] integerForKey:@"FacebookCommentsNumberOfPosts"];
-        if ( num > 0 && num < 501 )
-        {
-            result = [[NSUserDefaults standardUserDefaults] stringForKey:@"FacebookCommentsNumberOfPosts"];
-        }
-    }
-    
-    return result;
+    return [self extensiblePropertyForKey:@"fbNumberOfPosts"];
 }
 
-- (NSString *)fbColorScheme
+- (void)setFbNumberOfPosts:(NSNumber *)value
 {
-    return @"light"; // light or dark
+    [self setExtensibleProperty:value forKey:@"fbNumberOfPosts"];
+}
+
+//- (NSString *)fbNumberOfPosts
+//{
+//    NSString *result = @"10";
+//    
+//    if ( [[NSUserDefaults standardUserDefaults] objectForKey:@"FacebookCommentsNumberOfPosts"] )
+//    {
+//        NSInteger num = [[NSUserDefaults standardUserDefaults] integerForKey:@"FacebookCommentsNumberOfPosts"];
+//        if ( num > 0 && num < 501 )
+//        {
+//            result = [[NSUserDefaults standardUserDefaults] stringForKey:@"FacebookCommentsNumberOfPosts"];
+//        }
+//    }
+//    
+//    return result;
+//}
+
+- (NSNumber *)fbColorScheme
+{
+    return [self extensiblePropertyForKey:@"fbColorScheme"];
+}
+
+- (void)setFbColorScheme:(NSNumber *)value
+{
+    [self setExtensibleProperty:value forKey:@"fbColorScheme"];
+}
+
+- (NSString *)fbColorSchemeString
+{
+    // light or dark
+    if ( [[self fbColorScheme] unsignedIntValue] == 1 )
+    {
+        return @"dark";
+    }
+    else
+    {
+        return @"light";
+    }
 }
 
 - (NSString *)fbSidebarWidth
