@@ -241,13 +241,14 @@
 
             [context endElement]; // </p>
         }
+        
         [context endElement]; // <div>
     }
-    else
-    {
-        NSString *text = SVLocalizedString(@"Choose collection in the Inspector", "RSSBadge");
-        [context writePlaceholderWithText:text options:0];
-    }
+}
+
+- (NSString *)placeholderString
+{
+    return SVLocalizedString(@"Choose collection in the Inspector", "RSSBadge");
 }
 
 - (BOOL)useLargeIconLayout
