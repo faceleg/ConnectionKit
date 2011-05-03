@@ -11,6 +11,7 @@
 #import "SVWebSourceViewController.h"
 #import "SVLoadingPlaceholderViewController.h"
 
+#import "KTDocWindowController.h"
 #import "KTPage.h"
 
 
@@ -119,6 +120,10 @@
     pages = [pages copy];
     [_selectedPages release];
     _selectedPages = pages;
+    
+    
+    // Close out the HTML editor
+    [self.view.window.windowController setHTMLEditorController:nil];
     
     
     // During an undo or redo we're often not quite ready to load the page

@@ -240,9 +240,6 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     
     // Once we move offscreen, we're no longer suitable to be shown
     [self setViewIsReadyToAppear:NO];
-	
-	// Close out the HTML editor
-	[self.parentViewController.view.window.windowController setHTMLEditorController:nil];
 }
 
 #pragma mark Loading
