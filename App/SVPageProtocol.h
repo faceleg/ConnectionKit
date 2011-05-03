@@ -16,8 +16,6 @@
 @protocol SVPlugInContext;
 
 
-typedef enum { kTruncateNone, kTruncateCharacters, kTruncateWords, kTruncateSentences, kTruncateParagraphs } SVTruncationType;
-
 enum {
     SVExcludeThumbnailInTruncation = 1 << 0,
 };
