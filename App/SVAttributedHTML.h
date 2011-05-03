@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "KSWriter.h"
 #import "SVPageProtocol.h"
-
+#import "KTPage.h"
 
 @class SVHTMLContext, SVGraphic;
 

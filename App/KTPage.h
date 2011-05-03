@@ -31,6 +31,8 @@ typedef enum {
     SVCollectionSortOrderUnspecified = -1,		// used internally
 } SVCollectionSortOrder;
 
+typedef enum { kTruncateNone, kTruncateCharacters, kTruncateWords, kTruncateSentences, kTruncateParagraphs } SVTruncationType;
+
 
 @class SVArticle, KTMaster, SVSidebar, SVPageTitle, SVRichText, SVGraphic, SVMediaRecord, KTCodeInjection, SVHTMLContext;
 
