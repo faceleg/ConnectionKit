@@ -171,8 +171,8 @@
 	<div id="quick-look-sticky-note">
 		<table>
 			<tr>
-				<td class="quick-look-key">[['Published at]]</td>
-				<td class="quick-look-value"><a href="[[=&site.hostProperties.siteURL]]">[[=&site.hostProperties.siteURL]]</a></td>
+				<td class="quick-look-key">[['Published to]]</td>
+				<td class="quick-look-value">[[if site.hostProperties.siteURL]]<a href="[[=&site.hostProperties.siteURL]]">[[=&site.hostProperties.siteURL]]</a>[[else2]][['<<unpublished>>]][[endif2]]</td>
 			</tr>
 			<tr>
 				<td class="quick-look-key">[['Last updated]]</td>

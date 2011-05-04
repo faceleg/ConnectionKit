@@ -61,7 +61,8 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
 
 /*	These strings are used for generating Quick Look preview sticky-note text
  */
-// NSLocalizedString(@"Published at", "Quick Look preview sticky-note text");
+// NSLocalizedString(@"Published to", "Quick Look preview sticky-note text");
+// NSLocalizedString(@"<<unpublished>>", "Quick Look preview sticky-note text");
 // NSLocalizedString(@"Last updated", "Quick Look preview sticky-note text");
 // NSLocalizedString(@"Author", "Quick Look preview sticky-note text");
 // NSLocalizedString(@"Language", "Quick Look preview sticky-note text");
