@@ -1935,7 +1935,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	// URL
 	if ([sUrlKeySet containsObject:key])
 	{
-		newValue = [newValue stringByTrimmingWhitespace];
+		newValue = [newValue stringByTrimmingWhitespace];   // ideally, I reckon KSURLFormatter should do this for us
 		
         KSURLFormatter *formatter = [[KSURLFormatter alloc] init];
         NSURL *newValueURL = [formatter URLFromString:newValue];
@@ -1956,7 +1956,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 			}
 			testURLString = [testURLString stringByReplacingOccurrencesOfString:@"?" withString:@"userID"];		// use this instead for the test
 		}
-		NSURL *url = [KSURLFormatter URLFromString:testURLString];
+		NSURL *url = [NSURL URLWithString:testURLString];
 
 		errorString
 			= NSLocalizedString(@"Illegal characters found in URL. A URL must look something like http://www.domain.com/path/", @"validation error message for illegal URL");
