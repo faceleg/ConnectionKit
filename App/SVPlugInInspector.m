@@ -114,8 +114,15 @@ change context:(void *)context
     
     
     // Remove old inspector
-    [[_selectedInspector view] removeFromSuperview];
-    [[_selectedInspector inspectedObjectsController] setContent:nil];
+    @try
+    {
+        [[_selectedInspector view] removeFromSuperview];
+        [[_selectedInspector inspectedObjectsController] setContent:nil];
+    }
+    @catch (NSException *exception)
+    {
+        NSLog(@"%@", [exception description]);
+    }
     
     
     // Store new
@@ -123,20 +130,21 @@ change context:(void *)context
     
     
     // Match title to selection
-    if (inspector)
-    {
-        [self bind:@"title" toObject:inspector withKeyPath:@"title" options:nil];
-    }
-    else
+    if (!inspector)
     {
         [self unbind:@"title"];
         [self setTitle:nil];
+        return;
     }
     
     
     // Setup new
     @try
     {
+        // Match title to selection
+        [self bind:@"title" toObject:inspector withKeyPath:@"title" options:nil];
+    
+        
         NSView *view = [inspector view];    // make sure it's loaded before going further
         
         if (inspector)
