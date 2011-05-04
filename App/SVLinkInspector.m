@@ -164,7 +164,7 @@
         
         // Apply to model
         SVLink *link = [[SVLink alloc] initWithURLString:urlString
-                                         openInNewWindow:[oOpenInNewWindowCheckbox intValue]];
+                                         openInNewWindow:[oExternalLinkOpenInNewWindowCheckbox intValue]];
         [[SVLinkManager sharedLinkManager] modifyLinkTo:link];
         [link release];
     }
@@ -172,11 +172,11 @@
 
 - (IBAction)openInNewWindow:(NSButton *)sender;
 {
-    // Apply to model
+    // Apply to model. If user clicked the "open in new window" box first, without entering URL, ignore
     SVLink *link = [[[SVLinkManager sharedLinkManager] selectedLink]
                     linkWithOpensInNewWindow:[sender intValue]];
     
-    [[SVLinkManager sharedLinkManager] modifyLinkTo:link];
+    if (link) [[SVLinkManager sharedLinkManager] modifyLinkTo:link];
 }
 
 - (IBAction)clearLinkDestination:(id)sender;

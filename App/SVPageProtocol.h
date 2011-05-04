@@ -21,6 +21,7 @@ enum {
 };
 typedef NSUInteger SVPageTruncationOptions;
 
+
 @protocol SVPage <NSObject>;
 
 #pragma mark Content
