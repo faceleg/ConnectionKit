@@ -45,6 +45,7 @@ TO DO:
 #import "NSWorkspace+Karelia.h"
 
 #import "NTSUTaskController.h"
+#import "KSError.h"
 #import "KSURLFormatter.h"
 
 #import <AddressBook/AddressBook.h>
@@ -1943,21 +1944,19 @@ static NSCharacterSet *sIllegalSubfolderSet;
         if (newValueURL) newValue = [newValueURL absoluteString];
 		
         
-        NSString *testURL = newValue;
+        NSString *testURLString = newValue;
 		// special case: with stemURL, we temporarily convert "?" into "userid" to make it seem valid
 		if ([key isEqualToString:@"stemURL"])
 		{
 			// Fix stemURL to have suffix / if it's missing
-			if (![testURL hasSuffix:@"/"])
+			if (![testURLString hasSuffix:@"/"])
 			{
-				newValue = [testURL stringByAppendingString:@"/"];
-				testURL = newValue;
+				newValue = [testURLString stringByAppendingString:@"/"];
+				testURLString = newValue;
 			}
-			NSMutableString *newString = [NSMutableString stringWithString:testURL];
-			[newString replaceOccurrencesOfString:@"?" withString:@"userID" options:0 range:NSMakeRange(0, [newString length])];
-			testURL = newString;		// use this instead for the test
+			testURLString = [testURLString stringByReplacingOccurrencesOfString:@"?" withString:@"userID"];		// use this instead for the test
 		}
-		NSURL *url = [KSURLFormatter URLFromString:testURL];
+		NSURL *url = [KSURLFormatter URLFromString:testURLString];
 
 		errorString
 			= NSLocalizedString(@"Illegal characters found in URL. A URL must look something like http://www.domain.com/path/", @"validation error message for illegal URL");
@@ -2068,15 +2067,11 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	}
 	else	// error: construct error; don't modify *ioValue
 	{
-        NSDictionary *userInfoDict =
-			[NSDictionary dictionaryWithObject:errorString
-										forKey:NSLocalizedDescriptionKey];
-        NSError *error = [NSError errorWithDomain:kKTHostSetupErrorDomain
-                                             code:2
-                                         userInfo:userInfoDict];
- 		if (outError)
+        if (outError)
 		{
-			*outError = error;
+            *outError = [KSError errorWithDomain:kKTHostSetupErrorDomain
+                                            code:2
+                            localizedDescription:errorString];
 		}
 	}
 	return result;
