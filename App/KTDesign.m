@@ -419,7 +419,7 @@ const int kDesignThumbHeight = 65;
 
 - (BOOL)menusUseNonBreakingSpaces
 {
-	BOOL result = YES;
+	BOOL result = NO;
 	
 	NSNumber *value = [self pluginPropertyForKey:@"menusUseNonBreakingSpaces" obsoleteKey:@"KTMenusUseNonBreakingSpaces"];
 	if (value)
