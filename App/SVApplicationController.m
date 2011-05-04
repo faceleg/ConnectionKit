@@ -1425,11 +1425,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 - (IBAction)openSupportForum:(id)sender
 {
 	
-//#ifndef VARIANT_RELEASE
-//	NSString *urlString = @"http://support.karelia.com/?sandvox-beta";
-//#else
-	NSString *urlString = @"http://support.karelia.com/?sandvox";
-//#endif
+	NSString *urlString = @"http://karelia.com/forum/";
 	NSURL *url = [NSURL URLWithString:urlString];
 	[KSWORKSPACE attemptToOpenWebURL:url];	
 }
