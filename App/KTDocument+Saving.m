@@ -493,9 +493,12 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         
         
         // Prepare file wrapper for preview resources. Try to recycle existing directory so hidden files (for SVN mainly) remain
-        NSString *oldQuickLookDir = [[[KTDocument quickLookURLForDocumentURL:inOriginalContentsURL] path]
-                                     stringByAppendingPathComponent:@"Resources"];
-        _previewResourcesFileWrapper = [[NSFileWrapper alloc] initWithPath:oldQuickLookDir];
+        if (inOriginalContentsURL)
+        {
+            NSString *oldQuickLookDir = [[[KTDocument quickLookURLForDocumentURL:inOriginalContentsURL] path]
+                                         stringByAppendingPathComponent:@"Resources"];
+            _previewResourcesFileWrapper = [[NSFileWrapper alloc] initWithPath:oldQuickLookDir];
+        }
         
         if ([_previewResourcesFileWrapper isDirectory])
         {
