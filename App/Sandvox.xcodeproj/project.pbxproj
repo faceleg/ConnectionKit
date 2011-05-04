@@ -166,7 +166,7 @@
 				3C9B66E60BFA95B9007A4871 /* Script - Add png2ico */,
 				3C9B66E80BFA95DD007A4871 /* Script - Add Spotlight Importer */,
 				CE9D3ED20DAAB8450025717A /* Script - Remove Unsupported Languages */,
-				CEFD3EFC12E9FA0100D3A6CD /* Script - Internationalize XIBs for Plugins */,
+				CEFD3EFC12E9FA0100D3A6CD /* Script - Internationalize XIBs */,
 				3CC092BA134BC490007E2390 /* Script - Code Sign .app */,
 			);
 			dependencies = (
@@ -6313,7 +6313,6 @@
 				CEC65E5D0E1AFD170065C3D0 /* Copy Sparkle - Strip Localizations */,
 				3CEC87370BF8DB4500CC732B /* Headers */,
 				8D15AC2B0486D014006FF6A4 /* Resources */,
-				3C1F512C11D576ED0036B375 /* Internationalize XIBs */,
 			);
 			buildRules = (
 			);
@@ -7072,21 +7071,6 @@
 			shellScript = "#!/bin/bash\n\n###\n### UPDATE Designs ToT FOR RELEASE BUILDS\n###\n\nDESIGNS_PATH=${SRCROOT}/../../Designs\n\n# for some reason using which to find svn works on Leopard, not on Tiger\n# SVN_PATH=`which svn`\n\n# so we do this instead and hope for the best\nif [ -e /usr/local/bin/svn ]\nthen\n\tSVN_PATH=/usr/local/bin/svn\nelif [ -e /usr/bin/svn ]\nthen\n\tSVN_PATH=/usr/bin/svn\nelif [ -e /opt/local/bin/svn ]\nthen\n\tSVN_PATH=/opt/local/bin/svn\nelse\n\techo \"ERROR - CANT FIND SVN\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"syncing Designs with ToT ...\"\ncd ${DESIGNS_PATH}\n${SVN_PATH} update\necho \"... finished syncing Designs\"\n\npopd\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
-		3C1F512C11D576ED0036B375 /* Internationalize XIBs */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Internationalize XIBs";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/zsh;
-			shellScript = "#echo \"looking in:\"\n#echo ${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\n#echo \"looking at:\"\n#echo ${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/**/*.nib\n\n\nforeach nibFile (${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/**/*.nib) # getting every nib in the built product - but not plugins\n\t#echo \"nibFile=${nibFile}\"\n\t#echo \"SOURCE_ROOT=${SOURCE_ROOT}\"\n\n\tstringsFilePath=${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/en.lproj/`basename ${nibFile} .nib`.strings # The path where the strings file will go\n\t#echo \"stringsFilePath=${stringsFilePath}\"\n\n\t# Look for the .xib file corresponding to that built nib file\n\txibFile=`basename ${nibFile} .nib`.xib\n\t#echo \"xibFile=${xibFile}\"\n\n\txibFilePath=`echo ${SOURCE_ROOT}/en.lproj/${xibFile}`\n\n\tif [[ -e ${xibFilePath} ]] {\n\t\techo \"*** en.lproj: Getting strings out of Xib: ${xibFilePath}\"\n\t\tibtool --generate-stringsfile ${stringsFilePath}~ ${xibFilePath}\n\t\t${BUILT_PRODUCTS_DIR}/xibLocalizationPostprocessor ${stringsFilePath}~ ${stringsFilePath}\n\t\trm ${stringsFilePath}~\n\t}\n\n\txibFilePath=`echo ${SOURCE_ROOT}/../../Shared/Interfaces/en.lproj/${xibFile}`\n\techo \"looking for Shared in ${xibFilePath}\"\n\n\tif [[ -e ${xibFilePath} ]] {\n\t\techo \"*** SHARED: Getting strings out of Xib: ${xibFilePath}\"\n\t\tibtool --generate-stringsfile ${stringsFilePath}~ ${xibFilePath}\n\t\t${BUILT_PRODUCTS_DIR}/xibLocalizationPostprocessor ${stringsFilePath}~ ${stringsFilePath}\n\t\trm ${stringsFilePath}~\n\t}\n\nend\n\n";
-			showEnvVarsInLog = 0;
-		};
 		3C24382F136CF41D009D0D85 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 8;
@@ -7520,19 +7504,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\necho \"### Removing dumb resources\"\n\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Versions/A/Resources/en.lproj/DropletLauncher.nib\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Versions/A/Resources/DropletIcon.icns\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Versions/A/Resources/DropletLauncher\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Versions/A/Resources/fr.lproj/DropletLauncher.nib\n\necho TARGET_BUILD_DIR ${TARGET_BUILD_DIR}\n";
 		};
-		CEFD3EFC12E9FA0100D3A6CD /* Script - Internationalize XIBs for Plugins */ = {
+		CEFD3EFC12E9FA0100D3A6CD /* Script - Internationalize XIBs */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Script - Internationalize XIBs for Plugins";
+			name = "Script - Internationalize XIBs";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/zsh;
-			shellScript = "echo \"Skipping This for Release Versions\"\nexit 0\n\n\necho ${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}${PRODUCT_NAME}.app/Contents/Plugins/**/*.nib\n\nforeach nibFile (${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}${PRODUCT_NAME}.app/Contents/Plugins/**/*.nib) # getting every nib in the built product - but not plugins\n\techo \"nibFile=${nibFile}\"\n\t\n\telementBaseName=`dirname ${nibFile}`\n\telementBaseName=`dirname ${elementBaseName}`\n\telementBaseName=`dirname ${elementBaseName}`\n\telementBaseName=`dirname ${elementBaseName}`\necho \"elementBaseName = ${elementBaseName}\"\n\telementBaseName=`basename ${elementBaseName} .svxElement`\necho \"elementBaseName = ${elementBaseName}\"\n\n\tstringsFilePath=`dirname ${nibFile}`/`basename ${nibFile} .nib`.strings # The path where the strings file will go\n\techo \"stringsFilePath=${stringsFilePath}\"\n\n\t# Look for the .xib file corresponding to that built nib file\n\txibFile=`basename ${nibFile} .nib`.xib\n\techo \"xibFile=${xibFile}\"\n\n\n\txibFilePath=`echo ${SOURCE_ROOT}/../Plugins/${elementBaseName}Element/en.lproj/${xibFile}`\n\n\tif [[ -e ${xibFilePath} ]] {\n\t\techo \"*** PLUGIN: Getting strings out of Xib: ${xibFilePath}\"\n\t\tibtool --generate-stringsfile ${stringsFilePath}~ ${xibFilePath}\n\t\t${BUILT_PRODUCTS_DIR}/xibLocalizationPostprocessor ${stringsFilePath}~ ${stringsFilePath}\n\t\trm ${stringsFilePath}~\n\t}\n\nend\n\n";
+			shellScript = "echo \"Skipping This for Release Versions\"\nexit 0\n\n\n\n\n\n\n\n\n\n\n#echo \"looking in:\"\n#echo ${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\n#echo \"looking at:\"\n#echo ${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/**/*.nib\n\n\nforeach nibFile (${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/**/*.nib) # getting every nib in the built product - but not plugins\n\t#echo \"nibFile=${nibFile}\"\n\t#echo \"SOURCE_ROOT=${SOURCE_ROOT}\"\n\n\tstringsFilePath=${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/en.lproj/`basename ${nibFile} .nib`.strings # The path where the strings file will go\n\t#echo \"stringsFilePath=${stringsFilePath}\"\n\n\t# Look for the .xib file corresponding to that built nib file\n\txibFile=`basename ${nibFile} .nib`.xib\n\t#echo \"xibFile=${xibFile}\"\n\n\txibFilePath=`echo ${SOURCE_ROOT}/en.lproj/${xibFile}`\n\n\tif [[ -e ${xibFilePath} ]] {\n\t\techo \"*** en.lproj: Getting strings out of Xib: ${xibFilePath}\"\n\t\tibtool --generate-stringsfile ${stringsFilePath}~ ${xibFilePath}\n\t\t${BUILT_PRODUCTS_DIR}/xibLocalizationPostprocessor ${stringsFilePath}~ ${stringsFilePath}\n\t\trm ${stringsFilePath}~\n\t}\n\n\txibFilePath=`echo ${SOURCE_ROOT}/../../Shared/Interfaces/en.lproj/${xibFile}`\n\techo \"looking for Shared in ${xibFilePath}\"\n\n\tif [[ -e ${xibFilePath} ]] {\n\t\techo \"*** SHARED: Getting strings out of Xib: ${xibFilePath}\"\n\t\tibtool --generate-stringsfile ${stringsFilePath}~ ${xibFilePath}\n\t\t${BUILT_PRODUCTS_DIR}/xibLocalizationPostprocessor ${stringsFilePath}~ ${stringsFilePath}\n\t\trm ${stringsFilePath}~\n\t}\n\nend\n\n\n\n\n\n\necho ${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}${PRODUCT_NAME}.app/Contents/Plugins/**/*.nib\n\nforeach nibFile (${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}${PRODUCT_NAME}.app/Contents/Plugins/**/*.nib) # getting every nib in the built product - but not plugins\n\techo \"nibFile=${nibFile}\"\n\t\n\telementBaseName=`dirname ${nibFile}`\n\telementBaseName=`dirname ${elementBaseName}`\n\telementBaseName=`dirname ${elementBaseName}`\n\telementBaseName=`dirname ${elementBaseName}`\necho \"elementBaseName = ${elementBaseName}\"\n\telementBaseName=`basename ${elementBaseName} .svxElement`\necho \"elementBaseName = ${elementBaseName}\"\n\n\tstringsFilePath=`dirname ${nibFile}`/`basename ${nibFile} .nib`.strings # The path where the strings file will go\n\techo \"stringsFilePath=${stringsFilePath}\"\n\n\t# Look for the .xib file corresponding to that built nib file\n\txibFile=`basename ${nibFile} .nib`.xib\n\techo \"xibFile=${xibFile}\"\n\n\n\txibFilePath=`echo ${SOURCE_ROOT}/../Plugins/${elementBaseName}Element/en.lproj/${xibFile}`\n\n\tif [[ -e ${xibFilePath} ]] {\n\t\techo \"*** PLUGIN: Getting strings out of Xib: ${xibFilePath}\"\n\t\tibtool --generate-stringsfile ${stringsFilePath}~ ${xibFilePath}\n\t\t${BUILT_PRODUCTS_DIR}/xibLocalizationPostprocessor ${stringsFilePath}~ ${stringsFilePath}\n\t\trm ${stringsFilePath}~\n\t}\n\nend\n\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
