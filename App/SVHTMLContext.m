@@ -192,8 +192,8 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     }
     
     
-    // First Code Injection
-	[page writeCodeInjectionBeforeHTML];
+    // First Code Injection.  Can't use a convenience method since we need this context.  Make sure this matches the convenience methods though!
+	[page write:self codeInjectionSection:@"beforeHTML" masterFirst:YES];
     
     
     // Start the document

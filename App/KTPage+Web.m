@@ -212,12 +212,13 @@
 // Note: For the paired code injection points -- the start and end of the head, and the body -- we flip around
 // the ordering so we can do thing like nesting output buffers in PHP. Page is more "local" than master.
 
-- (void)writeCodeInjectionBeforeHTML	{	[self writeCodeInjectionSection:@"beforeHTML"	masterFirst:YES];	}
-
 - (void)writeCodeInjectionEarlyHead		{	[self writeCodeInjectionSection:@"earlyHead"	masterFirst:YES];	}
 - (void)writeCodeInjectionHeadArea		{	[self writeCodeInjectionSection:@"headArea"		masterFirst:YES];	}	// Match what's in Sandvox1
 - (void)writeCodeInjectionBodyTagStart	{	[self writeCodeInjectionSection:@"bodyTagStart"	masterFirst:YES];	}
 - (void)writeCodeInjectionBodyTagEnd	{	[self writeCodeInjectionSection:@"bodyTagEnd"	masterFirst:NO];	}
+
+// Not actually used; in the place we want to write this we don't have the context set up this way.  Just here for completeness.
+- (void)writeCodeInjectionBeforeHTML	{	[self writeCodeInjectionSection:@"beforeHTML"	masterFirst:YES];	}
 
 // Special case: Show a space in between the two; no newlines.
 - (void)writeCodeInjectionBodyTag
