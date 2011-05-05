@@ -279,8 +279,12 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
             if (!path) path = [[self autosaveAlias] lastKnownPath];
             if (!path) path = [[self alias] lastKnownPath];
             
-            // Ignore files which are in the Trash
-            if ([path rangeOfString:@".Trash"].location != NSNotFound) path = nil;
+            // Ignore *external* files which are in the Trash
+            if (![[self shouldCopyFileIntoDocument] boolValue] &&
+                [path rangeOfString:@".Trash"].location != NSNotFound)
+            {
+                path = nil;
+            }
             
             
             if (path)
