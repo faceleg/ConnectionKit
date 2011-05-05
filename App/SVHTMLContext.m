@@ -193,7 +193,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     
     
     // First Code Injection
-	[page write:self codeInjectionSection:@"beforeHTML" masterFirst:NO];
+	[page writeCodeInjectionBeforeHTML];
     
     
     // Start the document
