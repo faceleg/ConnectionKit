@@ -658,10 +658,17 @@
 
 - (void)writeRSSFeedItemDescription { }
 
-- (BOOL)writeSummary:(SVHTMLContext *)context
+- (BOOL)writeContent:(id <SVPlugInContext>)context
+			  plugIn:(SVPlugIn *)plugIn
+			 options:(SVPageWritingOptions)options;
+{
+    return [self writeContent:context truncation:0 plugIn:plugIn options:options];
+}
+
+- (BOOL)writeContent:(SVHTMLContext *)context
 		  truncation:(NSUInteger)maxCount
 			  plugIn:(SVPlugIn *)plugIn
-			 options:(SVPageTruncationOptions)options;
+			 options:(SVPageWritingOptions)options;
 {
     SVHTMLTextBlock *textBlock = [[SVHTMLTextBlock alloc] init];
     [textBlock setEditable:YES];

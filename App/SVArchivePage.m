@@ -77,10 +77,9 @@
 
 - (void)writeRSSFeedItemDescription { }
 
-- (BOOL)writeSummary:(SVHTMLContext *)context
-		  truncation:(NSUInteger)maxCount
+- (BOOL)writeContent:(id <SVPlugInContext>)context
 			  plugIn:(SVPlugIn *)plugIn
-			 options:(SVPageTruncationOptions)options;
+			 options:(SVPageWritingOptions)options;
 { return NO; }
 
 - (NSString *)language; { return [[self collection] language]; }

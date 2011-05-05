@@ -17,27 +17,26 @@
 
 
 enum {
-    SVExcludeThumbnailInTruncation = 1 << 0,
+    SVPageWritingSkipThumbnail = 1 << 0,
 };
-typedef NSUInteger SVPageTruncationOptions;
+typedef NSUInteger SVPageWritingOptions;
 
 
 @protocol SVPage <NSObject>;
 
 #pragma mark Content
 
-- (NSString *)title;
-- (BOOL)showsTitle;
-
-- (BOOL)writeSummary:(id <SVPlugInContext>)context
-		  truncation:(NSUInteger)maxCount
+- (BOOL)writeContent:(id <SVPlugInContext>)context
 			  plugIn:(SVPlugIn *)plugIn
-			 options:(SVPageTruncationOptions)options;
+			 options:(SVPageWritingOptions)options;
 
 // For the image representation of a page, see SVPlugInContext
 
 
 #pragma mark Properties
+
+- (NSString *)title;
+- (BOOL)showsTitle;
 
 - (NSString *)language;             // KVO-compliant
 
