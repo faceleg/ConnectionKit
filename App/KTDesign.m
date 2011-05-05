@@ -445,9 +445,29 @@ const int kDesignThumbHeight = 65;
     
     NSString *result = [[self bundle] objectForInfoDictionaryKey:@"SVArticleGraphicsClearCSSValue"];
     
-    if (![result isEqualToString:@"left"] && ![result isEqualToString:@"right"])
+    if (![result isEqualToString:@"left"] && ![result isEqualToString:@"right"] && ![result isEqualToString:@"both"])
     {
-        result = @"both";
+        NSString *identifier = [[self bundle] bundleIdentifier];
+        if ([identifier hasPrefix:@"com.blueballdesign.FirstClass"])
+        {
+            result = @"right";
+        }
+        else if ([identifier hasPrefix:@"com.blueballdesign.Cubicle"] ||
+                 [identifier hasPrefix:@"com.blueballdesign.Quantum "] ||
+                 [identifier hasPrefix:@"com.sandvoxdesigner.Shadow "] ||
+                 [identifier hasPrefix:@"com.sandvoxdesigner.Showcase "] ||
+                 [identifier hasPrefix:@"com.sandvoxdesigner.Blueball Smooth "] ||
+                 [identifier hasPrefix:@"com.blueballdesign.Snapshot_"] ||
+                 [identifier hasPrefix:@"com.blueballdesign.Blueball_Synergy"] ||
+                 [identifier hasPrefix:@"com.sandvoxdesigner.Trifecta "] ||
+                 [identifier hasPrefix:@"com.blueballdesign.White_"])
+        {
+            result = @"left";
+        }
+        else
+        {
+            result = @"both";
+        }
     }
     
     return result;
