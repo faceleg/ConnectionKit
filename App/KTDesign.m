@@ -448,7 +448,8 @@ const int kDesignThumbHeight = 65;
     if (![result isEqualToString:@"left"] && ![result isEqualToString:@"right"] && ![result isEqualToString:@"both"])
     {
         NSString *identifier = [[self bundle] bundleIdentifier];
-        if ([identifier hasPrefix:@"com.blueballdesign.FirstClass"])
+        if ([identifier hasPrefix:@"com.blueballdesign.FirstClass"] ||
+            [identifier hasPrefix:@"sandvox.SWD Franchise"])
         {
             result = @"right";
         }
@@ -460,7 +461,16 @@ const int kDesignThumbHeight = 65;
                  [identifier hasPrefix:@"com.blueballdesign.Snapshot_"] ||
                  [identifier hasPrefix:@"com.blueballdesign.Blueball_Synergy"] ||
                  [identifier hasPrefix:@"com.sandvoxdesigner.Trifecta "] ||
-                 [identifier hasPrefix:@"com.blueballdesign.White_"])
+                 [identifier hasPrefix:@"com.blueballdesign.White_"] ||
+                 [identifier hasPrefix:@"sandvox.SWD Big Time "] ||
+                 [identifier hasPrefix:@"sandvox.SWD Bravado "] ||
+                 [identifier hasPrefix:@"sandvox.SWD Crafty "] ||
+                 [identifier hasPrefix:@"sandvox.SWD Discovery "] ||
+                 [identifier hasPrefix:@"sandvox.SWD Inspiration"] ||
+                 [identifier hasPrefix:@"sandvox.SWD Mojo"] ||
+                 [identifier hasPrefix:@"sandvox.SWD Override "] ||
+                 [identifier hasPrefix:@"sandvox.SWD Seclusion"] ||
+                 [identifier hasPrefix:@"sandvox.SWD Suspicion"])
         {
             result = @"left";
         }
