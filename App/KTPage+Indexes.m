@@ -271,7 +271,7 @@
 	
 	NSUInteger truncationLength = [self.parentPage.collectionMaxFeedItemLength intValue];
 	
-    (void) [self writeSummary:xmlContext
+    (void) [self writeContent:xmlContext
 									 truncation:truncationLength
 										 plugIn:(SVPlugIn *)[NSNull null]	// not an issue with RSS feed
 										options:0];	// not excluding thumbnails
@@ -404,10 +404,10 @@ NSUInteger kTwoThirdsTruncation;
 
 // Returns YES if truncated.
 
-- (BOOL)writeSummary:(SVHTMLContext *)context
+- (BOOL)writeContent:(SVHTMLContext *)context
 		  truncation:(NSUInteger)maxItemLength
 			  plugIn:(SVPlugIn *)plugInToExclude
-			 options:(SVPageTruncationOptions)options;
+			 options:(SVPageWritingOptions)options;
 {
 	NSParameterAssert(plugInToExclude);
     
@@ -416,7 +416,7 @@ NSUInteger kTwoThirdsTruncation;
 	
 	BOOL includeLargeMedia = ![context isWritingPagelet];		// do not allow large media if writing pagelet.
 	
-	SVGraphic *thumbnailToExclude = (options & SVExcludeThumbnailInTruncation) ? [self thumbnailSourceGraphic] : nil;		// CORRECT FOR ALL CASES?
+	SVGraphic *thumbnailToExclude = (options & SVPageWritingSkipThumbnail) ? [self thumbnailSourceGraphic] : nil;		// CORRECT FOR ALL CASES?
 	
 	SVTruncationType truncationType = [[self class] chooseTruncTypeFromMaxItemLength:maxItemLength];
 	BOOL result = NO;
@@ -427,7 +427,7 @@ NSUInteger kTwoThirdsTruncation;
 	// do we have a custom summary? if so just write it
     if ( nil != [self customSummaryHTML] )
     {
-        [super writeSummary:context truncation:maxItemLength plugIn:plugInToExclude options:options];
+        [super writeContent:context truncation:maxItemLength plugIn:plugInToExclude options:options];
 		result = YES;		// A custom summary means we want to make an obvious link to more
     }
     else
@@ -523,7 +523,7 @@ NSUInteger kTwoThirdsTruncation;
         }
         else
         {
-			[super writeSummary:context truncation:maxItemLength plugIn:plugInToExclude options:options];
+			[super writeContent:context truncation:maxItemLength plugIn:plugInToExclude options:options];
         }
 		
 		[summary release];

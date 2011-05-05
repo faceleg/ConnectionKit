@@ -137,6 +137,10 @@ typedef enum {
 // writes to the current HTML context. Ignore things like site title
 - (void)writeContent:(SVHTMLContext *)context recursively:(BOOL)recursive;
 
+- (BOOL)writeContent:(id <SVPlugInContext>)context
+		  truncation:(NSUInteger)maxCount
+			  plugIn:(SVPlugIn *)plugIn
+			 options:(SVPageWritingOptions)options;
 
 #pragma mark Image Representation
 

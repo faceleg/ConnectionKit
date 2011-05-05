@@ -48,10 +48,15 @@
 
 //FIXME: we really shouldn't rely on private API, if we need it, we should
 //discuss and expose the proper level of API from Sandvox
-@protocol PagePrivate
+@protocol PagePrivate <SVPage>
 - (NSNumber *)allowComments;
 - (id) master;
 - (void)writeComments:(id<SVPlugInContext>)context;
+- (BOOL)writeContent:(id <SVPlugInContext>)context
+		  truncation:(NSUInteger)maxCount
+			  plugIn:(SVPlugIn *)plugIn
+			 options:(SVPageWritingOptions)options;
+
 @end
 
 
@@ -382,14 +387,14 @@
 - (BOOL)writeSummaryOfIteratedPage;
 {
     id<SVPlugInContext> context = [self currentContext]; 
-    id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
+    id<PagePrivate> iteratedPage = [context objectForCurrentTemplateIteration];
 
 	// BOOL includeLargeMedia = self.indexLayoutType & kLargeMediaMask;
 	BOOL excludeThumbnail = self.indexLayoutType & kThumbMask;
-	SVPageTruncationOptions truncationOptions = 0;
-	if (excludeThumbnail) truncationOptions = SVExcludeThumbnailInTruncation;
+	SVPageWritingOptions truncationOptions = 0;
+	if (excludeThumbnail) truncationOptions = SVPageWritingSkipThumbnail;
 	
-    BOOL truncated = [iteratedPage writeSummary:context
+    BOOL truncated = [iteratedPage writeContent:context
 									 truncation:self.maxItemLength
 										 plugIn:self		// so we can stop recursion
 										options:truncationOptions];
