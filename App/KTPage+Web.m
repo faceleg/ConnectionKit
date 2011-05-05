@@ -107,7 +107,8 @@
 
 - (NSString *)markupString;   // creates a temporary HTML context and calls -writeHTML
 {
-    SVHTMLContext *context = [[SVHTMLContext alloc] init];	
+    SVHTMLContext *context = [[SVHTMLContext alloc] init];
+    [context setBaseURL:[self URL]];
 	[context writeDocumentWithPage:self];
     
     NSString *result = [[context outputStringWriter] string];
