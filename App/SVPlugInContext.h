@@ -162,13 +162,6 @@ typedef NSUInteger SVPageImageRepresentationOptions;
 // For CSS that refers to other files, the context must be asked where those files are. You can do this by hand, building up a string and passing to -addCSSString: or there's this method. The CSS will be parsed just like Template.html. Generally, your plug-in is the object to be parsed
 - (NSURL *)addCSSWithTemplateAtURL:(NSURL *)templateURL object:(id)object;
 
-// -addCSSWithURL: has been superseded by the general resource API above
-
-
-#pragma mark Placeholder
-// If you need to generate a stand-in for the real content. e.g. Live data feeds are disabled
-//- (void)writePlaceholderWithText:(NSString *)text options:(SVPlaceholderOptions)options;
-
 
 #pragma mark Metrics
 // The element's size will be taken from plug-in's .width and .height properties. When editing, that will be kept up-to-date, with resize handles if appropriate
