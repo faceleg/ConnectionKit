@@ -326,7 +326,7 @@
                                        stringByAppendingPathComponent:[hostProps subfolder]]
                                       stringByAppendingPathComponent:[anUpload valueForKey:@"pathRelativeToSite"]];
                     
-                    [hostProps regularFilePublishingRecordWithPath:path];
+                    if (path) [hostProps regularFilePublishingRecordWithPath:path];
                 }
                 
                 
