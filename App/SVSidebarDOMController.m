@@ -188,8 +188,11 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         
         // Insert before what should be its next sibling
         DOMElement *element = [controller HTMLElement];
-        [contentElement insertBefore:element
-                            refChild:[nextController HTMLElement]];
+        if (element)    // #119039
+        {
+            [contentElement insertBefore:element
+                                refChild:[nextController HTMLElement]];
+        }
         
         
         // Loop
