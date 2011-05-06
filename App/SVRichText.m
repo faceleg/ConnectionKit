@@ -27,6 +27,11 @@
 @end
 
 
+@interface SVRichText (CoreDataGenerated)
+- (void)addAttachmentsObject:(SVTextAttachment *)attachment;
+@end
+
+
 #pragma mark -
 
 
