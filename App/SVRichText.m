@@ -363,4 +363,14 @@
     return 200.0f;
 }
 
+#pragma mark Serialization
+
+- (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
+{
+    [super populateSerializedProperties:propertyList];
+    
+    [propertyList setValue:[[[self attachments] allObjects] valueForKey:@"serializedProperties"]
+                    forKey:@"attachments"];
+}
+
 @end
