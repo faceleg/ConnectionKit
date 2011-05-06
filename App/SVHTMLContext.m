@@ -1043,7 +1043,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
         {
             // CSS other than design should be written inline
             NSString *designPath = [[[[[[self page] master] design] bundle] bundlePath] stringByResolvingSymlinksInPath];
-            if ([[[fileURL path] stringByResolvingSymlinksInPath] ks_isSubpathOfPath:designPath])
+            if (designPath && [[[fileURL path] stringByResolvingSymlinksInPath] ks_isSubpathOfPath:designPath])
             {
                 [self linkToCSSAtURL:fileURL];
                 return fileURL;
