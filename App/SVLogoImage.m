@@ -16,6 +16,8 @@
 
 #import "NSManagedObject+KTExtensions.h"
 
+#import "NSObject+Karelia.h"
+
 
 @interface SVMediaGraphic (SVLogoImage)
 - (void)setSourceWithMediaRecord:(SVMediaRecord *)media;
@@ -48,6 +50,18 @@
     
     [self makeOriginalSize];
     [self setTypeToPublish:[[self media] typeOfFile]];
+}
+
+- (void)awakeFromFetch;
+{
+    [super awakeFromFetch];
+    
+    // Correct 2.0 beta-period bug where natural size was 0
+    if (![self validateValueForKey:@"naturalWidth" error:NULL] ||
+        ![self validateValueForKey:@"naturalHeight" error:NULL])
+    {
+        [[self plugIn] resetNaturalSize];
+    }
 }
 
 - (SVMediaRecord *)posterFrame; { return nil; }
