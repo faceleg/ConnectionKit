@@ -456,29 +456,6 @@
     }
 }
 
-- (void)deleteObjects:(id)sender;
-{
-    WEKWebEditorView *webEditor = [self webEditor];
-    if ([webEditor shouldChangeText:self])
-    {
-        NSArray *selection = [self selectedItems];
-        for (SVGraphicDOMController *anItem in selection)
-        {
-            // Only graphics can be deleted with -delete. #108128
-            if ([anItem graphicContainerDOMController] == [anItem parentWebEditorItem])
-            {
-                [anItem delete];
-            }
-            else
-            {
-                [[[self webEditorViewController] graphicsController] removeObject:[anItem representedObject]];
-            }
-        }
-        
-        [webEditor didChangeText];
-    }
-}
-
 - (IBAction)cleanHTML:(NSMenuItem *)sender;
 {
     // Fake a change
@@ -488,30 +465,6 @@
 }
 
 #pragma mark Selection
-
-- (NSArray *)selectedItems;
-{
-    NSArray *objects = [[[self webEditorViewController] graphicsController] selectedObjects];
-    NSMutableArray *result = [NSMutableArray arrayWithCapacity:[objects count]];
-    
-    for (SVGraphic *anObject in objects)
-    {
-        WEKWebEditorItem *item = [self hitTestRepresentedObject:anObject];
-        if (item)
-        {
-            // Search up to find the highest item
-            WEKWebEditorItem *parent = [item parentWebEditorItem];
-            while ([parent representedObject] == anObject)
-            {
-                item = parent; parent = [item parentWebEditorItem];
-            }
-            
-            [result addObject:item];
-        }
-    }
-    
-    return result;
-}
 
 - (DOMRange *)webEditorSelectionDOMRangeForProposedSelection:(DOMRange *)proposedRange
                                                     affinity:(NSSelectionAffinity)selectionAffinity

@@ -49,6 +49,15 @@
               item:(WEKWebEditorItem *)controller;
 
 
+#pragma mark Edit
+- (void)deleteObjects:(id)sender;
+
+
+#pragma mark Selection
+// Like Web Editor method but ignores items outside self. Text ranges and editing items are analyzed to find corresponding item inside self.
+- (NSArray *)selectedItems;
+
+
 #pragma mark Links
 @property(nonatomic, retain, readonly) DOMHTMLAnchorElement *selectedLink;
 
