@@ -36,13 +36,7 @@
 
 #pragma mark Actions
 // Like -delete: but targets the children that are selected or editing
-- (void)deleteObjects:(id)sender;
 - (IBAction)cleanHTML:(NSMenuItem *)sender;
-
-
-#pragma mark Selection
-// Like Web Editor method but ignores items outside self. Text ranges and editing items are analyzed to find corresponding item inside self.
-- (NSArray *)selectedItems;
 
 
 #pragma mark Drag Caret
