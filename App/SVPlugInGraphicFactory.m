@@ -78,6 +78,14 @@
 			path = [[NSBundle mainBundle] pathForImageResource:filename];
 		}
 	}
+    
+    
+    // HACK to fall back to plug-in icon
+    if (!path && [aName isEqualToString:@"KTPageIconName"])
+    {
+        return [self icon];
+    }
+    
 	
 	// TODO: We should not be referencing absolute paths.  Instead, we should check for 'XXXX' pattern and convert that to an OSType.
 	
