@@ -27,6 +27,11 @@
 @end
 
 
+@interface SVRichText (CoreDataGenerated)
+- (void)addAttachmentsObject:(SVTextAttachment *)attachment;
+@end
+
+
 #pragma mark -
 
 
@@ -361,6 +366,32 @@
 - (CGFloat)maxGraphicWidth;
 {
     return 200.0f;
+}
+
+#pragma mark Serialization
+
+- (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
+{
+    [super populateSerializedProperties:propertyList];
+    
+    [propertyList setValue:[[[self attachments] allObjects] valueForKey:@"serializedProperties"]
+                    forKey:@"attachments"];
+}
+
+- (void)awakeFromPropertyList:(id)propertyList;
+{
+    [super awakeFromPropertyList:propertyList];
+    
+    NSArray *attachments = [propertyList objectForKey:@"attachments"];
+    if (attachments)
+    {
+        for (id aSerializedAttachment in attachments)
+        {
+            SVTextAttachment *attachment = [SVTextAttachment insertNewTextAttachmentInManagedObjectContext:[self managedObjectContext]];
+            [attachment awakeFromPropertyList:aSerializedAttachment];
+            [self addAttachmentsObject:attachment];
+        }
+    }
 }
 
 @end
