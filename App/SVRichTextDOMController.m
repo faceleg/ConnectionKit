@@ -422,7 +422,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 {
     // Is there an orphaned item we should reconnect to?
     WEKWebEditorItem *orphanedItem = [self hitTestDOMNode:imageElement];
-    if (orphanedItem)
+    if ([orphanedItem representedObject])
     {
         [orphanedItem writeAttributedHTML:writer];
         DOMNode *result = [[orphanedItem HTMLElement] nextSibling];
@@ -577,21 +577,21 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     WEKWebEditorItem *item = [self itemForDOMNode:element];
     if (item)
     {
+        // Images need to create a corresponding model object & DOM controller
+        if (![item representedObject] && [writer importsGraphics] && [[element tagName] isEqualToString:@"IMG"])
+        {
+            return [self convertImageElementToGraphic:(DOMHTMLImageElement *)element
+                                           HTMLWriter:writer];
+        }
+        
+        
         // …If there are 2 controllers with the same node (e.g. plain image), hit-testing favours the inner one. We actually want to write the outer.
         return [self write:writer DOMElement:element item:item];
     }
     
     
     
-    // Images need to create a corresponding model object & DOM controller
-    else if ([writer importsGraphics] && [[element tagName] isEqualToString:@"IMG"])
-    {
-        return [self convertImageElementToGraphic:(DOMHTMLImageElement *)element
-                                       HTMLWriter:writer];
-    }
-    
-    
-    return element;
+   return element;
 }
 
 #pragma mark Properties
