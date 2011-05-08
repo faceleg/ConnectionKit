@@ -123,40 +123,46 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 
 #pragma mark Updating
 
-- (void)willUpdateWithNewChildController:(WEKWebEditorItem *)newChildController;
+- (void)update;
 {
-    // Helper method that:
-    //  A) swaps the new controller out for an existing one if possible
-    //  B) runs scripts for the new controller
+    // Tear down dependencies etc.
+    [self removeAllDependencies];
     
     
-    DOMDocument *doc = [[self HTMLElement] ownerDocument];
-    [newChildController loadHTMLElementFromDocument:doc];
+    // Write HTML
+    NSMutableString *htmlString = [[NSMutableString alloc] init];
     
-    NSObject *object = [newChildController representedObject];
+    SVWebEditorHTMLContext *context = [[[SVWebEditorHTMLContext class] alloc]
+                                       initWithOutputWriter:htmlString inheritFromContext:[self HTMLContext]];
     
-    for (WEKWebEditorItem *anOldController in [self childWebEditorItems])
+    [[context rootDOMController] setWebEditorViewController:[self webEditorViewController]];
+    [self writeUpdateHTML:context];
+    
+    
+    // Copy top-level dependencies across to parent. #79396
+    [context flush];    // you never know!
+    for (KSObjectKeyPathPair *aDependency in [[context rootDOMController] dependencies])
     {
-        if ([anOldController representedObject] == object)
-        {
-            DOMNode *oldElement = [anOldController HTMLElement];
-            if (oldElement)
-            {
-                // Bring back the old element!
-                DOMElement *element = [newChildController HTMLElement];
-                [[element parentNode] replaceChild:oldElement oldChild:element];
-                
-                // Bring back the old controller!
-                [[newChildController parentWebEditorItem] replaceChildWebEditorItem:newChildController
-                                                                               with:anOldController];
-                return;
-            }
-        }
+        [(SVDOMController *)[self parentWebEditorItem] addDependency:aDependency];
     }
     
     
-    // Force update the controller to run scripts etc. #99997
-    [newChildController setNeedsUpdate]; [newChildController updateIfNeeded];
+    // Turn observation back on. #92124
+    //[self startObservingDependencies];
+    
+    
+    // Bring end body code into the html
+    [context writeEndBodyString];
+    
+    
+    [self updateWithHTMLString:htmlString
+                         items:[[context rootDOMController] childWebEditorItems]];
+    
+    
+    // Tidy
+    [context close];
+    [htmlString release];
+    [context release];
 }
 
 - (void)updateWithHTMLString:(NSString *)html items:(NSArray *)items;
@@ -196,46 +202,45 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     }
 }
 
-- (void)update;
+- (void)willUpdateWithNewChildController:(WEKWebEditorItem *)newChildController;
 {
-    // Tear down dependencies etc.
-    [self removeAllDependencies];
+    // Helper method that:
+    //  A) swaps the new controller out for an existing one if possible
+    //  B) runs scripts for the new controller
     
     
-    // Write HTML
-    NSMutableString *htmlString = [[NSMutableString alloc] init];
+    DOMDocument *doc = [[self HTMLElement] ownerDocument];
+    [newChildController loadHTMLElementFromDocument:doc];
     
-    SVWebEditorHTMLContext *context = [[[SVWebEditorHTMLContext class] alloc]
-                                       initWithOutputWriter:htmlString inheritFromContext:[self HTMLContext]];
+    NSObject *object = [newChildController representedObject];
     
-    [[context rootDOMController] setWebEditorViewController:[self webEditorViewController]];
-    [[self textBlock] writeHTML:context];
-    
-    
-    // Copy top-level dependencies across to parent. #79396
-    [context flush];    // you never know!
-    for (KSObjectKeyPathPair *aDependency in [[context rootDOMController] dependencies])
+    for (WEKWebEditorItem *anOldController in [self childWebEditorItems])
     {
-        [(SVDOMController *)[self parentWebEditorItem] addDependency:aDependency];
+        if ([anOldController representedObject] == object)
+        {
+            DOMNode *oldElement = [anOldController HTMLElement];
+            if (oldElement)
+            {
+                // Bring back the old element!
+                DOMElement *element = [newChildController HTMLElement];
+                [[element parentNode] replaceChild:oldElement oldChild:element];
+                
+                // Bring back the old controller!
+                [[newChildController parentWebEditorItem] replaceChildWebEditorItem:newChildController
+                                                                               with:anOldController];
+                return;
+            }
+        }
     }
     
     
-    // Turn observation back on. #92124
-    //[self startObservingDependencies];
-    
-    
-    // Bring end body code into the html
-    [context writeEndBodyString];
-    
-    
-    [self updateWithHTMLString:htmlString
-                         items:[[context rootDOMController] childWebEditorItems]];
-    
-    
-    // Tidy
-    [context close];
-    [htmlString release];
-    [context release];
+    // Force update the controller to run scripts etc. #99997
+    [newChildController setNeedsUpdate]; [newChildController updateIfNeeded];
+}
+
+- (void)writeUpdateHTML:(SVHTMLContext *)context;
+{
+    [[self textBlock] writeHTML:context];
 }
 
 @synthesize updating = _isUpdating;

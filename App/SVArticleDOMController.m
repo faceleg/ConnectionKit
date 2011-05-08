@@ -500,48 +500,6 @@
 
 #pragma mark Updating
 
-- (void)update;
-{
-    // Tear down dependencies etc.
-    [self removeAllDependencies];
-    
-    
-    // Write HTML
-    NSMutableString *htmlString = [[NSMutableString alloc] init];
-    
-    SVWebEditorHTMLContext *context = [[[SVWebEditorHTMLContext class] alloc]
-                                       initWithOutputWriter:htmlString inheritFromContext:[self HTMLContext]];
-    
-    [[context rootDOMController] setWebEditorViewController:[self webEditorViewController]];
-    [[self representedObject] writeHTML:context];
-    
-    
-    // Copy top-level dependencies across to parent. #79396
-    [context flush];    // you never know!
-    for (KSObjectKeyPathPair *aDependency in [[context rootDOMController] dependencies])
-    {
-        [(SVDOMController *)[self parentWebEditorItem] addDependency:aDependency];
-    }
-    
-    
-    // Turn observation back on. #92124
-    //[self startObservingDependencies];
-    
-    
-    // Bring end body code into the html
-    [context writeEndBodyString];
-    
-    
-    [self updateWithHTMLString:htmlString
-                         items:[[context rootDOMController] childWebEditorItems]];
-    
-    
-    // Tidy
-    [context close];
-    [htmlString release];
-    [context release];
-}
-
 - (void)willUpdateWithNewChildController:(WEKWebEditorItem *)newChildController;
 {
     // Helper method that:
@@ -586,6 +544,11 @@
     {
         [super willUpdateWithNewChildController:newChildController];
     }
+}
+
+- (void)writeUpdateHTML:(SVHTMLContext *)context;
+{
+    [[self representedObject] writeHTML:context];
 }
 
 - (Class)attachmentsControllerClass; { return [SVArticleAttachmentsController class]; }

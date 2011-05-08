@@ -42,6 +42,7 @@
 
 - (Class)attachmentsControllerClass;    // default is NSArrayController
 
+- (void)writeUpdateHTML:(SVHTMLContext *)context;
 - (void)updateWithHTMLString:(NSString *)html items:(NSArray *)items;
 - (void)willUpdateWithNewChildController:(WEKWebEditorItem *)newChildController;
 
