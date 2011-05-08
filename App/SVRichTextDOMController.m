@@ -501,7 +501,8 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     
     
     // Generate new DOM node to match what model would normally generate
-    [controller performSelector:@selector(update)];
+    [controller setNeedsUpdate];
+    [controller updateIfNeeded];
     
     
     // Write the replacement
