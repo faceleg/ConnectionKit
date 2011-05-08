@@ -802,15 +802,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
 	@try
     {
-        // grab whatever data is already there (at least NSStoreTypeKey and NSStoreUUIDKey)
-        NSMutableDictionary *metadata = [[[coordinator metadataForPersistentStore:store] mutableCopy] autorelease];
-        
-        // remove old keys that might have been in use by older versions of Sandvox
-        [metadata removeObjectForKey:(NSString *)kMDItemDescription];
-        [metadata removeObjectForKey:@"com_karelia_Sandvox_AppVersion"];
-        [metadata removeObjectForKey:@"com_karelia_Sandvox_PageCount"];
-        [metadata removeObjectForKey:@"com_karelia_Sandvox_SiteAuthor"];
-        [metadata removeObjectForKey:@"com_karelia_Sandvox_SiteTitle"];
+        NSMutableDictionary *metadata = [NSMutableDictionary dictionary];
         
         // set ALL of our metadata for this store
         
