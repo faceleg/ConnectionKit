@@ -558,9 +558,24 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     
     // Does this controller replace a first pass?
     WEKWebEditorItem *existingItem = [self hitTestDOMNode:imageElement];
+    
     if ([existingItem parentWebEditorItem] == self)
     {
+        BOOL selected = [existingItem isSelected];
+        
         [self replaceChildWebEditorItem:existingItem withItems:NSARRAY(result)];
+        
+        if (selected)
+        {
+            // HACK: fake delegate request so that Web Editor View Controller selects the image once update completes
+            WEKWebEditorView *webEditor = [self webEditor];
+            [[webEditor delegate] webEditor:webEditor
+               shouldChangeSelectedDOMRange:[webEditor selectedDOMRange]
+                                 toDOMRange:nil
+                                   affinity:0
+                                      items:NSARRAY(result)
+                             stillSelecting:YES];
+        }
     }
     else
     {
