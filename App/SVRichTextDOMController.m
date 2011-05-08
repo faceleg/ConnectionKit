@@ -224,25 +224,29 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     return [super webEditorTextShouldInsertNode:node replacingDOMRange:range givenAction:action];
 }
 
+- (void)removeOrphanedChildWebEditorItems;
+{
+    // By removing an item, previous -childWebEditorItems result is potentially invalid, so hang on to for duration of the loop. #115550
+    NSArray *children = [[self childWebEditorItems] copy];
+    for (WEKWebEditorItem *anItem in children)
+    {
+        if ([[anItem HTMLElement] ks_isOrphanedFromDocument])
+        {
+            [anItem stopObservingDependencies];
+            [anItem setHTMLElement:nil];
+            [anItem removeFromParentWebEditorItem];
+        }
+    }
+    [children release];
+}
+
 - (void)webEditorTextDidChange;
 {    
     _isUpdating = YES;
     @try
     {
         [super webEditorTextDidChange];
-        
-        // Ditch any orphaned content. By removing an item, previous -childWebEditorItems result is potentially invalid, so hang on to for duration of the loop. #115550
-        NSArray *children = [[self childWebEditorItems] copy];
-        for (WEKWebEditorItem *anItem in children)
-        {
-            if ([[anItem HTMLElement] ks_isOrphanedFromDocument])
-            {
-                [anItem stopObservingDependencies];
-                [anItem setHTMLElement:nil];
-                [anItem removeFromParentWebEditorItem];
-            }
-        }
-        [children release];
+        [self removeOrphanedChildWebEditorItems];
     }
     @finally
     {
