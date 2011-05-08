@@ -1117,22 +1117,28 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     if (textController)
     {
-        // We want the result sorted to match DOM. #95785
-        NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"HTMLElement"
-                                                             ascending:YES
-                                                              selector:@selector(ks_compareDocumentPosition:)];
+        NSMutableArray *result = [NSMutableArray array];
         
-        NSMutableArray *result = [KSSortedMutableArray arrayWithSortDescriptor:sort];
-        [sort release];
+        DOMNode *commonNode = [range commonAncestorContainer];
+        DOMTreeWalker *walker = [[commonNode ownerDocument] createTreeWalker:commonNode
+                                                                  whatToShow:DOM_SHOW_ALL
+                                                                      filter:nil
+                                                      expandEntityReferences:NO];
         
-        for (WEKWebEditorItem *anItem in [textController selectableTopLevelDescendants])
+        [walker setCurrentNode:[range ks_startNode:NULL]];
+        while ([walker currentNode] != [range ks_endNode:NULL])
         {
-            DOMHTMLElement *element = [anItem HTMLElement];
-            if ([element ks_isDescendantOfElement:[textController HTMLElement]] &&
-                [range containsNode:element])   // weed out any obvious orphans
+            DOMNode *aNode = [walker currentNode];
+            if ([aNode nodeType] == DOM_ELEMENT_NODE)
             {
-                [result addObject:anItem];
+                WEKWebEditorItem *item = [self selectableItemForDOMNode:aNode];
+                if (item && item != textController && [item isDescendantOfWebEditorItem:textController])
+                {
+                    [result addObject:item];
+                }
             }
+            
+            if (![walker nextNode]) break;
         }
         
         return result;
