@@ -934,7 +934,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     WEKWebEditorView *webEditor = [self webEditor];
     
     id item = [[webEditor contentItem] hitTestRepresentedObject:[textRange containerObject]];
-    if (item)
+    if ([item textHTMLElement])
     {
         DOMRange *domRange = [[webEditor HTMLDocument] createRange];
         [textRange populateDOMRange:domRange fromContainerNode:[item textHTMLElement]];
