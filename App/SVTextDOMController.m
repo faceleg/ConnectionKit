@@ -117,7 +117,7 @@
         }
         else
         {
-            SVMediaDOMController *result = [[SVMediaDOMController alloc] init];
+            result = [[SVMediaDOMController alloc] init];
             [result setHTMLElement:(DOMHTMLElement *)node];
             
             [self addChildWebEditorItem:result];
