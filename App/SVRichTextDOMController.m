@@ -920,6 +920,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 {
     [_graphicsController removeObserver:self forKeyPath:@"arrangedObjects"];
     [_graphicsController unbind:NSContentSetBinding];
+    [_graphicsController setContent:nil];
 }
 
 - (void)setRepresentedObject:(id)object;
