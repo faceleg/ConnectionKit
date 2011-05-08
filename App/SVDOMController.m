@@ -330,7 +330,9 @@
     [selectorStrings release];
     
     
-    [super updateIfNeeded];
+    // Carry on updating, *unless* the update happened to remove us from the tree. Tends to happen for rich text
+    if ([self webEditor]) [super updateIfNeeded];
+    
     [self release];
 }
 
