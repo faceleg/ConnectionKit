@@ -10,7 +10,6 @@
 
 #import "SVAttributedHTML.h"
 #import "SVCalloutDOMController.h"
-#import "SVContentDOMController.h"
 #import "SVGraphicFactory.h"
 #import "SVMigrationHTMLWriterDOMAdaptor.h"
 #import "KTPage.h"
@@ -501,98 +500,6 @@
 
 #pragma mark Updating
 
-- (void)willUpdateWithNewChildController:(WEKWebEditorItem *)newChildController;
-{
-    // Helper method that:
-    //  A) swaps the new controller out for an existing one if possible
-    //  B) runs scripts for the new controller
-    
-    
-    DOMDocument *doc = [[self HTMLElement] ownerDocument];
-    [newChildController loadHTMLElementFromDocument:doc];
-    
-    
-    NSObject *object = [newChildController representedObject];
-    if (!object || [object isKindOfClass:[SVCallout class]])
-    {
-        // Probably a callout, search for a matching one
-        NSArray *objects = [newChildController valueForKeyPath:@"childWebEditorItems.representedObject"];
-        for (WEKWebEditorItem *anItem in [self childWebEditorItems])
-        {
-            if (![anItem representedObject] &&
-                [objects isEqualToArray:[anItem valueForKeyPath:@"childWebEditorItems.representedObject"]])
-            {
-                // Bring back the old element!
-                DOMElement *element = [newChildController HTMLElement];
-                [[element parentNode] replaceChild:[anItem HTMLElement] oldChild:element];
-                
-                // Bring back the old controller!
-                [[newChildController parentWebEditorItem] replaceChildWebEditorItem:newChildController
-                                                                               with:anItem];
-                return;
-            }
-        }
-        
-        //update contents instead. #99997
-        for (newChildController in [newChildController childWebEditorItems])
-        {
-            // Can't call -willUpdateWithNewChildController: as that will recycle an inline DOM controller in some cases. #95985
-            [newChildController setNeedsUpdate]; [newChildController updateIfNeeded];
-        }
-        return;
-    }
-    
-    
-    for (WEKWebEditorItem *anOldController in [self childWebEditorItems])
-    {
-        if ([anOldController representedObject] == object)
-        {
-            DOMNode *oldElement = [anOldController HTMLElement];
-            if (oldElement)
-            {
-                // Bring back the old element!
-                DOMElement *element = [newChildController HTMLElement];
-                [[element parentNode] replaceChild:oldElement oldChild:element];
-                
-                // Bring back the old controller!
-                [[newChildController parentWebEditorItem] replaceChildWebEditorItem:newChildController
-                                                                             with:anOldController];
-                return;
-            }
-        }
-    }
-    
-    
-    // Force update the controller to run scripts etc. #99997
-    [newChildController setNeedsUpdate]; [newChildController updateIfNeeded];
-}
-
-- (void)updateWithHTMLString:(NSString *)html items:(NSArray *)items;
-{
-    // Update DOM
-    [[self HTMLElement] setOuterHTML:html];
-    
-    
-    // Re-use any existing graphic controllers when possible
-    for (WEKWebEditorItem *aController in items)
-    {
-        for (WEKWebEditorItem *newChildController in [aController childWebEditorItems])
-        {
-            [self willUpdateWithNewChildController:newChildController];
-        }
-    }
-    
-    
-    // Hook up new DOM Controllers
-    [self stopObservingDependencies];
-    [[self parentWebEditorItem] replaceChildWebEditorItem:self withItems:items];
-    
-    for (SVDOMController *aController in items)
-    {
-        [aController didUpdateWithSelector:_cmd];
-    }
-}
-
 - (void)update;
 {
     // Tear down dependencies etc.
@@ -633,6 +540,52 @@
     [context close];
     [htmlString release];
     [context release];
+}
+
+- (void)willUpdateWithNewChildController:(WEKWebEditorItem *)newChildController;
+{
+    // Helper method that:
+    //  A) swaps the new controller out for an existing one if possible
+    //  B) runs scripts for the new controller
+    
+    
+    
+    
+    NSObject *object = [newChildController representedObject];
+    if (!object || [object isKindOfClass:[SVCallout class]])
+    {
+        DOMDocument *doc = [[self HTMLElement] ownerDocument];
+        [newChildController loadHTMLElementFromDocument:doc];
+    
+        // Probably a callout, search for a matching one
+        NSArray *objects = [newChildController valueForKeyPath:@"childWebEditorItems.representedObject"];
+        for (WEKWebEditorItem *anItem in [self childWebEditorItems])
+        {
+            if (![anItem representedObject] &&
+                [objects isEqualToArray:[anItem valueForKeyPath:@"childWebEditorItems.representedObject"]])
+            {
+                // Bring back the old element!
+                DOMElement *element = [newChildController HTMLElement];
+                [[element parentNode] replaceChild:[anItem HTMLElement] oldChild:element];
+                
+                // Bring back the old controller!
+                [[newChildController parentWebEditorItem] replaceChildWebEditorItem:newChildController
+                                                                               with:anItem];
+                return;
+            }
+        }
+        
+        //update contents instead. #99997
+        for (newChildController in [newChildController childWebEditorItems])
+        {
+            // Can't call -willUpdateWithNewChildController: as that will recycle an inline DOM controller in some cases. #95985
+            [newChildController setNeedsUpdate]; [newChildController updateIfNeeded];
+        }
+    }
+    else
+    {
+        [super willUpdateWithNewChildController:newChildController];
+    }
 }
 
 - (Class)attachmentsControllerClass; { return [SVArticleAttachmentsController class]; }

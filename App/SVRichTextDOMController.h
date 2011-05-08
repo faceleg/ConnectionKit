@@ -36,11 +36,14 @@
 
 
 #pragma mark Updates
+
 // Use these methods to temporarily suspend observation while updating model or view otherwise we get in an infinite loop
 @property(nonatomic, readonly, getter=isUpdating) BOOL updating;
-//- (void)willUpdate;
-//- (void)didUpdate;
+
 - (Class)attachmentsControllerClass;    // default is NSArrayController
+
+- (void)updateWithHTMLString:(NSString *)html items:(NSArray *)items;
+- (void)willUpdateWithNewChildController:(WEKWebEditorItem *)newChildController;
 
 
 #pragma mark Responding to Changes
