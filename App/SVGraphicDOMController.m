@@ -335,6 +335,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     // Teardown
     [_offscreenWebViewController setDelegate:nil];
     [_offscreenWebViewController release]; _offscreenWebViewController = nil;
+    [_offscreenDOMControllers release]; _offscreenDOMControllers = nil;
 }
 
 - (void)updateSize;
