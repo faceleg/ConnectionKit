@@ -152,7 +152,7 @@
 		
 		if (!showingSomething && [context isForEditing])
 		{
-			[context writePlaceholderWithText:SVLocalizedString(@"Gallery", "placeholder for invisible gallery index") options:SVPlaceholderInvisible];
+			[context writePlaceholderWithText:SVLocalizedString(@"Gallery", "placeholder for invisible gallery index") options:(1 << 0)]; // SVPlaceholderInvisible
 		}
 		
 		// If we have something to show, hook up gallery (or slideshow) to start when item is clicked.
