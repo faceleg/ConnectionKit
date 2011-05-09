@@ -91,8 +91,10 @@
     [oTabView selectTabViewItemAtIndex:[oLinkTypePopUpButton indexOfSelectedItem]];
     [[oEmailAddressField cell] setSendsActionOnEndEditing:YES];
     
-    [oExternalLinkOpenInNewWindowCheckbox setState:([link openInNewWindow] ? NSOnState : NSOffState)];
-    [oOpenInNewWindowCheckbox setState:([link openInNewWindow] ? NSOnState : NSOffState)];
+    BOOL openInNewWindow = [link openInNewWindow];
+    [oExternalLinkOpenInNewWindowCheckbox setState:openInNewWindow];
+    [oPageOpenInNewWindowCheckbox setState:openInNewWindow];
+    [oImageOpenInNewWindowCheckbox setState:openInNewWindow];
 }
 
 - (SVLinkManager *)linkManager
@@ -142,7 +144,7 @@
 {
 	if (aPage)
 	{
-		SVLink *link = [[SVLink alloc] initWithPage:aPage openInNewWindow:[oOpenInNewWindowCheckbox intValue]];
+		SVLink *link = [[SVLink alloc] initWithPage:aPage openInNewWindow:[oPageOpenInNewWindowCheckbox intValue]];
 		[[SVLinkManager sharedLinkManager] modifyLinkTo:link];
 		[link release];
 	}

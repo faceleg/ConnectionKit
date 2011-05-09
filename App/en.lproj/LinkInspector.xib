@@ -12,7 +12,6 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="142"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -34,7 +33,7 @@
 				<string key="NSClassName">NSApplication</string>
 			</object>
 			<object class="NSCustomView" id="1005">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -59,7 +58,7 @@
 									<string key="NSColorName">controlColor</string>
 									<object class="NSColor" key="NSColor" id="908835447">
 										<int key="NSColorSpace">3</int>
-										<bytes key="NSWhite">MC42NjY2NjY2ODY1AA</bytes>
+										<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
 									</object>
 								</object>
 								<reference key="NSTabView" ref="685216708"/>
@@ -67,7 +66,7 @@
 							<object class="NSTabViewItem" id="894881507">
 								<string key="NSIdentifier">2</string>
 								<object class="NSView" key="NSView" id="1069030782">
-									<reference key="NSNextResponder" ref="685216708"/>
+									<nil key="NSNextResponder"/>
 									<int key="NSvFlags">256</int>
 									<object class="NSMutableArray" key="NSSubviews">
 										<bool key="EncodedWithXMLCoder">YES</bool>
@@ -158,7 +157,6 @@
 										</object>
 									</object>
 									<string key="NSFrameSize">{230, 65}</string>
-									<reference key="NSSuperview" ref="685216708"/>
 								</object>
 								<reference key="NSColor" ref="779414817"/>
 								<reference key="NSTabView" ref="685216708"/>
@@ -376,7 +374,7 @@
 							<object class="NSTabViewItem" id="520724281">
 								<string key="NSIdentifier">3</string>
 								<object class="NSView" key="NSView" id="278439826">
-									<nil key="NSNextResponder"/>
+									<reference key="NSNextResponder" ref="685216708"/>
 									<int key="NSvFlags">256</int>
 									<object class="NSMutableArray" key="NSSubviews">
 										<bool key="EncodedWithXMLCoder">YES</bool>
@@ -404,19 +402,20 @@
 										</object>
 									</object>
 									<string key="NSFrameSize">{230, 65}</string>
+									<reference key="NSSuperview" ref="685216708"/>
 								</object>
 								<reference key="NSColor" ref="779414817"/>
 								<reference key="NSTabView" ref="685216708"/>
 							</object>
 						</object>
-						<reference key="NSSelectedTabViewItem" ref="894881507"/>
+						<reference key="NSSelectedTabViewItem" ref="520724281"/>
 						<reference key="NSFont" ref="26"/>
 						<int key="NSTvFlags">134217734</int>
 						<bool key="NSAllowTruncatedLabels">YES</bool>
 						<bool key="NSDrawsBackground">YES</bool>
 						<object class="NSMutableArray" key="NSSubviews">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="1069030782"/>
+							<reference ref="278439826"/>
 						</object>
 					</object>
 					<object class="NSTextField" id="419155358">
@@ -603,7 +602,6 @@
 					</object>
 				</object>
 				<string key="NSFrameSize">{230, 200}</string>
-				<reference key="NSSuperview"/>
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSUserDefaultsController" id="729820615">
@@ -687,14 +685,6 @@
 						</object>
 					</object>
 					<int key="connectionID">120</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">oOpenInNewWindowCheckbox</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="695373859"/>
-					</object>
-					<int key="connectionID">127</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -887,6 +877,22 @@
 						<reference key="destination" ref="1003532112"/>
 					</object>
 					<int key="connectionID">193</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oImageOpenInNewWindowCheckbox</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="494602088"/>
+					</object>
+					<int key="connectionID">198</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oPageOpenInNewWindowCheckbox</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="695373859"/>
+					</object>
+					<int key="connectionID">199</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1484,7 +1490,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">197</int>
+			<int key="maxID">199</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1841,15 +1847,17 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>oEmailAddressField</string>
 							<string>oExternalLinkOpenInNewWindowCheckbox</string>
+							<string>oImageOpenInNewWindowCheckbox</string>
 							<string>oLinkField</string>
 							<string>oLinkSourceView</string>
 							<string>oLinkTypePopUpButton</string>
-							<string>oOpenInNewWindowCheckbox</string>
+							<string>oPageOpenInNewWindowCheckbox</string>
 							<string>oTabView</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>KSEmailAddressComboBox</string>
+							<string>NSButton</string>
 							<string>NSButton</string>
 							<string>NSTextField</string>
 							<string>KTLinkSourceView</string>
@@ -1864,10 +1872,11 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>oEmailAddressField</string>
 							<string>oExternalLinkOpenInNewWindowCheckbox</string>
+							<string>oImageOpenInNewWindowCheckbox</string>
 							<string>oLinkField</string>
 							<string>oLinkSourceView</string>
 							<string>oLinkTypePopUpButton</string>
-							<string>oOpenInNewWindowCheckbox</string>
+							<string>oPageOpenInNewWindowCheckbox</string>
 							<string>oTabView</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -1878,6 +1887,10 @@
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">oExternalLinkOpenInNewWindowCheckbox</string>
+								<string key="candidateClassName">NSButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">oImageOpenInNewWindowCheckbox</string>
 								<string key="candidateClassName">NSButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
@@ -1893,7 +1906,7 @@
 								<string key="candidateClassName">NSPopUpButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">oOpenInNewWindowCheckbox</string>
+								<string key="name">oPageOpenInNewWindowCheckbox</string>
 								<string key="candidateClassName">NSButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">

@@ -26,7 +26,8 @@
     IBOutlet NSTextField            *oLinkField;
     IBOutlet NSButton               *oExternalLinkOpenInNewWindowCheckbox;
     IBOutlet KSEmailAddressComboBox *oEmailAddressField;
-    IBOutlet NSButton               *oOpenInNewWindowCheckbox;
+    IBOutlet NSButton               *oPageOpenInNewWindowCheckbox;
+    IBOutlet NSButton               *oImageOpenInNewWindowCheckbox;
     
   @private
 }
