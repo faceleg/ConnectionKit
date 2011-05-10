@@ -49,7 +49,3 @@
     #define SVLocalizedString(key,comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
 #endif
 
-// We do not want to be accidentally using NSLocalizedString and NSLocalizedStringFromTable from a plug-in!
-// They refer to the main bundle.  So undefine them to encourage SVLocalizedString.
-#undef NSLocalizedString
-#undef NSLocalizedStringFromTable
