@@ -88,7 +88,9 @@
     }
     if ( [properties objectForKey:@"titleHTML"] )
     {
-        self.title = [[properties objectForKey:@"titleHTML"] stringByConvertingHTMLToPlainText];
+        NSString *title = [properties objectForKey:@"titleHTML"];
+        if ((id)title == [NSNull null]) title = nil;
+        self.title = [title stringByConvertingHTMLToPlainText];
     }
 }
 
