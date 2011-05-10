@@ -74,15 +74,18 @@
     
     // Locate corresponding sidebar object and add pagelet to it
     NSManagedObject *sPage = [sPagelet valueForKey:@"page"];
-    NSArray *dSidebars = [manager destinationInstancesForEntityMappingNamed:@"PageToSidebar" sourceInstances:[NSArray arrayWithObject:sPage]];
-    
-    [[dInstance mutableSetValueForKey:@"sidebars"] addObjectsFromArray:dSidebars];
-    
-    
-    // Carry on down the tree?
-    if ([[sPagelet valueForKey:@"shouldPropagate"] boolValue])
+    if (sPage)
     {
-        [self propagateSidebarRelationshipForDestinationPagelet:dInstance toDescendantsOfPage:sPage manager:manager];
+        NSArray *dSidebars = [manager destinationInstancesForEntityMappingNamed:@"PageToSidebar" sourceInstances:[NSArray arrayWithObject:sPage]];
+        
+        [[dInstance mutableSetValueForKey:@"sidebars"] addObjectsFromArray:dSidebars];
+        
+        
+        // Carry on down the tree?
+        if ([[sPagelet valueForKey:@"shouldPropagate"] boolValue])
+        {
+            [self propagateSidebarRelationshipForDestinationPagelet:dInstance toDescendantsOfPage:sPage manager:manager];
+        }
     }
     
     return YES;
