@@ -190,6 +190,7 @@
 				3C8544AA12061D69000A19C3 /* PBXTargetDependency */,
 				3C042AC51307167D00D9F2A7 /* PBXTargetDependency */,
 				3C7C1E401219B5DA005D75B1 /* PBXTargetDependency */,
+				3C732B3C1378EA3100D5F738 /* PBXTargetDependency */,
 				3C9CF9B0121201D8005CFDD4 /* PBXTargetDependency */,
 				3C85B31C13023F8A00690048 /* PBXTargetDependency */,
 				274E82800D627180004F89C2 /* PBXTargetDependency */,
@@ -1616,6 +1617,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 3C5A9A850D11E4DF0054058C;
 			remoteInfo = "iMedia - Use Specific Revision";
+		};
+		3C732B3B1378EA3100D5F738 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE541507133C08DA003F635A /* GalleryIndex.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* GalleryIndex */;
+			remoteInfo = GalleryIndex;
 		};
 		3C79F2EA11F3AEDF00B699EE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -8086,6 +8094,11 @@
 			isa = PBXTargetDependency;
 			target = 3C5A9A850D11E4DF0054058C /* iMedia-UpdateRevision */;
 			targetProxy = 3C5A9A9B0D11E74B0054058C /* PBXContainerItemProxy */;
+		};
+		3C732B3C1378EA3100D5F738 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GalleryIndex;
+			targetProxy = 3C732B3B1378EA3100D5F738 /* PBXContainerItemProxy */;
 		};
 		3C79F2F211F3BF9900B699EE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
