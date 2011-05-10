@@ -19,7 +19,7 @@
 
 //  Sandvox.h is a convenience header that imports all "public" headers in Sandvox
 //  Each header is well commented as to its functionality. Further information can be found online at 
-//  http://docs.karelia.com/z/Sandvox_Developers_Guide.html
+//  http://www.karelia.com/sandvox/help/z/Sandvox_Developers_Guide.html
 
 
 // Core
@@ -49,7 +49,7 @@
     #define SVLocalizedString(key,comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
 #endif
 
-// We don't want to be accidentally using NSLocalizedString (and NSLocalizedStringFromTable) from a plug-in!
+// We do not want to be accidentally using NSLocalizedString and NSLocalizedStringFromTable from a plug-in!
 // They refer to the main bundle.  So undefine them to encourage SVLocalizedString.
 #undef NSLocalizedString
 #undef NSLocalizedStringFromTable
