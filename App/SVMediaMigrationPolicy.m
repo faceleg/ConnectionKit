@@ -179,6 +179,31 @@
     return result;
 }
 
+- (BOOL)createDestinationInstancesForSourceInstance:(NSManagedObject *)sInstance entityMapping:(NSEntityMapping *)mapping manager:(SVMigrationManager *)manager error:(NSError **)error;
+{
+    BOOL result = [super createDestinationInstancesForSourceInstance:sInstance entityMapping:mapping manager:manager error:error];
+    
+    // Failed to locate file? #119893
+    if (result &&
+        ![[manager destinationInstancesForEntityMappingNamed:[mapping name]
+                                             sourceInstances:[NSArray arrayWithObject:sInstance]] count])
+    {
+        // Treat like raw HTML
+        SVFullPageRawHTMLMediaMigrationPolicy *policy = [[SVFullPageRawHTMLMediaMigrationPolicy alloc] init];
+        NSEntityMapping *mapping = [[[manager mappingModel] entityMappingsByName] objectForKey:@"HTMLPageToFileMedia"];
+        
+        result = [policy createDestinationInstancesForSourceInstance:sInstance
+                                                       entityMapping:mapping
+                                                             manager:manager
+                                                               error:error];
+        
+        [policy release];
+    }
+    
+    
+    return result;
+}
+
 @end
 
 
@@ -190,6 +215,7 @@
 
 - (NSData *)extensiblePropertiesFromHTMLString:(NSString *)html;
 {
+    if (!html) html = @"";
     NSData *data = [html dataUsingEncoding:NSUTF8StringEncoding];
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:
