@@ -102,7 +102,7 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
 
 
 // Metadata
-- (BOOL)setMetadataForStoreAtURL:(NSURL *)aStoreURL error:(NSError **)outError;
+- (BOOL)setMetadataForPersistentStore:(NSPersistentStore *)store error:(NSError **)outError;
 - (NSString *)documentTextContent;
 
 
@@ -630,7 +630,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     // Now we're sure store is available, can give it some metadata.
     if (result && saveOp != NSAutosaveOperation)
     {
-        result = [self setMetadataForStoreAtURL:URL error:&error];
+        result = [self setMetadataForPersistentStore:store error:&error];
     }
     
     
@@ -774,9 +774,10 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 #pragma mark Metadata
 
 /*! setMetadataForStoreAtURL: sets all metadata for the store all at once */
-- (BOOL)setMetadataForStoreAtURL:(NSURL *)aStoreURL
-						   error:(NSError **)outError
+- (BOOL)setMetadataForPersistentStore:(NSPersistentStore *)store
+                                error:(NSError **)outError
 {
+    OBPRECONDITION(store);
 	//LOGMETHOD;
 	
 	BOOL result = NO;
@@ -784,155 +785,136 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	NSPersistentStoreCoordinator *coordinator = [context persistentStoreCoordinator];
     
 	@try
-	{
-		id theStore = [coordinator persistentStoreForURL:aStoreURL];
-		if (theStore)
-		{
-			// grab whatever data is already there (at least NSStoreTypeKey and NSStoreUUIDKey)
-			NSMutableDictionary *metadata = [[[coordinator metadataForPersistentStore:theStore] mutableCopy] autorelease];
-			
-			// remove old keys that might have been in use by older versions of Sandvox
-			[metadata removeObjectForKey:(NSString *)kMDItemDescription];
-			[metadata removeObjectForKey:@"com_karelia_Sandvox_AppVersion"];
-			[metadata removeObjectForKey:@"com_karelia_Sandvox_PageCount"];
-			[metadata removeObjectForKey:@"com_karelia_Sandvox_SiteAuthor"];
-			[metadata removeObjectForKey:@"com_karelia_Sandvox_SiteTitle"];
-			
-			// set ALL of our metadata for this store
-			
-			//  kMDItemAuthors
-			NSString *author = [[[[self site] rootPage] master] valueForKey:@"author"];
-			if ( (nil == author) || [author isEqualToString:@""] )
-			{
-				[metadata removeObjectForKey:(NSString *)kMDItemAuthors];
-			}
-			else
-			{
-				[metadata setObject:[NSArray arrayWithObject:author] forKey:(NSString *)kMDItemAuthors];
-			}
-			
-			// kMDItemLanguages
-			NSString *language = [[[[self site] rootPage] master] valueForKey:@"language"];
-			if ( (nil == language) || [language isEqualToString:@""] )
-			{
-				[metadata removeObjectForKey:(NSString *)kMDItemLanguages];
-			}
-			else
-			{
-				[metadata setObject:[NSArray arrayWithObject:language] forKey:(NSString *)kMDItemLanguages];
-			}
-			
-			// kMDItemHeadline  -- tagline/subtitle
-			NSString *subtitle = [[[[[self site] rootPage] master] siteSubtitle] text];
-			if ( (nil == subtitle) || [subtitle isEqualToString:@""] )
-			{
-				[metadata removeObjectForKey:(NSString *)kMDItemHeadline];
-			}
-			else
-			{
-				[metadata setObject:subtitle forKey:(NSString *)kMDItemHeadline];
-			}
-			
-			//  kMDItemCreator (Sandvox is the creator of this site document)
-			[metadata setObject:[NSApplication applicationName] forKey:(NSString *)kMDItemCreator];
-            
-			// kMDItemKind
-			[metadata setObject:NSLocalizedString(@"Sandvox Site", "kind of document") forKey:(NSString *)kMDItemKind];
-			
-			/// we're going to fault every page, use a local pool to release them quickly
-			NSAutoreleasePool *localPool = [[NSAutoreleasePool alloc] init];
-			
-			//  kMDItemNumberOfPages
-			NSArray *pages = [[self managedObjectContext] fetchAllObjectsForEntityForName:@"Page" error:NULL];
-			unsigned int pageCount = 0;
-			if ( nil != pages )
-			{
-				pageCount = [pages count]; // according to mmalc, this is the only way to get this kind of count
-			}
-			[metadata setObject:[NSNumber numberWithUnsignedInt:pageCount] forKey:(NSString *)kMDItemNumberOfPages];
-			
-            
-            
-			//  kMDItemTextContent (free-text account of content)
-			[metadata setObject:[self documentTextContent]
-                         forKey:(NSString *)kMDItemTextContent];
-			
-            
-			//  kMDItemKeywords (keywords of all pages)
-			NSMutableSet *keySet = [NSMutableSet set];
-			for (id loopItem in pages)
-			{
-				[keySet addObjectsFromArray:[loopItem keywords]];
-			}
-            
-			if ( (nil == keySet) || ([keySet count] == 0) )
-			{
-				[metadata removeObjectForKey:(NSString *)kMDItemKeywords];
-			}
-			else
-			{
-				[metadata setObject:[keySet allObjects] forKey:(NSString *)kMDItemKeywords];
-			}
-			[localPool release];
-			
-            
-			//  kMDItemTitle
-			NSString *siteTitle = [[[[[self site] rootPage] master] siteTitle] textHTMLString];        
-			if ( (nil == siteTitle) || [siteTitle isEqualToString:@""] )
-			{
-				[metadata removeObjectForKey:(NSString *)kMDItemTitle];
-			}
-			else
-			{
-				siteTitle = [siteTitle stringByConvertingHTMLToPlainText];
-				[metadata setObject:siteTitle forKey:(NSString *)kMDItemTitle];
-			}
-			
-			// custom attributes
-			
-			//  kKTMetadataModelVersionKey
-			[metadata setObject:kKTModelVersion forKey:kKTMetadataModelVersionKey];
-			
-			// kKTMetadataAppCreatedVersionKey should only be set once
-			if ( nil == [metadata valueForKey:kKTMetadataAppCreatedVersionKey] )
-			{
-				[metadata setObject:[NSApplication buildVersion] forKey:kKTMetadataAppCreatedVersionKey];
-			}
-			
-			//  kKTMetadataAppLastSavedVersionKey (CFBundleVersion of running app)
-			[metadata setObject:[NSApplication buildVersion] forKey:kKTMetadataAppLastSavedVersionKey];
-			
-			// replace the metadata in the store with our updates
-			// NB: changes to metadata through this method are not pushed to disk until the document is saved
-			[coordinator setMetadata:metadata forPersistentStore:theStore];
-			
-			result = YES;
-		}
-		else
-		{
-			NSLog(@"error: unable to setMetadataForStoreAtURL:%@ (no persistent store)", [aStoreURL path]);
-			NSString *path = [aStoreURL path];
-			NSString *reason = [NSString stringWithFormat:@"(%@ is not a valid persistent store.)", path];
-			if (outError)
-			{
-				*outError = [NSError errorWithDomain:NSCocoaErrorDomain
-												code:134070 // NSPersistentStoreOperationError
-											userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
-													  reason, NSLocalizedDescriptionKey,
-													  nil]];
-			}
-			result = NO;
-		}
-	}
+    {
+        // grab whatever data is already there (at least NSStoreTypeKey and NSStoreUUIDKey)
+        NSMutableDictionary *metadata = [[[coordinator metadataForPersistentStore:store] mutableCopy] autorelease];
+        
+        // remove old keys that might have been in use by older versions of Sandvox
+        [metadata removeObjectForKey:(NSString *)kMDItemDescription];
+        [metadata removeObjectForKey:@"com_karelia_Sandvox_AppVersion"];
+        [metadata removeObjectForKey:@"com_karelia_Sandvox_PageCount"];
+        [metadata removeObjectForKey:@"com_karelia_Sandvox_SiteAuthor"];
+        [metadata removeObjectForKey:@"com_karelia_Sandvox_SiteTitle"];
+        
+        // set ALL of our metadata for this store
+        
+        //  kMDItemAuthors
+        NSString *author = [[[[self site] rootPage] master] valueForKey:@"author"];
+        if ( (nil == author) || [author isEqualToString:@""] )
+        {
+            [metadata removeObjectForKey:(NSString *)kMDItemAuthors];
+        }
+        else
+        {
+            [metadata setObject:[NSArray arrayWithObject:author] forKey:(NSString *)kMDItemAuthors];
+        }
+        
+        // kMDItemLanguages
+        NSString *language = [[[[self site] rootPage] master] valueForKey:@"language"];
+        if ( (nil == language) || [language isEqualToString:@""] )
+        {
+            [metadata removeObjectForKey:(NSString *)kMDItemLanguages];
+        }
+        else
+        {
+            [metadata setObject:[NSArray arrayWithObject:language] forKey:(NSString *)kMDItemLanguages];
+        }
+        
+        // kMDItemHeadline  -- tagline/subtitle
+        NSString *subtitle = [[[[[self site] rootPage] master] siteSubtitle] text];
+        if ( (nil == subtitle) || [subtitle isEqualToString:@""] )
+        {
+            [metadata removeObjectForKey:(NSString *)kMDItemHeadline];
+        }
+        else
+        {
+            [metadata setObject:subtitle forKey:(NSString *)kMDItemHeadline];
+        }
+        
+        //  kMDItemCreator (Sandvox is the creator of this site document)
+        [metadata setObject:[NSApplication applicationName] forKey:(NSString *)kMDItemCreator];
+        
+        // kMDItemKind
+        [metadata setObject:NSLocalizedString(@"Sandvox Site", "kind of document") forKey:(NSString *)kMDItemKind];
+        
+        /// we're going to fault every page, use a local pool to release them quickly
+        NSAutoreleasePool *localPool = [[NSAutoreleasePool alloc] init];
+        
+        //  kMDItemNumberOfPages
+        NSArray *pages = [[self managedObjectContext] fetchAllObjectsForEntityForName:@"Page" error:NULL];
+        unsigned int pageCount = 0;
+        if ( nil != pages )
+        {
+            pageCount = [pages count]; // according to mmalc, this is the only way to get this kind of count
+        }
+        [metadata setObject:[NSNumber numberWithUnsignedInt:pageCount] forKey:(NSString *)kMDItemNumberOfPages];
+        
+        
+        
+        //  kMDItemTextContent (free-text account of content)
+        [metadata setObject:[self documentTextContent]
+                     forKey:(NSString *)kMDItemTextContent];
+        
+        
+        //  kMDItemKeywords (keywords of all pages)
+        NSMutableSet *keySet = [NSMutableSet set];
+        for (id loopItem in pages)
+        {
+            [keySet addObjectsFromArray:[loopItem keywords]];
+        }
+        
+        if ( (nil == keySet) || ([keySet count] == 0) )
+        {
+            [metadata removeObjectForKey:(NSString *)kMDItemKeywords];
+        }
+        else
+        {
+            [metadata setObject:[keySet allObjects] forKey:(NSString *)kMDItemKeywords];
+        }
+        [localPool release];
+        
+        
+        //  kMDItemTitle
+        NSString *siteTitle = [[[[[self site] rootPage] master] siteTitle] textHTMLString];        
+        if ( (nil == siteTitle) || [siteTitle isEqualToString:@""] )
+        {
+            [metadata removeObjectForKey:(NSString *)kMDItemTitle];
+        }
+        else
+        {
+            siteTitle = [siteTitle stringByConvertingHTMLToPlainText];
+            [metadata setObject:siteTitle forKey:(NSString *)kMDItemTitle];
+        }
+        
+        // custom attributes
+        
+        //  kKTMetadataModelVersionKey
+        [metadata setObject:kKTModelVersion forKey:kKTMetadataModelVersionKey];
+        
+        // kKTMetadataAppCreatedVersionKey should only be set once
+        if ( nil == [metadata valueForKey:kKTMetadataAppCreatedVersionKey] )
+        {
+            [metadata setObject:[NSApplication buildVersion] forKey:kKTMetadataAppCreatedVersionKey];
+        }
+        
+        //  kKTMetadataAppLastSavedVersionKey (CFBundleVersion of running app)
+        [metadata setObject:[NSApplication buildVersion] forKey:kKTMetadataAppLastSavedVersionKey];
+        
+        // replace the metadata in the store with our updates
+        // NB: changes to metadata through this method are not pushed to disk until the document is saved
+        [coordinator setMetadata:metadata forPersistentStore:store];
+        
+        result = YES;
+    }
 	@catch (NSException * e)
 	{
-		NSLog(@"error: unable to setMetadataForStoreAtURL:%@ exception: %@:%@", [aStoreURL path], [e name], [e reason]);
+		NSLog(@"error: unable to %@ %@ exception: %@:%@", NSStringFromSelector(_cmd), [store URL], [e name], [e reason]);
 		if (outError)
 		{
 			*outError = [NSError errorWithDomain:NSCocoaErrorDomain
 											code:134070 // NSPersistentStoreOperationError
 										userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
-												  [aStoreURL path], @"path",
+												  [store URL], NSURLErrorKey,
 												  [e name], @"name",
 												  [e reason], NSLocalizedDescriptionKey,
 												  nil]];
