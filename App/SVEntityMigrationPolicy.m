@@ -13,13 +13,23 @@
 
 - (BOOL)createDestinationInstancesForSourceInstance:(NSManagedObject *)sInstance entityMapping:(NSEntityMapping *)mapping manager:(NSMigrationManager *)manager error:(NSError **)error
 {
-    // Flat out ignore orphaned pages
+    NSManagedObject *aPage = nil;
     if ([[mapping sourceEntityName] isEqualToString:@"Page"])
     {
-        NSManagedObject *root = [sInstance valueForKeyPath:@"documentInfo.root"];
+        aPage = sInstance;
+    }
+    else if ([[mapping sourceEntityName] isEqualToString:@"Pagelet"])
+    {
+        aPage = [sInstance valueForKey:@"page"];
+    }
+    
+    
+    // Flat out ignore orphaned pages
+    if (aPage)
+    {
+        NSManagedObject *root = [aPage valueForKeyPath:@"documentInfo.root"];
         if (!root) return YES;
         
-        NSManagedObject *aPage = sInstance;
         while (aPage != root)
         {
             aPage = [aPage valueForKey:@"parent"];
