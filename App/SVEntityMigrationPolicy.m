@@ -13,6 +13,19 @@
 
 - (BOOL)createDestinationInstancesForSourceInstance:(NSManagedObject *)sInstance entityMapping:(NSEntityMapping *)mapping manager:(NSMigrationManager *)manager error:(NSError **)error
 {
+    if ([self shouldCreateDestinationInstancesForSourceInstance:sInstance entityMapping:mapping])
+    {
+        return [super createDestinationInstancesForSourceInstance:sInstance entityMapping:mapping manager:manager error:error];
+    }
+    else
+    {
+        return YES;
+    }
+}
+
+- (BOOL)shouldCreateDestinationInstancesForSourceInstance:(NSManagedObject *)sInstance
+                                            entityMapping:(NSEntityMapping *)mapping;
+{
     NSManagedObject *aPage = nil;
     if ([[mapping sourceEntityName] isEqualToString:@"Page"])
     {
@@ -28,19 +41,18 @@
     if (aPage)
     {
         NSManagedObject *root = [aPage valueForKeyPath:@"documentInfo.root"];
-        if (!root) return YES;
+        if (!root) return NO;
         
         while (aPage != root)
         {
             aPage = [aPage valueForKey:@"parent"];
             if (!aPage) {
-                return YES;
+                return NO;
             }
         }
     }
     
-    
-    return [super createDestinationInstancesForSourceInstance:sInstance entityMapping:mapping manager:manager error:error];
+    return YES;
 }
 
 @end

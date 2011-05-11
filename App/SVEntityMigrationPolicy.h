@@ -12,8 +12,8 @@
 
 
 @interface SVEntityMigrationPolicy : NSEntityMigrationPolicy
-{
 
-}
+- (BOOL)shouldCreateDestinationInstancesForSourceInstance:(NSManagedObject *)sInstance
+                                            entityMapping:(NSEntityMapping *)mapping;
 
 @end
