@@ -936,6 +936,18 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     id item = [[webEditor contentItem] hitTestRepresentedObject:[textRange containerObject]];
     if ([item textHTMLElement])
     {
+        // Home in the inner item
+        for (WEKWebEditorItem *aChild in [item childWebEditorItems])
+        {
+            aChild = [aChild hitTestRepresentedObject:[textRange containerObject]];
+            if (aChild) 
+            {
+                item = aChild;
+                break;
+            }
+        }
+        
+        
         DOMRange *domRange = [[webEditor HTMLDocument] createRange];
         [textRange populateDOMRange:domRange fromContainerNode:[item textHTMLElement]];
         

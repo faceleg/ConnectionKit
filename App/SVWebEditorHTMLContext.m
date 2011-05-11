@@ -195,7 +195,8 @@
     // Special case, want to write the body of the graphic
     if (graphic == [self currentGraphicContainer])
     {
-        if (![graphic isKindOfClass:[SVMediaGraphic class]])
+        if ([graphic respondsToSelector:@selector(newBodyDOMController)] &&
+             ![graphic isKindOfClass:[SVMediaGraphic class]])
         {
             SVDOMController *controller = [(SVGraphic *)graphic newBodyDOMController];
             [self startDOMController:controller];
