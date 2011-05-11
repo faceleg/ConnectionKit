@@ -26,20 +26,6 @@ typedef enum {
 
 - (BOOL)createDestinationInstancesForSourceInstance:(NSManagedObject *)sInstance entityMapping:(NSEntityMapping *)mapping manager:(NSMigrationManager *)manager error:(NSError **)error
 {
-    // Flat out ignore orphaned pages
-    NSManagedObject *root = [sInstance valueForKeyPath:@"documentInfo.root"];
-    if (!root) return YES;
-    
-    NSManagedObject *aPage = sInstance;
-    while (aPage != root)
-    {
-        aPage = [aPage valueForKey:@"parent"];
-        if (!aPage) {
-            return YES;
-        }
-    }
-    
-    
     // Home page of old docs tends to have @"" as filename. We want to change to nil
     if (![sInstance valueForKey:@"parent"])
     {
