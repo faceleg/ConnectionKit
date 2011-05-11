@@ -96,10 +96,22 @@
                         {
                             if ([description rangeOfString:@" </"].location != NSNotFound)
                             {
-                                // Something's wrong with the close tags. Generally, treat as invalid HTML, but we'll let <param> tags slide since they're fairly harmless. #119961
-                                description = [description stringByReplacingOccurrencesOfString:@"discarding unexpected </param>" withString:@""];
+                                // Something's wrong with the close tags. Generally, treat as invalid HTML, but:
+                                // we'll let <param> tags slide since they're fairly harmless. #119961
+                                // </html> shouldn't be a problem either. #120222
+                                NSMutableString *mutableDescription = [description mutableCopy];
                                 
-                                if ([description rangeOfString:@" </"].location != NSNotFound)
+                                [mutableDescription replaceOccurrencesOfString:@"discarding unexpected </param>"
+                                                                    withString:@""
+                                                                       options:0
+                                                                         range:NSMakeRange(0, [mutableDescription length])];
+                                
+                                [mutableDescription replaceOccurrencesOfString:@"discarding unexpected </html>"
+                                                                    withString:@""
+                                                                       options:0
+                                                                         range:NSMakeRange(0, [mutableDescription length])];
+                                
+                                if ([mutableDescription rangeOfString:@" </"].location != NSNotFound)
                                 {
                                     validation = kValidationStateUnparseable;
                                 }
