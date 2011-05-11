@@ -548,7 +548,9 @@
 	self.showPermaLinks = [[propertiesByRemovingNSNull objectForKey:@"collectionShowPermanentLink"] boolValue];
 	self.showTimestamps = [[properties objectForKey:@"includeTimestamp"] boolValue];
 	self.showComments = [[properties objectForKey:@"allowComments"] boolValue];			// disableComments ?
-	self.maxItemLength = [[properties objectForKey:@"collectionTruncateCharacters"] intValue];
+	
+    self.maxItemLength = [[propertiesByRemovingNSNull objectForKey:@"collectionTruncateCharacters"] intValue];
+    if (!self.maxItemLength) self.maxItemLength = 999999;
 	
     
     // Finish up
