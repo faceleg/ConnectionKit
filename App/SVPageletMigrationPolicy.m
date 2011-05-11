@@ -65,26 +65,29 @@
     if (!result) return result;
     
     
-    NSManagedObject *sPagelet = [[manager sourceInstancesForEntityMappingNamed:[mapping name] destinationInstances:[NSArray arrayWithObject:dInstance]] lastObject];
-    
-    // Only interested in sidebar pagelets
-    if ([dInstance valueForKey:@"textAttachment"]) return YES;
-    if ([[sPagelet valueForKey:@"location"] intValue] != 1) return YES;
-    
-    
-    // Locate corresponding sidebar object and add pagelet to it
-    NSManagedObject *sPage = [sPagelet valueForKey:@"page"];
-    if (sPage)
+    if ([[mapping sourceEntityName] isEqualToString:@"Pagelet"])
     {
-        NSArray *dSidebars = [manager destinationInstancesForEntityMappingNamed:@"PageToSidebar" sourceInstances:[NSArray arrayWithObject:sPage]];
+        NSManagedObject *sPagelet = [[manager sourceInstancesForEntityMappingNamed:[mapping name] destinationInstances:[NSArray arrayWithObject:dInstance]] lastObject];
         
-        [[dInstance mutableSetValueForKey:@"sidebars"] addObjectsFromArray:dSidebars];
+        // Only interested in sidebar pagelets
+        if ([dInstance valueForKey:@"textAttachment"]) return YES;
+        if ([[sPagelet valueForKey:@"location"] intValue] != 1) return YES;
         
         
-        // Carry on down the tree?
-        if ([[sPagelet valueForKey:@"shouldPropagate"] boolValue])
+        // Locate corresponding sidebar object and add pagelet to it
+        NSManagedObject *sPage = [sPagelet valueForKey:@"page"];
+        if (sPage)
         {
-            [self propagateSidebarRelationshipForDestinationPagelet:dInstance toDescendantsOfPage:sPage manager:manager];
+            NSArray *dSidebars = [manager destinationInstancesForEntityMappingNamed:@"PageToSidebar" sourceInstances:[NSArray arrayWithObject:sPage]];
+            
+            [[dInstance mutableSetValueForKey:@"sidebars"] addObjectsFromArray:dSidebars];
+            
+            
+            // Carry on down the tree?
+            if ([[sPagelet valueForKey:@"shouldPropagate"] boolValue])
+            {
+                [self propagateSidebarRelationshipForDestinationPagelet:dInstance toDescendantsOfPage:sPage manager:manager];
+            }
         }
     }
     
