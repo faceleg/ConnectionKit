@@ -359,6 +359,9 @@
 
 - (BOOL)createDestinationInstancesForSourceInstance:(NSManagedObject *)sInstance entityMapping:(NSEntityMapping *)mapping manager:(NSMigrationManager *)manager error:(NSError **)error;
 {
+    if (![self shouldCreateDestinationInstancesForSourceInstance:sInstance entityMapping:mapping]) return YES;
+    
+    
     NSManagedObject *dInstance = [NSEntityDescription insertNewObjectForEntityForName:[mapping destinationEntityName]
                                                                inManagedObjectContext:[manager destinationContext]];
     
