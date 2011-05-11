@@ -6,13 +6,13 @@
 //  Copyright 2011 Karelia Software. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import "SVEntityMigrationPolicy.h"
 
 
-@interface SVPageMigrationPolicy : NSEntityMigrationPolicy
+@interface SVPageMigrationPolicy : SVEntityMigrationPolicy
 @end
 
 
 
-@interface SVMasterMigrationPolicy : NSEntityMigrationPolicy
+@interface SVMasterMigrationPolicy : SVEntityMigrationPolicy
 @end
