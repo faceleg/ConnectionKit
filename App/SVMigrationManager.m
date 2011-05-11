@@ -256,10 +256,13 @@
         
         NSURL *sMediaStoreURL = [sourceDocURL ks_URLByAppendingPathComponent:@"media.xml" isDirectory:NO];
         
+        NSDictionary *options = NSDICT(NSBOOL(YES), NSReadOnlyPersistentStoreOption,
+                                       NSBOOL(YES), NSIgnorePersistentStoreVersioningOption);   // #120136
+        
         NSPersistentStore *store = [coordinator addPersistentStoreWithType:NSXMLStoreType
                                                              configuration:nil
                                                                        URL:sMediaStoreURL
-                                                                   options:NSDICT(NSBOOL(YES), NSReadOnlyPersistentStoreOption)
+                                                                   options:options
                                                                      error:outError];
         if (!store)
         {
