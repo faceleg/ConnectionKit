@@ -215,7 +215,7 @@
  */
 - (NSArray *)availablePathExtensions
 {
-	NSArray *result = [NSArray arrayWithObjects:@"html", @"htm", @"php", @"shtml", @"asp", nil];
+	NSArray *result = [NSArray arrayWithObjects:@"html", @"htm", @"php", @"shtml", @"asp", @"aspx", @"cfm", @"cgi", @"jsp", nil];
 	return result;
 }
 
