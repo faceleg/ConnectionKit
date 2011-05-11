@@ -97,16 +97,35 @@
                             if ([description rangeOfString:@" </"].location != NSNotFound)
                             {
                                 // Something's wrong with the close tags. Generally, treat as invalid HTML, but:
-                                // we'll let <param> tags slide since they're fairly harmless. #119961
-                                // </html> shouldn't be a problem either. #120222
+                                
                                 NSMutableString *mutableDescription = [description mutableCopy];
                                 
+                                // we'll let <param> tags slide since they're fairly harmless. #119961
                                 [mutableDescription replaceOccurrencesOfString:@"discarding unexpected </param>"
                                                                     withString:@""
                                                                        options:0
                                                                          range:NSMakeRange(0, [mutableDescription length])];
                                 
+                                // </html> shouldn't be a problem either. #120222
                                 [mutableDescription replaceOccurrencesOfString:@"discarding unexpected </html>"
+                                                                    withString:@""
+                                                                       options:0
+                                                                         range:NSMakeRange(0, [mutableDescription length])];
+                                
+                                // Same applies to bizarro <HEAD> elements. #120222
+                                [mutableDescription replaceOccurrencesOfString:@"</head>"
+                                                                    withString:@""
+                                                                       options:0
+                                                                         range:NSMakeRange(0, [mutableDescription length])];
+                                
+                                // People are pretty keen on putting in <B> tags but forgetting to close them. WebKit seems to cope OK since they're inline elements. #120222
+                                [mutableDescription replaceOccurrencesOfString:@"</b>"
+                                                                    withString:@""
+                                                                       options:0
+                                                                         range:NSMakeRange(0, [mutableDescription length])];
+                                
+                                // Same guy has iframes affected by open <B> elements. Again, WebKit seems to cope since it knows they should have no content of their own. #120222
+                                [mutableDescription replaceOccurrencesOfString:@"</iframe>"
                                                                     withString:@""
                                                                        options:0
                                                                          range:NSMakeRange(0, [mutableDescription length])];
