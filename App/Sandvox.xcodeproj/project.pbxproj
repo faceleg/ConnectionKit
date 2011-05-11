@@ -528,6 +528,7 @@
 		278FCFBB107B5E9D0091A239 /* SVWebEditorTextProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 278FCFBA107B5E9D0091A239 /* SVWebEditorTextProtocol.h */; };
 		2790BDAF1040162000654665 /* SVTextDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2790BDAD1040162000654665 /* SVTextDOMController.h */; };
 		2790BDB01040162000654665 /* SVTextDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2790BDAE1040162000654665 /* SVTextDOMController.m */; };
+		2790F1CC137A8EF100BB0611 /* SVEntityMigrationPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2790F1C3137A8E9600BB0611 /* SVEntityMigrationPolicy.m */; };
 		279217D110BC11CF00E590D5 /* HTMLSourceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 279217D010BC11CF00E590D5 /* HTMLSourceView.xib */; };
 		279218DD10BC44E900E590D5 /* KSOrderedManagedObjectControllers.h in Headers */ = {isa = PBXBuildFile; fileRef = 279218DB10BC44E900E590D5 /* KSOrderedManagedObjectControllers.h */; };
 		279218DE10BC44E900E590D5 /* KSOrderedManagedObjectControllers.m in Sources */ = {isa = PBXBuildFile; fileRef = 279218DC10BC44E900E590D5 /* KSOrderedManagedObjectControllers.m */; };
@@ -2253,6 +2254,8 @@
 		278FCFBA107B5E9D0091A239 /* SVWebEditorTextProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorTextProtocol.h; sourceTree = "<group>"; };
 		2790BDAD1040162000654665 /* SVTextDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVTextDOMController.h; sourceTree = "<group>"; };
 		2790BDAE1040162000654665 /* SVTextDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVTextDOMController.m; sourceTree = "<group>"; };
+		2790F1C2137A8E9600BB0611 /* SVEntityMigrationPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVEntityMigrationPolicy.h; sourceTree = "<group>"; };
+		2790F1C3137A8E9600BB0611 /* SVEntityMigrationPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVEntityMigrationPolicy.m; sourceTree = "<group>"; };
 		279217D010BC11CF00E590D5 /* HTMLSourceView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HTMLSourceView.xib; sourceTree = "<group>"; };
 		279218DB10BC44E900E590D5 /* KSOrderedManagedObjectControllers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSOrderedManagedObjectControllers.h; sourceTree = "<group>"; };
 		279218DC10BC44E900E590D5 /* KSOrderedManagedObjectControllers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSOrderedManagedObjectControllers.m; sourceTree = "<group>"; };
@@ -3553,6 +3556,8 @@
 				27E0426A130B3AF300FEA059 /* SVPageletMigrationPolicy.m */,
 				27403DFD130D72D3001006D6 /* SVMigrationDocument.h */,
 				27403DFE130D72D3001006D6 /* SVMigrationDocument.m */,
+				2790F1C2137A8E9600BB0611 /* SVEntityMigrationPolicy.h */,
+				2790F1C3137A8E9600BB0611 /* SVEntityMigrationPolicy.m */,
 			);
 			name = "Data Migration";
 			sourceTree = "<group>";
@@ -7950,6 +7955,7 @@
 				CE495E06133D4C690060FFDF /* SVColorBoxIndexPlugIn.m in Sources */,
 				27B5DA36133E4AA6002AAEA2 /* KSError.m in Sources */,
 				27A3ACC11369C1C7007D774D /* KSWorkspaceUtilities.m in Sources */,
+				2790F1CC137A8EF100BB0611 /* SVEntityMigrationPolicy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
