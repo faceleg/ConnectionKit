@@ -29,7 +29,9 @@
 
 #import "NSError+Karelia.h"
 #import "NSArray+Karelia.h"
+
 #import "KSExtensibleManagedObject.h"
+#import "KSThreadProxy.h"
 #import "KSURLUtilities.h"
 
 
@@ -403,7 +405,7 @@
         if (outError) *outError = error;
         
         
-        [NSApp reportException:exception];
+        [[NSApp ks_proxyOnThread:nil] reportException:exception];
     }
     
     
