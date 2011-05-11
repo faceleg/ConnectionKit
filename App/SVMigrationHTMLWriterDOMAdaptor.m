@@ -50,7 +50,14 @@
     }
     
     // Can't convert to raw HTML if contains an embedded image
-    if ([self DOMElementContainsAWebEditorItem:element])
+    BOOL treatAsImageContainer = [self DOMElementContainsAWebEditorItem:element];
+    if (treatAsImageContainer)
+    {
+        // google maps. #119961
+        if ([tagName isEqualToString:@"DIV"] && [[element className] hasPrefix:@"map-"]) treatAsImageContainer = NO;
+    }
+    
+    if (treatAsImageContainer)
     {
         return [super handleInvalidDOMElement:element];
     }
