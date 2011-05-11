@@ -111,6 +111,9 @@
 
 - (BOOL)createDestinationInstancesForSourceInstance:(NSManagedObject *)sInstance entityMapping:(NSEntityMapping *)mapping manager:(SVMigrationManager *)manager error:(NSError **)error;
 {
+    if (![self shouldCreateDestinationInstancesForSourceInstance:sInstance entityMapping:mapping]) return YES;
+    
+    
     // Locate HTML
     NSString *keyPath = [[mapping userInfo] objectForKey:@"stringKeyPath"];
     NSString *string;
