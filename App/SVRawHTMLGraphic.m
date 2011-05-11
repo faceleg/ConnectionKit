@@ -94,7 +94,16 @@
                         NSString *description = [error localizedDescription];
                         if (description)
                         {
-                            if ([description rangeOfString:@" </"].location != NSNotFound) validation = kValidationStateUnparseable;
+                            if ([description rangeOfString:@" </"].location != NSNotFound)
+                            {
+                                // Something's wrong with the close tags. Generally, treat as invalid HTML, but we'll let <param> tags slide since they're fairly harmless. #119961
+                                description = [description stringByReplacingOccurrencesOfString:@"discarding unexpected </param>" withString:@""];
+                                
+                                if ([description rangeOfString:@" </"].location != NSNotFound)
+                                {
+                                    validation = kValidationStateUnparseable;
+                                }
+                            }
                         }
                     }
                     
