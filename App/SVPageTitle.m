@@ -19,7 +19,8 @@
 
 - (NSTextAlignment)alignment;
 {
-    return [[self valueForKeyPath:@"page.titleAlignment"] intValue];
+    NSNumber *result = [self valueForKeyPath:@"page.titleAlignment"];
+    return (result ? [result intValue] : NSNaturalTextAlignment);
 }
 - (void)setAlignment:(NSTextAlignment)alignment;
 {
