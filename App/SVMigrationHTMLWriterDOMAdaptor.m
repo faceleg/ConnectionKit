@@ -15,6 +15,7 @@
 #import "SVWebEditorHTMLContext.h"
 
 #import "DOMNode+Karelia.h"
+#import "NSString+Karelia.h"
 
 
 @implementation SVMigrationHTMLWriterDOMAdaptor
@@ -43,11 +44,16 @@
         return [super handleInvalidDOMElement:element];
     }
     
+    
     // If the element is invalid just because it's in the wrong location, let super take care of repositioning
-    if ([[self class] validateElement:tagName])
+    // <H1> & <H2>s are never going be legal, so convert to paragraphs
+    if ([[self class] validateElement:tagName] ||
+        [tagName isEqualToString:@"H1"] ||
+        [tagName isEqualToString:@"H2"])
     {
         return [super handleInvalidDOMElement:element];
     }
+    
     
     // Can't convert to raw HTML if contains an embedded image
     BOOL treatAsImageContainer = [self DOMElementContainsAWebEditorItem:element];
@@ -58,6 +64,13 @@
     }
     
     if (treatAsImageContainer)
+    {
+        return [super handleInvalidDOMElement:element];
+    }
+    
+    
+    // Ignore empty elements! #119910
+    if ([[(DOMHTMLElement *)element innerText] isWhitespace])
     {
         return [super handleInvalidDOMElement:element];
     }

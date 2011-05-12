@@ -1533,6 +1533,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
                 NSMutableArray *pagelets = [NSMutableArray arrayWithObject:graphic];
                 
                 NSScanner *scanner = [[NSScanner alloc] initWithString:[attributedHTML string]];
+                [scanner setCharactersToBeSkipped:nil];
                 
                 while (attachment)
                 {
