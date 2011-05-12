@@ -214,7 +214,7 @@
     
     [adaptor setDelegate:self];
     if (![self isFieldEditor]) [(id)adaptor setAllowsPagelets:[self allowsPagelets]];
-    [adaptor setAllowsLinks:YES];
+    [adaptor setAllowsLinks:([[self textBlock] hyperlinkString] == nil)];
     
     [self writeText:adaptor];
     [stringWriter flush];   // to be sure. #116287
