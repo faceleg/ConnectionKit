@@ -15,6 +15,7 @@
 #import "SVWebEditorHTMLContext.h"
 
 #import "DOMNode+Karelia.h"
+#import "NSString+Karelia.h"
 
 
 @implementation SVMigrationHTMLWriterDOMAdaptor
