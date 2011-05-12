@@ -1623,7 +1623,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = CE541507133C08DA003F635A /* GalleryIndex.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* GalleryIndex */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = GalleryIndex;
 		};
 		3C79F2EA11F3AEDF00B699EE /* PBXContainerItemProxy */ = {
