@@ -214,7 +214,10 @@
     
     [adaptor setDelegate:self];
     if (![self isFieldEditor]) [(id)adaptor setAllowsPagelets:[self allowsPagelets]];
-    [adaptor setAllowsLinks:([[self textBlock] hyperlinkString] == nil)];
+    
+    SVHTMLTextBlock *textBlock = [self textBlock];
+    [adaptor setAllowsLinks:([textBlock hyperlinkString] == nil &&
+                             ![[textBlock tagName] isEqualToString:@"h1"])];    // site title is already a link. #120102
     
     [self writeText:adaptor];
     [stringWriter flush];   // to be sure. #116287
