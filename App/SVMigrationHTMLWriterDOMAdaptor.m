@@ -55,6 +55,18 @@
     }
     
     
+    // <DIV>s tend to be there by accident, unless they have a class, id, or styling
+    if ([tagName isEqualToString:@"DIV"])
+    {
+        if ([[element className] length] == 0 &&
+            [[(DOMHTMLElement *)element idName] length] == 0 &&
+            [[element getAttribute:@"style"] length] == 0)
+        {
+            return [super handleInvalidDOMElement:element];
+        }
+    }
+    
+    
     // Can't convert to raw HTML if contains an embedded image
     BOOL treatAsImageContainer = [self DOMElementContainsAWebEditorItem:element];
     if (treatAsImageContainer)
