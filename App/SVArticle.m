@@ -35,7 +35,7 @@
 
 - (void)setString:(NSString *)string attachments:(NSSet *)attachments wasModified:(BOOL)modified;
 {
-    [super setString:string attachments:attachments];
+    [super setString:string attachments:attachments wasModified:modified];
     
     
     // Make sure our page's thumbnail source graphic matches up
