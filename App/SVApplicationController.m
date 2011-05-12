@@ -1431,7 +1431,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 - (IBAction)openSupportForum:(id)sender
 {
 	
-	NSString *urlString = @"http://karelia.com/forum/";
+	NSString *urlString = @"http://www.karelia.com/forum/";
 	NSURL *url = [NSURL URLWithString:urlString];
 	[KSWORKSPACE attemptToOpenWebURL:url];	
 }
