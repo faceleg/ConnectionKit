@@ -85,6 +85,8 @@ static NSOperationQueue *sQueue;
 
 #pragma mark Loading
 
+static void * sOperationObservation = &sOperationObservation;
+
 - (void)startLoading;
 {
     NSURL *URL = [[self request] URL];
@@ -112,13 +114,13 @@ static NSOperationQueue *sQueue;
                                                         object:inputs];
     [inputs release];
     
-    [_operation addObserver:self forKeyPath:@"isFinished" options:0 context:sQueue];
+    [_operation addObserver:self forKeyPath:@"isFinished" options:0 context:sOperationObservation];
     [sQueue addOperation:_operation];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if (context == sQueue)
+    if (context == sOperationObservation)
     {
         // Convert to data
         NSImage *image = [_operation result];
