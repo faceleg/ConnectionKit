@@ -182,8 +182,8 @@
                                       height:(unsigned)height;
 {
     NSString *result = [NSString stringWithFormat:
-                        @"text-align:left; text-indent:-9999px; background:url(%@) top left no-repeat !important; width:%upx; height:%upx;",
-                        [url absoluteString],
+                        @"text-align:left; text-indent:-9999px; background:url(\"%@\") top left no-repeat !important; width:%upx; height:%upx;",
+                        [url absoluteString],   // quotes are needed around the URL in case it contains an apostrophe. #120419
                         width,
                         height];
     
