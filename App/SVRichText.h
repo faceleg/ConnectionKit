@@ -23,6 +23,7 @@
 #pragma mark Text
 - (NSAttributedString *)attributedHTMLString;
 - (void)setAttributedHTMLString:(NSAttributedString *)attributedHTML;
+- (void)setAttributedHTMLString:(NSAttributedString *)attributedHTML wasModified:(BOOL)modified;
 
 
 #pragma mark Primitive Text
@@ -30,6 +31,7 @@
 
 @property(nonatomic, copy) NSString *string;
 - (void)setString:(NSString *)string attachments:(NSSet *)attachments;  // deletes old attachments
+- (void)setString:(NSString *)string attachments:(NSSet *)attachments wasModified:(BOOL)modified;
 
 - (BOOL)isEmpty;
 
