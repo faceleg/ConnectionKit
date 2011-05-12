@@ -185,7 +185,7 @@
     
     [imageScanner release];
     
-    [richText setAttributedHTMLString:html];
+    [richText setAttributedHTMLString:html wasModified:NO];
     [html release];
 }
 
