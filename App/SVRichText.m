@@ -126,6 +126,11 @@
 
 - (void)setAttributedHTMLString:(NSAttributedString *)attributedHTML;
 {
+    [self setAttributedHTMLString:attributedHTML wasModified:YES];
+}
+
+- (void)setAttributedHTMLString:(NSAttributedString *)attributedHTML wasModified:(BOOL)modified;
+{
     NSMutableSet *attachments = [[NSMutableSet alloc] init];
     
     NSUInteger index = 0;
@@ -145,13 +150,18 @@
         index = range.location + range.length;
     }
     
-    [self setString:[attributedHTML string] attachments:attachments];
+    [self setString:[attributedHTML string] attachments:attachments wasModified:modified];
     [attachments release];
 }
 
 @dynamic string;
 
 - (void)setString:(NSString *)string attachments:(NSSet *)attachments;
+{
+    [self setString:string attachments:attachments wasModified:YES];
+}
+
+- (void)setString:(NSString *)string attachments:(NSSet *)attachments wasModified:(BOOL)modified;
 {
     [self setString:string];
     

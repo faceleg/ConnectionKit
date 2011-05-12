@@ -33,7 +33,7 @@
 
 @dynamic page;
 
-- (void)setString:(NSString *)string attachments:(NSSet *)attachments;
+- (void)setString:(NSString *)string attachments:(NSSet *)attachments wasModified:(BOOL)modified;
 {
     [super setString:string attachments:attachments];
     
@@ -52,7 +52,7 @@
     
     
     // Update mod date
-    [[self page] setModificationDate:[NSDate date]];
+    if (modified) [[self page] setModificationDate:[NSDate date]];
 }
 
 #pragma mark HTML
