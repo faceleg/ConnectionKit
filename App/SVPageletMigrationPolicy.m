@@ -206,6 +206,7 @@
 {
     NSString *key = ([identifier isEqualToString:@"sandvox.VideoElement"] ? @"remoteURL" : @"externalImageURL");
     NSString *result = [properties objectForKey:key];
+    if ([result length] == 0) result = nil; // #120745
     return result;
 }
 
