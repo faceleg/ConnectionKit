@@ -1368,29 +1368,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 
 - (IBAction) openScreencast:(id)sender
 {
-	NSURL *url = nil;
-	
-	NSRect largestScreenFrame = NSZeroRect;
-	for (NSScreen *screen in [NSScreen screens])
-	{
-		NSRect thisFrame = [screen frame];
-		if (thisFrame.size.height > largestScreenFrame.size.height
-				&& thisFrame.size.width > largestScreenFrame.size.width)
-		{
-			largestScreenFrame = thisFrame;
-		}
-	}
-	// Leave enough for the dock on the left or right, plus some extra for controller of player, etc.
-	// Basically we can play the large size on a MBP, but the smaller one on the MacBook
-	if (largestScreenFrame.size.width > 1100 && largestScreenFrame.size.height > 850)
-	{
-		url = [NSURL URLWithString: @"http://www.karelia.com/screencast/Introduction_to_Sandvox_1024.mov"];
-	}
-	else
-	{
-		url = [NSURL URLWithString: @"http://www.karelia.com/screencast/Introduction_to_Sandvox_640.mov"];
-	}
-
+	NSURL *url = [NSURL URLWithString: @"http://distrib.karelia.com/videos/Ch1_through_7.mp4"];
 	if  (([[NSApp currentEvent] modifierFlags]&NSAlternateKeyMask) )
 	{
 		[KSWORKSPACE attemptToOpenWebURL:url];	
