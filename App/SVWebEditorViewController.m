@@ -826,6 +826,8 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 {
     // Whenever there's some kind of text selection, the responsible controller must take it. If there's no controller, cannot perform
     NSResponder *controller = [self firstResponderItem];
+    if (!controller) controller = [[[self webEditor] editingItems] lastObject]; // #120987
+    
     if (controller)
     {
         [controller doCommandBySelector:action];
