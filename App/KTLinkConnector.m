@@ -102,10 +102,10 @@ NSRect KTRectFromPoints(NSPoint point1, NSPoint point2) {
 - (void)startConnectionWithPoint:(NSPoint)point pasteboard:(NSPasteboard *)pasteboard targetWindow:(NSWindow *)aWindow
 {
 	pboard = [pasteboard retain];
-	NSEvent *theEvent;
-	NSPoint curPoint;
-	NSRect connectorRect;
-	NSView *overView;
+	NSEvent *theEvent = nil;
+	NSPoint curPoint = NSZeroPoint;
+	NSRect connectorRect = NSZeroRect;
+	NSView *overView = nil;
 	
 	[self setStartTime:[NSDate date]];
 	lastViewOver = nil;
@@ -115,16 +115,16 @@ NSRect KTRectFromPoints(NSPoint point1, NSPoint point2) {
 	
 	while (1)
 	{
-		theEvent = [[NSApplication sharedApplication] nextEventMatchingMask:NSMouseMovedMask | NSLeftMouseUpMask
+		theEvent = [[NSApplication sharedApplication] nextEventMatchingMask:(NSMouseMovedMask | NSLeftMouseUpMask)
 																  untilDate:[NSDate distantPast]
 																	 inMode:NSEventTrackingRunLoopMode
 																	dequeue:NO];
 		curPoint = [NSEvent mouseLocation];
 		
 		NSEnumerator *winEnum = [[[NSApplication sharedApplication] windows] objectEnumerator];
-		NSWindow *curWindow;
-		NSView *contentView;
-		NSPoint pointInWindow;
+		NSWindow *curWindow = nil;
+		NSView *contentView = nil;
+		NSPoint pointInWindow = NSZeroPoint;
 		overView = nil;
 		
 		while (curWindow = [winEnum nextObject])

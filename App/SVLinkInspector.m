@@ -136,6 +136,10 @@
         [[SVLinkManager sharedLinkManager] modifyLinkTo:link];
         [link release];
     }
+    else if ( type == SVLinkToPage )
+    {
+        [oLinkSourceView setTargetWindow:[[NSApplication sharedApplication] mainWindow]];
+    }
     
     [oTabView selectTabViewItemAtIndex:[sender indexOfSelectedItem]];
 }
