@@ -213,7 +213,21 @@ static NSURLCache *_sharedCache;
 - (void)startLoading
 {
 	// Is the request already cached?
-	NSCachedURLResponse *cachedResponse = [[[self class] sharedScaledImageCache] cachedResponseForRequest:[self request]];
+	NSCachedURLResponse *cachedResponse = [self cachedResponse];
+    if (!cachedResponse)
+    {
+        NSURLRequestCachePolicy policy = [[self request] cachePolicy];
+        if (policy != NSURLRequestReloadIgnoringLocalCacheData &&
+            policy != NSURLRequestReloadIgnoringLocalAndRemoteCacheData)
+        {
+            cachedResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:[self request]];
+            if (!cachedResponse)
+            {
+                cachedResponse = [[[self class] sharedScaledImageCache] cachedResponseForRequest:[self request]];
+            }
+        }
+    }
+    
 	NSData *imageData = [cachedResponse data];
 	
 	
@@ -221,7 +235,7 @@ static NSURLCache *_sharedCache;
 	{
 		[[self client] URLProtocol:self
                 didReceiveResponse:[cachedResponse response]
-                cacheStoragePolicy:NSURLCacheStorageNotAllowed];	// We'll take care of our own caching
+                cacheStoragePolicy:NSURLCacheStorageAllowed];
         
         
         
@@ -260,7 +274,7 @@ static NSURLCache *_sharedCache;
         
         [[self client] URLProtocol:self
                 didReceiveResponse:response
-                cacheStoragePolicy:NSURLCacheStorageNotAllowed];	// We'll take care of our own caching
+                cacheStoragePolicy:NSURLCacheStorageAllowed];
         
         [[self client] URLProtocol:self didLoadData:imageData];
         
