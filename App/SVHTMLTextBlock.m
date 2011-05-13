@@ -209,10 +209,13 @@
     if (!graphicalTextSettings) return;
     
     [design loadLocalFontsIfNeeded];    // #102950
-    NSURL *composition = [design URLForCompositionForImageReplacementCode:graphicalTextCode];
+    
+    NSURL *compositionURL = [design URLForCompositionForImageReplacementCode:graphicalTextCode];
+    if (!compositionURL) return;
+    
     NSString *text = [(SVTitleBox *)HTML_VALUE text];
     
-    NSURL *url = [NSURL imageReplacementURLWithRendererURL:composition
+    NSURL *url = [NSURL imageReplacementURLWithRendererURL:compositionURL
                                                     string:text
                                                       size:[master graphicalTitleSize]];
     OBASSERT(url);
