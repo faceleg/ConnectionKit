@@ -216,11 +216,16 @@ static NSURLCache *_sharedCache;
 	NSCachedURLResponse *cachedResponse = [self cachedResponse];
     if (!cachedResponse)
     {
-        cachedResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:[self request]];
-    }
-    if (!cachedResponse)
-    {
-        cachedResponse = [[[self class] sharedScaledImageCache] cachedResponseForRequest:[self request]];
+        NSURLRequestCachePolicy policy = [[self request] cachePolicy];
+        if (policy != NSURLRequestReloadIgnoringLocalCacheData &&
+            policy != NSURLRequestReloadIgnoringLocalAndRemoteCacheData)
+        {
+            cachedResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:[self request]];
+            if (!cachedResponse)
+            {
+                cachedResponse = [[[self class] sharedScaledImageCache] cachedResponseForRequest:[self request]];
+            }
+        }
     }
     
 	NSData *imageData = [cachedResponse data];
