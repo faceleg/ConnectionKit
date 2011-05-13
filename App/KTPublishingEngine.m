@@ -624,9 +624,11 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     OBPRECONDITION(request);
     
     
-    // Put placeholder in dictionary so we don't start calculating digest/data twice while equivalent operation is already queued
-    [_publishedMediaDigests setObject:(cachedDigest ? cachedDigest : (id)[NSNull null])
-                               forKey:request];
+    // Put placeholder in dictionary so we don't start calculating digest/data twice while equivalent operation is already queued.
+    // Use CFDictionaryAddValue() so as not displace existing key
+    CFDictionaryAddValue((CFMutableDictionaryRef)_publishedMediaDigests,
+                         request,
+                         (cachedDigest ? cachedDigest : (id)[NSNull null]));
     
     
     // Do the calculation on a background thread. Which one depends on the task needed
@@ -680,7 +682,22 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     OBPRECONDITION([digest isKindOfClass:[NSData class]]);
 
     
-    [_publishedMediaDigests setObject:digest forKey:request];
+    id existingDigest = [_publishedMediaDigests objectForKey:request];
+    if (existingDigest == [NSNull null])
+    {
+        // Remove from the dictionary before replacing so that we're sure the key is the exact request passed in. Do this so scaling suffix is completely applied
+        [digest retain];
+        [_publishedMediaDigests removeObjectForKey:request];
+        [_publishedMediaDigests setObject:digest forKey:request];
+        [digest release];
+    }
+    else if (!existingDigest)
+    {
+        // No need to set if there's already a digest
+        [_publishedMediaDigests setObject:digest forKey:request];
+    }
+
+    
     
     // Is there already an existing file on the server? If so, use that
     NSString *result = [self pathForFileWithSHA1Digest:digest];
