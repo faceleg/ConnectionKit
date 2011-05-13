@@ -92,6 +92,8 @@
 		NSXMLElement *imageElement = [theNodes firstObjectKS];
 		
         NSString *src = [[imageElement attributeForName:@"src"] stringValue];
+        if ([src length] == 0) src = nil;
+        
         if (src)
         {
             NSURL *srcURL = [NSURL URLWithString:src];
