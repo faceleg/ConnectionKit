@@ -208,7 +208,18 @@
     {
         imageSource = CGImageSourceCreateWithURL((CFURLRef)[_sourceMedia mediaURL], NULL);
     }
-    OBASSERT(imageSource);
+    
+    if (!imageSource)
+    {
+        // CGImageSource doesn't give proper error output, so assume it's because the file doesn't exist
+        if (error)
+        {
+            *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadUnknownError userInfo:nil];
+        }
+        
+        return nil;
+    }
+        
     
     NSMutableData *result = [NSMutableData data];
     CGImageDestinationRef imageDestination = CGImageDestinationCreateWithData((CFMutableDataRef)result,
