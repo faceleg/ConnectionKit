@@ -682,21 +682,34 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     OBPRECONDITION([digest isKindOfClass:[NSData class]]);
 
     
-    id existingDigest = [_publishedMediaDigests objectForKey:request];
-    if (existingDigest == [NSNull null])
+    
+    SVMediaRequest *existingRequest;
+    id existingDigest;
+    if (NSMapMember(_publishedMediaDigests, request, (void **)&existingRequest, (void **)&existingDigest))
     {
-        // Remove from the dictionary before replacing so that we're sure the key is the exact request passed in. Do this so scaling suffix is completely applied
-        [digest retain];
-        [_publishedMediaDigests removeObjectForKey:request];
-        [_publishedMediaDigests setObject:digest forKey:request];
-        [digest release];
+        if (existingDigest == [NSNull null])
+        {
+            // Remove from the dictionary before replacing so that we're sure the key is the exact request passed in. Do this so scaling suffix is completely applied
+            [digest retain];
+            [_publishedMediaDigests removeObjectForKey:request];
+            [_publishedMediaDigests setObject:digest forKey:request];
+            [digest release];
+        }
+        else
+        {
+            // Digest shouldn't ever change!
+            OBASSERT([digest isEqualToData:existingDigest]);
+            
+            // Switch to canonical request
+            request = existingRequest;
+        }
     }
-    else if (!existingDigest)
+    else
     {
-        // No need to set if there's already a digest
         [_publishedMediaDigests setObject:digest forKey:request];
     }
-
+    
+    
     
     
     // Is there already an existing file on the server? If so, use that
