@@ -601,6 +601,8 @@ GAcIExQZGh8gKC0yMzY3O0BBRkpQUldbXlUkbnVsbNUJCgsMDQ4PEBESXxAQTlNFeHByZXNzaW9uVHlw
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z349"></relationship>
     </object>
     <object type="XDDEVRELATIONSHIPMAPPING" id="z194">
+        <attribute name="sourcemappingname" type="string">PageToThumbnail</attribute>
+        <attribute name="sourcekeypath" type="string">$source</attribute>
         <attribute name="autogenerateexpression" type="bool">1</attribute>
         <attribute name="name" type="string">customThumbnail</attribute>
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z438"></relationship>
