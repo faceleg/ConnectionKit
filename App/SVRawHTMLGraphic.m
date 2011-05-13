@@ -140,6 +140,7 @@
                                 {
                                     validation = kValidationStateUnparseable;
                                 }
+                                [mutableDescription release];
                             }
                         }
                     }
