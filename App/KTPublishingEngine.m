@@ -725,11 +725,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             while (![self shouldPublishToPath:result])
             {
                 count++;
-                NSString *extension = [result pathExtension];
-                
-                result = [[[result stringByDeletingPathExtension]
-                           stringByAppendingFormat:@"-%u", count]
-                          stringByAppendingPathExtension:extension];
+                result = [result ks_stringWithPathSuffix:[NSString stringWithFormat:@"-%u", count]];
             }
             
             OBASSERT(result);
