@@ -106,7 +106,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         
         _paths = [[NSMutableSet alloc] init];
         _pathsByDigest = [[NSMutableDictionary alloc] init];
-        _publishedMediaDigests = [[NSMutableDictionary alloc] init];
+        _publishedMediaDigests = [[NSMapTable mapTableWithStrongToStrongObjects] retain];
         
         _plugInCSS = [[NSMutableArray alloc] init];
         
@@ -626,9 +626,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     // Put placeholder in dictionary so we don't start calculating digest/data twice while equivalent operation is already queued.
     // Use CFDictionaryAddValue() so as not displace existing key
-    CFDictionaryAddValue((CFMutableDictionaryRef)_publishedMediaDigests,
-                         request,
-                         (cachedDigest ? cachedDigest : (id)[NSNull null]));
+    NSMapInsertIfAbsent(_publishedMediaDigests,
+                        request,
+                        (cachedDigest ? cachedDigest : (id)[NSNull null]));
     
     
     // Do the calculation on a background thread. Which one depends on the task needed

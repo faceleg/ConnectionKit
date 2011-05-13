@@ -67,7 +67,7 @@ typedef enum {
     
     NSMutableSet        *_paths;    // all the paths which are in use by the site
     NSMutableDictionary *_pathsByDigest;
-    NSMutableDictionary *_publishedMediaDigests;
+    NSMapTable          *_publishedMediaDigests;
     
     NSMutableArray      *_plugInCSS;    // mixture of string CSS snippets, and CSS URLs
     
