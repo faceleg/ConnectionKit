@@ -285,40 +285,49 @@
 
 @dynamic bannerType;
 
+- (NSString *)customBannerCSSSelector;
+{
+    NSString *result = nil;
+    
+    if ([[self bannerType] boolValue])
+    {
+        result = [[self design] bannerCSSSelector];
+    }
+    
+    return result;
+}
+
 - (void)writeBannerCSS:(SVHTMLContext *)context;
 {	
 	// If the user has specified a custom banner and the design supports it, load it in
-	if ([[self bannerType] boolValue])
+    NSString *bannerCSSSelector = [self customBannerCSSSelector];
+	if (bannerCSSSelector)
     {
         SVMediaRecord *banner = [self banner];
         NSURL *bannerURL = [banner fileURL];
         
         if (bannerURL)
         {
-            NSString *bannerCSSSelector = [[self design] bannerCSSSelector];
-            if (bannerCSSSelector)
-            {
-                NSMutableDictionary *scalingProperties = [[[self design] imageScalingPropertiesForUse:@"bannerImage"] mutableCopy];
-                OBASSERT(scalingProperties);
-                
-                NSString *type = [KSWORKSPACE typeOfFile:[bannerURL path] error:NULL];
-                if (![type isEqualToString:(NSString *)kUTTypePNG]) type = (NSString *)kUTTypeJPEG;
-                [scalingProperties setObject:type forKey:@"fileType"];
-                
-                
-                NSURL *URL = [NSURL sandvoxImageURLWithFileURL:bannerURL scalingProperties:scalingProperties];
-                [scalingProperties release];
-                
-                NSString *destination = [[SVDestinationDesignDirectory stringByAppendingPathComponent:@"banner"] stringByAppendingPathExtension:[KSWORKSPACE preferredFilenameExtensionForType:type]];
-                
-                URL = [context addResourceAtURL:URL destination:destination options:0];
-                NSString *relativeString = [URL ks_stringRelativeToURL:[context mainCSSURL]];
-                
-                NSString *css = [bannerCSSSelector stringByAppendingFormat:@" { background-image: url(\"%@\"); }\n", relativeString];
-                
-                
-                [context addCSSString:css];
-            }
+            NSMutableDictionary *scalingProperties = [[[self design] imageScalingPropertiesForUse:@"bannerImage"] mutableCopy];
+            OBASSERT(scalingProperties);
+            
+            NSString *type = [KSWORKSPACE typeOfFile:[bannerURL path] error:NULL];
+            if (![type isEqualToString:(NSString *)kUTTypePNG]) type = (NSString *)kUTTypeJPEG;
+            [scalingProperties setObject:type forKey:@"fileType"];
+            
+            
+            NSURL *URL = [NSURL sandvoxImageURLWithFileURL:bannerURL scalingProperties:scalingProperties];
+            [scalingProperties release];
+            
+            NSString *destination = [[SVDestinationDesignDirectory stringByAppendingPathComponent:@"banner"] stringByAppendingPathExtension:[KSWORKSPACE preferredFilenameExtensionForType:type]];
+            
+            URL = [context addResourceAtURL:URL destination:destination options:0];
+            NSString *relativeString = [URL ks_stringRelativeToURL:[context mainCSSURL]];
+            
+            NSString *css = [bannerCSSSelector stringByAppendingFormat:@" { background-image: url(\"%@\"); }\n", relativeString];
+            
+            
+            [context addCSSString:css];
         }
         [context addDependencyOnObject:self keyPath:@"banner"];
 	}
