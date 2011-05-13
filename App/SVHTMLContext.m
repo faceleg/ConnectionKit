@@ -1611,17 +1611,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 - (void)writeEnclosure:(id <SVEnclosure>)enclosure;
 {
     // Figure out the URL when published. Ideally this is from some media, but if not the published URL
-    NSURL *URL = nil;
-    
-    id <SVMedia> media = [enclosure media];
-    if (media)
-    {
-        URL = [self addMedia:media];
-    }
-    else
-    {
-        URL = [enclosure URL];
-    }
+    NSURL *URL = [enclosure addToContext:self];
     
     
     // Write

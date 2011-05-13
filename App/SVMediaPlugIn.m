@@ -9,6 +9,7 @@
 #import "SVMediaPlugIn.h"
 
 #import "SVGraphicFactory.h"
+#import "SVHTMLContext.h"
 #import "SVMediaGraphic.h"
 #import "SVMediaRecord.h"
 
@@ -191,7 +192,23 @@
 	return result;
 }
 
-- (NSURL *)URL; { return [self externalSourceURL]; }
+- (NSURL *)addToContext:(SVHTMLContext *)context;
+{
+    if ([self media])
+    {
+        NSString *type = [self typeToPublish];
+        return [context addImageMedia:[self media]
+                                width:nil
+                               height:nil
+                                 type:type
+                    preferredFilename:nil
+                        scalingSuffix:nil];
+    }
+    else
+    {
+        return [self externalSourceURL];
+    }
+}
 
 #pragma mark HTML
 

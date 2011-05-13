@@ -9,12 +9,12 @@
 #import <Cocoa/Cocoa.h>
 
 
-@class SVMedia;
+@class SVMedia, SVHTMLContext;
+
 
 @protocol SVEnclosure
 - (NSURL *)downloadedURL;   // where it currently resides on disk
 - (long long)length;
-- (SVMedia *)media;  // nil if there isn't corresponding media
+- (NSURL *)addToContext:(SVHTMLContext *)context;
 - (NSString *)MIMEType;
-- (NSURL *)URL;
 @end
