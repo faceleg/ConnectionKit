@@ -7405,7 +7405,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### PULL KSHTMLWriter FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../KSHTMLWriter\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"pulling KSHTMLWriter from GitHub ...\"\ncd ${REPOSITORY_PATH}\n${GIT_PATH} pull\necho \"... finished pulling KSHTMLWriter\"\n\npopd\n\nexit 0\n\n";
+			shellScript = "#!/bin/bash\n\n###\n### PULL KSHTMLWriter FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../KSHTMLWriter\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"pulling KSHTMLWriter from GitHub ...\"\ncd ${REPOSITORY_PATH}\n${GIT_PATH} checkout v1.0\necho \"... finished pulling KSHTMLWriter\"\n\npopd\n\nexit 0\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3CC092BA134BC490007E2390 /* Script - Code Sign .app */ = {
