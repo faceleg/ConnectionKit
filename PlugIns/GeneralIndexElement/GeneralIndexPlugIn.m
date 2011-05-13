@@ -460,7 +460,8 @@
 {
 	[super awakeFromSourceInstance:sInstance];		// this will get awakeFromSourceProperties called
 	
-	if ([[[sInstance entity] name] isEqualToString:@"Page"])	// make sure it's not an index pagelet
+	if ([[[sInstance entity] name] isEqualToString:@"Page"] ||
+		[[[sInstance entity] name] isEqualToString:@"Root"])	// make sure it's not an index pagelet
 	{
 		NSSet *children = [sInstance valueForKey:@"children"];
 		
