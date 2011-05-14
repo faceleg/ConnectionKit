@@ -825,8 +825,17 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 - (WEKWebEditorItem *)firstResponderItem;
 {
-    WEKWebEditorItem *result = [[self editingItems] lastObject];
+    WEKWebEditorItem *result = nil;
+    
+    DOMRange *selection = [self selectedDOMRange];
+    if (selection)
+    {
+        result = [[self contentItem] hitTestDOMNode:[selection commonAncestorContainer]];
+    }
+    
+    if (!result) result = [[self editingItems] lastObject];
     if (!result) result = [self selectedItem];
+    
     return result;
 }
 
