@@ -641,6 +641,18 @@
     [self cleanHTML:sender];
 }
 
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem;
+{
+    BOOL result = YES;
+    
+    if ([menuItem action] == @selector(editRawHTMLInSelectedBlock:))
+    {
+        result = [self shouldMigrateRawHTMLOnNextEdit];
+    }
+    
+    return result;
+}
+
 #pragma mark Moving
 
 - (DOMNode *)nodeToMoveControllerBefore:(SVDOMController *)controller;
