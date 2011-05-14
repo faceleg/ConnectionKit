@@ -2055,15 +2055,10 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	// Now deal with result
 	if (result)
 	{
-		if (![*ioValue isEqualToString:newValue])
+		//if (![*ioValue isEqualToString:newValue])
 		{
-			// Update the UI to reflect the "fixed" value
-			NSInvocation *invocation = [NSInvocation invocationWithSelector:@selector(setValue:forKey:)
-																	 target:self
-																  arguments:[NSArray arrayWithObjects:newValue, key, nil]];
-			[invocation performSelector:@selector(invokeWithTarget:) withObject:self afterDelay:0.0];
+            *ioValue = newValue;
 		}
-		*ioValue = newValue;	// update the real value immediately, I guess
 	}
 	else	// error: construct error; don't modify *ioValue
 	{
