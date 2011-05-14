@@ -639,9 +639,10 @@
     
     // Offer to Convert
     NSAlert *alert = [[NSAlert alloc] init];
-    [alert setMessageText:NSLocalizedString(@"Convert?", "Alert message")];
+    [alert setMessageText:NSLocalizedString(@"Used the “Edit Raw HTML” command on this text under Sandvox 1?", "Alert message")];
+    [alert setInformativeText:NSLocalizedString(@"Sandvox 2 works a little differently, placing Raw HTML objects within the text instead.\n\nWould you like to update this text? Anything that looks like custom code will be converted to a Raw HTML object.", "Alert info")];
     
-    [alert addButtonWithTitle:NSLocalizedString(@"Upgrade", "Alert button")];
+    [alert addButtonWithTitle:NSLocalizedString(@"Update Text", "Alert button")];
     [alert addButtonWithTitle:NSLocalizedString(@"Cancel", @"cancel")];
     
     
