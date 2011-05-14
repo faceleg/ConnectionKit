@@ -432,6 +432,11 @@
     }
 }
 
+- (NSString *)inlineGraphicClassName;
+{
+    return ([self indexLayoutType] == kLayoutTable ? @"Download-index" : @"general-index");
+}
+
 #pragma mark Properties
 
 @synthesize hyperlinkTitles = _hyperlinkTitles;

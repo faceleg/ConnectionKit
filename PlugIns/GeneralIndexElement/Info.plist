@@ -24,8 +24,6 @@
 	<string>${SVN_VERSION}</string>
 	<key>SVMinimumAppVersion</key>
 	<string>2.0</string>
-	<key>KTCSSClassName</key>
-	<string>general-index</string>
 	<key>SVPlugInIsIndex</key>
 	<true/>
 	<key>KTPageIconName</key>
