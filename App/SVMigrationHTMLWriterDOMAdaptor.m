@@ -59,8 +59,7 @@
     if ([tagName isEqualToString:@"DIV"])
     {
         if ([[element className] length] == 0 &&
-            [[(DOMHTMLElement *)element idName] length] == 0 &&
-            [[element getAttribute:@"style"] length] == 0)
+            [[(DOMHTMLElement *)element idName] length] == 0)
         {
             return [super handleInvalidDOMElement:element];
         }
