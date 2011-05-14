@@ -178,18 +178,16 @@
                                               options:NSLiteralSearch 
                                                 range:NSMakeRange(0, [writeableHTMLCode length])];
         
-        NSURL *onlineImageURL = [[service serviceIdentifier] isEqualToString:@"aim"] 
+        NSURL *onlineImageURL = ([[service serviceIdentifier] isEqualToString:@"aim"]) 
             ? [IMStatusImageURLProtocol URLWithBaseImageURL:[IMStatusImageURLProtocol baseOnlineImageURL] 
                                                    headline:[self headlineText] 
                                                      status:[self onlineText]]
             : [NSURL fileURLWithPath:[service onlineImagePath]];
         if (onlineImageURL)
         {
-            // add resource to context
+            // add resource to context (DO NOT use relative URL)
             NSURL *contextURL = [context addResourceAtURL:onlineImageURL destination:SVDestinationResourcesDirectory options:0];
-            
-            // generate relative string
-            NSString *onlineImagePath = [context relativeStringFromURL:contextURL];    
+            NSString *onlineImagePath = [contextURL absoluteString];    
             if (onlineImagePath)
             {
                 onlineImagePath = NSMakeCollectable(CFXMLCreateStringByEscapingEntities(NULL,
@@ -205,19 +203,17 @@
             }
         }
         
-        NSURL *offlineImageURL = [[service serviceIdentifier] isEqualToString:@"aim"] 
-        ? [IMStatusImageURLProtocol URLWithBaseImageURL:[IMStatusImageURLProtocol baseOfflineImageURL] 
-                                               headline:[self headlineText] 
-                                                 status:[self offlineText]]
-        : [NSURL fileURLWithPath:[service offlineImagePath]];
+        NSURL *offlineImageURL = ([[service serviceIdentifier] isEqualToString:@"aim"]) 
+            ? [IMStatusImageURLProtocol URLWithBaseImageURL:[IMStatusImageURLProtocol baseOfflineImageURL] 
+                                                   headline:[self headlineText] 
+                                                     status:[self offlineText]]
+            : [NSURL fileURLWithPath:[service offlineImagePath]];
         
         if ( offlineImageURL )
         {
-            // add resource to context
+            // add resource to context (DO NOT use relative URL)
             NSURL *contextURL = [context addResourceAtURL:offlineImageURL destination:SVDestinationResourcesDirectory options:0];
-            
-            // generate relative string
-            NSString *offlineImagePath = [context relativeStringFromURL:contextURL];    
+            NSString *offlineImagePath = [contextURL absoluteString];    
             if (offlineImagePath)
             {
                 offlineImagePath = NSMakeCollectable(CFXMLCreateStringByEscapingEntities(NULL,
