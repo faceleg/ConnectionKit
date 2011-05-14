@@ -413,6 +413,26 @@
 
 - (BOOL)shouldPublishEditingElementID; { return NO; }
 
+#pragma mark Feed Enclosure
+
+- (NSURL *)addToContext:(SVHTMLContext *)context;
+{
+    if ([self media])
+    {
+        NSString *type = [self typeToPublish];
+        BOOL fullSize = [[self link] linkType] == SVLinkToFullSizeImage;
+        
+        return [context addImageMedia:[self media]
+                                width:(fullSize ? nil : [self width])
+                               height:(fullSize ? nil : [self height])
+                                 type:type
+                    preferredFilename:nil
+                        scalingSuffix:nil];
+    }
+    
+    return [super addToContext:context];
+}
+
 #pragma mark Inspector
 
 + (SVInspectorViewController *)makeInspectorViewController;

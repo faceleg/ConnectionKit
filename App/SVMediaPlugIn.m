@@ -196,13 +196,7 @@
 {
     if ([self media])
     {
-        NSString *type = [self typeToPublish];
-        return [context addImageMedia:[self media]
-                                width:nil
-                               height:nil
-                                 type:type
-                    preferredFilename:nil
-                        scalingSuffix:nil];
+        return [context addMedia:[self media]];
     }
     else
     {
