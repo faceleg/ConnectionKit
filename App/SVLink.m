@@ -184,11 +184,21 @@
 
 - (NSString *)hrefInContext:(SVHTMLContext *)context image:(SVImage *)image;
 {
-    NSString *result;
+    NSString *result = nil;
     if ([self linkType] == SVLinkToFullSizeImage)
     {
         NSURL *URL = [context addMedia:[image media]];
         result = [context relativeStringFromURL:URL];
+    }
+    else if ([self linkType] == SVLinkToPage)
+    {
+        SVSiteItem *page = [SVSiteItem siteItemForPreviewPath:[self URLString]
+                                       inManagedObjectContext:[[context page] managedObjectContext]];
+        
+        if (page)
+        {
+            result = [context relativeStringFromURL:[context URLForPage:page]];
+        }
     }
     else
     {
