@@ -51,36 +51,6 @@
 }
 
 
-
-/*!	Return the last two components of an email address or host name. Returns nil if no domain name found
- */
-- (NSString *)domainName
-{
-	NSString *result = nil;
-	
-	NSRange lastDot = [self rangeOfString:@"." options:NSBackwardsSearch];
-	if (NSNotFound != lastDot.location)
-	{
-		static NSCharacterSet *sEarlierDelimSet = nil;
-		if (nil == sEarlierDelimSet)
-		{
-			sEarlierDelimSet = [[NSCharacterSet characterSetWithCharactersInString:@".@"] retain];
-		}
-		
-		NSRange earlierDelim = [self rangeOfCharacterFromSet:sEarlierDelimSet options:NSBackwardsSearch range:NSMakeRange(0,lastDot.location)];
-		if (NSNotFound != earlierDelim.location)
-		{
-			result = [self substringFromIndex:earlierDelim.location+1];
-			// return string after the @ or the . to the end of the string
-		}
-		else
-		{
-			result = self;	// didn't find earlier delimeter, so string must be domain.tld
-		}
-	}
-	return result;
-}
-
 - (BOOL) looksLikeValidHost
 {
 	if ([self isEqualToString:@"localhost"]) return YES;

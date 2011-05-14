@@ -24,7 +24,6 @@
 
 + (NSString *)formattedFileSizeWithBytes:(NSNumber *)filesize;
 
-- (NSString *)domainName;
 - (BOOL)looksLikeValidHost;
 
 - (NSString *)annotatedAtOffset:(unsigned int)anOffset;
