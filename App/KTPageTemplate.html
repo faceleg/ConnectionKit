@@ -58,7 +58,7 @@
 [[=site.googleAnalyticsCode]]
 [[endif3]][[endif2]][[endif]]
 	</head>
-	<body class="sandvox [[if !titleBox.hidden]]has-page-title[[else]]no-page-title[[endif]] [[if showSidebar]]allow-sidebar[[else]]no-sidebar[[endif]] [[if master.customBannerCSSSelector]]has-custom-banner[[else]]no-custom-banner[[endif]] [[if showNavigationArrows]][[if parentPage.navigationArrowsStyle==1]]has-photo-navigation[[else2]]has-text-navigation[[endif2]][[else]]no-navigation[[endif]][[if isRootPage]] home-page[[endif]][[if master.enableImageReplacement]] IR[[else]] no-IR[[endif]]" id="[[=&site.hostProperties.domainNameDashes]]" [[=writeCodeInjectionBodyTag]]>
+	<body class="sandvox [[if !titleBox.hidden]]has-page-title[[else]]no-page-title[[endif]] [[if showSidebar]]allow-sidebar[[else]]no-sidebar[[endif]] [[if master.customBannerCSSSelector]]has-custom-banner[[else]]no-custom-banner[[endif]] [[if parentPage.navigationArrowsStyle]][[if parentPage.navigationArrowsStyle==1]] has-photo-navigation[[else2]]has-text-navigation[[endif2]][[else]]no-navigation[[endif]][[if isRootPage]] home-page[[endif]][[if master.enableImageReplacement]] IR[[else]] no-IR[[endif]]" id="[[=&site.hostProperties.domainNameDashes]]" [[=writeCodeInjectionBodyTag]]>
 [[=writeCodeInjectionBodyTagStart]]
 		<div id="page-container">
 			<div id="page">
@@ -91,7 +91,7 @@
 					</div> <!-- sitemenu-container -->
 				</div> <!-- page-top -->
 				<div class="clear below-page-top"></div>
-				<div id="page-content" class="[[if showNavigationArrows]][[if parentPage.navigationArrowsStyle==1]]has-photo-navigation[[else2]]has-text-navigation[[endif2]][[else]]no-navigation[[endif]]">
+				<div id="page-content" class="[[if parentPage.navigationArrowsStyle]][[if parentPage.navigationArrowsStyle==1]]has-photo-navigation[[else2]]has-text-navigation[[endif2]][[else]]no-navigation[[endif]]">
 					[[if showSidebar]][[=sidebar.writeHTML]][[endif]]
 					<div id="main">
 						<div id="main-top"></div>
@@ -171,8 +171,8 @@
 	<div id="quick-look-sticky-note">
 		<table>
 			<tr>
-				<td class="quick-look-key">[['Published to]]</td>
-				<td class="quick-look-value">[[if site.hostProperties.siteURL]]<a href="[[=&site.hostProperties.siteURL]]">[[=&site.hostProperties.siteURL]]</a>[[else2]][['<<unpublished>>]][[endif2]]</td>
+				<td class="quick-look-key">[['Published at]]</td>
+				<td class="quick-look-value"><a href="[[=&site.hostProperties.siteURL]]">[[=&site.hostProperties.siteURL]]</a></td>
 			</tr>
 			<tr>
 				<td class="quick-look-key">[['Last updated]]</td>
