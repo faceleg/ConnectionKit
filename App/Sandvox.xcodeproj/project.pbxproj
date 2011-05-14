@@ -337,6 +337,8 @@
 		271B48601051C2F4008B698C /* WEKWebEditorView.h in Headers */ = {isa = PBXBuildFile; fileRef = 271B485E1051C2F4008B698C /* WEKWebEditorView.h */; };
 		271B48611051C2F4008B698C /* WEKWebEditorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 271B485F1051C2F4008B698C /* WEKWebEditorView.m */; };
 		271BFA4F10F00C2D006EA3A2 /* SVPageProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 271BFA4E10F00C2D006EA3A2 /* SVPageProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		271DFB8B137ECD540032D6F4 /* SVRawHTMLDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 271DFB89137ECD540032D6F4 /* SVRawHTMLDOMController.h */; };
+		271DFB8C137ECD540032D6F4 /* SVRawHTMLDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 271DFB8A137ECD540032D6F4 /* SVRawHTMLDOMController.m */; };
 		272321E00D48B6070075F31F /* KTCollectionIndexFilenameButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 272321DE0D48B6070075F31F /* KTCollectionIndexFilenameButton.h */; settings = {ATTRIBUTES = (); }; };
 		272321E10D48B6070075F31F /* KTCollectionIndexFilenameButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 272321DF0D48B6070075F31F /* KTCollectionIndexFilenameButton.m */; };
 		2725BA46121DE9990074EAA0 /* NSImageView+IMBImageItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 2725BA44121DE9990074EAA0 /* NSImageView+IMBImageItem.h */; };
@@ -2050,6 +2052,8 @@
 		271B485E1051C2F4008B698C /* WEKWebEditorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEKWebEditorView.h; sourceTree = "<group>"; };
 		271B485F1051C2F4008B698C /* WEKWebEditorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEKWebEditorView.m; sourceTree = "<group>"; };
 		271BFA4E10F00C2D006EA3A2 /* SVPageProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPageProtocol.h; sourceTree = "<group>"; };
+		271DFB89137ECD540032D6F4 /* SVRawHTMLDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRawHTMLDOMController.h; sourceTree = "<group>"; };
+		271DFB8A137ECD540032D6F4 /* SVRawHTMLDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRawHTMLDOMController.m; sourceTree = "<group>"; };
 		272321DE0D48B6070075F31F /* KTCollectionIndexFilenameButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTCollectionIndexFilenameButton.h; sourceTree = "<group>"; };
 		272321DF0D48B6070075F31F /* KTCollectionIndexFilenameButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTCollectionIndexFilenameButton.m; sourceTree = "<group>"; };
 		27238AFA12C3FE3A00999CD1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/RawHTMLInspector.xib; sourceTree = "<group>"; };
@@ -3532,6 +3536,8 @@
 				27F33BDB126E101600CDC551 /* SVIndexDOMController.m */,
 				276C004C129BE40500568A73 /* SVGraphicContainerDOMController.h */,
 				276C004D129BE40500568A73 /* SVGraphicContainerDOMController.m */,
+				271DFB89137ECD540032D6F4 /* SVRawHTMLDOMController.h */,
+				271DFB8A137ECD540032D6F4 /* SVRawHTMLDOMController.m */,
 			);
 			name = "Other DOM Controllers";
 			sourceTree = "<group>";
@@ -6292,6 +6298,7 @@
 				CE495E05133D4C690060FFDF /* SVColorBoxIndexPlugIn.h in Headers */,
 				27B5DA35133E4AA6002AAEA2 /* KSError.h in Headers */,
 				27A3ACC01369C1C7007D774D /* KSWorkspaceUtilities.h in Headers */,
+				271DFB8B137ECD540032D6F4 /* SVRawHTMLDOMController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7964,6 +7971,7 @@
 				27B5DA36133E4AA6002AAEA2 /* KSError.m in Sources */,
 				27A3ACC11369C1C7007D774D /* KSWorkspaceUtilities.m in Sources */,
 				2790F1CC137A8EF100BB0611 /* SVEntityMigrationPolicy.m in Sources */,
+				271DFB8C137ECD540032D6F4 /* SVRawHTMLDOMController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

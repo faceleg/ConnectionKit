@@ -985,21 +985,11 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     
 	SEL action = [menuItem action];
 	
-	if (action == @selector(editRawHTMLInSelectedBlock:))
-	{
-		result = NO;	// default to no unless found below.
-		for (id selection in [self.graphicsController selectedObjects])
-		{
-			if ([selection isKindOfClass:[SVRawHTMLGraphic class]])
-			{
-				result = YES;
-				break;
-			}
-		}
-	}
-    else if (action == @selector(cleanHTML:))
+	if (action == @selector(editRawHTMLInSelectedBlock:) || action == @selector(cleanHTML:))
     {
         id target = [[self firstResponderItem] ks_targetForAction:action];
+        if (!target) target = [[[self webEditor] selectedItem] ks_targetForAction:action];  // HACK
+        
         if (target)
         {
             result = YES;
