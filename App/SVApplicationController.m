@@ -1207,6 +1207,15 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];	// apparently pool may not be in place yet?
 	// see http://lapcatsoftware.com/blog/2007/03/10/everything-you-always-wanted-to-know-about-nsapplication/
+    
+    
+    // Enlarge standard URL cache since we're using it to cache scaled images
+#define MIN_DISK_CACHE 100000000
+    NSURLCache *cache = [NSURLCache sharedURLCache];
+    if ([cache diskCapacity] < MIN_DISK_CACHE)
+    {
+        [cache setDiskCapacity:MIN_DISK_CACHE];
+    }
 
 
 	OBASSERT([NSApp isKindOfClass:[KTApplication class]]);	// make sure we instantiated the right kind of NSApplication subclass
