@@ -8,13 +8,23 @@
 
 #import "SVRawHTMLDOMController.h"
 
+#import "KTDocWindowController.h"
+#import "KTHTMLEditorController.h"
+
 
 @implementation SVRawHTMLDOMController
 
 - (void)editRawHTMLInSelectedBlock:(id)sender;
 {
-    // This is just a placeholder method; web editor view controller takes care of the work
-    NSBeep();
+    KTHTMLEditorController *controller = [[[[self webEditor] window] windowController] HTMLEditorController];
+    SVRawHTMLGraphic *graphic = [self representedObject];
+    
+    SVTitleBox *titleBox = [graphic titleBox];
+    [controller setTitle:[titleBox text]];
+    
+    [controller setHTMLSourceObject:graphic];	// so it can save things back.
+    
+    [controller showWindow:nil];
 }
 
 @end

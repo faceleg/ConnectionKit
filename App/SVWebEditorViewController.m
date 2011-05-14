@@ -20,7 +20,6 @@
 #import "KTPage.h"
 #import "SVGraphicDOMController.h"
 #import "SVGraphicFactory.h"
-#import "KTHTMLEditorController.h"
 #import "SVLinkManager.h"
 #import "SVMedia.h"
 #import "SVPlugInGraphic.h"
@@ -1042,29 +1041,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 
 - (IBAction)editRawHTMLInSelectedBlock:(id)sender;
 {
-	for (id selection in [self.graphicsController selectedObjects])
-	{
-		if ([selection isKindOfClass:[SVRawHTMLGraphic class]])
-		{
-			KTHTMLEditorController *controller = [[[[self view] window] windowController] HTMLEditorController];
-			SVRawHTMLGraphic *graphic = (SVRawHTMLGraphic *) selection;
-						
-			SVTitleBox *titleBox = [graphic titleBox];
-			if (titleBox)
-			{
-				[controller setTitle:[titleBox text]];
-			}
-			else
-			{
-				[controller setTitle:nil];
-			}
-			
-			[controller setHTMLSourceObject:graphic];	// so it can save things back.
-			
-			[controller showWindow:nil];
-			break;
-		}
-	}
+	[[[self webEditor] firstResponderItem] doCommandBySelector:_cmd];
 }
 
 #pragma mark -
