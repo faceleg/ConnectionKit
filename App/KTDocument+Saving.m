@@ -1068,7 +1068,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
             {
                 NSString *path = [[URL path] stringByResolvingSymlinksInPath];
                 NSString *resourcePath = [path lastPathComponent];
-                if ([path ks_isSubpathOfPath:designPath])
+                if (designPath && [path ks_isSubpathOfPath:designPath])
                 {
                     resourcePath = [path ks_pathRelativeToDirectory:designPath];
                 }
