@@ -162,7 +162,7 @@
 {
     if ([self videoID])
     {
-        return SVLocalizedString(@"To see the video in Sandvox, please enable live data feeds in the Preferences.", 
+        return SVLocalizedString(@"To see the video in Sandvox, please enable 'Load data from the Internet' in Preferences.", 
                           "Live data feeds are disabled");
     }
     else

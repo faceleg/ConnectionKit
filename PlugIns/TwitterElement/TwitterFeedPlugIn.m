@@ -162,7 +162,7 @@
     else
     {
         // no live feed
-        result = SVLocalizedString(@"This is a placeholder for a Twitter feed. It will appear here once published or if you enable live data feeds in Preferences", "WebView Placeholder");
+        result = SVLocalizedString(@"This is a placeholder for a Twitter feed. It will appear on your published site, or view it in Sandvox by enabling 'Load data from the Internet' in Preferences.", "WebView Placeholder");
     }
 
     return result;

@@ -104,7 +104,7 @@
 
 @synthesize posterFrameType = _posterFrameType;
 
-//	NSLocalizedString(@"This is a placeholder for a video. The full video will appear once you publish this website, but to see the video in Sandvox, please enable live data feeds in the preferences.", "Live data feeds disabled message.")
+//	NSLocalizedString(@"This is a placeholder for video. The full video will appear on your published site, or view it in Sandvox by enabling 'Load data from the Internet' in Preferences.", "Live data feeds disabled message.")
 
 //	NSLocalizedString(@"Please use the Inspector to enter the URL of a video.", "URL has not been specified - placeholder message")
 

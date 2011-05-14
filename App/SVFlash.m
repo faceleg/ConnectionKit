@@ -51,7 +51,8 @@
 
 @synthesize dimensionCalculationConnection = _dimensionCalculationConnection;
 
-//	NSLocalizedString(@"This is a placeholder for a Flash file. The full Flash presentation will appear once you publish this website, but to see the Flash in Sandvox, please enable live data feeds in the preferences.", "Live data feeds disabled message.")
+
+//	NSLocalizedString(@"This is a placeholder for Flash. The full Flash video will appear on your published site, or view it in Sandvox by enabling 'Load data from the Internet' in Preferences.", "Live data feeds disabled message.")
 
 //	NSLocalizedString(@"Please use the Inspector to enter the URL of a Flash.", "URL has not been specified - placeholder message")
 

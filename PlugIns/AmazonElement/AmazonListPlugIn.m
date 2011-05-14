@@ -45,7 +45,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 
 - (void)writeProductPlaceholder;
 {
-    SVLocalizedString(@"This is a placeholder for an Amazon product; It will appear here once published or if you enable live data feeds in the preferences.", "Placeholder text");
+    SVLocalizedString(@"This is a placeholder for an Amazon product. It will appear on your published site, or view it in Sandvox by enabling 'Load data from the Internet' in Preferences.", "Placeholder text");
     
     
     //[[self currentContext] startel];
