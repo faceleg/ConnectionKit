@@ -661,13 +661,36 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     }
     else
     {
-        NSInvocation *invocation = [NSInvocation
-                                    invocationWithSelector:@selector(threaded_publishMedia:cachedSHA1Digest:)
-                                    target:self
-                                    arguments:NSARRAY(request, cachedDigest)];
+        // Already been cached?
+        NSURL *URL = [NSURL sandvoxImageURLWithFileURL:[[request media ] mediaURL]
+                                                  size:NSMakeSize([[request width] floatValue], [[request height] floatValue])
+                                           scalingMode:KSImageScalingModeFill
+                                            sharpening:0.0f                     // settings match SVHTMLContext,
+                                     compressionFactor:1.0f                     // there's got to be a better way right?
+                                              fileType:[request type]];
         
-        op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
-        [_coreImageQueue addOperation:op];  // most of the work should be Core Image's
+        NSCachedURLResponse *response = [[NSURLCache sharedURLCache] cachedResponseForRequest:[NSURLRequest requestWithURL:URL]];
+        if (response)
+        {
+            // It's cached! Just need to calculate to hash which is pretty speedy
+            NSInvocation *invocation = [NSInvocation
+                                        invocationWithSelector:@selector(threaded_publishData:forMedia:)
+                                        target:self
+                                        arguments:NSARRAY([response data], request)];
+            
+            op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
+            [_defaultQueue addOperation:op];
+        }
+        else
+        {
+            NSInvocation *invocation = [NSInvocation
+                                        invocationWithSelector:@selector(threaded_publishMedia:cachedSHA1Digest:)
+                                        target:self
+                                        arguments:NSARRAY(request, cachedDigest)];
+            
+            op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
+            [_coreImageQueue addOperation:op];  // most of the work should be Core Image's
+        }
     }
     [self addDependencyForNextPhase:op];
     [op release];
