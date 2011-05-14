@@ -823,6 +823,13 @@ typedef enum {  // this copied from WebPreferences+Private.h
     return result;
 }
 
+- (WEKWebEditorItem *)firstResponderItem;
+{
+    WEKWebEditorItem *result = [[self editingItems] lastObject];
+    if (!result) result = [self selectedItem];
+    return result;
+}
+
 #pragma mark Links
 
 - (void)updateLinkManager;

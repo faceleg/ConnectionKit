@@ -109,6 +109,8 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 
 @property(nonatomic, copy, readonly) NSArray *editingItems;
 
+- (WEKWebEditorItem *)firstResponderItem;
+
 
 #pragma mark Editing
 
