@@ -637,8 +637,27 @@
 {
     if (![self shouldMigrateRawHTMLOnNextEdit]) NSBeep();
     
-    // Convert
-    [self cleanHTML:sender];
+    // Offer to Convert
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert setMessageText:NSLocalizedString(@"Convert?", "Alert message")];
+    
+    [alert addButtonWithTitle:NSLocalizedString(@"Upgrade", "Alert button")];
+    [alert addButtonWithTitle:NSLocalizedString(@"Cancel", @"cancel")];
+    
+    
+    [alert beginSheetModalForWindow:[[self webEditor] window]
+                      modalDelegate:self
+                     didEndSelector:@selector(migrateHTMLAlertDidEnd:returnCode:contextInfo:)
+                        contextInfo:NULL];
+    [alert release];
+}
+
+- (void)migrateHTMLAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+{
+    if (returnCode == NSAlertFirstButtonReturn)
+    {
+        [self cleanHTML:nil];
+    }
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem;
