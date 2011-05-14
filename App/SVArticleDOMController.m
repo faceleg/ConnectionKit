@@ -607,17 +607,22 @@
     return result;
 }
 
-- (id)newHTMLWritingDOMAdaptorWithOutputStringWriter:(KSStringWriter *)stringWriter;
+- (BOOL)shouldMigrateRawHTMLOnNextEdit;
 {
     SVArticle *article = [self representedObject];
-    
-    if ([[[[article page] extensibleProperties] valueForKey:@"migrateRawHTMLOnNextEdit"] boolValue])
+    return [[[[article page] extensibleProperties] valueForKey:@"migrateRawHTMLOnNextEdit"] boolValue];
+}
+
+- (id)newHTMLWritingDOMAdaptorWithOutputStringWriter:(KSStringWriter *)stringWriter;
+{
+    if ([self shouldMigrateRawHTMLOnNextEdit])
     {
         SVMigrationHTMLWriterDOMAdaptor *result = [[SVMigrationHTMLWriterDOMAdaptor alloc] initWithOutputStringWriter:stringWriter];
         
         [result setTextDOMController:self];
         
         // Stop this happening again
+        SVArticle *article = [self representedObject];
         [[article page] removeExtensiblePropertyForKey:@"migrateRawHTMLOnNextEdit"];
         
         return result;
@@ -626,6 +631,14 @@
     {
         return [super newHTMLWritingDOMAdaptorWithOutputStringWriter:stringWriter];
     }
+}
+
+- (void)editRawHTMLInSelectedBlock:(id)sender;
+{
+    if (![self shouldMigrateRawHTMLOnNextEdit]) NSBeep();
+    
+    // Convert
+    [self cleanHTML:sender];
 }
 
 #pragma mark Moving
