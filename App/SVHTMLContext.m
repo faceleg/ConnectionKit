@@ -950,7 +950,11 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     }
     
     
-    if (!type) type = (NSString *)kUTTypePNG;
+    if (!type)
+    {
+        type = [media performSelector:@selector(typeOfFile)];
+        if (![type isEqualToString:(NSString *)kUTTypeJPEG]) type = (NSString *)kUTTypePNG;
+    }
     
 	
     // During editing, cheat and use special URL if possible. #98041
