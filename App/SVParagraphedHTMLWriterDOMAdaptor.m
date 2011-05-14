@@ -204,9 +204,13 @@
 {
     BOOL result = [super validateStyleProperty:propertyName ofElementWithTagName:tagName];
     
-    if (!result && [propertyName isEqualToString:@"text-align"])
+    if (!result)
     {
-        if ([tagName isEqualToString:@"p"])
+        if ([propertyName isEqualToString:@"text-align"] && [tagName isEqualToString:@"p"])
+        {
+            result = YES;
+        }
+        else if ([propertyName isEqualToString:@"direction"])
         {
             result = YES;
         }
