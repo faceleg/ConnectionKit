@@ -102,7 +102,7 @@ preferredUploadPath:(NSString *)path
 {
     NSDictionary *result = [NSURL
                             sandvoxImageParametersWithSize:NSMakeSize([[self width] floatValue], [[self height] floatValue])
-                            scalingMode:KSImageScalingModeAspectFit
+                            scalingMode:KSImageScalingModeFill
                             sharpening:0.0f
                             compressionFactor:1.0f
                             fileType:[self type]];
