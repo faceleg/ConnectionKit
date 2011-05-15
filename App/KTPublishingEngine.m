@@ -13,6 +13,7 @@
 #import "KTHostProperties.h"
 #import "KTSite.h"
 #import "KTMaster.h"
+#import "SVMediaDigestStorage.h"
 #import "SVMediaRequest.h"
 #import "KTPage+Internal.h"
 #import "SVPublishingHTMLContext.h"
@@ -106,7 +107,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         
         _paths = [[NSMutableSet alloc] init];
         _pathsByDigest = [[NSMutableDictionary alloc] init];
-        _publishedMediaDigests = [[NSMapTable mapTableWithStrongToStrongObjects] retain];
+        _mediaDigestStorage = [[SVMediaDigestStorage alloc] init];
         
         _plugInCSS = [[NSMutableArray alloc] init];
         
@@ -149,7 +150,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     [_paths release];
     [_pathsByDigest release];
-    [_publishedMediaDigests release];
+    [_mediaDigestStorage release];
     
     [_plugInCSS release];
     
@@ -624,11 +625,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     OBPRECONDITION(request);
     
     
-    // Put placeholder in dictionary so we don't start calculating digest/data twice while equivalent operation is already queued.
-    // Use CFDictionaryAddValue() so as not displace existing key
-    NSMapInsertIfAbsent(_publishedMediaDigests,
-                        request,
-                        (cachedDigest ? cachedDigest : (id)[NSNull null]));
+    [_mediaDigestStorage addRequest:request cachedDigest:cachedDigest];
     
     
     // Do the calculation on a background thread. Which one depends on the task needed
@@ -701,38 +698,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     OBPRECONDITION(request);
     OBPRECONDITION(digest);
     
-    // We pop NSNull in as a placeholder while generating hash, so make sure it doesn't creep into other bits of the system
-    OBPRECONDITION([digest isKindOfClass:[NSData class]]);
-
     
-    
-    SVMediaRequest *existingRequest;
-    id existingDigest;
-    if (NSMapMember(_publishedMediaDigests, request, (void **)&existingRequest, (void **)&existingDigest))
-    {
-        if (existingDigest == [NSNull null])
-        {
-            // Remove from the dictionary before replacing so that we're sure the key is the exact request passed in. Do this so scaling suffix is completely applied
-            [digest retain];
-            [_publishedMediaDigests removeObjectForKey:request];
-            [_publishedMediaDigests setObject:digest forKey:request];
-            [digest release];
-        }
-        else
-        {
-            // Digest shouldn't ever change!
-            OBASSERT([digest isEqualToData:existingDigest]);
-            
-            // Switch to canonical request
-            request = existingRequest;
-        }
-    }
-    else
-    {
-        [_publishedMediaDigests setObject:digest forKey:request];
-    }
-    
-    
+    request = [_mediaDigestStorage addRequest:request cachedDigest:digest];
     
     
     // Is there already an existing file on the server? If so, use that
@@ -809,10 +776,10 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     //  A)  Collect digests of all media (e.g. for dupe identification)
     //  B)  As a head start, queue for upload any media that has previously been published, thus reserving path
     
-    NSData *cachedDigest = [_publishedMediaDigests objectForKey:request];
-    if (cachedDigest)
+    if ([_mediaDigestStorage containsRequest:request])
     {
-        if (cachedDigest != (id)[NSNull null])  // nothing to do yet while hash is being calculated
+        NSData *cachedDigest = [_mediaDigestStorage digestForRequest:request];
+        if (cachedDigest)  // nothing to do yet while hash is being calculated
         {
             result = [self publishMediaWithRequest:request cachedData:nil SHA1Digest:cachedDigest];
         }

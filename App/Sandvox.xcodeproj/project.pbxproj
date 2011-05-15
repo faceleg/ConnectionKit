@@ -468,6 +468,8 @@
 		276C004F129BE40500568A73 /* SVGraphicContainerDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 276C004D129BE40500568A73 /* SVGraphicContainerDOMController.m */; };
 		276C010C129C00F800568A73 /* DOMTreeWalker+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 276C010A129C00F800568A73 /* DOMTreeWalker+Karelia.h */; };
 		276C010D129C00F800568A73 /* DOMTreeWalker+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 276C010B129C00F800568A73 /* DOMTreeWalker+Karelia.m */; };
+		276D4908137FFE6D004F4954 /* SVMediaDigestStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = 276D4906137FFE6D004F4954 /* SVMediaDigestStorage.h */; };
+		276D4909137FFE6D004F4954 /* SVMediaDigestStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 276D4907137FFE6D004F4954 /* SVMediaDigestStorage.m */; };
 		276F8AB210D572780094AA73 /* SVDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 276F8AB010D572780094AA73 /* SVDOMController.h */; };
 		276F8AB310D572780094AA73 /* SVDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 276F8AB110D572780094AA73 /* SVDOMController.m */; };
 		276FE0AB12424D1D00EE2C14 /* SVSizeFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 276FE0A912424D1D00EE2C14 /* SVSizeFormatter.h */; };
@@ -2195,6 +2197,8 @@
 		276C010A129C00F800568A73 /* DOMTreeWalker+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOMTreeWalker+Karelia.h"; sourceTree = "<group>"; };
 		276C010B129C00F800568A73 /* DOMTreeWalker+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOMTreeWalker+Karelia.m"; sourceTree = "<group>"; };
 		276C151C114A6C0300D30CFE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/GraphicInspector.xib; sourceTree = "<group>"; };
+		276D4906137FFE6D004F4954 /* SVMediaDigestStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaDigestStorage.h; sourceTree = "<group>"; };
+		276D4907137FFE6D004F4954 /* SVMediaDigestStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMediaDigestStorage.m; sourceTree = "<group>"; };
 		276F8AB010D572780094AA73 /* SVDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDOMController.h; sourceTree = "<group>"; };
 		276F8AB110D572780094AA73 /* SVDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDOMController.m; sourceTree = "<group>"; };
 		276FE0A912424D1D00EE2C14 /* SVSizeFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSizeFormatter.h; sourceTree = "<group>"; };
@@ -3959,6 +3963,8 @@
 				3C11079312AF122800FB34E8 /* SVGoogleSitemapPinger.h */,
 				3C11079412AF122800FB34E8 /* SVGoogleSitemapPinger.m */,
 				27A1892C11F864F0004BEFC2 /* SVPublisher.h */,
+				276D4906137FFE6D004F4954 /* SVMediaDigestStorage.h */,
+				276D4907137FFE6D004F4954 /* SVMediaDigestStorage.m */,
 			);
 			name = "Publishing Engine";
 			sourceTree = "<group>";
@@ -6299,6 +6305,7 @@
 				27B5DA35133E4AA6002AAEA2 /* KSError.h in Headers */,
 				27A3ACC01369C1C7007D774D /* KSWorkspaceUtilities.h in Headers */,
 				271DFB8B137ECD540032D6F4 /* SVRawHTMLDOMController.h in Headers */,
+				276D4908137FFE6D004F4954 /* SVMediaDigestStorage.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7972,6 +7979,7 @@
 				27A3ACC11369C1C7007D774D /* KSWorkspaceUtilities.m in Sources */,
 				2790F1CC137A8EF100BB0611 /* SVEntityMigrationPolicy.m in Sources */,
 				271DFB8C137ECD540032D6F4 /* SVRawHTMLDOMController.m in Sources */,
+				276D4909137FFE6D004F4954 /* SVMediaDigestStorage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
