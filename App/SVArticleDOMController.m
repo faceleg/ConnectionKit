@@ -633,6 +633,8 @@
     }
 }
 
+#pragma mark Edit Raw HTML
+
 - (void)editRawHTMLInSelectedBlock:(id)sender;
 {
     if (![self shouldMigrateRawHTMLOnNextEdit]) NSBeep();
@@ -668,6 +670,26 @@
     if ([menuItem action] == @selector(editRawHTMLInSelectedBlock:))
     {
         result = [self shouldMigrateRawHTMLOnNextEdit];
+    }
+    
+    return result;
+}
+
+- (NSArray *)contextMenuItemsForElement:(NSDictionary *)element
+                       defaultMenuItems:(NSArray *)defaultMenuItems;
+{
+    NSArray *result = [super contextMenuItemsForElement:element defaultMenuItems:defaultMenuItems];
+    
+    if ([self shouldMigrateRawHTMLOnNextEdit])
+    {
+        NSMenuItem *editItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Edit Raw HTML…", "menu item")
+                                                          action:@selector(editRawHTMLInSelectedBlock:)
+                                                   keyEquivalent:@""];
+        
+        result = [NSARRAY(editItem, [NSMenuItem separatorItem])
+                  arrayByAddingObjectsFromArray:result];
+        
+        [editItem release];
     }
     
     return result;
