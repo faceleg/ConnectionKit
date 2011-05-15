@@ -59,7 +59,7 @@ NSString *KTImageScalingURLProtocolScheme = @"x-sandvox-image";
 + (NSURL *)sandvoxImageURLWithFileURL:(NSURL *)fileURL queryParameters:(NSDictionary *)query;
 {
     OBPRECONDITION(fileURL);
-    OBPRECONDITION([fileURL isFileURL]);
+    if (![fileURL isFileURL]) return nil;   // only support file URLs for now
     
     NSString *host = [fileURL host];
     if (!host) host = @"";
