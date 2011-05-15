@@ -81,22 +81,23 @@ NSString *KTImageScalingURLProtocolScheme = @"x-sandvox-image";
 	if (properties)
 	{
 		KTImageScalingSettings *settings = [properties objectForKey:@"scalingBehavior"];
-        KSImageScalingMode mode = KSImageScalingModeAspectFit; // use most common value to avoid warning
+        KSImageScalingMode mode = KSImageScalingModeFill;
 		
-        switch ([settings behavior])
-		{
-			case KTScaleToSize:
-				mode = KSImageScalingModeAspectFit;
-				break;
-			case KTStretchToSize:
-				mode = KSImageScalingModeFill;
-				break;
-			case KTCropToSize:
-				mode = [settings alignment] + 11;  // +11 converts from KTMediaScalingOperation to KSImageScalingMode
-				break;
-			default:
-				break;
-		}
+        if (settings)
+        {
+            switch ([settings behavior])
+            {
+                case KTStretchToSize:
+                    mode = KSImageScalingModeFill;
+                    break;
+                case KTCropToSize:
+                    mode = [settings alignment] + 11;  // +11 converts from KTMediaScalingOperation to KSImageScalingMode
+                    break;
+                default:
+                    mode = KSImageScalingModeAspectFit;
+                    break;
+            }
+        }
 		
 		NSURL *result = [self sandvoxImageURLWithFileURL:fileURL
                                                     size:[settings size]
