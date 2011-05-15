@@ -1614,25 +1614,32 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 - (void)writeEnclosure:(id <SVEnclosure>)enclosure;
 {
-    // Figure out the URL when published. Ideally this is from some media, but if not the published URL
-    NSURL *URL = [enclosure addToContext:self];
-    
-    
-    // Write
-    if (URL)
+    @try    // enclosure is probably an SVPlugIn so play it safe
     {
-        [self pushAttribute:@"url" value:[self relativeStringFromURL:URL]];
+        // Figure out the URL when published. Ideally this is from some media, but if not the published URL
+        NSURL *URL = [enclosure addToContext:self];
         
-        if ([enclosure length])
+        
+        // Write
+        if (URL)
         {
-            [self pushAttribute:@"length"
-                          value:[[NSNumber numberWithLongLong:[enclosure length]] description]];
+            [self pushAttribute:@"url" value:[self relativeStringFromURL:URL]];
+            
+            if ([enclosure length])
+            {
+                [self pushAttribute:@"length"
+                              value:[[NSNumber numberWithLongLong:[enclosure length]] description]];
+            }
+            
+            if ([enclosure MIMEType]) [self pushAttribute:@"type" value:[enclosure MIMEType]];
+            
+            [self startElement:@"enclosure"];
+            [self endElement];
         }
-        
-        if ([enclosure MIMEType]) [self pushAttribute:@"type" value:[enclosure MIMEType]];
-        
-        [self startElement:@"enclosure"];
-        [self endElement];
+    }
+    @catch (NSException *e)
+    {
+        // TODO: Log
     }
 }
 
