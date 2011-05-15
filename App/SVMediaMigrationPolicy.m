@@ -130,6 +130,12 @@
 
 - (BOOL)createDestinationInstancesForSourceInstance:(NSManagedObject *)sInstance entityMapping:(NSEntityMapping *)mapping manager:(SVMigrationManager *)manager error:(NSError **)error;
 {
+    if (![self shouldCreateDestinationInstancesForSourceInstance:sInstance entityMapping:mapping])
+    {
+        return YES;
+    }
+    
+    
     // Figure media ID
     NSString *keyPath = [[mapping userInfo] objectForKey:@"mediaContainerIdentifierKeyPath"];
     NSString *mediaID;
