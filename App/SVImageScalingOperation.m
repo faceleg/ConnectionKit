@@ -9,6 +9,7 @@
 #import "SVImageScalingOperation.h"
 
 #import "KTImageScalingSettings.h"
+#import "KTImageScalingURLProtocol.h"
 #import "SVMedia.h"
 #import "SVMediaRequest.h"
 
@@ -291,8 +292,11 @@
         
         if (imageData)
         {
-            // Construct new cached response
-            _response = [[NSURLResponse alloc] initWithURL:[_sourceMedia mediaURL]
+            // Construct URL response for cache etc. to use
+            NSURL *url = [NSURL sandvoxImageURLWithFileURL:[_sourceMedia mediaURL]
+                                           queryParameters:_parameters];
+            
+            _response = [[NSURLResponse alloc] initWithURL:url
                                                   MIMEType:[KSWORKSPACE ks_MIMETypeForType:UTI]
                                      expectedContentLength:[imageData length]
                                           textEncodingName:nil];
