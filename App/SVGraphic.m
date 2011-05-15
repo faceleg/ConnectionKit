@@ -483,6 +483,13 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (BOOL)validateForUpdate:(NSError **)error
 {
+    // Somehow Maria H created a site where intro & caption had been sidestepped
+    if ([self canHaveCaption] && [self canHaveIntroduction] && ![self caption] && ![self introduction])
+    {
+        [self createDefaultIntroAndCaption];
+    }
+    
+    
     BOOL result = [super validateForUpdate:error];
     if (result && [self textAttachment]) result = [[self textAttachment] validateWrapping:error];
     
