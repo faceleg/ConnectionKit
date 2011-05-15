@@ -871,7 +871,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     
     
-    NSData *fileContents = [SVImageScalingOperation dataWithMediaRequest:request];
+    NSURLResponse *response;
+    NSData *fileContents = [SVImageScalingOperation dataWithMediaRequest:request response:&response];
     
     if (fileContents)
     {
@@ -898,6 +899,19 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             [self addDependencyForNextPhase:op];
             [[self defaultQueue] addOperation:op];
             [op release];
+        }
+        
+        
+        // Cache the result
+        if (response)
+        {
+            NSCachedURLResponse *cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response
+                                                                                           data:fileContents];
+            
+            [[NSURLCache sharedURLCache] storeCachedResponse:cachedResponse
+                                                  forRequest:[NSURLRequest requestWithURL:[response URL]]];
+            
+            [cachedResponse release];
         }
     }
     else

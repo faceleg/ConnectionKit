@@ -28,6 +28,6 @@
 @property(nonatomic, copy, readonly) NSURLResponse *returnedResponse;
 
 // Convenience
-+ (NSData *)dataWithMediaRequest:(SVMediaRequest *)request;
++ (NSData *)dataWithMediaRequest:(SVMediaRequest *)request response:(NSURLResponse **)response;
 
 @end

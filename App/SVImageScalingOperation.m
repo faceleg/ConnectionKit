@@ -306,12 +306,15 @@
     }
 }
 
-+ (NSData *)dataWithMediaRequest:(SVMediaRequest *)request;
++ (NSData *)dataWithMediaRequest:(SVMediaRequest *)request response:(NSURLResponse **)response;
 {
     if ([request isNativeRepresentation])
     {
         NSData *result = [[request media] mediaData];
         if (!result) result = [NSData dataWithContentsOfURL:[[request media] mediaURL]];
+        
+        if (response) *response = nil;
+        
         return result;
     }
     else
@@ -327,6 +330,8 @@
         [op start];
         
         NSData *result = [[[op result] copy] autorelease];
+        if (response) *response = [[[op returnedResponse] copy] autorelease];
+        
         [op release];
         
         return result;
