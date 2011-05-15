@@ -10,6 +10,7 @@
 #import "KTImageScalingSettings.h"
 
 #import "SVImageScalingOperation.h"
+#import "SVMediaRequest.h"
 
 #import "NSImage+KTExtensions.h"
 
@@ -26,6 +27,18 @@ NSString *KTImageScalingURLProtocolScheme = @"x-sandvox-image";
 
 
 @implementation NSURL (SandvoxImage)
+
++ (NSURL *)sandvoxImageURLWithMediaRequest:(SVMediaRequest *)request;
+{
+    NSSize size = NSMakeSize([[request width] floatValue], [[request height] floatValue]);
+    
+    return [NSURL sandvoxImageURLWithFileURL:[[request media] mediaURL]
+                                        size:size
+                                 scalingMode:KSImageScalingModeFill
+                                  sharpening:0.0f                   // settings match SVHTMLContext,
+                           compressionFactor:1.0f                   // there's got to be a better way right?
+                                    fileType:[request type]];
+}
 
 + (NSURL *)sandvoxImageURLWithFileURL:(NSURL *)fileURL 
                                  size:(NSSize)size

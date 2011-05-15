@@ -18,7 +18,12 @@
 extern NSString *KTImageScalingURLProtocolScheme;
 
 
+@class SVMediaRequest;
+
+
 @interface NSURL (SandvoxImage)
+
++ (NSURL *)sandvoxImageURLWithMediaRequest:(SVMediaRequest *)request;
 
 + (NSURL *)sandvoxImageURLWithFileURL:(NSURL *)fileURL 
                                  size:(NSSize)size

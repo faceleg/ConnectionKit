@@ -659,14 +659,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     else
     {
         // Already been cached?
-        NSURL *URL = [NSURL sandvoxImageURLWithFileURL:[[request media ] mediaURL]
-                                                  size:NSMakeSize([[request width] floatValue], [[request height] floatValue])
-                                           scalingMode:KSImageScalingModeFill
-                                            sharpening:0.0f                     // settings match SVHTMLContext,
-                                     compressionFactor:1.0f                     // there's got to be a better way right?
-                                              fileType:[request type]];
-        
+        NSURL *URL = [NSURL sandvoxImageURLWithMediaRequest:request];
         NSCachedURLResponse *response = [[NSURLCache sharedURLCache] cachedResponseForRequest:[NSURLRequest requestWithURL:URL]];
+        
         if (response)
         {
             // It's cached! Just need to calculate to hash which is pretty speedy
@@ -710,7 +705,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         {
             //  The media rep does not already exist on the server, so need to assign it a new path
             result = [[self baseRemotePath] stringByAppendingPathComponent:[request preferredUploadPath]];
-                       
+            
             NSUInteger count = 1;
             while (![self shouldPublishToPath:result])
             {
@@ -722,7 +717,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         }
         else
         {
-            // This is new media. Is its preferred filename definitely available? If so, can go ahead and publish immediately. #111549. Otherwise, wait until all meda is known to figure out the best available path
+            // This is new media. Is its preferred filename definitely available? If so, can go ahead and publish immediately. #111549. Otherwise, wait until all media is known to figure out the best available path
             result = [[self baseRemotePath] stringByAppendingPathComponent:[request preferredUploadPath]];
             
             if (![self shouldPublishToPath:result]) result = nil;
