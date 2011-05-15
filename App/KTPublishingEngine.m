@@ -903,7 +903,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         
         
         // Cache the result
-        if (response)
+        if ([response URL])
         {
             NSCachedURLResponse *cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response
                                                                                            data:fileContents];
