@@ -25,6 +25,8 @@ extern NSString *KTImageScalingURLProtocolScheme;
 
 + (NSURL *)sandvoxImageURLWithMediaRequest:(SVMediaRequest *)request;
 
++ (NSURL *)sandvoxImageURLWithFileURL:(NSURL *)fileURL queryParameters:(NSDictionary *)query;
+
 + (NSURL *)sandvoxImageURLWithFileURL:(NSURL *)fileURL 
                                  size:(NSSize)size
                           scalingMode:(KSImageScalingMode)scalingMode
@@ -32,13 +34,16 @@ extern NSString *KTImageScalingURLProtocolScheme;
                     compressionFactor:(CGFloat)compression
                              fileType:(NSString *)UTI;
 
-+ (NSURL *)sandvoxImageURLWithFileURL:(NSURL *)fileURL scalingProperties:(NSDictionary *)properties;
-
 + (NSDictionary *)sandvoxImageParametersWithSize:(NSSize)size
                                      scalingMode:(KSImageScalingMode)scalingMode
                                       sharpening:(CGFloat)sharpening
                                compressionFactor:(CGFloat)compression
                                         fileType:(NSString *)UTI;
+
+
+#pragma mark 
+
++ (NSURL *)sandvoxImageURLWithFileURL:(NSURL *)fileURL scalingProperties:(NSDictionary *)properties;
 
 @end
 

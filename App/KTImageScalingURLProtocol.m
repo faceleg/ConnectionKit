@@ -47,6 +47,17 @@ NSString *KTImageScalingURLProtocolScheme = @"x-sandvox-image";
                     compressionFactor:(CGFloat)compression
                              fileType:(NSString *)UTI;
 {
+    NSDictionary *query = [self sandvoxImageParametersWithSize:size
+                                                   scalingMode:scalingMode
+                                                    sharpening:sharpening
+                                             compressionFactor:compression
+                                                      fileType:UTI];
+	
+	return [self sandvoxImageURLWithFileURL:fileURL queryParameters:query];
+}
+
++ (NSURL *)sandvoxImageURLWithFileURL:(NSURL *)fileURL queryParameters:(NSDictionary *)query;
+{
     OBPRECONDITION(fileURL);
     OBPRECONDITION([fileURL isFileURL]);
     
@@ -58,13 +69,8 @@ NSString *KTImageScalingURLProtocolScheme = @"x-sandvox-image";
 											  path:[fileURL path]];
 	
 	OBASSERT(baseURL);
-	NSDictionary *query = [self sandvoxImageParametersWithSize:size
-                                                   scalingMode:scalingMode
-                                                    sharpening:sharpening
-                                             compressionFactor:compression
-                                                      fileType:UTI];
 	
-	NSURL *result = [NSURL ks_URLWithScheme:KTImageScalingURLProtocolScheme
+    NSURL *result = [NSURL ks_URLWithScheme:KTImageScalingURLProtocolScheme
                                        host:host
                                        path:[fileURL path]
                             queryParameters:query];
