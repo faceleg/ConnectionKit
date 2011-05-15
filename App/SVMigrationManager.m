@@ -468,6 +468,12 @@
 - (NSNumber *)boolValue:(id)anObject; { return NSBOOL([anObject boolValue]); }
 - (NSNumber *)value:(id)anObject ifGreaterThan:(id)compareTo; { return ([anObject isGreaterThan:compareTo] ? anObject : nil); }
 
+- (NSString *)valueIfNotEmptyString:(NSString *)value;
+{
+    if (![value length]) value = nil;
+    return value;
+}
+
 - (id)propertyListFromData:(NSData *)data;
 {
     return [NSPropertyListSerialization propertyListFromData:data mutabilityOption:NSPropertyListImmutable format:NULL errorDescription:NULL];
