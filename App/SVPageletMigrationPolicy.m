@@ -29,6 +29,12 @@
     }
     @catch (NSException *exception)
     {
+        // Migration manager seems to handle NSObjectInaccessibleExceptions itself
+        if ([[exception name] isEqualToString:NSObjectInaccessibleException])
+        {
+            @throw exception;
+        }
+        
         if (error)
         {
             *error = [KSError errorWithDomain:NSCocoaErrorDomain
