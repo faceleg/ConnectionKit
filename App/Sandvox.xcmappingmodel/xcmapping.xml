@@ -718,7 +718,6 @@ EwcIExQZGiInLC0wMTU6O0BESkxVJG51bGzVCQoLDA0ODxAREl8QEE5TRXhwcmVzc2lvblR5cGVeTlNT
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z349"></relationship>
     </object>
     <object type="XDDEVENTITYMAPPING" id="z212">
-        <attribute name="sourcefilterpredicatestring" type="string">pluginIdentifier != 'sandvox.DownloadElement' \u2600\u2600 pluginIdentifier != 'sandvox.LinkElement' \u2600\u2600 (parent != nil || self == documentInfo.root)</attribute>
         <attribute name="userinfodata" type="binary">YnBsaXN0MDDUAQIDBAUGGhtYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoKUH
 CBESE1UkbnVsbNMJCgsMDQ9WJGNsYXNzV05TLmtleXNaTlMub2JqZWN0c4AEoQ6AAqEQgANfEB9tZWRpYUNvbnRhaW5lcklkZW50aWZpZXJLZXlQYXRoXxAYdGh1bWJuYWlsTWVkaWFJZGVudGlmaWVy0hQVFhdaJGNsYXNzbmFtZVgkY2xhc3Nlc18QE05TTXV0YWJsZURpY3Rpb25hcnmjFhgZXE5TRGljdGlvbmFyeVhOU09iamVjdF8QD05TS2V5ZWRBcmNoaXZlctEcHVRyb290gAEACAARABoAIwAtADIANwA9AEMASgBRAFkAZABmAGgAagBsAG4AkACrALAAuwDEANoA3gDrAPQBBgEJAQ4AAAAAAAACAQAAAAAAAAAeAAAAAAAAAAAAAAAAAAABEA==
 </attribute>
@@ -729,7 +728,7 @@ CBESE1UkbnVsbNMJCgsMDQ9WJGNsYXNzV05TLmtleXNaTlMub2JqZWN0c4AEoQ6AAqEQgANfEB9tZWRp
         <attribute name="destinationname" type="string">Thumbnail</attribute>
         <attribute name="autogenerateexpression" type="bool">1</attribute>
         <relationship name="mappingmodel" type="1/1" destination="XDDEVMAPPINGMODEL" idrefs="z353"></relationship>
-        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z437 z381 z401 z257 z222 z376"></relationship>
+        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z401 z376 z381 z437 z257 z222"></relationship>
         <relationship name="relationshipmappings" type="0/0" destination="XDDEVRELATIONSHIPMAPPING" idrefs="z268"></relationship>
     </object>
     <object type="XDDEVRELATIONSHIPMAPPING" id="z213">
@@ -2112,6 +2111,9 @@ CBMUGRoiJywtMjZVJG51bGzVCQoLDA0ODxAREl8QEE5TRXhwcmVzc2lvblR5cGVeTlNTZWxlY3Rvck5h
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z349"></relationship>
     </object>
     <object type="XDDEVATTRIBUTEMAPPING" id="z455">
+        <attribute name="valueexpressiondata" type="binary">YnBsaXN0MDDUAQIDBAUGZGVYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK8Q
+GgcIExQZGiIoLS4xMjY7PEFFS1BRVFVZXF1fVSRudWxs1QkKCwwNDg8QERJfEBBOU0V4cHJlc3Npb25UeXBlXk5TU2VsZWN0b3JOYW1lViRjbGFzc1lOU09wZXJhbmRbTlNBcmd1bWVudHMQBIACgBmAA4AGXxAzdGh1bWJuYWlsVHlwZUZyb21UaHVtYm5haWxNZWRpYUlkZW50aWZpZXI6Y2hpbGRyZW460xUJCxYXGFpOU1ZhcmlhYmxlgAQQAoAFXGVudGl0eVBvbGljedIbHB0eWiRjbGFzc25hbWVYJGNsYXNzZXNfEBROU1ZhcmlhYmxlRXhwcmVzc2lvbqMfICFfEBROU1ZhcmlhYmxlRXhwcmVzc2lvblxOU0V4cHJlc3Npb25YTlNPYmplY3TSCyMkJVpOUy5vYmplY3RzgBiiJieAB4AR1QkKCwwNDikqKyyACIAQgAmAC18QEHZhbHVlRm9yS2V5UGF0aDrTFQkLLxcYgAqABVZzb3VyY2XSCyMzNIAPoTWADNM3CQs4OTpZTlNLZXlQYXRogA0QCoAOXxAYdGh1bWJuYWlsTWVkaWFJZGVudGlmaWVy0hscPT5fEBxOU0tleVBhdGhTcGVjaWZpZXJFeHByZXNzaW9uoz9AIV8QHE5TS2V5UGF0aFNwZWNpZmllckV4cHJlc3Npb25cTlNFeHByZXNzaW9u0hscQkNeTlNNdXRhYmxlQXJyYXmjQkQhV05TQXJyYXnSGxxGR18QE05TS2V5UGF0aEV4cHJlc3Npb26kSElKIV8QE05TS2V5UGF0aEV4cHJlc3Npb25fEBROU0Z1bmN0aW9uRXhwcmVzc2lvblxOU0V4cHJlc3Npb27VCQoLDA0OTCpOT4ASgBCAE4AVXxAQdmFsdWVGb3JLZXlQYXRoOtMVCQtSFxiAFIAFVnNvdXJjZdILIzNXgA+hWIAW0zcJC1o5OoAXgA5YY2hpbGRyZW7SGxxEXqJEIdIbHGBhXxAUTlNGdW5jdGlvbkV4cHJlc3Npb26jYmMhXxAUTlNGdW5jdGlvbkV4cHJlc3Npb25cTlNFeHByZXNzaW9uXxAPTlNLZXllZEFyY2hpdmVy0WZnVHJvb3SAAQAIABEAGgAjAC0AMgA3AFQAWgBlAHgAhwCOAJgApACmAKgAqgCsAK4A5ADrAPYA+AD6APwBCQEOARkBIgE5AT0BVAFhAWoBbwF6AXwBfwGBAYMBjgGQAZIBlAGWAakBsAGyAbQBuwHAAcIBxAHGAc0B1wHZAdsB3QH4Af0CHAIgAj8CTAJRAmACZAJsAnEChwKMAqICuQLGAtEC0wLVAtcC2QLsAvMC9QL3Av4DAwMFAwcDCQMQAxIDFAMdAyIDJQMqA0EDRQNcA2kDewN+A4MAAAAAAAACAQAAAAAAAABoAAAAAAAAAAAAAAAAAAADhQ==
+</attribute>
         <attribute name="name" type="string">thumbnailType</attribute>
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z250"></relationship>
     </object>
@@ -2181,6 +2183,8 @@ EwcIExQZGiInLC0wMTU6O0BESkxVJG51bGzVCQoLDA0ODxAREl8QEE5TRXhwcmVzc2lvblR5cGVeTlNT
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z205"></relationship>
     </object>
     <object type="XDDEVRELATIONSHIPMAPPING" id="z469">
+        <attribute name="sourcemappingname" type="string">PageToThumbnail</attribute>
+        <attribute name="sourcekeypath" type="string">$source</attribute>
         <attribute name="autogenerateexpression" type="bool">1</attribute>
         <attribute name="name" type="string">customThumbnail</attribute>
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z250"></relationship>
