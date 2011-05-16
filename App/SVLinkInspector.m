@@ -125,6 +125,11 @@
             // TODO: Would it be better to apply any existing value? might be handy if user wants to make two links to the same address in a row?
             [oLinkField setStringValue:@""];
         }
+        
+        // Give field the focus since you're likely going to type into it next
+        [oTabView selectTabViewItemAtIndex:[sender indexOfSelectedItem]];   // HACK, repeated
+        [[oLinkField window] makeFirstResponder:oLinkField];
+        [[oLinkField window] makeKeyWindow];
     }
     else if (type == SVLinkEmail)
     {
