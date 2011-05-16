@@ -58,10 +58,16 @@
     // <DIV>s tend to be there by accident, unless they have a class, id, or styling
     if ([tagName isEqualToString:@"DIV"])
     {
-        if ([[element className] length] == 0 &&
-            [[(DOMHTMLElement *)element idName] length] == 0)
+        if ([[(DOMHTMLElement *)element idName] length] == 0)
         {
-            return [super handleInvalidDOMElement:element];
+            // MS Office brings along its own classname which is highly undersireable. I'm trying ot build a bit of a whitelist of what it might chuck in. #121069
+            NSString *class = [element className];
+            if ([class length] == 0 ||
+                [class isEqualToString:@"MsoNormal"] ||
+                [class isEqualToString:@"paragraph Heading_2"])
+            {
+                return [super handleInvalidDOMElement:element];
+            }
         }
     }
     
