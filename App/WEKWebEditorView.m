@@ -844,7 +844,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
 - (void)updateLinkManager;
 {
     NSWindow *window = [self window];
-    if ([window isKeyWindow])
+    if ([window isKeyWindow] || [window isMainWindow])  // will be main window if user tabs around link inspector. #119729
     {
         NSResponder *firstResponder = [window firstResponder];
         if ([self ks_followsResponder:firstResponder])
