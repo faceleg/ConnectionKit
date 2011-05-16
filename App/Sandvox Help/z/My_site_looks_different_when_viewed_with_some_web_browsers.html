@@ -31,27 +31,21 @@
 
         <h2><span class="mw-headline">PNG Images</span></h2>
 
-        <p>Internet Explorer version 6 and earlier will not properly display PNG images with transparency. To compensate, you could ask your site visitors to use an alternative browser (such as <a href="http://www.getfirefox.com" class="external text" title="http://www.getfirefox.com">Firefox</a> or Internet Explorer 7), although this is probably not ideal! Instead, you are better off avoiding the use of transparent PNG images within your site.</p>
+        <p>Internet Explorer version 6 and earlier will not properly display PNG images with transparency. To compensate, you could ask your site visitors to use an alternative browser (such as <a href="http://www.getfirefox.com" class="external text" title="http://www.getfirefox.com">Firefox</a> or a newer version of Internet Explorer), although this is probably not ideal! Instead, you may better off avoiding the use of transparent PNG images within your site.</p>
 
         <p>There are two ways round this; You can use GIF images instead, or PNG images without transparency.</p>
 
         <div class="instructions">
-            <p><b>To replace a PNG image with a GIF image:</b></p>
+            <p><b>To publish an image as a GIF:</b></p>
 
             <ol>
-                <li>Copy the image to the clipboard.</li>
+                <li>Select the image</li>
 
-                <li>Delete the image from your site.</li>
+                <li>Open the <a href="Object_Inspector.html" title="Object Inspector">Object Inspector</a></li>
 
-                <li>Paste the image into the <a href="http://docs.info.apple.com/article.html?path=Preview/3.0.1/en/disc01.html" class="external text" title="http://docs.info.apple.com/article.html?path=Preview/3.0.1/en/disc01.html">Preview</a> application.</li>
-
-                <li>In Preview, choose "File → Save As…" and save the image in the GIF format.</li>
-
-                <li>Add the GIF image to your site in place of the original.</li>
+                <li>From the "Format" popup, select "GIF"</li>
             </ol>
         </div>
-
-        <p>It is important that you save the GIF images at the same size they will be displayed at. Sandvox <b>must not</b> have to resize any image since this will convert it to PNG and you'll be back to square one!</p>
 
         <div class="instructions">
             <p><b>To remove the transparency from a PNG image:</b></p>
@@ -73,11 +67,11 @@
 
         <h2><span class="mw-headline">Page text styled one way in Firefox, not bold in Safari</span></h2>
 
-        <p>Let's say for example that some text is bold in Firefox but not Safari. Look for a stray &lt;b&gt; tag in your raw HTML text. It must have a corresponding closing &lt;/b&gt; tag or you will see different results in different browsers.</p>
+        <p>Let's say for example that some text is bold in Firefox but not Safari. Look for a stray &lt;b&gt; tag in your <a href="Raw_HTML.html" title="Raw HTML">raw HTML</a>. It must have a corresponding closing &lt;/b&gt; tag or you will see different results in different browsers.</p>
 
         <p>Safari ignores the unmatched tag, so nothing becomes bold.</p>
 
-        <p>Firefox makes everything on the page bold from that point on until it find a closing &lt;/b&gt; tag. If it never finds the tag, the entire page will appear to be bold in Firefox, but plain text in Safari.</p><a name="Graphical_Titles" id="Graphical_Titles"></a>
+        <p>Firefox makes everything on the page bold from that point on until it find a closing &lt;/b&gt; tag. If it never finds the tag, the entire page will appear to be bold in Firefox, but regular text in Safari.</p><a name="Graphical_Titles" id="Graphical_Titles"></a>
 
         <h2><span class="mw-headline">Graphical Titles</span></h2>
 

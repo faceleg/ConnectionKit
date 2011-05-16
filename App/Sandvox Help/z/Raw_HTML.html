@@ -43,29 +43,77 @@
             </ul>
         </div>
 
-        <p>Before <a href="Publishing_Your_Site.html" title="Publish">publishing</a>, please be sure to <a href="HTML_Validation.html" title="HTML Validation">validate</a> any Raw HTML pages or objects.</p><a name="Raw_HTML_Objects_on_a_Page" id="Raw_HTML_Objects_on_a_Page"></a>
+        <p>Before <a href="Publishing_Your_Site.html" title="Publish">publishing</a>, please be sure to <a href="HTML_Validation.html" title="HTML Validation">validate</a> any Raw HTML pages or objects.</p><a name="Code_Guidelines" id="Code_Guidelines"></a>
 
-        <h2><span class="mw-headline">Raw HTML Objects on a Page</span></h2>
+        <h3><span class="mw-headline">Code Guidelines</span></h3>
+
+        <p>For advice on the correct HTML to use, please see "<a href="HTML_code_guidelines_and_tips.html" title="HTML code guidelines and tips">HTML code guidelines and tips</a>."</p><a name="Raw_HTML_object" id="Raw_HTML_object"></a>
+
+        <h2><span class="mw-headline">Raw HTML object</span></h2>
 
         <p>Raw HTML Objects allow you to manage HTML on part of your page.</p>
 
         <div class="instructions">
-            <p><b>To edit the code of Raw HTML object:</b></p>
+            <p><b>To insert a Raw HTML object:</b></p>
 
             <ol>
-                <li>Select the object on the page.</li>
+                <li>From the "Objects" <a href="Toolbar.html" title="Toolbar">toolbar</a> item, select "Raw HTML"</li>
 
-                <li>Open the <a href="Object_Inspector.html" title="Object Inspector">Object Inspector</a>.</li>
+                <li>Enter your HTML into the editor that appears</li>
 
-                <li>Click the "Edit HTML.." button.</li>
+                <li>To see the HTML in the <a href="Web_View.html" title="Web View">Web View</a>, close the editor or click "Update Preview" in the toolbar</li>
+            </ol>
 
-                <li>Edit your code in the window that appears.</li>
+            <p><b>To later edit a Raw HTML object:</b></p>
+
+            <ol>
+                <li>Select it</li>
+
+                <li>Use the "Edit → Edit Raw HTML…" menu command</li>
+
+                <li>Edit your HTML</li>
+            </ol>
+
+            <p>We advise you to use the "Validate" toolbar item to ensure your HTML adheres to web standards.</p>
+        </div>
+
+        <p>Sandvox will do its best to display your HTML in the <a href="Web_View.html" title="Web View">Web View</a> exactly as it will appear once published. There are some limitations though:</p><a name="External_Resources" id="External_Resources"></a>
+
+        <h3><span class="mw-headline">External Resources</span></h3>
+
+        <p>If you have "Load data from the Internet" disabled in the <a href="Preferences.html" title="Preferences">Preferences</a>, and your HTML references resources that must be loaded from the internet, loading them will fail within Sandvox. Such resources should appear correctly once <a href="Publishing_Your_Site.html" title="Publish">published</a>, or you could temporarily turn the preference back on to test.</p><a name="Invalid_HTML" id="Invalid_HTML"></a>
+
+        <h3><span class="mw-headline">Invalid HTML</span></h3>
+
+        <p>Before displaying the HTML, Sandvox tries to make sure it isn't invalid in such a way that could compromise other editing features. If a problem is detected, Sandvox will instead display this placeholder:</p>
+
+        <p><span style="-webkit-border-radius:3px; padding:2px 5px; color:white; font-size:80%; background:rgb(205,0,0)">Invalid HTML</span></p>
+
+        <p>This is generally the result of a missing, mismatched, or extra close tag. For example, this is missing <code>&lt;/div&gt;</code> at the end:</p>
+        <pre>
+&lt;div&gt;Text
+</pre>
+
+        <p>And this has an extra <code>&lt;/div&gt;</code>:</p>
+        <pre>
+&lt;div&gt;Text&lt;/div&gt;&lt;/div&gt;
+</pre>
+
+        <p>To fix, it's advisable to correct your HTML as the error may cause some web browsers to render the page incorrectly. Sandvox's HTML editor has built-in validation support which can provide detailed information on the problems.</p>
+
+        <div class="instructions">
+            <p><b>To validate custom HTML:</b></p>
+
+            <ol>
+                <li>Open the Raw HTML editor (the "Edit → Edit Raw HTML…" menu)</li>
+
+                <li>Click the "Validate" toolbar item</li>
             </ol>
         </div>
 
-        <p>The changes are updated in the <a href="Web_View.html" title="Web View">Web View</a> when you click the "Update Preview" button or close the HTML editing window.</p><a name="A_Page_composed_entirely_of_Raw_HTML" id="A_Page_composed_entirely_of_Raw_HTML"></a>
+        <p>The placeholder only takes effect while editing in Sandvox; the code you enter will <b>always</b> be included exactly as you typed it when the site is <a href="Publishing_Your_Site.html" title="Publish">published</a>.</p><a name="Raw_HTML_page" id="Raw_HTML_page"></a>
 
-        <h2><span class="mw-headline">A Page composed entirely of Raw HTML</span></h2>
+        <h2><span class="mw-headline">Raw HTML page</span></h2>
 
         <p>This is a page in which the *entire* contents of the page is managed by you and does not contain any Sandvox-generated content.</p>
 
@@ -81,11 +129,7 @@
             </ol>
         </div>
 
-        <p>The changes are updated in the <a href="Web_View.html" title="Web View">Web View</a> when you click the "Update Preview" button or close the HTML editing window.</p><a name="Code_Guidelines" id="Code_Guidelines"></a>
-
-        <h3><span class="mw-headline">Code Guidelines</span></h3>
-
-        <p>For information on correctly using a Raw HTML <a href="Page.html" title="Page">page</a> or <a href="Object.html" title="Object">object</a>, please see "<a href="HTML_code_guidelines_and_tips.html" title="HTML code guidelines and tips">HTML code guidelines and tips</a>."</p>
+        <p>The changes are updated in the <a href="Web_View.html" title="Web View">Web View</a> when you click the "Update Preview" button or close the HTML editing window.</p>
 
         <div class="related">
             <a name="Related_Articles" id="Related_Articles"></a>
@@ -102,6 +146,8 @@
                 <li><a href="Raw_HTML_object_examples.html" title="Raw HTML object examples">Raw HTML object examples</a></li>
 
                 <li><a href="Code_Injection.html" title="Code Injection">Code Injection</a></li>
+
+                <li><a href="Adobe_Flash.html" title="Adobe Flash">Adobe Flash</a></li>
             </ul>
         </div>
     </div>
