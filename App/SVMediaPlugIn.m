@@ -109,7 +109,8 @@
     [graphic setNaturalHeight:height];
     
     
-    if (![self width] && ![self height] && width && height)
+    // I'm not convinced we should touch the actual size at all, but it's needed to make video import. #121592
+    if ((![self width] || ![self height]) && width && height)
     {
         NSNumber *oldWidth = [[self width] copy];
         [graphic makeOriginalSize]; // why did I decide to do this? – Mike
