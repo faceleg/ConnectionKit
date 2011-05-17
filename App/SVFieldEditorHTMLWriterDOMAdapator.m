@@ -113,6 +113,32 @@
 
 #pragma mark Elements
 
+- (DOMElement *)openDOMElementConflictingWithDOMElement:(DOMElement *)element
+                                                tagName:(NSString *)tagName;
+{
+    NSArray *openElements = [[self XMLWriter] openElements];
+    
+    for (NSString *anElement in [openElements reverseObjectEnumerator])
+    {
+        if ([anElement isEqualToStringCaseInsensitive:tagName])
+        {
+            // Search for the DOM element in question
+            DOMElement *result = (DOMElement *)[element parentNode];
+            while (![[result tagName] isEqualToString:tagName])
+            {
+                result = (DOMElement *)[result parentNode];
+            }
+            
+            return result;
+        }
+        
+        // If there's a hyperlink open, don't want to search beyond that since the link could be split up
+        if ([anElement isEqualToString:@"a"]) return nil;
+    }
+    
+    return nil;
+}
+
 - (DOMNode *)willWriteDOMElement:(DOMElement *)element;
 {
     DOMNode *result = [super willWriteDOMElement:element];
@@ -164,16 +190,10 @@
         // The exception is if outer element has font: property, and inner element overrides that using longhand. e.g. font-family
         // Under those circumstances, WebKit doesn't give us enough API to make the merge, so keep both elements.
         // #100362
-        if ([[self XMLWriter] hasOpenElement:[tagName lowercaseString]])
+        DOMElement *existingElement = [self openDOMElementConflictingWithDOMElement:element
+                                                                            tagName:tagName];
+        if (existingElement)
         {
-            // Find the conflicting element
-            DOMElement *existingElement = (DOMElement *)[element parentNode];
-            while (![[existingElement tagName] isEqualToString:tagName])
-            {
-                existingElement = (DOMElement *)[existingElement parentNode];
-            }
-            
-            
             // Is it really a conflict?
             if ([element tryToPopulateStyleWithValuesInheritedFromElement:existingElement])
             {
