@@ -12,13 +12,12 @@ Redistribution and use in source and binary forms, with or without modification,
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-function twitterCallback_withOptions(obj, divid, linksinnewwindows, includetimestamp) {
+function twitterCallback_withOptions(obj, divid, username, linksinnewwindows, includetimestamp) {
 	var wwwregular = /\bwww\.\w.\w/ig;
 	var regular = /((https?|s?ftp|ssh)\:\/\/[^"\s\<\>]*[^.,;'">\:\s\<\>\)\]\!])/g;
 	var atregular = /\B@([_a-z0-9]+)/ig;
 	var twitters = obj;
 	var statusHTML = "";
-	var username = "";
 	
 	for (var i=0; i<twitters.length; i++) {
 		var posttext = "";
@@ -26,10 +25,9 @@ function twitterCallback_withOptions(obj, divid, linksinnewwindows, includetimes
 		posttext = posttext.replace(regular, '<a href="$1">$1</a>');
 		posttext = posttext.replace(atregular, '@<a href="http://twitter.com/$1">$1</a>');
 		
-		username = twitters[i].user.screen_name
 		statusHTML += ('<li><span>'+posttext+'</span>');
 		if (includetimestamp) {
-			statusHTML += (' <a style="font-size:85%" href="http://twitter.com/'+username+'/statuses/'+twitters[i].id+'" title="[["Tweet Permalink]]">'+relative_time(twitters[i].created_at)+'</a>');
+			statusHTML += (' <a style="font-size:85%" href="http://twitter.com/'+username+'/status/'+twitters[i].id+'" title="[["Tweet Permalink]]">'+relative_time(twitters[i].created_at)+'</a>');
 		}
 		statusHTML += ('</li>');
 	}

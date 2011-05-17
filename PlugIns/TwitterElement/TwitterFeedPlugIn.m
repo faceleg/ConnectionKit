@@ -178,10 +178,10 @@
                             @"<script type=\"text/javascript\">\n"
                             @"function twitterCallback_%@(obj)\n"
                             @"{\n"
-                            @"    twitterCallback_withOptions(obj, '%@', %@, %@);\n"
+                            @"    twitterCallback_withOptions(obj, '%@', '%@', %@, %@);\n"
                             @"}\n"
                             @"</script>\n",
-                            uniqueID, uniqueID, linksFlag, timestampFlag];
+                            uniqueID, uniqueID, self.username, linksFlag, timestampFlag];
         [context addMarkupToEndOfBody:script1];
         
         NSString *script2 = [NSString stringWithFormat:
