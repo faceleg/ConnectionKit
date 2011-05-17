@@ -586,6 +586,7 @@
     BOOL result = ([propertyName isEqualToString:@"font"] ||
                    [propertyName hasPrefix:@"font-"] ||
                    [propertyName isEqualToString:@"color"] ||
+                   [propertyName isEqualToString:@"background-color"] ||
                    [propertyName isEqualToString:@"text-decoration"]);
     
     return result;
