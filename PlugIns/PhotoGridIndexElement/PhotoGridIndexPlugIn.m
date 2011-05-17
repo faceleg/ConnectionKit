@@ -183,4 +183,28 @@ height="[[mediainfo info:height media:aPage.thumbnail sizeToFit:thumbnailImageSi
                           options:(SVImageScaleAspectFit | SVPageImageRepresentationLink)];
 }
 
+
+/*
+<h3><a [[target aPage]]href="[[path aPage]]"><span class="in">[[=&aPage.title]]</span></a></h3>
+[[COMMENT should be currentHeaderLevel, but some designs require h3]]
+ */
+
+- (void)writeTitleOfIteratedPage
+{
+    id<SVPlugInContext> context = [self currentContext]; 
+    id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
+	
+	if ([iteratedPage showsTitle])		// Do not show title if it is hidden!
+	{
+        [context startElement:@"h3"];
+        [context startAnchorElementWithPage:iteratedPage];
+		[context writeElement:@"span"
+			  withTitleOfPage:iteratedPage
+				  asPlainText:YES 
+				   attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
+        [context endElement]; // </a>
+        [context endElement]; // </h3>
+	}
+}
+
 @end

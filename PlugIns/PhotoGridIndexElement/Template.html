@@ -1,10 +1,9 @@
 [[if indexedPages]]
 [[foreach indexedPages aPage]]
 <div class="gridItem [[i]] [[eo]][[last]]">
-	[[=writeThumbnailImageOfIteratedPage]]
-    <h3><a [[target aPage]]href="[[path aPage]]"><span class="in">[[=&aPage.title]]</span></a></h3>
-    [[COMMENT should be currentHeaderLevel, but some designs require h3]]
-	[[=writeHiddenLinkToPhoto]]
+    [[=writeThumbnailImageOfIteratedPage]]
+    [[=writeTitleOfIteratedPage]]
+    [[=writeHiddenLinkToPhoto]]
 </div>
 [[endForEach]]
 [[endif]]
