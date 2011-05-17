@@ -144,6 +144,20 @@
 
 #pragma mark Characters
 
+- (DOMNode *)willWriteDOMText:(DOMText *)textNode;
+{
+    // Ignore non-top-level whitespace
+    if ([[self XMLWriter] openElementsCount] > 0 &&
+        [[textNode data] isWhitespace])
+    {
+        DOMNode *result = [textNode nextSibling];
+        [[textNode parentNode] removeChild:textNode];
+        return result;
+    }
+    
+    return [super willWriteDOMText:textNode];
+}
+
 - (DOMNode *)didWriteDOMText:(DOMText *)textNode nextNode:(DOMNode *)nextNode;
 {
     DOMNode *result = [super didWriteDOMText:textNode nextNode:nextNode];

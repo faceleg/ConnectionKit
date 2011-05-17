@@ -648,11 +648,11 @@
 
 - (BOOL)isParagraphCharacterStyle; { return YES; }
 
-- (DOMNode *)nodeByStrippingNonParagraphNodes:(SVFieldEditorHTMLWriterDOMAdapator *)context;
+- (DOMNode *)nodeByStrippingNonParagraphNodes:(SVFieldEditorHTMLWriterDOMAdapator *)adaptor;
 {
-    if (![context validateElement:[self tagName]])
+    if (![adaptor validateElement:[self tagName]])
     {
-        return [context handleInvalidDOMElement:self];
+        return [adaptor handleInvalidDOMElement:self];
     }
     
     return self;
