@@ -177,6 +177,18 @@
     }
 }
 
+- (void)unlink:(id)sender;
+{
+    //  Pass on to focused text
+    if (![[self dataSource] webEditor:self createLink:nil])
+    {
+        if ([[self focusedText] respondsToSelector:_cmd])
+        {
+            [[self focusedText] performSelector:_cmd withObject:sender];
+        }
+    }
+}
+
 #pragma mark Undo
 
 /*  Covers for private WebKit methods
