@@ -1950,11 +1950,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
    newFrameName:(NSString *)frameName
 decisionListener:(id <WebPolicyDecisionListener>)listener
 {
-	// Open the URL in the user's web browser
 	[listener ignore];
-	
-	NSURL *URL = [request URL];
-	[KSWORKSPACE attemptToOpenWebURL:URL];
+    [[self delegate] webEditor:self handleNavigationAction:actionInformation request:request];
 }
 
 /*  We don't allow navigation, but our delegate may then decide to
