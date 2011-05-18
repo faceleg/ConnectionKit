@@ -53,6 +53,16 @@
     return [_target addMedia:media];
 }
 
+- (NSURL *)addImageMedia:(id <SVMedia>)media
+                   width:(NSNumber *)width
+                  height:(NSNumber *)height
+                    type:(NSString *)type
+       preferredFilename:(NSString *)preferredFilename
+           scalingSuffix:(NSString *)suffix;
+{
+    return [_target addImageMedia:media width:width height:height type:type preferredFilename:preferredFilename scalingSuffix:suffix];
+}
+
 - (NSURL *)addResourceAtURL:(NSURL *)fileURL destination:(NSString *)uploadPath options:(NSUInteger)options;
 {
     return [_target addResourceAtURL:fileURL destination:uploadPath options:options];
