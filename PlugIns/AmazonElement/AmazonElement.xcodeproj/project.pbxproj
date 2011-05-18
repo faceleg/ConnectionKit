@@ -108,6 +108,13 @@
 		8D5B49B6048680CD000E48DA /* Amazon.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Amazon.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE722FA30D85CE9A00E9C592 /* amazon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = amazon.icns; sourceTree = "<group>"; };
+		CEAD383D1384324000161C8F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Inspector.strings; sourceTree = "<group>"; };
+		CEAD383E1384324300161C8F /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEAD383F1384324300161C8F /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Inspector.strings; sourceTree = "<group>"; };
+		CEAD38401384324300161C8F /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEAD38411384324400161C8F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEAD38421384324400161C8F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Inspector.strings; sourceTree = "<group>"; };
+		CEAD38431384324400161C8F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CEC1F0221141A69D00D8D0B9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Inspector.xib; sourceTree = "<group>"; };
 		CEDA1DF21302086A00DC6FE7 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Inspector.strings; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
@@ -338,6 +345,8 @@
 				ja,
 				zh_CN,
 				zh_TW,
+				pt_BR,
+				es,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* AmazonElement */;
 			projectDirPath = "";
@@ -430,6 +439,8 @@
 				3C4A16FA0D5E7447009476BF /* ja */,
 				3C4A16FB0D5E744F009476BF /* zh_CN */,
 				3C4A16FC0D5E7456009476BF /* zh_TW */,
+				CEAD383E1384324300161C8F /* pt_BR */,
+				CEAD38411384324400161C8F /* es */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -445,6 +456,8 @@
 				3C4A17040D5E7497009476BF /* ja */,
 				3C4A17050D5E74A1009476BF /* zh_CN */,
 				3C4A17060D5E74A8009476BF /* zh_TW */,
+				CEAD38401384324300161C8F /* pt_BR */,
+				CEAD38431384324400161C8F /* es */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -461,6 +474,9 @@
 			isa = PBXVariantGroup;
 			children = (
 				CEDA1DF21302086A00DC6FE7 /* fr */,
+				CEAD383D1384324000161C8F /* de */,
+				CEAD383F1384324300161C8F /* pt_BR */,
+				CEAD38421384324400161C8F /* es */,
 			);
 			name = Inspector.strings;
 			sourceTree = "<group>";

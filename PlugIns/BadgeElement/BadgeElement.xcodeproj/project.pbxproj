@@ -99,6 +99,23 @@
 		3CA9FF0A0D63C0A800815310 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
 		8D5B49B6048680CD000E48DA /* Badge.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Badge.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CEAD380D1384319F00161C8F /* es */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = es; path = es.lproj/sandvox_bucket.png; sourceTree = "<group>"; };
+		CEAD380E1384319F00161C8F /* es */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = es; path = es.lproj/sandvox_bucket_white.png; sourceTree = "<group>"; };
+		CEAD380F1384319F00161C8F /* es */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = es; path = es.lproj/sandvox_castle_top.png; sourceTree = "<group>"; };
+		CEAD38101384319F00161C8F /* es */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = es; path = es.lproj/sandvox_castle_top_white.png; sourceTree = "<group>"; };
+		CEAD38111384319F00161C8F /* es */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = es; path = es.lproj/sandvox_icon_white.png; sourceTree = "<group>"; };
+		CEAD3812138431A600161C8F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEAD3813138431A600161C8F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Inspector.strings; sourceTree = "<group>"; };
+		CEAD3814138431A600161C8F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEAD38211384321300161C8F /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEAD38221384321300161C8F /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Inspector.strings; sourceTree = "<group>"; };
+		CEAD38231384321300161C8F /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEAD38241384321300161C8F /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pt_BR; path = pt_BR.lproj/sandvox_bucket.png; sourceTree = "<group>"; };
+		CEAD38251384321300161C8F /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pt_BR; path = pt_BR.lproj/sandvox_bucket_white.png; sourceTree = "<group>"; };
+		CEAD38261384321300161C8F /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pt_BR; path = pt_BR.lproj/sandvox_castle_top.png; sourceTree = "<group>"; };
+		CEAD38271384321300161C8F /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pt_BR; path = pt_BR.lproj/sandvox_castle_top_white.png; sourceTree = "<group>"; };
+		CEAD38281384321300161C8F /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pt_BR; path = pt_BR.lproj/sandvox_icon_white.png; sourceTree = "<group>"; };
+		CEAD382F1384322600161C8F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Inspector.strings; sourceTree = "<group>"; };
 		CEDA1DEE1302085B00DC6FE7 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Inspector.strings; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
@@ -260,6 +277,8 @@
 				ja,
 				zh_CN,
 				zh_TW,
+				es,
+				pt_BR,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* BadgeElement */;
 			projectDirPath = "";
@@ -335,6 +354,8 @@
 				3CA9FEA20D63BE7100815310 /* ja */,
 				3CA9FEA30D63BE7800815310 /* zh_CN */,
 				3CA9FEA40D63BE7E00815310 /* zh_TW */,
+				CEAD3812138431A600161C8F /* es */,
+				CEAD38211384321300161C8F /* pt_BR */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -358,6 +379,8 @@
 				3CA9FEAE0D63BEBE00815310 /* ja */,
 				3CA9FEAF0D63BEC500815310 /* zh_CN */,
 				3CA9FEB00D63BECA00815310 /* zh_TW */,
+				CEAD3814138431A600161C8F /* es */,
+				CEAD38231384321300161C8F /* pt_BR */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -373,6 +396,8 @@
 				3CA9FEDE0D63BF5D00815310 /* ja */,
 				3CA9FEE30D63BF6900815310 /* zh_CN */,
 				3CA9FEE80D63BF7300815310 /* zh_TW */,
+				CEAD380D1384319F00161C8F /* es */,
+				CEAD38241384321300161C8F /* pt_BR */,
 			);
 			name = sandvox_bucket.png;
 			sourceTree = "<group>";
@@ -388,6 +413,8 @@
 				3CA9FEDF0D63BF5D00815310 /* ja */,
 				3CA9FEE40D63BF6900815310 /* zh_CN */,
 				3CA9FEE90D63BF7300815310 /* zh_TW */,
+				CEAD380E1384319F00161C8F /* es */,
+				CEAD38251384321300161C8F /* pt_BR */,
 			);
 			name = sandvox_bucket_white.png;
 			sourceTree = "<group>";
@@ -403,6 +430,8 @@
 				3CA9FEE00D63BF5D00815310 /* ja */,
 				3CA9FEE50D63BF6900815310 /* zh_CN */,
 				3CA9FEEA0D63BF7300815310 /* zh_TW */,
+				CEAD380F1384319F00161C8F /* es */,
+				CEAD38261384321300161C8F /* pt_BR */,
 			);
 			name = sandvox_castle_top.png;
 			sourceTree = "<group>";
@@ -418,6 +447,8 @@
 				3CA9FEE10D63BF5D00815310 /* ja */,
 				3CA9FEE60D63BF6900815310 /* zh_CN */,
 				3CA9FEEB0D63BF7300815310 /* zh_TW */,
+				CEAD38101384319F00161C8F /* es */,
+				CEAD38271384321300161C8F /* pt_BR */,
 			);
 			name = sandvox_castle_top_white.png;
 			sourceTree = "<group>";
@@ -433,6 +464,8 @@
 				3CA9FEE20D63BF5D00815310 /* ja */,
 				3CA9FEE70D63BF6900815310 /* zh_CN */,
 				3CA9FEEC0D63BF7300815310 /* zh_TW */,
+				CEAD38111384319F00161C8F /* es */,
+				CEAD38281384321300161C8F /* pt_BR */,
 			);
 			name = sandvox_icon_white.png;
 			sourceTree = "<group>";
@@ -441,6 +474,9 @@
 			isa = PBXVariantGroup;
 			children = (
 				CEDA1DEE1302085B00DC6FE7 /* fr */,
+				CEAD3813138431A600161C8F /* es */,
+				CEAD38221384321300161C8F /* pt_BR */,
+				CEAD382F1384322600161C8F /* de */,
 			);
 			name = Inspector.strings;
 			sourceTree = "<group>";

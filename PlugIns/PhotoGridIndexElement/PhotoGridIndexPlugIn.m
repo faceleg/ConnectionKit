@@ -37,6 +37,9 @@
 #import "PhotoGridIndexPlugIn.h"
 
 
+// This string needs to be moved into placeholder.acorn and rendered there as placeholder.png
+// SVLocalizedString(@"Drag images here", "(to be shown as instructions for how to drag and drop images into the image area)")
+
 @implementation PhotoGridIndexPlugIn
 
 

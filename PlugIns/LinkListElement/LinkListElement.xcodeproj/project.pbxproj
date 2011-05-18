@@ -54,6 +54,13 @@
 		8D5B49B6048680CD000E48DA /* LinkList.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LinkList.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE28031312432D1800B00F3D /* toolbar_linklist.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_linklist.tiff; sourceTree = "<group>"; };
+		CEAD37DF1384315100161C8F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Inspector.strings; sourceTree = "<group>"; };
+		CEAD37E01384315300161C8F /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEAD37E11384315300161C8F /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Inspector.strings; sourceTree = "<group>"; };
+		CEAD37E21384315300161C8F /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEAD37E31384315400161C8F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEAD37E41384315400161C8F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Inspector.strings; sourceTree = "<group>"; };
+		CEAD37E51384315400161C8F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CEDA1DCF130207EF00DC6FE7 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Inspector.strings; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
@@ -202,6 +209,8 @@
 				ja,
 				zh_CN,
 				zh_TW,
+				pt_BR,
+				es,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* LinkListElement */;
 			projectDirPath = "";
@@ -272,6 +281,8 @@
 				3CA900B10D63CB0400815310 /* ja */,
 				3CA900B40D63CB1100815310 /* zh_CN */,
 				3CA900B70D63CB1900815310 /* zh_TW */,
+				CEAD37E01384315300161C8F /* pt_BR */,
+				CEAD37E31384315400161C8F /* es */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -295,6 +306,8 @@
 				3CA900B30D63CB0400815310 /* ja */,
 				3CA900B60D63CB1100815310 /* zh_CN */,
 				3CA900B90D63CB1900815310 /* zh_TW */,
+				CEAD37E21384315300161C8F /* pt_BR */,
+				CEAD37E51384315400161C8F /* es */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -303,6 +316,9 @@
 			isa = PBXVariantGroup;
 			children = (
 				CEDA1DCF130207EF00DC6FE7 /* fr */,
+				CEAD37DF1384315100161C8F /* de */,
+				CEAD37E11384315300161C8F /* pt_BR */,
+				CEAD37E41384315400161C8F /* es */,
 			);
 			name = Inspector.strings;
 			sourceTree = "<group>";

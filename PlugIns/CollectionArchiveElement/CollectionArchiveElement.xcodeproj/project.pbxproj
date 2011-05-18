@@ -48,6 +48,10 @@
 		8D5B49B6048680CD000E48DA /* CollectionArchive.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CollectionArchive.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE7D56D812761A900071E88D /* toolbar_archive.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_archive.tiff; sourceTree = "<group>"; };
+		CEAD37FD1384317800161C8F /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEAD37FE1384317800161C8F /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEAD37FF1384317900161C8F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEAD38001384317900161C8F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -191,6 +195,8 @@
 				ja,
 				zh_CN,
 				zh_TW,
+				pt_BR,
+				es,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* RSSBadgeElement */;
 			projectDirPath = "";
@@ -258,6 +264,8 @@
 				3C42DDF70D64CB41004F35FD /* ja */,
 				3C42DDFA0D64CB4C004F35FD /* zh_CN */,
 				3C42DDFD0D64CB5B004F35FD /* zh_TW */,
+				CEAD37FD1384317800161C8F /* pt_BR */,
+				CEAD37FF1384317900161C8F /* es */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -273,6 +281,8 @@
 				3C42DDF80D64CB41004F35FD /* ja */,
 				3C42DDFB0D64CB4C004F35FD /* zh_CN */,
 				3C42DDFE0D64CB5B004F35FD /* zh_TW */,
+				CEAD37FE1384317800161C8F /* pt_BR */,
+				CEAD38001384317900161C8F /* es */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

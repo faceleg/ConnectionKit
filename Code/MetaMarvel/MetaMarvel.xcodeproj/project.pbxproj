@@ -33,6 +33,8 @@
 		CE55AF380AD198710091C8AE /* ja */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/schema.strings; sourceTree = "<group>"; };
 		CE55AF390AD1987C0091C8AE /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/schema.strings; sourceTree = "<group>"; };
 		CE60785809EEE54900621F88 /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/schema.strings; sourceTree = "<group>"; };
+		CEAD384F1384325C00161C8F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/schema.strings; sourceTree = "<group>"; };
+		CEAD38501384325F00161C8F /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/schema.strings; sourceTree = "<group>"; };
 		CEDE17590A5C674A0055352C /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/schema.strings; sourceTree = "<group>"; };
 		CEDE175A0A5C67540055352C /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/schema.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -160,6 +162,8 @@
 				da,
 				zh_CN,
 				it,
+				es,
+				pt_BR,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* MetaMarvel */;
 			projectDirPath = "";
@@ -216,6 +220,8 @@
 				CE55AF370AD198680091C8AE /* it */,
 				CE55AF380AD198710091C8AE /* ja */,
 				CE55AF390AD1987C0091C8AE /* de */,
+				CEAD384F1384325C00161C8F /* es */,
+				CEAD38501384325F00161C8F /* pt_BR */,
 			);
 			name = schema.strings;
 			sourceTree = "<group>";

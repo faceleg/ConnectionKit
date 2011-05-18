@@ -57,6 +57,17 @@
 		8D5B49B6048680CD000E48DA /* PhotoGridIndex.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhotoGridIndex.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE2802A012432BBD00B00F3D /* toolbar_photogrid.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_photogrid.tiff; sourceTree = "<group>"; };
+		CEAD37A91384307F00161C8F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Inspector.strings; sourceTree = "<group>"; };
+		CEAD37AA1384307F00161C8F /* de */ = {isa = PBXFileReference; lastKnownFileType = file; name = de; path = de.lproj/placeholder.acorn; sourceTree = "<group>"; };
+		CEAD37AB1384307F00161C8F /* de */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = de; path = de.lproj/placeholder.png; sourceTree = "<group>"; };
+		CEAD37AC1384308200161C8F /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Inspector.strings; sourceTree = "<group>"; };
+		CEAD37AD1384308200161C8F /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = file; name = pt_BR; path = pt_BR.lproj/placeholder.acorn; sourceTree = "<group>"; };
+		CEAD37AE1384308200161C8F /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pt_BR; path = pt_BR.lproj/placeholder.png; sourceTree = "<group>"; };
+		CEAD37AF1384308500161C8F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEAD37B01384308500161C8F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Inspector.strings; sourceTree = "<group>"; };
+		CEAD37B11384308500161C8F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEAD37B21384308500161C8F /* es */ = {isa = PBXFileReference; lastKnownFileType = file; name = es; path = es.lproj/placeholder.acorn; sourceTree = "<group>"; };
+		CEAD37B31384308500161C8F /* es */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = es; path = es.lproj/placeholder.png; sourceTree = "<group>"; };
 		CEB4FDA810309DF60054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CEB4FDA910309DF60054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CECF2AE013426F120005E476 /* PhotoGridIndexInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoGridIndexInspector.h; sourceTree = "<group>"; };
@@ -286,6 +297,7 @@
 				3C09514E0D5D0E6900DE6F62 /* zh_CN */,
 				3C09514F0D5D0E6F00DE6F62 /* zh_TW */,
 				CEB4FDA810309DF60054C9BE /* pt_BR */,
+				CEAD37AF1384308500161C8F /* es */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -295,6 +307,9 @@
 			children = (
 				3C0429AA1306FF3300D9F2A7 /* en */,
 				3C0429AB1306FF4900D9F2A7 /* fr */,
+				CEAD37AA1384307F00161C8F /* de */,
+				CEAD37AD1384308200161C8F /* pt_BR */,
+				CEAD37B21384308500161C8F /* es */,
 			);
 			name = placeholder.acorn;
 			sourceTree = "<group>";
@@ -319,6 +334,7 @@
 				3C09515A0D5D0EBF00DE6F62 /* zh_CN */,
 				3C09515B0D5D0EC500DE6F62 /* zh_TW */,
 				CEB4FDA910309DF60054C9BE /* pt_BR */,
+				CEAD37B11384308500161C8F /* es */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -328,6 +344,9 @@
 			children = (
 				3CDF98E01305D096000026AE /* en */,
 				3C0429AC1306FF5D00D9F2A7 /* fr */,
+				CEAD37AB1384307F00161C8F /* de */,
+				CEAD37AE1384308200161C8F /* pt_BR */,
+				CEAD37B31384308500161C8F /* es */,
 			);
 			name = placeholder.png;
 			sourceTree = "<group>";
@@ -336,6 +355,9 @@
 			isa = PBXVariantGroup;
 			children = (
 				CEE30EAF1361FCCA00565EA4 /* fr */,
+				CEAD37A91384307F00161C8F /* de */,
+				CEAD37AC1384308200161C8F /* pt_BR */,
+				CEAD37B01384308500161C8F /* es */,
 			);
 			name = Inspector.strings;
 			sourceTree = "<group>";
