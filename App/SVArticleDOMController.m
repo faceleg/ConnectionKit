@@ -637,7 +637,7 @@
 
 - (void)editRawHTMLInSelectedBlock:(id)sender;
 {
-    if (![self shouldMigrateRawHTMLOnNextEdit]) NSBeep();
+    if (![self shouldMigrateRawHTMLOnNextEdit]) return NSBeep();
     
     // Offer to Convert
     NSAlert *alert = [[NSAlert alloc] init];
