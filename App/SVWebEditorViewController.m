@@ -986,7 +986,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 	
 	if (action == @selector(editRawHTMLInSelectedBlock:) || action == @selector(cleanHTML:))
     {
-        id target = [[self firstResponderItem] ks_targetForAction:action];
+        id target = [[[self webEditor] firstResponderItem] ks_targetForAction:action];
         if (!target) target = [[[self webEditor] selectedItem] ks_targetForAction:action];  // HACK
         
         if (target)
