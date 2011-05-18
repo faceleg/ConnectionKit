@@ -876,7 +876,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         }
         else
         {
-            [aGraphic pageDidChange:nil];   // forces it to adopt placeholder if needed. #121946
+            [aGraphic pageDidChange:[[self site] rootPage]];   // forces it to adopt placeholder if needed. #121946
         }
 	}
     
