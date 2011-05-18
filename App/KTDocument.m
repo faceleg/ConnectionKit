@@ -866,10 +866,18 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	NSArray *graphics = [[self managedObjectContext] fetchAllObjectsForEntityForName:@"Graphic" error:NULL];
 	for (SVGraphic *aGraphic in graphics)
 	{
-		for (id <SVPage> aPage in [aGraphic pages])
-		{
-			[aGraphic pageDidChange:aPage];
-		}
+        NSSet *pages = [aGraphic pages];
+        if ([pages count])
+        {
+            for (id <SVPage> aPage in pages)
+            {
+                [aGraphic pageDidChange:aPage];
+            }
+        }
+        else
+        {
+            [aGraphic pageDidChange:nil];   // forces it to adopt placeholder if needed. #121946
+        }
 	}
     
     KTPage *root = [[self site] rootPage];
