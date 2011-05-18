@@ -187,8 +187,13 @@
     NSString *result = nil;
     if ([self linkType] == SVLinkToFullSizeImage)
     {
-        NSURL *URL = [context addMedia:[image media]];
-        result = [context relativeStringFromURL:URL];
+        OBPRECONDITION(image);
+        SVMedia *media = [image media];
+        if (media)
+        {
+            NSURL *URL = [context addMedia:media];
+            result = [context relativeStringFromURL:URL];
+        }
     }
     else if ([self linkType] == SVLinkToPage)
     {
