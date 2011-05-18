@@ -324,156 +324,158 @@
 				NSXMLNode *currentNode = [theNodes lastObject];		// working node we traverse
 				NSXMLNode *lastTextNode = nil;
 				NSXMLElement *theBody = [theNodes lastObject];	// the body that we we will be truncating
-				int accumulator = 0;	// Character count. We stop as soon as end of our truncation unit overflows this (except by-character)
-				while (nil != currentNode)
+				if (theBody)
 				{
-					if (NSXMLTextKind == [currentNode kind])
+					int accumulator = 0;	// Character count. We stop as soon as end of our truncation unit overflows this (except by-character)
+					while (nil != currentNode)
 					{
-						NSString *thisString = [currentNode stringValue];	// renders &amp; etc.
-						if (kTruncateCharacters == truncationType)
+						if (NSXMLTextKind == [currentNode kind])
 						{
-							lastTextNode = currentNode;		// when we are done, we will add ellipses
-							unsigned int newAccumulator = accumulator + [thisString length];
-							if (newAccumulator >= maxItemLength)	// will we need to prune?
+							NSString *thisString = [currentNode stringValue];	// renders &amp; etc.
+							if (kTruncateCharacters == truncationType)
 							{
-								int truncateIndex = maxItemLength - accumulator;
-								NSString *truncd = [thisString smartSubstringWithMaxLength:truncateIndex didSplitWord:nil];
-								
-								[currentNode setStringValue:truncd];	// re-escapes &amp; etc.
-								
-								break;		// we will now remove everything after "node"
-							}
-							accumulator = newAccumulator;
-						}
-						else if (kTruncateWords == truncationType || kTruncateSentences == truncationType)
-						{
-							// Note: Word truncation is not perfect. :-\  Ideally we would truncate after
-							// the last word, not truncate to include the last word.  Otherwise we lose
-							// punctuation, say, if the truncation happens to happen right after the end of a sentence.
-							// However, it's certainly good enough!
-							
-							NSUInteger len = [thisString length];
-							if (len + accumulator < maxItemLength)
-							{
-								accumulator += len;		// skip past all this text; it's below our truncation threshold
-							}
-							else	// need to tokenize this string
-							{
-								CFStringTokenizerRef tokenRef
-								= CFStringTokenizerCreate (
-														   kCFAllocatorDefault,
-														   (CFStringRef)thisString,
-														   CFRangeMake(0,len),
-														   (kTruncateWords == truncationType
-															? kCFStringTokenizerUnitWord
-															: kCFStringTokenizerUnitSentence),
-														   NULL	// Apparently locale is ignored anyhow when doing words?
-														   );
-								
-								CFStringTokenizerTokenType tokenType = kCFStringTokenizerTokenNone;
-								CFIndex lastWord = 0;
-								BOOL stopWordScan = NO;	// don't use break, since we want breaking out of outer loop
-								
-								while(!stopWordScan && 
-									  (kCFStringTokenizerTokenNone != (tokenType = CFStringTokenizerAdvanceToNextToken(tokenRef))) )
+								lastTextNode = currentNode;		// when we are done, we will add ellipses
+								unsigned int newAccumulator = accumulator + [thisString length];
+								if (newAccumulator >= maxItemLength)	// will we need to prune?
 								{
-									CFRange tokenRange = CFStringTokenizerGetCurrentTokenRange(tokenRef);
-									OFF((@"'%@' found at %d+%d", [thisString substringWithRange:NSMakeRange(tokenRange.location, tokenRange.length)], tokenRange.location, tokenRange.length));
+									int truncateIndex = maxItemLength - accumulator;
+									NSString *truncd = [thisString smartSubstringWithMaxLength:truncateIndex didSplitWord:nil];
 									
-									if (tokenRange.location + accumulator >= maxItemLength)
-									{
-										stopWordScan = YES;
-										OFF((@"early exit from word count, accumulator = %d", accumulator));
-									}
-									lastWord = tokenRange.location;
+									[currentNode setStringValue:truncd];	// re-escapes &amp; etc.
+									
+									break;		// we will now remove everything after "node"
 								}
-								CFRelease(tokenRef);
-								OFF((@"in '%@' max=%d len=%d", thisString, lastWord, len));
-								if (lastWord + accumulator >= maxItemLength)
+								accumulator = newAccumulator;
+							}
+							else if (kTruncateWords == truncationType || kTruncateSentences == truncationType)
+							{
+								// Note: Word truncation is not perfect. :-\  Ideally we would truncate after
+								// the last word, not truncate to include the last word.  Otherwise we lose
+								// punctuation, say, if the truncation happens to happen right after the end of a sentence.
+								// However, it's certainly good enough!
+								
+								NSUInteger len = [thisString length];
+								if (len + accumulator < maxItemLength)
 								{
-									if (lastWord < len)
+									accumulator += len;		// skip past all this text; it's below our truncation threshold
+								}
+								else	// need to tokenize this string
+								{
+									CFStringTokenizerRef tokenRef
+									= CFStringTokenizerCreate (
+															   kCFAllocatorDefault,
+															   (CFStringRef)thisString,
+															   CFRangeMake(0,len),
+															   (kTruncateWords == truncationType
+																? kCFStringTokenizerUnitWord
+																: kCFStringTokenizerUnitSentence),
+															   NULL	// Apparently locale is ignored anyhow when doing words?
+															   );
+									
+									CFStringTokenizerTokenType tokenType = kCFStringTokenizerTokenNone;
+									CFIndex lastWord = 0;
+									BOOL stopWordScan = NO;	// don't use break, since we want breaking out of outer loop
+									
+									while(!stopWordScan && 
+										  (kCFStringTokenizerTokenNone != (tokenType = CFStringTokenizerAdvanceToNextToken(tokenRef))) )
 									{
-										NSString *partialString = [thisString substringToIndex:lastWord];
+										CFRange tokenRange = CFStringTokenizerGetCurrentTokenRange(tokenRef);
+										OFF((@"'%@' found at %d+%d", [thisString substringWithRange:NSMakeRange(tokenRange.location, tokenRange.length)], tokenRange.location, tokenRange.length));
 										
-										OFF((@"accumulator = %d; Truncating to '%@'", accumulator, partialString));
-										[currentNode setStringValue:partialString];	// re-escapes &amp; etc.
-										lastTextNode = currentNode;
-										removedAnything = YES;
-										OFF((@"... and breaking from loop; we're done, since this is really truncating"));
-										break;		// exit outer loop, so we stop scanning
+										if (tokenRange.location + accumulator >= maxItemLength)
+										{
+											stopWordScan = YES;
+											OFF((@"early exit from word count, accumulator = %d", accumulator));
+										}
+										lastWord = tokenRange.location;
+									}
+									CFRelease(tokenRef);
+									OFF((@"in '%@' max=%d len=%d", thisString, lastWord, len));
+									if (lastWord + accumulator >= maxItemLength)
+									{
+										if (lastWord < len)
+										{
+											NSString *partialString = [thisString substringToIndex:lastWord];
+											
+											OFF((@"accumulator = %d; Truncating to '%@'", accumulator, partialString));
+											[currentNode setStringValue:partialString];	// re-escapes &amp; etc.
+											lastTextNode = currentNode;
+											removedAnything = YES;
+											OFF((@"... and breaking from loop; we're done, since this is really truncating"));
+											break;		// exit outer loop, so we stop scanning
+										}
+										else
+										{
+											OFF((@"We are out of words, but not breaking here in case we hit inline to follow"));
+										}
 									}
 									else
 									{
-										OFF((@"We are out of words, but not breaking here in case we hit inline to follow"));
+										accumulator += len;
 									}
 								}
-								else
-								{
-									accumulator += len;
-								}
 							}
 						}
-					}
-					else if ([currentNode kind] == NSXMLElementKind)
-					{
-						NSXMLElement *theElement = (NSXMLElement *)currentNode;
-						if (kTruncateParagraphs == truncationType)
+						else if ([currentNode kind] == NSXMLElementKind)
 						{
-							if ([@"p" isEqualToString:[theElement name]])
+							NSXMLElement *theElement = (NSXMLElement *)currentNode;
+							if (kTruncateParagraphs == truncationType)
 							{
-								NSUInteger textLengthInThisParagraph = [self lengthOfEnclosedTextFromElement:theElement];
-								OFF((@"P length: %d", textLengthInThisParagraph));
-								accumulator += textLengthInThisParagraph;
-								if (accumulator >= maxItemLength)
+								if ([@"p" isEqualToString:[theElement name]])
 								{
-									OFF((@"%d >= %d", accumulator, maxItemLength));
-									break;	// we will now remove everything after "node"
-								}
-								else
-								{
-									OFF((@"%d < %d", accumulator, maxItemLength));
+									NSUInteger textLengthInThisParagraph = [self lengthOfEnclosedTextFromElement:theElement];
+									OFF((@"P length: %d", textLengthInThisParagraph));
+									accumulator += textLengthInThisParagraph;
+									if (accumulator >= maxItemLength)
+									{
+										OFF((@"%d >= %d", accumulator, maxItemLength));
+										break;	// we will now remove everything after "node"
+									}
+									else
+									{
+										OFF((@"%d < %d", accumulator, maxItemLength));
+									}
 								}
 							}
 						}
+						currentNode = [currentNode nextNode];
 					}
-					currentNode = [currentNode nextNode];
-				}
-				OBASSERT(theBody);
-				removedAnything |= [theBody removeAllNodesAfter:(NSXMLElement *)currentNode];
-				if (removedAnything)
-				{
-					OFF((@"Removed some stuff"));
-				}
-				else
-				{
-					OFF((@"Did NOT remove some stuff"));
-				}
-				if (removedAnything)
-				{
-					if (lastTextNode)
+					removedAnything |= [theBody removeAllNodesAfter:(NSXMLElement *)currentNode];
+					if (removedAnything)
 					{
-						// Trucate, plus add on an ellipses.
-						NSString *ellipses = NSLocalizedString(@"\\U2026", @"ellipses appended to command, meaning there will be confirmation alert.  Probably spaces before in French.");
-						NSString *lastNodeString = [lastTextNode stringValue];
-						NSString *newString = [lastNodeString stringByAppendingString:ellipses];
-						[lastTextNode setStringValue:newString];
+						OFF((@"Removed some stuff"));
 					}
 					else
 					{
-						// LOG((@"NEED TO ADD ELLIPSES AFTER %@", currentNode));
+						OFF((@"Did NOT remove some stuff"));
 					}
-				}
-				
-				result = [theBody XMLStringWithOptions:NSXMLDocumentTidyXML];  // NSXMLDocumentTidyHTML ??????
-				// DON'T use NSXMLNodePreserveAll -- it converted " to ' and ' to &apos;  !!!
-				
-				NSRange rangeOfBodyStart = [result rangeOfString:@"<body>" options:0];
-				NSRange rangeOfBodyEnd   = [result rangeOfString:@"</body>" options:NSBackwardsSearch];
-				if (NSNotFound != rangeOfBodyStart.location && NSNotFound != rangeOfBodyEnd.location)
-				{
-					int sPos = NSMaxRange(rangeOfBodyStart);
-					int len  = rangeOfBodyEnd.location - sPos;
-					result = [result substringWithRange:NSMakeRange(sPos,len)];
+					if (removedAnything)
+					{
+						if (lastTextNode)
+						{
+							// Trucate, plus add on an ellipses.
+							NSString *ellipses = NSLocalizedString(@"\\U2026", @"ellipses appended to command, meaning there will be confirmation alert.  Probably spaces before in French.");
+							NSString *lastNodeString = [lastTextNode stringValue];
+							NSString *newString = [lastNodeString stringByAppendingString:ellipses];
+							[lastTextNode setStringValue:newString];
+						}
+						else
+						{
+							// LOG((@"NEED TO ADD ELLIPSES AFTER %@", currentNode));
+						}
+					}
+					
+					result = [theBody XMLStringWithOptions:NSXMLDocumentTidyXML];  // NSXMLDocumentTidyHTML ??????
+					// DON'T use NSXMLNodePreserveAll -- it converted " to ' and ' to &apos;  !!!
+					
+					NSRange rangeOfBodyStart = [result rangeOfString:@"<body>" options:0];
+					NSRange rangeOfBodyEnd   = [result rangeOfString:@"</body>" options:NSBackwardsSearch];
+					if (NSNotFound != rangeOfBodyStart.location && NSNotFound != rangeOfBodyEnd.location)
+					{
+						int sPos = NSMaxRange(rangeOfBodyStart);
+						int len  = rangeOfBodyEnd.location - sPos;
+						result = [result substringWithRange:NSMakeRange(sPos,len)];
+					}
 				}
 			}
 		}
