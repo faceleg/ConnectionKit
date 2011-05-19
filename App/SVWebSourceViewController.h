@@ -28,4 +28,6 @@
 @property(nonatomic, retain) SVWebEditorViewController *webEditorViewController;
 @property(nonatomic, retain) KTPage *currentPage;
 
+- (NSTextView *)sourceView; // TODO: this should become an IBOutlet property, replacing oSourceView
+
 @end

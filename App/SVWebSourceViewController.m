@@ -43,6 +43,12 @@
 
 #pragma mark properties
 
+- (NSTextView *)sourceView;
+{
+    [self view];
+    return oSourceView;
+}
+
 @synthesize viewType = _viewType;
 @synthesize webEditorViewController = _webEditorViewController;
 @synthesize currentPage = _currentPage;
@@ -74,10 +80,10 @@
         }
     }
     
-    NSTextStorage *textStorage = [oSourceView textStorage];
+    NSTextStorage *textStorage = [[self sourceView] textStorage];
     NSRange fullRange = NSMakeRange(0, [textStorage length]);
     [textStorage replaceCharactersInRange:fullRange withString:pageHTML];
-    [oSourceView recolorRange:NSMakeRange(0, [pageHTML length])];
+    [[self sourceView] recolorRange:NSMakeRange(0, [pageHTML length])];
 }
 
 - (void)webEditorViewControllerWillUpdate:(NSNotification *)aNotification
