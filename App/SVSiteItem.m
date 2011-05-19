@@ -24,6 +24,7 @@
 #import "NSSet+Karelia.h"
 #import "NSString+Karelia.h"
 
+#import "KSError.h"
 #import "KSPathUtilities.h"
 #import "KTPublishingEngine.h"
 
@@ -403,11 +404,11 @@
     BOOL result = (*page != nil);
     if (!result && outError)
     {
-        NSDictionary *info = [NSDictionary dictionaryWithObject:@"parentPage is a required property" forKey:NSLocalizedDescriptionKey];
-        
-        *outError = [NSError errorWithDomain:NSCocoaErrorDomain
-                                        code:NSValidationMissingMandatoryPropertyError
-                                    userInfo:info];
+        *outError = [KSError validationErrorWithCode:NSValidationMissingMandatoryPropertyError
+                                              object:self
+                                                 key:@"parentPage"
+                                               value:*page
+                          localizedDescriptionFormat:@"parentPage is a required property"];
     }
     
     return result;

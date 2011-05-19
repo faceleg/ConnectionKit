@@ -168,9 +168,11 @@
     {
         if (!*max)
         {
-            if (outError) *outError = [KSError errorWithDomain:NSCocoaErrorDomain
-                                                          code:NSValidationMissingMandatoryPropertyError
-                                          localizedDescription:@"collectionMaxSyndicatedPagesCount is non-optional for collections"];
+            if (outError) *outError = [KSError validationErrorWithCode:NSValidationMissingMandatoryPropertyError
+                                                                object:self
+                                                                   key:@"collectionMaxSyndicatedPagesCount"
+                                                                 value:*max
+                                            localizedDescriptionFormat:@"collectionMaxSyndicatedPagesCount is non-optional for collections"];
             
             return NO;
         }

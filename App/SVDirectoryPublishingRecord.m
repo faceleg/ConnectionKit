@@ -61,9 +61,11 @@
     NSSet *filenames = [*outRecords valueForKeyPath:@"filename.lowercaseString"];
     BOOL result = ([filenames count] == [*outRecords count]);
     
-    if (!result && error) *error = [KSError errorWithDomain:NSCocoaErrorDomain
-                                                       code:NSValidationRelationshipLacksMinimumCountError
-                                       localizedDescription:@"filenames are not unique"];
+    if (!result && error) *error = [KSError validationErrorWithCode:NSValidationRelationshipLacksMinimumCountError
+                                                             object:self
+                                                                key:@"contentRecords"
+                                                              value:*outRecords
+                                         localizedDescriptionFormat:@"filenames are not unique"];
     
     return result;
 }

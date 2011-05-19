@@ -361,9 +361,11 @@
     // Base class can only handle inline graphic
     if (placement != SVGraphicPlacementInline)
     {
-        if (error) *error = [KSError errorWithDomain:NSCocoaErrorDomain
-                                                code:NSValidationNumberTooLargeError
-                                localizedDescription:@"Rich text areas only support inline graphics"];
+        if (error) *error = [KSError validationErrorWithCode:NSValidationNumberTooLargeError
+                                                      object:self
+                                                         key:nil
+                                                       value:nil
+                                  localizedDescriptionFormat:@"Rich text areas only support inline graphics"];
         
         return NO;
     }

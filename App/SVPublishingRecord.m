@@ -53,9 +53,11 @@
     {
         if (![[self filename] isEqualToString:*outFilename])
         {
-            if (error) *error = [KSError errorWithDomain:NSCocoaErrorDomain
-                                                    code:NSManagedObjectValidationError
-                                    localizedDescription:@"Publishing record paths are immutable"];
+            if (error) *error = [KSError validationErrorWithCode:NSManagedObjectValidationError
+                                                          object:self
+                                                             key:@"filename"
+                                                           value:*outFilename
+                                      localizedDescriptionFormat:@"Publishing record paths are immutable"];
             return NO;
         }
     }
@@ -76,7 +78,11 @@
 {
     if (!*outRecord)
     {
-        if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSValidationMissingMandatoryPropertyError userInfo:nil];
+        if (error) *error = [KSError validationErrorWithCode:NSValidationMissingMandatoryPropertyError
+                                                      object:self
+                                                         key:@"parentDirectoryRecord"
+                                                       value:*outRecord
+                                  localizedDescriptionFormat:nil];
         return NO;
     }
     

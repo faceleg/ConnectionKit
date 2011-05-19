@@ -92,9 +92,11 @@
         if ([[self body] attachmentsMustBeWrittenInline] && ![[self graphic] shouldWriteHTMLInline])
         {
             result = NO;
-            if (error) *error = [KSError errorWithDomain:NSCocoaErrorDomain
-                                                    code:NSValidationNumberTooLargeError
-                                    localizedDescription:@"Graphics in this text area cannot cause wrap"];
+            if (error) *error = [KSError validationErrorWithCode:NSValidationNumberTooLargeError
+                                                          object:self
+                                                             key:@"causesWrap"
+                                                           value:*causesWrap
+                                      localizedDescriptionFormat:@"Graphics in this text area cannot cause wrap"];
         }
     }
     else
@@ -103,9 +105,11 @@
         if (![[self graphic] canWriteHTMLInline])
         {
             result = NO;
-            if (error) *error = [KSError errorWithDomain:NSCocoaErrorDomain
-                                                    code:NSValidationNumberTooSmallError
-                                    localizedDescription:@"Graphic must cause wrap"];
+            if (error) *error = [KSError validationErrorWithCode:NSValidationNumberTooSmallError
+                                                          object:self
+                                                             key:@"causesWrap"
+                                                           value:*causesWrap
+                                      localizedDescriptionFormat:@"Graphic must cause wrap"];
         }
     }
     
@@ -120,15 +124,19 @@
     {
         case SVGraphicWrapFloat_1_0:
             if ([[self graphic] canWriteHTMLInline]) break;   // only images are allowed this
-            if (error) *error = [KSError errorWithDomain:NSCocoaErrorDomain
-                                                    code:NSValidationNumberTooSmallError
-                                    localizedDescription:@"SVGraphicWrapFloat_1_0 is not supported"];
+            if (error) *error = [KSError validationErrorWithCode:NSValidationNumberTooSmallError
+                                                          object:self
+                                                             key:@"wrap"
+                                                           value:*wrap
+                                      localizedDescriptionFormat:@"SVGraphicWrapFloat_1_0 is not supported"];
             return NO;
     
         case SVGraphicWrapCenter:
-            if (error) *error = [KSError errorWithDomain:NSCocoaErrorDomain
-                                                    code:NSManagedObjectValidationError
-                                    localizedDescription:@"Wrap Center not supported"];
+            if (error) *error = [KSError validationErrorWithCode:NSManagedObjectValidationError
+                                                          object:self
+                                                             key:@"wrap"
+                                                           value:*wrap
+                                      localizedDescriptionFormat:@"Wrap Center not supported"];
             return NO;
     }
     

@@ -245,11 +245,11 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     BOOL result = [[*filename pathComponents] count] == 1;
     if (!result && outError)
     {
-        NSDictionary *info = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"perferredFilename \"%@\" is a path; not a filename", *filename]
-                                                         forKey:NSLocalizedDescriptionKey];
-        *outError = [NSError errorWithDomain:NSCocoaErrorDomain
-                                        code:NSValidationStringPatternMatchingError
-                                    userInfo:info];
+        *outError = [KSError validationErrorWithCode:NSValidationStringPatternMatchingError
+                                              object:self
+                                                 key:@"preferredFilename"
+                                               value:*filename
+                          localizedDescriptionFormat:@"preferredFilename \"%@\" is a path; not a filename", *filename];
     }
     
     return result;
@@ -357,9 +357,11 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     BOOL result = ([self filename] || [self alias] || [self extensiblePropertyForKey:@"media"]);
     if (!result && error)
     {
-        *error = [KSError errorWithDomain:NSCocoaErrorDomain
-                                     code:NSValidationMissingMandatoryPropertyError
-                     localizedDescription:@"Media has no source"];
+        *error = [KSError validationErrorWithCode:NSValidationMissingMandatoryPropertyError
+                                           object:self
+                                              key:nil
+                                            value:nil
+                       localizedDescriptionFormat:@"Media has no source"];
     }
     
     return result;

@@ -277,9 +277,11 @@
     // Must have media OR external URL as soure. #92086
     if (![self media] && ![self externalSourceURL])
     {
-        if (error) *error = [KSError errorWithDomain:NSCocoaErrorDomain
-                                               code:NSValidationMissingMandatoryPropertyError
-                               localizedDescription:@"Must have either media or external URL as source"];
+        if (error) *error = [KSError validationErrorWithCode:NSValidationMissingMandatoryPropertyError
+                                                      object:self
+                                                         key:@"source"
+                                                       value:nil
+                                  localizedDescriptionFormat:@"Must have either media or external URL as source"];
         
         return NO;
     }
@@ -295,7 +297,11 @@
     BOOL result = [[self plugIn] validatePosterFrame:*media];
     if (!result && error)
     {
-        *error = [KSError errorWithDomain:NSCocoaErrorDomain code:NSValidationMissingMandatoryPropertyError localizedDescription:@"Plug-in doesn't want a poster image"];
+        *error = [KSError validationErrorWithCode:NSValidationMissingMandatoryPropertyError
+                                           object:self
+                                              key:@"posterFrame"
+                                            value:*media
+                       localizedDescriptionFormat:@"Plug-in doesn't want a poster image"];
     }
     
     return result;
@@ -329,7 +335,11 @@
     BOOL result = [[self plugIn] validateTypeToPublish:*type];
     if (!result && error)
     {
-        *error = [KSError errorWithDomain:NSCocoaErrorDomain code:NSValidationMissingMandatoryPropertyError localizedDescription:@"typeToPublish is non-optional for images"];
+        *error = [KSError validationErrorWithCode:NSValidationMissingMandatoryPropertyError
+                                           object:self
+                                              key:@"typeToPublish"
+                                            value:*type
+                       localizedDescriptionFormat:@"typeToPublish is non-optional for images"];
     }
     
     return result;

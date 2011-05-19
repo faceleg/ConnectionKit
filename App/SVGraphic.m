@@ -231,9 +231,11 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     BOOL result = ((*caption != nil) == [self canHaveCaption]);
     if (!result && error)
     {
-        *error = [KSError errorWithDomain:NSCocoaErrorDomain
-                                     code:NSValidationMissingMandatoryPropertyError
-                     localizedDescription:@"caption is non-optional"];
+        *error = [KSError validationErrorWithCode:NSValidationMissingMandatoryPropertyError
+                                           object:self
+                                              key:@"caption"
+                                            value:*caption
+                       localizedDescriptionFormat:@"caption is non-optional"];
     }
     
     return result;
@@ -254,9 +256,11 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     BOOL result = ((*introduction != nil) == [self canHaveIntroduction]);
     if (!result && error)
     {
-        *error = [KSError errorWithDomain:NSCocoaErrorDomain
-                                     code:NSValidationMissingMandatoryPropertyError
-                     localizedDescription:@"introduction is non-optional"];
+        *error = [KSError validationErrorWithCode:NSValidationMissingMandatoryPropertyError
+                                           object:self
+                                              key:@"introduction"
+                                            value:*introduction
+                       localizedDescriptionFormat:@"introduction is non-optional"];
     }
     
     return result;
@@ -277,10 +281,14 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     BOOL result = ((*width == nil) || [*width unsignedIntegerValue] >= [self minWidth]);
     if (!result && error)
     {
-        *error = [KSError errorWithDomain:NSCocoaErrorDomain code:NSValidationNumberTooSmallError localizedDescriptionFormat:
-                   @"Graphic '%@' must be %u pixels wide or more",
-                   [self title],
-                   [self minWidth]];
+        *error = [KSError validationErrorWithCode:NSValidationNumberTooSmallError
+                                           object:self
+                                              key:@"width"
+                                            value:*width
+                       localizedDescriptionFormat:
+                  @"Graphic '%@' must be %u pixels wide or more",
+                  [self title],
+                  [self minWidth]];
     }
     
     return result;
