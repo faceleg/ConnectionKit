@@ -652,7 +652,6 @@
                       modalDelegate:self
                      didEndSelector:@selector(migrateHTMLAlertDidEnd:returnCode:contextInfo:)
                         contextInfo:NULL];
-    [alert release];
 }
 
 - (void)migrateHTMLAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
@@ -661,6 +660,8 @@
     {
         [self cleanHTML:nil];
     }
+    
+    [alert release];
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem;
