@@ -90,7 +90,12 @@
 {	
 	if ([[self view] window])   // only do something if we are attached to a window
 	{
-		[self updateWithPage:self.webEditorViewController.HTMLContext.page];
+        KTPage *page = self.webEditorViewController.HTMLContext.page;
+        
+        // HACK for #123440
+        if (!page) page = (id)[(id)[_webEditorViewController parentViewController] selectedPage];
+        
+		[self updateWithPage:page];
 	}
 }
 
