@@ -7235,7 +7235,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### PULL KSError FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../KSError\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\ncd ${REPOSITORY_PATH}\n${GIT_PATH} checkout ${KSERROR_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSError from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout v1.1\n\techo \"... finished fetching KSError\"\nfi\n\npopd\n\nexit 0\n";
+			shellScript = "#!/bin/bash\n\n###\n### PULL KSError FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../KSError\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\ncd ${REPOSITORY_PATH}\n${GIT_PATH} checkout ${KSERROR_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSError from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSERROR_COMMIT}\n\techo \"... finished fetching KSError\"\nfi\n\npopd\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
 		3C3003151313001B0022E49A /* ShellScript */ = {
@@ -7249,7 +7249,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### PULL KSFileUtilities FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../KSFileUtilities\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"pulling KSFileUtilities from GitHub ...\"\ncd ${REPOSITORY_PATH}\n${GIT_PATH} checkout v1.0.1\nif (($? != 0))\nthen\n\tgit fetch\n\t${GIT_PATH} checkout v1.0.1\nfi\necho \"... finished pulling KSFileUtilities\"\n\npopd\n\nexit 0\n\n";
+			shellScript = "#!/bin/bash\n\n###\n### PULL KSFileUtilities FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../KSFileUtilities\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\ncd ${REPOSITORY_PATH}\n${GIT_PATH} checkout ${KSFILEUTILS_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSFileUtilities from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSFILEUTILS_COMMIT}\n\techo \"... finished fetching KSFileUtilities\"\nfi\n\npopd\n\nexit 0\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C3003551313005D0022E49A /* ShellScript */ = {
@@ -7268,16 +7268,16 @@
 		};
 		3C30036A131300DF0022E49A /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### PULL KSSelectionBorder FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../KSSelectionBorder\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"pulling KSSelectionBorder from GitHub ...\"\ncd ${REPOSITORY_PATH}\n${GIT_PATH} pull\necho \"... finished pulling KSSelectionBorder\"\n\npopd\n\nexit 0\n\n";
+			shellScript = "#!/bin/bash\n\n###\n### PULL KSSelectionBorder FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../KSSelectionBorder\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\ncd ${REPOSITORY_PATH}\n${GIT_PATH} checkout ${KSSELECTIONBORDER_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSSelectionBorder from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSSELECTIONBORDER_COMMIT}\n\techo \"... finished fetching KSSelectionBorder\"\nfi\n\npopd\n\nexit 0\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C3E75F90F1C5F42002E3A9A /* ShellScript */ = {
@@ -7296,16 +7296,16 @@
 		};
 		3C3ED288120894800080EB6E /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### PULL KSThreadProxy FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../KSThreadProxy\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"pulling KSThreadProxy from GitHub ...\"\ncd ${REPOSITORY_PATH}\n${GIT_PATH} pull\necho \"... finished pulling KSThreadProxy\"\n\npopd\n\nexit 0\n";
+			shellScript = "#!/bin/bash\n\n###\n### PULL KSThreadProxy FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../KSThreadProxy\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\ncd ${REPOSITORY_PATH}\n${GIT_PATH} checkout ${KSTHREADPROXY_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSThreadProxy from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSTHREADPROXY_COMMIT}\n\techo \"... finished fetching KSThreadProxy\"\nfi\n\npopd\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
 		3C3ED294120894F70080EB6E /* ShellScript */ = {
@@ -7324,16 +7324,16 @@
 		};
 		3C3ED29E120895580080EB6E /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### PULL yrk-spinning-progress-indicator FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../yrk-spinning-progress-indicator\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"pulling yrk-spinning-progress-indicator from GitHub ...\"\ncd ${REPOSITORY_PATH}\n${GIT_PATH} pull\necho \"... finished pulling yrk-spinning-progress-indicator\"\n\npopd\n\nexit 0\n";
+			shellScript = "#!/bin/bash\n\n###\n### PULL yrk-spinning-progress-indicator FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../yrk-spinning-progress-indicator\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\ncd ${REPOSITORY_PATH}\n${GIT_PATH} checkout ${YRKSPINNINGPROGRESSINDICATOR_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching yrk-spinning-progress-indicator from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${YRKSPINNINGPROGRESSINDICATOR_COMMIT}\n\techo \"... finished fetching yrk-spinning-progress-indicator\"\nfi\n\npopd\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
 		3C5A77C40EB6E0880049B898 /* ShellScript */ = {
@@ -7530,16 +7530,16 @@
 		};
 		3CBC651A11EFD04800716937 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### PULL KSExtensibleManagedObjects FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../KSExtensibleManagedObject\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"pulling KSExtensibleManagedObject from GitHub ...\"\ncd ${REPOSITORY_PATH}\n${GIT_PATH} pull\necho \"... finished pulling KSExtensibleManagedObject\"\n\npopd\n\nexit 0\n";
+			shellScript = "#!/bin/bash\n\n###\n### PULL KSExtensibleManagedObjects FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../KSExtensibleManagedObject\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\ncd ${REPOSITORY_PATH}\n${GIT_PATH} checkout ${KSEXTENSIBLEMANAGEDOBJECT_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSExtensibleManagedObject from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSEXTENSIBLEMANAGEDOBJECT_COMMIT}\n\techo \"... finished fetching KSExtensibleManagedObject\"\nfi\n\npopd\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
 		3CBC727211F0C59E00716937 /* ShellScript */ = {
@@ -7553,7 +7553,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### PULL KSHTMLWriter FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../KSHTMLWriter\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"checking out KSHTMLWriter\"\ncd ${REPOSITORY_PATH}\n${GIT_PATH} checkout v1.1\nif (($? != 0))\nthen\n\tgit fetch\n\t${GIT_PATH} checkout v1.1\nfi\necho \"... finished pulling KSHTMLWriter\"\n\npopd\n\nexit 0\n\n";
+			shellScript = "#!/bin/bash\n\n###\n### PULL KSHTMLWriter FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../KSHTMLWriter\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\ncd ${REPOSITORY_PATH}\n${GIT_PATH} checkout ${KSHTMLWRITER_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSHTMLWriter from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSHTMLWRITER_COMMIT}\n\techo \"... finished fetching KSHTMLWriter\"\nfi\n\npopd\n\nexit 0\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3CC092BA134BC490007E2390 /* Script - Code Sign .app */ = {
@@ -7573,16 +7573,16 @@
 		};
 		3CD806DE120A62C300E0848F /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### PULL BDAlias FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../bdalias\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"pulling BDAlias from GitHub ...\"\ncd ${REPOSITORY_PATH}\n${GIT_PATH} pull\necho \"... finished pulling BDAlias\"\n\npopd\n\nexit 0\n";
+			shellScript = "#!/bin/bash\n\n###\n### PULL BDAlias FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../bdalias\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\ncd ${REPOSITORY_PATH}\n${GIT_PATH} checkout ${BDALIAS_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching BDAlias from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${BDALIAS_COMMIT}\n\techo \"... finished fetching BDAlias\"\nfi\n\npopd\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
 		3CE2B2B60D7F1DD900E2711E /* ShellScript */ = {
@@ -9323,6 +9323,7 @@
 		};
 		3C3003491313001C0022E49A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
 			buildSettings = {
 				PRODUCT_NAME = UpdateKSFileUtilities;
 			};
@@ -9330,6 +9331,7 @@
 		};
 		3C30034A1313001C0022E49A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
 			buildSettings = {
 				DEPLOYMENT_POSTPROCESSING = YES;
 				PRODUCT_NAME = UpdateKSFileUtilities;
@@ -9353,6 +9355,7 @@
 		};
 		3C30036C131300E00022E49A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
 			buildSettings = {
 				PRODUCT_NAME = UpdateKSSelectionBorder;
 			};
@@ -9360,6 +9363,7 @@
 		};
 		3C30036D131300E00022E49A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
 			buildSettings = {
 				DEPLOYMENT_POSTPROCESSING = YES;
 				PRODUCT_NAME = UpdateKSSelectionBorder;
@@ -9384,6 +9388,7 @@
 		};
 		3C3ED28A120894800080EB6E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
 			buildSettings = {
 				PRODUCT_NAME = UpdateKSThreadProxy;
 			};
@@ -9416,6 +9421,7 @@
 		};
 		3C3ED2A0120895580080EB6E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
 			buildSettings = {
 				PRODUCT_NAME = UpdateYRKSpinningProgressIndicator;
 			};
@@ -9544,6 +9550,7 @@
 		};
 		3CBC651C11EFD04900716937 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
 			buildSettings = {
 				PRODUCT_NAME = UpdateKSExtensibleManagedObject;
 			};
@@ -9560,6 +9567,7 @@
 		};
 		3CBC727411F0C59E00716937 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
 			buildSettings = {
 				PRODUCT_NAME = UpdateKSHTMLWriter;
 			};
