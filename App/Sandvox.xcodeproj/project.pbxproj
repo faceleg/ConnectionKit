@@ -7625,7 +7625,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "echo \"###\"\necho \"Removing Unsupported languages from ${TARGET_BUILD_DIR}/Sandvox.app/...\"\n\n# Localization builds only....\n#find ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.|/fr\\.|/de\\.|/pt_BR\\.' | xargs rm -rf\n\nfind ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.|/fr\\.' | xargs rm -rf\n";
+			shellScript = "echo \"###\"\necho \"Removing Unsupported languages from ${TARGET_BUILD_DIR}/Sandvox.app/...\"\n\n# Localization builds only....\n#find ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.|/fr\\.|/de\\.|/es\\.|/pt_BR\\.' | xargs rm -rf\n\nfind ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.|/fr\\.' | xargs rm -rf\n";
 			showEnvVarsInLog = 0;
 		};
 		CEC65E5D0E1AFD170065C3D0 /* Copy Sparkle - Strip Localizations */ = {
@@ -7640,7 +7640,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\n# as of July 2008, we are only localized for\n# da, de, en, fr, it, ja, sv, zh_CN, and zh_TW\n\n# this script copies Sparkle into the app, but excludes those\n# those localizations not specified above\n\nPBXCP=${PROJECT_DIR}/../../Shared/Tools/pbxcp\nSPARKLE=${SRCROOT}/../../Shared/ThirdParty/Sparkle/Sparkle.framework\n\necho \"Copying Sparkle from ${SPARKLE} to ${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH} ...\"\n\n${PBXCP} \\\n\t-exclude ca.lproj -exclude cs.lproj -exclude cy.lproj -exclude es.lproj -exclude fi.lproj \\\n\t-exclude he.lproj -exclude hu.lproj -exclude id.lproj -exclude is.lproj -exclude ko.lproj \\\n\t-exclude nl.lproj -exclude no.lproj -exclude pl.lproj -exclude ru.lproj -exclude sk.lproj \\\n\t-exclude th.lproj -exclude tr.lproj \\\n\t-exclude .DS_Store -exclude CVS -exclude .svn -exclude PrivateHeaders -exclude Headers \\\n\t-resolve-src-symlinks -v \\\n\t\"${SPARKLE}\" \\\n\t\"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}\"\n\n\n\n";
+			shellScript = "\n# as of July 2008, we are only localized for\n# da, de, en, fr, it, ja, sv, zh_CN, and zh_TW\n\n# this script copies Sparkle into the app, but excludes those\n# those localizations not specified above\n\nPBXCP=${PROJECT_DIR}/../../Shared/Tools/pbxcp\nSPARKLE=${SRCROOT}/../../Shared/ThirdParty/Sparkle/Sparkle.framework\n\necho \"Copying Sparkle from ${SPARKLE} to ${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH} ...\"\n\n${PBXCP} \\\n\t-exclude .DS_Store -exclude CVS -exclude .svn -exclude PrivateHeaders -exclude Headers \\\n\t-resolve-src-symlinks -v \\\n\t\"${SPARKLE}\" \\\n\t\"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}\"\n\n\n\n";
 			showEnvVarsInLog = 0;
 		};
 		CEF64406134B69A60011AC68 /* Script - Remove other resources */ = {
