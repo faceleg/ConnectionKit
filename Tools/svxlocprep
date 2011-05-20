@@ -86,7 +86,7 @@ mkdir -p$VERBOSE $WD/Subversion/Shared/Interfaces/$1.lproj
 # echo $WD/Subversion/Shared/Interfaces/$1.lproj/
 cp -R$VERBOSE ./Contents/Resources/$1.lproj/KS* $WD/Subversion/Shared/Interfaces/$1.lproj/
 
-echo "Plugins..."
+echo "PlugIns..."
 
 # plugins with their own project
 
@@ -96,8 +96,8 @@ do
     BASE=`echo $PLUGIN | sed 's/.svxElement//'`
     if [ ! -z "$PLUGIN/Contents/Resources/$1.lproj" ]; then
         echo "$BASE:"
-        mkdir -p$VERBOSE $WD/Subversion/Sandvox$CURRENTBRANCH/Plugins/${BASE}Element
-        cp -R$VERBOSE $PLUGIN/Contents/Resources/$1.lproj $WD/Subversion/Sandvox$CURRENTBRANCH/Plugins/${BASE}Element
+        mkdir -p$VERBOSE $WD/Subversion/Sandvox$CURRENTBRANCH/PlugIns/${BASE}Element
+        cp -R$VERBOSE $PLUGIN/Contents/Resources/$1.lproj $WD/Subversion/Sandvox$CURRENTBRANCH/PlugIns/${BASE}Element
     else
         echo "Not copying $PLUGIN - no $1.lproj"
     fi
