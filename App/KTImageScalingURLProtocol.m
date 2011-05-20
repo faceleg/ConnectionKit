@@ -40,7 +40,7 @@ NSString *KTImageScalingURLProtocolScheme = @"x-sandvox-image";
                                     fileType:[request type]];
 }
 
-+ (NSURL *)sandvoxImageURLWithFileURL:(NSURL *)fileURL 
++ (NSURL *)sandvoxImageURLWithFileURL:(NSURL *)fileURL
                                  size:(NSSize)size
                           scalingMode:(KSImageScalingMode)scalingMode
                            sharpening:(CGFloat)sharpening
@@ -61,22 +61,9 @@ NSString *KTImageScalingURLProtocolScheme = @"x-sandvox-image";
     OBPRECONDITION(fileURL);
     if (![fileURL isFileURL]) return nil;   // only support file URLs for now
     
-    NSString *host = [fileURL host];
-    if (!host) host = @"";
+    NSURL *result = [[fileURL ks_URLWithScheme:KTImageScalingURLProtocolScheme]	// safest technique. #121969
+                     ks_URLWithQueryParameters:query];
     
-    NSURL *baseURL = [[NSURL alloc] initWithScheme:KTImageScalingURLProtocolScheme
-											  host:@""
-											  path:[fileURL path]];
-	
-	OBASSERT(baseURL);
-	
-    NSURL *result = [NSURL ks_URLWithScheme:KTImageScalingURLProtocolScheme
-                                       host:host
-                                       path:[fileURL path]
-                            queryParameters:query];
-    
-	[baseURL release];
-	
 	OBPOSTCONDITION(result);
 	return result;
 }
