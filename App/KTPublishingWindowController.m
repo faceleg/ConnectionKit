@@ -289,7 +289,22 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
     }
     else
     {
+        NSWindow *window = _modalWindow;
         [self endSheet];
+        
+        // Prompt to save
+        NSAlert *alert = [[[NSAlert alloc] init] autorelease];
+        [alert setMessageText:NSLocalizedString(@"Please save", "alert title")];
+        [alert addButtonWithTitle:NSLocalizedString(@"Save", "button")];
+        [alert addButtonWithTitle:NSLocalizedString(@"Cancel", "button")];
+        [alert addButtonWithTitle:NSLocalizedString(@"Save As…", "button")];
+        
+        
+        [[self window] orderOut:self];
+        [alert beginSheetModalForWindow:window
+                          modalDelegate:nil
+                         didEndSelector:nil
+                            contextInfo:NULL];
     }
 }
 
