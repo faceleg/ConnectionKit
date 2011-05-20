@@ -68,17 +68,6 @@ enum { LABEL_NAME = 1, LABEL_EMAIL, LABEL_SUBJECT, LABEL_MESSAGE, LABEL_SEND };
 
 @implementation ContactPlugIn
 
-/*
- Plugin Properties we use:
- 
- sendButtonTitle
- subjectPrompt
- subjectText
- subjectType
- address
- 
- */
-
 enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelection };
 
 
