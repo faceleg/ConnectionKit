@@ -58,15 +58,15 @@
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE2802A012432BBD00B00F3D /* toolbar_photogrid.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_photogrid.tiff; sourceTree = "<group>"; };
 		CEAD37A91384307F00161C8F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Inspector.strings; sourceTree = "<group>"; };
-		CEAD37AA1384307F00161C8F /* de */ = {isa = PBXFileReference; lastKnownFileType = file; name = de; path = de.lproj/placeholder.acorn; sourceTree = "<group>"; };
+		CEAD37AA1384307F00161C8F /* de */ = {isa = PBXFileReference; lastKnownFileType = text; name = de; path = de.lproj/placeholder.acorn; sourceTree = "<group>"; };
 		CEAD37AB1384307F00161C8F /* de */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = de; path = de.lproj/placeholder.png; sourceTree = "<group>"; };
 		CEAD37AC1384308200161C8F /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Inspector.strings; sourceTree = "<group>"; };
-		CEAD37AD1384308200161C8F /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = file; name = pt_BR; path = pt_BR.lproj/placeholder.acorn; sourceTree = "<group>"; };
+		CEAD37AD1384308200161C8F /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text; name = pt_BR; path = pt_BR.lproj/placeholder.acorn; sourceTree = "<group>"; };
 		CEAD37AE1384308200161C8F /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pt_BR; path = pt_BR.lproj/placeholder.png; sourceTree = "<group>"; };
 		CEAD37AF1384308500161C8F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CEAD37B01384308500161C8F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Inspector.strings; sourceTree = "<group>"; };
 		CEAD37B11384308500161C8F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
-		CEAD37B21384308500161C8F /* es */ = {isa = PBXFileReference; lastKnownFileType = file; name = es; path = es.lproj/placeholder.acorn; sourceTree = "<group>"; };
+		CEAD37B21384308500161C8F /* es */ = {isa = PBXFileReference; lastKnownFileType = text; name = es; path = es.lproj/placeholder.acorn; sourceTree = "<group>"; };
 		CEAD37B31384308500161C8F /* es */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = es; path = es.lproj/placeholder.png; sourceTree = "<group>"; };
 		CEB4FDA810309DF60054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CEB4FDA910309DF60054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
