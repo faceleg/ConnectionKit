@@ -285,7 +285,7 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
     {
         [self setMessageText:NSLocalizedString(@"Publishing finished.", @"Upload message text")];
         [self setInformativeText:nil];
-        [oFirstButton setTitle:NSLocalizedString(@"Close", @"Button title")];
+        [oFirstButton setTitle:NSLocalizedString(@"Close", @"button title")];
     }
     else
     {
@@ -385,7 +385,7 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
 		[_dockProgress setHidden:YES];
 
         
-        [oFirstButton setTitle:NSLocalizedString(@"Close", @"Button title")];
+        [oFirstButton setTitle:NSLocalizedString(@"Close", @"button title")];
     }
 }
 

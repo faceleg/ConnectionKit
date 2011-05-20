@@ -1139,7 +1139,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	NSRunCriticalAlertPanel(
 							NSLocalizedString(@"This version of Sandvox has expired.", @""),
 							NSLocalizedString(@"This version of Sandvox is no longer functional. Sandvox will now check for updates; please install the newest version if available.", @""), 
-							NSLocalizedString(@"Check for Updates", @"Button title"),
+							NSLocalizedString(@"Check for Updates", @"button title"),
 							nil,
 							nil
 							);

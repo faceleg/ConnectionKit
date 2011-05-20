@@ -240,7 +240,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     message = NSLocalizedString(@"Your original document will be left alone, in case you need to refer back to it.","document upgrade informative text");
     [informativeTextField setStringValue:message];
     
-	[cancelButton setTitle:NSLocalizedString(@"Cancel","Button title")];
+	[cancelButton setTitle:NSLocalizedString(@"Cancel","button title")];
     
 	
     //[dataMigratorController setContent:[self dataMigrator]];
