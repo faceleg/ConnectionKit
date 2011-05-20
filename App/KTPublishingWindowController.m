@@ -297,7 +297,12 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
         
         // Prompt to save
         NSAlert *alert = [[NSAlert alloc] init];
-        [alert setMessageText:NSLocalizedString(@"Please save", "alert title")];
+        
+        NSDocument *document = [[_modalWindow windowController] document];
+        [alert setMessageText:[NSString stringWithFormat:NSLocalizedString(@"Publishing finished. Do you want to save the changes made in the document “%@”?", "alert title"), [document displayName]]];
+        
+        [alert setInformativeText:NSLocalizedString(@"Saving will ensure Sandvox doesn't upload the same changes again next time you publish.", "alert text")];
+         
         [alert addButtonWithTitle:NSLocalizedString(@"Save", "button")];
         [alert addButtonWithTitle:NSLocalizedString(@"Cancel", "button")];
         [alert addButtonWithTitle:NSLocalizedString(@"Save As…", "button")];
