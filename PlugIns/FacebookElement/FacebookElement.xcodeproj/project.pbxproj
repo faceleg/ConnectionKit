@@ -38,6 +38,15 @@
 		8D5B49B6048680CD000E48DA /* Facebook.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Facebook.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE753EB212EA4D8900C93992 /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CE8C968D1386F60400B1B8DB /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CE8C968E1386F60400B1B8DB /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Inspector.strings; sourceTree = "<group>"; };
+		CE8C968F1386F60400B1B8DB /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CE8C96991386F61400B1B8DB /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CE8C969A1386F61400B1B8DB /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Inspector.strings; sourceTree = "<group>"; };
+		CE8C969B1386F61400B1B8DB /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CE8C969C1386F61D00B1B8DB /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CE8C969D1386F61D00B1B8DB /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Inspector.strings; sourceTree = "<group>"; };
+		CE8C969E1386F61D00B1B8DB /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CEB18FA91316D8BD00AFE09C /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CEDA1DE21302082800DC6FE7 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Inspector.strings; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
@@ -185,6 +194,9 @@
 				German,
 				en,
 				fr,
+				pt_BR,
+				de,
+				es,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* FacebookElement */;
 			projectDirPath = "";
@@ -249,6 +261,9 @@
 			children = (
 				3C15B4DB13146ADF0038DAE3 /* en */,
 				CEB18FA91316D8BD00AFE09C /* fr */,
+				CE8C968F1386F60400B1B8DB /* pt_BR */,
+				CE8C969B1386F61400B1B8DB /* de */,
+				CE8C969E1386F61D00B1B8DB /* es */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -258,6 +273,9 @@
 			children = (
 				3C5851C71289ADEB0084315D /* en */,
 				CE753EB212EA4D8900C93992 /* fr */,
+				CE8C968D1386F60400B1B8DB /* pt_BR */,
+				CE8C96991386F61400B1B8DB /* de */,
+				CE8C969C1386F61D00B1B8DB /* es */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -274,6 +292,9 @@
 			isa = PBXVariantGroup;
 			children = (
 				CEDA1DE21302082800DC6FE7 /* fr */,
+				CE8C968E1386F60400B1B8DB /* pt_BR */,
+				CE8C969A1386F61400B1B8DB /* de */,
+				CE8C969D1386F61D00B1B8DB /* es */,
 			);
 			name = Inspector.strings;
 			sourceTree = "<group>";

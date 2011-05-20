@@ -56,6 +56,13 @@
 		8D5B49B6048680CD000E48DA /* Flickr.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Flickr.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE28031F12432D5C00B00F3D /* toolbar_flickr.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_flickr.tiff; sourceTree = "<group>"; };
+		CE8C96D41386F6B200B1B8DB /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CE8C96D51386F6B200B1B8DB /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Inspector.strings; sourceTree = "<group>"; };
+		CE8C96D61386F6B200B1B8DB /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CE8C96D71386F6CF00B1B8DB /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Inspector.strings; sourceTree = "<group>"; };
+		CE8C96D81386F6E600B1B8DB /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CE8C96D91386F6E600B1B8DB /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Inspector.strings; sourceTree = "<group>"; };
+		CE8C96DA1386F6E600B1B8DB /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CEDA1DDA1302081200DC6FE7 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Inspector.strings; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
@@ -205,6 +212,8 @@
 				ja,
 				zh_CN,
 				zh_TW,
+				pt_BR,
+				es,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* FlickrElement */;
 			projectDirPath = "";
@@ -276,6 +285,8 @@
 				3C42E4B70D65030F004F35FD /* ja */,
 				3C42E4BA0D650318004F35FD /* zh_CN */,
 				3C42E4BD0D650321004F35FD /* zh_TW */,
+				CE8C96D41386F6B200B1B8DB /* pt_BR */,
+				CE8C96D81386F6E600B1B8DB /* es */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -291,6 +302,8 @@
 				3C42E4B80D65030F004F35FD /* ja */,
 				3C42E4BB0D650318004F35FD /* zh_CN */,
 				3C42E4BE0D650321004F35FD /* zh_TW */,
+				CE8C96D61386F6B200B1B8DB /* pt_BR */,
+				CE8C96DA1386F6E600B1B8DB /* es */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -307,6 +320,9 @@
 			isa = PBXVariantGroup;
 			children = (
 				CEDA1DDA1302081200DC6FE7 /* fr */,
+				CE8C96D51386F6B200B1B8DB /* pt_BR */,
+				CE8C96D71386F6CF00B1B8DB /* de */,
+				CE8C96D91386F6E600B1B8DB /* es */,
 			);
 			name = Inspector.strings;
 			sourceTree = "<group>";

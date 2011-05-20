@@ -51,6 +51,13 @@
 		8D5B49B6048680CD000E48DA /* Feed.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Feed.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE28032712432D8400B00F3D /* toolbar_feed.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_feed.tiff; sourceTree = "<group>"; };
+		CE8C96B61386F65900B1B8DB /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CE8C96B71386F65900B1B8DB /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Inspector.strings; sourceTree = "<group>"; };
+		CE8C96B81386F65900B1B8DB /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CE8C96B91386F67400B1B8DB /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Inspector.strings; sourceTree = "<group>"; };
+		CE8C96BA1386F68000B1B8DB /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CE8C96BB1386F68000B1B8DB /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Inspector.strings; sourceTree = "<group>"; };
+		CE8C96BC1386F68000B1B8DB /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CEDA1DDE1302081D00DC6FE7 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Inspector.strings; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
@@ -197,6 +204,8 @@
 				ja,
 				zh_CN,
 				zh_TW,
+				es,
+				pt_BR,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* FeedElement */;
 			projectDirPath = "";
@@ -266,6 +275,8 @@
 				3CA9FF640D63C37E00815310 /* ja */,
 				3CA9FF670D63C38800815310 /* zh_CN */,
 				3CA9FF6A0D63C39200815310 /* zh_TW */,
+				CE8C96B61386F65900B1B8DB /* es */,
+				CE8C96BA1386F68000B1B8DB /* pt_BR */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -289,6 +300,8 @@
 				3CA9FF650D63C37E00815310 /* ja */,
 				3CA9FF680D63C38800815310 /* zh_CN */,
 				3CA9FF6B0D63C39200815310 /* zh_TW */,
+				CE8C96B81386F65900B1B8DB /* es */,
+				CE8C96BC1386F68000B1B8DB /* pt_BR */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -297,6 +310,9 @@
 			isa = PBXVariantGroup;
 			children = (
 				CEDA1DDE1302081D00DC6FE7 /* fr */,
+				CE8C96B71386F65900B1B8DB /* es */,
+				CE8C96B91386F67400B1B8DB /* de */,
+				CE8C96BB1386F68000B1B8DB /* pt_BR */,
 			);
 			name = Inspector.strings;
 			sourceTree = "<group>";

@@ -70,6 +70,11 @@
 		3CFCD654123AF4B1003A635C /* NSString+IMStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+IMStatus.m"; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* IMStatus.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IMStatus.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE8C97061386F78B00B1B8DB /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Inspector.strings; sourceTree = "<group>"; };
+		CE8C97131386F79100B1B8DB /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CE8C97141386F79100B1B8DB /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Inspector.strings; sourceTree = "<group>"; };
+		CE8C97151386F79100B1B8DB /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CE8C97161386F79E00B1B8DB /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Inspector.strings; sourceTree = "<group>"; };
 		CEA32AE71283356500648C39 /* toolbar_imstatus.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_imstatus.tiff; sourceTree = "<group>"; };
 		CEB4FD9710309DBC0054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CEB4FD9810309DBC0054C9BE /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -312,6 +317,7 @@
 				3C42E44D0D64FBA6004F35FD /* zh_CN */,
 				3C42E4500D64FBB1004F35FD /* zh_TW */,
 				CEB4FD9710309DBC0054C9BE /* pt_BR */,
+				CE8C97131386F79100B1B8DB /* es */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -328,6 +334,7 @@
 				3C42E44E0D64FBA6004F35FD /* zh_CN */,
 				3C42E4510D64FBB1004F35FD /* zh_TW */,
 				CEB4FD9810309DBC0054C9BE /* pt_BR */,
+				CE8C97151386F79100B1B8DB /* es */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -344,6 +351,9 @@
 			isa = PBXVariantGroup;
 			children = (
 				CEDA1DD3130207F900DC6FE7 /* fr */,
+				CE8C97061386F78B00B1B8DB /* de */,
+				CE8C97141386F79100B1B8DB /* es */,
+				CE8C97161386F79E00B1B8DB /* pt_BR */,
 			);
 			name = Inspector.strings;
 			sourceTree = "<group>";
