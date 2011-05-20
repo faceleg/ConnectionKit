@@ -289,6 +289,12 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
     }
     else
     {
+        if ([self isExporting])
+        {
+            [self endSheet];
+            return;
+        }
+        
         // Prompt to save
         NSAlert *alert = [[NSAlert alloc] init];
         [alert setMessageText:NSLocalizedString(@"Please save", "alert title")];
