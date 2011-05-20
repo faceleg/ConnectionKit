@@ -289,23 +289,39 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
     }
     else
     {
-        NSWindow *window = _modalWindow;
-        [self endSheet];
-        
         // Prompt to save
-        NSAlert *alert = [[[NSAlert alloc] init] autorelease];
+        NSAlert *alert = [[NSAlert alloc] init];
         [alert setMessageText:NSLocalizedString(@"Please save", "alert title")];
         [alert addButtonWithTitle:NSLocalizedString(@"Save", "button")];
         [alert addButtonWithTitle:NSLocalizedString(@"Cancel", "button")];
         [alert addButtonWithTitle:NSLocalizedString(@"Save As…", "button")];
         
         
+        [NSApp endSheet:[self window]];
         [[self window] orderOut:self];
-        [alert beginSheetModalForWindow:window
-                          modalDelegate:nil
-                         didEndSelector:nil
+        
+        [alert beginSheetModalForWindow:_modalWindow
+                          modalDelegate:self
+                         didEndSelector:@selector(saveAfterPublishingAlertDidEnd:returnCode:contextInfo:)
                             contextInfo:NULL];
     }
+}
+
+- (void)saveAfterPublishingAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+{
+    [[alert window] orderOut:self];
+    
+    if (returnCode == NSAlertFirstButtonReturn)
+    {
+        [[[_modalWindow windowController] document] saveDocument:self];
+    }
+    else if (returnCode == NSAlertThirdButtonReturn)
+    {
+        [[[_modalWindow windowController] document] saveDocumentAs:self];
+    }
+    
+    [alert release];
+    [self endSheet];
 }
 
 - (void)publishingEngine:(KTPublishingEngine *)engine didFailWithError:(NSError *)error
