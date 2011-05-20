@@ -260,7 +260,7 @@
 	{
 		NSURL *URL = [context URLForImageRepresentationOfPage:self
 														width:90 height:90	// This seems to be largest size used by facebook. Yahoo is 98x54?
-													  options:0];
+													  options:SVImageScaleAspectFit];
 		if (URL)
 		{
 			NSString *href = [URL absoluteString];	// leave it an absolute URL for Facebook's benefit

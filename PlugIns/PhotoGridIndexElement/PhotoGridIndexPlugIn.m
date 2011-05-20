@@ -105,9 +105,9 @@
 		id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
 		
 		NSURL *URL = [context URLForImageRepresentationOfPage:iteratedPage
-														width:1200
-													   height:1200		// plenty large, but not overwhelming
-													  options:0];
+														width:2000
+													   height:1200		// plenty large, but not overwhelming, good for a monitor
+													  options:SVImageScaleAspectFit];
 		if (URL)
 		{
 			NSString *href = [context relativeStringFromURL:URL];
