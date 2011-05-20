@@ -287,7 +287,10 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 - (NSString *)encodedRecipient
 {
 	NSString *email = [self address];
-	
+	if ([email length] > (MAX_EMAILS_LENGTH-1))
+	{
+		email = [email substringToIndex:(MAX_EMAILS_LENGTH-1)];
+	}
 	NSData *mailData = [email dataUsingEncoding:NSUTF8StringEncoding];
 	unsigned char outBytes[MAX_EMAILS_LENGTH] = { 0 };
 	unsigned char inBytes[MAX_EMAILS_LENGTH] = { 0 };
