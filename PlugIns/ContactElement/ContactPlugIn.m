@@ -133,8 +133,12 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
     }
 }
 
-
 @synthesize uniqueID = _uniqueID;
++ (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key
+{
+    // Don't want -uniqueID to be KVO-compliant as it can get the webview stuck in a loop loading. #123180
+    return ([key isEqualToString:@"uniqueID"] ? NO : [super automaticallyNotifiesObserversForKey:key]);
+}
 
 - (void)writeUniqueElement
 {
