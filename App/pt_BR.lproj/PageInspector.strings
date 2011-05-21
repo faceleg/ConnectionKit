@@ -121,7 +121,7 @@
 "Link to previous/next page:" = "Link para anterior/próxima página:";
 
 /* Class = "NSTextFieldCell"; title = "Applies to all pages in the same collection"; ObjectID = "363"; */
-"Applies to all pages in the same collection" = "Aplicar para toads as páginas da mesma coleção";
+"Applies to all pages in the same collection" = "Aplicar para todas as páginas da mesma coleção";
 
 /* Class = "NSTextFieldCell"; title = "Include page in:"; ObjectID = "365"; */
 "Include page in:" = "Incluir página em:";
@@ -175,7 +175,7 @@
 "Setup…" = "Configurar...";
 
 /* Class = "NSButtonCell"; title = "Comments"; ObjectID = "624"; */
-"Comments" = "Comantários";
+"Comments" = "Comentários";
 
 /* Class = "NSTextFieldCell"; title = "Facebook, mikeabdullah"; ObjectID = "629"; */
 "Facebook, mikeabdullah" = "Facebook, mikeabdullah";

@@ -37,7 +37,7 @@
 "Radio" = "Rádio";
 
 /* Class = "NSButtonCell"; title = "Object causes wrap"; ObjectID = "241"; */
-"Object causes wrap" = "O objeto enviolve o texto";
+"Object causes wrap" = "O objeto envolve o texto";
 
 /* Class = "NSBox"; title = "Box"; ObjectID = "254"; */
 "Box" = "Caixa";
@@ -57,7 +57,7 @@
 "Sidebar" = "Barra Lateral";
 
 /* Class = "NSTextFieldCell"; title = "Not all designs/placements support this"; ObjectID = "466"; */
-"Not all designs/placements support this" = "Nem todos os designs/posicionamentos são suportados";
+"Not all designs/placements support this" = "Nem todos os designs/posições são suportados";
 
 /* Class = "NSButtonCell"; title = "Border"; ObjectID = "467"; */
 "Border" = "Borda";
