@@ -1,0 +1,13 @@
+﻿/* Class = "NSWindow"; title = "Choose Design"; ObjectID = "1"; */
+"Choose Design" = "Escolher Design";
+
+/* Class = "NSButtonCell"; title = "Choose"; ObjectID = "4"; */
+"Choose" = "Escolher";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "6"; */
+"Cancel" = "Cancelar";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "39"; */
+"Box" = "Caixa";
+/* Class = "NSButtonCell"; title = "Discover More Designs…"; ObjectID = "119"; */
+"Discover More Designs…" = "Localizar Mais Designs...";

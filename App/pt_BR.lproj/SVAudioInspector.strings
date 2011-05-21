@@ -1,0 +1,28 @@
+﻿/* Class = "NSTextFieldCell"; title = "Options"; ObjectID = "149"; */
+"Options" = "Opções";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "166"; */
+"Box" = "Caixa";
+
+/* Class = "NSImageView"; designAccessibilityDescription = "caution"; ObjectID = "167"; */
+"caution" = "atenção";
+/* Class = "NSButtonCell"; title = "Copy file into document"; ObjectID = "224"; */
+"Copy file into document" = "Copiar arquivo no documento";
+
+/* Class = "NSTextFieldCell"; title = "Advanced"; ObjectID = "225"; */
+"Advanced" = "Avançado";
+
+/* Class = "NSButtonCell"; title = "Enclosure in RSS Feeds"; ObjectID = "232"; */
+"Enclosure in RSS Feeds" = "Acrescentar no RSS Feeds";
+
+/* Class = "NSButtonCell"; title = "Loop"; ObjectID = "244"; */
+"Loop" = "Intermitente";
+
+/* Class = "NSButtonCell"; title = "Automatically load"; ObjectID = "245"; */
+"Automatically load" = "Carregar automaticamente";
+
+/* Class = "NSButtonCell"; title = "Automatically play"; ObjectID = "246"; */
+"Automatically play" = "Tocar automaticamente";
+
+/* Class = "NSButtonCell"; title = "Show Controller"; ObjectID = "247"; */
+"Show Controller" = "Controlar Exibição";

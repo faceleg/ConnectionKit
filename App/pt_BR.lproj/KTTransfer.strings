@@ -1,0 +1,11 @@
+﻿/* Class = "NSImageView"; designAccessibilityDescription = "caution"; ObjectID = "53"; */
+"caution" = "atenção";
+
+/* Class = "NSImageView"; gToolTip = "The URL entered is not valid"; ObjectID = "53"; */
+"The URL entered is not valid" = "A URL digitada não é válida";
+
+/* Class = "NSTextFieldCell"; title = "Site URL:"; ObjectID = "68"; */
+"Site URL:" = "URL do Site:";
+
+/* Class = "NSTextFieldCell"; title = "Note: Before posting materials (text, images, audio, etc.) on your site, check that you own the copyright and/or control the necessary rights."; ObjectID = "70"; */
+"Note: Before posting materials (text, images, audio, etc.) on your site, check that you own the copyright and/or control the necessary rights." = "Nota: Antes de postar materiais (textos, imagens, áudios, etc) em nosso site, verifique que você tenha os direitos autorais e/ou controle dos direitos necessários.";

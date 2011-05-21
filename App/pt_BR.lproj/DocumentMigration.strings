@@ -1,0 +1,8 @@
+﻿/* Class = "NSWindow"; title = "Window"; ObjectID = "5"; */
+"Window" = "Janela";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "62"; */
+"Cancel" = "Cancelar";
+
+/* Class = "NSTextFieldCell"; title = "Upgrading document \"%@\""; ObjectID = "64"; */
+"Upgrading document \"%@\"" = "Atualizando o documento \"%@\"";

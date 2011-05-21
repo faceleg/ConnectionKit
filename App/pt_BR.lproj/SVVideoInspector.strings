@@ -1,0 +1,49 @@
+﻿/* Class = "NSTextFieldCell"; title = "Options"; ObjectID = "149"; */
+"Options" = "Opções";
+
+/* Class = "NSTextFieldCell"; title = "Poster Image"; ObjectID = "157"; */
+"Poster Image" = "Imagem do Poster";
+
+/* Class = "NSImageView"; designAccessibilityDescription = "Video Poster"; ObjectID = "158"; */
+"Video Poster" = "Vídeo do Poster";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "166"; */
+"Box" = "Caixa";
+
+/* Class = "NSImageView"; designAccessibilityDescription = "Caution"; ObjectID = "167"; */
+"Caution" = "Atenção";
+
+/* Class = "NSButtonCell"; title = "Choose…"; ObjectID = "195"; */
+"Choose…" = "Escolher...";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "200"; */
+"OtherViews" = "Outras Exibições";
+
+/* Class = "NSMenuItem"; title = "None"; ObjectID = "201"; */
+"None" = "Nenhum";
+
+/* Class = "NSMenuItem"; title = "Automatic"; ObjectID = "202"; */
+"Automatic" = "Automático";
+
+/* Class = "NSMenuItem"; title = "Custom Image"; ObjectID = "203"; */
+"Custom Image" = "Imagem Personalizada";
+/* Class = "NSTextFieldCell"; title = "Advanced"; ObjectID = "269"; */
+"Advanced" = "Avançado";
+
+/* Class = "NSButtonCell"; title = "Copy file into document"; ObjectID = "271"; */
+"Copy file into document" = "Copiar arquivo no documento";
+
+/* Class = "NSButtonCell"; title = "Enclosure in RSS Feeds"; ObjectID = "282"; */
+"Enclosure in RSS Feeds" = "Acrescentar no RSS Feeds";
+
+/* Class = "NSButtonCell"; title = "Show Controller"; ObjectID = "289"; */
+"Show Controller" = "Controlar Exibição";
+
+/* Class = "NSButtonCell"; title = "Automatically play"; ObjectID = "293"; */
+"Automatically play" = "Tocar automaticamente";
+
+/* Class = "NSButtonCell"; title = "Automatically load"; ObjectID = "295"; */
+"Automatically load" = "Carregar automaticamente";
+
+/* Class = "NSButtonCell"; title = "Loop"; ObjectID = "297"; */
+"Loop" = "Intermitente";

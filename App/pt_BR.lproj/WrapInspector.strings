@@ -1,0 +1,63 @@
+﻿/* Class = "NSButtonCell"; title = "float\nright"; ObjectID = "39"; */
+"float\nright" = "flutuante\ndireita";
+
+/* Class = "NSButtonCell"; title = "float\nleft"; ObjectID = "40"; */
+"float\nleft" = "flutuante\nesquerda";
+
+/* Class = "NSButtonCell"; title = "block\nright"; ObjectID = "41"; */
+"block\nright" = "bloquear\ndireita";
+
+/* Class = "NSButtonCell"; title = "block\nctr."; ObjectID = "42"; */
+"block\nctr." = "bloquear\ncentralizado";
+
+/* Class = "NSButtonCell"; title = "block\nleft"; ObjectID = "43"; */
+"block\nleft" = "bloquear\nesquerda";
+
+/* Class = "NSTextFieldCell"; title = "Object Placement"; ObjectID = "50"; */
+"Object Placement" = "Posicionamento do Objeto";
+
+/* Class = "NSButton"; designAccessibilityDescription = "aligned left"; ObjectID = "53"; */
+"aligned left" = "alinhado à esquerda";
+
+/* Class = "NSButton"; designAccessibilityDescription = "aligned center"; ObjectID = "55"; */
+"aligned center" = "centralizado";
+/* Class = "NSButton"; designAccessibilityDescription = "floated left"; ObjectID = "59"; */
+"floated left" = "flutuante à esquerda";
+
+/* Class = "NSButton"; designAccessibilityDescription = "floated right"; ObjectID = "61"; */
+"floated right" = "flutuante à direita";
+
+/* Class = "NSButtonCell"; title = "Inline (moves with text)"; ObjectID = "107"; */
+"Inline (moves with text)" = "Em Linha (move com o texto)";
+
+/* Class = "NSButtonCell"; title = "Callout"; ObjectID = "108"; */
+"Callout" = "Texto Explicativo";
+
+/* Class = "NSButtonCell"; title = "Radio"; ObjectID = "109"; */
+"Radio" = "Rádio";
+
+/* Class = "NSButtonCell"; title = "Object causes wrap"; ObjectID = "241"; */
+"Object causes wrap" = "O objeto enviolve o texto";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "254"; */
+"Box" = "Caixa";
+/* Class = "NSTextFieldCell"; title = "Layout"; ObjectID = "295"; */
+"Layout" = "Layout";
+
+/* Class = "NSButtonCell"; title = "Show Caption"; ObjectID = "296"; */
+"Show Caption" = "Exibir Título";
+
+/* Class = "NSButtonCell"; title = "Show Introduction"; ObjectID = "297"; */
+"Show Introduction" = "Exibir Introdução";
+
+/* Class = "NSButtonCell"; title = "Show Title"; ObjectID = "298"; */
+"Show Title" = "Exibir Título";
+
+/* Class = "NSButtonCell"; title = "Sidebar"; ObjectID = "314"; */
+"Sidebar" = "Barra Lateral";
+
+/* Class = "NSTextFieldCell"; title = "Not all designs/placements support this"; ObjectID = "466"; */
+"Not all designs/placements support this" = "Nem todos os designs/posicionamentos são suportados";
+
+/* Class = "NSButtonCell"; title = "Border"; ObjectID = "467"; */
+"Border" = "Borda";

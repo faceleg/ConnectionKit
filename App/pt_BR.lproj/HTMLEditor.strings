@@ -1,0 +1,40 @@
+﻿/* Class = "KTHTMLEditorWindow"; title = "Raw HTML Editor"; ObjectID = "5"; */
+"Raw HTML Editor" = "Editor de HTML Puro";
+
+/* Class = "NSButton"; gToolTip = "Open Help"; ObjectID = "19"; */
+"Open Help" = "Abrir Ajuda";
+
+/* Class = "NSImageView"; designAccessibilityDescription = "Validation Status"; ObjectID = "67"; */
+"Validation Status" = "Status de Validação";
+
+/* Class = "NSToolbarItem"; label = "Validate"; ObjectID = "116"; */
+"Validate" = "Validação";
+/* Class = "NSToolbarItem"; label = "Update Preview"; ObjectID = "117"; */
+"Update Preview" = "Atualizar Visualização";
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "120"; */
+"OtherViews" = "Outras Exibições";
+
+/* Class = "NSMenuItem"; title = "Other"; ObjectID = "121"; */
+"Other" = "Outro";
+
+/* Class = "NSMenuItem"; title = "PHP"; ObjectID = "123"; */
+"PHP" = "PHP";
+
+/* Class = "NSMenuItem"; title = "HTML"; ObjectID = "124"; */
+"HTML" = "HTML";
+
+/* Class = "NSMenuItem"; title = "JavaScript"; ObjectID = "127"; */
+"JavaScript" = "JavaScript";
+
+/* Class = "NSToolbarItem"; label = "Content Type"; ObjectID = "129"; */
+"Content Type" = "Tipo de Conteúdo";
+/* Class = "NSImageView"; designAccessibilityDescription = "Load Status"; ObjectID = "144"; */
+"Load Status" = "Status de Carregamento";
+
+/* Class = "NSImageView"; gToolTip = "The preference to show \"live\" data feeds and pages is turned off, so any resources loaded by this raw HTML will not be visible."; ObjectID = "144"; */
+"The preference to show \"live\" data feeds and pages is turned off, so any resources loaded by this raw HTML will not be visible." = "A preferência para exibir dados de campos \"ativos\" e páginas está desativado, por isso todos os recursos carregados por este código HTML puro não será visível.";
+/* Class = "NSTextFieldCell"; title = "Loaded items will not be visible."; ObjectID = "146"; */
+"Loaded items will not be visible." = "Os itens carregados não serão visíveis";
+
+/* Class = "NSMenuItem"; title = "HTML — No Preview"; ObjectID = "167"; */
+"HTML — No Preview" = "HTML — Sem Visualização";

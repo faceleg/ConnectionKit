@@ -1,0 +1,119 @@
+﻿/* Class = "NSTabViewItem"; label = "Site"; ObjectID = "4"; */
+"Site" = "Site";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "68"; */
+"Box" = "Caixa";
+
+/* Class = "NSTabViewItem"; label = "Appearance"; ObjectID = "170"; */
+"Appearance" = "Aparência";
+
+/* Class = "NSTextFieldCell"; title = "Layout"; ObjectID = "173"; */
+"Layout" = "Layout";
+
+/* Class = "NSButtonCell"; title = "Site Title"; ObjectID = "175"; */
+"Site Title" = "Título do Site";
+
+/* Class = "NSButtonCell"; title = "Tagline"; ObjectID = "177"; */
+"Tagline" = "Tagline";
+
+/* Class = "NSButtonCell"; title = "Footer"; ObjectID = "179"; */
+"Footer" = "Rodapé";
+/* Class = "NSButtonCell"; title = "Choose…"; ObjectID = "288"; */
+"Choose…" = "Escolher...";
+
+/* Class = "NSTextFieldCell"; title = "Banner"; ObjectID = "291"; */
+"Banner" = "Banner";
+
+/* Class = "NSButtonCell"; title = "Graphical Titles"; ObjectID = "297"; */
+"Graphical Titles" = "Títulos Gráficos";
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "318"; */
+"OtherViews" = "Outras Exibições";
+
+/* Class = "NSMenuItem"; title = "Design-supplied"; ObjectID = "319"; */
+"Design-supplied" = "Design fornecidos";
+
+/* Class = "NSMenuItem"; title = "Image Fill"; ObjectID = "320"; */
+"Image Fill" = "Preenchimento da Imagem";
+/* Class = "NSButtonCell"; title = "Configure…"; ObjectID = "333"; */
+"Configure…" = "Configurar...";
+
+/* Class = "NSPopUpButton"; designAccessibilityDescription = "Character Encoding"; ObjectID = "421"; */
+"Character Encoding" = "Codificação de Caracteres";
+/* Class = "NSMenuItem"; title = "UTF-8 (Recommended)"; ObjectID = "435"; */
+"UTF-8 (Recommended)" = "UTF-8 (Recomendado)";
+
+/* Class = "NSMenuItem"; title = "ISO-8859-1 / Latin 1"; ObjectID = "436"; */
+"ISO-8859-1 / Latin 1" = "ISO-8859-1 / Latin 1";
+
+/* Class = "NSMenuItem"; title = "US-ASCII"; ObjectID = "437"; */
+"US-ASCII" = "US-ASCII";
+
+/* Class = "NSMenuItem"; title = "UTF-16"; ObjectID = "438"; */
+"UTF-16" = "UTF-16";
+/* Class = "NSSlider"; designAccessibilityDescription = "Scale"; ObjectID = "459"; */
+"Scale" = "Escala";
+
+/* Class = "NSSlider"; designAccessibilityDescription = "JPEG Quality"; ObjectID = "497"; */
+"JPEG Quality" = "Qualidade do JPEG";
+
+/* Class = "NSSlider"; designAccessibilityHelp = "Scale from lowest quality, with smallest size, to highest quality, with the largest size"; ObjectID = "497"; */
+"Scale from lowest quality, with smallest size, to highest quality, with the largest size" = "Escala de menor qualidade, com menor tamanho, para alta qualidade, com o maior tamanho";
+
+/* Class = "NSTextFieldCell"; title = "Highest Quality"; ObjectID = "501"; */
+"Highest Quality" = "Alta Qualidade";
+
+/* Class = "NSTextFieldCell"; title = "Smallest Size"; ObjectID = "502"; */
+"Smallest Size" = "Baixa Qualidade";
+/* Class = "NSTextFieldCell"; title = "Scaled Images"; ObjectID = "508"; */
+"Scaled Images" = "Imagens Escaladas";
+
+/* Class = "NSSlider"; designAccessibilityDescription = "Sharpening"; ObjectID = "510"; */
+"Sharpening" = "Nitidez";
+
+/* Class = "NSSlider"; designAccessibilityHelp = "Scale from \"off\" to \"sharpest\""; ObjectID = "510"; */
+"Scale from \"off\" to \"sharpest\"" = "Escalar de \"desativado\" para \"mais nítido\"";
+
+/* Class = "NSTextFieldCell"; title = "Sharpest"; ObjectID = "513"; */
+"Sharpest" = "Mais Nítidez";
+
+/* Class = "NSTextFieldCell"; title = "Off"; ObjectID = "514"; */
+"Off" = "Desativar";
+/* Class = "NSButtonCell"; title = "Logo"; ObjectID = "520"; */
+"Logo" = "Logo";
+/* Class = "NSImageView"; designAccessibilityDescription = "Favicon"; ObjectID = "594"; */
+"Favicon" = "Favicon";
+
+/* Class = "NSImageView"; gToolTip = "A small bookmark icon for your site."; ObjectID = "594"; */
+"A small bookmark icon for your site." = "Um pequeno ícone para o seu site favorito.";
+/* Class = "NSMenuItem"; title = "None"; ObjectID = "600"; */
+"None" = "Nenhum";
+/* Class = "NSTextField"; designAccessibilityDescription = "Author"; ObjectID = "628"; */
+"Author" = "Autor";
+
+/* Class = "NSPopUpButton"; designAccessibilityDescription = "Language"; ObjectID = "631"; */
+"Language" = "Idioma";
+
+/* Class = "NSTextField"; designAccessibilityDescription = "Code"; ObjectID = "632"; */
+"Code" = "Código";
+/* Class = "NSMenuItem"; title = "Other…"; ObjectID = "639"; */
+"Other…" = "Outro...";
+/* Class = "NSPopUpButton"; designAccessibilityDescription = "Date Format"; ObjectID = "650"; */
+"Date Format" = "Formato da Data";
+
+/* Class = "NSButtonCell"; title = "Also show time"; ObjectID = "652"; */
+"Also show time" = "Também exibirá horário";
+/* Class = "NSMenuItem"; title = "Full"; ObjectID = "655"; */
+"Full" = "Completo";
+
+/* Class = "NSMenuItem"; title = "Long"; ObjectID = "656"; */
+"Long" = "Longo";
+
+/* Class = "NSMenuItem"; title = "Short"; ObjectID = "657"; */
+"Short" = "Curto";
+
+/* Class = "NSMenuItem"; title = "Medium"; ObjectID = "658"; */
+"Medium" = "Médio";
+/* Class = "NSMenuItem"; title = "Sandvox Castle"; ObjectID = "662"; */
+"Sandvox Castle" = "Castelo Sandvox";
+/* Class = "NSTextFieldCell"; title = "Google Tools"; ObjectID = "755"; */
+"Google Tools" = "Ferramentas do Google";

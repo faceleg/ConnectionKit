@@ -1,0 +1,31 @@
+﻿/* Class = "NSBox"; title = "Box"; ObjectID = "2"; */
+"Box" = "Caixa";
+
+/* Class = "NSTextFieldCell"; title = "For visitors who cannot see the image"; ObjectID = "7"; */
+"For visitors who cannot see the image" = "Para os visitantes que não conseguem ver a imagem";
+
+/* Class = "NSTextFieldCell"; title = "Alternate Text"; ObjectID = "9"; */
+"Alternate Text" = "Texto Alternativo";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "15"; */
+"OtherViews" = "Outras Exibições";
+
+/* Class = "NSMenuItem"; title = "JPEG (best for photos)"; ObjectID = "16"; */
+"JPEG (best for photos)" = "JPEG (melhor para fotos)";
+
+/* Class = "NSMenuItem"; title = "PNG"; ObjectID = "17"; */
+"PNG" = "PNG";
+
+/* Class = "NSMenuItem"; title = "GIF"; ObjectID = "18"; */
+"GIF" = "GIF";
+/* Class = "NSTextFieldCell"; title = "Format"; ObjectID = "21"; */
+"Format" = "Formatar";
+
+/* Class = "NSButtonCell"; title = "Enclosure in RSS Feeds"; ObjectID = "37"; */
+"Enclosure in RSS Feeds" = "Acrescentar no RSS Feeds";
+
+/* Class = "NSTextFieldCell"; title = "Choose a file or URL for an image, video, audio, or Flash file."; ObjectID = "43"; */
+"Choose a file or URL for an image, video, audio, or Flash file." = "Escolha um arquivo ou URL de uma imagem, vídeo, áudio ou arquivos Flash.";
+
+/* Class = "NSTextFieldCell"; title = "Advanced"; ObjectID = "49"; */
+"Advanced" = "Avançado";

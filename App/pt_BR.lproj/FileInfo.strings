@@ -1,0 +1,17 @@
+﻿/* Class = "NSTextFieldCell"; placeholderString = "Choose a file or enter external URL"; ObjectID = "7"; */
+"Choose a file or enter external URL" = "Escolha um arquivo ou digite uma URL externa";
+
+/* Class = "NSTextFieldCell"; title = "Foo-bar.png"; ObjectID = "8"; */
+"Foo-bar.png" = "Foo-bar.png";
+
+/* Class = "NSTextFieldCell"; title = "File Info"; ObjectID = "9"; */
+"File Info" = "Informações do Arquivo";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "11"; */
+"OtherViews" = "Outras Exibições";
+
+/* Class = "NSMenuItem"; title = "Choose…"; ObjectID = "12"; */
+"Choose…" = "Escolher...";
+
+/* Class = "NSMenuItem"; title = "Enter External URL…"; ObjectID = "13"; */
+"Enter External URL…" = "Digitar uma URL Externa...";

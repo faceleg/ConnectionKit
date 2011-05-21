@@ -1,0 +1,54 @@
+﻿/* Class = "NSWindow"; title = "Window"; ObjectID = "1"; */
+"Window" = "Janela";
+
+/* Class = "NSButtonCell"; title = "Done"; ObjectID = "5"; */
+"Done" = "Finalizar";
+
+/* Class = "NSTabViewItem"; label = "None"; ObjectID = "8"; */
+"None" = "Nenhum";
+
+/* Class = "NSTabViewItem"; label = "Haloscan"; ObjectID = "9"; */
+"Haloscan" = "Haloscan";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "14"; */
+"OtherViews" = "Outras Exibições";
+
+/* Class = "NSMenuItem"; title = "Disqus"; ObjectID = "15"; */
+"Disqus" = "Disqus";
+
+/* Class = "NSMenuItem"; title = "IntenseDebate"; ObjectID = "16"; */
+"IntenseDebate" = "IntenseDebate";
+
+/* Class = "NSTextFieldCell"; title = "Comments Provider:"; ObjectID = "19"; */
+"Comments Provider:" = "Comentários do Provedor:";
+/* Class = "NSTabViewItem"; label = "Echo"; ObjectID = "23"; */
+"Echo" = "Echo";
+
+/* Class = "NSTextFieldCell"; title = "Moderator Email:"; ObjectID = "44"; */
+"Moderator Email:" = "E-mail do Moderador:";
+/* Class = "NSTextFieldCell"; title = "Account ID:"; ObjectID = "59"; */
+"Account ID:" = "ID da Conta:";
+
+/* Class = "NSTextFieldCell"; title = "Shortname:"; ObjectID = "64"; */
+"Shortname:" = "Apelido:";
+
+/* Class = "NSTextFieldCell"; title = "Haloscan is no longer supported"; ObjectID = "67"; */
+"Haloscan is no longer supported" = "Haloscan não é mais suportado";
+
+/* Class = "NSMenuItem"; title = "Facebook"; ObjectID = "82"; */
+"Facebook" = "Facebook";
+/* Class = "NSTextFieldCell"; title = "App ID:"; ObjectID = "92"; */
+"App ID:" = "ID da Apple:";
+
+/* Class = "NSButtonCell"; title = "Register Site…"; ObjectID = "97"; */
+"Register Site…" = "Registrar Site...";
+/* Class = "NSTextFieldCell"; title = "Number of Posts:"; ObjectID = "115"; */
+"Number of Posts:" = "Número de Postagens...";
+
+/* Class = "NSTextFieldCell"; title = "Color Scheme:"; ObjectID = "119"; */
+"Color Scheme:" = "Esquema de Cores:";
+/* Class = "NSMenuItem"; title = "Light"; ObjectID = "123"; */
+"Light" = "Suave";
+
+/* Class = "NSMenuItem"; title = "Dark"; ObjectID = "124"; */
+"Dark" = "Escuro";

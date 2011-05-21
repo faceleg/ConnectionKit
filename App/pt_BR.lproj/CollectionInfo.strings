@@ -1,0 +1,8 @@
+﻿/* Class = "KTLinkSourceView"; designAccessibilityDescription = "target"; ObjectID = "4"; */
+"target" = "destino";
+
+/* Class = "NSTextFieldCell"; title = "Drag target to a collection in the site outline"; ObjectID = "5"; */
+"Drag target to a collection in the site outline" = "Arraste o alvo para uma coleção dentro do site";
+
+/* Class = "NSTextFieldCell"; title = "Collection to Index"; ObjectID = "38"; */
+"Collection to Index" = "Coleção para o Índice";

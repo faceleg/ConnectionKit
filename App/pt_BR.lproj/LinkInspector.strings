@@ -1,0 +1,49 @@
+﻿/* Class = "NSBox"; title = "Box"; ObjectID = "4"; */
+"Box" = "Caixa";
+
+/* Class = "NSButtonCell"; title = "Make all links active"; ObjectID = "6"; */
+"Make all links active" = "Tornar todos os links ativos";
+
+/* Class = "NSTextFieldCell"; title = "Hold down Shift key over a link to activate it"; ObjectID = "8"; */
+"Hold down Shift key over a link to activate it" = "Pressionar a tecla Shift sobre um link para ativá-lo";
+
+/* Class = "NSButtonCell"; title = "Open in new window"; ObjectID = "18"; */
+"Open in new window" = "Abrir em nova janela";
+
+/* Class = "KTLinkSourceView"; designAccessibilityDescription = "target"; ObjectID = "24"; */
+"target" = "destino";
+
+/* Class = "NSTextFieldCell"; title = "Drag target to a page in the site outline"; ObjectID = "33"; */
+"Drag target to a page in the site outline" = "Arrastar o alvo para uma página dentro do site";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "132"; */
+"OtherViews" = "Outras Exibições";
+
+/* Class = "NSMenuItem"; title = "External URL"; ObjectID = "133"; */
+"External URL" = "URL Externa";
+
+/* Class = "NSMenuItem"; title = "Page in this Site"; ObjectID = "134"; */
+"Page in this Site" = "Página neste Site";
+
+/* Class = "NSMenuItem"; title = "Full-size image"; ObjectID = "135"; */
+"Full-size image" = "Imagem de tamanho total";
+
+/* Class = "NSTextFieldCell"; title = "Link To:"; ObjectID = "137"; */
+"Link To:" = "Ligar para:";
+
+/* Class = "NSTextFieldCell"; title = "URL:"; ObjectID = "144"; */
+"URL:" = "URL:";
+/* Class = "NSMenuItem"; title = "Nothing"; ObjectID = "166"; */
+"Nothing" = "Nada";
+
+/* Class = "NSMenuItem"; title = "Email"; ObjectID = "178"; */
+"Email" = "E-mail";
+
+/* Class = "NSTabViewItem"; label = "Item 4"; ObjectID = "179"; */
+"Item 4" = "Item 4";
+
+/* Class = "NSTextFieldCell"; title = "To:"; ObjectID = "182"; */
+"To:" = "Para:";
+
+/* Class = "NSTextFieldCell"; title = "LOCALIZATION NOTE: \"Open in new window\" should just be \"new window\" in longer language (FR, DE)"; ObjectID = "195"; */
+"LOCALIZATION NOTE: \"Open in new window\" should just be \"new window\" in longer language (FR, DE)" = "NOTA DE TRADUÇÃO: \"Abrir em nova janela\" deve ser ajustado para \"nova janela\" em idiomas maiores (FR, DE, BR)";

@@ -1,0 +1,415 @@
+﻿/* Class = "NSMenuItem"; title = "Bring All to Front"; ObjectID = "5"; */
+"Bring All to Front" = "Trazer Tudo Para Frente";
+
+/* Class = "NSMenuItem"; title = "Window"; ObjectID = "19"; */
+"Window" = "Janela";
+
+/* Class = "NSMenuItem"; title = "Minimize"; ObjectID = "23"; */
+"Minimize" = "Minimizar";
+/* Class = "NSMenu"; title = "MainMenu"; ObjectID = "29"; */
+"MainMenu" = "Menu Principal";
+
+/* Class = "NSMenuItem"; title = "Sandvox"; ObjectID = "56"; */
+"Sandvox" = "Sandvox";
+/* Class = "NSMenuItem"; title = "About Sandvox"; ObjectID = "58"; */
+"About Sandvox" = "Sobre o Sandvox";
+
+/* Class = "NSMenuItem"; title = "Open…"; ObjectID = "72"; */
+"Open…" = "Abrir...";
+
+/* Class = "NSMenuItem"; title = "Close"; ObjectID = "73"; */
+"Close" = "Fechar";
+
+/* Class = "NSMenu"; title = "File"; ObjectID = "81"; */
+"File" = "Arquivo";
+
+/* Class = "NSMenuItem"; title = "New Site…"; ObjectID = "82"; */
+"New Site…" = "Novo Site...";
+/* Class = "NSMenuItem"; title = "Help"; ObjectID = "103"; */
+"Help" = "Ajuda";
+/* Class = "NSMenuItem"; title = "Preferences…"; ObjectID = "129"; */
+"Preferences…" = "Preferências...";
+
+/* Class = "NSMenu"; title = "Services"; ObjectID = "130"; */
+"Services" = "Serviços";
+/* Class = "NSMenuItem"; title = "Hide Sandvox"; ObjectID = "134"; */
+"Hide Sandvox" = "Ocultar o Sandvox";
+
+/* Class = "NSMenuItem"; title = "Quit Sandvox"; ObjectID = "136"; */
+"Quit Sandvox" = "Sair do Sandvox";
+
+/* Class = "NSMenuItem"; title = "Hide Others"; ObjectID = "145"; */
+"Hide Others" = "Ocultar Outros";
+
+/* Class = "NSMenuItem"; title = "Show All"; ObjectID = "150"; */
+"Show All" = "Exibir Tudo";
+
+/* Class = "NSMenuItem"; title = "Copy"; ObjectID = "157"; */
+"Copy" = "Copiar";
+
+/* Class = "NSMenuItem"; title = "Undo"; ObjectID = "158"; */
+"Undo" = "Desfazer";
+
+/* Class = "NSMenuItem"; title = "Cut"; ObjectID = "160"; */
+"Cut" = "Recortar";
+
+/* Class = "NSMenuItem"; title = "Edit"; ObjectID = "163"; */
+"Edit" = "Editar";
+
+/* Class = "NSMenuItem"; title = "Delete"; ObjectID = "164"; */
+"Delete" = "Excluir";
+/* Class = "NSMenuItem"; title = "Paste"; ObjectID = "171"; */
+"Paste" = "Colar";
+
+/* Class = "NSMenuItem"; title = "Select All"; ObjectID = "172"; */
+"Select All" = "Selecionar Tudo";
+
+/* Class = "NSMenuItem"; title = "Redo"; ObjectID = "173"; */
+"Redo" = "Refazer";
+
+/* Class = "NSMenuItem"; title = "Zoom"; ObjectID = "203"; */
+"Zoom" = "Zoom";
+
+/* Class = "NSMenu"; title = "View"; ObjectID = "288"; */
+"View" = "Visualizar";
+/* Class = "NSMenuItem"; title = "Show Toolbar"; ObjectID = "293"; */
+"Show Toolbar" = "Exibir Barra de Ferramentas";
+
+/* Class = "NSMenuItem"; title = "Customize Toolbar…"; ObjectID = "294"; */
+"Customize Toolbar…" = "Personalizar Barra de Ferramentas...";
+
+/* Class = "NSMenuItem"; title = "Publish"; ObjectID = "295"; */
+"Publish" = "Publicar";
+/* Class = "NSMenuItem"; title = "Group as Collection"; ObjectID = "305"; */
+"Group as Collection" = "Agrupar como Coleção";
+
+/* Class = "NSMenuItem"; title = "Release Notes"; ObjectID = "310"; */
+"Release Notes" = "Notas de Lançamento";
+
+/* Class = "NSMenuItem"; title = "Acknowledgments"; ObjectID = "312"; */
+"Acknowledgments" = "Agradecimentos";
+
+/* Class = "NSMenuItem"; title = "Visit Support Forum…"; ObjectID = "344"; */
+"Visit Support Forum…" = "Visitar Fórum de Suporte...";
+
+/* Class = "NSMenuItem"; title = "Setup Host…"; ObjectID = "369"; */
+"Setup Host…" = "Configurar Domínio...";
+
+/* Class = "NSMenuItem"; title = "Make Text Bigger"; ObjectID = "387"; */
+"Make Text Bigger" = "Criar Texto Grande";
+
+/* Class = "NSMenuItem"; title = "Make Text Smaller"; ObjectID = "388"; */
+"Make Text Smaller" = "Criar Texto Pequeno";
+
+/* Class = "NSMenuItem"; title = "Open Recent"; ObjectID = "396"; */
+"Open Recent" = "Abrir Recentes";
+/* Class = "NSMenuItem"; title = "Clear Menu"; ObjectID = "398"; */
+"Clear Menu" = "Limpar Menu";
+
+/* Class = "NSMenuItem"; title = "Save As…"; ObjectID = "426"; */
+"Save As…" = "Salvar Como...";
+
+/* Class = "NSMenuItem"; title = "Small Page Icons"; ObjectID = "429"; */
+"Small Page Icons" = "Ícones de Página Pequenos";
+
+/* Class = "NSMenuItem"; title = "Paste and Match Style"; ObjectID = "656"; */
+"Paste and Match Style" = "Colar e Combinar Estilos";
+
+/* Class = "NSMenuItem"; title = "Create Link…"; ObjectID = "687"; */
+"Create Link…" = "Criar Link...";
+
+/* Class = "NSMenuItem"; title = "Duplicate"; ObjectID = "695"; */
+"Duplicate" = "Duplicar";
+
+/* Class = "NSMenuItem"; title = "Deselect All"; ObjectID = "697"; */
+"Deselect All" = "Cancelar Seleção";
+
+/* Class = "NSMenuItem"; title = "Make Text Normal Size"; ObjectID = "714"; */
+"Make Text Normal Size" = "Criar Texto de Tamanho Normal";
+
+/* Class = "NSMenuItem"; title = "Publish All"; ObjectID = "725"; */
+"Publish All" = "Publicar Tudo";
+
+/* Class = "NSMenuItem"; title = "Publish Changes"; ObjectID = "726"; */
+"Publish Changes" = "Publicar Alterações";
+
+/* Class = "NSMenuItem"; title = "Export…"; ObjectID = "727"; */
+"Export…" = "Exportar...";
+
+/* Class = "NSMenuItem"; title = "Web View"; ObjectID = "782"; */
+"Web View" = "Exibir Web";
+/* Class = "NSMenuItem"; title = "Standard Web View"; ObjectID = "795"; */
+"Standard Web View" = "Exibição Padrão de Web";
+
+/* Class = "NSMenuItem"; title = "HTML Source"; ObjectID = "799"; */
+"HTML Source" = "Código HTML";
+
+/* Class = "NSMenuItem"; title = "RSS"; ObjectID = "803"; */
+"RSS" = "RSS";
+
+/* Class = "NSMenuItem"; title = "Reload Page"; ObjectID = "809"; */
+"Reload Page" = "Recarregar Página";
+
+/* Class = "NSMenuItem"; title = "Sandvox Help"; ObjectID = "817"; */
+"Sandvox Help" = "Ajuda do Sandvox";
+
+/* Class = "NSMenuItem"; title = "Buy/Register Sandvox…"; ObjectID = "820"; */
+"Buy/Register Sandvox…" = "Compar/Registrar o Sandvox...";
+
+/* Class = "NSMenuItem"; title = "Watch Video Introduction"; ObjectID = "840"; */
+"Watch Video Introduction" = "Assistir Vídeo de Introdução";
+
+/* Class = "NSMenuItem"; title = "Format"; ObjectID = "919"; */
+"Format" = "Formatar";
+/* Class = "NSMenuItem"; title = "Alignment"; ObjectID = "921"; */
+"Alignment" = "Alinhamento";
+/* Class = "NSMenuItem"; title = "Align Left"; ObjectID = "923"; */
+"Align Left" = "Alinhar à Esquerda";
+
+/* Class = "NSMenuItem"; title = "Center"; ObjectID = "924"; */
+"Center" = "Centralizar";
+
+/* Class = "NSMenuItem"; title = "Align Right"; ObjectID = "926"; */
+"Align Right" = "Alinhas à Direita";
+
+/* Class = "NSMenuItem"; title = "Show Fonts"; ObjectID = "927"; */
+"Show Fonts" = "Exibir Fontes";
+
+/* Class = "NSMenuItem"; title = "Show Colors"; ObjectID = "928"; */
+"Show Colors" = "Exibir Cores";
+
+/* Class = "NSMenuItem"; title = "Paste HTML into Text"; ObjectID = "958"; */
+"Paste HTML into Text" = "Colar HTML em um Texto";
+
+/* Class = "NSMenuItem"; title = "Baseline"; ObjectID = "962"; */
+"Baseline" = "Base da LInha";
+/* Class = "NSMenuItem"; title = "Use Default"; ObjectID = "964"; */
+"Use Default" = "Usar Padrão";
+
+/* Class = "NSMenuItem"; title = "Superscript"; ObjectID = "965"; */
+"Superscript" = "Sobrescrito";
+
+/* Class = "NSMenuItem"; title = "Subscript"; ObjectID = "966"; */
+"Subscript" = "Subscrito";
+
+/* Class = "NSMenuItem"; title = "Bold"; ObjectID = "977"; */
+"Bold" = "Negrito";
+
+/* Class = "NSMenuItem"; title = "Italic"; ObjectID = "979"; */
+"Italic" = "Itálico";
+
+/* Class = "NSMenuItem"; title = "Underline"; ObjectID = "981"; */
+"Underline" = "Sublinhado";
+
+/* Class = "NSMenuItem"; title = "Strikeout"; ObjectID = "984"; */
+"Strikeout" = "Riscado";
+
+/* Class = "NSMenuItem"; title = "Copy Style"; ObjectID = "987"; */
+"Copy Style" = "Copiar Estilo";
+
+/* Class = "NSMenuItem"; title = "Paste Style"; ObjectID = "989"; */
+"Paste Style" = "Colar Estilo";
+
+/* Class = "NSMenuItem"; title = "Clear Style"; ObjectID = "1022"; */
+"Clear Style" = "Limpar Estilo";
+
+/* Class = "NSMenuItem"; title = "Justify"; ObjectID = "1024"; */
+"Justify" = "Justificar";
+
+/* Class = "NSMenuItem"; title = "Visit Published Site"; ObjectID = "1028"; */
+"Visit Published Site" = "Visitar Site Publicado";
+
+/* Class = "NSMenuItem"; title = "Edit Raw HTML…"; ObjectID = "1032"; */
+"Edit Raw HTML…" = "Editar HTML Puro…";
+
+/* Class = "NSMenuItem"; title = "Site Code Injection…"; ObjectID = "1034"; */
+"Site Code Injection…" = "Site da Injeção de Código";
+
+/* Class = "NSMenuItem"; title = "Page Code Injection…"; ObjectID = "1039"; */
+"Page Code Injection…" = "Página da Injeção de Código...";
+
+/* Class = "NSMenuItem"; title = "Paste Link"; ObjectID = "1068"; */
+"Paste Link" = "Colar Link";
+
+/* Class = "NSMenuItem"; title = "Check for Updates…"; ObjectID = "1078"; */
+"Check for Updates…" = "Verificar Atualizações...";
+
+/* Class = "NSMenuItem"; title = "Join Karelia Email List…"; ObjectID = "1120"; */
+"Join Karelia Email List…" = "Assinar Lista de E-mails da Karelia...";
+
+/* Class = "NSMenuItem"; title = "Send Feedback…"; ObjectID = "1127"; */
+"Send Feedback…" = "Enviar Comentários...";
+
+/* Class = "NSMenuItem"; title = "Visit Published Page"; ObjectID = "1149"; */
+"Visit Published Page" = "Visitar Página Publicada";
+
+/* Class = "NSMenuItem"; title = "Publishing Transcript"; ObjectID = "1154"; */
+"Publishing Transcript" = "Transcrever Publicação";
+
+/* Class = "NSMenuItem"; title = "Discover Plug-ins…"; ObjectID = "1157"; */
+"Discover Plug-ins…" = "Procurar Plug-ins...";
+
+/* Class = "NSMenuItem"; title = "Submit to Site Directory…"; ObjectID = "1162"; */
+"Submit to Site Directory…" = "Enviar para o Diretório do Site...";
+
+/* Class = "NSMenuItem"; title = "Save"; ObjectID = "1174"; */
+"Save" = "Salvar";
+
+/* Class = "NSMenuItem"; title = "Revert to Saved"; ObjectID = "1176"; */
+"Revert to Saved" = "Reverter para Salvo";
+
+/* Class = "NSMenuItem"; title = "Find"; ObjectID = "1179"; */
+"Find" = "Localizar";
+
+/* Class = "NSMenuItem"; title = "Spelling and Grammar"; ObjectID = "1180"; */
+"Spelling and Grammar" = "Ortografia e Gramática";
+
+/* Class = "NSMenuItem"; title = "Substitutions"; ObjectID = "1181"; */
+"Substitutions" = "Substituições";
+
+/* Class = "NSMenuItem"; title = "Transformations"; ObjectID = "1182"; */
+"Transformations" = "Transformações";
+
+/* Class = "NSMenuItem"; title = "Speech"; ObjectID = "1183"; */
+"Speech" = "Narração";
+/* Class = "NSMenuItem"; title = "Stop Speaking"; ObjectID = "1185"; */
+"Stop Speaking" = "Parar Narração";
+
+/* Class = "NSMenuItem"; title = "Start Speaking"; ObjectID = "1186"; */
+"Start Speaking" = "Iniciar Narração";
+/* Class = "NSMenuItem"; title = "Capitalize"; ObjectID = "1188"; */
+"Capitalize" = "Colocar em Maiúsculas";
+
+/* Class = "NSMenuItem"; title = "Make Lower Case"; ObjectID = "1189"; */
+"Make Lower Case" = "Minúsculas";
+
+/* Class = "NSMenuItem"; title = "Make Upper Case"; ObjectID = "1190"; */
+"Make Upper Case" = "Maiúsculas";
+/* Class = "NSMenuItem"; title = "Text Replacement"; ObjectID = "1192"; */
+"Text Replacement" = "Substituir Texto";
+
+/* Class = "NSMenuItem"; title = "Data Detectors"; ObjectID = "1193"; */
+"Data Detectors" = "Detectar Datas";
+
+/* Class = "NSMenuItem"; title = "Smart Links"; ObjectID = "1194"; */
+"Smart Links" = "Links Inteligentes";
+
+/* Class = "NSMenuItem"; title = "Smart Dashes"; ObjectID = "1195"; */
+"Smart Dashes" = "Traços Inteligentes";
+
+/* Class = "NSMenuItem"; title = "Smart Quotes"; ObjectID = "1196"; */
+"Smart Quotes" = "Áspas Inteligentes";
+
+/* Class = "NSMenuItem"; title = "Smart Copy/Paste"; ObjectID = "1197"; */
+"Smart Copy/Paste" = "Copiar/Colar Inteligentes";
+
+/* Class = "NSMenuItem"; title = "Show Substitutions"; ObjectID = "1199"; */
+"Show Substitutions" = "Exibir Substituições";
+
+/* Class = "NSMenu"; title = "Spelling"; ObjectID = "1200"; */
+"Spelling" = "Ortografia";
+
+/* Class = "NSMenuItem"; title = "Correct Spelling Automatically"; ObjectID = "1201"; */
+"Correct Spelling Automatically" = "Corrigir Ortografia Automaticamente";
+
+/* Class = "NSMenuItem"; title = "Check Grammar With Spelling"; ObjectID = "1202"; */
+"Check Grammar With Spelling" = "Verificar Gramática e Orotografia";
+
+/* Class = "NSMenuItem"; title = "Check Spelling While Typing"; ObjectID = "1203"; */
+"Check Spelling While Typing" = "Verificar Orotografia ao Digitar";
+
+/* Class = "NSMenuItem"; title = "Check Document Now"; ObjectID = "1205"; */
+"Check Document Now" = "Verificar o Documento Agora";
+
+/* Class = "NSMenuItem"; title = "Show Spelling and Grammar"; ObjectID = "1206"; */
+"Show Spelling and Grammar" = "Exibir Ortografia e Gramática";
+/* Class = "NSMenuItem"; title = "Jump to Selection"; ObjectID = "1208"; */
+"Jump to Selection" = "Ir para a Seleção";
+
+/* Class = "NSMenuItem"; title = "Use Selection for Find"; ObjectID = "1209"; */
+"Use Selection for Find" = "Usar Seleção para Localizar";
+
+/* Class = "NSMenuItem"; title = "Find Previous"; ObjectID = "1210"; */
+"Find Previous" = "Localizar Anterior";
+
+/* Class = "NSMenuItem"; title = "Find Next"; ObjectID = "1211"; */
+"Find Next" = "Localizar Próximo";
+
+/* Class = "NSMenuItem"; title = "Find…"; ObjectID = "1212"; */
+"Find…" = "Localizar...";
+
+/* Class = "NSMenuItem"; title = "Show/Hide Inspector(s)"; ObjectID = "1235"; */
+"Show/Hide Inspector(s)" = "Exibir/Ocultar Inspetores";
+
+/* Class = "NSMenuItem"; title = "Show/Hide Media Browser"; ObjectID = "1239"; */
+"Show/Hide Media Browser" = "Exibir/Ocultar Navegador de Mídias";
+
+/* Class = "NSMenuItem"; title = "New Inspector"; ObjectID = "1242"; */
+"New Inspector" = "Novo Inspetor";
+
+/* Class = "NSMenuItem"; title = "Insert"; ObjectID = "1246"; */
+"Insert" = "Inserir";
+/* Class = "NSMenuItem"; title = "New Page"; ObjectID = "1272"; */
+"New Page" = "Nova Página";
+/* Class = "NSMenuItem"; title = "External Link"; ObjectID = "1282"; */
+"External Link" = "Link Externo";
+
+/* Class = "NSMenuItem"; title = "Raw HTML/text"; ObjectID = "1283"; */
+"Raw HTML/text" = "HTML/Texto Puro";
+
+/* Class = "NSMenuItem"; title = "Choose…"; ObjectID = "1285"; */
+"Choose…" = "Escolher...";
+/* Class = "NSMenuItem"; title = "Line Break"; ObjectID = "1301"; */
+"Line Break" = "Quebra de Linha";
+
+/* Class = "NSMenuItem"; title = "Paragraph Break"; ObjectID = "1304"; */
+"Paragraph Break" = "Quebra de Parágrafo";
+
+/* Class = "NSMenuItem"; title = "Validate HTML (w3.org)"; ObjectID = "1306"; */
+"Validate HTML (w3.org)" = "Validar HTML (w3.org)";
+
+/* Class = "NSMenuItem"; title = "Welcome to Sandvox"; ObjectID = "1308"; */
+"Welcome to Sandvox" = "Bem Vindo ao Sandvox";
+
+/* Class = "NSMenuItem"; title = "Choose Design…"; ObjectID = "1315"; */
+"Choose Design…" = "Escolher Design...";
+
+/* Class = "NSMenuItem"; title = "Raw HTML"; ObjectID = "1341"; */
+"Raw HTML" = "HTML Raw";
+
+/* Class = "NSMenuItem"; title = "Previous Design"; ObjectID = "1355"; */
+"Previous Design" = "Design Anterior";
+
+/* Class = "NSMenuItem"; title = "Next Design"; ObjectID = "1356"; */
+"Next Design" = "Próximo Design";
+
+/* Class = "NSMenuItem"; title = "Choose Comments Provider…"; ObjectID = "1360"; */
+"Choose Comments Provider…" = "Escolher COmentários do Provedor...";
+
+/* Class = "NSMenuItem"; title = "Configure Google Tools…"; ObjectID = "1361"; */
+"Configure Google Tools…" = "Configurar as Ferramentas do Google...";
+
+/* Class = "NSMenuItem"; title = "Advanced"; ObjectID = "1371"; */
+"Advanced" = "Avançado";
+/* Class = "NSMenuItem"; title = "Tidy HTML"; ObjectID = "1373"; */
+"Tidy HTML" = "Organizar HTML";
+
+/* Class = "NSMenuItem"; title = "Text"; ObjectID = "1375"; */
+"Text" = "Texto";
+
+/* Class = "NSMenuItem"; title = "Writing Direction"; ObjectID = "1382"; */
+"Writing Direction" = "Direção da Escrita";
+/* Class = "NSMenuItem"; title = "Paragraph"; ObjectID = "1388"; */
+"Paragraph" = "Parágrafo";
+
+/* Class = "NSMenuItem"; title = "\tDefault"; ObjectID = "1389"; */
+"\tDefault" = "\tPadrão";
+
+/* Class = "NSMenuItem"; title = "\tLeft to Right"; ObjectID = "1390"; */
+"\tLeft to Right" = "\tEsquerda para Direita";
+
+/* Class = "NSMenuItem"; title = "\tRight to Left"; ObjectID = "1391"; */
+"\tRight to Left" = "\tDireita para Esquerda";
+
+/* Class = "NSMenuItem"; title = "Selection"; ObjectID = "1393"; */
+"Selection" = "Seleção";

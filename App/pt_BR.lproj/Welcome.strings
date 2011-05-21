@@ -1,0 +1,49 @@
+﻿/* Class = "NSWindow"; title = "Welcome to Sandvox"; ObjectID = "5"; */
+"Welcome to Sandvox" = "Bem Vindo ao Sandvox";
+
+/* Class = "NSButtonCell"; title = "Create a New Site…"; ObjectID = "119"; */
+"Create a New Site…" = "Criar um Novo Site...";
+
+/* Class = "NSButtonCell"; title = "Open an Existing Site…"; ObjectID = "120"; */
+"Open an Existing Site…" = "Abrir um Site Existente...";
+
+/* Class = "NSTextFieldCell"; title = "Watch our Introduction Video"; ObjectID = "122"; */
+"Watch our Introduction Video" = "Assistir nosso vídeo de introdução";
+
+/* Class = "NSTextFieldCell"; title = "See us build a website from start to finish.\n18 minutes long, in English\nInternet connection required."; ObjectID = "125"; */
+"See us build a website from start to finish.\n18 minutes long, in English\nInternet connection required." = "Veja como construir um site do início ao fim.\n18 minutos de duração, em Inglês\nUma conexão à Internet é necessária.";
+
+/* Class = "NSTableColumn"; designAccessibilityDescription = "website thumbnail"; ObjectID = "135"; */
+"website thumbnail" = "miniatura do site";
+
+/* Class = "NSTableColumn"; designAccessibilityDescription = "website title"; ObjectID = "136"; */
+"website title" = "título do site";
+
+/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "137"; */
+"Text Cell" = "Célula de Texto";
+
+/* Class = "NSTextFieldCell"; title = "Recent Documents"; ObjectID = "140"; */
+"Recent Documents" = "Documentos Recentes";
+
+/* Class = "NSButtonCell"; title = "Open Selected Item"; ObjectID = "145"; */
+"Open Selected Item" = "Abrir Item Selecionado";
+
+/* Class = "NSImageView"; designAccessibilityDescription = "examples of Sandvox websites"; ObjectID = "148"; */
+"examples of Sandvox websites" = "exemplos de websites do Sandvox";
+/* Class = "NSTextFieldCell"; title = "Take a look at what kind of websites you can build with Sandvox."; ObjectID = "159"; */
+"Take a look at what kind of websites you can build with Sandvox." = "Veja que tipo de sites você pode construir com o Sandvox.";
+
+/* Class = "NSTextFieldCell"; title = "Help & Documentation"; ObjectID = "160"; */
+"Help & Documentation" = "Ajuda e Documentação";
+
+/* Class = "NSButtonCell"; title = "Help"; ObjectID = "164"; */
+"Help" = "Ajuda";
+
+/* Class = "NSButtonCell"; title = "Play"; ObjectID = "167"; */
+"Play" = "Iniciar";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "228"; */
+"Box" = "Caixa";
+
+/* Class = "NSButtonCell"; title = "Show at launch"; ObjectID = "242"; */
+"Show at launch" = "Exibir ao carregar";

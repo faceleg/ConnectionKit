@@ -1,0 +1,237 @@
+﻿/* Class = "NSButtonCell"; title = "On This Computer"; ObjectID = "11"; */
+"On This Computer" = "Neste Computador";
+
+/* Class = "NSTabViewItem"; label = "Publishing on This Computer"; ObjectID = "54"; */
+"Publishing on This Computer" = "Publicar Neste Computador";
+
+/* Class = "NSTabViewItem"; label = "Publishing Locations"; ObjectID = "57"; */
+"Publishing Locations" = "Locais de Publicação";
+
+/* Class = "NSTabViewItem"; label = "MobileMe Account"; ObjectID = "61"; */
+"MobileMe Account" = "Conta MobileMe";
+
+/* Class = "NSTabViewItem"; label = "Remote Host"; ObjectID = "66"; */
+"Remote Host" = "Domínio Remoto";
+
+/* Class = "NSTabViewItem"; label = "Overview"; ObjectID = "68"; */
+"Overview" = "Visão Geral";
+
+/* Class = "NSButtonCell"; title = "My Home Directory"; ObjectID = "79"; */
+"My Home Directory" = "Diretório Principal";
+
+/* Class = "NSButtonCell"; title = "Computer"; ObjectID = "80"; */
+"Computer" = "Computador";
+
+/* Class = "NSFormCell"; title = "Store site in a subfolder called:"; ObjectID = "205"; */
+"Store site in a subfolder called:" = "Aramazenar site em uma pasta chamada:";
+
+/* Class = "NSFormCell"; title = "Hostname of this computer:"; ObjectID = "210"; */
+"Hostname of this computer:" = "Domínio deste computador:";
+/* Class = "NSTabViewItem"; label = "Summary"; ObjectID = "505"; */
+"Summary" = "Resumo";
+
+/* Class = "NSTabViewItem"; label = "Error Connecting to Your Computer"; ObjectID = "633"; */
+"Error Connecting to Your Computer" = "Erro ao Conectar Seu Computador";
+
+/* Class = "NSTabViewItem"; label = "Please Activate Web Sharing"; ObjectID = "643"; */
+"Please Activate Web Sharing" = "Por favor, Compartilhar a Web Ativa";
+
+/* Class = "NSTabViewItem"; label = "Testing Your Connection"; ObjectID = "660"; */
+"Testing Your Connection" = "Testando Sua Conexão";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "671"; */
+"Box" = "Caixa";
+
+/* Class = "IBBindingConnection"; designableIsNilPlaceholder = "server.domain.com"; ObjectID = "733"; */
+"server.domain.com" = "server.domain.com";
+
+/* Class = "NSTextField"; gToolTip = "Use '?' as a placeholder for the user ID"; ObjectID = "906"; */
+"Use '?' as a placeholder for the user ID" = "Use '?' como um espaço reservado para o ID de usuário";
+
+/* Class = "NSButtonCell"; title = "On a Remote Host"; ObjectID = "1006"; */
+"On a Remote Host" = "Em um Domínio Remoto";
+
+/* Class = "NSPanel"; title = "Panel"; ObjectID = "1009"; */
+"Panel" = "Painel";
+
+/* Class = "NSButton"; gToolTip = "Browse Remote Host for Folder"; ObjectID = "1025"; */
+"Browse Remote Host for Folder" = "Navegar do Domínio Remoto para Pasta";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "1048"; */
+"OtherViews" = "Outras Exibições";
+
+/* Class = "NSMenuItem"; title = "WebDAV"; ObjectID = "1050"; */
+"WebDAV" = "WebDAV";
+
+/* Class = "NSMenuItem"; title = "SFTP (Most Secure)"; ObjectID = "1052"; */
+"SFTP (Most Secure)" = "SFTP (Mais Seguro)";
+
+/* Class = "NSMenuItem"; title = "FTP (Least Secure)"; ObjectID = "1056"; */
+"FTP (Least Secure)" = "FTP (Menos Seguro)";
+
+/* Class = "NSButton"; gToolTip = "Open Help"; ObjectID = "1114"; */
+"Open Help" = "Abrir Ajuda";
+
+/* Class = "NSButton"; designAccessibilityDescription = "A2 hosting"; ObjectID = "1123"; */
+"A2 hosting" = "Hospedagem A2";
+
+/* Class = "NSButtonCell"; title = "MobileMe"; ObjectID = "1130"; */
+"MobileMe" = "MobileMe";
+
+/* Class = "NSButtonCell"; title = "A2 or other provider (FTP, SFTP, or WebDAV)"; ObjectID = "1131"; */
+"A2 or other provider (FTP, SFTP, or WebDAV)" = "A2 ou outro provedor (FTP, SFTP, ou WebDAV)";
+
+/* Class = "NSButtonCell"; title = "Personal Domain:"; ObjectID = "1962"; */
+"Personal Domain:" = "Domínio Pessoal:";
+
+/* Class = "NSButtonCell"; title = "web.mac.com*"; ObjectID = "1963"; */
+"web.mac.com*" = "web.mac.com*";
+
+/* Class = "NSButtonCell"; title = "web.me.com"; ObjectID = "1965"; */
+"web.me.com" = "web.me.com";
+
+/* Class = "NSButtonCell"; title = "Continue"; ObjectID = "1970"; */
+"Continue" = "Continuar";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "1971"; */
+"Cancel" = "Cancelar";
+
+/* Class = "NSButtonCell"; title = "⇠ Go Back"; ObjectID = "1972"; */
+"⇠ Go Back" = "⇠ Voltar";
+
+/* Class = "NSTextFieldCell"; title = "Where should the site be published on this computer?"; ObjectID = "1973"; */
+"Where should the site be published on this computer?" = "Onde é que o site será publicado no computador?";
+
+/* Class = "NSTextFieldCell"; title = "Choose this option if you share this computer with others.\n\nThe data will be stored in your home folder's \"Sites\" folder."; ObjectID = "1974"; */
+"Choose this option if you share this computer with others.\n\nThe data will be stored in your home folder's \"Sites\" folder." = "Escolha esta opção se você compartilha o computador com outras pessoas.\n\nOs dados serão armazenados em sua pasta pessoal na pasta \"Sites\".";
+
+/* Class = "NSTextFieldCell"; title = "Choose this option if you do not share this computer, or if you want this document to be the primary website for this computer."; ObjectID = "1975"; */
+"Choose this option if you do not share this computer, or if you want this document to be the primary website for this computer." = "Escolha esta opção se você não compartilha este computador ou se você quer que este documento seja o site primário para este computador.";
+
+/* Class = "NSTextFieldCell"; title = "Optional: Enter the machine name where this computer can be reached. If not specified, a numeric IP address will be used."; ObjectID = "1976"; */
+"Optional: Enter the machine name where this computer can be reached. If not specified, a numeric IP address will be used." = "Opcional: Digite o nome da máquina em que o computador pode ser encontrado. Se não especificado, um endereço IP numérico será usado.";
+
+/* Class = "NSTextFieldCell"; title = "Optional: Enter a folder name if you plan on hosting other websites in this location."; ObjectID = "1977"; */
+"Optional: Enter a folder name if you plan on hosting other websites in this location." = "Opcional: Digite o nome da pasta se você planeja hospedar outros sites neste local.";
+
+/* Class = "NSTextFieldCell"; title = "http://foo.bar.com/users/dwood/mysite/"; ObjectID = "1981"; */
+"http://foo.bar.com/users/dwood/mysite/" = "http://foo.bar.com/usuarios/pneto/meusite/";
+
+/* Class = "NSTextFieldCell"; title = "Where will your Web site be published?"; ObjectID = "1982"; */
+"Where will your Web site be published?" = "Onde o seu site será publicado?";
+
+/* Class = "NSTextFieldCell"; title = "Choose this option if your computer is on all the time and is accessible from the Internet at a constant IP address. This option may not be suitable for home setups, especially if you do not have a Static IP address for connection to the Internet."; ObjectID = "1983"; */
+"Choose this option if your computer is on all the time and is accessible from the Internet at a constant IP address. This option may not be suitable for home setups, especially if you do not have a Static IP address for connection to the Internet." = "Escolha esta opção se seu computador estiver ligado o tempo todo e é acessível à Internet em um endereço IP fixo. Esta opção pode não ser apropriada para as configurações domésticas, especialmente se você não tiver um endereço IP para conexão à Internet.";
+
+/* Class = "NSTextFieldCell"; title = "If you are looking for a provider, we recommend A2 Hosting.\n\nBe sure to enter the coupon code “A2Sandvox” for a lifetime 20% discount."; ObjectID = "1986"; */
+"If you are looking for a provider, we recommend A2 Hosting.\n\nBe sure to enter the coupon code “A2Sandvox” for a lifetime 20% discount." = "Se você está procurando um provedor, nós recomendamos o Hosting A2.\n\nNão se esqueça de digitar o código do cupom \"A2Sandvox\" para um desconto de 20% permanente.";
+
+/* Class = "NSButtonCell"; title = "http://c.karelia.com/113"; ObjectID = "1988"; */
+"http://c.karelia.com/113" = "http://c.karelia.com/113";
+
+/* Class = "NSTextFieldCell"; title = "This site will be published…."; ObjectID = "1991"; */
+"This site will be published…." = "Este site está sendo publicado...";
+
+/* Class = "NSTextFieldCell"; title = "Optional: Enter a folder name if you plan on hosting other websites on this MobileMe account."; ObjectID = "1992"; */
+"Optional: Enter a folder name if you plan on hosting other websites on this MobileMe account." = "Opcional: Digite o nome da pasta se você planeja hospedar outros sites sobre essa conta MobileMe.";
+/* Class = "NSButtonCell"; title = "Get MobileMe Account…"; ObjectID = "1996"; */
+"Get MobileMe Account…" = "Receber uma Conta MobileMe...";
+
+/* Class = "NSButtonCell"; title = "Open MobileMe Preferences"; ObjectID = "1997"; */
+"Open MobileMe Preferences" = "Abrir Preferências do MobileMe";
+
+/* Class = "NSTextFieldCell"; placeholderString = "domain.com"; ObjectID = "1998"; */
+"domain.com" = "domain.com";
+
+/* Class = "NSButtonCell"; title = "Setting up MobileMe to use a personal domain"; ObjectID = "1999"; */
+"Setting up MobileMe to use a personal domain" = "Configurar o MobileMe para usar um domínio pessoal";
+
+/* Class = "NSTextFieldCell"; title = "Location:"; ObjectID = "2000"; */
+"Location:" = "Local:";
+
+/* Class = "NSTextFieldCell"; title = "* Legacy — Use for previously published websites"; ObjectID = "2001"; */
+"* Legacy — Use for previously published websites" = "* Legado - Uso de sites publicados anteriormente";
+
+/* Class = "NSTextFieldCell"; title = "Upload Method:"; ObjectID = "2002"; */
+"Upload Method:" = "Método de Envio:";
+
+/* Class = "NSTextFieldCell"; title = "Enter your connection information, as documented by your Internet Service Provider."; ObjectID = "2003"; */
+"Enter your connection information, as documented by your Internet Service Provider." = "Digite suas informações de conexão, como documentado por seu Provedor de Internet.";
+
+/* Class = "NSTextFieldCell"; title = "9999"; ObjectID = "2005"; */
+"9999" = "9999";
+
+/* Class = "NSTextFieldCell"; title = "Port:"; ObjectID = "2006"; */
+"Port:" = "Porta:";
+
+/* Class = "NSTextFieldCell"; title = "Hostname:"; ObjectID = "2008"; */
+"Hostname:" = "Domínio:";
+
+/* Class = "NSTextFieldCell"; title = "The computer to connect to. For example: my-web-host.com, ftp.funhost.com"; ObjectID = "2009"; */
+"The computer to connect to. For example: my-web-host.com, ftp.funhost.com" = "Para o computador se conectar. Por exemplo: meu-dominio-web.com.br, ftp.dominio.com.br";
+
+/* Class = "NSTextFieldCell"; title = "Document Root:"; ObjectID = "2011"; */
+"Document Root:" = "Documento Raiz:";
+
+/* Class = "NSTextFieldCell"; title = "The directory to place the web files.\nFor example: htdocs, www, /home/yourname"; ObjectID = "2012"; */
+"The directory to place the web files.\nFor example: htdocs, www, /home/yourname" = "Diretório para colocar os arquivos web.\nPor exemplo: htdocs, www, /home/seunome";
+
+/* Class = "NSTextFieldCell"; title = "URL Format:"; ObjectID = "2014"; */
+"URL Format:" = "Formato da URL:";
+
+/* Class = "NSTextFieldCell"; title = "What the URL of your site will be.\nFor example: http://www.funhost.com/~yourname/"; ObjectID = "2015"; */
+"What the URL of your site will be.\nFor example: http://www.funhost.com/~yourname/" = "Como será a URL do seu site.\nPor exemplo: http://www.dominio.com.br/~seunome/";
+
+/* Class = "NSButtonCell"; title = "Browse…"; ObjectID = "2016"; */
+"Browse…" = "Procurar...";
+
+/* Class = "NSTextFieldCell"; title = "Username:"; ObjectID = "2017"; */
+"Username:" = "Usuário:";
+
+/* Class = "NSTextFieldCell"; title = "Password:"; ObjectID = "2019"; */
+"Password:" = "Senha...";
+
+/* Class = "NSTextFieldCell"; title = "Password will be stored in the Keychain."; ObjectID = "2021"; */
+"Password will be stored in the Keychain." = "A senha será armazenada no Keychain.";
+/* Class = "NSTextFieldCell"; title = "Optional: Enter a folder name if you plan on hosting other websites on this account."; ObjectID = "2024"; */
+"Optional: Enter a folder name if you plan on hosting other websites on this account." = "Opcional: Digite o nome da pasta se você planeja hospedar outros sites sobre essa conta.";
+
+/* Class = "NSTextFieldCell"; title = "Subfolder:"; ObjectID = "2025"; */
+"Subfolder:" = "Subpasta:";
+
+/* Class = "NSButtonCell"; title = "Use public key"; ObjectID = "2027"; */
+"Use public key" = "Usar chave pública";
+
+/* Class = "NSTextFieldCell"; title = "*"; ObjectID = "2028"; */
+"*" = "*";
+
+/* Class = "NSTextFieldCell"; title = "In order to publish on this computer, you need to turn on Personal Web Sharing from System Preferences."; ObjectID = "2041"; */
+"In order to publish on this computer, you need to turn on Personal Web Sharing from System Preferences." = "Para publicar no seu computador, você precisa ativar o Compartilhamento Web Pessoal nas Preferências do Sistema.";
+
+/* Class = "NSButtonCell"; title = "Open Sharing Preferences"; ObjectID = "2044"; */
+"Open Sharing Preferences" = "Abrir Preferências de Compartilhamento";
+
+/* Class = "NSTextFieldCell"; title = "Sandvox is testing your account and connection information to verify that you are able to place publish files remotely."; ObjectID = "2045"; */
+"Sandvox is testing your account and connection information to verify that you are able to place publish files remotely." = "O Sandvox está testando sua conta e informações de conexão para verificar se você está habilitado para publicar arquivos remotamente.";
+
+/* Class = "NSTextFieldCell"; title = "Label of Step"; ObjectID = "2048"; */
+"Label of Step" = "Etiqueta do Passo";
+
+/* Class = "NSTextFieldCell"; title = "Host Setup:"; ObjectID = "2050"; */
+"Host Setup:" = "Configurar Domínio:";
+
+/* Class = "NSButtonCell"; title = "New Configuration"; ObjectID = "2051"; */
+"New Configuration" = "Nova Configuração";
+
+/* Class = "NSTextFieldCell"; title = "No Account Details"; ObjectID = "2054"; */
+"No Account Details" = "Nenhum Detalhe da Conta";
+
+/* Class = "NSTextFieldCell"; title = "Please enter your details to browse the host"; ObjectID = "2055"; */
+"Please enter your details to browse the host" = "Por favor, informe seus dados para procurar o domínio";
+/* Class = "NSButtonCell"; title = "OK"; ObjectID = "2060"; */
+"OK" = "OK";
+/* Class = "NSButtonCell"; title = "Radio"; ObjectID = "2062"; */
+"Radio" = "Rádio";
+
+/* Class = "NSFormCell"; title = "Field:"; ObjectID = "2063"; */
+"Field:" = "Campo:";

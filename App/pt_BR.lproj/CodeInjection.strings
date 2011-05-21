@@ -1,0 +1,47 @@
+﻿/* Class = "KSNoCascadeWindow"; title = "Code Injection"; ObjectID = "5"; */
+"Code Injection" = "Injeção de Código";
+
+/* Class = "NSTabViewItem"; label = "Head Area"; ObjectID = "8"; */
+"Head Area" = "Cabeçalho da Área";
+
+/* Class = "NSTabViewItem"; label = "Before Document"; ObjectID = "10"; */
+"Before Document" = "Antes do Documento";
+
+/* Class = "NSTabViewItem"; label = "Document Body"; ObjectID = "12"; */
+"Document Body" = "Corpo do Documento";
+
+/* Class = "NSImageView"; designAccessibilityDescription = "injection syringe"; ObjectID = "241"; */
+"injection syringe" = "siringa de injeção";
+
+/* Class = "NSTextFieldCell"; title = "<head>"; ObjectID = "301"; */
+"<head>" = "<head>";
+
+/* Class = "NSTextFieldCell"; title = "</head>"; ObjectID = "302"; */
+"</head>" = "</head>";
+
+/* Class = "NSTextFieldCell"; title = "<meta http-equiv=\"content-type\" content=\"text/html\" charset=\"...\" />"; ObjectID = "303"; */
+"<meta http-equiv=\"content-type\" content=\"text/html\" charset=\"...\" />" = "<meta http-equiv=\"content-type\" content=\"text/html\" charset=\"...\" />";
+
+/* Class = "NSTextFieldCell"; title = "Use this for server-side scripts like PHP. This code is not visible when previewing within Sandvox."; ObjectID = "304"; */
+"Use this for server-side scripts like PHP. This code is not visible when previewing within Sandvox." = "Use isso para servidores de scripts como PHP. Este código não é visível ao visualizar no Sandvox.";
+
+/* Class = "NSTextFieldCell"; title = "<body"; ObjectID = "306"; */
+"<body" = "<body";
+
+/* Class = "NSTextFieldCell"; title = ">"; ObjectID = "307"; */
+">" = ">";
+
+/* Class = "NSTextFieldCell"; title = "</body>"; ObjectID = "308"; */
+"</body>" = "</body>";
+
+/* Class = "NSTextFieldCell"; title = "Sandvox will insert its content for the head between these fields"; ObjectID = "323"; */
+"Sandvox will insert its content for the head between these fields" = "O Sandvox irá inserir o seu conteúdo para o cabeçalho entre esses campos";
+
+/* Class = "NSTextFieldCell"; title = "Sandvox will insert its content for the body between these fields"; ObjectID = "328"; */
+"Sandvox will insert its content for the body between these fields" = "O Sandvox irá inserir o seu conteúdo para o corpo entre esses campos";
+
+/* Class = "NSTabViewItem"; label = "Style Sheet"; ObjectID = "332"; */
+"Style Sheet" = "Folha de Estilos";
+
+/* Class = "NSTextFieldCell"; title = "Use this for CSS to be appended after the styles provided in the design."; ObjectID = "336"; */
+"Use this for CSS to be appended after the styles provided in the design." = "Use isso para o CSS ser acrescentado depois dos estilos fornecidos no projeto.";
