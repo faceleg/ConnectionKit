@@ -142,7 +142,10 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:kKSLicenseStatusChangeNotification
                                                   object:nil];
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:NSManagedObjectContextObjectsDidChangeNotification
+                                                  object:nil];
+	
 	[_outlineView setDataSource:nil];  // don't call [self outlineView] as that may try to load the nib when we don't want it to
 	[_outlineView setDelegate:nil];
     [_outlineView setNextResponder:[self nextResponder]];   // reset responder chain
@@ -186,7 +189,11 @@
     
     
     // Licensing
-    if (outlineView) [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(licenseDidChange:) name:kKSLicenseStatusChangeNotification object:nil];
+    if (outlineView)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(licenseDidChange:) name:kKSLicenseStatusChangeNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(objectsDidChange:) name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
+    }
     
 	
 	// Finally, hook up outline delegate & data source
@@ -216,6 +223,11 @@
 - (BOOL)isOutlineViewLoaded; { return _outlineView != nil; }
 
 - (void)licenseDidChange:(NSNotification *)notification;
+{
+    [[self outlineView] setNeedsDisplay:YES];
+}
+
+- (void)objectsDidChange:(NSNotification *)notification;
 {
     [[self outlineView] setNeedsDisplay:YES];
 }
