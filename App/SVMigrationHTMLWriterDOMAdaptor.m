@@ -104,7 +104,7 @@
     
     // Create text attachment too
     SVTextAttachment *attachment = [SVTextAttachment textAttachmentWithGraphic:graphic];
-    [attachment setCausesWrap:NSBOOL([self allowsPagelets])];
+    [attachment setCausesWrap:NSBOOL([self allowsPagelets] && [[self XMLWriter] openElementsCount] == 0)];
     
     SVRichText *container = [[self textDOMController] representedObject];
     if ([container attachmentsMustBeWrittenInline]) [attachment setWrap:[NSNumber numberWithInt:SVGraphicWrapFloat_1_0]];
