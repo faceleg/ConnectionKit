@@ -87,7 +87,8 @@
     
     
     // Ignore empty elements! #119910
-    if ([[(DOMHTMLElement *)element innerText] isWhitespace])
+    if (![tagName isEqualToString:@"SCRIPT"] &&
+        [[(DOMHTMLElement *)element innerText] isWhitespace])
     {
         return [super handleInvalidDOMElement:element];
     }
