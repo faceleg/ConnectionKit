@@ -27,8 +27,9 @@
 
 #import "NSManagedObjectContext+KTExtensions.h"
 
-#import "NSError+Karelia.h"
 #import "NSArray+Karelia.h"
+#import "NSError+Karelia.h"
+#import "NSString+Karelia.h"
 
 #import "KSExtensibleManagedObject.h"
 #import "KSThreadProxy.h"
@@ -83,7 +84,7 @@
         if ([imageScanner isAtEnd]) break;
         
         NSRange range = NSMakeRange([imageScanner scanLocation], 0);
-        NSString *fragment = [[html string] substringFromIndex:range.location];
+        NSString *fragment = [[html string] ks_substringFromIndex:range.location maxLength:4096];   // don't let get out of hand. #123503
         NSXMLDocument *xmlDoc = [[NSXMLDocument alloc] initWithXMLString:fragment options:NSXMLDocumentTidyHTML error:NULL];
         OBASSERT(xmlDoc);  // HTML tidy shouldn't fail if you give it a simple enough fragment and no prelude stuff to restrict parsing
         
