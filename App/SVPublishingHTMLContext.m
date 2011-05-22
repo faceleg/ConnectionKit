@@ -119,7 +119,11 @@
     
     
     NSString *path = nil;
-    if (preferredFilename)
+    if ([preferredFilename isEqualToString:@"../favicon.ico"])  // DIRTY HACK
+    {
+        path = @"favicon.ico";
+    }
+    else if (preferredFilename)
     {
         path = [[[[media preferredUploadPath]
                   stringByDeletingLastPathComponent]
