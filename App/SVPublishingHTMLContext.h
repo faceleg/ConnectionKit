@@ -28,7 +28,8 @@
     NSUInteger  _didAddMediaWithoutPath;
     
     // Event loop
-    NSUInteger  _disableRunningEventLoop;
+    NSUInteger      _disableRunningEventLoop;
+    NSTimeInterval  _lastEventLoopTimestamp;
 }
 
 - (id)initWithUploadPath:(NSString *)path

@@ -282,13 +282,15 @@
     
     
     // Run event loop to avoid stalling the GUI too long
-    if (!_disableRunningEventLoop)
+    if (!_disableRunningEventLoop &&
+        [[NSDate date] timeIntervalSince1970] > _lastEventLoopTimestamp + 0.010)
     {
         NSEvent *event = [NSApp nextEventMatchingMask:NSAnyEventMask untilDate:[NSDate distantPast] inMode:NSDefaultRunLoopMode dequeue:YES];
         if (event)
         {
             [NSApp sendEvent:event];
         }
+        _lastEventLoopTimestamp = [[NSDate date] timeIntervalSince1970];
     }
 }
 
