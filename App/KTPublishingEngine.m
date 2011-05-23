@@ -707,10 +707,11 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             result = [[self baseRemotePath] stringByAppendingPathComponent:[request preferredUploadPath]];
             
             NSUInteger count = 1;
+            NSString *basePath = result;
             while (![self shouldPublishToPath:result])
             {
                 count++;
-                result = [result ks_stringWithPathSuffix:[NSString stringWithFormat:@"-%u", count]];
+                result = [basePath ks_stringWithPathSuffix:[NSString stringWithFormat:@"-%u", count]];
             }
             
             OBASSERT(result);
