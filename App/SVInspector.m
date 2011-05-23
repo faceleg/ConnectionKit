@@ -33,19 +33,32 @@
 
 #pragma mark Inspected Pages
 
++ (NSArrayController *)inspectedPagesController;
+{
+    static NSArrayController *sInspectedPagesController;
+    if (!sInspectedPagesController)
+    {
+        sInspectedPagesController = [[NSArrayController alloc] init];
+    }
+    return sInspectedPagesController;
+}
+
 @synthesize inspectedPagesController = _inspectedPagesController;
 - (void)setInspectedPagesController:(id <KSCollectionController>)controller
 {
-    [_documentInspector setInspectedObjectsController:controller];
-    [_pageInspector setInspectedObjectsController:controller];
-    [_collectionInspector setInspectedObjectsController:controller];
-    
     if (controller)
     {
+        [[[self class] inspectedPagesController]
+         bind:NSContentArrayBinding
+         toObject:controller
+         withKeyPath:@"selectedObjects"
+         options:NSDICT(NSBOOL(YES), NSSelectsAllWhenSettingContentBindingOption)];
+        
         [_plugInInspector bind:@"inspectedPages" toObject:controller withKeyPath:@"selectedObjects" options:nil];
     }
     else
     {
+        [[[self class] inspectedPagesController] unbind:NSContentArrayBinding];
         [_plugInInspector unbind:@"inspectedPages"];
     }
 }
@@ -95,6 +108,7 @@
     [_documentInspector setIdentifier:@"com.karelia.Sandvox.DocumentInspector"];
     [_documentInspector setTitle:NSLocalizedString(@"Document", @"Document Inspector")];
     [_documentInspector setIcon:[NSImage imageNamed:@"document_inspector"] ];
+    [_documentInspector setInspectedObjectsController:[[self class] inspectedPagesController]];
     
     
     // Page
@@ -102,6 +116,7 @@
     [_pageInspector setIdentifier:@"com.karelia.Sandvox.PageInspector"];
     [_pageInspector setTitle:NSLocalizedString(@"Page", @"Page Inspector")];
     [_pageInspector setIcon:[NSImage imageNamed:@"page_inspector"]];
+    [_pageInspector setInspectedObjectsController:[[self class] inspectedPagesController]];
     
     
     // Wrap
