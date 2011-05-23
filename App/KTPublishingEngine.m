@@ -620,7 +620,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [homePage publish:self recursively:YES];
 }
 
-- (void)startPublishingMedia:(SVMediaRequest *)request cachedSHA1Digest:(NSData *)cachedDigest;
+- (NSString *)startPublishingMedia:(SVMediaRequest *)request cachedSHA1Digest:(NSData *)cachedDigest;
 {
     OBPRECONDITION(request);
     
@@ -665,13 +665,10 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         if (response)
         {
             // It's cached! Just need to calculate to hash which is pretty speedy
-            NSInvocation *invocation = [NSInvocation
-                                        invocationWithSelector:@selector(threaded_publishData:forMedia:)
-                                        target:self
-                                        arguments:NSARRAY([response data], request)];
+            NSData *data = [response data];
+            OBASSERT(data);
             
-            op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
-            [_defaultQueue addOperation:op];
+            return [self publishMediaWithRequest:request cachedData:data SHA1Digest:[data SHA1Digest]];
         }
         else
         {
@@ -684,8 +681,10 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             [_coreImageQueue addOperation:op];  // most of the work should be Core Image's
         }
     }
+    
     [self addDependencyForNextPhase:op];
     [op release];
+    return nil;
 }
 
 - (NSString *)publishMediaWithRequest:(SVMediaRequest *)request cachedData:(NSData *)data SHA1Digest:(NSData *)digest
@@ -783,7 +782,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     else
     {
         // Calculating where to publish media is actually quite time-consuming, so do on a background thread
-        [self startPublishingMedia:request cachedSHA1Digest:nil];
+        result = [self startPublishingMedia:request cachedSHA1Digest:nil];
     }
     
     return result;
