@@ -678,7 +678,14 @@
 		[textBlock setTagName:@"span"];
 		
 		[textBlock setHTMLSourceObject:siteItem];
-		[textBlock setHTMLSourceKeyPath:@"menuTitleHTMLString"];
+		if (0 == aTreeLevel)
+		{
+			[textBlock setHTMLSourceKeyPath:@"menuTitleHTMLStringCanDoNonBreakingSpaces"];	// may be escaped with nbsp
+		}
+		else
+		{
+			[textBlock setHTMLSourceKeyPath:@"menuTitleHTMLString"];		// never converting spaces to nbsp
+		}
 		
 		[textBlock writeHTML:context];
 		

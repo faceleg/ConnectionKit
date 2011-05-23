@@ -28,6 +28,7 @@
 #import "KSPathUtilities.h"
 #import "KTPublishingEngine.h"
 
+#import "KSStringXMLEntityEscaping.h"
 
 @implementation SVSiteItem 
 
@@ -150,18 +151,27 @@
     return [NSSet setWithObjects:@"title", @"customMenuTitle", nil];
 }
 
-- (NSString *)menuTitleHTMLString;
+- (NSString *)menuTitleHTMLStringCanDoNonBreakingSpaces;
 {
     NSString *result = [self menuTitle];
     
+	result = [result stringByEscapingXMLEntities:nil];		// This is supposed to be HTML escaped
     if ([[[self master] design] menusUseNonBreakingSpaces])
     {
         result = [result stringByReplacingOccurrencesOfString:@" " withString:@"&nbsp;"];
     }
-    
+    return result;
+}
++ (NSSet *)keyPathsForValuesAffectingMenuTitleHTMLStringCanDoNonBreakingSpaces; { return [NSSet setWithObject:@"menuTitle"]; }
+
+- (NSString *)menuTitleHTMLString;
+{
+    NSString *result = [self menuTitle];
+	result = [result stringByEscapingXMLEntities:nil];		// This is supposed to be HTML escaped
     return result;
 }
 + (NSSet *)keyPathsForValuesAffectingMenuTitleHTMLString; { return [NSSet setWithObject:@"menuTitle"]; }
+
 
 @dynamic customMenuTitle;
 
