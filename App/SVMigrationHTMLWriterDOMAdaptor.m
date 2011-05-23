@@ -39,7 +39,8 @@
         [tagName isEqualToString:@"I"] ||
         [tagName isEqualToString:@"B"] ||
         [tagName isEqualToString:@"TT"] ||
-        [tagName hasPrefix:@"O:"])          // special for case like #118003
+        [tagName hasPrefix:@"O:"] ||        // special for case like #118003
+        [tagName hasPrefix:@"CENTER"])      // convert to centered paragraph
     {
         return [super handleInvalidDOMElement:element];
     }
