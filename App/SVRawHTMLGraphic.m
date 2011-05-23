@@ -136,6 +136,12 @@
                                                                        options:0
                                                                          range:NSMakeRange(0, [mutableDescription length])];
                                 
+                                // Let's ignore those wretched <o:p> constructs since they're unlikely to be typed or pasted in, only migrated from 1.x
+                                [mutableDescription replaceOccurrencesOfString:@"</o:p>"
+                                                                    withString:@""
+                                                                       options:0
+                                                                         range:NSMakeRange(0, [mutableDescription length])];
+                                
                                 if ([mutableDescription rangeOfString:@" </"].location != NSNotFound)
                                 {
                                     validation = kValidationStateUnparseable;
