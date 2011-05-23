@@ -848,7 +848,11 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
     // Don't log 259 userInfo ... crashes, see case 34969
     NSString *errorDescription = ([error code] == NSFileReadCorruptFileError) ? [error description] : [error debugDescription];
 //    NSError *underlyingError = [[error userInfo] objectForKey:NSUnderlyingErrorKey];
+#ifdef RELEASE
 	NSLog(@"Error: %@", [errorDescription condenseWhiteSpace]);
+#else
+    NSLog(@"Error: %@", errorDescription);
+#endif
 	
     return error;
 }
