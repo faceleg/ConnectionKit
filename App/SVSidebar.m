@@ -82,8 +82,6 @@
     [self writePageletsHTML:[[SVHTMLTemplateParser currentTemplateParser] HTMLContext]];
 }
 
-- (BOOL)shouldPublishEditingElementID; { return YES; }
-
 - (void)write:(SVHTMLContext *)context graphic:(id <SVGraphic>)graphic;
 {
     //_writingPagelet = YES;

@@ -353,18 +353,3 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 }
 
 @end
-
-
-#pragma mark -
-
-
-// Plug-ins don't implement this stuff, so we're going to have to fake it for now.
-
-@interface SVPlugIn (SVResizableDOMController) //<SVDOMControllerRepresentedObject>
-@end
-
-@implementation SVPlugIn (SVResizableDOMController)
-
-- (BOOL)shouldPublishEditingElementID; { return NO; }
-
-@end

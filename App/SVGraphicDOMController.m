@@ -1124,8 +1124,6 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     return [[SVGraphicBodyDOMController alloc] initWithRepresentedObject:self];
 }
 
-- (BOOL)shouldPublishEditingElementID { return NO; }
-
 - (BOOL)requiresPageLoad; { return NO; }
 
 @end

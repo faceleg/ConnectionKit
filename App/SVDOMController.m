@@ -903,8 +903,6 @@
     return [[SVDOMController alloc] initWithRepresentedObject:self];
 }
 
-- (BOOL)shouldPublishEditingElementID; { return NO; }
-
 @end
 
 

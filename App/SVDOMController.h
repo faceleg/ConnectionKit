@@ -152,9 +152,6 @@
 //  I appreciate this slightly crosses the MVC divide, but the important thing is that the receiver never knows about any _specific_ controller, just the class involved.
 - (SVDOMController *)newDOMController;
 
-// Default is NO. Override if you want it to be published.
-- (BOOL)shouldPublishEditingElementID;
-
 @end
 
 

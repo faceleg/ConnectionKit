@@ -411,8 +411,6 @@
 + (NSString *)elementClassName; { return @"ImageElement"; }
 + (NSString *)contentClassName; { return @"photo"; }
 
-- (BOOL)shouldPublishEditingElementID; { return NO; }
-
 #pragma mark Feed Enclosure
 
 - (NSURL *)addToContext:(SVHTMLContext *)context;
