@@ -9,6 +9,7 @@
 #import "SVPageThumbnailHTMLContext.h"
 
 #import "SVMedia.h"
+#import "SVMediaRequest.h"
 
 #import "KSObjectKeyPathPair.h"
 
@@ -17,10 +18,10 @@
 
 @synthesize delegate = _delegate;
 
-- (NSURL *)addMedia:(SVMedia *)media;
+- (NSURL *)addMediaWithRequest:(SVMediaRequest *)request;
 {
-    [[self delegate] pageThumbnailHTMLContext:self didAddMedia:media];
-    return [super addMedia:media];
+    [[self delegate] pageThumbnailHTMLContext:self didAddMedia:[request media]];
+    return [super addMediaWithRequest:request];
 }
 
 - (void) addDependencyOnObject:(NSObject *)object keyPath:(NSString *)keyPath;
