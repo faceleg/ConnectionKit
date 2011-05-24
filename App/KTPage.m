@@ -122,7 +122,7 @@
         [self setPrimitiveValue:maxTitles forKey:@"collectionMaxSyndicatedPagesCount"];
     }
     
-    [self setPrimitiveValue:@"index.rss" forKey:@"RSSFileName"];
+    [self setPrimitiveValue:@"index.xml" forKey:@"RSSFileName"];
     
     
     // Code Injection
