@@ -621,6 +621,7 @@
 	}
 	else
 	{
+		[context pushClassName:@"isSubMenu"];
 		[context startElement:@"ul" writeInline:YES];		// for Webkit bug, don't have white space in here 
 	}
     
