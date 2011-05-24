@@ -193,7 +193,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 {
 	NSDictionary *lookup = [NSDictionary dictionaryWithObjectsAndKeys:
 							NSLocalizedString(@"All types", @"all plugin types, for 'show:' popup menu"), @"",
-							NSLocalizedString(@"Pages/Pagelets", @"plugin type for 'show:' popup menu"), @"Element",
+							NSLocalizedString(@"Objects", @"plugin type for 'show:' popup menu"), @"Element",
 							NSLocalizedString(@"Designs", @"plugin type for 'show:' popup menu"), @"Design",
 							nil];
 	NSMutableArray *result = [NSMutableArray array];

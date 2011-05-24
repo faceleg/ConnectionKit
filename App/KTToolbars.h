@@ -10,10 +10,10 @@
 #define PALETTE_INSERT_TEXT_BOX NSLocalizedStringWithDefaultValue(@"PALETTE_INSERT_TEXT_BOX", nil, [NSBundle mainBundle], @"Text Box", @"")
 #define TOOLTIP_INSERT_TEXT_BOX NSLocalizedStringWithDefaultValue(@"TOOLTIP_INSERT_TEXT_BOX", nil, [NSBundle mainBundle], @"Add a new text box to the current page.", @"tooltip")
 
-#define TOOLBAR_ADD_PAGELET NSLocalizedStringWithDefaultValue(@"TOOLBAR_ADD_PAGELET", nil, [NSBundle mainBundle], @"Objects", @"")
-#define PALETTE_ADD_PAGELET NSLocalizedStringWithDefaultValue(@"PALETTE_ADD_PAGELET", nil, [NSBundle mainBundle], @"Objects", @"")
-#define PALETTE_ADD_PAGELET_POPUP NSLocalizedStringWithDefaultValue(@"PALETTE_ADD_PAGELET_POPUP", nil, [NSBundle mainBundle], @"Objects", @"")
-#define TOOLTIP_ADD_PAGELET NSLocalizedStringWithDefaultValue(@"TOOLTIP_ADD_PAGELET", nil, [NSBundle mainBundle], @"Add a new object to the current page.", @"tooltip")
+#define TOOLBAR_ADD_OBJECTS NSLocalizedStringWithDefaultValue(@"TOOLBAR_ADD_OBJECTS", nil, [NSBundle mainBundle], @"Objects", @"")
+#define PALETTE_ADD_OBJECTS NSLocalizedStringWithDefaultValue(@"PALETTE_ADD_OBJECTS", nil, [NSBundle mainBundle], @"Objects", @"")
+#define PALETTE_ADD_OBJECTS_POPUP NSLocalizedStringWithDefaultValue(@"PALETTE_ADD_OBJECTS_POPUP", nil, [NSBundle mainBundle], @"Objects", @"")
+#define TOOLTIP_ADD_OBJECT NSLocalizedStringWithDefaultValue(@"TOOLTIP_ADD_OBJECT", nil, [NSBundle mainBundle], @"Add a new object to the current page.", @"tooltip")
 
 #define TOOLBAR_INSERT_INDEX NSLocalizedStringWithDefaultValue(@"TOOLBAR_INSERT_INDEX", nil, [NSBundle mainBundle], @"Indexes", @"")
 #define PALETTE_INSERT_INDEX NSLocalizedStringWithDefaultValue(@"PALETTE_INSERT_INDEX", nil, [NSBundle mainBundle], @"Indexes", @"")

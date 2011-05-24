@@ -54,15 +54,15 @@
 		</dict>
 		<dict>
 			<key>help</key>
-			<string>TOOLTIP_ADD_PAGELET</string>
+			<string>TOOLTIP_ADD_OBJECT</string>
 			<key>identifier</key>
 			<string>addPageletPop:</string>
 			<key>image</key>
 			<string>toolbar_objects</string>
 			<key>label</key>
-			<string>TOOLBAR_ADD_PAGELET</string>
+			<string>TOOLBAR_ADD_OBJECTS</string>
 			<key>paletteLabel</key>
-			<string>PALETTE_ADD_PAGELET_POPUP</string>
+			<string>PALETTE_ADD_OBJECTS_POPUP</string>
 			<key>target</key>
 			<string>windowcontroller</string>
 			<key>view</key>
