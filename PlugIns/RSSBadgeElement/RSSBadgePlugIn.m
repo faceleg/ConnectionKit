@@ -166,15 +166,6 @@
             return;
         }
         
-        // what if there's nothing to display?
-        if ( RSSBadgeIconStyleNone == self.iconStyle && (nil == self.label || [self.label isEqualToString:@""]) )
-        {
-            [context writePlaceholderWithText:NSLocalizedString(@"RSS Badge not visible", "placeholder")
-                                      options:0];
-            return;
-        }
-        
-        
         [context startElement:@"div" attributes:[NSDictionary dictionaryWithObject:@"rssBadge" forKey:@"class"]];
         if ( [self useLargeIconLayout] )
         {
@@ -256,6 +247,11 @@
 
 - (NSString *)placeholderString
 {
+    // what if there's nothing to display?
+    if ( RSSBadgeIconStyleNone == self.iconStyle && (nil == self.label || [self.label isEqualToString:@""]) )
+    {
+        return SVLocalizedString(@"RSS Badge not visible", "RSSBadge");
+    }
     return SVLocalizedString(@"Choose collection in the Inspector", "RSSBadge");
 }
 
