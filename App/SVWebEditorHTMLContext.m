@@ -16,6 +16,7 @@
 #import "SVHTMLTextBlock.h"
 #import "SVMediaDOMController.h"
 #import "SVMediaPlugIn.h"
+#import "SVMediaRequest.h"
 #import "SVIndexDOMController.h"
 #import "KTPage.h"
 #import "SVRichText.h"
@@ -361,11 +362,13 @@
 
 - (NSSet *)media; { return [[_media copy] autorelease]; }
 
-- (NSURL *)addMedia:(id <SVMedia>)media;
+- (NSURL *)addMediaWithRequest:(SVMediaRequest *)request;
 {
     NSURL *result = nil;
     
+    SVMedia *media = [request media];
     NSData *data = [media mediaData];
+    
     if (data)
     {
         SVMedia *matchingMedia = [_mediaByData objectForKey:data];
@@ -379,7 +382,7 @@
         }
     }
     
-    result = [super addMedia:media];
+    result = [super addMediaWithRequest:request];
     [_media addObject:media];
     
     return result;

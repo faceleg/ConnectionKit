@@ -48,19 +48,9 @@
 
 - (NSStringEncoding)encoding { return [_target encoding]; }
 
-- (NSURL *)addMedia:(id <SVMedia>)media;
+- (NSURL *)addMediaWithRequest:(SVMediaRequest *)request;
 {
-    return [_target addMedia:media];
-}
-
-- (NSURL *)addImageMedia:(id <SVMedia>)media
-                   width:(NSNumber *)width
-                  height:(NSNumber *)height
-                    type:(NSString *)type
-       preferredFilename:(NSString *)preferredFilename
-           scalingSuffix:(NSString *)suffix;
-{
-    return [_target addImageMedia:media width:width height:height type:type preferredFilename:preferredFilename scalingSuffix:suffix];
+    return [_target addMediaWithRequest:request];
 }
 
 - (NSURL *)addResourceAtURL:(NSURL *)fileURL destination:(NSString *)uploadPath options:(NSUInteger)options;

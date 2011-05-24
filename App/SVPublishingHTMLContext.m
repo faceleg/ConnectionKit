@@ -26,8 +26,6 @@
 #import "KSURLUtilities.h"
 #import "KSPathUtilities.h"
 
-#import <Connection/Connection.h>
-
 
 @implementation SVPublishingHTMLContext
 
@@ -93,56 +91,6 @@
 }
 
 #pragma mark Media
-
-- (NSURL *)addMedia:(SVMedia *)media;
-{
-    SVMediaRequest *request = [[SVMediaRequest alloc] initWithMedia:media preferredUploadPath:nil];
-    NSURL *result = [self addMediaWithRequest:request];
-    [request release];
-    return result;
-}
-
-- (NSURL *)addImageMedia:(SVMedia *)media
-                   width:(NSNumber *)width
-                  height:(NSNumber *)height
-                    type:(NSString *)type
-       preferredFilename:(NSString *)preferredFilename
-           scalingSuffix:(NSString *)suffix;
-{
-    // When scaling an image, need full suite of parameters
-    if (width || height)
-    {
-        OBPRECONDITION(width);
-        OBPRECONDITION(height);
-        OBPRECONDITION(type);
-    }
-    
-    
-    NSString *path = nil;
-    if ([preferredFilename isEqualToString:@"../favicon.ico"])  // DIRTY HACK
-    {
-        path = @"favicon.ico";
-    }
-    else if (preferredFilename)
-    {
-        path = [[[[media preferredUploadPath]
-                  stringByDeletingLastPathComponent]
-                 stringByAppendingPathComponent:preferredFilename]
-                stringByStandardizingHTTPPath];
-    }
-    
-    SVMediaRequest *request = [[SVMediaRequest alloc] initWithMedia:media
-                                                              width:width
-                                                             height:height
-                                                               type:type
-                                                preferredUploadPath:path
-                                                      scalingSuffix:suffix];
-    
-    NSURL *result = [self addMediaWithRequest:request];
-    [request release];
-    
-    return result;
-}
 
 - (NSURL *)addMediaWithRequest:(SVMediaRequest *)request;
 {

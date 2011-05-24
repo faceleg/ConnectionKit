@@ -18,6 +18,7 @@
 #import "KTImageScalingURLProtocol.h"
 #import "KTMaster.h"
 #import "SVMediaGraphic.h"
+#import "SVMediaRequest.h"
 #import "KTPage.h"
 #import "SVSidebarDOMController.h"
 #import "KTSite.h"
@@ -40,6 +41,8 @@
 #import "KSStringWriter.h"
 
 #import "Registration.h"
+
+#import <Connection/Connection.h>
 
 
 NSString * const SVDestinationResourcesDirectory = @"_Resources";
@@ -840,22 +843,59 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 #pragma mark Media
 
-- (NSURL *)addMedia:(id <SVMedia>)media;
+- (NSURL *)addMedia:(SVMedia *)media;
 {
-    OBPRECONDITION(media);
-    
-    NSURL *result = [media mediaURL];
+    SVMediaRequest *request = [[SVMediaRequest alloc] initWithMedia:media preferredUploadPath:nil];
+    NSURL *result = [self addMediaWithRequest:request];
+    [request release];
     return result;
 }
 
-- (NSURL *)addImageMedia:(id <SVMedia>)media
+- (NSURL *)addMediaWithRequest:(SVMediaRequest *)request;
+{
+    return [[request media] mediaURL];
+}
+
+- (NSURL *)addImageMedia:(SVMedia *)media
                    width:(NSNumber *)width
                   height:(NSNumber *)height
                     type:(NSString *)type
        preferredFilename:(NSString *)preferredFilename
            scalingSuffix:(NSString *)suffix;
 {
-    return [self addMedia:media];
+    // When scaling an image, need full suite of parameters
+    if (width || height)
+    {
+        OBPRECONDITION(width);
+        OBPRECONDITION(height);
+        OBPRECONDITION(type);
+    }
+    
+    
+    NSString *path = nil;
+    if ([preferredFilename isEqualToString:@"../favicon.ico"])  // DIRTY HACK
+    {
+        path = @"favicon.ico";
+    }
+    else if (preferredFilename)
+    {
+        path = [[[[media preferredUploadPath]
+                  stringByDeletingLastPathComponent]
+                 stringByAppendingPathComponent:preferredFilename]
+                stringByStandardizingHTTPPath];
+    }
+    
+    SVMediaRequest *request = [[SVMediaRequest alloc] initWithMedia:media
+                                                              width:width
+                                                             height:height
+                                                               type:type
+                                                preferredUploadPath:path
+                                                      scalingSuffix:suffix];
+    
+    NSURL *result = [self addMediaWithRequest:request];
+    [request release];
+    
+    return result;
 }
 
 - (void)writeImageWithSourceMedia:(id <SVMedia>)media

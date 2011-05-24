@@ -35,7 +35,6 @@
 - (id)initWithUploadPath:(NSString *)path
                publisher:(id <SVPublisher>)publisher;
 
-- (NSURL *)addMediaWithRequest:(SVMediaRequest *)request;
 - (BOOL)didAddMediaWithoutPath;
 
 @end

@@ -38,7 +38,7 @@ typedef NSUInteger SVPlaceholderOptions;
 
 
 @class KSStringWriter;
-@class KTPage, SVSiteItem, SVArchivePage, SVGraphic, SVHTMLTextBlock, SVLink, SVMedia, SVSidebarPageletsController;
+@class KTPage, SVSiteItem, SVArchivePage, SVGraphic, SVHTMLTextBlock, SVLink, SVMedia, SVMediaRequest, SVSidebarPageletsController;
 @class SVTemplate;
 @protocol SVGraphic, SVMedia, SVEnclosure;
 
@@ -193,6 +193,8 @@ typedef NSUInteger SVPlaceholderOptions;
 
 // Returns the URL to find the media at. It can be passed on to -relativeStringFromURL: etc.
 - (NSURL *)addMedia:(id <SVMedia>)media;
+
+- (NSURL *)addMediaWithRequest:(SVMediaRequest *)request;
 
 // When dealing with images specifically, you probably want this method. Rules:
 //  - media is mandatory (obviously!)
