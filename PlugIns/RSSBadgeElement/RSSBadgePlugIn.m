@@ -250,7 +250,7 @@
     // what if there's nothing to display?
     if ( RSSBadgeIconStyleNone == self.iconStyle && (nil == self.label || [self.label isEqualToString:@""]) )
     {
-        return SVLocalizedString(@"RSS Badge not visible", "RSSBadge");
+        return SVLocalizedString(@"Choose an icon or enter a label in the Inspector", "RSSBadge");
     }
     return SVLocalizedString(@"Choose collection in the Inspector", "RSSBadge");
 }
