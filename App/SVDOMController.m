@@ -158,10 +158,10 @@
             [[self childWebEditorItems] makeObjectsPerformSelector:_cmd withObject:document];
             
             
-            if (![[self representedObject] shouldPublishEditingElementID])
+            if (!_shouldPublishElementID)
             {
                 // Ideally, as we're clearing out value from the DOM, should also stop referencing it ourselves. If an update occurs, the id should be regenerated. This isn't quite working yet though.
-                [self setElementIdName:nil];
+                [_elementID release]; _elementID = nil;
                 [element setIdName:nil];
             }
         }
@@ -170,7 +170,6 @@
     }
 }
 
-@synthesize elementIdName = _elementID;
 - (NSString *)elementIdName;
 {
     if (!_elementID)
@@ -185,7 +184,7 @@
         SVDOMController *parent = (id)[self parentWebEditorItem];
         if (![parent hasElementIdName])
         {
-            [parent setElementIdName:[self elementIdName]];
+            [parent setElementIdName:[self elementIdName] includeWhenPublishing:NO];
         }
     }
     
@@ -193,6 +192,14 @@
 }
 
 - (BOOL)hasElementIdName; { return _elementID != nil; }
+
+- (void)setElementIdName:(NSString *)ID includeWhenPublishing:(BOOL)shouldPublish;
+{
+    ID = [ID copy];
+    [_elementID release]; _elementID = ID;
+    
+    _shouldPublishElementID = shouldPublish;
+}
 
 @synthesize HTMLContext = _context;
 

@@ -176,7 +176,8 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     {
         // Reset element, ready to reload
         [parent setHTMLElement:nil];
-        [(SVDOMController *)parent setElementIdName:[[items lastObject] elementIdName]];
+        [(SVDOMController *)parent setElementIdName:[[items lastObject] elementIdName]
+                              includeWhenPublishing:YES];
         
         parent = [parent parentWebEditorItem];
     }

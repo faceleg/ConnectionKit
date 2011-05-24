@@ -253,11 +253,15 @@
     
     
     // Has an ID for the controller already been decided?
-    KSElementInfo *info = [self currentElementInfo];
-    NSString *ID = [[info attributesAsDictionary] objectForKey:@"id"];
-    if (ID)
+    // TODO: Not sure this branch is even needed any more, look into ditching!
+    if (![controller hasElementIdName])
     {
-        [controller setElementIdName:ID];
+        KSElementInfo *info = [self currentElementInfo];
+        NSString *ID = [[info attributesAsDictionary] objectForKey:@"id"];
+        if (ID)
+        {
+            [controller setElementIdName:ID includeWhenPublishing:YES];
+        }
     }
     
     
@@ -417,7 +421,7 @@
     // Was this an id attribute, removing our need to write one?
     if (![[self currentDOMController] hasElementIdName] && [attribute isEqualToString:@"id"])
     {
-        [[self currentDOMController] setElementIdName:value];
+        [[self currentDOMController] setElementIdName:value includeWhenPublishing:YES];
     }
 }
 
@@ -433,7 +437,7 @@
         if (!idName)
         {
             idName = [NSString stringWithFormat:@"%p", controller];
-            [controller setElementIdName:idName];
+            [controller setElementIdName:idName includeWhenPublishing:NO];
         }
         
         [self pushAttribute:@"id" value:idName];
