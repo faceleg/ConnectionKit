@@ -56,7 +56,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 @interface KTPageDetailsController ()
 - (void)metaDescriptionDidChangeToValue:(id)value;
-- (void)windowTitleDidChangeToValue:(id)value;
+- (void)comboTitleTextDidChangeToValue:(id)value;
 - (void)fileNameDidChangeToValue:(id)value;
 - (void) resetDescriptionPlaceholder:(NSString *)metaDescriptionText;
 - (void) layoutPageURLComponents;
@@ -219,7 +219,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	if (!aView)
 	{
 		[oPagesTreeController removeObserver:self forKeyPath:@"selection.metaDescription"];
-		[oPagesTreeController removeObserver:self forKeyPath:@"selection.windowTitle"];
+		[oPagesTreeController removeObserver:self forKeyPath:@"selection.comboTitleText"];
 		[oPagesTreeController removeObserver:self forKeyPath:@"selection.fileName"];
         [oPagesTreeController removeObserver:self forKeyPath:@"selection.filename"];    // 101628
 		[oPagesTreeController removeObserver:self forKeyPath:@"selection.baseExampleURLString"];
@@ -275,10 +275,10 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		[self resetDescriptionPlaceholder:[oPagesTreeController valueForKeyPath:@"selection.metaDescription"]];
 		
 		[oPagesTreeController addObserver:self
-						   forKeyPath:@"selection.windowTitle"
+						   forKeyPath:@"selection.comboTitleText"
 							  options:NSKeyValueObservingOptionNew
 							  context:sWindowTitleObservationContext];
-		[self windowTitleDidChangeToValue:[oPagesTreeController valueForKeyPath:@"selection.windowTitle"]];
+		[self comboTitleTextDidChangeToValue:[oPagesTreeController valueForKeyPath:@"selection.comboTitleText"]];
 		[oPagesTreeController addObserver:self
 						   forKeyPath:@"selection.fileName"
 							  options:NSKeyValueObservingOptionNew
@@ -484,7 +484,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 /*	Called in response to a change of selection.windowTitle or the user typing
  *	We update our own count property in response
  */
-- (void)windowTitleDidChangeToValue:(id)value
+- (void)comboTitleTextDidChangeToValue:(id)value
 {
 	if (value)
 	{
@@ -721,7 +721,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	}
 	else if (context == sWindowTitleObservationContext)
 	{
-		[self windowTitleDidChangeToValue:[object valueForKeyPath:keyPath]];
+		[self comboTitleTextDidChangeToValue:[object valueForKeyPath:keyPath]];
 	}
 	else if (context == sFileNameObservationContext)
 	{
@@ -1335,7 +1335,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		
 		if (textField == oWindowTitleField)
 		{
-			[self windowTitleDidChangeToValue:newString];
+			[self comboTitleTextDidChangeToValue:newString];
 		}
 		else if (textField == oMetaDescriptionField)
 		{
@@ -1355,8 +1355,8 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 - (void)controlTextDidBecomeFirstResponder:(NSNotification *)notification;
 {
-	KSShadowedRectView *view = (KSShadowedRectView *)[[notification object] superview];
 	NSTextField *field = [notification object];
+	KSShadowedRectView *view = (KSShadowedRectView *)[field superview];
 	OBASSERT([view isKindOfClass:[KSShadowedRectView class]]);
 
 	self.activeTextField = field;
@@ -1468,11 +1468,21 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 - (void)controlTextDidResignFirstResponder:(NSNotification *)notification;
 {
-	KSShadowedRectView *view = (KSShadowedRectView *)[[notification object] superview];
+	NSTextField *field = [notification object];
+	KSShadowedRectView *view = (KSShadowedRectView *)[field superview];
 	OBASSERT([view isKindOfClass:[KSShadowedRectView class]]);
 	[view setFocusRect:NSZeroRect];
 	self.activeTextField = nil;
-	
+
+	// Somewhat hackish.  If the user left the window title field and it was empty, null it out to return it to its default.
+	if (field == oWindowTitleField)
+	{
+		if ([@"" isEqualToString:[field stringValue]])
+		{
+			[oPagesTreeController setValue:nil forKeyPath:@"selection.comboTitleText"];
+		}
+	}
+
 	if (self.attachedWindow)
 	{
 		[self.attachedWindow.animator setAlphaValue:0.0];
