@@ -223,13 +223,5 @@ typedef enum {
 
 
 @implementation SVMasterMigrationPolicy
-
-- (NSData *)extensiblePropertiesData;
-{
-    NSDictionary *props = [NSDictionary dictionaryWithObject:NSBOOL(YES) forKey:@"migrateRawHTMLOnNextEdit"];
-    NSData *result = [KSExtensibleManagedObject archiveExtensibleProperties:props];
-    return result;
-}
-
 @end
 

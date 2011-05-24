@@ -485,6 +485,10 @@
     NSDictionary *result = [KSExtensibleManagedObject unarchiveExtensibleProperties:data];
     return result;
 }
+- (NSData *)dataFromExtensibleProperties:(NSDictionary *)properties;
+{
+    return [KSExtensibleManagedObject archiveExtensibleProperties:properties];
+}
 
 #pragma mark Progress
 
