@@ -786,10 +786,10 @@
 "Pages" = "Seiten";
 
 /* plugin type for 'show:' popup menu */
-"Pages/Pagelets" = "Seiten/Pagelets";
+"Objects" = "Objekten";
 
 /* No comment provided by engineer. */
-"PALETTE_ADD_COLLECTION_POPUP" = "Indizes	";
+"PALETTE_ADD_COLLECTION_POPUP" = "Indizes";
 
 /* No comment provided by engineer. */
 "PALETTE_ADD_PAGE" = "Neue Seite";
@@ -798,10 +798,10 @@
 "PALETTE_ADD_PAGE_POPUP" = "Neu";
 
 /* No comment provided by engineer. */
-"PALETTE_ADD_PAGELET" = "Objekte";
+"PALETTE_ADD_OBJECTS" = "Objekte";
 
 /* No comment provided by engineer. */
-"PALETTE_ADD_PAGELET_POPUP" = "Objekte";
+"PALETTE_ADD_OBJECTS_POPUP" = "Objekte";
 
 /* No comment provided by engineer. */
 "PALETTE_CHOOSE_DESIGN" = "Designs";
@@ -1265,7 +1265,7 @@
 "TOOLBAR_ADD_PAGE" = "Neu";
 
 /* No comment provided by engineer. */
-"TOOLBAR_ADD_PAGELET" = "Objekte";
+"TOOLBAR_ADD_OBJECTS" = "Objekte";
 
 /* No comment provided by engineer. */
 "TOOLBAR_CHOOSE_DESIGN" = "Designs";
@@ -1316,7 +1316,7 @@
 "TOOLTIP_ADD_PAGE" = "Neue Seite zur Website hinzufügen.";
 
 /* tooltip */
-"TOOLTIP_ADD_PAGELET" = "Ein neues Objekt zur aktuellen Seite hinzufügen";
+"TOOLTIP_ADD_OBJECT" = "Ein neues Objekt zur aktuellen Seite hinzufügen";
 
 /* tooltip */
 "TOOLTIP_CHOOSE_DESIGN" = "Wählen Sie ein Design für Ihre Website";
