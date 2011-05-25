@@ -463,7 +463,10 @@ NSUInteger kTwoThirdsTruncation;
 			{
 				countOfAttachments++;
 				
-				BOOL shouldKeepAttachment = (includeLargeMedia && attachment && [[attachment causesWrap] boolValue]);
+				BOOL shouldKeepAttachment = (includeLargeMedia && attachment );
+				// Take out && [[attachment causesWrap] boolValue] ... This meant that we were only keeping explicitly wrapped
+				// grahics, even though many graphics happen to be not causes-wrap and just happen to be on their own line.
+				// I cant think of why you would want to strip out in-line graphics!
 				SVGraphic *graphic = [attachment graphic];
 				
 				if (thumbnailToExclude == graphic)
