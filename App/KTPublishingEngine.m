@@ -55,6 +55,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)publishDesign;
 - (void)publishMainCSSToPath:(NSString *)cssUploadPath;
+- (NSString *)publishMediaWithRequest:(SVMediaRequest *)request cachedData:(NSData *)data SHA1Digest:(NSData *)digest;
 
 - (void)setRootTransferRecord:(CKTransferRecord *)rootRecord;
 
