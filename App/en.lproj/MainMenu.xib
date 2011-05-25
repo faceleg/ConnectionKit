@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1387"/>
+			<integer value="24"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1844,14 +1844,6 @@
 									<reference key="NSOnImage" ref="73959282"/>
 									<reference key="NSMixedImage" ref="49718828"/>
 								</object>
-								<object class="NSMenuItem" id="589434839">
-									<reference key="NSMenu" ref="467521895"/>
-									<string key="NSTitle">Text</string>
-									<string key="NSKeyEquiv"/>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="73959282"/>
-									<reference key="NSMixedImage" ref="49718828"/>
-								</object>
 							</object>
 							<string key="NSName">_NSWindowsMenu</string>
 						</object>
@@ -3183,7 +3175,6 @@
 							<reference ref="564202837"/>
 							<reference ref="331407955"/>
 							<reference ref="1003820325"/>
-							<reference ref="589434839"/>
 						</object>
 						<reference key="parent" ref="773929156"/>
 					</object>
@@ -4501,14 +4492,6 @@
 						<reference key="parent" ref="352081774"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">1375</int>
-						<reference key="object" ref="589434839"/>
-						<object class="NSMutableArray" key="children">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-						</object>
-						<reference key="parent" ref="467521895"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">1382</int>
 						<reference key="object" ref="535582180"/>
 						<object class="NSMutableArray" key="children">
@@ -4732,7 +4715,6 @@
 					<string>1372.IBEditorWindowLastContentRect</string>
 					<string>1372.IBPluginDependency</string>
 					<string>1373.IBPluginDependency</string>
-					<string>1375.IBPluginDependency</string>
 					<string>1382.IBPluginDependency</string>
 					<string>1387.IBEditorWindowLastContentRect</string>
 					<string>1387.IBPluginDependency</string>
@@ -5112,7 +5094,6 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{619, 532}, {164, 173}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -5165,7 +5146,7 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{599, 812}, {219, 123}}</string>
+					<string>{{599, 832}, {219, 103}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<boolean value="YES"/>
@@ -8987,6 +8968,14 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
+					<string key="className">SVGraphicDOMController</string>
+					<string key="superclassName">SVDOMController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="368243963">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">SVGraphicDOMController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">SVLinkManager</string>
 					<string key="superclassName">NSObject</string>
 					<object class="NSMutableDictionary" key="actions">
@@ -9019,6 +9008,25 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">SVPagesTreeController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">SVRawHTMLDOMController</string>
+					<string key="superclassName">SVGraphicDOMController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">editRawHTMLInSelectedBlock:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">editRawHTMLInSelectedBlock:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">editRawHTMLInSelectedBlock:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">SVRawHTMLDOMController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -9521,10 +9529,7 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">WEKWebEditorItem</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">SVGraphicDOMController.h</string>
-					</object>
+					<reference key="sourceIdentifier" ref="368243963"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">WEKWebEditorItem</string>
