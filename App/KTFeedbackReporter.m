@@ -38,7 +38,8 @@
 		NSString *fileName = [NSString stringWithFormat:@"ValidationReport-%@.html", attachmentOwner];
 		if (fileName)
 		{
-			NSString *compressedName = [fileName stringByAppendingPathExtension:EXTENSION_BZIP];
+			OBASSERT(![fileName isEqualToString:@""]);
+            NSString *compressedName = [fileName stringByAppendingPathExtension:EXTENSION_BZIP];
 			
 			KSFeedbackAttachment *attachment = [KSFeedbackAttachment attachmentWithFileName:compressedName data:compressedData];
 			if (attachment)

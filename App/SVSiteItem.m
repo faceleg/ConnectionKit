@@ -249,6 +249,7 @@
 	NSString *fileName = [result stringByDeletingPathExtension];
     NSString *extension = [[result pathExtension] lowercaseString];
     
+    OBASSERT(![[fileName legalizedWebPublishingFileName] isEqualToString:@""]);
     result = [[fileName legalizedWebPublishingFileName]
                         stringByAppendingPathExtension:extension];
 	return result;

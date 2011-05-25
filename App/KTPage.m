@@ -386,7 +386,8 @@
 	if (result)
 	{
 		NSString *indexFileName = [[[self site] hostProperties] valueForKey:@"htmlIndexBaseName"];
-		result = [indexFileName stringByAppendingPathExtension:result];
+		OBASSERT(![indexFileName isEqualToString:@""]);
+        result = [indexFileName stringByAppendingPathExtension:result];
 	}
 	return result;
 }

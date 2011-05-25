@@ -120,6 +120,7 @@ preferredUploadPath:(NSString *)path
         {
             NSString *name = [[[self media] preferredUploadPath] stringByDeletingPathExtension];
             
+            OBASSERT(![name isEqualToString:@""]);
             _uploadPath = [name stringByAppendingPathExtension:
                            [KSWORKSPACE preferredFilenameExtensionForType:[self type]]];
             [_uploadPath retain];

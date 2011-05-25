@@ -1171,6 +1171,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
             NSString *extension = [KSWORKSPACE preferredFilenameExtensionForType:type];
             if (extension)
             {
+                OBASSERT(![result isEqualToString:@""]);
                 result = [result stringByAppendingPathExtension:extension];
             }
         }
@@ -1327,6 +1328,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 - (NSURL *)addGraphicalTextData:(NSData *)imageData idName:(NSString *)idName;
 {
+    OBASSERT(![[idName legalizedWebPublishingFileName] isEqualToString:@""]);
     NSString *filename = [[idName legalizedWebPublishingFileName]
                           stringByAppendingPathExtension:@"png"];
     

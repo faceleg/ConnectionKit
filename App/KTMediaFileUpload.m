@@ -70,6 +70,7 @@
             NSString *fileName = [[path lastPathComponent] stringByDeletingPathExtension];
             NSString *legalizedFileName = [fileName legalizedWebPublishingFileName];
             
+            OBASSERT(![legalizedFileName isEqualToString:@""]);
             NSString *legalizedPath = [[path stringByDeletingLastPathComponent] stringByAppendingPathComponent:
                                        [legalizedFileName stringByAppendingPathExtension:
                                         [path pathExtension]]];

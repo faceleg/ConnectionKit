@@ -54,7 +54,8 @@
     NSString *result = [self fileName];
     if (![self isCollection])
     {
-        result = [result stringByAppendingPathExtension:[self pathExtension]];
+        OBASSERT(![result isEqualToString:@""]);
+		result = [result stringByAppendingPathExtension:[self pathExtension]];
     }
     
     return result;
@@ -102,7 +103,8 @@
     // To begin, this is based on the title. But once customised or published, filename should become stuck
     if ([self datePublished] || ![self shouldUpdateFileNameWhenTitleChanges])
     {
-        return [[self fileName] stringByAppendingPathExtension:[self pathExtension]];
+        OBASSERT(![[self fileName] isEqualToString:@""]);
+		return [[self fileName] stringByAppendingPathExtension:[self pathExtension]];
     }
     else
     {
@@ -112,7 +114,11 @@
             result = [self uniqueID];
         }
         
-        if (![self isCollection]) result = [result stringByAppendingPathExtension:[self pathExtension]];
+        if (![self isCollection])
+        {
+            OBASSERT(![result isEqualToString:@""]);
+            result = [result stringByAppendingPathExtension:[self pathExtension]];
+        }
         
         return result;
     }
@@ -171,7 +177,8 @@
 	if (result)
 	{
 		NSString *indexFileName = [[[self site] hostProperties] valueForKey:@"htmlIndexBaseName"];
-		result = [indexFileName stringByAppendingPathExtension:result];
+		OBASSERT(![indexFileName isEqualToString:@""]);
+        result = [indexFileName stringByAppendingPathExtension:result];
 	}
 	
 	return result;
@@ -231,8 +238,10 @@
 	if ([self isCollection])
 	{
 		NSString *indexFileName = [[[self site] hostProperties] valueForKey:@"htmlIndexBaseName"];
-		OBASSERT([self pathExtension]);
-		result = [indexFileName stringByAppendingPathExtension:[self pathExtension]];
+		
+        OBASSERT([self pathExtension]);
+		OBASSERT(![indexFileName isEqualToString:@""]);
+        result = [indexFileName stringByAppendingPathExtension:[self pathExtension]];
 	}
 	
 	return result;
@@ -259,8 +268,10 @@
 	if ([self isCollection])
 	{
 		NSString *archivesFileName = [[[self site] hostProperties] valueForKey:@"archivesBaseName"];
-		OBASSERT([self pathExtension]);
-		result = [archivesFileName stringByAppendingPathExtension:[self pathExtension]];
+		
+        OBASSERT([self pathExtension]);
+		OBASSERT(![archivesFileName isEqualToString:@""]);
+        result = [archivesFileName stringByAppendingPathExtension:[self pathExtension]];
 	}
 	
 	return result;
@@ -280,6 +291,7 @@
         for (anExtension in availableExtensions)
         {
             OBASSERT(anExtension);
+            OBASSERT(![indexFileName isEqualToString:@""]);
             NSString *aFilename = [indexFileName stringByAppendingPathExtension:anExtension];
             [result addObject:aFilename];
         }

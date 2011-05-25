@@ -121,6 +121,7 @@
     
     if ([[result pathExtension] isEqualToString:@"jpg"])    // #91088
     {
+        OBASSERT(![result stringByDeletingPathExtension]);
         result = [[result stringByDeletingPathExtension] stringByAppendingPathExtension:@"jpeg"];
     }
     

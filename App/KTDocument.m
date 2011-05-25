@@ -783,6 +783,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
                                   [preferredFilename stringByDeletingPathExtension],
                                   count];
         
+        OBASSERT(![numberedName isEqualToString:@""]);
 		result = [numberedName stringByAppendingPathExtension:[preferredFilename pathExtension]];
     }
     

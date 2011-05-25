@@ -127,8 +127,10 @@
 	{
 		count++;
 		NSString *aFileName = [NSString stringWithFormat:@"%@-%u", fileName, count];
-		OBASSERT(extension);
-		result = [aFileName stringByAppendingPathExtension:extension];
+		
+        OBASSERT(extension);
+		OBASSERT(![aFileName isEqualToString:@""]);
+        result = [aFileName stringByAppendingPathExtension:extension];
 		[fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"filename LIKE[c] %@", result]];
 	}
 	

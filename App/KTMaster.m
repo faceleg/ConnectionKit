@@ -319,6 +319,7 @@
             NSURL *URL = [NSURL sandvoxImageURLWithFileURL:bannerURL scalingProperties:scalingProperties];
             [scalingProperties release];
             
+            OBASSERT(![SVDestinationDesignDirectory isEqualToString:@""]);
             NSString *destination = [[SVDestinationDesignDirectory stringByAppendingPathComponent:@"banner"] stringByAppendingPathExtension:[KSWORKSPACE preferredFilenameExtensionForType:type]];
             
             URL = [context addResourceAtURL:URL destination:destination options:0];

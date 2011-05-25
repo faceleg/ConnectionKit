@@ -179,6 +179,7 @@
     NSString *extension = [sInstance valueForKey:@"customFileExtension"];
     if (!extension) extension = @"html";    // shouldn't happen
     
+    OBASSERT(![[sInstance valueForKey:@"fileName"] isEqualToString:@""]);
     [result setValue:[[sInstance valueForKey:@"fileName"] stringByAppendingPathExtension:extension]
               forKey:@"preferredFilename"];
     
@@ -239,6 +240,7 @@
 - (NSString *)filenameFromName:(NSString *)name customExtension:(NSString *)extension;
 {
     if (!extension) extension = @"html";
+    OBASSERT(![name isEqualToString:@""]);
     NSString *result = [name stringByAppendingPathExtension:extension];
     return result;
 }

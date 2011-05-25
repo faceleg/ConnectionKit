@@ -774,7 +774,8 @@ const int kDesignThumbHeight = 65;
 					[variationNamesToIgnore addObject:file];
 				}
 				// Ignore all variation CSS files
-				[variationNamesToIgnore addObject:[file stringByAppendingPathExtension:@"css"]];
+				OBASSERT(![file isEqualToString:@""]);
+                [variationNamesToIgnore addObject:[file stringByAppendingPathExtension:@"css"]];
 				// Note: all thumbnails are ignored below.
 			}
 		}
