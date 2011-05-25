@@ -607,7 +607,8 @@
                    [propertyName hasPrefix:@"font-"] ||
                    [propertyName isEqualToString:@"color"] ||
                    [propertyName isEqualToString:@"background-color"] ||
-                   [propertyName isEqualToString:@"text-decoration"]);
+                   [propertyName isEqualToString:@"text-decoration"] ||
+                   [propertyName isEqualToString:@"text-shadow"]);
     
     return result;
 }
