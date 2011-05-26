@@ -11,7 +11,7 @@
 "%d errors" = "%d Fehler";
 
 /* count of designs in a 'family' group. */
-"%d variations" = "%d Abweichungen";
+"%d variations" = "%d Variations";
 
 /* <count> warnings */
 "%d warnings" = "%d Warnungen";

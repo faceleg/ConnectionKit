@@ -341,9 +341,18 @@
 		
 		
 		NSColor *blueColor = [NSColor colorWithCalibratedRed:0.000 green:0.295 blue:0.528 alpha:1.000];
+
+		// HACK - If French or German, make it smaller
+		NSArray *topLocs = [NSBundle
+							preferredLocalizationsFromArray:[[NSBundle mainBundle] localizations]];
+		NSString *firstLang = [topLocs firstObjectKS];
 		
-		NSDictionary *attr1 = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont fontWithName:@"Marker Felt" size:20.0], NSFontAttributeName, nil];
-		NSDictionary *attr2 = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont fontWithName:@"Chalkboard" size:12.0], NSFontAttributeName, nil];
+		float bigTextSize = ([firstLang isEqualToString:@"de"] ) ? 17.0 : 20.0 ;
+		float smallTextSize = ([firstLang isEqualToString:@"de"] || [firstLang isEqualToString:@"fr"]) ? 10.5 : 12.0 ;
+		
+		NSDictionary *attr1 = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont fontWithName:@"Marker Felt" size:bigTextSize], NSFontAttributeName, nil];
+		
+		NSDictionary *attr2 = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont fontWithName:@"Chalkboard" size:smallTextSize], NSFontAttributeName, nil];
 		
 		NSMutableAttributedString *attrStickyText = [[[NSMutableAttributedString alloc] initWithString:
 													  stickyHeadline attributes:attr1] autorelease];	
