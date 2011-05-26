@@ -416,7 +416,7 @@
 "Empty/Text" = "Leer/Text";
 
 /* menu item title */
-"Empty/Text – Without Sidebar" = "Empty/Text – ohne Seitenleiste";
+"Empty/Text – Without Sidebar" = "Leer/Text – ohne Seitenleiste";
 
 /* Button title to enter a license Code */
 "Enter License Key" = "Lizenzschlüssel eingeben";
@@ -1634,3 +1634,9 @@
 
 /* no RSS placeholder for page title */
 "“%@” has no RSS feed" = "„%@“ hat keinen RSS Feed";
+
+/* The [ and the ] will be removed, and the text in between will be give a hyperlink attribute. */
+"Visit [Google Analytics] to add a profile for your website. Paste the provided code below and then publish your website to begin tracking." = "Besuchen Sie [Google Analytics], um ein Profil für Ihr Website anzulegen. Fügen Sie den erzeugten Code unten ein und veröffentlichen Sie Ihre Website, um das Tracking zu starten.";
+
+/* The [ and the ] will be removed, and the text in between will be give a hyperlink attribute. PLEASE VISIT THIS SITE TO GET THE EXACT TRANSLATION OF THE QUOTED STRING --> http://www.google.com/webmasters/tools/ */
+"Visit [Google Webmaster Tools] to register and verify your site using the “Add a meta tag to your site’s home page” option. Paste the provided tag below and then publish your website to confirm verification." = "Besuchen Sie die [Google Webmaster Tools], um sich zu registrieren und verifizieren Sie Ihre Site mit der “Ein Meta-Tag zur Startseite Ihrer Website hinzufügen” Methode. Fügen Sie den erzeugten Tag unten ein und veröffentlichen Sie Ihre Website, um dieses zu verifizieren."; 
