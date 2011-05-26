@@ -56,7 +56,7 @@
     }
 	
 
-	NSString *ver0 = NSLocalizedString(@"Visit [Google Webmaster Tools] to register and verify your site using the “Add a meta tag to your site’s home page” option. Paste the provided tag below and then publish your website to confirm verification.", @"The [ and the ] will be removed, and the text in between will be give a hyperlink attribute.");
+	NSString *ver0 = NSLocalizedString(@"Visit [Google Webmaster Tools] to register and verify your site using the “Add a meta tag to your site’s home page” option. Paste the provided tag below and then publish your website to confirm verification.", @"The [ and the ] will be removed, and the text in between will be give a hyperlink attribute.  PLEASE VISIT THIS SITE TO GET THE EXACT TRANSLATION OF THE QUOTED STRING --> http://www.google.com/webmasters/tools/");
 	NSAttributedString *ver1 = [NSAttributedString systemFontStringWithString:ver0 hyperlinkInBracketsTo:
 								[NSURL URLWithString:@"http://www.google.com/webmasters/tools/"]];
 	[[self.verificationOverview textStorage] setAttributedString:ver1];
