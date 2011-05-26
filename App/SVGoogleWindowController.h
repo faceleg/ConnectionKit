@@ -16,11 +16,16 @@
     NSObjectController *_objectController;
     NSTextField *_verificationCodeField;
     NSTextField *_analyticsCodeField;
+	NSTextField *_verificationPrompt;
+	NSTextView *_verificationOverview;
+	NSTextView *_analyticsOverview;
 }
 
 @property (nonatomic, retain) IBOutlet NSObjectController *objectController;
 @property (nonatomic, retain) IBOutlet NSTextField *verificationCodeField;
 @property (nonatomic, retain) IBOutlet NSTextField *analyticsCodeField;
+@property (nonatomic, retain) IBOutlet NSTextView *verificationOverview;
+@property (nonatomic, retain) IBOutlet NSTextView *analyticsOverview;
 
 - (void)configureGoogle:(NSWindowController *)sender;
 - (IBAction)closeSheet:(id)sender;

@@ -75,6 +75,7 @@
 #import "NSBundle+Karelia.h"
 #import "NSImage+Karelia.h"
 #import "NSColor+Karelia.h"
+#import "NSAttributedString+Karelia.h"
 
 @interface SVAudio ()
 - (void)loadAudio;		// after it has changed (URL or media), determine codecType; later we may kick off load to test properties
@@ -713,15 +714,12 @@
 									[NSFont systemFontOfSize:[NSFont smallSystemFontSize]], NSFontAttributeName,
 									nil];
 	NSMutableAttributedString *info = [[[NSMutableAttributedString alloc] initWithString:result attributes:attribs] autorelease];
-	NSDictionary *linkAttribs
-	= [NSDictionary dictionaryWithObjectsAndKeys:
-	   [NSURL URLWithString:[NSString stringWithFormat:@"http://docs.karelia.com/z/Supported_Audio_Formats.html?type=%@", type]],
-	   NSLinkAttributeName,
-	   [NSNumber numberWithInteger:NSSingleUnderlineStyle], NSUnderlineStyleAttributeName,
-	   [NSCursor pointingHandCursor], NSCursorAttributeName,
-	   [NSColor linkColor], NSForegroundColorAttributeName,
-	   nil];
-	[attribs addEntriesFromDictionary:linkAttribs];
+
+	NSString *helpFilePath = [[NSBundle mainBundle] pathForResource:@"Supported_Audio_Formats" ofType:@"html" inDirectory:@"Sandvox Help/z"];
+	
+	NSURL *url = [[[NSURL alloc] initWithScheme:@"help" host:@"" path:helpFilePath] autorelease];
+	
+	[attribs addEntriesFromDictionary:[NSAttributedString attributesLinkingTo:url]];
 	
 	[info appendAttributedString:
 	 [[[NSAttributedString alloc] initWithString:NSLocalizedString(@"More", @"hyperlink to a page that will tell more details about the warning")

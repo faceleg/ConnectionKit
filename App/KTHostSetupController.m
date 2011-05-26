@@ -283,14 +283,8 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	NSRange whereA2 = [rec rangeOfString:@"A2 Hosting"];
 	if (NSNotFound != whereA2.location)
 	{
-		[recAttr addAttribute:NSForegroundColorAttributeName value:[NSColor linkColor]
-						   range:whereA2];
-		[recAttr addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:1]
-						   range:whereA2];
-		[recAttr addAttribute:NSCursorAttributeName value:[NSCursor pointingHandCursor]
-						   range:whereA2];
-		[recAttr addAttribute:NSLinkAttributeName value:[NSURL URLWithString:@"http://c.karelia.com/113"]
-							range:whereA2];
+		NSURL *url = [NSURL URLWithString:@"http://c.karelia.com/113"];
+		[recAttr addAttributes:[NSAttributedString attributesLinkingTo:url] range:whereA2];
 	}
 	//[oRecommendation setAttributedTitle:recAttr];
 	[oRecommendation setAttributedStringValue:recAttr];

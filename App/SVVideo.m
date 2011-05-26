@@ -74,6 +74,7 @@
 #import "NSError+Karelia.h"
 #import "QTMovie+Karelia.h"
 #import "NSColor+Karelia.h"
+#import "NSAttributedString+Karelia.h"
 
 #import "KSThreadProxy.h"
 #import "KSURLUtilities.h"
@@ -1081,15 +1082,7 @@
 	
 	NSURL *url = [[[NSURL alloc] initWithScheme:@"help" host:@"" path:helpFilePath] autorelease];
 				   
-	NSDictionary *linkAttribs
-	= [NSDictionary dictionaryWithObjectsAndKeys:
-	   url,
-	   NSLinkAttributeName,
-	   [NSNumber numberWithInteger:NSSingleUnderlineStyle], NSUnderlineStyleAttributeName,
-	   [NSCursor pointingHandCursor], NSCursorAttributeName,
-	   [NSColor linkColor], NSForegroundColorAttributeName,
-	   nil];
-	[attribs addEntriesFromDictionary:linkAttribs];
+	[attribs addEntriesFromDictionary:[NSAttributedString attributesLinkingTo:url]];
 	
 	[info appendAttributedString:
 	 [[[NSAttributedString alloc] initWithString:NSLocalizedString(@"More", @"hyperlink to a page that will tell more details about the warning")
