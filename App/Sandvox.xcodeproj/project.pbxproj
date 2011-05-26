@@ -3010,7 +3010,7 @@
 		CE44C86C130216C600015A24 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/KSBugReporterViews.strings; sourceTree = "<group>"; };
 		CE44C86E130216C600015A24 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/KSCrash.strings; sourceTree = "<group>"; };
 		CE44C870130216C600015A24 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/KSException.strings; sourceTree = "<group>"; };
-		CE44C872130216C600015A24 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/KSFeedback.strings; sourceTree = "<group>"; };
+		CE44C872130216C600015A24 /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/KSFeedback.strings; sourceTree = "<group>"; };
 		CE44C874130216C600015A24 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/KSJoinList.strings; sourceTree = "<group>"; };
 		CE44C876130216C600015A24 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/KSKeepInTouch.strings; sourceTree = "<group>"; };
 		CE44C878130216C600015A24 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/KSPluginInstaller.strings; sourceTree = "<group>"; };
