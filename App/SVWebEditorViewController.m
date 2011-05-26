@@ -20,6 +20,7 @@
 #import "KTPage.h"
 #import "SVGraphicDOMController.h"
 #import "SVGraphicFactory.h"
+#import "KTImageScalingURLProtocol.h"
 #import "SVLinkManager.h"
 #import "SVMedia.h"
 #import "SVPlugInGraphic.h"
@@ -1327,7 +1328,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     if (![[NSUserDefaults standardUserDefaults] boolForKey:kSVLiveDataFeedsKey])
     {
         BOOL local = ([[request URL] isFileURL] ||
-                      [[[request URL] scheme] isEqualToString:@"x-sandvox-image"] ||
+                      [[[request URL] scheme] isEqualToString:KTImageScalingURLProtocolScheme] ||
                       [[[request URL] scheme] isEqualToString:@"x-imstatusimage"]);
         if (!local)
         {
