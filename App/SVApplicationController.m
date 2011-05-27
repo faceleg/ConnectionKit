@@ -1389,13 +1389,20 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	else
 	{
 		BOOL opened = [KSWORKSPACE openURLs:[NSArray arrayWithObject:url]
-									  withAppBundleIdentifier:@"com.apple.quicktimeplayer" 
+									  withAppBundleIdentifier:@"com.apple.QuickTimePlayerX" 
 													  options:NSWorkspaceLaunchAsync
 							   additionalEventParamDescriptor:nil launchIdentifiers:nil];
 		if (!opened)
 		{
-			// try to open some other way
-			[KSWORKSPACE attemptToOpenWebURL:url];	
+			opened = [KSWORKSPACE openURLs:[NSArray arrayWithObject:url]
+						withAppBundleIdentifier:@"com.apple.quicktimeplayer" 
+										options:NSWorkspaceLaunchAsync
+				 additionalEventParamDescriptor:nil launchIdentifiers:nil];
+			if (!opened)
+			{
+				// try to open some other way
+				[KSWORKSPACE attemptToOpenWebURL:url];	
+			}
 		}
 	}
 }
