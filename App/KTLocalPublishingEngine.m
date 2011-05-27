@@ -175,6 +175,11 @@
             
             // Pretend we uploaded so the engine still tracks path/digest etc.
             [self didEnqueueUpload:nil toPath:remotePath cachedSHA1Digest:digest contentHash:hash object:object];
+            
+            // Length might not have been filled in before
+            NSNumber *length = [NSNumber numberWithUnsignedLongLong:[data length]];
+            if (![[record length] isEqualToNumber:length]) [record setLength:length];
+            
             return;
         }
     }
