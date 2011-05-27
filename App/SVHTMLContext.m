@@ -1004,7 +1004,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
                                                   size:NSMakeSize(width, height)
                                            scalingMode:scaling
                                             sharpening:0.0f
-                                     compressionFactor:1.0f
+                                     compressionFactor:0.7f
                                               fileType:type];
         
         return url;

@@ -36,7 +36,7 @@ NSString *KTImageScalingURLProtocolScheme = @"x-sandvox-image";
                                         size:size
                                  scalingMode:KSImageScalingModeFill
                                   sharpening:0.0f                   // settings match SVHTMLContext,
-                           compressionFactor:1.0f                   // there's got to be a better way right?
+                           compressionFactor:0.7f                   // there's got to be a better way right?
                                     fileType:[request type]];
 }
 
