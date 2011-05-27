@@ -11,6 +11,9 @@
 #import "KTHostSetupController.h"
 #import "SVRootPublishingRecord.h"
 
+#import "NSManagedObjectContext+KTExtensions.h"
+
+#import "NSArray+Karelia.h"
 #import "NSCharacterSet+Karelia.h"
 #import "NSEntityDescription+KTExtensions.h"
 #import "NSManagedObject+KTExtensions.h"
@@ -512,14 +515,48 @@ to be verified.
     return result;
 }
 
++ (NSArray *)hashSortDescriptors;
+{
+    // When given the choice of two files with the same hash, favour the shortest path. Fall back to alphabetical
+    static NSArray *result = nil;
+    if (!result)
+    {
+        NSSortDescriptor *pathLength = [[NSSortDescriptor alloc]
+                                        initWithKey:@"path.length" ascending:YES];
+        NSSortDescriptor *alphabetical = [[NSSortDescriptor alloc]
+                                          initWithKey:@"path"
+                                          ascending:YES
+                                          selector:@selector(caseInsensitiveCompare:)];
+        
+        result = [[NSArray alloc] initWithObjects:pathLength, alphabetical, nil];
+        
+        [pathLength release];
+        [alphabetical release];
+    }
+    
+    return result;
+}
+
 - (SVPublishingRecord *)publishingRecordForSHA1Digest:(NSData *)digest;
 {
-    return [[self rootPublishingRecord] publishingRecordForSHA1Digest:digest];
+    NSArray *records = [[self managedObjectContext]
+                        fetchAllObjectsForEntityForName:@"FilePublishingRecord"
+                        predicate:[NSPredicate predicateWithFormat:@"SHA1Digest == %@", digest]
+                        error:NULL];
+    
+    records = [records sortedArrayUsingDescriptors:[[self class] hashSortDescriptors]];
+    return [records firstObjectKS];
 }
 
 - (SVPublishingRecord *)publishingRecordForContentHash:(NSData *)digest;
 {
-    return [[self rootPublishingRecord] publishingRecordForContentHash:digest];
+    NSArray *records = [[self managedObjectContext]
+                        fetchAllObjectsForEntityForName:@"FilePublishingRecord"
+                        predicate:[NSPredicate predicateWithFormat:@"contentHash == %@", digest]
+                        error:NULL];
+    
+    records = [records sortedArrayUsingDescriptors:[[self class] hashSortDescriptors]];
+    return [records firstObjectKS];
 }
 
 @end
