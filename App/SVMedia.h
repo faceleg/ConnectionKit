@@ -45,4 +45,8 @@
 - (BOOL)writeToURL:(NSURL *)URL error:(NSError **)outError;
 
 
+#pragma mark Hash
+- (NSData *)SHA1Digest;
+
+
 @end

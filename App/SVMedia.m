@@ -13,6 +13,7 @@
 #import "NSString+Karelia.h"
 #import "QTMovie+Karelia.h"
 
+#import "KSSHA1Stream.h"
 #import "KSThreadProxy.h"
 #import "KSURLUtilities.h"
 
@@ -271,6 +272,25 @@
     [aCoder encodeObject:[self fileURL] forKey:@"fileURL"];
     [aCoder encodeObject:[self webResource] forKey:@"webResource"];
     [aCoder encodeObject:[self preferredFilename] forKey:@"preferredFilename"];
+}
+
+#pragma mark Hashing
+
+- (NSData *)SHA1Digest;
+{
+    NSData *data = [self mediaData];
+    if (data)
+    {
+        return [data SHA1Digest];
+    }
+    else
+    {
+        NSURL *url = [self mediaURL];
+        NSData *result = [NSData SHA1DigestOfContentsOfURL:url];
+        
+        if (!result) NSLog(@"Unable to hash file: %@", url);
+        return result;
+    }
 }
 
 #pragma mark Deprecated
