@@ -285,6 +285,8 @@
     }
     else
     {
+        if ([NSThread isMainThread]) NSLog(@"Hashing URL on main thread; likely gives bad responsiveness");
+        
         NSURL *url = [self mediaURL];
         NSData *result = [NSData SHA1DigestOfContentsOfURL:url];
         
