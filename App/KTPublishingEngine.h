@@ -87,11 +87,13 @@ typedef enum {
 - (id <KTPublishingEngineDelegate>)delegate;
 - (void)setDelegate:(id <KTPublishingEngineDelegate>)delegate;
 
-// Accessors
+#pragma mark Accessors
 - (KTSite *)site;
 - (NSString *)documentRootPath;
 - (NSString *)subfolderPath;
 - (NSString *)baseRemotePath;
+@property(nonatomic, readonly) SVMediaDigestStorage *mediaDigestStorage;
+
 
 // Control
 - (KTPublishingEngineStatus)status;
@@ -105,6 +107,7 @@ typedef enum {
 
 
 #pragma mark Uploads
+
 - (CKTransferRecord *)willUploadToPath:(NSString *)path;  // for subclasses. Returns parent dir
 - (void)didEnqueueUpload:(CKTransferRecord *)record
                   toPath:(NSString *)path

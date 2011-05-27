@@ -69,9 +69,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 @interface KTPublishingEngine (SubclassSupportPrivate)
 
-// Media
-- (void)gatherMedia;
-
 // Resources
 - (void)addResourceFile:(NSURL *)resourceURL;
 
@@ -179,6 +176,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     return result;
 }
 
+@synthesize mediaDigestStorage = _mediaDigestStorage;
+
 #pragma mark Overall flow control
 
 - (void)start
@@ -210,7 +209,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         
         
         // Gather media
-        [self gatherMedia];
+        // Publish any media that has been published before (so it maintains its path). Ignore all else
+        KTPage *homePage = [[self site] rootPage];
+        [homePage publish:self recursively:YES];
         
         
         // Now have most dependencies in place, so can publish for real after that
@@ -389,13 +390,14 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)publishData:(NSData *)data toPath:(NSString *)uploadPath;
 {
-    [self publishData:data toPath:uploadPath cachedSHA1Digest:nil contentHash:nil object:nil];
+    [self publishData:data toPath:uploadPath cachedSHA1Digest:nil contentHash:nil mediaRequest:nil object:nil];
 }
 
 - (void)publishData:(NSData *)data
              toPath:(NSString *)remotePath
-   cachedSHA1Digest:(NSData *)digest  // save engine the trouble of calculating itself
+   cachedSHA1Digest:(NSData *)digest                // save engine the trouble of calculating itself
         contentHash:(NSData *)hash
+       mediaRequest:(SVMediaRequest *)mediaRequest  // if there was one behind all this
              object:(id <SVPublishedObject>)object;
 {
 	OBPRECONDITION(data);
@@ -614,13 +616,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 #pragma mark Media
 
-- (void)gatherMedia;
-{
-    // Publish any media that has been published before (so it maintains its path). Ignore all else
-    KTPage *homePage = [[self site] rootPage];
-    [homePage publish:self recursively:YES];
-}
-
 - (NSString *)startPublishingMedia:(SVMediaRequest *)request cachedSHA1Digest:(NSData *)cachedDigest;
 {
     OBPRECONDITION(request);
@@ -737,6 +732,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                            toPath:result
                  cachedSHA1Digest:digest
                       contentHash:nil
+                     mediaRequest:request
                            object:nil];
             }
             else
@@ -1163,10 +1159,12 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         
         NSString *siteMapPath = [[self baseRemotePath] stringByAppendingPathComponent:@"sitemap.xml.gz"];
         self.sitemapPinger = [[[SVGoogleSitemapPinger alloc] init] autorelease];
+        
         [self publishData:gzipped
                    toPath:siteMapPath
          cachedSHA1Digest:nil
               contentHash:nil
+             mediaRequest:nil
                    object:self.sitemapPinger];
     }
 }

@@ -57,8 +57,9 @@ extern int kMaxNumberOfFreePublishedPages;
 // The 2 methods above are just conveniences on these, which offer more flexibility
 - (void)publishData:(NSData *)data
              toPath:(NSString *)remotePath
-   cachedSHA1Digest:(NSData *)digest  // save engine the trouble of calculating itself
+   cachedSHA1Digest:(NSData *)digest                // save engine the trouble of calculating itself
         contentHash:(NSData *)hash
+       mediaRequest:(SVMediaRequest *)mediaRequest  // if there was one behind all this
              object:(id <SVPublishedObject>)object;
 
 - (void)publishContentsOfURL:(NSURL *)localURL

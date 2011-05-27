@@ -134,7 +134,12 @@
     NSData *data = [media mediaData];
     if (data)
     {
-        [publishingEngine publishData:data toPath:uploadPath cachedSHA1Digest:nil contentHash:nil object:self];
+        [publishingEngine publishData:data
+                               toPath:uploadPath
+                     cachedSHA1Digest:nil
+                          contentHash:nil
+                         mediaRequest:nil
+                               object:self];
     }
     else
     {

@@ -75,6 +75,7 @@
                                        toPath:fullUploadPath
                              cachedSHA1Digest:nil
                                   contentHash:[_contentHashStream SHA1Digest]
+                                 mediaRequest:nil
                                        object:page];
             }
         }

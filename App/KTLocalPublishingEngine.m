@@ -11,6 +11,7 @@
 #import "KTSite.h"
 #import "KTHostProperties.h"
 #import "KTMaster.h"
+#import "SVMediaDigestStorage.h"
 #import "KTPage.h"
 #import "SVPublishingRecord.h"
 #import "KTURLCredentialStorage.h"
@@ -92,10 +93,29 @@
 
 - (void)publishData:(NSData *)data
              toPath:(NSString *)remotePath
-   cachedSHA1Digest:(NSData *)digest  // save engine the trouble of calculating itself
+   cachedSHA1Digest:(NSData *)digest                // save engine the trouble of calculating itself
         contentHash:(NSData *)hash
+       mediaRequest:(SVMediaRequest *)mediaRequest  // if there was one behind all this
              object:(id <SVPublishedObject>)object;
 {
+    // Before can publish media data, must calculate content hash
+    if (!hash && [mediaRequest width] || [mediaRequest height])
+    {
+        // Hopefully we've published it before. Figure out content hash
+        SVMediaRequest *sourceRequest = [mediaRequest sourceRequest];
+        NSData *sourceDigest = [[self mediaDigestStorage] digestForRequest:sourceRequest];
+        
+        if (!sourceDigest) sourceDigest = [[mediaRequest media] SHA1Digest];
+        if (sourceDigest)
+        {
+            hash = [mediaRequest contentHashWithMediaDigest:sourceDigest];
+            SVPublishingRecord *record = [[[self site] hostProperties] publishingRecordForSHA1Digest:hash];
+            
+            if (record) remotePath = [record path];
+        }
+    }
+    
+    
     // Record digest of the data for after publishing
     if (!digest)
     {
@@ -103,16 +123,31 @@
     }
     
     
-    // Don't upload if the page isn't stale and we've been requested to only publish changes
+    // Don't upload if the data isn't stale and we've been requested to only publish changes
 	if ([self onlyPublishChanges])
     {
         SVPublishingRecord *record = [[[self site] hostProperties] publishingRecordForPath:remotePath];
         
-        NSData *toPublishDigest = (hash ? hash : digest);
-        NSData *publishedDigest = (hash ? [record contentHash] : [record SHA1Digest]);
-        
-        if ([toPublishDigest isEqualToData:publishedDigest])
+        // If content hash hasn't changed, no need to publish
+        if ([hash isEqualToData:[record contentHash]])
         {
+            if (mediaRequest && ![digest isEqualToData:[record SHA1Digest]])
+            {
+                NSLog(@"Not publishing %@ because content hash hasn't changed, even though digest has; from %@ to %@",
+                      mediaRequest,
+                      [record SHA1Digest],
+                      digest);
+            }
+            
+            // Pretend we uploaded so the engine still tracks path/digest etc.
+            [self didEnqueueUpload:nil toPath:remotePath cachedSHA1Digest:digest contentHash:hash object:object];
+            return;
+        }
+        else if ([digest isEqualToData:[record SHA1Digest]]) 
+        {
+            // Equal data means no need to publish, but still want to mark change in content hash
+            [record setContentHash:hash];
+            
             // Pretend we uploaded so the engine still tracks path/digest etc.
             [self didEnqueueUpload:nil toPath:remotePath cachedSHA1Digest:digest contentHash:hash object:object];
             return;
@@ -120,7 +155,12 @@
     }
     
     
-    return [super publishData:data toPath:remotePath cachedSHA1Digest:digest contentHash:hash object:object];
+    return [super publishData:data
+                       toPath:remotePath
+             cachedSHA1Digest:digest
+                  contentHash:hash
+                 mediaRequest:mediaRequest
+                       object:object];
 }
 
 - (void)publishContentsOfURL:(NSURL *)localURL
