@@ -43,7 +43,26 @@
 
 @dynamic hidden;
 
-- (NSTextAlignment)alignment; { return NSNaturalTextAlignment; }
+#pragma mark Alignment
+
+- (NSTextAlignment)alignment;
+{
+    NSString *keyPath = [[self class] alignmentKeyPath];
+    NSNumber *result = (keyPath ? [self valueForKeyPath:keyPath] : nil);
+    return (result ? [result intValue] : NSNaturalTextAlignment);
+}
+- (void)setAlignment:(NSTextAlignment)alignment;
+{
+    [self setValue:[NSNumber numberWithInt:alignment]
+        forKeyPath:[[self class] alignmentKeyPath]];
+}
++ (NSSet *)keyPathsForValuesAffectingAlignment;
+{
+    NSString *keyPath = [self alignmentKeyPath];
+    return (keyPath ? [NSSet setWithObject:[self alignmentKeyPath]] : nil);
+}
+
++ (NSString *)alignmentKeyPath; { return nil; }
 
 #pragma mark Graphical Text
 

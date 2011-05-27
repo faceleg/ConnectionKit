@@ -14,20 +14,7 @@
 
 @implementation SVPageletTitleBox
 
-- (NSTextAlignment)alignment;
-{
-    NSNumber *result = [self valueForKeyPath:@"pagelet.titleAlignment"];
-    return (result ? [result intValue] : NSNaturalTextAlignment);
-}
-- (void)setAlignment:(NSTextAlignment)alignment;
-{
-    [self setValue:[NSNumber numberWithInt:alignment]
-        forKeyPath:@"pagelet.titleAlignment"];
-}
-+ (NSSet *)keyPathsForValuesAffectingAlignment;
-{
-    return [NSSet setWithObject:@"pagelet.titleAlignment"];
-}
++ (NSString *)alignmentKeyPath; { return @"pagelet.titleAlignment"; }
 
 @dynamic pagelet;
 
