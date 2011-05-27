@@ -117,24 +117,35 @@
         else
         {
             [context startResizableElement:@"div" plugIn:self options:0 preferredIdName:nil attributes:nil];
-            
-            NSString *text = [self.linkURL absoluteString];
-            [context writePlaceholderWithText:text options:0];
-            
             [context endElement];
         }
     }
     else
     {
         [context startResizableElement:@"div" plugIn:self options:0 preferredIdName:nil attributes:nil];
-        
-        NSString *text = SVLocalizedString(@"Drag a URL here","");
-        [context writePlaceholderWithText:text options:0];
-        
         [context endElement];
     }
 }
 
+- (NSString *)placeholderString
+{
+    NSString *result = nil;
+    
+    if ( self.linkURL )
+    {
+        if ( ![[self currentContext] liveDataFeeds] )
+        {
+            result = [self.linkURL absoluteString];
+        }
+    }
+    else
+    {
+        result = SVLocalizedString(@"Drag a URL here","");
+    }
+    
+    return result;
+}
+                                     
 
 #pragma mark Metrics
 
