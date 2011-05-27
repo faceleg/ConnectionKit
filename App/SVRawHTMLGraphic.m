@@ -124,8 +124,8 @@
                                                                        options:0
                                                                          range:NSMakeRange(0, [mutableDescription length])];
                                 
-                                // Font tags (bleargh!) are the same. #120633
-                                [mutableDescription replaceOccurrencesOfString:@"</font>"
+                                // Font tags, WebKit will generally figure out. #124935
+                                [mutableDescription replaceOccurrencesOfString:@"missing </font> before </"
                                                                     withString:@""
                                                                        options:0
                                                                          range:NSMakeRange(0, [mutableDescription length])];
