@@ -568,23 +568,6 @@
     return [NSSet setWithObject:@"commentsProvider"];
 }
 
-- (BOOL)usesExtensiblePropertiesForUndefinedKey:(NSString *)key
-{
-    if ( [key isEqualToString:@"disqusShortName"]
-        || [key isEqualToString:@"IntenseDebateAccountID"]
-        || [key isEqualToString:@"JSKitModeratorEmail"] 
-        || [key isEqualToString:@"facebookAppID"] 
-        || [key isEqualToString:@"fbNumberOfPosts"] 
-        || [key isEqualToString:@"fbColorScheme"] )
-    {
-        return YES;
-    }
-    else
-    {
-        return [super usesExtensiblePropertiesForUndefinedKey:key];
-    }
-}
-
 - (NSString *)disqusShortName
 {
     return [self extensiblePropertyForKey:@"disqusShortName"];
@@ -719,6 +702,26 @@
     else
     {
         return @"680";
+    }
+}
+
+#pragma mark KVO
+
+- (BOOL)usesExtensiblePropertiesForUndefinedKey:(NSString *)key
+{
+    if ( [key isEqualToString:@"disqusShortName"]
+        || [key isEqualToString:@"IntenseDebateAccountID"]
+        || [key isEqualToString:@"JSKitModeratorEmail"] 
+        || [key isEqualToString:@"facebookAppID"] 
+        || [key isEqualToString:@"fbNumberOfPosts"] 
+        || [key isEqualToString:@"fbColorScheme"]
+        || [key isEqualToString:@"siteTitleAlignment"])
+    {
+        return YES;
+    }
+    else
+    {
+        return [super usesExtensiblePropertiesForUndefinedKey:key];
     }
 }
 

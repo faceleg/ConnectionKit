@@ -84,6 +84,8 @@
 
 @implementation SVSiteTitle 
 
++ (NSString *)alignmentKeyPath; { return @"master.siteTitleAlignment"; }
+
 - (NSString *)graphicalTextCode:(SVHTMLContext *)context;
 {
     return ([[context page] isRootPage] ? @"h1h" : @"h1");
