@@ -403,9 +403,9 @@
     {
         SVPublishingRecord *record = [[[self site] hostProperties] regularFilePublishingRecordWithPath:path];
         
-        NSData *digest = [transferRecord propertyForKey:@"dataDigest"];
-        [record setSHA1Digest:digest];
+        [record setSHA1Digest:[transferRecord propertyForKey:@"dataDigest"]];
         [record setContentHash:[transferRecord propertyForKey:@"contentHash"]];
+        [record setLength:[NSNumber numberWithUnsignedLongLong:[transferRecord size]]];
     }
     
     
