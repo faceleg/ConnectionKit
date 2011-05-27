@@ -517,5 +517,10 @@ to be verified.
     return [[self rootPublishingRecord] publishingRecordForSHA1Digest:digest];
 }
 
+- (SVPublishingRecord *)publishingRecordForContentHash:(NSData *)digest;
+{
+    return [[self rootPublishingRecord] publishingRecordForContentHash:digest];
+}
+
 @end
 

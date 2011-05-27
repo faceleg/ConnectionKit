@@ -33,7 +33,10 @@ preferredUploadPath:(NSString *)path
 
 - (id)initWithMedia:(SVMedia *)media preferredUploadPath:(NSString *)path;   // convenience
 
+
+#pragma mark Source
 @property(nonatomic, retain, readonly) SVMedia *media;
+- (SVMediaRequest *)sourceRequest;
 
 
 #pragma mark Scaling
@@ -57,6 +60,9 @@ preferredUploadPath:(NSString *)path
 @property(nonatomic, copy, readonly) NSString *preferredUploadPath;
 
 - (SVMediaRequest *)requestWithScalingSuffixApplied;
+
+// Given the SHA1 digest of source media, what should the content hash of this request be?
+- (NSData *)contentHashWithMediaDigest:(NSData *)digest;
 
 
 #pragma mark Equality

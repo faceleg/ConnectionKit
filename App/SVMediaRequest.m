@@ -12,6 +12,7 @@
 #import "SVImageScalingOperation.h"
 #import "KTImageScalingURLProtocol.h"
 
+#import "NSData+Karelia.h"
 #import "NSString+Karelia.h"
 
 #import "KSPathUtilities.h"
@@ -83,7 +84,17 @@ preferredUploadPath:(NSString *)path
     [super dealloc];
 }
 
+#pragma mark Source
+
 @synthesize media = _media;
+
+- (SVMediaRequest *)sourceRequest;
+{
+    return [[[SVMediaRequest alloc] initWithMedia:[self media] preferredUploadPath:nil] autorelease];
+}
+
+#pragma mark Properties
+
 @synthesize width = _width;
 @synthesize height = _height;
 @synthesize type = _type;
@@ -147,6 +158,22 @@ preferredUploadPath:(NSString *)path
                                              type:[self type]
                               preferredUploadPath:path
                                     scalingSuffix:nil] autorelease];
+}
+
+- (NSData *)contentHashWithMediaDigest:(NSData *)digest;
+{
+    NSData *result = nil;
+    
+    NSString *query = [[NSURL sandvoxImageURLWithMediaRequest:self] query];
+    if (query)
+    {
+        query = [@"?" stringByAppendingString:query];
+        
+        result = [digest ks_dataByAppendingData:
+                  [query dataUsingEncoding:NSASCIIStringEncoding]];
+    }
+    
+    return result;
 }
 
 - (BOOL)isEqualToMediaRequest:(SVMediaRequest *)otherMedia;

@@ -51,7 +51,9 @@
 
 - (SVPublishingRecord *)publishingRecordForPath:(NSString *)path;
 - (SVPublishingRecord *)regularFilePublishingRecordWithPath:(NSString *)path;
+
 - (SVPublishingRecord *)publishingRecordForSHA1Digest:(NSData *)digest;
+- (SVPublishingRecord *)publishingRecordForContentHash:(NSData *)digest;
 
 
 @end

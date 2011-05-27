@@ -706,12 +706,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             //  The media rep does not already exist on the server, so need to assign it a new path
             result = [[self baseRemotePath] stringByAppendingPathComponent:[request preferredUploadPath]];
             
-            NSUInteger count = 1;
-            NSString *basePath = result;
             while (![self shouldPublishToPath:result])
             {
-                count++;
-                result = [basePath ks_stringWithPathSuffix:[NSString stringWithFormat:@"-%u", count]];
+                result = [result ks_stringByIncrementingPath];
             }
             
             OBASSERT(result);

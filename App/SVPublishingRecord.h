@@ -30,6 +30,7 @@
 @property (nonatomic, retain) NSSet *contentRecords;
 - (SVPublishingRecord *)publishingRecordForFilename:(NSString *)filename;
 - (SVPublishingRecord *)publishingRecordForSHA1Digest:(NSData *)digest;
+- (SVPublishingRecord *)publishingRecordForContentHash:(NSData *)digest;
 
 
 #pragma mark Attributes
