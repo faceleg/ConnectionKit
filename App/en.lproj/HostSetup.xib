@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="2088"/>
+			<integer value="58"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -280,7 +280,7 @@
 																	<nil key="NSDefaultParagraphStyle"/>
 																</object>
 																<int key="NSTVFlags">6</int>
-																<string key="NSMaxSize">{1014, 1e+07}</string>
+																<string key="NSMaxSize">{507, 1e+07}</string>
 																<string key="NSMinize">{507, 0}</string>
 																<nil key="NSDelegate"/>
 															</object>
@@ -1831,7 +1831,7 @@ QXBwbGUgQ29tcHV0ZXIsIEluYy4sIDIwMDUAAAAAA</bytes>
 								<object class="NSTabViewItem" id="961928556">
 									<string key="NSIdentifier">host</string>
 									<object class="NSView" key="NSView" id="706000326">
-										<reference key="NSNextResponder" ref="273226907"/>
+										<nil key="NSNextResponder"/>
 										<int key="NSvFlags">256</int>
 										<object class="NSMutableArray" key="NSSubviews">
 											<bool key="EncodedWithXMLCoder">YES</bool>
@@ -2490,7 +2490,6 @@ d3csIC9ob21lL3lvdXJuYW1lA</string>
 											</object>
 										</object>
 										<string key="NSFrameSize">{507, 415}</string>
-										<reference key="NSSuperview" ref="273226907"/>
 									</object>
 									<string key="NSLabel">Remote Host</string>
 									<reference key="NSColor" ref="205087010"/>
@@ -2583,7 +2582,7 @@ d3csIC9ob21lL3lvdXJuYW1lA</string>
 								<object class="NSTabViewItem" id="846545440">
 									<string key="NSIdentifier">summary</string>
 									<object class="NSView" key="NSView" id="259681852">
-										<nil key="NSNextResponder"/>
+										<reference key="NSNextResponder" ref="273226907"/>
 										<int key="NSvFlags">256</int>
 										<object class="NSMutableArray" key="NSSubviews">
 											<bool key="EncodedWithXMLCoder">YES</bool>
@@ -2658,7 +2657,7 @@ d3csIC9ob21lL3lvdXJuYW1lA</string>
 																	<nil key="NSDefaultParagraphStyle"/>
 																</object>
 																<int key="NSTVFlags">6</int>
-																<string key="NSMaxSize">{1014, 1e+07}</string>
+																<string key="NSMaxSize">{507, 1e+07}</string>
 																<string key="NSMinize">{507, 0}</string>
 																<nil key="NSDelegate"/>
 															</object>
@@ -2702,19 +2701,20 @@ d3csIC9ob21lL3lvdXJuYW1lA</string>
 											</object>
 										</object>
 										<string key="NSFrameSize">{507, 415}</string>
+										<reference key="NSSuperview" ref="273226907"/>
 									</object>
 									<string key="NSLabel">Summary</string>
 									<reference key="NSColor" ref="205087010"/>
 									<reference key="NSTabView" ref="273226907"/>
 								</object>
 							</object>
-							<reference key="NSSelectedTabViewItem" ref="961928556"/>
+							<reference key="NSSelectedTabViewItem" ref="846545440"/>
 							<reference key="NSFont" ref="413709463"/>
 							<int key="NSTvFlags">6</int>
 							<bool key="NSAllowTruncatedLabels">YES</bool>
 							<object class="NSMutableArray" key="NSSubviews">
 								<bool key="EncodedWithXMLCoder">YES</bool>
-								<reference ref="706000326"/>
+								<reference ref="259681852"/>
 							</object>
 						</object>
 						<object class="NSTextField" id="585227161">
