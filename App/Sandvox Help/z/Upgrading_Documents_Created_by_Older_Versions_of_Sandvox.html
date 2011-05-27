@@ -29,7 +29,33 @@
 
         <p><img alt="Sandvox2upgrade" src="img/9/9a/Sandvox2upgrade.jp2" width="454" height="238" border="0" /></p>
 
-        <p>Your older Sandvox document will remain in place with the current, .svxSite file. You'll still be able to open it with the previous version of Sandvox if needed.</p>
+        <p>Your older Sandvox document will remain in place with the current, .svxSite file. You'll still be able to open it with the previous version of Sandvox if needed.</p><a name="Migration" id="Migration"></a>
+
+        <h2><span class="mw-headline">Migration</span></h2>
+
+        <p>So how do we move to Sandvox 2?</p>
+
+        <p>When you first import a document into Sandvox 2, any custom HTML is left untouched. The site should continue to look as it always has.</p>
+
+        <p>After that, the first edit of some text will kick in the new behaviour. This could be from:</p>
+
+        <ul>
+            <li>Typing or deleting within the main text of a page</li>
+
+            <li>Selecting the "Edit Raw HTML" menu command</li>
+
+            <li>Moving an image within the text</li>
+
+            <li>Adding or deleting an object in the text</li>
+
+            <li>Typing or deleting in a Text Box</li>
+        </ul>
+
+        <p>So what happens when you take one of these actions?</p>
+
+        <p>Sandvox goes through the HTML making up the text. Each piece either gets cleaned up into neat paragraphs, or if Sandvox suspects the code might be custom, converts it to a Raw HTML object. From there you should be able to continue typing normally into the page, and/or edit the HTML objects.</p>
+
+        <p>This logic by its nature has to be guesswork, so if you feel Sandvox is guessing wrong on a particular case, please get in touch with us using the Feedback Reporter, and we'll try our best to improve matters for you.</p>
 
         <div class="related">
             <a name="Related_Articles" id="Related_Articles"></a>
