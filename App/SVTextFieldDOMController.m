@@ -381,6 +381,25 @@
 
 #pragma mark Dependencies
 
+- (void)startObservingDependencies;
+{
+    [super startObservingDependencies];
+    
+    id object = [self representedObject];
+    if (object)
+    {
+        if (![self infoForBinding:NSValueBinding])
+        {
+            [self bind:NSValueBinding toObject:object withKeyPath:@"textHTMLString" options:nil];
+        }
+        
+        if (![self infoForBinding:NSAlignmentBinding])
+        {
+            [self bind:NSAlignmentBinding toObject:object withKeyPath:@"alignment" options:nil];
+        }
+    }
+}
+
 - (void)stopObservingDependencies;
 {
     [self unbind:NSAlignmentBinding];
