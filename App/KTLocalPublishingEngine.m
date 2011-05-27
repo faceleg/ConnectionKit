@@ -164,6 +164,10 @@
                       digest);
             }
             
+            // Equal content hash means no need to publish, but still want to mark change in digest
+            OBASSERT(digest);
+            if (![digest isEqualToData:[record SHA1Digest]]) [record setSHA1Digest:digest];
+            
             // Pretend we uploaded so the engine still tracks path/digest etc.
             [self didEnqueueUpload:nil toPath:remotePath cachedSHA1Digest:digest contentHash:hash object:object];
             return;
