@@ -750,7 +750,7 @@
 - (BOOL)shouldIncludeInIndexes;
 {
     BOOL result = ([[self includeInIndex] boolValue] && 
-                   ([self datePublished] || ![self isDraftOrHasDraftAncestor]));
+                   ([self datePublished] || ![self isDraft]));
     return result;
 }
 + (NSSet *)keyPathsForValuesAffectingShouldIncludeInIndexes;
