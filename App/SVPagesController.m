@@ -115,7 +115,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     SVPagesController *result = [self controllerWithPagesInCollection:collection bind:bind];
     
     // Filter out pages not in index
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"shouldIncludeInIndexes == YES"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"shouldIncludeInIndexes != NO"];
     [result setFilterPredicate:predicate];
     
     return result;
