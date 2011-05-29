@@ -21,11 +21,11 @@
 	NSTextView *_analyticsOverview;
 }
 
-@property (nonatomic, retain) IBOutlet NSObjectController *objectController;
-@property (nonatomic, retain) IBOutlet NSTextField *verificationCodeField;
-@property (nonatomic, retain) IBOutlet NSTextField *analyticsCodeField;
-@property (nonatomic, retain) IBOutlet NSTextView *verificationOverview;
-@property (nonatomic, retain) IBOutlet NSTextView *analyticsOverview;
+@property (assign) IBOutlet NSObjectController *objectController;
+@property (assign) IBOutlet NSTextField *verificationCodeField;
+@property (assign) IBOutlet NSTextField *analyticsCodeField;
+@property (assign) IBOutlet NSTextView *verificationOverview;
+@property (assign) IBOutlet NSTextView *analyticsOverview;
 
 - (void)configureGoogle:(NSWindowController *)sender;
 - (IBAction)closeSheet:(id)sender;

@@ -20,16 +20,6 @@
 @synthesize verificationOverview = _verificationOverview;
 @synthesize analyticsOverview = _analyticsOverview;
 
-- (void)dealloc
-{
-    self.objectController = nil;
-    self.verificationCodeField = nil;
-    self.analyticsCodeField = nil;
-	self.verificationOverview = nil;
-	self.analyticsOverview = nil;
-    [super dealloc];
-}
-
 - (void)windowDidLoad
 {
     // figure out our best possible mono-spaced font
@@ -55,20 +45,22 @@
         font = [NSFont userFixedPitchFontOfSize:12.0];
     }
 	
+    [self.verificationCodeField setFont:font];
+    [self.analyticsCodeField setFont:font];
+
+    
+    // localize NSTextViews
 
 	NSString *ver0 = NSLocalizedString(@"Visit [Google Webmaster Tools] to register and verify your site using the “Add a meta tag to your site’s home page” option. Paste the provided tag below and then publish your website to confirm verification.", @"The [ and the ] will be removed, and the text in between will be give a hyperlink attribute.  PLEASE VISIT THIS SITE TO GET THE EXACT TRANSLATION OF THE QUOTED STRING --> http://www.google.com/webmasters/tools/");
-	NSAttributedString *ver1 = [NSAttributedString systemFontStringWithString:ver0 hyperlinkInBracketsTo:
-								[NSURL URLWithString:@"http://www.google.com/webmasters/tools/"]];
+	NSAttributedString *ver1 = [NSAttributedString systemFontStringWithString:ver0 
+                                                        hyperlinkInBracketsTo:[NSURL URLWithString:@"http://www.google.com/webmasters/tools/"]];
 	[[self.verificationOverview textStorage] setAttributedString:ver1];
 
  
 	NSString *ana0 = NSLocalizedString(@"Visit [Google Analytics] to add a profile for your website. Paste the provided code below and then publish your website to begin tracking.", @"The [ and the ] will be removed, and the text in between will be give a hyperlink attribute.");
-	NSAttributedString *ana1 = [NSAttributedString systemFontStringWithString:ana0 hyperlinkInBracketsTo:
-								[NSURL URLWithString:@"http://www.google.com/analytics/"]];
+	NSAttributedString *ana1 = [NSAttributedString systemFontStringWithString:ana0 
+                                                        hyperlinkInBracketsTo:[NSURL URLWithString:@"http://www.google.com/analytics/"]];
 	[[self.analyticsOverview textStorage] setAttributedString:ana1];
-	
-    [self.verificationCodeField setFont:font];
-    [self.analyticsCodeField setFont:font];
 }
 
 - (void)setSite:(KTSite *)site
