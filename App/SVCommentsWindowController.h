@@ -64,9 +64,15 @@
 @interface SVCommentsWindowController : NSWindowController 
 {
     NSObjectController *_objectController;
+    NSTextView *_disqusOverview;
+    NSTextView *_intenseDebateOverview;
+    NSTextView *_facebookCommentsOverview;
 }
 
-@property (nonatomic, retain) IBOutlet NSObjectController *objectController;
+@property (assign) IBOutlet NSObjectController *objectController;
+@property (assign) IBOutlet NSTextView *disqusOverview;
+@property (assign) IBOutlet NSTextView *intenseDebateOverview;
+@property (assign) IBOutlet NSTextView *facebookCommentsOverview;
 
 - (void)configureComments:(NSWindowController *)sender;
 - (void)setMaster:(KTMaster *)master;

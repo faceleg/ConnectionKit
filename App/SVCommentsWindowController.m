@@ -11,15 +11,39 @@
 #import "KTMaster.h"
 #import "KSAppDelegate.h"
 #import "NSWorkspace+Karelia.h"
+#import "NSAttributedString+Karelia.h"
 
 
 @implementation SVCommentsWindowController
 @synthesize objectController = _objectController;
+@synthesize disqusOverview = _disqusOverview;
+@synthesize intenseDebateOverview = _intenseDebateOverview;
+@synthesize facebookCommentsOverview = _facebookCommentsOverview;
 
-- (void)dealloc
+- (void)windowDidLoad
 {
-    self.objectController = nil;
-    [super dealloc];
+    // localize NSTextViews
+    
+    // Disqus
+    NSString *localizedStringWithBrackets = NSLocalizedString(@"Enter your [Disqus] shortname to enable comments on this site.", @"The [ and the ] will be removed, and the text in between will be give a hyperlink attribute. PLEASE VISIT THIS SITE TO GET THE EXACT TRANSLATION OF THE QUOTED STRING --> http://disqus.com/");
+    NSAttributedString *hyperlinkedString = [NSAttributedString systemFontStringWithString:localizedStringWithBrackets 
+                                                                     hyperlinkInBracketsTo:[NSURL URLWithString:@"http://disqus.com/"]];
+    NSAssert(nil != self.disqusOverview, @"no outlet");
+    [[self.disqusOverview textStorage] setAttributedString:hyperlinkedString];
+
+    // IntenseDebate
+    localizedStringWithBrackets = NSLocalizedString(@"Enter your [IntenseDebate] Account ID to enable comments on this site.", @"The [ and the ] will be removed, and the text in between will be give a hyperlink attribute. PLEASE VISIT THIS SITE TO GET THE EXACT TRANSLATION OF THE QUOTED STRING --> http://intensedebate.com/");
+    hyperlinkedString = [NSAttributedString systemFontStringWithString:localizedStringWithBrackets 
+                                                 hyperlinkInBracketsTo:[NSURL URLWithString:@"http://intensedebate.com/"]];
+    NSAssert(nil != self.intenseDebateOverview, @"no outlet");
+    [[self.intenseDebateOverview textStorage] setAttributedString:hyperlinkedString];
+    
+    // Facebook Comments
+    localizedStringWithBrackets = NSLocalizedString(@"Enter your site’s [Facebook] App ID to enable comments on this site.", @"The [ and the ] will be removed, and the text in between will be give a hyperlink attribute. PLEASE VISIT THIS SITE TO GET THE EXACT TRANSLATION OF THE QUOTED STRING --> http://www.facebook.com/");
+    hyperlinkedString = [NSAttributedString systemFontStringWithString:localizedStringWithBrackets 
+                                                 hyperlinkInBracketsTo:[NSURL URLWithString:@"http://www.facebook.com/"]];
+    NSAssert(nil != self.facebookCommentsOverview, @"no outlet");
+    [[self.facebookCommentsOverview textStorage] setAttributedString:hyperlinkedString];
 }
 
 - (void)setMaster:(KTMaster *)master
@@ -76,6 +100,5 @@
 {
     [KSWORKSPACE attemptToOpenWebURL:[NSURL URLWithString:@"http://intensedebate.com/signup"]];
 }
-
 
 @end

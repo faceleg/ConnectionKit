@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="84"/>
+			<integer value="2"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1535,6 +1535,30 @@ aXMgc2l0ZS4</bytes>
 					</object>
 					<int key="connectionID">127</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">facebookCommentsOverview</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="189962744"/>
+					</object>
+					<int key="connectionID">129</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">disqusOverview</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="765757820"/>
+					</object>
+					<int key="connectionID">130</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">intenseDebateOverview</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="857996564"/>
+					</object>
+					<int key="connectionID">131</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -1954,25 +1978,16 @@ aXMgc2l0ZS4</bytes>
 						<reference key="object" ref="524619067"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="889345599"/>
 							<reference ref="590165823"/>
 							<reference ref="669817547"/>
 							<reference ref="79312381"/>
-							<reference ref="60917688"/>
 							<reference ref="363257487"/>
 							<reference ref="328835112"/>
 							<reference ref="790481121"/>
+							<reference ref="60917688"/>
+							<reference ref="889345599"/>
 						</object>
 						<reference key="parent" ref="707701864"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">85</int>
-						<reference key="object" ref="889345599"/>
-						<object class="NSMutableArray" key="children">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="495219738"/>
-						</object>
-						<reference key="parent" ref="524619067"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">86</int>
@@ -2013,11 +2028,6 @@ aXMgc2l0ZS4</bytes>
 						<int key="objectID">91</int>
 						<reference key="object" ref="635035427"/>
 						<reference key="parent" ref="590165823"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">92</int>
-						<reference key="object" ref="495219738"/>
-						<reference key="parent" ref="889345599"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">96</int>
@@ -2062,20 +2072,6 @@ aXMgc2l0ZS4</bytes>
 						<reference key="parent" ref="672793611"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">114</int>
-						<reference key="object" ref="60917688"/>
-						<object class="NSMutableArray" key="children">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="27818542"/>
-						</object>
-						<reference key="parent" ref="524619067"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">115</int>
-						<reference key="object" ref="27818542"/>
-						<reference key="parent" ref="60917688"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">116</int>
 						<reference key="object" ref="363257487"/>
 						<object class="NSMutableArray" key="children">
@@ -2092,20 +2088,6 @@ aXMgc2l0ZS4</bytes>
 							<reference ref="333725683"/>
 						</object>
 						<reference key="parent" ref="363257487"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">118</int>
-						<reference key="object" ref="790481121"/>
-						<object class="NSMutableArray" key="children">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="691255929"/>
-						</object>
-						<reference key="parent" ref="524619067"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">119</int>
-						<reference key="object" ref="691255929"/>
-						<reference key="parent" ref="790481121"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">120</int>
@@ -2149,6 +2131,48 @@ aXMgc2l0ZS4</bytes>
 						<int key="objectID">128</int>
 						<reference key="object" ref="333725683"/>
 						<reference key="parent" ref="166465855"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">118</int>
+						<reference key="object" ref="790481121"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="691255929"/>
+						</object>
+						<reference key="parent" ref="524619067"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">119</int>
+						<reference key="object" ref="691255929"/>
+						<reference key="parent" ref="790481121"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">114</int>
+						<reference key="object" ref="60917688"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="27818542"/>
+						</object>
+						<reference key="parent" ref="524619067"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">115</int>
+						<reference key="object" ref="27818542"/>
+						<reference key="parent" ref="60917688"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">85</int>
+						<reference key="object" ref="889345599"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="495219738"/>
+						</object>
+						<reference key="parent" ref="524619067"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">92</int>
+						<reference key="object" ref="495219738"/>
+						<reference key="parent" ref="889345599"/>
 					</object>
 				</object>
 			</object>
@@ -2263,9 +2287,9 @@ aXMgc2l0ZS4</bytes>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>{{458, 601}, {489, 255}}</string>
+					<string>{{548, 296}, {489, 255}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{458, 601}, {489, 255}}</string>
+					<string>{{548, 296}, {489, 255}}</string>
 					<boolean value="NO"/>
 					<string>{196, 240}</string>
 					<string>{{202, 428}, {480, 270}}</string>
@@ -2436,7 +2460,7 @@ aXMgc2l0ZS4</bytes>
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">128</int>
+			<int key="maxID">132</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2803,14 +2827,49 @@ aXMgc2l0ZS4</bytes>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">objectController</string>
-						<string key="NS.object.0">NSObjectController</string>
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>disqusOverview</string>
+							<string>facebookCommentsOverview</string>
+							<string>intenseDebateOverview</string>
+							<string>objectController</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>NSTextView</string>
+							<string>NSTextView</string>
+							<string>NSTextView</string>
+							<string>NSObjectController</string>
+						</object>
 					</object>
 					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">objectController</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">objectController</string>
-							<string key="candidateClassName">NSObjectController</string>
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>disqusOverview</string>
+							<string>facebookCommentsOverview</string>
+							<string>intenseDebateOverview</string>
+							<string>objectController</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBToOneOutletInfo">
+								<string key="name">disqusOverview</string>
+								<string key="candidateClassName">NSTextView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">facebookCommentsOverview</string>
+								<string key="candidateClassName">NSTextView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">intenseDebateOverview</string>
+								<string key="candidateClassName">NSTextView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">objectController</string>
+								<string key="candidateClassName">NSObjectController</string>
+							</object>
 						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
