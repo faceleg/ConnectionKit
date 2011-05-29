@@ -1,5 +1,5 @@
 //
-//  SVMediaDigestStorage.h
+//  SVPublishingDigestStorage.h
 //  Sandvox
 //
 //  Created by Mike on 15/05/2011.
@@ -9,12 +9,22 @@
 #import "SVMediaRequest.h"
 
 
-@interface SVMediaDigestStorage : NSObject
+@interface SVPublishingDigestStorage : NSObject
 {
   @private
+    NSMutableSet        *_paths;    // all the paths which are in use by the site
+    NSMutableDictionary *_pathsByDigest;
     NSMapTable          *_publishedMediaDigests;
-    
 }
+
+#pragma mark General
+
+- (BOOL)containsPath:(NSString *)path;
+- (NSString *)pathForFileWithDigest:(NSData *)digest;
+- (void)addPath:(NSString *)path digest:(NSData *)digest;
+
+
+#pragma mark Media Requests
 
 - (NSData *)digestForRequest:(SVMediaRequest *)request;
 

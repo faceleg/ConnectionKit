@@ -45,7 +45,7 @@ typedef enum {
     KTPublishingEngineStatusFinished,
 } KTPublishingEngineStatus;
 
-@class KTSite, KTPage, SVMediaDigestStorage;
+@class KTSite, KTPage, SVPublishingDigestStorage;
 @protocol KTPublishingEngineDelegate;
 
 
@@ -65,9 +65,7 @@ typedef enum {
     CKTransferRecord    *_rootTransferRecord;
     CKTransferRecord    *_baseTransferRecord;
     
-    NSMutableSet            *_paths;    // all the paths which are in use by the site
-    NSMutableDictionary     *_pathsByDigest;
-    SVMediaDigestStorage    *_mediaDigestStorage;
+    SVPublishingDigestStorage    *_digestStorage;
     
     NSMutableArray      *_plugInCSS;    // mixture of string CSS snippets, and CSS URLs
     
@@ -92,7 +90,7 @@ typedef enum {
 - (NSString *)documentRootPath;
 - (NSString *)subfolderPath;
 - (NSString *)baseRemotePath;
-@property(nonatomic, readonly) SVMediaDigestStorage *mediaDigestStorage;
+@property(nonatomic, readonly) SVPublishingDigestStorage *mediaDigestStorage;
 
 
 // Control

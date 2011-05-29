@@ -1,28 +1,52 @@
 //
-//  SVMediaDigestStorage.m
+//  SVPublishingDigestStorage.m
 //  Sandvox
 //
 //  Created by Mike on 15/05/2011.
 //  Copyright 2011 Karelia Software. All rights reserved.
 //
 
-#import "SVMediaDigestStorage.h"
+#import "SVPublishingDigestStorage.h"
 
 
-@implementation SVMediaDigestStorage
+@implementation SVPublishingDigestStorage
 
 - (id)init;
 {
     [super init];
+    
+    _paths = [[NSMutableSet alloc] init];
+    _pathsByDigest = [[NSMutableDictionary alloc] init];
     _publishedMediaDigests = [[NSMapTable mapTableWithStrongToStrongObjects] retain];
+    
     return self;
 }
 
 - (void)dealloc
 {
+    [_paths release];
+    [_pathsByDigest release];
     [_publishedMediaDigests release];
+    
     [super dealloc];
 }
+
+#pragma mark General
+
+- (BOOL)containsPath:(NSString *)path; { return [_paths containsObject:path]; }
+
+- (NSString *)pathForFileWithDigest:(NSData *)digest;
+{
+    return [_pathsByDigest objectForKey:digest];
+}
+
+- (void)addPath:(NSString *)path digest:(NSData *)digest;
+{
+    [_paths addObject:path];
+    if (digest) [_pathsByDigest setObject:path forKey:digest];
+}
+
+#pragma mark Media
 
 - (NSData *)digestForRequest:(SVMediaRequest *)request;
 {

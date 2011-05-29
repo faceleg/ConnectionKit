@@ -13,7 +13,7 @@
 #import "KTHostProperties.h"
 #import "KTSite.h"
 #import "KTMaster.h"
-#import "SVMediaDigestStorage.h"
+#import "SVPublishingDigestStorage.h"
 #import "SVMediaRequest.h"
 #import "KTPage+Internal.h"
 #import "SVPublishingHTMLContext.h"
@@ -103,9 +103,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	{
 		_site = [site retain];
         
-        _paths = [[NSMutableSet alloc] init];
-        _pathsByDigest = [[NSMutableDictionary alloc] init];
-        _mediaDigestStorage = [[SVMediaDigestStorage alloc] init];
+        _digestStorage = [[SVPublishingDigestStorage alloc] init];
         
         _plugInCSS = [[NSMutableArray alloc] init];
         
@@ -146,9 +144,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	[_documentRootPath release];
     [_subfolderPath release];
     
-    [_paths release];
-    [_pathsByDigest release];
-    [_mediaDigestStorage release];
+    [_digestStorage release];
     
     [_plugInCSS release];
     
@@ -176,7 +172,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     return result;
 }
 
-@synthesize mediaDigestStorage = _mediaDigestStorage;
+@synthesize mediaDigestStorage = _digestStorage;
 
 #pragma mark Overall flow control
 
@@ -419,7 +415,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
 - (BOOL)shouldPublishToPath:(NSString *)path;
 {
-    BOOL result = ![_paths containsObject:path];
+    BOOL result = ![[self mediaDigestStorage] containsPath:path];
     return result;
 }
 
@@ -495,8 +491,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
              contentHash:(NSData *)contentHash
                   object:(id <SVPublishedObject>)object;
 {
-    [_paths addObject:path];
-    if (digest) [_pathsByDigest setObject:path forKey:digest];
+    [[self mediaDigestStorage] addPath:path digest:digest];
 }
 
 - (void)didEnqueueUpload:(CKTransferRecord *)record toDirectory:(CKTransferRecord *)parent;
@@ -621,7 +616,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     OBPRECONDITION(request);
     
     
-    [_mediaDigestStorage addRequest:request cachedDigest:cachedDigest];
+    [_digestStorage addRequest:request cachedDigest:cachedDigest];
     
     
     // Do the calculation on a background thread. Which one depends on the task needed
@@ -689,7 +684,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     OBPRECONDITION(digest);
     
     
-    request = [_mediaDigestStorage addRequest:request cachedDigest:digest];
+    request = [_digestStorage addRequest:request cachedDigest:digest];
     
     
     // Is there already an existing file on the server? If so, use that
@@ -765,9 +760,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     //  A)  Collect digests of all media (e.g. for dupe identification)
     //  B)  As a head start, queue for upload any media that has previously been published, thus reserving path
     
-    if ([_mediaDigestStorage containsRequest:request])
+    if ([_digestStorage containsRequest:request])
     {
-        NSData *cachedDigest = [_mediaDigestStorage digestForRequest:request];
+        NSData *cachedDigest = [_digestStorage digestForRequest:request];
         if (cachedDigest)  // nothing to do yet while hash is being calculated
         {
             result = [self publishMediaWithRequest:request cachedData:nil SHA1Digest:cachedDigest];
@@ -945,7 +940,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 {
     OBPRECONDITION(digest);
     
-    NSString *result = [_pathsByDigest objectForKey:digest];
+    NSString *result = [[self mediaDigestStorage] pathForFileWithDigest:digest];
     
     if (!result)
     {

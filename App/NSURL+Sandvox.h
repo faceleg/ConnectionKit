@@ -15,7 +15,7 @@
 
 @interface NSURL (Sandvox)
 
-// Interprets the query portion of the recevier as a dictionary
+// Interprets the query portion of the receiver as a dictionary
 - (NSDictionary *)svQueryParameters;
 
 + (NSURL *)svURLWithScheme:(NSString *)scheme

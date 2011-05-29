@@ -11,7 +11,7 @@
 #import "KTSite.h"
 #import "KTHostProperties.h"
 #import "KTMaster.h"
-#import "SVMediaDigestStorage.h"
+#import "SVPublishingDigestStorage.h"
 #import "KTPage.h"
 #import "SVPublishingRecord.h"
 #import "KTURLCredentialStorage.h"
@@ -193,43 +193,6 @@
                        object:object];
 }
 
-- (void)threaded_publishMediaData:(NSData *)data
-                           toPath:(NSString *)remotePath
-                          request:(SVMediaRequest *)request
-                 cachedSHA1Digest:(NSData *)digest;
-{
-    OBPRECONDITION(data);
-    OBPRECONDITION(remotePath);
-    OBPRECONDITION(request);
-    
-    
-    NSData *hash = nil;
-    if ([request width] || [request height])
-    {
-        // Hopefully we've published it before. Figure out content hash
-        NSData *sourceDigest = [[request media] SHA1Digest];
-        if (sourceDigest)
-        {
-            hash = [request contentHashWithMediaDigest:sourceDigest];
-        }
-        
-        // Signify a failure with NSNull so we don't get stuck in an endless loop
-        if (!hash) hash = (id)[NSNull null];
-    }
-    
-    
-    // Might as well hash while we're not on the main thread
-    if (!digest) digest = [data SHA1Digest];
-    
-    
-    [[self ks_proxyOnThread:nil] publishData:data
-                                      toPath:remotePath
-                            cachedSHA1Digest:digest
-                                 contentHash:hash
-                                mediaRequest:request
-                                      object:nil];
-}
-
 - (void)publishContentsOfURL:(NSURL *)localURL
                       toPath:(NSString *)remotePath
             cachedSHA1Digest:(NSData *)digest  // save engine the trouble of calculating itself
@@ -339,6 +302,84 @@
     [record setProperty:path forKey:@"path"];
     if (digest) [record setProperty:digest forKey:@"dataDigest"];
     if (contentHash) [record setProperty:contentHash forKey:@"contentHash"];
+}
+
+#pragma mark Media
+
+- (NSString *)publishMediaWithRequest:(SVMediaRequest *)request;
+{
+    if ([self onlyPublishChanges])
+    {
+        if ([request width] || [request height])
+        {
+            // Figure out content hash first
+            NSData *sourceDigest = [[self mediaDigestStorage] digestForRequest:[request sourceRequest]];
+            if (!sourceDigest) sourceDigest = [[request media] SHA1Digest];
+            
+            if (sourceDigest)
+            {
+                NSData *hash = [request contentHashWithMediaDigest:sourceDigest];
+                if (hash)
+                {
+                    // Seek an existing instance of that media
+                    SVPublishingRecord *record = [[[self site] hostProperties] publishingRecordForContentHash:hash];
+                    if (record)
+                    {
+                        // Pretend the media was uploaded
+                        NSString *result = [record path];
+                        OBASSERT(result);
+                                                
+                        [self didEnqueueUpload:nil
+                                        toPath:result
+                              cachedSHA1Digest:[record SHA1Digest]
+                                   contentHash:hash
+                                        object:nil];
+                        
+                        return result;
+                    }
+                }
+            }
+        }
+    }
+    
+    return [super publishMediaWithRequest:request];
+}
+
+- (void)threaded_publishMediaData:(NSData *)data
+                           toPath:(NSString *)remotePath
+                          request:(SVMediaRequest *)request
+                 cachedSHA1Digest:(NSData *)digest;
+{
+    OBPRECONDITION(data);
+    OBPRECONDITION(remotePath);
+    OBPRECONDITION(request);
+    
+    
+    NSData *hash = nil;
+    if ([request width] || [request height])
+    {
+        // Hopefully we've published it before. Figure out content hash
+        NSData *sourceDigest = [[request media] SHA1Digest];
+        if (sourceDigest)
+        {
+            hash = [request contentHashWithMediaDigest:sourceDigest];
+        }
+        
+        // Signify a failure with NSNull so we don't get stuck in an endless loop
+        if (!hash) hash = (id)[NSNull null];
+    }
+    
+    
+    // Might as well hash while we're not on the main thread
+    if (!digest) digest = [data SHA1Digest];
+    
+    
+    [[self ks_proxyOnThread:nil] publishData:data
+                                      toPath:remotePath
+                            cachedSHA1Digest:digest
+                                 contentHash:hash
+                                mediaRequest:request
+                                      object:nil];
 }
 
 #pragma mark Status
