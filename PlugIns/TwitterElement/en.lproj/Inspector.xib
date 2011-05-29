@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="5"/>
+			<integer value="470"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -124,7 +124,7 @@
 							<object class="NSTextField" id="213407851">
 								<reference key="NSNextResponder" ref="94088254"/>
 								<int key="NSvFlags">268</int>
-								<string key="NSFrame">{{50, 46}, {58, 14}}</string>
+								<string key="NSFrame">{{53, 46}, {58, 14}}</string>
 								<reference key="NSSuperview" ref="94088254"/>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSTextFieldCell" key="NSCell" id="588630269">
@@ -189,13 +189,13 @@
 							<object class="NSTextField" id="501979337">
 								<reference key="NSNextResponder" ref="94088254"/>
 								<int key="NSvFlags">268</int>
-								<string key="NSFrame">{{0, 44}, {30, 19}}</string>
+								<string key="NSFrame">{{0, 44}, {29, 19}}</string>
 								<reference key="NSSuperview" ref="94088254"/>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSTextFieldCell" key="NSCell" id="1048304676">
 									<int key="NSCellFlags">-1804468671</int>
-									<int key="NSCellFlags2">-1874721792</int>
-									<string key="NSContents"/>
+									<int key="NSCellFlags2">272761856</int>
+									<integer value="999" key="NSContents"/>
 									<reference key="NSSupport" ref="26"/>
 									<object class="NSNumberFormatter" key="NSFormatter" id="1063075690">
 										<object class="NSMutableDictionary" key="NS.attributes">
@@ -220,8 +220,8 @@
 												<object class="NSLocale">
 													<string key="NS.identifier"/>
 												</object>
-												<real value="20"/>
-												<integer value="2"/>
+												<real value="999"/>
+												<integer value="3"/>
 												<real value="1"/>
 												<integer value="1"/>
 												<string>-#</string>
@@ -248,7 +248,7 @@
 											</object>
 										</object>
 										<real value="1" key="NS.min"/>
-										<real value="20" key="NS.max"/>
+										<real value="999" key="NS.max"/>
 										<object class="NSDecimalNumberHandler" key="NS.rounding">
 											<int key="NS.roundingmode">3</int>
 											<bool key="NS.raise.overflow">YES</bool>
@@ -300,7 +300,7 @@
 							<object class="NSStepper" id="223232723">
 								<reference key="NSNextResponder" ref="94088254"/>
 								<int key="NSvFlags">268</int>
-								<string key="NSFrame">{{32, 42}, {15, 22}}</string>
+								<string key="NSFrame">{{35, 42}, {15, 22}}</string>
 								<reference key="NSSuperview" ref="94088254"/>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSStepperCell" key="NSCell" id="685735087">
@@ -310,7 +310,7 @@
 									<reference key="NSControlView" ref="223232723"/>
 									<double key="NSValue">1</double>
 									<double key="NSMinValue">1</double>
-									<double key="NSMaxValue">20</double>
+									<double key="NSMaxValue">999</double>
 									<double key="NSIncrement">1</double>
 									<bool key="NSAutorepeat">YES</bool>
 								</object>
