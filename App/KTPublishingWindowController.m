@@ -304,7 +304,7 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
         [alert setInformativeText:NSLocalizedString(@"Saving will ensure Sandvox doesn't upload the same changes again next time you publish.", "alert text")];
          
         [alert addButtonWithTitle:NSLocalizedString(@"Save", "button")];
-        [alert addButtonWithTitle:NSLocalizedString(@"Cancel", "button")];
+        [alert addButtonWithTitle:NSLocalizedString(@"Don't Save", "button")];
         [alert addButtonWithTitle:NSLocalizedString(@"Save As…", "button")];
         
         
