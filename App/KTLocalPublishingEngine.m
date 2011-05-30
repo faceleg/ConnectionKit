@@ -299,17 +299,32 @@
 
 #pragma mark Media
 
-- (NSString *)publishMediaWithRequest:(SVMediaRequest *)request;
+- (NSString *)publishMediaWithRequest:(SVMediaRequest *)request cachedSourceDigest:(NSData *)sourceDigest;
 {
     if ([self onlyPublishChanges])
     {
         if ([request width] || [request height])
         {
             // Figure out content hash first
-            NSData *sourceDigest = [[self mediaDigestStorage] digestForRequest:[request sourceRequest]];
-            if (!sourceDigest) sourceDigest = [[request media] SHA1Digest];
+            if (!sourceDigest) sourceDigest = [[self mediaDigestStorage] digestForRequest:[request sourceRequest]];
+            if (!sourceDigest && [self status] > KTPublishingEngineStatusGatheringMedia)
+            {
+                sourceDigest = [[request media] SHA1Digest];
+            }
             
-            if (sourceDigest)
+            if (!sourceDigest)
+            {
+                NSOperation *op = [[NSInvocationOperation alloc]
+                                   initWithTarget:self
+                                   selector:@selector(threaded_publishMediaWithRequestByHashingSource:)
+                                   object:request];
+                [self addOperation:op queue:[self diskOperationQueue]];
+                [op release];
+                return nil;
+            }
+            
+            
+            if ([sourceDigest length])  // empty data signals failure to hash on backgroun thread
             {
                 NSData *hash = [request contentHashWithMediaDigest:sourceDigest];
                 if (hash)
@@ -321,7 +336,7 @@
                         // Pretend the media was uploaded
                         NSString *result = [record path];
                         OBASSERT(result);
-                                                
+                        
                         [self didEnqueueUpload:nil
                                         toPath:result
                               cachedSHA1Digest:[record SHA1Digest]
@@ -336,6 +351,11 @@
     }
     
     return [super publishMediaWithRequest:request];
+}
+
+- (NSString *)publishMediaWithRequest:(SVMediaRequest *)request;
+{
+    return [self publishMediaWithRequest:request cachedSourceDigest:nil];
 }
 
 - (void)threaded_publishMediaData:(NSData *)data
@@ -373,6 +393,15 @@
                                  contentHash:hash
                                 mediaRequest:request
                                       object:nil];
+}
+
+- (void)threaded_publishMediaWithRequestByHashingSource:(SVMediaRequest *)request;
+{
+    NSData *sourceDigest = [[request media] SHA1Digest];
+    
+    // Signal failure with empty data
+    if (!sourceDigest) sourceDigest = [NSData data];
+    [[self ks_proxyOnThread:nil] publishMediaWithRequest:request cachedSourceDigest:sourceDigest];
 }
 
 #pragma mark Status
