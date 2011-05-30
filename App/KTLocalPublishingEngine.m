@@ -307,20 +307,25 @@
         {
             // Figure out content hash first
             if (!sourceDigest) sourceDigest = [[self mediaDigestStorage] digestForRequest:[request sourceRequest]];
-            if (!sourceDigest && [self status] > KTPublishingEngineStatusGatheringMedia)
-            {
-                sourceDigest = [[request media] SHA1Digest];
-            }
+            
             
             if (!sourceDigest)
             {
-                NSOperation *op = [[NSInvocationOperation alloc]
-                                   initWithTarget:self
-                                   selector:@selector(threaded_publishMediaWithRequestByHashingSource:)
-                                   object:request];
-                [self addOperation:op queue:[self diskOperationQueue]];
-                [op release];
-                return nil;
+                if ([self status] > KTPublishingEngineStatusGatheringMedia)
+                {
+                    // Need an answer NOW
+                    sourceDigest = [[request media] SHA1Digest];
+                }
+                else
+                {
+                    NSOperation *op = [[NSInvocationOperation alloc]
+                                       initWithTarget:self
+                                       selector:@selector(threaded_publishMediaWithRequestByHashingSource:)
+                                       object:request];
+                    [self addOperation:op queue:[self diskOperationQueue]];
+                    [op release];
+                    return nil;
+                }
             }
             
             
