@@ -274,9 +274,13 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 @synthesize startNextPhaseOperation = _nextOp;
 
-- (void)addDependencyForNextPhase:(NSOperation *)op;    // can't finish publishing until the op runs
+- (void)addOperation:(NSOperation *)operation queue:(NSOperationQueue *)queue;
 {
-    [[self startNextPhaseOperation] addDependency:op];
+    [[self startNextPhaseOperation] addDependency:operation];
+    
+    if (!queue) queue = [self defaultQueue];
+    OBASSERT(queue);
+    [queue addOperation:operation];
 }
 
 #pragma mark Transfer Records
@@ -620,7 +624,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     
     // Do the calculation on a background thread. Which one depends on the task needed
-    NSOperation *op;
     if ([request isNativeRepresentation])
     {
         NSData *data = [[request media] mediaData];
@@ -632,8 +635,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                                         target:self
                                         arguments:NSARRAY(data, request)];
             
-            op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
-            [[self defaultQueue] addOperation:op];
+            NSOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
+            [self addOperation:op queue:[self defaultQueue]];
+            [op release];
         }
         else
         {
@@ -643,8 +647,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                                         target:self
                                         arguments:NSARRAY(request, cachedDigest)];
             
-            op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
-            [_diskQueue addOperation:op];
+            NSOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
+            [self addOperation:op queue:_diskQueue];
+            [op release];
         }
     }
     else
@@ -668,13 +673,12 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                                         target:self
                                         arguments:NSARRAY(request, cachedDigest)];
             
-            op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
-            [_coreImageQueue addOperation:op];  // most of the work should be Core Image's
+            NSOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
+            [self addOperation:op queue:_coreImageQueue];  // most of the work should be Core Image's
+            [op release];
         }
     }
     
-    [self addDependencyForNextPhase:op];
-    [op release];
     return nil;
 }
 
@@ -885,8 +889,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                                         arguments:[NSArray arrayWithObjects:fileContents, request, nil]];
             
             NSOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
-            [self addDependencyForNextPhase:op];
-            [[self defaultQueue] addOperation:op];
+            [self addOperation:op queue:[self defaultQueue]];
             [op release];
         }
         

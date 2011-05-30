@@ -119,8 +119,7 @@
                                             arguments:NSARRAY(data, remotePath, mediaRequest, digest)];
                 
                 NSOperation *operation = [[KSInvocationOperation alloc] initWithInvocation:invocation];
-                [self addDependencyForNextPhase:operation];
-                [_diskAccessQueue addOperation:operation];
+                [self addOperation:operation queue:_diskAccessQueue];
                 [operation release];
                 
                 return;
@@ -209,8 +208,7 @@
         [invocation setArgument:&object atIndex:4];
         
         NSOperation *operation = [[KSInvocationOperation alloc] initWithInvocation:invocation];
-        [self addDependencyForNextPhase:operation];
-        [_diskAccessQueue addOperation:operation];
+        [self addOperation:operation queue:_diskAccessQueue];
         [operation release];
         
         return;

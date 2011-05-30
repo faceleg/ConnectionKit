@@ -95,7 +95,9 @@ typedef enum {
 
 // Control
 - (KTPublishingEngineStatus)status;
-- (void)addDependencyForNextPhase:(NSOperation *)op;    // can't finish publishing until the op runs. threadsafe
+
+// Publishing won't finish until the operation runs. Threadsafe. If queue is nil, uses a vanilla NSOperationQueue
+- (void)addOperation:(NSOperation *)operation queue:(NSOperationQueue *)queue;
 
 - (NSUInteger)incrementingCountOfPublishedItems;
 
