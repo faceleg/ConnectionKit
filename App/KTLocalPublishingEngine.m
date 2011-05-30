@@ -301,7 +301,7 @@
 
 - (NSString *)publishMediaWithRequest:(SVMediaRequest *)request cachedSourceDigest:(NSData *)sourceDigest;
 {
-    if ([self onlyPublishChanges])
+    if ([self onlyPublishChanges] && [self status] <= KTPublishingEngineStatusGatheringMedia)
     {
         if ([request width] || [request height])
         {
@@ -311,21 +311,13 @@
             
             if (!sourceDigest)
             {
-                if ([self status] > KTPublishingEngineStatusGatheringMedia)
-                {
-                    // Need an answer NOW
-                    sourceDigest = [[request media] SHA1Digest];
-                }
-                else
-                {
-                    NSOperation *op = [[NSInvocationOperation alloc]
-                                       initWithTarget:self
-                                       selector:@selector(threaded_publishMediaWithRequestByHashingSource:)
-                                       object:request];
-                    [self addOperation:op queue:[self diskOperationQueue]];
-                    [op release];
-                    return nil;
-                }
+                NSOperation *op = [[NSInvocationOperation alloc]
+                                   initWithTarget:self
+                                   selector:@selector(threaded_publishMediaWithRequestByHashingSource:)
+                                   object:request];
+                [self addOperation:op queue:[self diskOperationQueue]];
+                [op release];
+                return nil;
             }
             
             
@@ -342,9 +334,12 @@
                         NSString *result = [record path];
                         OBASSERT(result);
                         
+                        NSData *digest = [record SHA1Digest];
+                        [[self mediaDigestStorage] addRequest:request cachedDigest:digest];
+                        
                         [self didEnqueueUpload:nil
                                         toPath:result
-                              cachedSHA1Digest:[record SHA1Digest]
+                              cachedSHA1Digest:digest
                                    contentHash:hash
                                         object:nil];
                         
