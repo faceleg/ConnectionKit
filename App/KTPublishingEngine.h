@@ -98,6 +98,7 @@ typedef enum {
 
 // Publishing won't finish until the operation runs. Threadsafe. If queue is nil, uses a vanilla NSOperationQueue
 - (void)addOperation:(NSOperation *)operation queue:(NSOperationQueue *)queue;
+- (NSOperationQueue *)diskOperationQueue;
 
 - (NSUInteger)incrementingCountOfPublishedItems;
 
@@ -126,10 +127,9 @@ typedef enum {
 
 
 #pragma mark
-// A standard operation queue that will run as many operations as the system sees fit. Generally, use for CPU-bound operations (e.g. hashing)
-@property(retain, readonly) NSOperationQueue *defaultQueue; // want this to be threadsafe
-
 @property(retain) id<SVPublishedObject> sitemapPinger;
+
+
 @end
 
 

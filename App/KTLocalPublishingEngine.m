@@ -48,9 +48,6 @@
 {
     [super init];
     
-    _diskAccessQueue = [[NSOperationQueue alloc] init];
-    [_diskAccessQueue setMaxConcurrentOperationCount:1];
-    
     return self;
 }
 
@@ -80,9 +77,7 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    [_diskAccessQueue release];
-    
-	[super dealloc];
+    [super dealloc];
 }
 
 #pragma mark Accessors
@@ -119,7 +114,7 @@
                                             arguments:NSARRAY(data, remotePath, mediaRequest, digest)];
                 
                 NSOperation *operation = [[KSInvocationOperation alloc] initWithInvocation:invocation];
-                [self addOperation:operation queue:_diskAccessQueue];
+                [self addOperation:operation queue:[self diskOperationQueue]];
                 [operation release];
                 
                 return;
@@ -208,7 +203,7 @@
         [invocation setArgument:&object atIndex:4];
         
         NSOperation *operation = [[KSInvocationOperation alloc] initWithInvocation:invocation];
-        [self addOperation:operation queue:_diskAccessQueue];
+        [self addOperation:operation queue:[self diskOperationQueue]];
         [operation release];
         
         return;

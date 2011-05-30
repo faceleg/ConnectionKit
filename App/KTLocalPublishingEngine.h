@@ -13,8 +13,6 @@
 @interface KTLocalPublishingEngine : KTPublishingEngine 
 {
 	BOOL    _onlyPublishChanges;
-    
-    NSOperationQueue    *_diskAccessQueue;
 }
 
 - (id)initWithSite:(KTSite *)aDocumentInfo onlyPublishChanges:(BOOL)publishChanges;
