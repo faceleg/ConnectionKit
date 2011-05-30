@@ -184,6 +184,13 @@
     return result;
 }
 
+- (NSString *)collectionToIndexIdentifierFromExtensibleProperties:(NSDictionary *)properties
+{
+    id result = [properties objectForKey:@"indexedPage"];
+    if (!result) result = [properties objectForKey:@"collection"];
+    return [result valueForKey:@"myObjectIdentifier"];
+}
+
 @end
 
 
