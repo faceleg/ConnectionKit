@@ -160,8 +160,7 @@ typedef enum {
                                       type:(SVThumbnailType)type
                                      width:(NSUInteger)width
                                     height:(NSUInteger)height
-                                   options:(SVPageImageRepresentationOptions)options
-                  pushSizeToCurrentElement:(BOOL)push;
+                                   options:(SVPageImageRepresentationOptions)options;
 
 - (void)writeThumbnailPlaceholder:(SVHTMLContext *)context width:(NSUInteger)width height:(NSUInteger)height;
 

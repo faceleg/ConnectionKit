@@ -431,7 +431,6 @@
                                      width:(NSUInteger)width
                                     height:(NSUInteger)height
                                    options:(SVPageImageRepresentationOptions)options
-                  pushSizeToCurrentElement:(BOOL)push;
 {
     switch (type)
     {
@@ -449,7 +448,7 @@
             else
             {
                 // Write placeholder if desired
-                return [super addImageRepresentationToContext:context type:type width:width height:height options:options pushSizeToCurrentElement:push];
+                return [super addImageRepresentationToContext:context type:type width:width height:height options:options];
             }
         }
             
@@ -467,8 +466,7 @@
                                                     type:[[page thumbnailType] intValue]
                                                    width:width
                                                   height:height
-                                                 options:options
-                                pushSizeToCurrentElement:push];
+                                                 options:options];
         }
             
         case SVThumbnailTypeLastChildItem:
@@ -485,8 +483,7 @@
                                                     type:[[page thumbnailType] intValue]
                                                    width:width
                                                   height:height
-                                                 options:options
-                                pushSizeToCurrentElement:push];
+                                                 options:options];
         }
             
         default:
@@ -495,8 +492,7 @@
                                                      type:type
                                                     width:width
                                                    height:height
-                                                  options:options
-                                 pushSizeToCurrentElement:push];
+                                                  options:options];
     }
 }
 

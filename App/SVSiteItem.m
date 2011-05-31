@@ -599,8 +599,7 @@
                                                   type:type
                                                  width:width
                                                 height:height
-                                               options:options
-                              pushSizeToCurrentElement:YES];
+                                               options:(options | SVImagePushSizeToCurrentElement)];
     
     if (url)
     {
@@ -621,8 +620,7 @@
                                       type:(SVThumbnailType)type
                                      width:(NSUInteger)width
                                     height:(NSUInteger)height
-                                   options:(SVPageImageRepresentationOptions)options
-                  pushSizeToCurrentElement:(BOOL)push;
+                                   options:(SVPageImageRepresentationOptions)options;
 {
     if (type == SVThumbnailTypeCustom && [self customThumbnail])
     {
@@ -631,8 +629,7 @@
                                             height:height
                                               type:nil
                                      scalingSuffix:nil
-                                           options:options
-                          pushSizeToCurrentElement:push];
+                                           options:options];
 
         return result;
     }

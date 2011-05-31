@@ -35,7 +35,7 @@
 
 - (BOOL)isForPublishing; { return NO; }
 
-- (NSURL *)addThumbnailMedia:(SVMedia *)media width:(NSUInteger)width height:(NSUInteger)height type:(NSString *)type scalingSuffix:(NSString *)suffix options:(SVPageImageRepresentationOptions)options pushSizeToCurrentElement:(BOOL)push;
+- (NSURL *)addThumbnailMedia:(SVMedia *)media width:(NSUInteger)width height:(NSUInteger)height type:(NSString *)type scalingSuffix:(NSString *)suffix options:(SVPageImageRepresentationOptions)options;
 {
     // Irrelevant to text content
     return nil;

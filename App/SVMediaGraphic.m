@@ -493,6 +493,8 @@
             {
                 width = height * aspectRatio;
             }
+            
+            options -= SVImageScaleAspectFit;
         }
         
         
@@ -509,8 +511,7 @@
                                    height:height
                                      type:type
                             scalingSuffix:[NSString stringWithFormat:@"_%u", width]
-                                  options:0
-                 pushSizeToCurrentElement:YES];
+                                  options:options];
     }
     
     return nil;

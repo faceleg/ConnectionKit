@@ -952,8 +952,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
                                             type:[[page thumbnailType] intValue]
                                            width:width
                                           height:height
-                                         options:options
-                        pushSizeToCurrentElement:NO];
+                                         options:options];
 }
 
 - (NSURL *)addThumbnailMedia:(SVMedia *)media
@@ -961,8 +960,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
                       height:(NSUInteger)height
                         type:(NSString *)type
                scalingSuffix:(NSString *)suffix
-                     options:(SVPageImageRepresentationOptions)options
-    pushSizeToCurrentElement:(BOOL)push;
+                     options:(SVPageImageRepresentationOptions)options;
 {
     // Scale to fit?
     KSImageScalingMode scaling = KSImageScalingModeCropCenter;
@@ -983,7 +981,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
         [image release];
     }
     
-    if (push)
+    if (options & SVImagePushSizeToCurrentElement)
     {
 		if (width)  [self pushAttribute:@"width" value:[NSNumber numberWithUnsignedInteger:width]];
 		if (height) [self pushAttribute:@"height" value:[NSNumber numberWithUnsignedInteger:height]];
@@ -1032,8 +1030,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 								  height:height
 									type:type
                            scalingSuffix:nil
-								 options:options
-				pushSizeToCurrentElement:YES];
+								 options:(options | SVImagePushSizeToCurrentElement)];
 	
 	[self writeImageWithSrc:[self relativeStringFromURL:url]
 						alt:altText

@@ -83,7 +83,6 @@
                                      width:(NSUInteger)width
                                     height:(NSUInteger)height
                                    options:(SVPageImageRepresentationOptions)options
-                  pushSizeToCurrentElement:(BOOL)push;
 {
     if (type == SVThumbnailTypePickFromPage)
     {
@@ -105,7 +104,7 @@
     }
     else
     {
-        return [super addImageRepresentationToContext:context type:type width:width height:height options:options pushSizeToCurrentElement:push];
+        return [super addImageRepresentationToContext:context type:type width:width height:height options:options];
     }
 }
 

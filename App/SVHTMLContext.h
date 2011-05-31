@@ -33,6 +33,11 @@ enum {
 };
 typedef NSUInteger SVPlaceholderOptions;
 
+enum {
+    SVImagePushSizeToCurrentElement = 1 << 10,    // placeholder represents content visible only on published site
+};
+typedef NSUInteger SVPageImageRepresentationOptions2;
+
 
 #pragma mark -
 
@@ -227,8 +232,7 @@ typedef NSUInteger SVPlaceholderOptions;
                       height:(NSUInteger)height
                         type:(NSString *)type
                scalingSuffix:(NSString *)suffix
-                     options:(SVPageImageRepresentationOptions)options
-    pushSizeToCurrentElement:(BOOL)push;
+                     options:(SVPageImageRepresentationOptions)options;
 
 
 #pragma mark Resource Files
