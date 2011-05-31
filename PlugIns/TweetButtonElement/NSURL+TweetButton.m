@@ -13,11 +13,10 @@
 
 - (NSString *)svx_placeholderString
 {
-    //FIXME: when self is "first-post.html -- //blog/", [self host] is blog rather than nil
-    if ( ![self host] )
+    if ( ![self host] || ![self scheme] )
     {
         NSString *nohost = NSLocalizedString(@"«unspecified»", @"placeholder for site not yet set up for publishing.");
-        return [nohost stringByAppendingPathComponent:[self path]];
+        return [nohost stringByAppendingPathComponent:[self relativePath]];
     }
     else
     {
