@@ -123,7 +123,7 @@
 	<key>ClickToFlashOptOut</key>
 	<true/>
 	<key>KSFeedType</key>
-	<string>${PRODUCT_VARIANT_WITH_SECRET_KEY_FOR_SPARKLE}</string>
+	<string>${PRODUCT_VARIANT}</string>
 	<key>LSEnvironment</key>
 	<dict>
 		<key>MinimumSystemVersion</key>
