@@ -371,8 +371,8 @@
         
         [context writeImageWithSrc:(URL ? [context relativeStringFromURL:URL] : @"")
                                alt:alt
-                             width:self.container.width
-                            height:self.container.height];
+                             width:nil
+                            height:nil];
     }
     //[context addDependencyOnObject:self keyPath:@"media"];    // don't need, graphic does for us
 }
