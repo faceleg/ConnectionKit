@@ -399,22 +399,6 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     }
     
     
-    if ([[collection collectionSortOrder] intValue] == SVCollectionSortManually)
-    {
-        // Store the ordering in model too
-        [self setAutomaticallyRearrangesObjects:NO];
-        @try
-        {
-            [self updateContentChildIndexes];
-        }
-        @finally
-        {
-            [self setAutomaticallyRearrangesObjects:YES];
-        }
-    }
-    // Sorted collections trust the insertion to be in correct location
-    
-    
     // Inherit standard pagelets
     if ([object isKindOfClass:[KTPage class]])
     {
@@ -448,6 +432,22 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     
 	// Done
     [[NSNotificationCenter defaultCenter] postNotificationName:SVPagesControllerDidInsertObjectNotification object:self];
+}
+
+- (void)didInsertObjects;
+{
+    // Store the ordering in model too
+    [self setAutomaticallyRearrangesObjects:NO];
+    @try
+    {
+        [self updateContentChildIndexes];
+    }
+    @finally
+    {
+        [self setAutomaticallyRearrangesObjects:YES];
+    }
+    
+    [super didInsertObjects];
 }
 
 #pragma mark Pasteboard Support
