@@ -35,4 +35,10 @@
 
 - (BOOL)isForPublishing; { return NO; }
 
+- (NSURL *)addThumbnailMedia:(SVMedia *)media width:(NSUInteger)width height:(NSUInteger)height type:(NSString *)type scalingSuffix:(NSString *)suffix options:(SVPageImageRepresentationOptions)options pushSizeToCurrentElement:(BOOL)push;
+{
+    // Irrelevant to text content
+    return nil;
+}
+
 @end
