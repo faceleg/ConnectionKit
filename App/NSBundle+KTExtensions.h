@@ -17,7 +17,8 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import <Foundation/Foundation.h>
+#import "NSBundle+Karelia.h"
+
 
 @interface NSBundle ( KTExtensions )
 
