@@ -23,23 +23,51 @@
 #pragma mark Content
 
 @dynamic textHTMLString;
+- (void)setTextHTMLString:(NSString *)string
+{
+    [self willChangeValueForKey:@"text"];
+    [self willChangeValueForKey:@"textHTMLString"];
+    
+    [self setPrimitiveValue:nil forKey:@"text"];    // cause it be regenerated on demand
+    [self setPrimitiveValue:string forKey:@"textHTMLString"];
+    
+    [self didSetText];
+    
+    [self didChangeValueForKey:@"text"];
+    [self didChangeValueForKey:@"textHTMLString"];
+}
 
 - (NSString *)text	// get title, but without attributes
 {
-	NSString *html = [self textHTMLString];
-	NSString *result = [html stringByConvertingHTMLToPlainText];
-	return result;
+    [self willAccessValueForKey:@"text"];
+    
+    NSString *result = [self primitiveValueForKey:@"text"];
+    if (!result)
+    {
+        NSString *html = [self textHTMLString];
+        result = [html stringByConvertingHTMLToPlainText];
+        [self setPrimitiveValue:result forKey:@"text"];
+    }
+    
+    [self didAccessValueForKey:@"text"];
+    return result;
 }
 
 - (void)setText:(NSString *)value
 {
-	[self setTextHTMLString:[KSXMLWriter stringFromCharacters:value]];
+    [self willChangeValueForKey:@"text"];
+    [self willChangeValueForKey:@"textHTMLString"];
+    
+    [self setPrimitiveValue:value forKey:@"text"];
+    [self setPrimitiveValue:[KSXMLWriter stringFromCharacters:value] forKey:@"textHTMLString"];
+    
+    [self didSetText];
+    
+    [self didChangeValueForKey:@"text"];
+    [self didChangeValueForKey:@"textHTMLString"];
 }
 
-+ (NSSet *)keyPathsForValuesAffectingText
-{
-    return [NSSet setWithObject:@"textHTMLString"];
-}
+- (void)didSetText; { }
 
 @dynamic hidden;
 

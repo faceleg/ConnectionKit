@@ -21,12 +21,9 @@
 
 @dynamic page;
 
-- (void)setTextHTMLString:(NSString *)html
+- (void)didSetText;
 {
-    [self willChangeValueForKey:@"textHTMLString"];
-    [self setPrimitiveValue:html forKey:@"textHTMLString"];
-    [self didChangeValueForKey:@"textHTMLString"];
-	
+    [super didSetText];	
 	
     // If the page hasn't been published yet, update the filename to match
 	KTPage *page = [self page];

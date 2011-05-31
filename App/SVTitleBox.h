@@ -14,6 +14,7 @@
 
 @property(nonatomic, copy) NSString *textHTMLString;
 @property(nonatomic, copy) NSString *text;
+- (void)didSetText;
 
 @property(nonatomic, copy) NSNumber *hidden;    // BOOL, required
 
