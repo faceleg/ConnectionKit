@@ -359,7 +359,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 	for (i=0; i<[pages count]; i++)
 	{
 		KTPage *aPage = [pages objectAtIndex:i];
-		[aPage setChildIndex:i];
+		if ([aPage childIndex] != i) [aPage setChildIndex:i];
 	}
 }
 
