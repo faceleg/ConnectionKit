@@ -351,6 +351,14 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 
 #pragma mark Inserting Objects
 
+- (void)insertObject:(id)object atArrangedObjectIndex:(NSUInteger)index;
+{
+    // Pre-seed the child index in the hope that it won't have to change again after insert, cutting down on KVO. #120744
+    [object setChildIndex:index];
+    
+    [super insertObject:object atArrangedObjectIndex:index];
+}
+
 - (void)updateContentChildIndexes;
 {
     NSArray *pages = [self arrangedObjects];
