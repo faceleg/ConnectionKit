@@ -521,7 +521,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
     
 	NSString *language = [[self cache] valueForKeyPath:@"parser.currentPage.master.language"];
 	if (!language) language = @"en";	// fallback just in case
-	NSString *theNewString = [theBundle localizedStringForString:theString language:language];
+	NSString *theNewString = [theBundle ks_localizedStringForString:theString language:language];
 	
 	// LOG((@"TARGET %@ -> %@", theString, theNewString));
 	
@@ -535,7 +535,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	NSString *language = [[self cache] valueForKeyPath:@"parser.currentPage.master.language"];
 	if (language)
 	{
-		result = [[NSBundle mainBundle] localizedStringForString:result language:language];
+		result = [[NSBundle mainBundle] ks_localizedStringForString:result language:language];
 	}
 	
 	return [KSXMLWriter stringFromCharacters:result];

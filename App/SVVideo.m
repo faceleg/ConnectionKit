@@ -745,7 +745,7 @@
 	NSString *language = [thePage language];
 	
 	NSString *cannotViewTitle
-	= [[NSBundle mainBundle] localizedStringForString:@"cannotViewTitleText"
+	= [[NSBundle mainBundle] ks_localizedStringForString:@"cannotViewTitleText"
 											 language:language
 											 fallback:
 	   NSLocalizedStringWithDefaultValue(@"cannotViewTitleText",
@@ -771,7 +771,7 @@
 	KTPage *thePage = [context page];
 	NSString *language = [thePage language];
 	
-	NSString *noCrossDomainFlash = [[NSBundle mainBundle] localizedStringForString:@"noCrossDomainFlashText"
+	NSString *noCrossDomainFlash = [[NSBundle mainBundle] ks_localizedStringForString:@"noCrossDomainFlashText"
 																	   language:language
 																	   fallback:
 								 NSLocalizedStringWithDefaultValue(@"noCrossDomainFlashText", nil, [NSBundle mainBundle], @"Unable to embed remotely-hosted Flash-based video.", @"Warning to show when a video cannot be played")];

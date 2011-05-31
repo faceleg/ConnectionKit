@@ -44,8 +44,19 @@
 	}
 }
 
+#pragma mark Localization
 
-#pragma mark -
+/*  Implement NSBundle(Sandvox) here
+ */
+- (NSString *)localizedStringForString:(NSString *)aString
+                              language:(NSString *)aLocalization
+                              fallback:(NSString *)aFallbackString;
+{
+    return [self ks_localizedStringForString:aString
+                                    language:aLocalization
+                                    fallback:aFallbackString];
+}
+
 #pragma mark HTML Template files
 
 - (NSString *)entityName

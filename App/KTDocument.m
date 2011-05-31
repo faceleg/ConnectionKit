@@ -309,7 +309,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         [master setValue:@"UTF-8" forKey:@"charset"];
         
         
-        NSString *defaultRootPageTitleText = [[NSBundle mainBundle] localizedStringForString:@"defaultRootPageTitleText"
+        NSString *defaultRootPageTitleText = [[NSBundle mainBundle] ks_localizedStringForString:@"defaultRootPageTitleText"
                                                                                     language:language
                                                                                     fallback:
                                               NSLocalizedStringWithDefaultValue(@"defaultRootPageTitleText", nil, [NSBundle mainBundle], @"Home Page", @"Title of initial home page")];

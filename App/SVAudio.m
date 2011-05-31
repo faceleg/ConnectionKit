@@ -449,7 +449,7 @@
 	NSString *language = [thePage language];
 	
 	NSString *cannotPlayTitle
-	= [[NSBundle mainBundle] localizedStringForString:@"cannotPlayTitleText"
+	= [[NSBundle mainBundle] ks_localizedStringForString:@"cannotPlayTitleText"
 											 language:language
 											 fallback:
 	   NSLocalizedStringWithDefaultValue(@"cannotPlayTitleText",
