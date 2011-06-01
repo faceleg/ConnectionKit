@@ -810,12 +810,12 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     // The document also reserves some special cases itself
     if (result)
     {
-        if ([[filename stringByDeletingPathExtension] isEqualToString:@"index"] ||
-            [filename isEqualToString:@"quicklook"] ||
-            [filename isEqualToString:@"contents"] ||
-            [filename isEqualToString:@"shared"] ||
-            [filename isEqualToString:@"theme-files"] ||
-            [filename isEqualToString:@"thumbs"])
+        if ([[filename stringByDeletingPathExtension] isEqualToStringCaseInsensitive:@"index"] ||
+            [filename isEqualToStringCaseInsensitive:@"quicklook"] ||
+            [filename isEqualToStringCaseInsensitive:@"contents"] ||
+            [filename isEqualToStringCaseInsensitive:@"shared"] ||
+            [filename isEqualToStringCaseInsensitive:@"theme-files"] ||
+            [filename isEqualToStringCaseInsensitive:@"thumbs"])
         {
             result = NO;
         }
