@@ -79,6 +79,8 @@
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSWindow+Karelia.h"
+
+#import "KSPathUtilities.h"
 #import "KSURLUtilities.h"
 
 #import "Debug.h"                       // Debugging
@@ -770,21 +772,12 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (NSString *)addDocumentFileWrapper:(id <SVDocumentFileWrapper>)wrapper; // returns the filename reserved
 {
-    NSString *preferredFilename = [wrapper preferredFilename];
-    NSString *result = preferredFilename;
+    NSString *result = [wrapper preferredFilename];
     
-    NSUInteger count = 1;
     while (![self isFilenameAvailable:result])
     {
         // Adjust the filename ready to try again
-        count++;
-		NSString *numberedName = [NSString stringWithFormat:
-                                  @"%@-%u",
-                                  [preferredFilename stringByDeletingPathExtension],
-                                  count];
-        
-        OBASSERT(![numberedName isEqualToString:@""]);
-		result = [numberedName stringByAppendingPathExtension:[preferredFilename pathExtension]];
+		result = [result ks_stringByIncrementingPath];
     }
     
     // Reserve it
