@@ -825,12 +825,9 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     // Finally, see if there's already an item on disk (such as .svn directory)
     if (result)
     {
-        NSURL *docURL = [self fileURL];
-        NSURL *url = [docURL ks_URLByAppendingPathComponent:filename isDirectory:NO];
-        if ([url isFileURL])
-        {
-            result = ![[NSFileManager defaultManager] fileExistsAtPath:[url path]];
-        }
+        // Turns out deriving the path from -fileURL is a bit of a bottleneck, so go old school. #125521
+        NSString *path = [[self fileName] stringByAppendingPathComponent:filename];
+        result = ![[NSFileManager defaultManager] fileExistsAtPath:path];
     }
     
     return result;
