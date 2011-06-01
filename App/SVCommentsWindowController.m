@@ -30,13 +30,17 @@
                                                                      hyperlinkInBracketsTo:[NSURL URLWithString:@"http://disqus.com/"]];
     NSAssert(nil != self.disqusOverview, @"no outlet");
     [[self.disqusOverview textStorage] setAttributedString:hyperlinkedString];
-
+    [self.disqusOverview scrollRangeToVisible:NSMakeRange([[self.disqusOverview textStorage] length], 0)];
+    
+    
     // IntenseDebate
     localizedStringWithBrackets = NSLocalizedString(@"Enter your [IntenseDebate] Account ID to enable comments on this site.", @"The [ and the ] will be removed, and the text in between will be give a hyperlink attribute. PLEASE VISIT THIS SITE TO GET THE EXACT TRANSLATION OF THE QUOTED STRING --> http://intensedebate.com/");
     hyperlinkedString = [NSAttributedString systemFontStringWithString:localizedStringWithBrackets 
                                                  hyperlinkInBracketsTo:[NSURL URLWithString:@"http://intensedebate.com/"]];
     NSAssert(nil != self.intenseDebateOverview, @"no outlet");
     [[self.intenseDebateOverview textStorage] setAttributedString:hyperlinkedString];
+    [self.intenseDebateOverview scrollRangeToVisible:NSMakeRange([[self.intenseDebateOverview textStorage] length], 0)];
+    
     
     // Facebook Comments
     localizedStringWithBrackets = NSLocalizedString(@"Enter your site’s [Facebook] App ID to enable comments on this site.", @"The [ and the ] will be removed, and the text in between will be give a hyperlink attribute. PLEASE VISIT THIS SITE TO GET THE EXACT TRANSLATION OF THE QUOTED STRING --> http://www.facebook.com/");
@@ -44,6 +48,7 @@
                                                  hyperlinkInBracketsTo:[NSURL URLWithString:@"http://www.facebook.com/"]];
     NSAssert(nil != self.facebookCommentsOverview, @"no outlet");
     [[self.facebookCommentsOverview textStorage] setAttributedString:hyperlinkedString];
+    [self.facebookCommentsOverview scrollRangeToVisible:NSMakeRange([[self.facebookCommentsOverview textStorage] length], 0)];
 }
 
 - (void)setMaster:(KTMaster *)master
