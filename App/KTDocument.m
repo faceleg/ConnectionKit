@@ -804,7 +804,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     
     
     // Consult both cache to see if the name is taken
-    BOOL result = ([[self documentFileWrappers] objectForKey:filename] == nil);
+    BOOL result = ([_filenameReservations objectForKey:filename] == nil);
     
     
     // The document also reserves some special cases itself
