@@ -709,22 +709,27 @@
 	{
 		result = NSLocalizedString(@"Audio cannot be played in most browsers.", @"status of file chosen for audio. Should fit in 3 lines in inspector.");
 	}
-	result = [result stringByAppendingString:@" "];	// space between message and the hyperlinked "More"
+	
 	NSMutableDictionary *attribs = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
 									[NSFont systemFontOfSize:[NSFont smallSystemFontSize]], NSFontAttributeName,
 									nil];
 	NSMutableAttributedString *info = [[[NSMutableAttributedString alloc] initWithString:result attributes:attribs] autorelease];
-
 	NSString *helpFilePath = [[NSBundle mainBundle] pathForResource:@"Supported_Audio_Formats" ofType:@"html" inDirectory:@"Sandvox Help/z"];
-	
-	NSURL *url = [[[NSURL alloc] initWithScheme:@"help" host:@"" path:helpFilePath] autorelease];
-	
-	[attribs addEntriesFromDictionary:[NSAttributedString attributesLinkingTo:url]];
-	
-	[info appendAttributedString:
-	 [[[NSAttributedString alloc] initWithString:NSLocalizedString(@"More", @"hyperlink to a page that will tell more details about the warning")
-									  attributes:attribs] autorelease]];
-    [attribs release];
+	if (helpFilePath)
+	{
+		[info appendAttributedString:
+		 [[[NSAttributedString alloc] initWithString:@" " attributes:attribs] autorelease]];
+		
+		
+		NSURL *url = [[[NSURL alloc] initWithScheme:@"help" host:@"" path:helpFilePath] autorelease];
+		
+		[attribs addEntriesFromDictionary:[NSAttributedString attributesLinkingTo:url]];
+		
+		[info appendAttributedString:
+		 [[[NSAttributedString alloc] initWithString:NSLocalizedString(@"More", @"hyperlink to a page that will tell more details about the warning")
+										  attributes:attribs] autorelease]];
+		[attribs release];
+	}
 	return info;
 }
 
