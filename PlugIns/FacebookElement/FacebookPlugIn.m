@@ -63,12 +63,6 @@ enum COLORSCHEMES { LIGHT_SCHEME = 0, DARK_SCHEME };
 enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
 
 
-@interface FacebookPlugIn ()
-- (NSNumber *)srcWidth:(id <SVPlugInContext>)context;
-- (NSNumber *)srcHeight:(id <SVPlugInContext>)context;
-@end
-
-
 @implementation FacebookPlugIn
 
 
@@ -95,6 +89,16 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
     [self setAction:LIKE_ACTION];
 }
 
+- (void)awakeFromFetch
+{
+    [super awakeFromFetch];
+    
+    // prior to 2.0.6, auto-width or height was possible so we need to correct that
+    NSNumber *fixWidth = (nil != [self width]) ? [self width] : [self minWidth];
+    NSNumber *fixHeight = (nil != [self height]) ? [self height] : [self minHeight];
+    [self setWidth:fixWidth height:fixHeight];
+}
+
 
 #pragma mark HTML Generation
 
@@ -105,8 +109,8 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
     if ( [context liveDataFeeds] )
     {
         // determine size that we tell Facebook
-        NSString *widthString = [[self srcWidth:context] stringValue];
-        NSString *heightString = [[self srcHeight:context] stringValue];
+        NSString *widthString = [[self width] stringValue];
+        NSString *heightString = [[self height] stringValue];
         
         // determine src query parameters
         NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
@@ -227,7 +231,11 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
         // write iframe
         style = @"text-align:center; padding-top:10px; padding-bottom:10px;";
         [context startElement:@"div" attributes:[NSDictionary dictionaryWithObject:style forKey:@"style"]];
-        [context startElement:@"iframe" attributes:attributes];
+        (void)[context startResizableElement:@"iframe"
+                                      plugIn:self
+                                     options:0
+                             preferredIdName:nil
+                                  attributes:attributes];
         [context endElement]; // </iframe>
         [context endElement]; // </div>
     }
@@ -246,80 +254,14 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
     return SVLocalizedString(@"Facebook Button visible only when loading data from the Internet.", "");
 }
 
-// facebook wants width and height specified, so we need to calculate those explicitly
-
-- (NSNumber *)srcWidth:(id <SVPlugInContext>)context
-{
-    NSNumber *result = nil;
-    
-    switch ( self.layout )
-    {
-        case STANDARD_LAYOUT:
-            // this is tricky since this layout style includes text
-            result = [self width];
-            if (!result)
-            {
-                // if width is auto and writing a pagelet, use 200, otherwise 450
-                if (![context isWritingPagelet])
-                {
-                    result = [NSNumber numberWithInt:450];
-                }
-                else
-                {
-                    result = [NSNumber numberWithInt:200];
-                }
-            }
-            break;
-        case BUTTON_COUNT_LAYOUT:
-            result = (self.action == RECOMMEND_ACTION) ? [NSNumber numberWithInt:140] : [NSNumber numberWithInt:90];
-            break;
-        case BOX_COUNT_LAYOUT:
-            result = (self.action == RECOMMEND_ACTION) ? [NSNumber numberWithInt:110] : [NSNumber numberWithInt:55];
-            break;
-        default:
-            break;
-    }
-    
-    return result;
-}
-
-- (NSNumber *)srcHeight:(id <SVPlugInContext>)context
-{
-    NSNumber *result = nil;
-    
-    switch ( self.layout )
-    {
-        case STANDARD_LAYOUT:
-            result = (self.showFaces) ? [NSNumber numberWithInt:80] : [NSNumber numberWithInt:35];
-            break;
-        case BOX_COUNT_LAYOUT:
-            result = [NSNumber numberWithInt:65];
-            break;
-        case BUTTON_COUNT_LAYOUT:
-            result = [NSNumber numberWithInt:20];
-        default:
-            break;
-    }
-    
-    return result;
-}
-
 
 #pragma mark Metrics
 
 - (void)makeOriginalSize
 {
-    // leave height as auto-height
-    switch ( self.layout )
-    {
-        case STANDARD_LAYOUT:
-            [self setWidth:[NSNumber numberWithInt:450] height:nil];
-            break;
-        default:
-            [self setWidth:[self minWidth] height:nil];
-            break;
-    }
+    [self setWidth:[self minWidth] height:[self minHeight]];
 }
+    
 
 + (NSSet *)keyPathsForValuesAffectingMinWidth
 {
@@ -333,16 +275,55 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
     switch ( self.layout )
     {
         case STANDARD_LAYOUT:
-            result = [NSNumber numberWithInt:225];
-            break;
-        case BOX_COUNT_LAYOUT:
-            result = [NSNumber numberWithInt:55];
+            //FIXME: this doesn't really work
+            // currentContext is actually nil at this point, but if we had some way to know
+            // that the plug-in is in the main body, the width should really be 450
+            if ( [self currentContext] && ![[self currentContext] isWritingPagelet] )
+            {
+                result = [NSNumber numberWithInt:450];
+            }
+            else
+            {
+                result = [NSNumber numberWithInt:200];
+            }
             break;
         case BUTTON_COUNT_LAYOUT:
-            result = [NSNumber numberWithInt:90];
+            result = (self.action == RECOMMEND_ACTION) ? [NSNumber numberWithInt:140] : [NSNumber numberWithInt:90];
+            break;
+        case BOX_COUNT_LAYOUT:
+            result = (self.action == RECOMMEND_ACTION) ? [NSNumber numberWithInt:110] : [NSNumber numberWithInt:55];
             break;
         default:
             result = [super minWidth];
+            break;
+    }
+    
+    return result;
+}
+
+
++ (NSSet *)keyPathsForValuesAffectingMinHeight
+{
+    return [NSSet setWithObject:@"layout"];
+}
+
+- (NSNumber *)minHeight
+{
+    NSNumber *result = nil;
+    
+    switch ( self.layout )
+    {
+        case STANDARD_LAYOUT:
+            result = (self.showFaces) ? [NSNumber numberWithInt:80] : [NSNumber numberWithInt:35];
+            break;
+        case BOX_COUNT_LAYOUT:
+            result = [NSNumber numberWithInt:65];
+            break;
+        case BUTTON_COUNT_LAYOUT:
+            result = [NSNumber numberWithInt:20];
+            break;
+        default:
+            result = [super minHeight];
             break;
     }
     
