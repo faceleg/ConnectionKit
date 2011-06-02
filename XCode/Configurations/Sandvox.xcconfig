@@ -3,18 +3,18 @@
 #include "/private/tmp/build-sandvox/BuildSettings.xcconfig"
 
 // the "marketing" version is baked into CFBundleShortVersionString
-SANDVOX_VERSION = 2.0.5b6
+SANDVOX_VERSION = 2.0.5
 
 // the SLA variant to wrap around the .dmg [ALPHA,BETA,RELEASE]
 // Also determines if VARIANT_ALPHA or VARIANT_BETA or VARIANT_RELEASE is defined.
 // For checking alpha/beta behaviors, better to test for being *not* VARIANT_RELEASE
 // We use the macro with the secret key so that sparkle can match with key on the server end.
-PRODUCT_VARIANT = BETA
+PRODUCT_VARIANT = RELEASE
 
 
 
 // expiry for beta
-EXPIRY_TIMESTAMP = '@\"2011-06-10 11:59:59 -0800\"'
+// EXPIRY_TIMESTAMP = '@\"2011-06-10 11:59:59 -0800\"'
 
 // Release builds checkout and use these specific revisions
 
@@ -24,7 +24,7 @@ EXPIRY_TIMESTAMP = '@\"2011-06-10 11:59:59 -0800\"'
 		/// FOR RELEASE, PLEASE TIE IMEDIA TO A PARTICULAR NUMBER. * * * * * * * * * * * * * * *
 
 
-IMEDIA_REVISION = HEAD
+IMEDIA_REVISION = 1596
 
 BDALIAS_COMMIT = 8ea89475440bdce1f6d880ddbdbed6f62e1e6f8d
 KSERROR_COMMIT = v1.1
