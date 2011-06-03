@@ -54,7 +54,6 @@ static KTPluginInstaller *sSharedPluginInstaller = nil;
 
 - (void)queueURL:(NSURL *)aURL		// cancel queued requests and queue up another one.
 {
-NSLog(@"%@", aURL);
 	if (0 == [myURLs count] && !myProgressPanel)
 	{
         myProgressPanel = [[KSProgressPanel alloc] init];
@@ -102,7 +101,7 @@ NSLog(@"%@", aURL);
 		
 		if ([sourcePath isEqualToString:destPath] || [sourcePath isEqualToString:altDestPath])
 		{
-			NSLog(@"Not moving; already %@ is already installed.", sourcePath);
+			NSLog(@"Not moving; %@ is already installed.", sourcePath);
 			[errorURLs addObject:url];
 		}
 		else if ([sourcePath hasPrefix:destFolder])
