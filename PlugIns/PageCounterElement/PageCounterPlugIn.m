@@ -269,7 +269,7 @@ NSString *PCFilenameKey = @"filename";
     }
     else 
     {
-        countScript = [NSString stringWithFormat:@"<script type=\"text/javascript\" src=\"http://service.karelia.com/ctr/count.js?u=%@\"></script>\n", currentPageURL];
+        countScript = [NSString stringWithFormat:@"<script type=\"text/javascript\" src=\"http://service.karelia.com/ctr/count.js?u=%@\"></script>\n", [currentPageURL absoluteString]];
     }
     [context addMarkupToEndOfBody:countScript];
     
@@ -354,7 +354,7 @@ NSString *PCFilenameKey = @"filename";
                               @"    <!-- tickle pagecounter by loading a small image -->\n"
                               @"    <p><img src=\"http://service.karelia.com/ctr/noscript.gif?u=%@\" alt=\"\" /></p>\n"
                               @"</noscript>\n",
-                              currentPageURL];
+                              [currentPageURL absoluteString]];
         }
         else 
         {
@@ -363,9 +363,9 @@ NSString *PCFilenameKey = @"filename";
                               @"    <!-- tickle pagecounter by loading a small image -->\n"
                               @"    <div><img src=\"http://service.karelia.com/ctr/1x1.gif?u=%@\" alt=\"\" height=\"1\" width=\"1\" /></div>\n"
                               @"</noscript>\n",
-                              currentPageURL];
+                              [currentPageURL absoluteString]];
         }
-        [context addMarkupToEndOfBody:noscriptScript];
+        [context addMarkupToEpondOfBody:noscriptScript];
     }
     
     [context addMarkupToEndOfBody:@"<!-- /pagecounter scripts -->\n"];
