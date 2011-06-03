@@ -365,7 +365,7 @@ NSString *PCFilenameKey = @"filename";
                               @"</noscript>\n",
                               [currentPageURL absoluteString]];
         }
-        [context addMarkupToEpondOfBody:noscriptScript];
+        [context addMarkupToEndOfBody:noscriptScript];
     }
     
     [context addMarkupToEndOfBody:@"<!-- /pagecounter scripts -->\n"];
