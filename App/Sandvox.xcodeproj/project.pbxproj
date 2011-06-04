@@ -3039,7 +3039,6 @@
 		CE58138E11DEA45D008478AF /* NSStatusAvailable.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = NSStatusAvailable.tiff; sourceTree = "<group>"; };
 		CE58138F11DEA45D008478AF /* NSStatusPartiallyAvailable.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = NSStatusPartiallyAvailable.tiff; sourceTree = "<group>"; };
 		CE58139011DEA45D008478AF /* NSStatusUnavailable.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = NSStatusUnavailable.tiff; sourceTree = "<group>"; };
-		CE5A722E0E79DC26002925A8 /* SandvoxGraylistedLicenses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SandvoxGraylistedLicenses.h; sourceTree = "<group>"; };
 		CE5A77FD12135D770085C5EE /* player_flv_maxi.swf */ = {isa = PBXFileReference; lastKnownFileType = file; path = player_flv_maxi.swf; sourceTree = "<group>"; };
 		CE5B1CB611E54A37005E2C5E /* KTFeedbackReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTFeedbackReporter.h; sourceTree = "<group>"; };
 		CE5B1CB711E54A37005E2C5E /* KTFeedbackReporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTFeedbackReporter.m; sourceTree = "<group>"; };
@@ -5038,7 +5037,6 @@
 			children = (
 				3C202D1407DFC06100DE4994 /* KT.h */,
 				3C1929170D6F712A008B9861 /* SandvoxInvalidLicenses.h */,
-				CE5A722E0E79DC26002925A8 /* SandvoxGraylistedLicenses.h */,
 				3CD6B0EE0BFA380600B9287E /* ThirdParty.h */,
 			);
 			name = "Common Headers";
@@ -7291,7 +7289,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### UPDATE SandvoxInvalidLicenses.h FOR RELEASE BUILDS\n###\n\ncurl --proxy-anyauth --insecure --user \"xcode:home.cooking.32\" \"https://secure.karelia.com/private/invalidLicenses.h.php?app=1\" -o \"${SRCROOT}/../../Shared/Licensing/SandvoxInvalidLicenses.h\"\n\nexit 0\n";
+			shellScript = "#!/bin/bash\n\n###\n### UPDATE SandvoxInvalidLicenses.h FOR RELEASE BUILDS ... Notice we are asking only for license of version 2 (or higher)\n###\n\ncurl --proxy-anyauth --insecure --user \"xcode:home.cooking.32\" \"https://secure.karelia.com/private/invalidLicenses.h.php?app=1&v=2\" -o \"${SRCROOT}/../../Shared/Licensing/SandvoxInvalidLicenses.h\"\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
 		3C3ED288120894800080EB6E /* ShellScript */ = {

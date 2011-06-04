@@ -629,34 +629,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	
 }
 
-- (BOOL) checkForGraylistedLicense:(NSData *)aHash
-{
-#include "SandvoxGraylistedLicenses.h"
-
-	return [self licenseHash:[aHash bytes] foundInList:grayListDigests ofSize:GRAY_LIST_COUNT];
-}
-
-- (BOOL) codeIsValid:(NSString *)aCode
-					:(int *)outNamed
-					:(NSString **)outLicensee	// RETAINS if created
-					:(int *)outIndex
-					:(int *)outVersion
-					:(NSDate **)outDate		// RETAINS if created; expiration if version == 0
-					:(int *)outType
-					:(int *)outSource
-					:(int *)outPro
-					:(unsigned int *)outSeats
-{
-	BOOL result = [super codeIsValid:aCode :outNamed :outLicensee :outIndex :outVersion :outDate :outType :outSource :outPro :outSeats];
-	
-	if (result && [self checkForGraylistedLicense:gRegistrationHashData] && nil != outPro)
-	{
-		NSLog(@"Repaired non-pro registration code");
-		*outPro = (int)NO;
-	}
-	return result;
-}
-
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
 	OBPRECONDITION(menuItem);
