@@ -321,18 +321,6 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 								   initWithIllegalCharacterSet:illegalCharSetForPageTitles] autorelease];
 		[oFileNameField setFormatter:formatter];
 		[oMediaFilenameField setFormatter:formatter];
-
-		[oExtensionPopup bind:@"defaultValue"
-					 toObject:oPagesTreeController
-				  withKeyPath:@"selection.defaultFileExtension"
-					  options:nil];
-		// popup is bound to availablePathExtensions, selection is bound to customPathExtension.
-        
-		[oIndexAndExtensionPopup bind:@"defaultValue"
-					 toObject:oPagesTreeController
-				  withKeyPath:@"selection.defaultIndexAndPathExtension"
-					  options:nil];
-		// popup is bound to availableIndexFilenames, selection is bound to customIndexAndPathExtension.
 		
         
         _awokenFromNib = YES;
