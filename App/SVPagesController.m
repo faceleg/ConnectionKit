@@ -436,15 +436,20 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 
 - (void)didInsertObjects;
 {
-    // Store the ordering in model too
-    [self setAutomaticallyRearrangesObjects:NO];
-    @try
+    // Store the ordering in model too, but only if manually sorted
+    KTPage *collection = [(SVSiteItem *)[[self arrangedObjects] lastObject] parentPage];
+    
+    if (![[collection collectionSortOrder] boolValue])
     {
-        [self updateContentChildIndexes];
-    }
-    @finally
-    {
-        [self setAutomaticallyRearrangesObjects:YES];
+        [self setAutomaticallyRearrangesObjects:NO];
+        @try
+        {
+            [self updateContentChildIndexes];
+        }
+        @finally
+        {
+            [self setAutomaticallyRearrangesObjects:YES];
+        }
     }
     
     [super didInsertObjects];
