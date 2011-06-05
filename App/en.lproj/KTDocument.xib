@@ -4059,12 +4059,12 @@
 							<string>NSButton</string>
 							<string>NSTextField</string>
 							<string>NSButton</string>
-							<string>KSFancySchmancyBindingsPopUpButton</string>
+							<string>NSPopUpButton</string>
 							<string>KSFocusingTextField</string>
 							<string>KSFocusingTextField</string>
 							<string>NSTextField</string>
 							<string>NSButton</string>
-							<string>KSFancySchmancyBindingsPopUpButton</string>
+							<string>NSPopUpButton</string>
 							<string>KSFocusingTextField</string>
 							<string>KSFocusingTextField</string>
 							<string>NSTextField</string>
@@ -4144,7 +4144,7 @@
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">oExtensionPopup</string>
-								<string key="candidateClassName">KSFancySchmancyBindingsPopUpButton</string>
+								<string key="candidateClassName">NSPopUpButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">oExternalURLField</string>
@@ -4164,7 +4164,7 @@
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">oIndexAndExtensionPopup</string>
-								<string key="candidateClassName">KSFancySchmancyBindingsPopUpButton</string>
+								<string key="candidateClassName">NSPopUpButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">oMediaFilenameField</string>
