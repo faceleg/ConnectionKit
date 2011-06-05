@@ -746,7 +746,7 @@
      undoRedo_setSelectionIndexPaths:selection registerIndexPaths:indexPaths];
     
     
-    // Sort the index paths backwards so as we remove each one the remaining paths are not affected
+    // Sort the index paths backwards, so as we remove each one, the remaining paths are not affected
     NSArray *descriptors = [NSSortDescriptor sortDescriptorArrayWithKey:@"self" ascending:NO];
     indexPaths = [indexPaths sortedArrayUsingDescriptors:descriptors];
     
@@ -776,12 +776,17 @@
     for (NSIndexPath *aPath in indexPaths)
     {
         NSTreeNode *node = [[self arrangedObjects] descendantNodeAtIndexPath:aPath];
+        if (!node) continue;
         
         [node retain];
         //[[[node parentNode] mutableChildNodes] removeObjectAtIndex:[aPath lastIndex]];
         
         // Delete. Pages have to be treated specially, but I forget quite why
+        // Assertions for #126769
+        OBASSERT([node representedObject]);
         id page = [[node representedObject] self]; // self accounts for proxy
+        OBASSERT(page);
+        
         if ([page isKindOfClass:[KTPage class]])
         {
             [[self managedObjectContext] deletePage:page];
