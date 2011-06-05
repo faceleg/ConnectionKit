@@ -981,10 +981,15 @@
     // Fallback to creating graphics/links from the pasteboard
     BOOL result = NO;
     
+    
     NSArray *pages = [pagesController objectsWithContentFromPasteboard:pboard];
     if (pages)
     {
-        [self insertObjects:pages atArrangedObjectIndexPath:startingIndexPath];
+        // Ignore the selection settings and insert directly into array controller for speeeeed!
+        NSUInteger index = [startingIndexPath lastIndex];
+        NSIndexSet *indexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(index, [pages count])];
+        
+        [pagesController insertObjects:pages atArrangedObjectIndexes:indexes];
         result = YES;
     }
     
