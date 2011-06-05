@@ -146,13 +146,16 @@
 
 - (DOMNode *)willWriteDOMText:(DOMText *)textNode;
 {
-    // Ignore non-top-level whitespace
-    if ([[self XMLWriter] openElementsCount] > 0 &&
-        [[textNode data] isWhitespace])
-    {
-        DOMNode *result = [textNode nextSibling];
-        [[textNode parentNode] removeChild:textNode];
-        return result;
+   if ([[self XMLWriter] openElementsCount] > 0)
+   {
+       // Ignore whitespace
+       DOMNode *nextNode = [textNode nextSibling];
+       
+       if (!nextNode && [[textNode data] isWhitespace])
+       {
+           [[textNode parentNode] removeChild:textNode];
+           return nextNode;
+       }
     }
     
     return [super willWriteDOMText:textNode];
