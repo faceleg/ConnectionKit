@@ -72,3 +72,7 @@ div.text-navigation div { display:inline; margin:0px 0.5em; }
 #dsq-content .dsq-by { margin: 4px 6px 0px 0px; }
 #dsq-content .dsq-by a, #dsq-content .dsq-by a:hover { border: 0px none; }
 #dsq-content h3 { margin:0px; }
+
+/* Site menus. Don't wrap the top level items, and wrap sub-menu items normaly. */
+#sitemenu-content ul li {white-space: nowrap}
+#sitemenu-content ul ul li {white-space: normal}
