@@ -661,7 +661,7 @@
 				[context pushClassName:@"currentParent"];
 			}
 		}
-		[context startElement:@"li" writeInline:YES];
+		[context startElement:@"li" writeInline:(aTreeLevel > 0)];
 
 		// start the anchor
 		if (siteItem != currentParserPage)
