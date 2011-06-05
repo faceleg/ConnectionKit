@@ -51,7 +51,19 @@
 - (void)webEditorTextDidEndEditing:(NSNotification *)notification;
 {
     [super webEditorTextDidEndEditing:notification];
-    [self updateDOMWithPlaceholderStringIfNeeded];
+    
+    if ([self shouldDisplayPlaceholderString])
+    {
+        SVRichText *text = [self representedObject];
+        if ([text respondsToSelector:@selector(setHidden:)])
+        {
+            [text setValue:NSBOOL(YES) forKey:@"hidden"];
+        }
+        else
+        {
+            [self updateDOMWithPlaceholderStringIfNeeded];
+        }
+    }
 }
 
 #pragma mark Selection
