@@ -1954,39 +1954,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">content: selection.availableIndexFilenames</string>
-						<reference key="source" ref="953316196"/>
-						<reference key="destination" ref="660072411"/>
-						<object class="NSNibBindingConnector" key="connector" id="71718846">
-							<reference key="NSSource" ref="953316196"/>
-							<reference key="NSDestination" ref="660072411"/>
-							<string key="NSLabel">content: selection.availableIndexFilenames</string>
-							<string key="NSBinding">content</string>
-							<string key="NSKeyPath">selection.availableIndexFilenames</string>
-							<object class="NSDictionary" key="NSOptions">
-								<bool key="EncodedWithXMLCoder">YES</bool>
-								<object class="NSArray" key="dict.sortedKeys">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<string>NSInsertsNullPlaceholder</string>
-									<string>NSMultipleValuesPlaceholder</string>
-									<string>NSNullPlaceholder</string>
-									<string>NSRaisesForNotApplicableKeys</string>
-								</object>
-								<object class="NSMutableArray" key="dict.values">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<boolean value="YES"/>
-									<string>MULTIPLE</string>
-									<string>NULL</string>
-									<boolean value="NO"/>
-								</object>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">2263</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: selection.externalLinkRepresentation.URL</string>
 						<reference key="source" ref="899980468"/>
 						<reference key="destination" ref="660072411"/>
@@ -2111,27 +2078,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">selectedObject: selection.indexAndPathExtension</string>
-						<reference key="source" ref="953316196"/>
-						<reference key="destination" ref="660072411"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="953316196"/>
-							<reference key="NSDestination" ref="660072411"/>
-							<string key="NSLabel">selectedObject: selection.indexAndPathExtension</string>
-							<string key="NSBinding">selectedObject</string>
-							<string key="NSKeyPath">selection.indexAndPathExtension</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSRaisesForNotApplicableKeys</string>
-								<boolean value="NO" key="NS.object.0"/>
-							</object>
-							<reference key="NSPreviousConnector" ref="71718846"/>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">2288</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: selection.metaDescription</string>
 						<reference key="source" ref="943593109"/>
 						<reference key="destination" ref="660072411"/>
@@ -2186,7 +2132,7 @@
 						<string key="label">content: selection.availablePathExtensions</string>
 						<reference key="source" ref="408006662"/>
 						<reference key="destination" ref="660072411"/>
-						<object class="NSNibBindingConnector" key="connector" id="994530190">
+						<object class="NSNibBindingConnector" key="connector" id="163405381">
 							<reference key="NSSource" ref="408006662"/>
 							<reference key="NSDestination" ref="660072411"/>
 							<string key="NSLabel">content: selection.availablePathExtensions</string>
@@ -2227,11 +2173,63 @@
 								<string key="NS.key.0">NSRaisesForNotApplicableKeys</string>
 								<boolean value="NO" key="NS.object.0"/>
 							</object>
-							<reference key="NSPreviousConnector" ref="994530190"/>
+							<reference key="NSPreviousConnector" ref="163405381"/>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
 					<int key="connectionID">2298</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">content: selection.availableIndexFilenames</string>
+						<reference key="source" ref="953316196"/>
+						<reference key="destination" ref="660072411"/>
+						<object class="NSNibBindingConnector" key="connector" id="88933756">
+							<reference key="NSSource" ref="953316196"/>
+							<reference key="NSDestination" ref="660072411"/>
+							<string key="NSLabel">content: selection.availableIndexFilenames</string>
+							<string key="NSBinding">content</string>
+							<string key="NSKeyPath">selection.availableIndexFilenames</string>
+							<object class="NSDictionary" key="NSOptions">
+								<bool key="EncodedWithXMLCoder">YES</bool>
+								<object class="NSArray" key="dict.sortedKeys">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<string>NSMultipleValuesPlaceholder</string>
+									<string>NSNullPlaceholder</string>
+									<string>NSRaisesForNotApplicableKeys</string>
+								</object>
+								<object class="NSMutableArray" key="dict.values">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<string>MULTIPLE</string>
+									<string>NULL</string>
+									<boolean value="NO"/>
+								</object>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">2299</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">selectedObject: selection.indexAndPathExtension</string>
+						<reference key="source" ref="953316196"/>
+						<reference key="destination" ref="660072411"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="953316196"/>
+							<reference key="NSDestination" ref="660072411"/>
+							<string key="NSLabel">selectedObject: selection.indexAndPathExtension</string>
+							<string key="NSBinding">selectedObject</string>
+							<string key="NSKeyPath">selection.indexAndPathExtension</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSRaisesForNotApplicableKeys</string>
+								<boolean value="NO" key="NS.object.0"/>
+							</object>
+							<reference key="NSPreviousConnector" ref="88933756"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">2300</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -3200,7 +3198,6 @@
 					<string>2213.IBPluginDependency</string>
 					<string>2213.IBViewBoundsToFrameTransform</string>
 					<string>2214.IBPluginDependency</string>
-					<string>2222.CustomClassName</string>
 					<string>2222.IBPluginDependency</string>
 					<string>2222.IBViewBoundsToFrameTransform</string>
 					<string>2223.IBPluginDependency</string>
@@ -3463,7 +3460,6 @@
 						<bytes key="NSTransformStruct">P4AAAL+AAABCqgAAwkwAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>KSFancySchmancyBindingsPopUpButton</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
 						<bytes key="NSTransformStruct">P4AAAL+AAABEAAAAwlAAAA</bytes>
@@ -3492,7 +3488,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">2298</int>
+			<int key="maxID">2300</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4635,7 +4631,7 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">SVDOMController</string>
 					<string key="superclassName">WEKWebEditorItem</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="333742932">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="939027318">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">SVDOMController.h</string>
 					</object>
@@ -4658,7 +4654,7 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">SVGraphicDOMController</string>
 					<string key="superclassName">SVDOMController</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="953140786">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="494263717">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">SVGraphicDOMController.h</string>
 					</object>
@@ -4981,14 +4977,14 @@
 							</object>
 						</object>
 					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="1067574679">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="176507809">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">SVWebEditorViewController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">WEKDOMController</string>
-					<reference key="sourceIdentifier" ref="333742932"/>
+					<reference key="sourceIdentifier" ref="939027318"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">WEKDOMController</string>
@@ -5007,7 +5003,7 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">WEKWebEditorItem</string>
-					<reference key="sourceIdentifier" ref="333742932"/>
+					<reference key="sourceIdentifier" ref="939027318"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">WEKWebEditorItem</string>
@@ -5018,7 +5014,7 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">WEKWebEditorItem</string>
-					<reference key="sourceIdentifier" ref="953140786"/>
+					<reference key="sourceIdentifier" ref="494263717"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">WEKWebEditorItem</string>
@@ -5036,7 +5032,7 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">WEKWebEditorItem</string>
-					<reference key="sourceIdentifier" ref="1067574679"/>
+					<reference key="sourceIdentifier" ref="176507809"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">WEKWebEditorItem</string>
