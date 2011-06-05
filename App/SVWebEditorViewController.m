@@ -1491,15 +1491,6 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
                       NSFilenamesPboardType,
                       NSStringPboardType, nil];
     
-    NSPasteboard *pasteboard = [dragInfo draggingPasteboard];
-    NSString *bestType = [pasteboard availableTypeFromArray:types];
-    
-    if ([bestType isEqualToString:NSStringPboardType])
-    {
-        return nil;
-    }
-    
-    
     WEKWebEditorView *webEditor = [self webEditor];
     
     NSDictionary *element = [[webEditor webView] elementAtPoint:
@@ -1538,6 +1529,13 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
         {
             result = nil;
         }
+    }
+    else if ([result isKindOfClass:[SVTextDOMController class]])
+    {
+        NSPasteboard *pasteboard = [dragInfo draggingPasteboard];
+        NSString *bestType = [pasteboard availableTypeFromArray:types];
+        
+        if ([bestType isEqualToString:NSStringPboardType]) result = nil;
     }
     
     
