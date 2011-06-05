@@ -372,7 +372,7 @@
 		
 		[context writeElement:@"span"
 			  withTitleOfPage:iteratedPage
-				  asPlainText:(0 == (kArticleMask & self.indexLayoutType))		// plain text 
+				  asPlainText:YES	// used to be allowing for rich text in articles, but this allows hyperlinks to go through, which means nested hyperlinks in the index.
 				   attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
 		
 		if ( self.hyperlinkTitles ) { [context endElement]; } // </a> 
