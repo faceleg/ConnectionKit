@@ -151,7 +151,7 @@
        // Ignore whitespace
        DOMNode *nextNode = [textNode nextSibling];
        
-       if (!nextNode && [[textNode data] isWhitespace])
+       if (!nextNode && ![textNode previousSibling] && [[textNode data] isWhitespace])
        {
            [[textNode parentNode] removeChild:textNode];
            return nextNode;
