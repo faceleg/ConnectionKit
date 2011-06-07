@@ -378,7 +378,7 @@
 	{
 		// Can't find way to hide the player; controller must always be showing
 		if (self.autoplay)				[flashVars appendString:@"&autoplay=1"];
-		if (kPreloadAuto == self.preload)	[flashVars appendString:@"&autoload=1"];
+//		if (kPreloadAuto == self.preload)	[flashVars appendString:@"&autoload=1"];
 		if (self.loop)					[flashVars appendString:@"&loop=1"];
 	}
 	else if ([audioFlashPlayer isEqualToString:@"dewplayer"])

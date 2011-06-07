@@ -703,7 +703,7 @@
 	{
 		[flashVars appendFormat:@"&showplayer=%@", (self.controller) ? @"autohide" : @"never"];
 		if (self.autoplay)				[flashVars appendString:@"&autoplay=1"];
-		if (kPreloadAuto == self.preload)	[flashVars appendString:@"&autoload=1"];
+//		if (kPreloadAuto == self.preload)	[flashVars appendString:@"&autoload=1"];
 		if (self.loop)					[flashVars appendString:@"&loop=1"];
 	}
 	if (videoFlashExtras)	// append other parameters (usually like key1=value1&key2=value2)
