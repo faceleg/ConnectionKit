@@ -17,6 +17,10 @@
 @property(nonatomic, retain, readonly) SVRichText *body;
 
 
+#pragma mark Options
+@property(nonatomic, copy) NSNumber *isBlockQuote;
+
+
 @end
 
 

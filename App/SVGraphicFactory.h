@@ -41,6 +41,7 @@ typedef NSUInteger SVPlugInPasteboardReadingOptions;
 
 #pragma mark Shared Objects
 + (SVGraphicFactory *)textBoxFactory;
++ (SVGraphicFactory *)blockQuoteFactory;
 + (NSArray *)mediaFactories;
 + (SVGraphicFactory *)mediaPlaceholderFactory;
 + (SVGraphicFactory *)videoFactory;

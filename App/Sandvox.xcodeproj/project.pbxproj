@@ -369,6 +369,7 @@
 		2731ECCE10861E1500D8AAA5 /* SVRichTextDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2731ECCC10861E1500D8AAA5 /* SVRichTextDOMController.m */; };
 		2731ECD410861FF300D8AAA5 /* SVTextFieldDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2731ECD210861FF300D8AAA5 /* SVTextFieldDOMController.h */; };
 		2731ECD510861FF300D8AAA5 /* SVTextFieldDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2731ECD310861FF300D8AAA5 /* SVTextFieldDOMController.m */; };
+		27350A9A1397E9AA00F0DC63 /* TextBoxInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27350A991397E9AA00F0DC63 /* TextBoxInspector.xib */; };
 		2736A0E613095B9800397D1A /* SVPageMigrationPolicy.h in Headers */ = {isa = PBXBuildFile; fileRef = 2736A0E413095B9800397D1A /* SVPageMigrationPolicy.h */; };
 		2736A0E713095B9800397D1A /* SVPageMigrationPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2736A0E513095B9800397D1A /* SVPageMigrationPolicy.m */; };
 		2736A1091309606200397D1A /* SVMigrationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 2736A1071309606200397D1A /* SVMigrationManager.h */; };
@@ -2088,6 +2089,7 @@
 		2731ECD210861FF300D8AAA5 /* SVTextFieldDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVTextFieldDOMController.h; sourceTree = "<group>"; };
 		2731ECD310861FF300D8AAA5 /* SVTextFieldDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVTextFieldDOMController.m; sourceTree = "<group>"; };
 		27324D7D0EAFF72500383B15 /* DocumentSaving.graffle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = DocumentSaving.graffle; sourceTree = "<group>"; };
+		27350A991397E9AA00F0DC63 /* TextBoxInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextBoxInspector.xib; sourceTree = "<group>"; };
 		2736A0E413095B9800397D1A /* SVPageMigrationPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPageMigrationPolicy.h; sourceTree = "<group>"; };
 		2736A0E513095B9800397D1A /* SVPageMigrationPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPageMigrationPolicy.m; sourceTree = "<group>"; };
 		2736A1071309606200397D1A /* SVMigrationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMigrationManager.h; sourceTree = "<group>"; };
@@ -4266,6 +4268,7 @@
 				27D7345412119C6600722189 /* SVMediaGraphicInspector.m */,
 				CEFD1D4412E9F85300D3A6CD /* SVImage.xib */,
 				CEFD1D4A12E9F85300D3A6CD /* RawHTMLInspector.xib */,
+				27350A991397E9AA00F0DC63 /* TextBoxInspector.xib */,
 			);
 			name = "Plug-In Inspector";
 			sourceTree = "<group>";
@@ -7188,6 +7191,7 @@
 				CE429F95133DA5CC007760AB /* colorbox in Resources */,
 				CE6BB267134A8DDB00EEB1E2 /* UnpublishedTemplate.html in Resources */,
 				CEAD39B11384342400161C8F /* MediaInspector.xib in Resources */,
+				27350A9A1397E9AA00F0DC63 /* TextBoxInspector.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

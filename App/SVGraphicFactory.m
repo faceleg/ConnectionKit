@@ -84,6 +84,31 @@
 #pragma mark -
 
 
+@interface SVBlockQuoteFactory : SVTextBoxFactory
+@end
+
+
+@implementation SVBlockQuoteFactory
+
+- (NSString *)identifier { return @"com.karelia.sandvox.BlockQuote"; }
+- (NSString *)name { return NSLocalizedString(@"Block Quote", @"Graphic name"); }
+
+- (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    SVGraphic *result = [super insertNewGraphicInManagedObjectContext:context];
+    
+    [result setValue:NSBOOL(YES) forKey:@"isBlockQuote"];
+    [result makeOriginalSize];
+    
+    return result;
+}
+
+@end
+
+
+#pragma mark -
+
+
 @interface SVImageFactory : SVGraphicFactory
 @end
 
@@ -294,6 +319,7 @@ static NSPointerArray       *sFactories;
 static NSMutableDictionary  *sFactoriesByIdentifier;
 
 static SVGraphicFactory *sSharedTextBoxFactory;
+static SVGraphicFactory *sQuoteBoxFactory;
 static SVGraphicFactory *sImageFactory;
 static SVGraphicFactory *sVideoFactory;
 static SVGraphicFactory *sAudioFactory;
@@ -316,6 +342,12 @@ static SVGraphicFactory *sRawHTMLFactory;
     {
         sSharedTextBoxFactory = [[SVTextBoxFactory alloc] init];
         [self registerFactory:sSharedTextBoxFactory];
+    }
+    
+    if (!sQuoteBoxFactory)
+    {
+        sQuoteBoxFactory = [[SVBlockQuoteFactory alloc] init];
+        [self registerFactory:sQuoteBoxFactory];
     }
     
     if (!sImageFactory)
@@ -464,6 +496,7 @@ static SVGraphicFactory *sRawHTMLFactory;
 + (NSArray *)moreGraphicFactories; { return [[sMoreFactories copy] autorelease]; }
 
 + (SVGraphicFactory *)textBoxFactory; { return sSharedTextBoxFactory; }
++ (SVGraphicFactory *)blockQuoteFactory; { return sQuoteBoxFactory; }
 
 + (SVGraphicFactory *)mediaPlaceholderFactory; { return sImageFactory; }
 + (SVGraphicFactory *)videoFactory; { return sVideoFactory; }

@@ -238,12 +238,16 @@
 	SVGraphicFactory *factory = nil;
 	
 	
-	// Text box item
+	// Text boxes
 	factory = [SVGraphicFactory textBoxFactory];
 	item = [factory makeMenuItemWithDescription:YES];
 	[menu addItem:item];
-	
-	
+    
+    factory = [SVGraphicFactory blockQuoteFactory];
+	item = [factory makeMenuItemWithDescription:YES];
+	[menu addItem:item];
+    
+    	
 	// Media Placeholder
 	factory = [SVGraphicFactory mediaPlaceholderFactory];
 	item = [factory makeMenuItemWithDescription:YES];

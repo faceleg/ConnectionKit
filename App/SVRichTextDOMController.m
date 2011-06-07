@@ -751,10 +751,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     // Create text attachment for the graphic
     SVTextAttachment *textAttachment = [SVTextAttachment textAttachmentWithGraphic:graphic];
     
-    SVGraphicPlacement placement = ([graphic isKindOfClass:[SVTextBox class]] ? // #93281
-                                    SVGraphicPlacementCallout :
-                                    SVGraphicPlacementInline);
-    [textAttachment setPlacement:[NSNumber numberWithInteger:placement]];
+    [textAttachment setPlacement:[NSNumber numberWithInteger:SVGraphicPlacementInline]];
     
     [textAttachment setCausesWrap:[NSNumber numberWithBool:!placeInline]];
     [textAttachment setBody:[self representedObject]];
