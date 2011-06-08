@@ -14,6 +14,14 @@
 #import "NSString+Karelia.h"
 
 
+@interface SVPublishingRecord ()
+@property(nonatomic, copy, readwrite) NSData *SHA1Digest;
+@end
+
+
+#pragma mark -
+
+
 @implementation SVPublishingRecord 
 
 + (SVPublishingRecord *)insertNewRegularFileIntoManagedObjectContext:(NSManagedObjectContext *)context;

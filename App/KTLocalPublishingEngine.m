@@ -37,6 +37,11 @@
 @end
 
 
+@interface SVPublishingRecord ()
+- (void)setSHA1Digest:(NSData *)digest;
+@end
+
+
 #pragma mark -
 
 
