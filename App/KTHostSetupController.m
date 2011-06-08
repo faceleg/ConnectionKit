@@ -2494,7 +2494,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 	if (![CKDotMacConnection getDotMacAccountName:&iToolsMember password:&iToolsPassword] || [iToolsMember isEqualToString:@""] || [iToolsPassword isEqualToString:@""])
 	{
-		[oDotMacLabel setStringValue:[NSString stringWithFormat:NSLocalizedString(@"This website cannot be published until you have set up your MobileMe account.", @"")]];
+		[oDotMacLabel setStringValue:NSLocalizedString(@"This website cannot be published until you have set up your MobileMe account.", @"")];
 		[self setValue:nil forKey:@"userName"];
 		[oGetDotMacButton setHidden:NO];
 	}
@@ -2737,7 +2737,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 						[theText appendAttributedString:
 							[NSAttributedString stringWithString:[NSString stringWithFormat:NSLocalizedString(@"Your computer could not be reached from the Internet at the URL you have specified, %@. You may need to check your hostname settings, or configure your router or local network so that your computer is reachable from the Internet.", @"warning when computer could not be reached."), globalSiteURL]  attributes:boldRedAttr]];
 						[theText appendAttributedString:
-							[NSAttributedString stringWithString:[NSString stringWithFormat:NSLocalizedString(@"\n\nIf you are just testing, and you are OK with your site not being accessible from the Internet, then feel free to ignore this warning.", @"second half -- warning when computer could not be reached.")]  attributes:boldAttr]];
+							[NSAttributedString stringWithString:NSLocalizedString(@"\n\nIf you are just testing, and you are OK with your site not being accessible from the Internet, then feel free to ignore this warning.", @"second half -- warning when computer could not be reached.")  attributes:boldAttr]];
 						myShouldShowConnectionTroubleshooting = YES;
 						break;
 				}

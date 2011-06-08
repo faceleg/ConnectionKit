@@ -986,7 +986,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 				NSMutableString *secondary = [NSMutableString string];
 				if ( numErrors > 3 )
 				{
-					[secondary appendFormat:NSLocalizedString(@"The first 3 are:\n", @"To be followed by 3 error messages")];
+					[secondary appendString:NSLocalizedString(@"The first 3 are:\n", @"To be followed by 3 error messages")];
 				}
 				
 				unsigned i;
