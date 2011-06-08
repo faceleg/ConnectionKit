@@ -1066,8 +1066,6 @@
 		CE01A8060EAFD63600BDF264 /* TrimFirstLineTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A7020EAFD63600BDF264 /* TrimFirstLineTransformer.m */; };
 		CE01A8070EAFD63600BDF264 /* TrimTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A7030EAFD63600BDF264 /* TrimTransformer.h */; };
 		CE01A8080EAFD63600BDF264 /* TrimTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A7040EAFD63600BDF264 /* TrimTransformer.m */; };
-		CE01A80D0EAFD63600BDF264 /* AQDataExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A70A0EAFD63600BDF264 /* AQDataExtensions.h */; };
-		CE01A80E0EAFD63600BDF264 /* AQDataExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A70B0EAFD63600BDF264 /* AQDataExtensions.m */; };
 		CE01A80F0EAFD63600BDF264 /* BDAlias.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A70C0EAFD63600BDF264 /* BDAlias.h */; settings = {ATTRIBUTES = (); }; };
 		CE01A8100EAFD63600BDF264 /* BDAlias.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A70D0EAFD63600BDF264 /* BDAlias.m */; };
 		CE01A8110EAFD63600BDF264 /* DNDArrayController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A70E0EAFD63600BDF264 /* DNDArrayController.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -2881,8 +2879,6 @@
 		CE01A7020EAFD63600BDF264 /* TrimFirstLineTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrimFirstLineTransformer.m; sourceTree = "<group>"; };
 		CE01A7030EAFD63600BDF264 /* TrimTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrimTransformer.h; sourceTree = "<group>"; };
 		CE01A7040EAFD63600BDF264 /* TrimTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrimTransformer.m; sourceTree = "<group>"; };
-		CE01A70A0EAFD63600BDF264 /* AQDataExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AQDataExtensions.h; sourceTree = "<group>"; };
-		CE01A70B0EAFD63600BDF264 /* AQDataExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AQDataExtensions.m; sourceTree = "<group>"; };
 		CE01A70C0EAFD63600BDF264 /* BDAlias.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BDAlias.h; path = ../../bdalias/BDAlias.h; sourceTree = "<group>"; };
 		CE01A70D0EAFD63600BDF264 /* BDAlias.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BDAlias.m; path = ../../bdalias/BDAlias.m; sourceTree = "<group>"; };
 		CE01A70E0EAFD63600BDF264 /* DNDArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNDArrayController.h; sourceTree = "<group>"; };
@@ -5468,8 +5464,6 @@
 		CE01A7050EAFD63600BDF264 /* Imported */ = {
 			isa = PBXGroup;
 			children = (
-				CE01A70A0EAFD63600BDF264 /* AQDataExtensions.h */,
-				CE01A70B0EAFD63600BDF264 /* AQDataExtensions.m */,
 				CE01A70C0EAFD63600BDF264 /* BDAlias.h */,
 				CE01A70D0EAFD63600BDF264 /* BDAlias.m */,
 				CE01A70E0EAFD63600BDF264 /* DNDArrayController.h */,
@@ -6194,7 +6188,6 @@
 				CE01A8040EAFD63600BDF264 /* Symbolicator.h in Headers */,
 				CE01A8050EAFD63600BDF264 /* TrimFirstLineTransformer.h in Headers */,
 				CE01A8070EAFD63600BDF264 /* TrimTransformer.h in Headers */,
-				CE01A80D0EAFD63600BDF264 /* AQDataExtensions.h in Headers */,
 				CE01A80F0EAFD63600BDF264 /* BDAlias.h in Headers */,
 				CE01A8110EAFD63600BDF264 /* DNDArrayController.h in Headers */,
 				CE01A8130EAFD63600BDF264 /* NSBezierPath_AMAdditions.h in Headers */,
@@ -7865,7 +7858,6 @@
 				CE01A8030EAFD63600BDF264 /* StripHTMLTransformer.m in Sources */,
 				CE01A8060EAFD63600BDF264 /* TrimFirstLineTransformer.m in Sources */,
 				CE01A8080EAFD63600BDF264 /* TrimTransformer.m in Sources */,
-				CE01A80E0EAFD63600BDF264 /* AQDataExtensions.m in Sources */,
 				CE01A8100EAFD63600BDF264 /* BDAlias.m in Sources */,
 				CE01A8120EAFD63600BDF264 /* DNDArrayController.m in Sources */,
 				CE01A8140EAFD63600BDF264 /* NSBezierPath_AMAdditions.m in Sources */,
