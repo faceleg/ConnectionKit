@@ -59,11 +59,6 @@
 enum { LABEL_NAME = 1, LABEL_EMAIL, LABEL_SUBJECT, LABEL_MESSAGE, LABEL_SEND };
 
 
-@interface ContactPlugIn ()
-#ifdef DEBUG
-- (void)decode:(NSString *)v;
-#endif
-@end
 
 
 @implementation ContactPlugIn
@@ -320,34 +315,9 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	
 	//	LOG((@"Encrypted %@ as %@ --> %@", email, trimmedData, result ));
 	
-#ifdef DEBUG
-    [self decode:result];
-#endif    
 	return result;
 }
 
-#ifdef DEBUG
-
-- (void)decode:(NSString *)v
-{
-    NSData *decodedTrimmedData = [NSData dataWithBase64EncodedString:v];
-	
-	unsigned char inBytes[MAX_EMAILS_LENGTH] = { 0 };
-    [decodedTrimmedData getBytes:inBytes];
-    
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	NSString *passwordString = [defaults objectForKey:@"mailmePassword"];
-	if (nil == passwordString)
-	{
-		passwordString = CONTACT_PASSWORD;
-	}
-	const char *password = [passwordString UTF8String];
-	
-    
-	//    NSString *decryptedEmail = [NSString stringWithCString:(const char *)outBytes encoding:NSUTF8StringEncoding]; // encoding should match the encoding of mailData, above, shouldn't it???
-	//	NSLog(@"Decrypted %@ --> %@ as %@", v, decodedTrimmedData, decryptedEmail);
-}
-#endif
 
 
 #pragma mark *** NEW STUFF ***
