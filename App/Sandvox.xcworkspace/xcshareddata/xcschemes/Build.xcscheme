@@ -27,10 +27,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6A8666480F9593B200325E1C"
-               BuildableName = "ObjectiveFlickr.framework"
-               BlueprintName = "ObjectiveFlickr (framework)"
-               ReferencedContainer = "container:../../imedia/ObjectiveFlickr/ObjectiveFlickr.xcodeproj">
+               BlueprintIdentifier = "8DC2EF4F0486A6940098B216"
+               BuildableName = "iMedia.framework"
+               BlueprintName = "iMedia"
+               ReferencedContainer = "container:../../imedia/iMedia.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -41,10 +41,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8DC2EF4F0486A6940098B216"
-               BuildableName = "iMedia.framework"
-               BlueprintName = "iMedia"
-               ReferencedContainer = "container:../../imedia/iMedia.xcodeproj">
+               BlueprintIdentifier = "79CFD12509F702BE00172CDD"
+               BuildableName = "Connection.framework"
+               BlueprintName = "Framework"
+               ReferencedContainer = "container:../../connection/Connection.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
