@@ -19,6 +19,34 @@
                ReferencedContainer = "container:../../Shared/Code/AmazonSupport/AmazonSupport.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "6A8666480F9593B200325E1C"
+               BuildableName = "ObjectiveFlickr.framework"
+               BlueprintName = "ObjectiveFlickr (framework)"
+               ReferencedContainer = "container:../../imedia/ObjectiveFlickr/ObjectiveFlickr.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "8DC2EF4F0486A6940098B216"
+               BuildableName = "iMedia.framework"
+               BlueprintName = "iMedia"
+               ReferencedContainer = "container:../../imedia/iMedia.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction

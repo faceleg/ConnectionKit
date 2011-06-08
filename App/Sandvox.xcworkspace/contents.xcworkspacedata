@@ -4,4 +4,7 @@
    <FileRef
       location = "group:../../Shared/Code/AmazonSupport/AmazonSupport.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:../../imedia/iMedia.xcodeproj">
+   </FileRef>
 </Workspace>
