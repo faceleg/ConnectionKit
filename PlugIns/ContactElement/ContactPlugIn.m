@@ -40,8 +40,8 @@
 
 #import "ContactElementField.h"
 #import "NSData+Karelia.h"
-#include <openssl/blowfish.h>
 #include <zlib.h>
+#include "CommonCrypto/CommonCryptor.h"
 
 
 // should be localized in user's language
@@ -281,7 +281,6 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 		email = [email substringToIndex:(MAX_EMAILS_LENGTH-1)];
 	}
 	NSData *mailData = [email dataUsingEncoding:NSUTF8StringEncoding];
-	unsigned char outBytes[MAX_EMAILS_LENGTH] = { 0 };
 	unsigned char inBytes[MAX_EMAILS_LENGTH] = { 0 };
 	// fill with zeros.  Make the buffer have zeros afterwards to prevent possible encoding problems
 	// where there's junk at the end.
@@ -294,30 +293,30 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	{
 		passwordString = CONTACT_PASSWORD;
 	}
-	const char *password = [passwordString UTF8String];
-	BF_KEY key;
-	BF_set_key(&key, (int) strlen(password), (unsigned char *) password);
 	
-	unsigned char ivec[8] = { 0,0,0,0, 0,0,0,0 };
-	int num = 0;
 	
-	BF_cfb64_encrypt(inBytes,					// in
-					 outBytes,					// out
-					 [mailData length] + 2,		// length ... 2 extra 0's to keep junk from appearing at end???
-					 &key,						// schedule (key)
-					 (unsigned char *) &ivec,	// ivec
-					 &num,						// num
-					 BF_ENCRYPT);				// encode vs. decode
+    //See the doc: For block ciphers, the output size will always be less than or
+    //equal to the input size plus the size of one block.
+    //That's why we need to add the size of one block here
+    size_t bufferSize           = MAX_EMAILS_LENGTH + kCCBlockSize3DES;
+    void* buffer                = malloc(bufferSize);
 	
-	// Brute force -- trim ending zeroes off of the end of the string
-	int newLength = MAX_EMAILS_LENGTH-1;
-	while (0 == outBytes[newLength])
-	{
-		newLength--;
-	}
+    size_t numBytesEncrypted    = 0;
+    CCCryptorStatus cryptStatus = CCCrypt(kCCEncrypt, kCCAlgorithm3DES, kCCOptionPKCS7Padding,
+										  [passwordString UTF8String], kCCKeySize3DES,
+                                          NULL /* initialization vector (optional) */,
+                                          inBytes, [mailData length], /* input */
+                                          buffer, bufferSize, /* output */
+                                          &numBytesEncrypted);
 	
-	NSData *trimmedData = [NSData dataWithBytes:outBytes length:newLength];
-	NSString *result = [trimmedData base64Encoding];
+	NSData *bufferData = nil;
+    if (cryptStatus == kCCSuccess)
+    {
+        //the returned NSData takes ownership of the buffer and will free it on deallocation
+        bufferData = [NSData dataWithBytesNoCopy:buffer length:numBytesEncrypted];
+    }
+	
+	NSString *result = [bufferData base64Encoding];
 	
 	//	LOG((@"Encrypted %@ as %@ --> %@", email, trimmedData, result ));
 	
@@ -333,7 +332,6 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 {
     NSData *decodedTrimmedData = [NSData dataWithBase64EncodedString:v];
 	
-    unsigned char outBytes[MAX_EMAILS_LENGTH];
 	unsigned char inBytes[MAX_EMAILS_LENGTH] = { 0 };
     [decodedTrimmedData getBytes:inBytes];
     
@@ -345,20 +343,6 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	}
 	const char *password = [passwordString UTF8String];
 	
-	BF_KEY key;
-	BF_set_key(&key, (int) strlen(password), (unsigned char *) password);
-	
-	
-    unsigned char ivec[8] = { 0,0,0,0, 0,0,0,0 };
-	int num = 0;
-	
-	BF_cfb64_encrypt(inBytes,					// in
-					 outBytes,					// out
-					 [decodedTrimmedData length],	// length
-					 &key,						// schedule (key)
-					 (unsigned char *) &ivec,	// ivec
-					 &num,						// num
-					 BF_DECRYPT);				// encode vs. decode
     
 	//    NSString *decryptedEmail = [NSString stringWithCString:(const char *)outBytes encoding:NSUTF8StringEncoding]; // encoding should match the encoding of mailData, above, shouldn't it???
 	//	NSLog(@"Decrypted %@ --> %@ as %@", v, decodedTrimmedData, decryptedEmail);
