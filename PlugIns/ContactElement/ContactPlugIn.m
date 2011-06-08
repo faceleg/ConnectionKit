@@ -40,8 +40,7 @@
 
 #import "ContactElementField.h"
 #import "NSData+Karelia.h"
-#include <zlib.h>
-#include "CommonCrypto/CommonCryptor.h"
+//#include <zlib.h>
 
 
 // should be localized in user's language
@@ -289,32 +288,12 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 		passwordString = CONTACT_PASSWORD;
 	}
 	
-	
-    //See the doc: For block ciphers, the output size will always be less than or
-    //equal to the input size plus the size of one block.
-    //That's why we need to add the size of one block here
-    size_t bufferSize           = MAX_EMAILS_LENGTH + kCCBlockSize3DES;
-    void* buffer                = malloc(bufferSize);
-	
-    size_t numBytesEncrypted    = 0;
-    CCCryptorStatus cryptStatus = CCCrypt(kCCEncrypt, kCCAlgorithm3DES, kCCOptionPKCS7Padding,
-										  [passwordString UTF8String], kCCKeySize3DES,
-                                          NULL /* initialization vector (optional) */,
-                                          inBytes, [mailData length], /* input */
-                                          buffer, bufferSize, /* output */
-                                          &numBytesEncrypted);
-	
-	NSData *bufferData = nil;
-    if (cryptStatus == kCCSuccess)
-    {
-        //the returned NSData takes ownership of the buffer and will free it on deallocation
-        bufferData = [NSData dataWithBytesNoCopy:buffer length:numBytesEncrypted];
-    }
-	
-	NSString *result = [bufferData base64Encoding];
-	
-	//	LOG((@"Encrypted %@ as %@ --> %@", email, trimmedData, result ));
-	
+	NSData *encryptedAddress = [mailData dataEncryptedWithPassword:passwordString algorithm:kCCAlgorithm3DES options:kCCOptionPKCS7Padding];
+	NSString *result = nil;
+	if (encryptedAddress)
+	{
+		result = [encryptedAddress base64Encoding];
+	}	
 	return result;
 }
 
