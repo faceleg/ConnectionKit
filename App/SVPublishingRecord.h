@@ -29,13 +29,12 @@
 
 @property (nonatomic, retain) NSSet *contentRecords;
 - (SVPublishingRecord *)publishingRecordForFilename:(NSString *)filename;
-- (SVPublishingRecord *)publishingRecordForContentHash:(NSData *)digest;
 
 
 #pragma mark Attributes
 @property(nonatomic, copy) NSNumber *length;
 @property(nonatomic, copy, readonly) NSData *SHA1Digest;    // pub engine maintains
-@property(nonatomic, copy) NSData *contentHash; // like SHA1Digest, but content-specific
+@property(nonatomic, copy, readonly) NSData *contentHash; // like SHA1Digest, but content-specific
 @property(nonatomic, copy) NSDate *date;
 @property(nonatomic, copy) NSDate *modificationDate;
 

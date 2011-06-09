@@ -36,11 +36,13 @@
 
 @interface KTLocalPublishingEngine ()
 - (void)pingURL:(NSURL *)URL;
+- (void)setContentHash:(NSData *)hash forPublishingRecord:(SVPublishingRecord *)record;
 @end
 
 
 @interface SVPublishingRecord ()
 - (void)setSHA1Digest:(NSData *)digest;
+- (void)setContentHash:(NSData *)digest;
 @end
 
 
@@ -78,6 +80,15 @@
         _publishingRecordsBySHA1Digest = [[NSMutableDictionary alloc]
                                           initWithObjects:records
                                           forKeys:[records valueForKey:@"SHA1Digest"]];
+        
+        records = [[site managedObjectContext]
+                   fetchAllObjectsForEntityForName:@"FilePublishingRecord"
+                   predicate:[NSPredicate predicateWithFormat:@"contentHash != nil"]
+                   error:NULL];
+        
+        _publishingRecordsByContentHash = [[NSMutableDictionary alloc]
+                                           initWithObjects:records
+                                           forKeys:[records valueForKey:@"contentHash"]];
 	}
 	
 	return self;
@@ -88,6 +99,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     [_publishingRecordsBySHA1Digest release];
+    [_publishingRecordsByContentHash release];
     
     [super dealloc];
 }
@@ -95,6 +107,11 @@
 #pragma mark Accessors
 
 - (BOOL)onlyPublishChanges { return _onlyPublishChanges; }
+
+- (SVPublishingRecord *)publishingRecordForContentHash:(NSData *)digest;
+{
+    return [_publishingRecordsByContentHash objectForKey:digest];
+}
 
 #pragma mark Connection
 
@@ -141,7 +158,7 @@
         // If media with the same content hash was already published, want to publish there instead
         if (hash)
         {
-            SVPublishingRecord *record = [[[self site] hostProperties] publishingRecordForContentHash:hash];
+            SVPublishingRecord *record = [self publishingRecordForContentHash:hash];
             if (record) remotePath = [record path];
         }
     }
@@ -177,7 +194,7 @@
         else if ([digest isEqualToData:[record SHA1Digest]])
         {
             // Equal data means no need to publish, but still want to mark change in content hash
-            if (!KSISEQUAL(hash, [record contentHash])) [record setContentHash:hash];
+            if (!KSISEQUAL(hash, [record contentHash])) [self setContentHash:hash forPublishingRecord:record];
             
             // Pretend we uploaded so the engine still tracks path/digest etc.
             [self didEnqueueUpload:nil toPath:remotePath cachedSHA1Digest:digest contentHash:hash object:object];
@@ -339,7 +356,7 @@
                 if (hash)
                 {
                     // Seek an existing instance of that media
-                    SVPublishingRecord *record = [[[self site] hostProperties] publishingRecordForContentHash:hash];
+                    SVPublishingRecord *record = [self publishingRecordForContentHash:hash];
                     if (record)
                     {
                         // Pretend the media was uploaded
@@ -489,7 +506,9 @@
         [record setSHA1Digest:digest];
         [_publishingRecordsBySHA1Digest setObject:record forKey:digest];
         
-        [record setContentHash:[transferRecord propertyForKey:@"contentHash"]];
+        [self setContentHash:[transferRecord propertyForKey:@"contentHash"]
+         forPublishingRecord:record];
+        
         [record setLength:[NSNumber numberWithUnsignedLongLong:[transferRecord size]]];
     }
     
@@ -502,6 +521,15 @@
     {
         [object setDatePublished:[NSDate date]];
     }
+}
+
+- (void)setContentHash:(NSData *)hash forPublishingRecord:(SVPublishingRecord *)record;
+{
+    NSData *oldHash = [record contentHash];
+    if (oldHash) [_publishingRecordsBySHA1Digest removeObjectForKey:oldHash];
+    
+    [record setContentHash:hash];
+    if (hash) [_publishingRecordsByContentHash setObject:record forKey:hash];
 }
 
 // FIXME: This has a lot in common with super's implementation

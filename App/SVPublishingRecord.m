@@ -16,6 +16,7 @@
 
 @interface SVPublishingRecord ()
 @property(nonatomic, copy, readwrite) NSData *SHA1Digest;
+@property(nonatomic, copy, readwrite) NSData *contentHash;
 @end
 
 
@@ -108,27 +109,6 @@
     }
     
     return result;
-}
-
-- (SVPublishingRecord *)publishingRecordForContentHash:(NSData *)digest;
-{
-    if (![self isDirectory])
-    {
-        if ([[self contentHash] isEqual:digest])
-        {
-            return self;
-        }
-    }
-    else
-    {
-        for (SVPublishingRecord *aRecord in [self contentRecords])
-        {
-            SVPublishingRecord *result = [aRecord publishingRecordForContentHash:digest];
-            if (result) return result;
-        }
-    }
-    
-    return nil;
 }
 
 #pragma mark Attributes
