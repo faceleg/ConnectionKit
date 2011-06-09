@@ -65,7 +65,8 @@ typedef enum {
     CKTransferRecord    *_rootTransferRecord;
     CKTransferRecord    *_baseTransferRecord;
     
-    SVPublishingDigestStorage    *_digestStorage;
+    SVPublishingDigestStorage   *_digestStorage;
+    NSDictionary                *_pagesByID;
     
     NSMutableArray      *_plugInCSS;    // mixture of string CSS snippets, and CSS URLs
     

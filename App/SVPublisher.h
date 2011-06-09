@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@class SVHTMLContext, KTSite, SVMediaRequest;
+@class SVHTMLContext, KTSite, SVSiteItem, SVMediaRequest;
 
 
 @protocol SVPublishedObject
@@ -27,6 +27,7 @@ extern int kMaxNumberOfFreePublishedPages;
 
 #pragma mark Site
 - (KTSite *)site;   // Ideally won't have to expose this eventually
+- (SVSiteItem *)siteItemWithUniqueID:(NSString *)ID;
 
 
 #pragma mark HTML

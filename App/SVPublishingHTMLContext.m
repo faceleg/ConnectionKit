@@ -259,4 +259,9 @@
     [super writeDocumentWithPage:page];
 }
 
+- (SVSiteItem *)siteItemWithUniqueID:(NSString *)ID;
+{
+    return [_publisher siteItemWithUniqueID:ID];
+}
+
 @end

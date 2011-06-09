@@ -131,6 +131,14 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             [_diskQueue performSelector:@selector(setName:) withObject:@"KTPublishingEngine: Disk Access Queue"];
             [_defaultQueue performSelector:@selector(setName:) withObject:@"KTPublishingEngine: Default Queue"];
         }
+        
+        
+        // Page ID cache
+        NSArray *pages = [[site managedObjectContext] fetchAllObjectsForEntityForName:@"SiteItem"
+                                                                                error:NULL];
+        
+        _pagesByID = [[NSDictionary alloc] initWithObjects:pages
+                                                   forKeys:[pages valueForKey:@"uniqueID"]];
 	}
 	
 	return self;
@@ -155,6 +163,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [_defaultQueue release];
     [_diskQueue release];
     [_nextOp release];
+    
+    [_pagesByID release];
 	
 	[super dealloc];
 }
@@ -162,9 +172,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 #pragma mark Simple Accessors
 
 - (KTSite *)site { return _site; }
-
 - (NSString *)documentRootPath { return _documentRootPath; }
-
 - (NSString *)subfolderPath { return _subfolderPath; }
     
 /*  Combines doc root and subfolder to get the directory that all content goes into
@@ -172,6 +180,18 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 - (NSString *)baseRemotePath
 {
     NSString *result = [[self documentRootPath] stringByAppendingPathComponent:[self subfolderPath]];
+    return result;
+}
+
+- (SVSiteItem *)siteItemWithUniqueID:(NSString *)ID;
+{
+    SVSiteItem *result = [_pagesByID objectForKey:ID];
+    if (!result)
+    {
+        // It's very rare to look up a page that doesn't exist, so we can afford to make the sure the page doesn't really exist
+        result = [SVSiteItem pageWithUniqueID:ID inManagedObjectContext:[[self site] managedObjectContext]];
+    }
+    
     return result;
 }
 

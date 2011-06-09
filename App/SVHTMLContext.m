@@ -1480,6 +1480,12 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 	return result;
 }
 
+- (SVSiteItem *)siteItemWithUniqueID:(NSString *)ID;
+{
+    return [SVSiteItem pageWithUniqueID:ID
+                 inManagedObjectContext:[[self page] managedObjectContext]];
+}
+
 - (NSAttributedString *)processLinks:(NSAttributedString *)attributedHTMLString
 {
     if (![self isForEditing] && [attributedHTMLString length])
@@ -1516,8 +1522,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
             idRange.length = postIDRange.location - idRange.location;
             
             NSString *idString = [[buffer string] substringWithRange:idRange];
-            SVSiteItem *thePage = [SVSiteItem pageWithUniqueID:idString
-                                        inManagedObjectContext:[[self page] managedObjectContext]];
+            SVSiteItem *thePage = [self siteItemWithUniqueID:idString];
             
             // Figure out correct path
             NSString *newPath = nil;

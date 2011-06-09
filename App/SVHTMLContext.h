@@ -270,6 +270,10 @@ typedef NSUInteger SVPageImageRepresentationOptions2;
 - (void)writeEnclosure:(id <SVEnclosure>)enclosure;
 
 
+#pragma mark Pages
+- (SVSiteItem *)siteItemWithUniqueID:(NSString *)ID;
+
+
 #pragma mark Publishing
 // During publishing, you can ask context to ignore some sections of the markup when deciding if changes need publishing
 - (void)disableChangeTracking;
