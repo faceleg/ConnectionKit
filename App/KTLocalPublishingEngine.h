@@ -13,6 +13,9 @@
 @interface KTLocalPublishingEngine : KTPublishingEngine 
 {
 	BOOL    _onlyPublishChanges;
+    
+  @private
+    NSMutableDictionary *_publishingRecordsBySHA1Digest;
 }
 
 - (id)initWithSite:(KTSite *)aDocumentInfo onlyPublishChanges:(BOOL)publishChanges;

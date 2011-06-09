@@ -25,6 +25,8 @@
 #import "NSInvocation+Karelia.h"
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
+
+#import "KSPathUtilities.h"
 #import "KSURLUtilities.h"
 
 #import "KSInvocationOperation.h"
@@ -49,13 +51,6 @@
 
 #pragma mark Init & Dealloc
 
-- (id)init;
-{
-    [super init];
-    
-    return self;
-}
-
 - (id)initWithSite:(KTSite *)site onlyPublishChanges:(BOOL)publishChanges;
 {
 	OBPRECONDITION(site);
@@ -73,6 +68,16 @@
                                                  selector:@selector(transferRecordDidFinish:)
                                                      name:CKTransferRecordTransferDidFinishNotification
                                                    object:nil];
+        
+        // Cache all the known publishing records
+        NSArray *records = [[site managedObjectContext]
+                            fetchAllObjectsForEntityForName:@"FilePublishingRecord"
+                            predicate:[NSPredicate predicateWithFormat:@"SHA1Digest != nil"]
+                            error:NULL];
+        
+        _publishingRecordsBySHA1Digest = [[NSMutableDictionary alloc]
+                                          initWithObjects:records
+                                          forKeys:[records valueForKey:@"SHA1Digest"]];
 	}
 	
 	return self;
@@ -81,6 +86,8 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    [_publishingRecordsBySHA1Digest release];
     
     [super dealloc];
 }
@@ -476,7 +483,12 @@
     {
         SVPublishingRecord *record = [[[self site] hostProperties] regularFilePublishingRecordWithPath:path];
         
-        [record setSHA1Digest:[transferRecord propertyForKey:@"dataDigest"]];
+        NSData *oldDigest = [record SHA1Digest];
+        if (oldDigest) [_publishingRecordsBySHA1Digest removeObjectForKey:oldDigest];
+        NSData *digest = [transferRecord propertyForKey:@"dataDigest"];
+        [record setSHA1Digest:digest];
+        [_publishingRecordsBySHA1Digest setObject:record forKey:digest];
+        
         [record setContentHash:[transferRecord propertyForKey:@"contentHash"]];
         [record setLength:[NSNumber numberWithUnsignedLongLong:[transferRecord size]]];
     }
@@ -490,6 +502,34 @@
     {
         [object setDatePublished:[NSDate date]];
     }
+}
+
+// FIXME: This has a lot in common with super's implementation
+- (NSString *)pathForFileWithSHA1Digest:(NSData *)digest;
+{
+    OBPRECONDITION(digest);
+    
+    NSString *result = [[self mediaDigestStorage] pathForFileWithDigest:digest];
+    
+    if (!result)
+    {
+        SVPublishingRecord *publishingRecord = [_publishingRecordsBySHA1Digest objectForKey:digest];
+        
+        NSString *publishedPath = [publishingRecord path];
+        if (publishedPath)
+        {
+            // The record's path is for the published site. Correct to account for current pub location
+            
+            KTHostProperties *hostProperties = [[self site] hostProperties];
+            NSString *base = [[hostProperties documentRoot]
+                              stringByAppendingPathComponent:[hostProperties subfolder]];
+            
+            NSString *relativePath = [publishedPath ks_pathRelativeToDirectory:base];
+            result = [[self baseRemotePath] stringByAppendingPathComponent:relativePath];
+        }
+    }
+    
+    return result;
 }
 
 #pragma mark Ping
