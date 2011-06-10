@@ -114,56 +114,23 @@
     
     // Ensure we have a graphics context big enough to render into
     // Cache contexts per thread
-    CGContextRef graphicsContext = (CGContextRef)[[[NSThread currentThread] threadDictionary]
-                                    objectForKey:@"SVImageScalingOperationBitmapContext"];
-    
-    if (!graphicsContext)
-    {
-        CGColorSpaceRef colorSpace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
-        
-        graphicsContext = CGBitmapContextCreate(NULL,
-                                                640, 640,
-                                                8,
-                                                640 * 4,
-                                                colorSpace,
-                                                kCGImageAlphaPremultipliedLast);
-        CGColorSpaceRelease(colorSpace);
-        
-        [[[NSThread currentThread] threadDictionary]
-         setObject:(id)graphicsContext forKey:@"SVImageScalingOperationBitmapContext"];
-        CFRelease(graphicsContext);
-    }
-    
-    CGRect neededContextRect = [scaledImage extent];    // Clang, we assert scaledImage is non-nil above
-    size_t currentContextWidth = CGBitmapContextGetWidth(graphicsContext);
-    size_t currentContextHeight = CGBitmapContextGetHeight(graphicsContext);
-    
-    if (currentContextWidth < neededContextRect.size.width || currentContextHeight < neededContextRect.size.height)
-    {        
-        size_t newContextWidth = MAX(currentContextWidth, (size_t)ceilf(neededContextRect.size.width));
-        size_t newContextHeight = MAX(currentContextHeight, (size_t)ceilf(neededContextRect.size.height));
-        CGColorSpaceRef colorSpace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
-        
-        graphicsContext = CGBitmapContextCreate(NULL,
-                                                newContextWidth, newContextHeight,
-                                                8,
-                                                newContextWidth * 4,
-                                                colorSpace,
-                                                kCGImageAlphaPremultipliedLast);
-        CGColorSpaceRelease(colorSpace);
-        
-        [[[NSThread currentThread] threadDictionary]
-         setObject:(id)graphicsContext forKey:@"SVImageScalingOperationBitmapContext"];
-        CFRelease(graphicsContext);
-    }
-    
+    CIContext *coreImageContext = [[[NSThread currentThread] threadDictionary]
+                                    objectForKey:@"SVImageScalingOperationCIContext"];
     
     // Create CIIContext to match
-    CIContext *coreImageContext = [CIContext contextWithCGContext:graphicsContext
-                                                          options:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:kCIContextUseSoftwareRenderer]];
+    if (!coreImageContext)
+    {
+        coreImageContext = [CIContext contextWithCGContext:nil
+                                                   options:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:kCIContextUseSoftwareRenderer]];
+        
+        [[[NSThread currentThread] threadDictionary]
+         setObject:coreImageContext forKey:@"SVImageScalingOperationCIContext"];
+    }
     
     
     // Render a CGImage
+    CGRect neededContextRect = [scaledImage extent];    // Clang, we assert scaledImage is non-nil above
+    
     CGImageRef finalImage = [coreImageContext createCGImage:scaledImage fromRect:neededContextRect];
     OBASSERT(finalImage);
     
