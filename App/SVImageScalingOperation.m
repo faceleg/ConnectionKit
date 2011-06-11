@@ -121,7 +121,7 @@
     if (!coreImageContext)
     {
         coreImageContext = [CIContext contextWithCGContext:nil
-                                                   options:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:kCIContextUseSoftwareRenderer]];
+                                                   options:[NSDictionary dictionaryWithObject:NSBOOL(YES) forKey:kCIContextUseSoftwareRenderer]];
         
         [[[NSThread currentThread] threadDictionary]
          setObject:coreImageContext forKey:@"SVImageScalingOperationCIContext"];

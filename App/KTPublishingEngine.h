@@ -72,7 +72,6 @@ typedef enum {
     
     // Worker queues
     NSOperationQueue    *_defaultQueue;
-    NSOperationQueue    *_coreImageQueue;
     NSOperationQueue    *_diskQueue;
     
     id<SVPublishedObject> _sitemapPinger;   

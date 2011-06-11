@@ -114,11 +114,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         _subfolderPath = [subfolder copy];
         
         
-        // As I understand it, Core Image already uses multiple cores (including the GPU!) so trying to render images in parallel with it is a waste (and tends to make GCD spawn crazy number of threads)
-        // I guess really we could make this queue global
-        _coreImageQueue = [[NSOperationQueue alloc] init];
-        [_coreImageQueue setMaxConcurrentOperationCount:1];
-        
         _diskQueue = [[NSOperationQueue alloc] init];
         [_diskQueue setMaxConcurrentOperationCount:1];
         
@@ -127,7 +122,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         // Name them for debugging
         if ([NSOperationQueue instancesRespondToSelector:@selector(setName:)])
         {
-            [_coreImageQueue performSelector:@selector(setName:) withObject:@"KTPublishingEngine: Core Image Queue"];
             [_diskQueue performSelector:@selector(setName:) withObject:@"KTPublishingEngine: Disk Access Queue"];
             [_defaultQueue performSelector:@selector(setName:) withObject:@"KTPublishingEngine: Default Queue"];
         }
@@ -159,7 +153,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     [_plugInCSS release];
     
-    [_coreImageQueue release];
     [_defaultQueue release];
     [_diskQueue release];
     [_nextOp release];
@@ -234,7 +227,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         
         
         // Now have most dependencies in place, so can publish for real after that
-        [_coreImageQueue addOperation:nextOp];
+        [[KTImageScalingURLProtocol coreImageQueue] addOperation:nextOp];
         [nextOp release];
     }
 }
@@ -269,7 +262,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     
     // Once all is done (the op should now have most dependencies it needs), finish up
-    [_coreImageQueue addOperation:nextOp];
+    [[KTImageScalingURLProtocol coreImageQueue] addOperation:nextOp];
     [nextOp release];
 }
 
@@ -699,7 +692,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                                         arguments:NSARRAY(request, cachedDigest)];
             
             NSOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
-            [self addOperation:op queue:_coreImageQueue];  // most of the work should be Core Image's
+            [self addOperation:op queue:[KTImageScalingURLProtocol coreImageQueue]];  // most of the work should be Core Image's
             [op release];
         }
     }

@@ -56,6 +56,9 @@ extern NSString *KTImageScalingURLProtocolScheme;
   @private
     NSOperation *_operation;
 }
+
++ (NSOperationQueue *)coreImageQueue;
+
 @end
 
 

@@ -174,8 +174,16 @@ static NSURLCache *_sharedCache;
     {
         _coreImageQueue = [[NSOperationQueue alloc] init];
         [_coreImageQueue setMaxConcurrentOperationCount:1]; // Core Image is already multithreaded
+        
+        if ([_coreImageQueue respondsToSelector:@selector(setName:)])
+        {
+            [_coreImageQueue setName:@"Core Image Queue"];
+        }
     }
 }
+
++ (NSOperationQueue *)coreImageQueue; { return _coreImageQueue; }
+
 + (BOOL)canInitWithRequest:(NSURLRequest *)request
 {
 	BOOL result = NO;
@@ -268,7 +276,7 @@ static NSURLCache *_sharedCache;
     // Run the scaling op
     _operation = [[SVImageScalingOperation alloc] initWithURL:[[self request] URL]];
     [_operation addObserver:self forKeyPath:@"isFinished" options:0 context:NULL];
-    [_coreImageQueue addOperation:_operation];
+    [[[self class] coreImageQueue] addOperation:_operation];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(SVImageScalingOperation *)operation change:(NSDictionary *)change context:(void *)context;
