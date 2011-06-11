@@ -969,16 +969,30 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     {
         scaling = KSImageScalingModeFill;
         
+        
         KTImageScalingSettings *settings = [KTImageScalingSettings settingsWithBehavior:KTScaleToSize size:NSMakeSize(width, height)];
         
-        CIImage *image = [[CIImage alloc] initWithContentsOfURL:[media mediaURL]];
-        if (!image) image = [[CIImage alloc] initWithData:[media mediaData]];
+        CGImageSourceRef source = CGImageSourceCreateWithURL((CFURLRef)[media mediaURL], NULL);
+        if (!source) source = CGImageSourceCreateWithData((CFDataRef)[media mediaData], NULL);
         
-        CGSize size = [settings scaledCGSizeForImageOfSize:[image extent].size];
-        width = size.width;
-        height = size.height;
+        if (source)
+        {
+            CFDictionaryRef properties = CGImageSourceCopyPropertiesAtIndex(source, 0, NULL);
+            if (properties)
+            {
+                width = [(NSNumber *)CFDictionaryGetValue(properties, kCGImagePropertyPixelWidth) unsignedIntegerValue];
+                height = [(NSNumber *)CFDictionaryGetValue(properties, kCGImagePropertyPixelHeight) unsignedIntegerValue];
+                
+                NSSize size = [settings scaledSizeForImageOfSize:NSMakeSize(width, height)];
+                width = size.width;
+                height = size.height;
+                
+                CFRelease(properties);
+            }
+            
         
-        [image release];
+            CFRelease(source);
+        }
     }
     
     if (options & SVImagePushSizeToCurrentElement)
