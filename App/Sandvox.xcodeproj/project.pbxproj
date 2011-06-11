@@ -7347,16 +7347,16 @@
 		};
 		3C5A9A840D11E4DF0054058C /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### UPDATE IMEDIA_REVISION FOR RELEASE BUILDS\n###\n\nIMEDIA_PATH=${SRCROOT}/../../imedia\n\n# for some reason using which to find svn works on Leopard, not on Tiger\n# SVN_PATH=`which svn`\n\n# so we do this instead and hope for the best\nif [ -e /usr/local/bin/svn ]\nthen\n\tSVN_PATH=/usr/local/bin/svn\nelif [ -e /usr/bin/svn ]\nthen\n\tSVN_PATH=/usr/bin/svn\nelif [ -e /opt/local/bin/svn ]\nthen\n\tSVN_PATH=/opt/local/bin/svn\nelse\n\techo \"ERROR - CANT FIND SVN\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"syncing iMedia with revision ${IMEDIA_REVISION}\"\ncd ${IMEDIA_PATH}\n${SVN_PATH} update -r${IMEDIA_REVISION}\necho \"finished syncing iMedia\"\n\npopd\n\nexit 0\n";
+			shellScript = "#!/bin/bash\n\n###\n### UPDATE IMEDIA_REVISION FOR RELEASE BUILDS\n###\n\nIMEDIA_PATH=${SRCROOT}/../../imedia\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\ncd ${IMEDIA_PATH}\n${GIT_PATH} checkout ${IMEDIA_REVISION}\nif (($? != 0))\nthen\n\techo \"fetching iMedia from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${IMEDIA_REVISION}\n\techo \"... finished fetching iMedia\"\nfi\n\npopd\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
 		3C88838C0BFCB49C00921FA4 /* Build Disk Image */ = {
