@@ -155,6 +155,9 @@
 
 - (BOOL)isEqualToMedia:(id <SVMedia>)otherMedia;
 {
+    if (otherMedia == self) return YES;
+    
+    
     BOOL result = ([[self mediaURL] ks_isEqualToURL:[otherMedia mediaURL]]);
     if (!result)
     {
