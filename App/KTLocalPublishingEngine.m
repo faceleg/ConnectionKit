@@ -334,23 +334,30 @@
     {
         if ([request width] || [request height])
         {
-            // Figure out content hash first
-            if (!sourceDigest) sourceDigest = [[self mediaDigestStorage] digestForRequest:[request sourceRequest]];
-            
-            
-            if (!sourceDigest)
+            if (sourceDigest)
             {
-                NSOperation *op = [[NSInvocationOperation alloc]
-                                   initWithTarget:self
-                                   selector:@selector(threaded_publishMediaWithRequestByHashingSource:)
-                                   object:request];
-                [self addOperation:op queue:[self diskOperationQueue]];
-                [op release];
-                return nil;
+                // Store in da cache
+                [[self mediaDigestStorage] addRequest:[request sourceRequest] cachedDigest:sourceDigest];
+            }
+            else
+            {
+                // Figure out content hash first
+                sourceDigest = [[self mediaDigestStorage] digestForRequest:[request sourceRequest]];
+            
+                if (!sourceDigest)
+                {
+                    NSOperation *op = [[NSInvocationOperation alloc]
+                                       initWithTarget:self
+                                       selector:@selector(threaded_publishMediaWithRequestByHashingSource:)
+                                       object:request];
+                    [self addOperation:op queue:[self diskOperationQueue]];
+                    [op release];
+                    return nil;
+                }
             }
             
             
-            if ([sourceDigest length])  // empty data signals failure to hash on backgroun thread
+            if ([sourceDigest length])  // empty data signals failure to hash on background thread
             {
                 NSData *hash = [request contentHashWithMediaDigest:sourceDigest];
                 if (hash)
@@ -430,7 +437,8 @@
     
     // Signal failure with empty data
     if (!sourceDigest) sourceDigest = [NSData data];
-    [[self ks_proxyOnThread:nil] publishMediaWithRequest:request cachedSourceDigest:sourceDigest];
+    [[self ks_proxyOnThread:nil]
+     publishMediaWithRequest:request cachedSourceDigest:sourceDigest];
 }
 
 #pragma mark Status
