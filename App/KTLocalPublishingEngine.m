@@ -334,24 +334,33 @@
     {
         if ([request width] || [request height])
         {
+            SVMediaRequest *sourceRequest = [request sourceRequest];
+            
             if (sourceDigest)
             {
                 // Store in da cache
-                [[self mediaDigestStorage] addRequest:[request sourceRequest] cachedDigest:sourceDigest];
+                [[self mediaDigestStorage] addRequest:sourceRequest cachedDigest:sourceDigest];
             }
             else
             {
                 // Figure out content hash first
-                sourceDigest = [[self mediaDigestStorage] digestForRequest:[request sourceRequest]];
+                sourceDigest = [[self mediaDigestStorage] digestForRequest:sourceRequest];
             
                 if (!sourceDigest)
                 {
-                    NSOperation *op = [[NSInvocationOperation alloc]
-                                       initWithTarget:self
-                                       selector:@selector(threaded_publishMediaWithRequestByHashingSource:)
-                                       object:request];
-                    [self addOperation:op queue:[self diskOperationQueue]];
-                    [op release];
+                    // Hashing could already be in progress
+                    if (![[self mediaDigestStorage] containsRequest:sourceRequest])
+                    {
+                        [[self mediaDigestStorage] addRequest:sourceRequest cachedDigest:nil];
+                        
+                        NSOperation *op = [[NSInvocationOperation alloc]
+                                           initWithTarget:self
+                                           selector:@selector(threaded_publishMediaWithRequestByHashingSource:)
+                                           object:request];
+                        [self addOperation:op queue:[self diskOperationQueue]];
+                        [op release];
+                    }
+                    
                     return nil;
                 }
             }
