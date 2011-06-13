@@ -678,7 +678,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         
         if (response)
         {
-            // It's cached! Just need to calculate to hash which is pretty speedy
+            // It's cached! Just need to calculate the hash which is pretty speedy
             NSData *data = [response data];
             OBASSERT(data);
             
@@ -745,10 +745,18 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             
             if (data)
             {
+                NSData *hash = nil;
+                NSData *sourceDigest = [[self mediaDigestStorage] digestForRequest:[request sourceRequest]];
+                
+                if (sourceDigest)
+                {
+                    hash = [request contentHashWithMediaDigest:sourceDigest];
+                }
+                
                 [self publishData:data
                            toPath:result
                  cachedSHA1Digest:digest
-                      contentHash:nil
+                      contentHash:hash
                      mediaRequest:request
                            object:nil];
             }
