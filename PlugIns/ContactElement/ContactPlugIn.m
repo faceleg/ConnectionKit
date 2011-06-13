@@ -40,7 +40,6 @@
 
 #import "ContactElementField.h"
 #import "NSData+Karelia.h"
-//#include <zlib.h>
 
 
 // should be localized in user's language
