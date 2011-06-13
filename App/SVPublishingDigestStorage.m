@@ -109,6 +109,11 @@
     return request;
 }
 
+- (NSData *)dataForMediaRequest:(SVMediaRequest *)request;
+{
+    return [_scaledImageCache objectForKey:request];
+}
+
 - (void)removeMediaRequest:(SVMediaRequest *)request;
 {
     [_publishedMediaDigests removeObjectForKey:request];

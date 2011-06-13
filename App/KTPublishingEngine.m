@@ -685,15 +685,16 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     else
     {
         // Already been cached?
-        NSURL *URL = [NSURL sandvoxImageURLWithMediaRequest:request];
-        NSCachedURLResponse *response = [[NSURLCache sharedURLCache] cachedResponseForRequest:[NSURLRequest requestWithURL:URL]];
-        
-        if (response)
+        NSData *data = [[self mediaDigestStorage] dataForMediaRequest:request];
+        if (!data)
         {
-            // It's cached! Just need to calculate the hash which is pretty speedy
-            NSData *data = [response data];
-            OBASSERT(data);
-            
+            NSURL *URL = [NSURL sandvoxImageURLWithMediaRequest:request];
+            data = [[[NSURLCache sharedURLCache] cachedResponseForRequest:[NSURLRequest requestWithURL:URL]] data];
+        }
+        
+        if (data)
+        {
+            // It's cached! Just need to calculate the hash which is pretty speedy            
             return [self publishMediaWithRequest:request cachedData:data SHA1Digest:[data SHA1Digest]];
         }
         else

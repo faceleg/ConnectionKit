@@ -38,6 +38,8 @@
                     cachedData:(NSData *)data
                   cachedDigest:(NSData *)digest;
 
+- (NSData *)dataForMediaRequest:(SVMediaRequest *)request;
+
 - (void)removeMediaRequest:(SVMediaRequest *)request;
 
 
