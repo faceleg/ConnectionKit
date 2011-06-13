@@ -35,5 +35,7 @@
 // Throws an exception if there's a digest already stored for the request, and it doesn't match
 - (SVMediaRequest *)addRequest:(SVMediaRequest *)request cachedDigest:(NSData *)digest;
 
+- (void)removeMediaRequest:(SVMediaRequest *)request;
+
 
 @end

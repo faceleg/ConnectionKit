@@ -98,4 +98,9 @@
     return request;
 }
 
+- (void)removeMediaRequest:(SVMediaRequest *)request;
+{
+    [_publishedMediaDigests removeObjectForKey:request];
+}
+
 @end

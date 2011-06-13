@@ -328,30 +328,54 @@
 
 #pragma mark Media
 
-- (NSString *)publishMediaWithRequest:(SVMediaRequest *)request cachedSourceDigest:(NSData *)sourceDigest;
+- (void)didHash:(NSData *)sourceDigest sourceOfMediaRequest:(SVMediaRequest *)request;
+{
+    // Store digest of source
+    SVPublishingDigestStorage *digestStorage = [self mediaDigestStorage];
+    
+    if ([sourceDigest length])  
+    {
+        [digestStorage addRequest:[request sourceRequest] cachedDigest:sourceDigest];
+        
+        
+        // Request is probably in the store only as a placeholder while we digest it
+        NSData *digest = [digestStorage digestForRequest:request];
+        OBASSERT(!digest);
+        
+        [self publishMediaWithRequest:request];
+    }
+    else
+    {
+        // Empty data signals failure to hash on background thread, so we have to jump straight to attempting a publish
+        // Remove from the store to fool super
+        [digestStorage removeMediaRequest:request];
+        [super publishMediaWithRequest:request];
+    }
+}
+
+- (NSString *)publishMediaWithRequest:(SVMediaRequest *)request;
 {
     if ([self onlyPublishChanges] && [self status] <= KTPublishingEngineStatusGatheringMedia)
     {
         if ([request width] || [request height])
         {
-            SVMediaRequest *sourceRequest = [request sourceRequest];
+            SVPublishingDigestStorage *digestStorage = [self mediaDigestStorage];
+            NSData *digest = [digestStorage digestForRequest:request];
             
-            if (sourceDigest)
-            {
-                // Store in da cache
-                [[self mediaDigestStorage] addRequest:sourceRequest cachedDigest:sourceDigest];
-            }
-            else
+            if (!digest)
             {
                 // Figure out content hash first
-                sourceDigest = [[self mediaDigestStorage] digestForRequest:sourceRequest];
-            
+                SVMediaRequest *sourceRequest = [request sourceRequest];
+                NSData *sourceDigest = [digestStorage digestForRequest:sourceRequest];
+                
                 if (!sourceDigest)
                 {
                     // Hashing could already be in progress
-                    if (![[self mediaDigestStorage] containsRequest:sourceRequest])
+                    // This does mean same source media can get hashed multiple times though
+                    if (![digestStorage containsRequest:request])
                     {
-                        [[self mediaDigestStorage] addRequest:sourceRequest cachedDigest:nil];
+                        [digestStorage addRequest:request cachedDigest:nil];
+                        [digestStorage addRequest:sourceRequest cachedDigest:nil];
                         
                         NSOperation *op = [[NSInvocationOperation alloc]
                                            initWithTarget:self
@@ -363,11 +387,8 @@
                     
                     return nil;
                 }
-            }
-            
-            
-            if ([sourceDigest length])  // empty data signals failure to hash on background thread
-            {
+                
+                
                 NSData *hash = [request contentHashWithMediaDigest:sourceDigest];
                 if (hash)
                 {
@@ -391,16 +412,14 @@
                         return result;
                     }
                 }
+                
+                // Remove from the store to fool super
+                [digestStorage removeMediaRequest:request];
             }
         }
     }
     
     return [super publishMediaWithRequest:request];
-}
-
-- (NSString *)publishMediaWithRequest:(SVMediaRequest *)request;
-{
-    return [self publishMediaWithRequest:request cachedSourceDigest:nil];
 }
 
 - (void)threaded_publishMediaData:(NSData *)data
@@ -447,7 +466,7 @@
     // Signal failure with empty data
     if (!sourceDigest) sourceDigest = [NSData data];
     [[self ks_proxyOnThread:nil]
-     publishMediaWithRequest:request cachedSourceDigest:sourceDigest];
+     didHash:sourceDigest sourceOfMediaRequest:request];
 }
 
 #pragma mark Status
