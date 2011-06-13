@@ -152,11 +152,14 @@
 		  flashSourceURL:(NSURL *)flashSourceURL;
 {
 	NSString *flashSourcePath  = flashSourceURL ? [context relativeStringFromURL:flashSourceURL] : @"";
-	
-	[context pushAttribute:@"classid" value:@"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"];	// Proper value?
-	[context pushAttribute:@"codebase" value:@"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"];
+
+	// Don't use these; Firefox gets upset
+//	[context pushAttribute:@"classid" value:@"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"];	// Proper value?
+//	[context pushAttribute:@"codebase" value:@"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"];
 	// align?  It was in Sandvox 1.x.  Doesn't seem to be officially supported though.
 	
+	[context pushAttribute:@"data" value:flashSourcePath];
+
 	[context buildAttributesForResizableElement:@"object" object:self DOMControllerClass:nil sizeDelta:NSZeroSize options:0];
 
 	// ID on <object> apparently required for IE8
