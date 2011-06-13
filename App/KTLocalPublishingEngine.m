@@ -333,7 +333,7 @@
     // Store digest of source
     SVPublishingDigestStorage *digestStorage = [self mediaDigestStorage];
     
-    if ([sourceDigest length])  
+    if (sourceDigest)
     {
         [digestStorage addRequest:[request sourceRequest] cachedDigest:sourceDigest];
         
@@ -346,7 +346,7 @@
     }
     else
     {
-        // Empty data signals failure to hash on background thread, so we have to jump straight to attempting a publish
+        // Nil data signals failure to hash on background thread, so we have to jump straight to attempting a publish
         // Remove from the store to fool super
         [digestStorage removeMediaRequest:request];
         [super publishMediaWithRequest:request];
@@ -463,8 +463,6 @@
 {
     NSData *sourceDigest = [[request media] SHA1Digest];
     
-    // Signal failure with empty data
-    if (!sourceDigest) sourceDigest = [NSData data];
     [[self ks_proxyOnThread:nil]
      didHash:sourceDigest sourceOfMediaRequest:request];
 }
