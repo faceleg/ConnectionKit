@@ -16,7 +16,6 @@
     
   @private
     NSMutableDictionary *_publishingRecordsBySHA1Digest;
-    NSMutableDictionary *_publishingRecordsByContentHash;
 }
 
 - (id)initWithSite:(KTSite *)aDocumentInfo onlyPublishChanges:(BOOL)publishChanges;

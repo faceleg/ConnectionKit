@@ -133,6 +133,17 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         
         _pagesByID = [[NSDictionary alloc] initWithObjects:pages
                                                    forKeys:[pages valueForKey:@"uniqueID"]];
+        
+        
+        // Content Hash cache
+        NSArray *records = [[site managedObjectContext]
+                            fetchAllObjectsForEntityForName:@"FilePublishingRecord"
+                            predicate:[NSPredicate predicateWithFormat:@"contentHash != nil"]
+                            error:NULL];
+        
+        _publishingRecordsByContentHash = [[NSMutableDictionary alloc]
+                                           initWithObjects:records
+                                           forKeys:[records valueForKey:@"contentHash"]];
 	}
 	
 	return self;
@@ -158,7 +169,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [_nextOp release];
     
     [_pagesByID release];
-	
+	[_publishingRecordsByContentHash release];
+    
 	[super dealloc];
 }
 
@@ -706,11 +718,26 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     OBPRECONDITION(digest);
     
     
-    request = [[self mediaDigestStorage] addRequest:request cachedData:nil cachedDigest:digest];
+    SVPublishingDigestStorage *digestStore = [self mediaDigestStorage];
+    request = [digestStore addRequest:request cachedData:nil cachedDigest:digest];
     
     
     // Is there already an existing file on the server? If so, use that
     NSString *result = [self pathForFileWithSHA1Digest:digest];
+    if (!result)
+    {
+        NSData *sourceDigest = [digestStore digestForRequest:[request sourceRequest]]; 
+        if (sourceDigest)
+        {
+            NSData *hash = [request contentHashWithMediaDigest:sourceDigest];
+            if (hash)
+            {
+                result = [[self publishingRecordForContentHash:hash] path];
+            }
+        }
+    }
+    
+    
     if (!result)
     {
         result = [[self baseRemotePath] stringByAppendingPathComponent:[request preferredUploadPath]];
@@ -731,7 +758,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             if (![self shouldPublishToPath:result])
             {
                 // but cache the data
-                [[self mediaDigestStorage] addRequest:request cachedData:data cachedDigest:digest];
+                [digestStore addRequest:request cachedData:data cachedDigest:digest];
                 result = nil;
             }
         }
@@ -749,7 +776,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             if (data)
             {
                 NSData *hash = nil;
-                NSData *sourceDigest = [[self mediaDigestStorage] digestForRequest:[request sourceRequest]];
+                NSData *sourceDigest = [digestStore digestForRequest:[request sourceRequest]];
                 
                 if (sourceDigest)
                 {
@@ -994,6 +1021,20 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     }
     
     return result;
+}
+
+- (SVPublishingRecord *)publishingRecordForContentHash:(NSData *)digest;
+{
+    return [_publishingRecordsByContentHash objectForKey:digest];
+}
+
+- (void)setContentHash:(NSData *)hash forPublishingRecord:(SVPublishingRecord *)record;
+{
+    NSData *oldHash = [record contentHash];
+    if (oldHash) [_publishingRecordsByContentHash removeObjectForKey:oldHash];
+    
+    [record setContentHash:hash];
+    if (hash) [_publishingRecordsByContentHash setObject:record forKey:hash];
 }
 
 #pragma mark Util

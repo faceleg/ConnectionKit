@@ -36,7 +36,6 @@
 
 @interface KTLocalPublishingEngine ()
 - (void)pingURL:(NSURL *)URL;
-- (void)setContentHash:(NSData *)hash forPublishingRecord:(SVPublishingRecord *)record;
 @end
 
 
@@ -80,15 +79,6 @@
         _publishingRecordsBySHA1Digest = [[NSMutableDictionary alloc]
                                           initWithObjects:records
                                           forKeys:[records valueForKey:@"SHA1Digest"]];
-        
-        records = [[site managedObjectContext]
-                   fetchAllObjectsForEntityForName:@"FilePublishingRecord"
-                   predicate:[NSPredicate predicateWithFormat:@"contentHash != nil"]
-                   error:NULL];
-        
-        _publishingRecordsByContentHash = [[NSMutableDictionary alloc]
-                                           initWithObjects:records
-                                           forKeys:[records valueForKey:@"contentHash"]];
 	}
 	
 	return self;
@@ -99,7 +89,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     [_publishingRecordsBySHA1Digest release];
-    [_publishingRecordsByContentHash release];
     
     [super dealloc];
 }
@@ -107,11 +96,6 @@
 #pragma mark Accessors
 
 - (BOOL)onlyPublishChanges { return _onlyPublishChanges; }
-
-- (SVPublishingRecord *)publishingRecordForContentHash:(NSData *)digest;
-{
-    return [_publishingRecordsByContentHash objectForKey:digest];
-}
 
 #pragma mark Connection
 
@@ -555,15 +539,6 @@
     {
         [object setDatePublished:[NSDate date]];
     }
-}
-
-- (void)setContentHash:(NSData *)hash forPublishingRecord:(SVPublishingRecord *)record;
-{
-    NSData *oldHash = [record contentHash];
-    if (oldHash) [_publishingRecordsBySHA1Digest removeObjectForKey:oldHash];
-    
-    [record setContentHash:hash];
-    if (hash) [_publishingRecordsByContentHash setObject:record forKey:hash];
 }
 
 // FIXME: This has a lot in common with super's implementation
