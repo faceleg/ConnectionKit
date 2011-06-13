@@ -18,6 +18,7 @@
     _paths = [[NSMutableSet alloc] init];
     _pathsByDigest = [[NSMutableDictionary alloc] init];
     _publishedMediaDigests = [[NSMapTable mapTableWithStrongToStrongObjects] retain];
+    _scaledImageCache = [[NSMutableDictionary alloc] init];
     
     return self;
 }
@@ -27,6 +28,7 @@
     [_paths release];
     [_pathsByDigest release];
     [_publishedMediaDigests release];
+    [_scaledImageCache release];
     
     [super dealloc];
 }
@@ -60,7 +62,9 @@
     return ([_publishedMediaDigests objectForKey:request] != nil);
 }
 
-- (SVMediaRequest *)addRequest:(SVMediaRequest *)request cachedDigest:(NSData *)digest;
+- (SVMediaRequest *)addRequest:(SVMediaRequest *)request
+                    cachedData:(NSData *)data
+                  cachedDigest:(NSData *)digest;
 {
     OBPRECONDITION(request);
     
@@ -94,6 +98,13 @@
         if (!digest) digest = (id)[NSNull null];    // placeholder while digest is calculated
         [_publishedMediaDigests setObject:digest forKey:request];
     }
+    
+    
+    if (data)
+    {
+        [_scaledImageCache setObject:data forKey:request];
+    }
+    
     
     return request;
 }

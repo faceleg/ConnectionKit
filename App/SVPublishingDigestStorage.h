@@ -15,6 +15,7 @@
     NSMutableSet        *_paths;    // all the paths which are in use by the site
     NSMutableDictionary *_pathsByDigest;
     NSMapTable          *_publishedMediaDigests;
+    NSMutableDictionary *_scaledImageCache;
 }
 
 #pragma mark General
@@ -33,7 +34,9 @@
 
 // Returns the canonical request. E.g. if media didn't need to be scaled the returned requested will have the scaling suffix stripped
 // Throws an exception if there's a digest already stored for the request, and it doesn't match
-- (SVMediaRequest *)addRequest:(SVMediaRequest *)request cachedDigest:(NSData *)digest;
+- (SVMediaRequest *)addRequest:(SVMediaRequest *)request
+                    cachedData:(NSData *)data
+                  cachedDigest:(NSData *)digest;
 
 - (void)removeMediaRequest:(SVMediaRequest *)request;
 

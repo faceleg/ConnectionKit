@@ -335,7 +335,7 @@
     
     if (sourceDigest)
     {
-        [digestStorage addRequest:[request sourceRequest] cachedDigest:sourceDigest];
+        [digestStorage addRequest:[request sourceRequest] cachedData:nil cachedDigest:sourceDigest];
         
         
         // Request is probably in the store only as a placeholder while we digest it
@@ -374,8 +374,8 @@
                     // This does mean same source media can get hashed multiple times though
                     if (![digestStorage containsRequest:request])
                     {
-                        [digestStorage addRequest:request cachedDigest:nil];
-                        [digestStorage addRequest:sourceRequest cachedDigest:nil];
+                        [digestStorage addRequest:request cachedData:nil cachedDigest:nil];
+                        [digestStorage addRequest:sourceRequest cachedData:nil cachedDigest:nil];
                         
                         NSOperation *op = [[NSInvocationOperation alloc]
                                            initWithTarget:self
@@ -401,7 +401,7 @@
                         OBASSERT(result);
                         
                         NSData *digest = [record SHA1Digest];
-                        [[self mediaDigestStorage] addRequest:request cachedDigest:digest];
+                        [[self mediaDigestStorage] addRequest:request cachedData:nil cachedDigest:digest];
                         
                         [self didEnqueueUpload:nil
                                         toPath:result

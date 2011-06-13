@@ -638,7 +638,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     OBPRECONDITION(request);
     
     
-    [_digestStorage addRequest:request cachedDigest:cachedDigest];
+    [_digestStorage addRequest:request cachedData:nil cachedDigest:cachedDigest];
     
     
     // Do the calculation on a background thread. Which one depends on the task needed
@@ -706,18 +706,18 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     OBPRECONDITION(digest);
     
     
-    request = [_digestStorage addRequest:request cachedDigest:digest];
+    request = [[self mediaDigestStorage] addRequest:request cachedData:nil cachedDigest:digest];
     
     
     // Is there already an existing file on the server? If so, use that
     NSString *result = [self pathForFileWithSHA1Digest:digest];
     if (!result)
     {
+        result = [[self baseRemotePath] stringByAppendingPathComponent:[request preferredUploadPath]];
+        
         if ([self status] > KTPublishingEngineStatusGatheringMedia)
         {
             //  The media rep does not already exist on the server, so need to assign it a new path
-            result = [[self baseRemotePath] stringByAppendingPathComponent:[request preferredUploadPath]];
-            
             while (![self shouldPublishToPath:result])
             {
                 result = [result ks_stringByIncrementingPath];
@@ -728,9 +728,12 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         else
         {
             // This is new media. Is its preferred filename definitely available? If so, can go ahead and publish immediately. #111549. Otherwise, wait until all media is known to figure out the best available path
-            result = [[self baseRemotePath] stringByAppendingPathComponent:[request preferredUploadPath]];
-            
-            if (![self shouldPublishToPath:result]) result = nil;
+            if (![self shouldPublishToPath:result])
+            {
+                // but cache the data
+                [[self mediaDigestStorage] addRequest:request cachedData:data cachedDigest:digest];
+                result = nil;
+            }
         }
     }
     
