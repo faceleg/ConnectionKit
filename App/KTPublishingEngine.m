@@ -282,6 +282,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 {
     [super cancel]; // so -isCancelled returns YES
     
+    // Cancel any in-progress operations
+    [[[self startNextPhaseOperation] dependencies] makeObjectsPerformSelector:_cmd];
+    
     // Mark self as finished
     if ([self status] > KTPublishingEngineStatusNotStarted && [self status] < KTPublishingEngineStatusFinished)
     {
