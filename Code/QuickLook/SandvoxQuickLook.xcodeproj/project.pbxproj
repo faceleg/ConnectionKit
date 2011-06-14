@@ -323,7 +323,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = /Library/QuickLook;
-				OTHER_LDFLAGS = "-lcrypto";
 				PRODUCT_NAME = SandvoxQuickLook;
 				VALID_ARCHS = "i386 ppc";
 				WRAPPER_EXTENSION = qlgenerator;
@@ -340,7 +339,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = /Library/QuickLook;
-				OTHER_LDFLAGS = "-lcrypto";
 				PRODUCT_NAME = SandvoxQuickLook;
 				VALID_ARCHS = "i386 ppc";
 				WRAPPER_EXTENSION = qlgenerator;

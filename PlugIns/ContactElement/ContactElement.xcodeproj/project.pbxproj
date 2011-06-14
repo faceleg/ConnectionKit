@@ -367,8 +367,6 @@
 				OTHER_LDFLAGS = (
 					"-seg1addr",
 					0x500e0000,
-					"-lssl",
-					"-lcrypto",
 					"-lz",
 				);
 				PRODUCT_NAME = Contact;
@@ -384,8 +382,6 @@
 				OTHER_LDFLAGS = (
 					"-seg1addr",
 					0x500e0000,
-					"-lssl",
-					"-lcrypto",
 					"-lz",
 				);
 				PRODUCT_NAME = Contact;
