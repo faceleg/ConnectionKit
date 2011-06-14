@@ -6452,6 +6452,7 @@
 				CEC65E5D0E1AFD170065C3D0 /* Copy Sparkle - Strip Localizations */,
 				3CEC87370BF8DB4500CC732B /* Headers */,
 				8D15AC2B0486D014006FF6A4 /* Resources */,
+				3C350E2313A7BD6900D0B454 /* Verify CFBundleVersion */,
 			);
 			buildRules = (
 			);
@@ -7265,6 +7266,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "#!/bin/bash\n\n###\n### PULL KSSelectionBorder FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../KSSelectionBorder\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\ncd ${REPOSITORY_PATH}\n${GIT_PATH} checkout ${KSSELECTIONBORDER_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSSelectionBorder from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSSELECTIONBORDER_COMMIT}\n\techo \"... finished fetching KSSelectionBorder\"\nfi\n\npopd\n\nexit 0\n\n";
+			showEnvVarsInLog = 0;
+		};
+		3C350E2313A7BD6900D0B454 /* Verify CFBundleVersion */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Verify CFBundleVersion";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "#!/bin/bash\n\n###\n### VERIFY VALID CFBundleVersion\n###\n\nSANDVOX_PLIST_PATH=${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\nSANDVOX_BUILD_NUMBER=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" ${SANDVOX_PLIST_PATH})\n\nif [ \"${SANDVOX_BUILD_NUMBER:-0}\" -ge 1000 ]\nthen\n\techo \"Info.plist Build Number Verified\"\n\texit 0\nfi\n\necho \"No CFBundleVersion found in Info.plist. Cannot continue.\"\n\nexit 1\n";
 			showEnvVarsInLog = 0;
 		};
 		3C3E75F90F1C5F42002E3A9A /* ShellScript */ = {
