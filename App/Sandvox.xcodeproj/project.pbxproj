@@ -1325,7 +1325,6 @@
 		CEE77B8012528930001F74FC /* SVAudioVisualPlugIn.h in Headers */ = {isa = PBXBuildFile; fileRef = CEE77B7E12528930001F74FC /* SVAudioVisualPlugIn.h */; };
 		CEE77B8112528930001F74FC /* SVAudioVisualPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE77B7F12528930001F74FC /* SVAudioVisualPlugIn.m */; };
 		CEED943012691AD1004ACB0E /* sound_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = CEED942F12691AD1004ACB0E /* sound_placeholder.png */; };
-		CEEE562B0DAD47AD00B7F6A2 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CEEE562A0DAD47AD00B7F6A2 /* libcurl.dylib */; };
 		CEF2889F11CC2D7300122D03 /* JSTalk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEF2889E11CC2D7300122D03 /* JSTalk.framework */; };
 		CEF288EE11CC2DA100122D03 /* JSTalk.framework in Copy Frameworks ALWAYS */ = {isa = PBXBuildFile; fileRef = CEF2889E11CC2D7300122D03 /* JSTalk.framework */; };
 		CEF9D0C30D862C4A00BD9895 /* KTImageWebKitViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF9D0C20D862C4A00BD9895 /* KTImageWebKitViewFactory.m */; };
@@ -3286,7 +3285,6 @@
 		CEE77B7E12528930001F74FC /* SVAudioVisualPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVAudioVisualPlugIn.h; sourceTree = "<group>"; };
 		CEE77B7F12528930001F74FC /* SVAudioVisualPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVAudioVisualPlugIn.m; sourceTree = "<group>"; };
 		CEED942F12691AD1004ACB0E /* sound_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sound_placeholder.png; sourceTree = "<group>"; };
-		CEEE562A0DAD47AD00B7F6A2 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = /usr/lib/libcurl.dylib; sourceTree = "<absolute>"; };
 		CEF12E770D908EB400FCAC70 /* YouTubeElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = YouTubeElement.xcodeproj; path = ../PlugIns/YouTubeElement/YouTubeElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		CEF2889E11CC2D7300122D03 /* JSTalk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSTalk.framework; path = ../../Shared/ThirdParty/JSTalk/JSTalk.framework; sourceTree = "<group>"; };
 		CEF9D0AF0D862B5100BD9895 /* ImageWebKitPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageWebKitPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3365,7 +3363,6 @@
 				3C3F54540D6258AA004885E7 /* Sparkle.framework in Frameworks */,
 				3C3F547D0D625919004885E7 /* Connection.framework in Frameworks */,
 				3C3F54A20D625983004885E7 /* AmazonSupport.framework in Frameworks */,
-				CEEE562B0DAD47AD00B7F6A2 /* libcurl.dylib in Frameworks */,
 				3C0B1D6910479ABB002EE098 /* BWToolkitFramework.framework in Frameworks */,
 				CEB721BC108FCEA500511E74 /* QuickLook.framework in Frameworks */,
 				CEBEB32D10AA7B07006E7D8A /* iMedia.framework in Frameworks */,
@@ -4989,7 +4986,6 @@
 			isa = PBXGroup;
 			children = (
 				3C5C0DB10BF820EA003594F8 /* libbz2.dylib */,
-				CEEE562A0DAD47AD00B7F6A2 /* libcurl.dylib */,
 				3C72D4F5094A24390061A876 /* libz.dylib */,
 			);
 			name = Libraries;
