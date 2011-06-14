@@ -735,7 +735,6 @@
 		3C11079512AF122800FB34E8 /* SVGoogleSitemapPinger.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C11079312AF122800FB34E8 /* SVGoogleSitemapPinger.h */; };
 		3C11079612AF122800FB34E8 /* SVGoogleSitemapPinger.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C11079412AF122800FB34E8 /* SVGoogleSitemapPinger.m */; };
 		3C1F511211D5757F0036B375 /* xibLocalizationPostprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C1F511111D5757F0036B375 /* xibLocalizationPostprocessor.m */; };
-		3C1F511411D5758F0036B375 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C1F511311D5758F0036B375 /* Cocoa.framework */; };
 		3C1FA3940D6C994C0008AAD9 /* NSPersistentStoreCoordinator+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A714F0BF7ADE100776464 /* NSPersistentStoreCoordinator+KTExtensions.h */; };
 		3C202D4307DFC0F000DE4994 /* KTDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D3407DFC0F000DE4994 /* KTDocument.m */; };
 		3C202DAC07DFC4DD00DE4994 /* KTBackgroundTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202DA707DFC4DD00DE4994 /* KTBackgroundTabView.m */; };
@@ -2497,7 +2496,6 @@
 		3C1929170D6F712A008B9861 /* SandvoxInvalidLicenses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SandvoxInvalidLicenses.h; path = ../../Shared/Licensing/SandvoxInvalidLicenses.h; sourceTree = SOURCE_ROOT; };
 		3C1F510A11D575510036B375 /* xibLocalizationPostprocessor */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = xibLocalizationPostprocessor; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C1F511111D5757F0036B375 /* xibLocalizationPostprocessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = xibLocalizationPostprocessor.m; path = ../../Shared/ThirdParty/GoldenBraeburn/DeliciousLocalization/xibLocalizationPostprocessor.m; sourceTree = SOURCE_ROOT; };
-		3C1F511311D5758F0036B375 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		3C202D1407DFC06100DE4994 /* KT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KT.h; sourceTree = "<group>"; };
 		3C202D1807DFC0AA00DE4994 /* SVApplicationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVApplicationController.h; sourceTree = "<group>"; };
 		3C202D1907DFC0AA00DE4994 /* SVApplicationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVApplicationController.m; sourceTree = "<group>"; };
@@ -3339,7 +3337,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3C1F511411D5758F0036B375 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4432,7 +4429,6 @@
 				CEC11A2E0D78BE0100513E70 /* Shared */,
 				3C202DF507E00CCC00DE4994 /* Product Dependencies */,
 				19C28FB0FE9D524F11CA2CBB /* Products */,
-				3C1F511311D5758F0036B375 /* Cocoa.framework */,
 			);
 			name = Marvel;
 			sourceTree = "<group>";
