@@ -369,7 +369,7 @@
 	{
 		// Check and see if it's in the first few
 		DJW((@"itemIndex:%d   %@", itemIndex, [[self URL] path]));
-		if (itemIndex < kMaxNumberOfFreePublishedPages)
+		if (itemIndex <= kMaxNumberOfFreePublishedPages)
 		{
 			canBePublished = YES;
 		}
