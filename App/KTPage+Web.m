@@ -263,6 +263,7 @@
 													  options:SVImageScaleAspectFit];
 		if (URL)
 		{
+			[context writeComment:@"Don't panic!  This line will likely not validate by W3C. That's expected."];
 			NSString *href = [URL absoluteString];	// leave it an absolute URL for Facebook's benefit
 			
 			NSString *pathExtension = [[URL path] pathExtension];
@@ -274,6 +275,28 @@
 			[context pushAttribute:@"type" value:mimeType];
 			[context startElement:@"link"];
 			[context endElement];
+		}
+		
+		// On the ROOT page only, I think -- put up apple-touch-icon.png
+		if ([self isRoot])
+		{
+			SVMedia *appleTouchIcon = [[self customThumbnail] media];		// Not quite right - what about non-custom thumbnail?  We don't have an API that returns media though.
+			if (appleTouchIcon)
+			{
+				// MAYBE DO SOMETHING LIKE THIS?  WILL THIS SCALE CORRECTLY? WHY IS PREFERRED FILENAME NOT HONORED?
+				NSURL *URL = [context addImageMedia:appleTouchIcon
+											  width:[NSNumber numberWithInt:114] height:[NSNumber numberWithInt:114]					// Recommended for Retina display
+											   type:(NSString *)kUTTypePNG
+								  preferredFilename:@"../apple-touch-icon.png"   // dirty HACK to get it at top-level
+									  scalingSuffix:nil];
+				if (URL)
+				{
+					[context pushAttribute:@"rel" value:@"apple-touch-icon"];
+					[context pushAttribute:@"href" value:[context relativeStringFromURL:URL]];
+					[context startElement:@"link"];
+					[context endElement];
+				}
+			}
 		}
 	}
 }
