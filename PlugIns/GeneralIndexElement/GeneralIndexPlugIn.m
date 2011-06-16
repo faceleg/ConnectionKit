@@ -415,10 +415,11 @@
     id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
     
     // Do a dry-run to see if there's actually a thumbnail
-    if ([context URLForImageRepresentationOfPage:iteratedPage
-                                           width:64
-                                          height:64
-                                         options:(SVImageScaleAspectFit | SVPageImageRepresentationLink)])
+	NSURL *thumbnailImage = [context URLForImageRepresentationOfPage:iteratedPage
+															   width:64
+															  height:64
+															 options:(SVImageScaleAspectFit | SVPageImageRepresentationLink)];
+    if (thumbnailImage)
     {
         [context startElement:@"div" className:@"article-thumbnail"];
         
@@ -545,6 +546,7 @@
 	{
         self.hyperlinkTitles = 
 		[collectionIndexBundleIdentifier isEqualToString:@"sandvox.ListingIndex"]		// listing index automatically gets hyperlinks
+			|| [collectionIndexBundleIdentifier isEqualToString:@"sandvox.DownloadIndex"]
 			|| [[propertiesByRemovingNSNull objectForKey:@"collectionHyperlinkPageTitles"] boolValue];
 	}
 	else
