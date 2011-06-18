@@ -188,12 +188,6 @@
         }
         else if ([digest isEqualToData:[record SHA1Digest]])
         {
-            // Equal data means no need to publish, but still want to mark change in content hash
-            if (!KSISEQUAL(hash, [record contentHash])) 
-            {
-                [self setContentHash:hash forPublishingRecord:record];
-            }
-            
             // Pretend we uploaded so the engine still tracks path/digest etc.
             [self didEnqueueUpload:nil toPath:remotePath cachedSHA1Digest:digest contentHash:hash object:object];
             
