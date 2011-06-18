@@ -59,7 +59,8 @@
     
     if (!result)
     {
-        result = [[_hashingOps objectForKey:request] result];
+        NSInvocationOperation *op = [self hashingOperationForMediaRequest:request];
+        if (![op isCancelled]) result = [op result];
     }
     
     return result;
