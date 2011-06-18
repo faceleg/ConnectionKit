@@ -430,7 +430,7 @@ NSUInteger kTwoThirdsTruncation;
     if ( nil != [self customSummaryHTML] )
     {
         [super writeContent:context truncation:maxItemLength plugIn:plugInToExclude options:options];
-		result = YES;		// A custom summary means we want to make an obvious link to more
+		result = NO;		// Used to be yes, but why would we want to force this?
     }
     else
 	{
