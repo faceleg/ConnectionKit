@@ -87,7 +87,8 @@
 	else
 	{
 		NSInvocation *nextStep = [NSInvocation invocationWithSelector:aSelector target:self];
-		[nextStep invoke];
+        
+        [nextStep performSelector:@selector(invoke) withObject:nil afterDelay:0.0f];
 	}
 }
 
