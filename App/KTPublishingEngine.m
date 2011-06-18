@@ -779,22 +779,19 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     if (!result)
     {
+        // Seek out a path not being published to
         result = [[self baseRemotePath] stringByAppendingPathComponent:[request preferredUploadPath]];
         
-        if ([self status] > KTPublishingEngineStatusGatheringMedia)
+        while ([self isPublishingToPath:result])
         {
-            //  The media rep does not already exist on the server, so need to assign it a new path
-            while ([self isPublishingToPath:result])
-            {
-                result = [result ks_stringByIncrementingPath];
-            }
-            
-            OBASSERT(result);
+            result = [result ks_stringByIncrementingPath];
         }
-        else
+        
+        // During the first phase of publishing, want to avoid overwriting any existing media on the server
+        if ([self status] <= KTPublishingEngineStatusGatheringMedia)
         {
             // This is new media. Is its preferred filename definitely available? If so, can go ahead and publish immediately. #111549. Otherwise, wait until all media is known to figure out the best available path
-            if ([self isPublishingToPath:result])
+            if ([[[self site] hostProperties] publishingRecordForPath:result])
             {
                 // but cache the data
                 [digestStore addRequest:request cachedData:data cachedDigest:digest];
