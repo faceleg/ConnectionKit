@@ -124,7 +124,7 @@
         {
             // Hopefully we've published it before. Figure out content hash
             SVMediaRequest *sourceRequest = [mediaRequest sourceRequest];
-            NSData *sourceDigest = [[self mediaDigestStorage] digestForRequest:sourceRequest];
+            NSData *sourceDigest = [[self digestStorage] digestForRequest:sourceRequest];
             
             if (sourceDigest)
             {
@@ -352,7 +352,7 @@
                                      selector:@selector(SHA1Digest)
                                      object:nil];
     
-    [[self mediaDigestStorage] setHashingOperation:result
+    [[self digestStorage] setHashingOperation:result
                                    forMediaRequest:sourceRequest];
     
     [self addOperation:result queue:([media mediaData] ?
@@ -368,7 +368,7 @@
     {
         if ([request width] || [request height])
         {
-            SVPublishingDigestStorage *digestStorage = [self mediaDigestStorage];
+            SVPublishingDigestStorage *digestStorage = [self digestStorage];
             NSData *digest = [digestStorage digestForRequest:request];
             
             if (!digest)
@@ -429,7 +429,7 @@
                         OBASSERT(result);
                         
                         NSData *digest = [record SHA1Digest];
-                        [[self mediaDigestStorage] addRequest:request cachedData:nil cachedDigest:digest];
+                        [[self digestStorage] addRequest:request cachedData:nil cachedDigest:digest];
                         
                         [self didEnqueueUpload:nil
                                         toPath:result
@@ -603,7 +603,7 @@
 {
     OBPRECONDITION(digest);
     
-    NSString *result = [[self mediaDigestStorage] pathForFileWithDigest:digest];
+    NSString *result = [[self digestStorage] pathForFileWithDigest:digest];
     
     if (!result)
     {

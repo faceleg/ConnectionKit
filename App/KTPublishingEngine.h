@@ -91,7 +91,7 @@ typedef enum {
 - (NSString *)documentRootPath;
 - (NSString *)subfolderPath;
 - (NSString *)baseRemotePath;
-@property(nonatomic, readonly) SVPublishingDigestStorage *mediaDigestStorage;
+@property(nonatomic, readonly) SVPublishingDigestStorage *digestStorage;
 
 
 // Control

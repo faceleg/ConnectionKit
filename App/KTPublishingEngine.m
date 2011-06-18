@@ -206,7 +206,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     return result;
 }
 
-@synthesize mediaDigestStorage = _digestStorage;
+@synthesize digestStorage = _digestStorage;
 
 #pragma mark Overall flow control
 
@@ -484,7 +484,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
 - (BOOL)isPublishingToPath:(NSString *)path;
 {
-    BOOL result = [[self mediaDigestStorage] containsPath:path];
+    BOOL result = [[self digestStorage] containsPath:path];
     return result;
 }
 
@@ -560,7 +560,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
              contentHash:(NSData *)contentHash
                   object:(id <SVPublishedObject>)object;
 {
-    [[self mediaDigestStorage] addPath:path digest:digest];
+    [[self digestStorage] addPath:path digest:digest];
 }
 
 - (void)didEnqueueUpload:(CKTransferRecord *)record toDirectory:(CKTransferRecord *)parent;
@@ -701,7 +701,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                                         arguments:NSARRAY(data, request)];
             
             NSInvocationOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
-            [[self mediaDigestStorage] setHashingOperation:op forMediaRequest:request];
+            [[self digestStorage] setHashingOperation:op forMediaRequest:request];
             [self addOperation:op queue:[self defaultQueue]];
             [op release];
         }
@@ -714,7 +714,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                                         arguments:NSARRAY(request, cachedDigest)];
             
             NSInvocationOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
-            [[self mediaDigestStorage] setHashingOperation:op forMediaRequest:request];
+            [[self digestStorage] setHashingOperation:op forMediaRequest:request];
             [self addOperation:op queue:_diskQueue];
             [op release];
         }
@@ -722,7 +722,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     else
     {
         // Already been cached?
-        NSData *data = [[self mediaDigestStorage] dataForMediaRequest:request];
+        NSData *data = [[self digestStorage] dataForMediaRequest:request];
         if (!data)
         {
             NSURL *URL = [NSURL sandvoxImageURLWithMediaRequest:request];
@@ -742,7 +742,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                                         arguments:NSARRAY(request, cachedDigest)];
             
             NSInvocationOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
-            [[self mediaDigestStorage] setHashingOperation:op forMediaRequest:request];
+            [[self digestStorage] setHashingOperation:op forMediaRequest:request];
             [self addOperation:op queue:[KTImageScalingURLProtocol coreImageQueue]];  // most of the work should be Core Image's
             [op release];
         }
@@ -757,7 +757,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     OBPRECONDITION(digest);
     
     
-    SVPublishingDigestStorage *digestStore = [self mediaDigestStorage];
+    SVPublishingDigestStorage *digestStore = [self digestStorage];
     request = [digestStore addRequest:request cachedData:nil cachedDigest:digest];
     
     
@@ -1062,7 +1062,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 {
     OBPRECONDITION(digest);
     
-    NSString *result = [[self mediaDigestStorage] pathForFileWithDigest:digest];
+    NSString *result = [[self digestStorage] pathForFileWithDigest:digest];
     
     if (!result)
     {
