@@ -1086,16 +1086,19 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 - (void)setContentHash:(NSData *)hash forPublishingRecord:(SVPublishingRecord *)record;
 {
     NSData *oldHash = [record contentHash];
-    if (oldHash) [_publishingRecordsByContentHash removeObjectForKey:oldHash];
-    
-    [record setContentHash:hash];
-    if (hash)
+    if (!KSISEQUAL(hash, oldHash))
     {
-        [_publishingRecordsByContentHash setObject:record forKey:hash];
-    }
-    else if (oldHash)
-    {
-        LOG((@"Nilled out content hash"));
+        if (oldHash) [_publishingRecordsByContentHash removeObjectForKey:oldHash];
+        
+        [record setContentHash:hash];
+        if (hash)
+        {
+            [_publishingRecordsByContentHash setObject:record forKey:hash];
+        }
+        else if (oldHash)
+        {
+            LOG((@"Nilled out content hash"));
+        }
     }
 }
 
