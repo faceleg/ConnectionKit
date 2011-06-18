@@ -73,9 +73,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)didEnqueueUpload:(CKTransferRecord *)record toDirectory:(CKTransferRecord *)parent;
 
-// A standard operation queue that will run as many operations as the system sees fit. Generally, use for CPU-bound operations (e.g. hashing)
-@property(retain, readonly) NSOperationQueue *defaultQueue; // want this to be threadsafe
-
 @end
 
 
@@ -320,7 +317,18 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 {
     [[self startNextPhaseOperation] addDependency:operation];
     
-    if (!queue) queue = [self defaultQueue];
+    if (!queue)
+    {
+        if ([NSOperationQueue respondsToSelector:@selector(mainQueue)])
+        {
+            queue = [NSOperationQueue mainQueue];
+        }
+        else
+        {
+            queue = [self defaultQueue];
+        }
+    }
+    
     OBASSERT(queue);
     [queue addOperation:operation];
 }

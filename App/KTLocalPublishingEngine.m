@@ -356,8 +356,8 @@
                                    forMediaRequest:sourceRequest];
     
     [self addOperation:result queue:([media mediaData] ?
-                                        nil :
-                                        [self diskOperationQueue])];
+                                     [self defaultQueue] :
+                                     [self diskOperationQueue])];
     
     return [result autorelease];
 }
@@ -408,13 +408,7 @@
                                        object:request];
                     
                     [op addDependency:hashingOp];
-                    
-                    NSOperationQueue *queue = nil;
-                    if ([NSOperationQueue respondsToSelector:@selector(mainQueue)])
-                    {
-                        queue = [NSOperationQueue mainQueue];
-                    }
-                    [self addOperation:op queue:queue];
+                    [self addOperation:op queue:nil];
                     
                     [digestStorage addRequest:request cachedData:nil cachedDigest:nil];
                     
