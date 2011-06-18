@@ -322,11 +322,19 @@
     
     [super didEnqueueUpload:record toPath:path cachedSHA1Digest:digest contentHash:contentHash object:object];
     
-    [record setProperty:path forKey:@"path"];
-    if (digest) [record setProperty:digest forKey:@"dataDigest"];
-    if (contentHash)
+    if (record)
     {
-        [record setProperty:contentHash forKey:@"contentHash"];
+        [record setProperty:path forKey:@"path"];
+        if (digest) [record setProperty:digest forKey:@"dataDigest"];
+        if (contentHash)
+        {
+            [record setProperty:contentHash forKey:@"contentHash"];
+        }
+    }
+    else
+    {
+        // Fake upload, store directly to pub records
+        [self updatePublishingRecordForPath:path SHA1Digest:digest contentHash:contentHash];
     }
 }
 
@@ -539,6 +547,34 @@
 
 #pragma mark Content Generation
 
+- (SVPublishingRecord *)updatePublishingRecordForPath:(NSString *)path
+                                           SHA1Digest:(NSData *)digest
+                                          contentHash:(NSData *)contentHash;
+{
+    SVPublishingRecord *record = [[[self site] hostProperties] regularFilePublishingRecordWithPath:path];
+    
+    NSData *oldDigest = [record SHA1Digest];
+    
+    // If the data hasn't changed, but the content hash is going to nil, actually want to keep existing content hash because something else is relying on it
+    if ([digest isEqualToData:oldDigest])
+    {
+        if (contentHash)
+        {
+            [self setContentHash:contentHash forPublishingRecord:record];
+        }
+    }
+    else
+    {
+        [self setContentHash:contentHash forPublishingRecord:record];
+        
+        if (oldDigest) [_publishingRecordsBySHA1Digest removeObjectForKey:oldDigest];
+        [record setSHA1Digest:digest];
+        [_publishingRecordsBySHA1Digest setObject:record forKey:digest];
+    }
+    
+    return record;
+}
+
 /*  Called when a transfer we are observing finishes. Mark its corresponding object non-stale and
  *  stop observation.
  */
@@ -556,28 +592,9 @@
     NSString *path = [transferRecord propertyForKey:@"path"];
     if (path && ![transferRecord isDirectory])
     {
-        SVPublishingRecord *record = [[[self site] hostProperties] regularFilePublishingRecordWithPath:path];
-        
-        NSData *digest = [transferRecord propertyForKey:@"dataDigest"];
-        NSData *oldDigest = [record SHA1Digest];
-        NSData *contentHash = [transferRecord propertyForKey:@"contentHash"];
-        
-        // If the data hasn't changed, but the content hash is going to nil, actually want to keep existing content hash because something else is relying on it
-        if ([digest isEqualToData:oldDigest])
-        {
-            if (contentHash)
-            {
-                [self setContentHash:contentHash forPublishingRecord:record];
-            }
-        }
-        else
-        {
-            [self setContentHash:contentHash forPublishingRecord:record];
-            
-            if (oldDigest) [_publishingRecordsBySHA1Digest removeObjectForKey:oldDigest];
-            [record setSHA1Digest:digest];
-            [_publishingRecordsBySHA1Digest setObject:record forKey:digest];
-        }
+        SVPublishingRecord *record = [self updatePublishingRecordForPath:path
+                                 SHA1Digest:[transferRecord propertyForKey:@"dataDigest"]
+                                contentHash:[transferRecord propertyForKey:@"contentHash"]];
         
         [record setLength:[NSNumber numberWithUnsignedLongLong:[transferRecord size]]];
     }
