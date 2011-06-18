@@ -71,6 +71,10 @@
  */
 - (NSData *)_loadImageScaledToSize:(NSSize)size type:(NSString *)fileType error:(NSError **)error // Mode will be read from the URL
 {
+#ifdef DEBUG
+    NSDate *start = [NSDate date];
+#endif
+    
     // Load the image from disk
     CIImage *sourceImage;
     if ([_sourceMedia mediaData])
@@ -156,6 +160,11 @@
     CFRelease(imageDestination);
     CGImageRelease(finalImage); // On Tiger the CGImage MUST be released before deallocating the CIImage!
     [sourceImage release];
+    
+    
+#ifdef DEBUG
+    NSLog(@"Spent %fs doing Core Image", -[start timeIntervalSinceNow]);
+#endif
     
     
     // Finish up

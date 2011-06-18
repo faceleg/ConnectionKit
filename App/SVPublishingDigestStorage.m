@@ -19,6 +19,7 @@
     _pathsByDigest = [[NSMutableDictionary alloc] init];
     _publishedMediaDigests = [[NSMapTable mapTableWithStrongToStrongObjects] retain];
     _scaledImageCache = [[NSMutableDictionary alloc] init];
+    _hashingOps = [[NSMutableDictionary alloc] init];
     
     return self;
 }
@@ -29,6 +30,7 @@
     [_pathsByDigest release];
     [_publishedMediaDigests release];
     [_scaledImageCache release];
+    [_hashingOps release];
     
     [super dealloc];
 }
@@ -54,6 +56,12 @@
 {
     id result = [_publishedMediaDigests objectForKey:request];
     if (result == [NSNull null]) result = nil;
+    
+    if (!result)
+    {
+        result = [[_hashingOps objectForKey:request] result];
+    }
+    
     return result;
 }
 
@@ -117,6 +125,17 @@
 - (void)removeMediaRequest:(SVMediaRequest *)request;
 {
     [_publishedMediaDigests removeObjectForKey:request];
+}
+
+- (NSInvocationOperation *)hashingOperationForMediaRequest:(SVMediaRequest *)request;
+{
+    return [_hashingOps objectForKey:request];
+}
+
+- (void)setHashingOperation:(NSInvocationOperation *)op
+            forMediaRequest:(SVMediaRequest *)request;
+{
+    [_hashingOps setObject:op forKey:request];
 }
 
 @end

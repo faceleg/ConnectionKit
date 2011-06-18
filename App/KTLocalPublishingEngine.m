@@ -106,6 +106,17 @@
        mediaRequest:(SVMediaRequest *)mediaRequest  // if there was one behind all this
              object:(id <SVPublishedObject>)object;
 {
+    if (![self shouldPublishToPath:remotePath]) // if already publishing, let be
+    {
+        return [super publishData:data
+                           toPath:remotePath
+                 cachedSHA1Digest:digest
+                      contentHash:hash
+                     mediaRequest:mediaRequest
+                           object:object];
+    }
+    
+    
     if (mediaRequest)
     {
         // Before can publish media data, must calculate content hash
@@ -178,7 +189,10 @@
         else if ([digest isEqualToData:[record SHA1Digest]])
         {
             // Equal data means no need to publish, but still want to mark change in content hash
-            if (!KSISEQUAL(hash, [record contentHash])) [self setContentHash:hash forPublishingRecord:record];
+            if (!KSISEQUAL(hash, [record contentHash])) 
+            {
+                [self setContentHash:hash forPublishingRecord:record];
+            }
             
             // Pretend we uploaded so the engine still tracks path/digest etc.
             [self didEnqueueUpload:nil toPath:remotePath cachedSHA1Digest:digest contentHash:hash object:object];
@@ -205,37 +219,40 @@
             cachedSHA1Digest:(NSData *)digest  // save engine the trouble of calculating itself
                       object:(id <SVPublishedObject>)object;
 {
-    // Hash if not already known
-    if (!digest)
+    if ([self shouldPublishToPath:remotePath])  // if already publishing, let be
     {
-        NSInvocation *invocation = [NSInvocation
-                                    invocationWithSelector:@selector(threaded_publishContentsOfURL:toPath:object:)
-                                    target:self];
-        [invocation setArgument:&localURL atIndex:2];
-        [invocation setArgument:&remotePath atIndex:3];
-        [invocation setArgument:&object atIndex:4];
-        
-        NSOperation *operation = [[KSInvocationOperation alloc] initWithInvocation:invocation];
-        [self addOperation:operation queue:[self diskOperationQueue]];
-        [operation release];
-        
-        return;
-    }
-    
-    
-    // Compare digests to know if it's worth publishing. Look up remote hash first to save us reading in the local file if possible
-    if ([self onlyPublishChanges])
-    {
-        SVPublishingRecord *record = [[[self site] hostProperties] publishingRecordForPath:remotePath];
-        NSData *publishedDigest = [record SHA1Digest];
-        if ([digest isEqualToData:publishedDigest])
+        // Hash if not already known
+        if (!digest)
         {
-            // Pretend we uploaded so the engine still tracks path/digest etc.
-            [self didEnqueueUpload:nil toPath:remotePath cachedSHA1Digest:digest contentHash:nil object:object];
+            NSInvocation *invocation = [NSInvocation
+                                        invocationWithSelector:@selector(threaded_publishContentsOfURL:toPath:object:)
+                                        target:self];
+            [invocation setArgument:&localURL atIndex:2];
+            [invocation setArgument:&remotePath atIndex:3];
+            [invocation setArgument:&object atIndex:4];
+            
+            NSOperation *operation = [[KSInvocationOperation alloc] initWithInvocation:invocation];
+            [self addOperation:operation queue:[self diskOperationQueue]];
+            [operation release];
+            
             return;
         }
+        
+        
+        // Compare digests to know if it's worth publishing. Look up remote hash first to save us reading in the local file if possible
+        if ([self onlyPublishChanges])
+        {
+            SVPublishingRecord *record = [[[self site] hostProperties] publishingRecordForPath:remotePath];
+            NSData *publishedDigest = [record SHA1Digest];
+            if ([digest isEqualToData:publishedDigest])
+            {
+                // Pretend we uploaded so the engine still tracks path/digest etc.
+                [self didEnqueueUpload:nil toPath:remotePath cachedSHA1Digest:digest contentHash:nil object:object];
+                return;
+            }
+        }
     }
-    
+     
     
     [super publishContentsOfURL:localURL toPath:remotePath cachedSHA1Digest:digest object:object];
 }
@@ -307,34 +324,40 @@
     
     [record setProperty:path forKey:@"path"];
     if (digest) [record setProperty:digest forKey:@"dataDigest"];
-    if (contentHash) [record setProperty:contentHash forKey:@"contentHash"];
+    if (contentHash)
+    {
+        [record setProperty:contentHash forKey:@"contentHash"];
+    }
 }
 
 #pragma mark Media
 
-- (void)didHash:(NSData *)sourceDigest sourceOfMediaRequest:(SVMediaRequest *)request;
+- (void)threaded_didHashSourceOfMediaRequest:(SVMediaRequest *)request;
 {
-    // Store digest of source
-    SVPublishingDigestStorage *digestStorage = [self mediaDigestStorage];
+    /*  Trampoline method pretty much, to fling us back to main thread!
+     */
     
-    if (sourceDigest)
-    {
-        [digestStorage addRequest:[request sourceRequest] cachedData:nil cachedDigest:sourceDigest];
-        
-        
-        // Request is probably in the store only as a placeholder while we digest it
-        NSData *digest = [digestStorage digestForRequest:request];
-        OBASSERT(!digest);
-        
-        [self publishMediaWithRequest:request];
-    }
-    else
-    {
-        // Nil data signals failure to hash on background thread, so we have to jump straight to attempting a publish
-        // Remove from the store to fool super
-        [digestStorage removeMediaRequest:request];
-        [super publishMediaWithRequest:request];
-    }
+    [[self ks_proxyOnThread:nil] publishMediaWithRequest:request];
+}
+
+- (NSInvocationOperation *)startHashingSourceOfMediaRequest:(SVMediaRequest *)request;
+{
+    SVMediaRequest *sourceRequest = [request sourceRequest];
+    SVMedia *media = [sourceRequest media];
+    
+    NSInvocationOperation *result = [[NSInvocationOperation alloc]
+                                     initWithTarget:media
+                                     selector:@selector(SHA1Digest)
+                                     object:nil];
+    
+    [[self mediaDigestStorage] setHashingOperation:result
+                                   forMediaRequest:sourceRequest];
+    
+    [self addOperation:result queue:([media mediaData] ?
+                                        nil :
+                                        [self diskOperationQueue])];
+    
+    return [result autorelease];
 }
 
 - (NSString *)publishMediaWithRequest:(SVMediaRequest *)request;
@@ -354,21 +377,46 @@
                 
                 if (!sourceDigest)
                 {
-                    // Hashing could already be in progress
-                    // This does mean same source media can get hashed multiple times though
-                    if (![digestStorage containsRequest:request])
+                    NSInvocationOperation *hashingOp = [digestStorage
+                                                        hashingOperationForMediaRequest:request];
+                    
+                    
+                    // It might be that hashing failed, so go ahead and try to publish
+                    if (hashingOp)
                     {
-                        [digestStorage addRequest:request cachedData:nil cachedDigest:nil];
-                        [digestStorage addRequest:sourceRequest cachedData:nil cachedDigest:nil];
-                        
-                        NSOperation *op = [[NSInvocationOperation alloc]
-                                           initWithTarget:self
-                                           selector:@selector(threaded_publishMediaWithRequestByHashingSource:)
-                                           object:request];
-                        [self addOperation:op queue:[self diskOperationQueue]];
-                        [op release];
+                        if ([hashingOp isFinished])
+                        {
+                            sourceDigest = [digestStorage digestForRequest:sourceRequest];
+                            if (!sourceDigest)
+                            {
+                                return [super publishMediaWithRequest:request];
+                            }
+                        }
+                    }
+                    else
+                    {
+                        hashingOp = [self startHashingSourceOfMediaRequest:request];
                     }
                     
+                    
+                    // Retry once source is hashed
+                    NSOperation *op = [[NSInvocationOperation alloc]
+                                       initWithTarget:self
+                                       selector:@selector(threaded_didHashSourceOfMediaRequest:)
+                                       object:request];
+                    
+                    [op addDependency:hashingOp];
+                    
+                    NSOperationQueue *queue = nil;
+                    if ([NSOperationQueue respondsToSelector:@selector(mainQueue)])
+                    {
+                        queue = [NSOperationQueue mainQueue];
+                    }
+                    [self addOperation:op queue:queue];
+                    
+                    [digestStorage addRequest:request cachedData:nil cachedDigest:nil];
+                    
+                    [op release];
                     return nil;
                 }
                 
@@ -443,14 +491,6 @@
                                       object:nil];
 }
 
-- (void)threaded_publishMediaWithRequestByHashingSource:(SVMediaRequest *)request;
-{
-    NSData *sourceDigest = [[request media] SHA1Digest];
-    
-    [[self ks_proxyOnThread:nil]
-     didHash:sourceDigest sourceOfMediaRequest:request];
-}
-
 #pragma mark Status
 
 /*  Once publishing is fully complete, without any errors, ping google if there is a sitemap
@@ -518,14 +558,26 @@
     {
         SVPublishingRecord *record = [[[self site] hostProperties] regularFilePublishingRecordWithPath:path];
         
-        NSData *oldDigest = [record SHA1Digest];
-        if (oldDigest) [_publishingRecordsBySHA1Digest removeObjectForKey:oldDigest];
         NSData *digest = [transferRecord propertyForKey:@"dataDigest"];
-        [record setSHA1Digest:digest];
-        [_publishingRecordsBySHA1Digest setObject:record forKey:digest];
+        NSData *oldDigest = [record SHA1Digest];
+        NSData *contentHash = [transferRecord propertyForKey:@"contentHash"];
         
-        [self setContentHash:[transferRecord propertyForKey:@"contentHash"]
-         forPublishingRecord:record];
+        // If the data hasn't changed, but the content hash is going to nil, actually want to keep existing content hash because something else is relying on it
+        if ([digest isEqualToData:oldDigest])
+        {
+            if (contentHash)
+            {
+                [self setContentHash:contentHash forPublishingRecord:record];
+            }
+        }
+        else
+        {
+            [self setContentHash:contentHash forPublishingRecord:record];
+            
+            if (oldDigest) [_publishingRecordsBySHA1Digest removeObjectForKey:oldDigest];
+            [record setSHA1Digest:digest];
+            [_publishingRecordsBySHA1Digest setObject:record forKey:digest];
+        }
         
         [record setLength:[NSNumber numberWithUnsignedLongLong:[transferRecord size]]];
     }

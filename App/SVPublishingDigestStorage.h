@@ -16,6 +16,7 @@
     NSMutableDictionary *_pathsByDigest;
     NSMapTable          *_publishedMediaDigests;
     NSMutableDictionary *_scaledImageCache;
+    NSMutableDictionary *_hashingOps;
 }
 
 #pragma mark General
@@ -41,6 +42,10 @@
 - (NSData *)dataForMediaRequest:(SVMediaRequest *)request;
 
 - (void)removeMediaRequest:(SVMediaRequest *)request;
+
+- (NSInvocationOperation *)hashingOperationForMediaRequest:(SVMediaRequest *)request;
+- (void)setHashingOperation:(NSInvocationOperation *)op
+            forMediaRequest:(SVMediaRequest *)request;
 
 
 @end

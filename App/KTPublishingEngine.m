@@ -48,6 +48,15 @@ int kMaxNumberOfFreePublishedPages = 5;	// This is the constant value of how man
 NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 
+@interface SVPublishingRecord ()
+- (void)setSHA1Digest:(NSData *)digest;
+- (void)setContentHash:(NSData *)digest;
+@end
+
+
+#pragma mark -
+
+
 @interface KTPublishingEngine ()
 
 @property(retain) NSOperation *startNextPhaseOperation;
@@ -251,6 +260,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         return [[self ks_proxyOnThread:nil waitUntilDone:NO] mainPublishing];
     }
     
+    LOG((@"Phase two of publishing!"));
+    
     
     // Store the op ready for dependencies to be added
     NSOperation *nextOp = [[NSInvocationOperation alloc]
@@ -433,12 +444,25 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
        mediaRequest:(SVMediaRequest *)mediaRequest  // if there was one behind all this
              object:(id <SVPublishedObject>)object;
 {
+	OBPRECONDITION(remotePath);
+    
+    if (![self shouldPublishToPath:remotePath])
+    {
+        // Make sure contentHash of transfer record is up to date
+        CKTransferRecord *record = [CKTransferRecord recordForFullPath:remotePath withRoot:[self rootTransferRecord]];
+        
+        [self didEnqueueUpload:record
+                        toPath:remotePath
+              cachedSHA1Digest:digest
+                   contentHash:hash
+                        object:object];
+        
+        return;
+    }
+    
 	OBPRECONDITION(data);
-    OBPRECONDITION(remotePath);
     
-    if (![self shouldPublishToPath:remotePath]) return;
-    
-	CKTransferRecord *result = [self uploadData:data toPath:remotePath];
+    CKTransferRecord *result = [self uploadData:data toPath:remotePath];
     
     if (result)
     {
@@ -668,7 +692,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                                         target:self
                                         arguments:NSARRAY(data, request)];
             
-            NSOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
+            NSInvocationOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
+            [[self mediaDigestStorage] setHashingOperation:op forMediaRequest:request];
             [self addOperation:op queue:[self defaultQueue]];
             [op release];
         }
@@ -680,7 +705,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                                         target:self
                                         arguments:NSARRAY(request, cachedDigest)];
             
-            NSOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
+            NSInvocationOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
+            [[self mediaDigestStorage] setHashingOperation:op forMediaRequest:request];
             [self addOperation:op queue:_diskQueue];
             [op release];
         }
@@ -707,7 +733,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                                         target:self
                                         arguments:NSARRAY(request, cachedDigest)];
             
-            NSOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
+            NSInvocationOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
+            [[self mediaDigestStorage] setHashingOperation:op forMediaRequest:request];
             [self addOperation:op queue:[KTImageScalingURLProtocol coreImageQueue]];  // most of the work should be Core Image's
             [op release];
         }
@@ -772,42 +799,61 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     // Publish!
     if (result)
     {
-        if ([self shouldPublishToPath:result])
+        // We might already know the data, ready to publish
+        if (!data && [request isNativeRepresentation]) data = [[request media] mediaData];
+        
+        if (data)
         {
-            // We might already know the data, ready to publish
-            if (!data && [request isNativeRepresentation]) data = [[request media] mediaData];
+            NSData *hash = nil;
+            NSData *sourceDigest = [digestStore digestForRequest:[request sourceRequest]];
             
-            if (data)
+            if (sourceDigest)
             {
-                NSData *hash = nil;
-                NSData *sourceDigest = [digestStore digestForRequest:[request sourceRequest]];
-                
-                if (sourceDigest)
-                {
-                    hash = [request contentHashWithMediaDigest:sourceDigest];
-                }
-                
-                [self publishData:data
-                           toPath:result
-                 cachedSHA1Digest:digest
-                      contentHash:hash
-                     mediaRequest:request
-                           object:nil];
+                hash = [request contentHashWithMediaDigest:sourceDigest];
+            }
+            
+            [self publishData:data
+                       toPath:result
+             cachedSHA1Digest:digest
+                  contentHash:hash
+                 mediaRequest:request
+                       object:nil];
+        }
+        else
+        {
+            if ([request isNativeRepresentation])
+            {
+                // Can publish the file itself
+                [self publishContentsOfURL:[[request media] mediaURL]
+                                    toPath:result
+                          cachedSHA1Digest:digest
+                                    object:nil];
             }
             else
             {
-                if ([request isNativeRepresentation])
+                // Fetching the data is potentially expensive, so do on worker thread again
+                // No point if the publish will be rejected
+                if ([self shouldPublishToPath:result])
                 {
-                    // Can publish the file itself
-                    [self publishContentsOfURL:[[request media] mediaURL]
-                                        toPath:result
-                              cachedSHA1Digest:digest
-                                        object:nil];
+                    [self startPublishingMedia:request cachedSHA1Digest:digest];
                 }
                 else
                 {
-                    // Fetching the data is potentially expensive, so do on worker thread again
-                    [self startPublishingMedia:request cachedSHA1Digest:digest];
+                    // Make sure content hash is carried through
+                    NSData *hash = nil;
+                    NSData *sourceDigest = [digestStore digestForRequest:[request sourceRequest]];
+                    
+                    if (sourceDigest)
+                    {
+                        hash = [request contentHashWithMediaDigest:sourceDigest];
+                    }
+                    
+                    [self publishData:data
+                               toPath:result
+                     cachedSHA1Digest:digest
+                          contentHash:hash
+                         mediaRequest:request
+                               object:nil];
                 }
             }
         }
@@ -841,7 +887,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     return result;
 }
 
-- (void)threaded_publishMedia:(SVMediaRequest *)request cachedSHA1Digest:(NSData *)cachedDigest;
+- (NSData *)threaded_publishMedia:(SVMediaRequest *)request cachedSHA1Digest:(NSData *)digest;
 {
     /*  It is presumed that the call to this method will have been scheduled on an appropriate queue.
      */
@@ -889,35 +935,35 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         
         // Calculate hash
         // TODO: Ideally we could look up the canonical request to see if hash has already been generated (e.g. user opted to publish full-size copy of image too)
-        if (!cachedDigest)
+        if (!digest)
         {
             NSData *data = [[request media] mediaData];
             if (data)
             {
-                cachedDigest = [data SHA1Digest];
+                digest = [data SHA1Digest];
             }
             else
             {
                 NSURL *url = [[request media] mediaURL];
-                cachedDigest = [NSData SHA1DigestOfContentsOfURL:url];
+                digest = [NSData SHA1DigestOfContentsOfURL:url];
             
-                if (!cachedDigest) NSLog(@"Unable to hash file: %@", url);
+                if (!digest) NSLog(@"Unable to hash file: %@", url);
             }
         }
         
-        if (cachedDigest)   // if couldn't be hashed, can't be published
+        if (digest)   // if couldn't be hashed, can't be published
         {
             // Publish original image first. Ensures the publishing of real request will be to the same path
             
             [[self ks_proxyOnThread:nil]  // wait until done so op isn't reported as finished too early
-             publishMediaWithRequest:canonical cachedData:nil SHA1Digest:cachedDigest];
+             publishMediaWithRequest:canonical cachedData:nil SHA1Digest:digest];
             
             [[self ks_proxyOnThread:nil]  // wait until done so op isn't reported as finished too early
-             publishMediaWithRequest:request cachedData:nil SHA1Digest:cachedDigest];
+             publishMediaWithRequest:request cachedData:nil SHA1Digest:digest];
         }
         
         [canonical release];
-        return;
+        return digest;
     }
     
     
@@ -934,11 +980,11 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         request = [request requestWithScalingSuffixApplied];
         OBASSERT([request isEqualToMediaRequest:original]);
         
-        if (cachedDigest)
+        if (digest)
         {
             // Hashing was done in a previous iteration, so recycle
             [[self ks_proxyOnThread:nil waitUntilDone:YES]  // wait before reporting op as finished
-             publishMediaWithRequest:request cachedData:fileContents SHA1Digest:cachedDigest];
+             publishMediaWithRequest:request cachedData:fileContents SHA1Digest:digest];
         }
         else
         {
@@ -970,9 +1016,12 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     {
         NSLog(@"Unable to load media request: %@", request);
     }
+    
+    
+    return digest;
 }
 
-- (void)threaded_publishData:(NSData *)data forMedia:(SVMediaRequest *)request;
+- (NSData *)threaded_publishData:(NSData *)data forMedia:(SVMediaRequest *)request;
 {
     /*  Since all that's needed is to hash the data, presumed you'll call this using -defaultQueue
      */
@@ -982,6 +1031,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     NSData *digest = [data SHA1Digest];
     [[self ks_proxyOnThread:nil waitUntilDone:YES]  // wait before reporting op as finished
      publishMediaWithRequest:request cachedData:data SHA1Digest:digest];
+    
+    return digest;
 }
 
 #pragma mark Resource Files
@@ -1038,7 +1089,14 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     if (oldHash) [_publishingRecordsByContentHash removeObjectForKey:oldHash];
     
     [record setContentHash:hash];
-    if (hash) [_publishingRecordsByContentHash setObject:record forKey:hash];
+    if (hash)
+    {
+        [_publishingRecordsByContentHash setObject:record forKey:hash];
+    }
+    else if (oldHash)
+    {
+        LOG((@"Nilled out content hash"));
+    }
 }
 
 #pragma mark Util
