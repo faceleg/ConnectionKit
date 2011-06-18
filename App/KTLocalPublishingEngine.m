@@ -106,7 +106,7 @@
        mediaRequest:(SVMediaRequest *)mediaRequest  // if there was one behind all this
              object:(id <SVPublishedObject>)object;
 {
-    if (![self shouldPublishToPath:remotePath]) // if already publishing, let be
+    if ([self isPublishingToPath:remotePath]) // if already publishing, let be
     {
         return [super publishData:data
                            toPath:remotePath
@@ -213,7 +213,7 @@
             cachedSHA1Digest:(NSData *)digest  // save engine the trouble of calculating itself
                       object:(id <SVPublishedObject>)object;
 {
-    if ([self shouldPublishToPath:remotePath])  // if already publishing, let be
+    if (![self isPublishingToPath:remotePath])  // if already publishing, let be
     {
         // Hash if not already known
         if (!digest)

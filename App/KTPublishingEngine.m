@@ -361,7 +361,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     // Don't let data be published twice
     NSString *fullPath = [[self baseRemotePath] stringByAppendingPathComponent:path];
     
-    if (![self shouldPublishToPath:fullPath])
+    if ([self isPublishingToPath:fullPath])
     {
         path = nil;
     }
@@ -389,7 +389,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     OBPRECONDITION(localURL);
     OBPRECONDITION(remotePath);
     
-    if (![self shouldPublishToPath:remotePath]) return;
+    if ([self isPublishingToPath:remotePath]) return;
     
     
     // Non-file URLs need to be uploaded as data
@@ -446,7 +446,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 {
 	OBPRECONDITION(remotePath);
     
-    if (![self shouldPublishToPath:remotePath])
+    if ([self isPublishingToPath:remotePath])
     {
         // Make sure contentHash of transfer record is up to date
         CKTransferRecord *record = [CKTransferRecord recordForFullPath:remotePath withRoot:[self rootTransferRecord]];
@@ -474,9 +474,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     }
 }
     
-- (BOOL)shouldPublishToPath:(NSString *)path;
+- (BOOL)isPublishingToPath:(NSString *)path;
 {
-    BOOL result = ![[self mediaDigestStorage] containsPath:path];
+    BOOL result = [[self mediaDigestStorage] containsPath:path];
     return result;
 }
 
@@ -776,7 +776,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         if ([self status] > KTPublishingEngineStatusGatheringMedia)
         {
             //  The media rep does not already exist on the server, so need to assign it a new path
-            while (![self shouldPublishToPath:result])
+            while ([self isPublishingToPath:result])
             {
                 result = [result ks_stringByIncrementingPath];
             }
@@ -786,7 +786,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         else
         {
             // This is new media. Is its preferred filename definitely available? If so, can go ahead and publish immediately. #111549. Otherwise, wait until all media is known to figure out the best available path
-            if (![self shouldPublishToPath:result])
+            if ([self isPublishingToPath:result])
             {
                 // but cache the data
                 [digestStore addRequest:request cachedData:data cachedDigest:digest];
@@ -833,7 +833,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             {
                 // Fetching the data is potentially expensive, so do on worker thread again
                 // No point if the publish will be rejected
-                if ([self shouldPublishToPath:result])
+                if (![self isPublishingToPath:result])
                 {
                     [self startPublishingMedia:request cachedSHA1Digest:digest];
                 }
