@@ -685,7 +685,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     OBPRECONDITION(request);
     
     
-    [_digestStorage addRequest:request cachedData:nil cachedDigest:cachedDigest];
+    [_digestStorage addMediaRequest:request cachedDigest:cachedDigest];
     
     
     // Do the calculation on a background thread. Which one depends on the task needed
@@ -758,14 +758,14 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     
     SVPublishingDigestStorage *digestStore = [self digestStorage];
-    request = [digestStore addRequest:request cachedData:nil cachedDigest:digest];
+    request = [digestStore addMediaRequest:request cachedDigest:digest];
     
     
     // Is there already an existing file on the server? If so, use that
     NSString *result = [self pathForFileWithSHA1Digest:digest];
     if (!result)
     {
-        NSData *sourceDigest = [digestStore digestForRequest:[request sourceRequest]]; 
+        NSData *sourceDigest = [digestStore digestForMediaRequest:[request sourceRequest]]; 
         if (sourceDigest)
         {
             NSData *hash = [request contentHashWithMediaDigest:sourceDigest];
@@ -794,7 +794,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             if ([[[self site] hostProperties] publishingRecordForPath:result])
             {
                 // but cache the data
-                [digestStore addRequest:request cachedData:data cachedDigest:digest];
+                [digestStore addMediaRequest:request cachedDigest:digest];
+                if (data) [digestStore setData:data forMediaRequest:request];
                 result = nil;
             }
         }
@@ -810,7 +811,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         if (data)
         {
             NSData *hash = nil;
-            NSData *sourceDigest = [digestStore digestForRequest:[request sourceRequest]];
+            NSData *sourceDigest = [digestStore digestForMediaRequest:[request sourceRequest]];
             
             if (sourceDigest)
             {
@@ -846,7 +847,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                 {
                     // Make sure content hash is carried through
                     NSData *hash = nil;
-                    NSData *sourceDigest = [digestStore digestForRequest:[request sourceRequest]];
+                    NSData *sourceDigest = [digestStore digestForMediaRequest:[request sourceRequest]];
                     
                     if (sourceDigest)
                     {
@@ -875,9 +876,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     //  A)  Collect digests of all media (e.g. for dupe identification)
     //  B)  As a head start, queue for upload any media that has previously been published, thus reserving path
     
-    if ([_digestStorage containsRequest:request])
+    if ([_digestStorage containsMediaRequest:request])
     {
-        NSData *cachedDigest = [_digestStorage digestForRequest:request];
+        NSData *cachedDigest = [_digestStorage digestForMediaRequest:request];
         if (cachedDigest)  // nothing to do yet while hash is being calculated
         {
             result = [self publishMediaWithRequest:request cachedData:nil SHA1Digest:cachedDigest];

@@ -28,24 +28,26 @@
 
 #pragma mark Media Requests
 
-- (NSData *)digestForRequest:(SVMediaRequest *)request;
+- (NSData *)digestForMediaRequest:(SVMediaRequest *)request;
 
 // Handy for if the request has already been made, but digest is not yet known
-- (BOOL)containsRequest:(SVMediaRequest *)request;
+- (BOOL)containsMediaRequest:(SVMediaRequest *)request;
 
 // Returns the canonical request. E.g. if media didn't need to be scaled the returned requested will have the scaling suffix stripped
 // Throws an exception if there's a digest already stored for the request, and it doesn't match
-- (SVMediaRequest *)addRequest:(SVMediaRequest *)request
-                    cachedData:(NSData *)data
-                  cachedDigest:(NSData *)digest;
-
-- (NSData *)dataForMediaRequest:(SVMediaRequest *)request;
+- (SVMediaRequest *)addMediaRequest:(SVMediaRequest *)request cachedDigest:(NSData *)digest;
 
 - (void)removeMediaRequest:(SVMediaRequest *)request;
 
 - (NSInvocationOperation *)hashingOperationForMediaRequest:(SVMediaRequest *)request;
 - (void)setHashingOperation:(NSInvocationOperation *)op
             forMediaRequest:(SVMediaRequest *)request;
+
+
+#pragma mark Data Cache
+- (NSData *)dataForMediaRequest:(SVMediaRequest *)request;
+- (void)setData:(NSData *)data forMediaRequest:(SVMediaRequest *)request;
+- (NSDictionary *)cachedMediaRequestData;   // keys = media requests, objects = data
 
 
 @end

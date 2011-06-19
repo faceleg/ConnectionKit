@@ -52,7 +52,7 @@
 
 #pragma mark Media
 
-- (NSData *)digestForRequest:(SVMediaRequest *)request;
+- (NSData *)digestForMediaRequest:(SVMediaRequest *)request;
 {
     id result = [_publishedMediaDigests objectForKey:request];
     if (result == [NSNull null]) result = nil;
@@ -66,14 +66,12 @@
     return result;
 }
 
-- (BOOL)containsRequest:(SVMediaRequest *)request;
+- (BOOL)containsMediaRequest:(SVMediaRequest *)request;
 {
     return ([_publishedMediaDigests objectForKey:request] != nil);
 }
 
-- (SVMediaRequest *)addRequest:(SVMediaRequest *)request
-                    cachedData:(NSData *)data
-                  cachedDigest:(NSData *)digest;
+- (SVMediaRequest *)addMediaRequest:(SVMediaRequest *)request cachedDigest:(NSData *)digest;
 {
     OBPRECONDITION(request);
     
@@ -109,18 +107,7 @@
     }
     
     
-    if (data)
-    {
-        [_scaledImageCache setObject:data forKey:request];
-    }
-    
-    
     return request;
-}
-
-- (NSData *)dataForMediaRequest:(SVMediaRequest *)request;
-{
-    return [_scaledImageCache objectForKey:request];
 }
 
 - (void)removeMediaRequest:(SVMediaRequest *)request;
@@ -137,6 +124,23 @@
             forMediaRequest:(SVMediaRequest *)request;
 {
     [_hashingOps setObject:op forKey:request];
+}
+
+#pragma mark Data Cache
+
+- (NSData *)dataForMediaRequest:(SVMediaRequest *)request;
+{
+    return [_scaledImageCache objectForKey:request];
+}
+
+- (NSDictionary *)cachedMediaRequestData;
+{
+    return [[_scaledImageCache copy] autorelease];
+}
+
+- (void)setData:(NSData *)data forMediaRequest:(SVMediaRequest *)request;
+{
+    [_scaledImageCache setObject:data forKey:request];
 }
 
 @end

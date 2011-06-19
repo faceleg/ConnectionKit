@@ -124,7 +124,7 @@
         {
             // Hopefully we've published it before. Figure out content hash
             SVMediaRequest *sourceRequest = [mediaRequest sourceRequest];
-            NSData *sourceDigest = [[self digestStorage] digestForRequest:sourceRequest];
+            NSData *sourceDigest = [[self digestStorage] digestForMediaRequest:sourceRequest];
             
             if (sourceDigest)
             {
@@ -369,13 +369,13 @@
         if ([request width] || [request height])
         {
             SVPublishingDigestStorage *digestStorage = [self digestStorage];
-            NSData *digest = [digestStorage digestForRequest:request];
+            NSData *digest = [digestStorage digestForMediaRequest:request];
             
             if (!digest)
             {
                 // Figure out content hash first
                 SVMediaRequest *sourceRequest = [request sourceRequest];
-                NSData *sourceDigest = [digestStorage digestForRequest:sourceRequest];
+                NSData *sourceDigest = [digestStorage digestForMediaRequest:sourceRequest];
                 
                 if (!sourceDigest)
                 {
@@ -388,7 +388,7 @@
                     {
                         if ([hashingOp isFinished])
                         {
-                            sourceDigest = [digestStorage digestForRequest:sourceRequest];
+                            sourceDigest = [digestStorage digestForMediaRequest:sourceRequest];
                             if (!sourceDigest)
                             {
                                 return [super publishMediaWithRequest:request];
@@ -410,7 +410,7 @@
                     [op addDependency:hashingOp];
                     [self addOperation:op queue:nil];
                     
-                    [digestStorage addRequest:request cachedData:nil cachedDigest:nil];
+                    [digestStorage addMediaRequest:request cachedDigest:nil];
                     
                     [op release];
                     return nil;
@@ -429,7 +429,7 @@
                         OBASSERT(result);
                         
                         NSData *digest = [record SHA1Digest];
-                        [[self digestStorage] addRequest:request cachedData:nil cachedDigest:digest];
+                        [[self digestStorage] addMediaRequest:request cachedDigest:digest];
                         
                         [self didEnqueueUpload:nil
                                         toPath:result
