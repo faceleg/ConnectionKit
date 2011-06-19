@@ -419,9 +419,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         // Is the URL actually a directory? If so, upload its contents
         if (isDirectory)
         {
-            NSArray *subpaths = [[NSFileManager defaultManager] directoryContentsAtPath:[localURL path]];
-            NSString *aSubPath;
-            for (aSubPath in subpaths)
+            NSArray *subpaths = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[localURL path]
+                                                                                    error:NULL];
+            for (NSString *aSubPath in subpaths)
             {
                 NSURL *aURL = [localURL ks_URLByAppendingPathComponent:aSubPath isDirectory:NO];
                 NSString *aRemotePath = [remotePath stringByAppendingPathComponent:aSubPath];
