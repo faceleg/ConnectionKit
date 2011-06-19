@@ -896,5 +896,11 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     // Ignore since other graphics are irrelevant to determining if explicitly sized. Indeed, they can even mistakenly push the result to YES. #117012
 }
 
+- (NSURL *) addThumbnailMedia:(SVMedia *)media width:(NSUInteger)width height:(NSUInteger)height type:(NSString *)type scalingSuffix:(NSString *)suffix options:(SVPageImageRepresentationOptions)options
+{
+    // Also irrelevant
+    return nil;
+}
+
 @end
 
