@@ -248,6 +248,8 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 
 - (BOOL)parseWithOutputWriter:(id <KSWriter>)stream;
 {
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
 	BOOL result = NO;
 	@try
 	{
@@ -286,6 +288,8 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	@finally
 	{
 		[self finishParsing];
+        
+        [pool release];
 	}
 	
     
