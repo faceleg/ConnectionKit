@@ -245,7 +245,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         
         
         // Now have most dependencies in place, so can publish for real after that
-        [[KTImageScalingURLProtocol coreImageQueue] addOperation:nextOp];
+        [self addOperation:nextOp queue:nil];
         [nextOp release];
     }
 }
@@ -282,7 +282,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     
     // Once all is done (the op should now have most dependencies it needs), finish up
-    [[KTImageScalingURLProtocol coreImageQueue] addOperation:nextOp];
+    [self addOperation:nextOp queue:nil];
     [nextOp release];
 }
 
@@ -315,7 +315,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)addOperation:(NSOperation *)operation queue:(NSOperationQueue *)queue;
 {
-    [[self startNextPhaseOperation] addDependency:operation];
+    NSOperation *nextPhaseOp = [self startNextPhaseOperation];
+    if (operation != nextPhaseOp) [nextPhaseOp addDependency:operation];
     
     if (!queue)
     {
