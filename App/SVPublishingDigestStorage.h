@@ -47,6 +47,7 @@
 #pragma mark Data Cache
 - (NSData *)dataForMediaRequest:(SVMediaRequest *)request;
 - (void)setData:(NSData *)data forMediaRequest:(SVMediaRequest *)request;
+- (void)removeDataForMediaRequest:(SVMediaRequest *)request;
 - (NSDictionary *)cachedMediaRequestData;   // keys = media requests, objects = data
 
 

@@ -257,6 +257,21 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         return [[self ks_proxyOnThread:nil waitUntilDone:NO] mainPublishing];
     }
     
+    
+    /* All media that didn't have a slot available for it before can now be published
+     */
+    LOG((@"Publishing cached media"));
+    
+    _status = KTPublishingEngineStatusParsing;
+    
+    NSDictionary *cache = [[self digestStorage] cachedMediaRequestData];
+    for (SVMediaRequest *aRequest in cache)
+    {
+        [self publishMediaWithRequest:aRequest];
+    }
+    
+    
+    
     LOG((@"Phase two of publishing!"));
     
     
@@ -270,7 +285,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     
     // Publish pages properly
-    _status = KTPublishingEngineStatusParsing;
     [self setCountOfPublishedItems:0];  // reset
     KTPage *home = [[self site] rootPage];
     [home publish:self recursively:YES];

@@ -143,4 +143,9 @@
     [_scaledImageCache setObject:data forKey:request];
 }
 
+- (void)removeDataForMediaRequest:(SVMediaRequest *)request;
+{
+    [_scaledImageCache removeObjectForKey:request];
+}
+
 @end
