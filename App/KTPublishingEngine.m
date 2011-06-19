@@ -931,20 +931,27 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         {
             if ([[request type] isEqualToString:(NSString *)CGImageSourceGetType(imageSource)])
             {
-                // TODO: Should we better take into account a source with multiple images?
-                CFDictionaryRef properties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, NULL);
-                if (properties)
+                if ([request width] || [request height])
                 {
-                    CFNumberRef width = CFDictionaryGetValue(properties, kCGImagePropertyPixelWidth);
-                    CFNumberRef height = CFDictionaryGetValue(properties, kCGImagePropertyPixelHeight);
-                    
-                    if ([[request width] isEqualToNumber:(NSNumber *)width] &&
-                        [[request height] isEqualToNumber:(NSNumber *)height])
+                    // TODO: Should we better take into account a source with multiple images?
+                    CFDictionaryRef properties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, NULL);
+                    if (properties)
                     {
-                        isNative = YES;
+                        CFNumberRef width = CFDictionaryGetValue(properties, kCGImagePropertyPixelWidth);
+                        CFNumberRef height = CFDictionaryGetValue(properties, kCGImagePropertyPixelHeight);
+                        
+                        if ([[request width] isEqualToNumber:(NSNumber *)width] &&
+                            [[request height] isEqualToNumber:(NSNumber *)height])
+                        {
+                            isNative = YES;
+                        }
+                        
+                        CFRelease(properties);
                     }
-                    
-                    CFRelease(properties);
+                }
+                else
+                {
+                    isNative = YES;
                 }
             }
             
