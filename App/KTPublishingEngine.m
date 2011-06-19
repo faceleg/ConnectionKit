@@ -305,7 +305,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [super cancel]; // so -isCancelled returns YES
     
     // Cancel any in-progress operations
-    [[[self startNextPhaseOperation] dependencies] makeObjectsPerformSelector:_cmd];
+    NSOperation *nextPhaseOp = [self startNextPhaseOperation];
+    [nextPhaseOp cancel];
+    [[nextPhaseOp dependencies] makeObjectsPerformSelector:_cmd];
     
     // Mark self as finished
     if ([self status] > KTPublishingEngineStatusNotStarted && [self status] < KTPublishingEngineStatusFinished)
@@ -695,12 +697,13 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 #pragma mark Media
 
-- (NSString *)startPublishingMedia:(SVMediaRequest *)request cachedSHA1Digest:(NSData *)cachedDigest;
+- (NSString *)startPublishingMedia:(SVMediaRequest *)request cachedSHA1Digest:(NSData *)digest;
 {
     OBPRECONDITION(request);
     
     
-    [_digestStorage addMediaRequest:request cachedDigest:cachedDigest];
+    SVPublishingDigestStorage *digestStorage = [self digestStorage];
+    [digestStorage addMediaRequest:request cachedDigest:digest];
     
     
     // Do the calculation on a background thread. Which one depends on the task needed
@@ -716,7 +719,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                                         arguments:NSARRAY(data, request)];
             
             NSInvocationOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
-            [[self digestStorage] setHashingOperation:op forMediaRequest:request];
+            [digestStorage setHashingOperation:op forMediaRequest:request];
             [self addOperation:op queue:[self defaultQueue]];
             [op release];
         }
@@ -726,10 +729,10 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             NSInvocation *invocation = [NSInvocation
                                         invocationWithSelector:@selector(threaded_publishMedia:cachedSHA1Digest:)
                                         target:self
-                                        arguments:NSARRAY(request, cachedDigest)];
+                                        arguments:NSARRAY(request, digest)];
             
             NSInvocationOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
-            [[self digestStorage] setHashingOperation:op forMediaRequest:request];
+            [digestStorage setHashingOperation:op forMediaRequest:request];
             [self addOperation:op queue:_diskQueue];
             [op release];
         }
@@ -737,8 +740,12 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     else
     {
         // Already been cached?
-        NSData *data = [[self digestStorage] dataForMediaRequest:request];
-        if (!data)
+        NSData *data = [digestStorage dataForMediaRequest:request];
+        if (data)
+        {
+            [digestStorage removeDataForMediaRequest:request];
+        }
+        else
         {
             NSURL *URL = [NSURL sandvoxImageURLWithMediaRequest:request];
             data = [[[NSURLCache sharedURLCache] cachedResponseForRequest:[NSURLRequest requestWithURL:URL]] data];
@@ -747,14 +754,15 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         if (data)
         {
             // It's cached! Just need to calculate the hash which is pretty speedy            
-            return [self publishMediaWithRequest:request cachedData:data SHA1Digest:[data SHA1Digest]];
+            if (!digest) digest = [data SHA1Digest];
+            return [self publishMediaWithRequest:request cachedData:data SHA1Digest:digest];
         }
         else
         {
             NSInvocation *invocation = [NSInvocation
                                         invocationWithSelector:@selector(threaded_publishMedia:cachedSHA1Digest:)
                                         target:self
-                                        arguments:NSARRAY(request, cachedDigest)];
+                                        arguments:NSARRAY(request, digest)];
             
             NSInvocationOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
             [[self digestStorage] setHashingOperation:op forMediaRequest:request];
@@ -809,7 +817,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             if ([[[self site] hostProperties] publishingRecordForPath:result])
             {
                 // but cache the data
-                [digestStore addMediaRequest:request cachedDigest:digest];
                 if (data) [digestStore setData:data forMediaRequest:request];
                 result = nil;
             }
