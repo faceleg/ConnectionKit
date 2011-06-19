@@ -13,7 +13,7 @@
 #import "KTMaster.h"
 #import "SVPublishingDigestStorage.h"
 #import "KTPage.h"
-#import "SVPublishingRecord.h"
+#import "SVDirectoryPublishingRecord.h"
 #import "KTURLCredentialStorage.h"
 #import "SVGoogleSitemapPinger.h"
 
@@ -35,6 +35,8 @@
 
 
 @interface KTLocalPublishingEngine ()
+- (SVPublishingRecord *)publishingRecordForPath:(NSString *)path;
+- (SVPublishingRecord *)regularFilePublishingRecordWithPath:(NSString *)path;
 - (void)pingURL:(NSURL *)URL;
 @end
 
@@ -79,6 +81,14 @@
         _publishingRecordsBySHA1Digest = [[NSMutableDictionary alloc]
                                           initWithObjects:records
                                           forKeys:[records valueForKey:@"SHA1Digest"]];
+        
+        
+        records = [[site managedObjectContext] fetchAllObjectsForEntityForName:@"PublishingRecord"
+                                                                         error:NULL];
+        
+        _publishingRecordsByPath = [[NSDictionary alloc]
+                                    initWithObjects:records
+                                    forKeys:[records valueForKeyPath:@"path.lowercaseString"]];
 	}
 	
 	return self;
@@ -89,6 +99,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     [_publishingRecordsBySHA1Digest release];
+    [_publishingRecordsByPath release];
     
     [super dealloc];
 }
@@ -169,7 +180,7 @@
     // Don't upload if the data isn't stale and we've been requested to only publish changes
 	if ([self onlyPublishChanges])
     {
-        SVPublishingRecord *record = [[[self site] hostProperties] publishingRecordForPath:remotePath];
+        SVPublishingRecord *record = [self publishingRecordForPath:remotePath];
         
         // If content hash hasn't changed, no need to publish
         if ([hash isEqualToData:[record contentHash]])
@@ -236,7 +247,7 @@
         // Compare digests to know if it's worth publishing. Look up remote hash first to save us reading in the local file if possible
         if ([self onlyPublishChanges])
         {
-            SVPublishingRecord *record = [[[self site] hostProperties] publishingRecordForPath:remotePath];
+            SVPublishingRecord *record = [self publishingRecordForPath:remotePath];
             NSData *publishedDigest = [record SHA1Digest];
             if ([digest isEqualToData:publishedDigest])
             {
@@ -533,13 +544,51 @@
     [undoManager removeAllActions];
 }
 
-#pragma mark Content Generation
+#pragma mark Publishing Records
+
+- (SVPublishingRecord *)publishingRecordForPath:(NSString *)path;
+{
+    return [_publishingRecordsByPath objectForKey:[path lowercaseString]];
+}
+
+- (SVPublishingRecord *)regularFilePublishingRecordWithPath:(NSString *)path;
+{
+    OBPRECONDITION(path);
+    
+    
+    SVPublishingRecord *result = [self publishingRecordForPath:path];
+    if (![result isRegularFile])
+    {
+        NSArray *pathComponents = [path pathComponents];
+        
+        // Create intermediate directories
+        SVPublishingRecord *aRecord = [[[self site] hostProperties] rootPublishingRecord];
+        for (int i = 0; i < [pathComponents count] - 1; i++)
+        {
+            NSString *aPathComponent = [pathComponents objectAtIndex:i];        
+            SVDirectoryPublishingRecord *parentRecord = (SVDirectoryPublishingRecord *)aRecord;
+            aRecord = [parentRecord directoryPublishingRecordWithFilename:aPathComponent];
+        }
+        
+        
+        // Create final record
+        NSString *filename = [pathComponents lastObject];
+        SVDirectoryPublishingRecord *parentRecord = (SVDirectoryPublishingRecord *)aRecord;
+        aRecord = [parentRecord regularFilePublishingRecordWithFilename:filename];
+        
+        
+        // Finish up
+        result = aRecord;
+    }
+    
+    return result;
+}
 
 - (SVPublishingRecord *)updatePublishingRecordForPath:(NSString *)path
                                            SHA1Digest:(NSData *)digest
                                           contentHash:(NSData *)contentHash;
 {
-    SVPublishingRecord *record = [[[self site] hostProperties] regularFilePublishingRecordWithPath:path];
+    SVPublishingRecord *record = [self regularFilePublishingRecordWithPath:path];
     
     NSData *oldDigest = [record SHA1Digest];
     

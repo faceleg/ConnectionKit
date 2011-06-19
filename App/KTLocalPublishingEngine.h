@@ -15,6 +15,7 @@
 	BOOL    _onlyPublishChanges;
     
   @private
+    NSDictionary        *_publishingRecordsByPath;
     NSMutableDictionary *_publishingRecordsBySHA1Digest;
 }
 
