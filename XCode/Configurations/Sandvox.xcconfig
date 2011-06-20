@@ -39,7 +39,6 @@ YRKSPINNINGPROGRESSINDICATOR_COMMIT = fe71a17098f56e62e65b36da0d2ba639481e4899
 
 // Building -- common settings across all configurations
 
-SDKROOT = macosx10.6
 
 // GCC 4.2
 GCC_VERSION = 4.2
