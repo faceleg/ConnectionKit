@@ -1299,7 +1299,6 @@
 		CEBEB32D10AA7B07006E7D8A /* iMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEBEB32C10AA7B07006E7D8A /* iMedia.framework */; };
 		CEC11F770D79355700513E70 /* NSImage+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = CE27F6600D6193B200D211EA /* NSImage+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
 		CEC4C55810CEED7E00AEE22D /* SVDesignChooserImageBrowserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC4C55610CEED7E00AEE22D /* SVDesignChooserImageBrowserView.m */; };
-		CEC4C55F10CEEE5100AEE22D /* SVDesignChooserImageBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC4C55D10CEEE5100AEE22D /* SVDesignChooserImageBrowserCell.m */; };
 		CEC4D2BC0934333800D75C23 /* ExceptionHandling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC4D2BB0934333800D75C23 /* ExceptionHandling.framework */; };
 		CEC69B06108E6FC4000E6E84 /* MAAttachedWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC69B04108E6FC4000E6E84 /* MAAttachedWindow.h */; };
 		CEC69B07108E6FC4000E6E84 /* MAAttachedWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC69B05108E6FC4000E6E84 /* MAAttachedWindow.m */; };
@@ -3213,8 +3212,6 @@
 		CEC0F93D10852CED002CE02E /* iMedia.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = iMedia.xcodeproj; path = ../../imedia/iMedia.xcodeproj; sourceTree = SOURCE_ROOT; };
 		CEC4C55510CEED7E00AEE22D /* SVDesignChooserImageBrowserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDesignChooserImageBrowserView.h; sourceTree = "<group>"; };
 		CEC4C55610CEED7E00AEE22D /* SVDesignChooserImageBrowserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDesignChooserImageBrowserView.m; sourceTree = "<group>"; };
-		CEC4C55C10CEEE5100AEE22D /* SVDesignChooserImageBrowserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDesignChooserImageBrowserCell.h; sourceTree = "<group>"; };
-		CEC4C55D10CEEE5100AEE22D /* SVDesignChooserImageBrowserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDesignChooserImageBrowserCell.m; sourceTree = "<group>"; };
 		CEC4C56210CEEFD200AEE22D /* DumpedImageKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DumpedImageKit.h; sourceTree = "<group>"; };
 		CEC4D2BB0934333800D75C23 /* ExceptionHandling.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExceptionHandling.framework; path = /System/Library/Frameworks/ExceptionHandling.framework; sourceTree = "<absolute>"; };
 		CEC4DB2F0935179500D75C23 /* NonStandardURL.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = NonStandardURL.html; sourceTree = "<group>"; };
@@ -4494,8 +4491,6 @@
 				3C6EA94D1048E59300B0763D /* SVDesignBrowserViewController.m */,
 				CEC4C55510CEED7E00AEE22D /* SVDesignChooserImageBrowserView.h */,
 				CEC4C55610CEED7E00AEE22D /* SVDesignChooserImageBrowserView.m */,
-				CEC4C55C10CEEE5100AEE22D /* SVDesignChooserImageBrowserCell.h */,
-				CEC4C55D10CEEE5100AEE22D /* SVDesignChooserImageBrowserCell.m */,
 				CEC4C56210CEEFD200AEE22D /* DumpedImageKit.h */,
 				CE8E713E10B5D0950005BD91 /* KTDesignFamily.h */,
 				CE8E713F10B5D0950005BD91 /* KTDesignFamily.m */,
@@ -7940,7 +7935,6 @@
 				273DCFF210CBDC10003CCE97 /* KSArrayController.m in Sources */,
 				277892A110CD5FA3008AA683 /* SVTitleBox.m in Sources */,
 				CEC4C55810CEED7E00AEE22D /* SVDesignChooserImageBrowserView.m in Sources */,
-				CEC4C55F10CEEE5100AEE22D /* SVDesignChooserImageBrowserCell.m in Sources */,
 				276F8AB310D572780094AA73 /* SVDOMController.m in Sources */,
 				27A3578A10E6D59D00C99FB3 /* SVTemplate.m in Sources */,
 				273D765110EC169F003F5BA8 /* SVPlugInInspector.m in Sources */,
