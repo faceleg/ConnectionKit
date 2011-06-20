@@ -9,15 +9,17 @@
 #import "SVArchivePage.h"
 
 #import "KTPage+Paths.h"
-#import "NSObject+Karelia.h"
 #import "SVGraphicFactory.h"
 #import "SVHTMLTemplateParser.h"
-#import "SVIndexPlugIn.h"
 #import "SVIndexPlugIn.h"
 #import "SVLink.h"
 #import "SVPlugInGraphic.h"
 #import "SVRichText.h"
 #import "SVTextAttachment.h"
+
+#import "NSObject+Karelia.h"
+#import "NSSet+Karelia.h"
+#import "NSSortDescriptor+Karelia.h"
 
 
 @implementation SVArchivePage
@@ -173,7 +175,16 @@
     
 	// get this archive page's collection, and then look at what indexes it has if possible
 	// With found one, make sure collection == plugIn.indexedCollection
-	NSArray *attachments = [[self.collection article] orderedAttachments];
+    static NSArray *sSortDescriptors;
+    if (!sSortDescriptors)
+    {
+        sSortDescriptors = [[NSSortDescriptor sortDescriptorArrayWithKey:@"placement" ascending:YES]
+                            arrayByAddingObjectsFromArray:[SVRichText attachmentSortDescriptors]];
+        [sSortDescriptors retain];
+    }
+    
+	NSArray *attachments = [[[self.collection article] attachments] KS_sortedArrayUsingDescriptors:sSortDescriptors];
+                            
 	SVIndexPlugIn *foundIndexPlugIn = nil;
 	NSString *foundIndexPlugInIdentifier = nil;
 	for (SVTextAttachment *attachment in attachments)
