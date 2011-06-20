@@ -671,6 +671,9 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (void)setFileURL:(NSURL *)absoluteURL
 {
+    if ([[self fileURL] isEqual:absoluteURL]) return;   // nowt to do
+    
+        
     // Mark persistent store as moved
     [self setURLForPersistentStoreUsingFileURL:absoluteURL];
     
