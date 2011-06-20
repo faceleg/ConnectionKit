@@ -13,7 +13,7 @@
 @class SVDesignBrowserViewController;
 @class SVDesignsController;
 
-@interface SVDesignPickerController : NSViewController <MGScopeBarDelegate>
+@interface SVDesignPickerController : NSViewController <NSWindowDelegate, MGScopeBarDelegate>
 {
     IBOutlet MGScopeBar             *oScopeBar;
 	

@@ -16,7 +16,7 @@
 	BOOL isFading;
 }
 
-+ (id)sharedOverlay;
++ (KTPulsatingOverlay *)sharedOverlay;
 
 - (void)displayWithFrame:(NSRect)frame;
 - (void)hide;

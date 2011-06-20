@@ -14,7 +14,7 @@
 @protocol KSCollectionController;
 
 
-@interface KTCodeInjectionController : KSSingletonWindowController 
+@interface KTCodeInjectionController : KSSingletonWindowController <NSSplitViewDelegate>
 {
 	IBOutlet NSTextField	*oCodeInjectionDescriptionLabel;
 	IBOutlet NSTabView		*oTabView;

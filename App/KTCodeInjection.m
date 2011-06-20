@@ -11,20 +11,6 @@
 
 @implementation KTCodeInjection
 
-+ (void)initialize
-{
-	// Site Outline
-	// Deprecated .... should use keyPathsForValuesAffectingValueForKey
-	[self setKeys:[NSArray arrayWithObjects:@"beforeHTML",
-                   @"bodyTag",
-                   @"bodyTagEnd",
-                   @"bodyTagStart",
-                   @"earlyHead",
-                   @"headArea", 
-				   @"additionalCSS", nil]
-        triggerChangeNotificationsForDependentKey:@"hasCodeInjection"];
-}
-
 /*  Returns YES if any of the injection fields have been filled out
  */
 - (BOOL)hasCodeInjection
@@ -57,5 +43,17 @@
 	
 	return NO;
 }
++ (NSSet *)keyPathsForValuesAffectingHasCodeInjection
+{
+    return [NSSet setWithObjects:
+            @"beforeHTML",
+            @"bodyTag",
+            @"bodyTagEnd",
+            @"bodyTagStart",
+            @"earlyHead",
+            @"headArea", 
+            @"additionalCSS", nil];
+}
+
 
 @end

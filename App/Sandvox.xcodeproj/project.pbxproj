@@ -324,8 +324,6 @@
 		2713C0691078177A000864C2 /* SVLayoutView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2713C0671078177A000864C2 /* SVLayoutView.h */; };
 		2713C06A1078177A000864C2 /* SVLayoutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2713C0681078177A000864C2 /* SVLayoutView.m */; };
 		271575CE0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 271575CC0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.m */; };
-		2716F2D40CE61A8000DE635E /* KTMissingMediaArrayController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2716F2D20CE61A8000DE635E /* KTMissingMediaArrayController.h */; settings = {ATTRIBUTES = (); }; };
-		2716F2D50CE61A8000DE635E /* KTMissingMediaArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2716F2D30CE61A8000DE635E /* KTMissingMediaArrayController.m */; };
 		271884431296A28000139C89 /* KSElementInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 271884411296A28000139C89 /* KSElementInfo.h */; };
 		271884441296A28000139C89 /* KSElementInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 271884421296A28000139C89 /* KSElementInfo.m */; };
 		27196F631090A9D40096B612 /* SVInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = 27196F611090A9D40096B612 /* SVInspector.h */; settings = {ATTRIBUTES = (); }; };
@@ -6043,7 +6041,6 @@
 				275341340C993D8600AC7220 /* KTHTMLParserMasterCache.h in Headers */,
 				277560360CA5228B00D8A412 /* KSObjectKeyPathPair.h in Headers */,
 				27AA10290CDA065A001D6B9B /* KTMissingMediaController.h in Headers */,
-				2716F2D40CE61A8000DE635E /* KTMissingMediaArrayController.h in Headers */,
 				27CD6CE80CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h in Headers */,
 				277EE9220CFD8CFF005617FE /* KTStalenessManager.h in Headers */,
 				27A50E8A0D19282B00149038 /* SVHTMLTextBlock.h in Headers */,
@@ -7726,7 +7723,6 @@
 				277560370CA5228B00D8A412 /* KSObjectKeyPathPair.m in Sources */,
 				273C2F910CCE58C100E48E22 /* KTMaster.m in Sources */,
 				27AA102A0CDA065A001D6B9B /* KTMissingMediaController.m in Sources */,
-				2716F2D50CE61A8000DE635E /* KTMissingMediaArrayController.m in Sources */,
 				27CD6CE90CE8BC3300919E41 /* KTMissingMediaThumbnailCell.m in Sources */,
 				273D7DB40D070BC100057448 /* KTPage+Paths.m in Sources */,
 				27A50E8B0D19282B00149038 /* SVHTMLTextBlock.m in Sources */,

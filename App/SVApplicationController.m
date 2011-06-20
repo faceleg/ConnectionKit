@@ -1070,7 +1070,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		NSString* fontCollectionFile = [@"~/Library/FontCollections/Web-safe Mac:Windows.collection" stringByExpandingTildeInPath];
 		
 		// copy into place even if it exists, so we can replace previosu version which should not have included Times
-		[fm copyPath:fontCollection toPath:fontCollectionFile handler:nil];
+		[fm copyItemAtPath:fontCollection toPath:fontCollectionFile error:NULL];
 		
 		[defaults setBool:YES forKey:@"Installed FontCollection 2"];
 	}

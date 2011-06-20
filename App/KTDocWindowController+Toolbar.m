@@ -40,7 +40,7 @@
 #import <BWToolkitFramework/BWToolkitFramework.h>
 
 
-@interface KTDocWindowController ( PrivateToolbar )
+@interface KTDocWindowController ( PrivateToolbar ) <NSToolbarDelegate>
 
 - (NSToolbar *)toolbarNamed:(NSString *)toolbarName;
 

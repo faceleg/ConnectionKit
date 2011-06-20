@@ -9,7 +9,7 @@
 #import "KSViewController.h"
 
 
-@interface KTExportSavePanelController : NSViewController
+@interface KTExportSavePanelController : NSViewController <NSOpenSavePanelDelegate>
 {
     IBOutlet NSTextField    *oSiteURLField;
     IBOutlet NSImageView    *oSiteURLWarningImageView;

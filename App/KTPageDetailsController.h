@@ -15,7 +15,7 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSite
 @class SVSiteOutlineViewController, SVPagesTreeController, KSFancySchmancyBindingsPopUpButton, KTPageDetailsBoxView, MAAttachedWindow, SVWebContentAreaController, KSFocusingTextField;
 
 
-@interface KTPageDetailsController : NSViewController
+@interface KTPageDetailsController : NSViewController <NSWindowDelegate>
 {
 	IBOutlet KSFocusingTextField	*oWindowTitleField;
 	IBOutlet KSFocusingTextField	*oMetaDescriptionField;

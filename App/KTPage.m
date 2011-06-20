@@ -159,8 +159,8 @@
 		{
 			// Get creation date from file if it's not specified explicitly
 			NSDictionary *fileAttrs = [[NSFileManager defaultManager]
-				fileAttributesAtPath:[aDictionary objectForKey:kKTDataSourceFilePath]
-						traverseLink:YES];
+                                       attributesOfItemAtPath:[aDictionary objectForKey:kKTDataSourceFilePath]
+                                       error:NULL];
 			NSDate *date = [fileAttrs objectForKey:NSFileCreationDate];
 			[self setValue:date forKey:@"creationDate"];
 		}

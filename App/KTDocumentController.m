@@ -31,11 +31,13 @@
 #import "NSBundle+Karelia.h"
 #import "NSURL+Karelia.h"
 
-#import "BDAlias.h"
 #import "KSApplication.h"
 #import "KSProgressPanel.h"
 #import "KSRegistrationController.h"
 #import "SVApplicationController.h"
+
+#import "BDAlias.h"
+#import "KSURLUtilities.h"
 
 #import "Debug.h"
 
@@ -331,14 +333,14 @@
     {
 		if ([document isKindOfClass:[KTDocument class]])	// make sure it's a KTDocument
 		{
-			if ( [[[document fileName] pathExtension] isEqualToString:kSVDocumentPathExtension] 
-				&& ![[document fileName] hasPrefix:[[NSBundle mainBundle] bundlePath]]  )
+			if ( [[[document fileURL] ks_pathExtension] isEqualToString:kSVDocumentPathExtension] 
+				&& ![[[document fileURL] path] hasPrefix:[[NSBundle mainBundle] bundlePath]]  )
 			{
-				BDAlias *alias = [BDAlias aliasWithPath:[document fileName] relativeToPath:[NSHomeDirectory() stringByResolvingSymlinksInPath]];
+				BDAlias *alias = [BDAlias aliasWithPath:[[document fileURL] path] relativeToPath:[NSHomeDirectory() stringByResolvingSymlinksInPath]];
 				if (nil == alias)
 				{
 					// couldn't find relative to home directory, so just do absolute
-					alias = [BDAlias aliasWithPath:[document fileName]];
+					alias = [BDAlias aliasWithPath:[[document fileURL] path]];
 				}
 				if ( nil != alias )
 				{

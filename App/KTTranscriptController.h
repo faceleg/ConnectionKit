@@ -10,8 +10,8 @@
 #import "KSSingletonWindowController.h"
 
 
-@interface KTTranscriptController : KSSingletonWindowController {
-
+@interface KTTranscriptController : KSSingletonWindowController <NSTextStorageDelegate>
+{
 	IBOutlet NSTextView *oLog;
 }
 

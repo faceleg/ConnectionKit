@@ -291,7 +291,7 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	NSString *backupFilename = [fileManager uniqueFilenameAtPath:preferredPath];
 	NSString *result = [backupDirectory stringByAppendingPathComponent:backupFilename];
 	
-	BOOL success = [fileManager movePath:path toPath:result handler:nil];
+	BOOL success = [fileManager moveItemAtPath:path toPath:result error:nil];
 	if (!success)
 	{
 		// The backup failed, construct an error
@@ -318,12 +318,12 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
     
     // Dump the failed save
 	NSString *savePath = [saveURL path];
-	BOOL result = [[NSFileManager defaultManager] removeFileAtPath:savePath handler:nil];
+	BOOL result = [[NSFileManager defaultManager] removeItemAtPath:savePath error:NULL];
 	
 	// Recover the backup if there is one
 	if (backupPath)
 	{
-		result = [[NSFileManager defaultManager] movePath:backupPath toPath:[saveURL path] handler:nil];
+		result = [[NSFileManager defaultManager] moveItemAtPath:backupPath toPath:[saveURL path] error:nil];
 	}
 	
 	if (!result)

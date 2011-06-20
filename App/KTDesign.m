@@ -782,7 +782,7 @@ const int kDesignThumbHeight = 65;
 		
 		// Run through all files in the bundle
 		NSString *designBundlePath = [[self bundle] bundlePath];
-		NSEnumerator *resourcesEnumerator = [[[NSFileManager defaultManager] directoryContentsAtPath:designBundlePath] objectEnumerator];
+		NSEnumerator *resourcesEnumerator = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:designBundlePath error:NULL] objectEnumerator];
 		NSString *aFilename;
 		
 		while (aFilename = [resourcesEnumerator nextObject])

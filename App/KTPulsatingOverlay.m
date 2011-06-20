@@ -19,7 +19,7 @@ static KTPulsatingOverlay *_sharedOverlay = nil;
 
 @implementation KTPulsatingOverlay
 
-+ (id)sharedOverlay
++ (KTPulsatingOverlay *)sharedOverlay
 {
 	if (!_sharedOverlay)
 	{

@@ -300,7 +300,7 @@
 - (void)exportSiteSavePanelDidEnd:(NSSavePanel *)savePanel returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
     // If there was a controller created for the panel, get rid of it
-    KTExportSavePanelController *controller = [savePanel delegate];
+    KTExportSavePanelController *controller = (KTExportSavePanelController *)[savePanel delegate];
     if (controller)
     {
         OBASSERT([controller isKindOfClass:[KTExportSavePanelController class]]);
