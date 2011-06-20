@@ -530,9 +530,13 @@
 	{
 		[context pushAttribute:@"style"
 						 value:[NSString stringWithFormat:
-							 @"padding:1px 1px 1px 6px; color:#888; text-overflow:ellipsis; overflow:hidden; white-space:nowrap; width:%@px;",
-								self.width]];
-		[context startElement:@"div"];
+							 @"padding:1px 1px 1px 6px; color:#888; text-overflow:ellipsis; overflow:hidden; white-space:nowrap;"]];
+        
+        [context startResizableElement:@"div"
+                                plugIn:self
+                               options:SVResizingDisableVertically
+                       preferredIdName:nil
+                            attributes:nil];
         {
             [context pushAttribute:@"style" value:@"vertical-align:text-bottom; padding-right:4px;"];
             
