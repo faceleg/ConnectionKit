@@ -530,18 +530,19 @@
 	{
 		[context pushAttribute:@"style"
 						 value:[NSString stringWithFormat:
-							 @"padding:1px 1px 1px 6px; color:#888; text-overflow:ellipsis; overflow:hidden; white-space:nowrap; width:%dpx;",
+							 @"padding:1px 1px 1px 6px; color:#888; text-overflow:ellipsis; overflow:hidden; white-space:nowrap; width:%@px;",
 								self.width]];
 		[context startElement:@"div"];
-			
-		[context pushAttribute:@"width" value:[NSNumber numberWithInt:16]];
-		[context pushAttribute:@"height" value:[[NSNumber numberWithInteger:16] stringValue]];
-		[context pushAttribute:@"src" value:[[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForImageResource:@"sound_placeholder"]] absoluteString]];
-		[context pushAttribute:@"style" value:@"vertical-align:text-bottom; padding-right:4px;"];
-		[context startElement:@"img"];
-		[context endElement];
+        {
+            [context pushAttribute:@"style" value:@"vertical-align:text-bottom; padding-right:4px;"];
+            
+            [context writeImageWithSrc:[[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForImageResource:@"sound_placeholder"]] absoluteString]
+                                   alt:@""
+                                 width:[NSNumber numberWithInt:16]
+                                height:[NSNumber numberWithInteger:16]];
 
-		[context writeCharacters:[[audioSourceURL path] lastPathComponent]];
+            [context writeCharacters:[[audioSourceURL path] lastPathComponent]];
+        }
 		[context endElement];
 	}
 	
