@@ -122,6 +122,7 @@
     
     
     // Remove from existing parent
+    [item retain];  // remove from parent might dealloc it
     if (parent) [item removeFromParentWebEditorItem];
     
     
@@ -135,6 +136,7 @@
     [item setParentWebEditorItem:self];
     
     [item itemDidMoveToParentWebEditorItem];
+    [item release];
 }
 
 - (void)replaceChildWebEditorItem:(WEKWebEditorItem *)oldItem withItems:(NSArray *)newItems
