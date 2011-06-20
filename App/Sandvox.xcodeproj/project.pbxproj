@@ -7587,16 +7587,16 @@
 		};
 		3CE2B2B60D7F1DD900E2711E /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### UPDATE Shared ToT FOR RELEASE BUILDS\n###\n\nSHARED_PATH=${SRCROOT}/../../Shared\n\n# for some reason using which to find svn works on Leopard, not on Tiger\n# SVN_PATH=`which svn`\n\n# so we do this instead and hope for the best\nif [ -e /usr/local/bin/svn ]\nthen\n\tSVN_PATH=/usr/local/bin/svn\nelif [ -e /usr/bin/svn ]\nthen\n\tSVN_PATH=/usr/bin/svn\nelif [ -e /opt/local/bin/svn ]\nthen\n\tSVN_PATH=/opt/local/bin/svn\nelse\n\techo \"ERROR - CANT FIND SVN\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"syncing Shared with ToT ...\"\ncd ${SHARED_PATH}\n${SVN_PATH} update\necho \"... finished syncing Shared\"\n\npopd\n\nexit 0\n";
+			shellScript = "#!/bin/bash\n\n###\n### CHECKOUT Shared\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../Shared\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\ncd ${REPOSITORY_PATH}\n${GIT_PATH} checkout ${SHARED_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching Shared from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${SHARED_COMMIT}\n\techo \"... finished fetching Shared\"\nfi\n\npopd\n\nexit 0\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3CE4E19A0ED4A6DE008DD114 /* ShellScript */ = {
@@ -9609,6 +9609,7 @@
 		};
 		3CE2B2B90D7F1DD900E2711E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
 			buildSettings = {
 				PRODUCT_NAME = UpdateShared;
 			};
