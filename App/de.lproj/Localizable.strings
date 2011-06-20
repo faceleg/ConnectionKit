@@ -1620,8 +1620,8 @@
 /* Message in alert */
 "Your Sites folder needs to be readable by other users in order to host your website from your computer. You will need to make this folder fully readable (using the Finder)." = "Ihr Website Ordner muss von anderen lesbar sein, um die Site auf Ihrem Computer zu hosten. Dazu müssen Sie den Ordner im Finder voll lesbar machen.";
 
-/* Button Text/Tooltip - WITH PLACEHOLDERS IN BRACKETS */
-"{current} of {total}" = "{aktuell} von {gesamt}";
+/* Button Text/Tooltip - DO NOT LOCALIZE {current} and the {total} - these will be replaced with numbers! */
+"{current} of {total}" = "{current} von {total}";
 
 /* placeholder for site not yet set up for publishing. */
 "«unspecified»" = "«nicht spezifiziert»";

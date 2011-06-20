@@ -115,7 +115,7 @@
 	NSString *language = [[self indexedCollection] language];
 	NSString *startString	= [bundle ks_localizedStringForString:@"Slideshow" language:language fallback:NSLocalizedString(@"Slideshow", @"Button Text/Tooltip")];
 	NSString *stopString	= [bundle ks_localizedStringForString:@"Stop" language:language fallback:NSLocalizedString(@"Stop", @"Button Text/Tooltip")];
-	NSString *currentFormat	= [bundle ks_localizedStringForString:@"{current} of {total}" language:language fallback:NSLocalizedString(@"{current} of {total}", @"Button Text/Tooltip - WITH PLACEHOLDERS IN BRACKETS")];
+	NSString *currentFormat	= [bundle ks_localizedStringForString:@"{current} of {total}" language:language fallback:NSLocalizedString(@"{current} of {total}", @"Button Text/Tooltip - DO NOT LOCALIZE {current} and the {total} - these will be replaced with numbers!")];
 	NSString *previousString= [bundle ks_localizedStringForString:@"Previous" language:language fallback:NSLocalizedString(@"Previous", @"Button Text/Tooltip")];
 	NSString *nextString	= [bundle ks_localizedStringForString:@"Next" language:language fallback:NSLocalizedString(@"Next", @"Button Text/Tooltip")];
 	NSString *closeString	= [bundle ks_localizedStringForString:@"Close" language:language fallback:NSLocalizedString(@"Close", @"Button Text/Tooltip")];
