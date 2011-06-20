@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10J567</string>
+		<string key="IBDocument.SystemVersion">10J869</string>
 		<string key="IBDocument.InterfaceBuilderVersion">823</string>
 		<string key="IBDocument.AppKitVersion">1038.35</string>
-		<string key="IBDocument.HIToolboxVersion">462.00</string>
+		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">823</string>
@@ -85,6 +85,15 @@
 						<reference key="NSMixedImage" ref="877865980"/>
 					</object>
 					<object class="NSMenuItem" id="77858638">
+						<reference key="NSMenu" ref="57021279"/>
+						<string key="NSTitle">Validate Page HTML (w3.org)</string>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="533168960"/>
+						<reference key="NSMixedImage" ref="877865980"/>
+						<int key="NSTag">3</int>
+					</object>
+					<object class="NSMenuItem" id="913079856">
 						<reference key="NSMenu" ref="57021279"/>
 						<string key="NSTitle">View Editor HTML Source</string>
 						<string key="NSKeyEquiv"/>
@@ -343,9 +352,25 @@
 					<object class="IBActionConnection" key="connection">
 						<string key="label">selectWebViewViewType:</string>
 						<reference key="source" ref="234968512"/>
+						<reference key="destination" ref="913079856"/>
+					</object>
+					<int key="connectionID">1091</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">validateSource:</string>
+						<reference key="source" ref="234968512"/>
 						<reference key="destination" ref="77858638"/>
 					</object>
-					<int key="connectionID">1089</int>
+					<int key="connectionID">1092</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oValidateSourceViewMenuItem</string>
+						<reference key="source" ref="848932847"/>
+						<reference key="destination" ref="77858638"/>
+					</object>
+					<int key="connectionID">1093</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -407,6 +432,7 @@
 							<reference ref="67801468"/>
 							<reference ref="727618609"/>
 							<reference ref="77858638"/>
+							<reference ref="913079856"/>
 						</object>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Debug</string>
@@ -512,6 +538,11 @@
 						<reference key="object" ref="77858638"/>
 						<reference key="parent" ref="57021279"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1090</int>
+						<reference key="object" ref="913079856"/>
+						<reference key="parent" ref="57021279"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -562,13 +593,14 @@
 					<string>1087.IBPluginDependency</string>
 					<string>1087.ImportedFromIB2</string>
 					<string>1088.IBPluginDependency</string>
+					<string>1090.IBPluginDependency</string>
 					<string>260.ImportedFromIB2</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{68, 227}, {236, 333}}</string>
+					<string>{{68, 207}, {261, 353}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -609,6 +641,7 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 				</object>
@@ -629,7 +662,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1089</int>
+			<int key="maxID">1093</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1453,13 +1486,6 @@
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../Shared/AppKit/KSSilencingConfirmSheet.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">../../Shared/AppKit/KSURLInfoField.h</string>
 					</object>
 				</object>
@@ -1841,7 +1867,6 @@
 							<string>oFindSeparator</string>
 							<string>oFindSubmenu</string>
 							<string>oIndexesMenu</string>
-							<string>oInsertBlankPageMenuItem</string>
 							<string>oInsertExternalLinkMenuItem</string>
 							<string>oInsertHTMLTextMenuItem</string>
 							<string>oInsertRawHTMLMenuItem</string>
@@ -1879,7 +1904,6 @@
 							<string>NSMenuItem</string>
 							<string>NSMenuItem</string>
 							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
 							<string>NSMenu</string>
 							<string>NSMenu</string>
 							<string>NSMenuItem</string>
@@ -1914,7 +1938,6 @@
 							<string>oFindSeparator</string>
 							<string>oFindSubmenu</string>
 							<string>oIndexesMenu</string>
-							<string>oInsertBlankPageMenuItem</string>
 							<string>oInsertExternalLinkMenuItem</string>
 							<string>oInsertHTMLTextMenuItem</string>
 							<string>oInsertRawHTMLMenuItem</string>
@@ -1999,10 +2022,6 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">oIndexesMenu</string>
 								<string key="candidateClassName">NSMenu</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">oInsertBlankPageMenuItem</string>
-								<string key="candidateClassName">NSMenuItem</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">oInsertExternalLinkMenuItem</string>
@@ -3438,7 +3457,7 @@
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
-			<integer value="1050" key="NS.object.0"/>
+			<integer value="1060" key="NS.object.0"/>
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.InterfaceBuilder3</string>
