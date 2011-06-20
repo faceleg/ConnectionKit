@@ -130,6 +130,12 @@
                                                                        options:0
                                                                          range:NSMakeRange(0, [mutableDescription length])];
                                 
+                                // #120025
+                                [mutableDescription replaceOccurrencesOfString:@"replacing unexpected font by </font>"
+                                                                    withString:@""
+                                                                       options:0
+                                                                         range:NSMakeRange(0, [mutableDescription length])];
+                                
                                 // Same guy has iframes affected by open <B> elements. Again, WebKit seems to cope since it knows they should have no content of their own. #120222
                                 [mutableDescription replaceOccurrencesOfString:@"</iframe>"
                                                                     withString:@""
