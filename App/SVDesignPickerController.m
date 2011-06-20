@@ -42,6 +42,7 @@
 {
     [self setWindow:nil];
     
+    [_design release];
     [_designsController release];
     [_browserViewController release];
     [_genre release];
@@ -76,11 +77,18 @@
 
 - (void)setDesign:(KTDesign *)design;
 {
-    IKImageBrowserView *imageBrowser = [self.browserViewController imageBrowser];
+    if (design == _design) return;
     
-    [imageBrowser reloadData];  // so that -setSelectedObjects: succeeds
-    [[self designsController] setSelectedObjects:[NSArray arrayWithObject:design]];
-	// NSLog(@"Set design to %p ... now selected objects is %@", design, [[self designsController] selectedObjects]);
+    [_design release]; _design = [design retain];
+    
+    if ([self isBrowserViewControllerLoaded])
+    {
+        IKImageBrowserView *imageBrowser = [self.browserViewController imageBrowser];
+        
+        [imageBrowser reloadData];  // so that -setSelectedObjects: succeeds
+        [[self designsController] setSelectedObjects:[NSArray arrayWithObject:design]];
+        // NSLog(@"Set design to %p ... now selected objects is %@", design, [[self designsController] selectedObjects]);
+    }
 }
 
 @synthesize genre = _genre;
@@ -299,6 +307,16 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 {
     [self window];  // make sure it's loaded
     return _browserViewController;
+}
+
+- (BOOL)isBrowserViewControllerLoaded; { return _browserViewController != nil; }
+
+- (void)loadView;
+{
+    [super loadView];
+    
+    [[[self browserViewController] imageBrowser] reloadData];
+    if (_design) [[self designsController] setSelectedObjects:[NSArray arrayWithObject:_design]];
 }
 
 #pragma mark NSWindowDelegate

@@ -18,6 +18,8 @@
     IBOutlet MGScopeBar             *oScopeBar;
 	
   @private
+    KTDesign    *_design;
+    
     NSWindow                        *_window;
     SVDesignsController             *_designsController;
     SVDesignBrowserViewController   *_browserViewController;
@@ -42,7 +44,9 @@
 
 @property (nonatomic, retain) IBOutlet NSWindow *window;
 @property (nonatomic, retain) IBOutlet NSArrayController *designsController;
+
 @property (nonatomic, retain) IBOutlet SVDesignBrowserViewController *browserViewController;
+- (BOOL)isBrowserViewControllerLoaded;
 
 - (IBAction)cancelSheet:(id)sender;
 - (IBAction)chooseDesign:(id)sender;
