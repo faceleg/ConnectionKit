@@ -972,8 +972,9 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
         
         KTImageScalingSettings *settings = [KTImageScalingSettings settingsWithBehavior:KTScaleToSize size:NSMakeSize(width, height)];
         
-        CGImageSourceRef source = CGImageSourceCreateWithURL((CFURLRef)[media mediaURL], NULL);
-        if (!source) source = CGImageSourceCreateWithData((CFDataRef)[media mediaData], NULL);
+        CGImageSourceRef source = nil;
+        if ([media mediaData]) source = CGImageSourceCreateWithData((CFDataRef)[media mediaData], NULL);
+        if (!source) source = CGImageSourceCreateWithURL((CFURLRef)[media mediaURL], NULL);
         
         if (source)
         {
