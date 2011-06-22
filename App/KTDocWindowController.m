@@ -245,23 +245,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 #pragma mark Window Title
 
-/*  We append the title of our current content to the default. This gives a similar effect to the titlebar in a web browser.
- */
-- (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName
-{
-    SVWebContentAreaController *contentController = [self webContentAreaController];
-    
-    NSString *contentTitle = [[contentController selectedViewController] title];
-    if ([contentTitle length] > 0)
-    {
-        displayName = [displayName stringByAppendingFormat:
-                       @" — %@",    // yes, that's an em-dash
-                       contentTitle];
-	}
-    
-    return displayName;
-}
-
 @synthesize contentTitle = _contentTitle;
 - (void)setContentTitle:(NSString *)title
 {
