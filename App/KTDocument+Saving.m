@@ -770,7 +770,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     // Try write
     NSURL *mediaURL = [docURL ks_URLByAppendingPathComponent:filename isDirectory:NO];
-    if ([aMediaRecord writeToURL:mediaURL updateFileURL:YES error:outError])
+    if ([aMediaRecord writeToURL:mediaURL updateFileURL:NO error:outError]) // NO, because don't final URL yet
     {
         // I was experimenting with not updating the file URL straight away. I'm not sure why, but I think it was to account for the idea that you might be doing a Save-To op. Unfortunately that breaks Quick Look previews if the home page contains a new image. So I've switched to updating the URL straight off, so it's ready to generate correct preview HTML.
         
