@@ -671,11 +671,18 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (void)setFileURL:(NSURL *)absoluteURL
 {
-    if ([[self fileURL] isEqual:absoluteURL]) return;   // nowt to do
-    
-        
     // Mark persistent store as moved
-    [self setURLForPersistentStoreUsingFileURL:absoluteURL];
+    if (![self autosavedContentsFileURL])
+    {
+        [self setURLForPersistentStoreUsingFileURL:absoluteURL];
+    }
+    
+    
+    if ([[self fileURL] isEqual:absoluteURL])
+    {
+        [super setFileURL:absoluteURL];
+        return;   // nowt to do
+    }
     
     
     [super setFileURL:absoluteURL];
@@ -708,9 +715,13 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     [super setAutosavedContentsFileURL:absoluteURL];
     
     // If this the only copy, tell the store its new location
-    if (absoluteURL && ![self fileURL])
+    if (absoluteURL)
     {
         [self setURLForPersistentStoreUsingFileURL:absoluteURL];
+    }
+    else if ([self fileURL])
+    {
+        [self setURLForPersistentStoreUsingFileURL:[self fileURL]];
     }
 }
 
