@@ -127,4 +127,6 @@
 
 @implementation SVSiteSubtitle 
 
++ (NSString *)alignmentKeyPath; { return @"master.taglineAlignment"; }
+
 @end

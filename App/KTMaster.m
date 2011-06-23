@@ -715,7 +715,8 @@
         || [key isEqualToString:@"facebookAppID"] 
         || [key isEqualToString:@"fbNumberOfPosts"] 
         || [key isEqualToString:@"fbColorScheme"]
-        || [key isEqualToString:@"siteTitleAlignment"])
+        || [key isEqualToString:@"siteTitleAlignment"]
+        || [key isEqualToString:@"taglineAlignment"])
     {
         return YES;
     }
