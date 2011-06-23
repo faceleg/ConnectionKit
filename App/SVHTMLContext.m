@@ -1173,7 +1173,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 - (NSString *)inventFilenameForData:(NSData *)data MIMEType:(NSString *)mimeType
 {
     // Invent a filename
-    NSString *result = [data sha1DigestString];
+    NSString *result = [data ks_SHA1DigestString];
     
     if (mimeType) 
     {

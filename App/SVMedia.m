@@ -286,14 +286,14 @@
     NSData *data = [self mediaData];
     if (data)
     {
-        return [data SHA1Digest];
+        return [data ks_SHA1Digest];
     }
     else
     {
         if ([NSThread isMainThread]) NSLog(@"Hashing URL on main thread; likely gives bad responsiveness");
         
         NSURL *url = [self mediaURL];
-        NSData *result = [NSData SHA1DigestOfContentsOfURL:url];
+        NSData *result = [KSSHA1Stream SHA1DigestOfContentsOfURL:url];
         
         if (!result) NSLog(@"Unable to hash file: %@", url);
         return result;

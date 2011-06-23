@@ -434,8 +434,6 @@
 		2756671E0F0167C700878A05 /* KTDocWindowController+Publishing.m in Sources */ = {isa = PBXBuildFile; fileRef = 2756671D0F0167C700878A05 /* KTDocWindowController+Publishing.m */; };
 		27579A31132BAAE00006C605 /* KSMutableDataWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 27579A2F132BAAE00006C605 /* KSMutableDataWriter.h */; };
 		27579A32132BAAE00006C605 /* KSMutableDataWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 27579A30132BAAE00006C605 /* KSMutableDataWriter.m */; };
-		27579B25132BD6D30006C605 /* KSSHA1Stream.h in Headers */ = {isa = PBXBuildFile; fileRef = 27579B23132BD6D30006C605 /* KSSHA1Stream.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		27579B26132BD6D30006C605 /* KSSHA1Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 27579B24132BD6D30006C605 /* KSSHA1Stream.m */; };
 		2759CC9B1039711200E2C046 /* SVWebEditorViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2759CC991039711200E2C046 /* SVWebEditorViewController.h */; };
 		2759CC9C1039711300E2C046 /* SVWebEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2759CC9A1039711200E2C046 /* SVWebEditorViewController.m */; };
 		2759CC9F103976D800E2C046 /* SVWebContentAreaController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2759CC9D103976D800E2C046 /* SVWebContentAreaController.h */; };
@@ -633,6 +631,8 @@
 		27C20F1011405105006D455E /* SVAuxiliaryPageletText.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C20F0C11405105006D455E /* SVAuxiliaryPageletText.m */; };
 		27C6FE610F1EBC8C00B58822 /* KTCodeInjection.h in Headers */ = {isa = PBXBuildFile; fileRef = 27C6FE5F0F1EBC8C00B58822 /* KTCodeInjection.h */; settings = {ATTRIBUTES = (); }; };
 		27C6FE620F1EBC8C00B58822 /* KTCodeInjection.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C6FE600F1EBC8C00B58822 /* KTCodeInjection.m */; };
+		27C969CA13B3598100EBC76A /* KSSHA1Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C969C113B3587700EBC76A /* KSSHA1Stream.m */; };
+		27C969CF13B359D600EBC76A /* KSSHA1Stream.h in Headers */ = {isa = PBXBuildFile; fileRef = 27C969C013B3587700EBC76A /* KSSHA1Stream.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		27CC249D11F0751A007FB3FE /* KSStringHTMLEntityUnescaping.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CC249B11F0751A007FB3FE /* KSStringHTMLEntityUnescaping.h */; };
 		27CC249E11F0751A007FB3FE /* KSStringHTMLEntityUnescaping.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CC249C11F0751A007FB3FE /* KSStringHTMLEntityUnescaping.m */; };
 		27CD0A2B11AD684A0069E5AB /* WEKWebKitPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CD0A2A11AD684A0069E5AB /* WEKWebKitPrivate.h */; };
@@ -2156,8 +2156,6 @@
 		2756671D0F0167C700878A05 /* KTDocWindowController+Publishing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+Publishing.m"; sourceTree = "<group>"; };
 		27579A2F132BAAE00006C605 /* KSMutableDataWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMutableDataWriter.h; sourceTree = "<group>"; };
 		27579A30132BAAE00006C605 /* KSMutableDataWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMutableDataWriter.m; sourceTree = "<group>"; };
-		27579B23132BD6D30006C605 /* KSSHA1Stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSSHA1Stream.h; sourceTree = "<group>"; };
-		27579B24132BD6D30006C605 /* KSSHA1Stream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSSHA1Stream.m; sourceTree = "<group>"; };
 		2759CC991039711200E2C046 /* SVWebEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorViewController.h; sourceTree = "<group>"; };
 		2759CC9A1039711200E2C046 /* SVWebEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebEditorViewController.m; sourceTree = "<group>"; };
 		2759CC9D103976D800E2C046 /* SVWebContentAreaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebContentAreaController.h; sourceTree = "<group>"; };
@@ -2372,6 +2370,8 @@
 		27C58AE7110204EE00F42306 /* KTPage+Serialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTPage+Serialization.m"; sourceTree = "<group>"; };
 		27C6FE5F0F1EBC8C00B58822 /* KTCodeInjection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTCodeInjection.h; sourceTree = "<group>"; };
 		27C6FE600F1EBC8C00B58822 /* KTCodeInjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTCodeInjection.m; sourceTree = "<group>"; };
+		27C969C013B3587700EBC76A /* KSSHA1Stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSSHA1Stream.h; sourceTree = "<group>"; };
+		27C969C113B3587700EBC76A /* KSSHA1Stream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSSHA1Stream.m; sourceTree = "<group>"; };
 		27C98C9B0F1BA46B0079A84F /* KSSimpleURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSSimpleURLConnection.h; path = ../../Shared/Foundation/KSSimpleURLConnection.h; sourceTree = SOURCE_ROOT; };
 		27C98C9C0F1BA46B0079A84F /* KSSimpleURLConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSSimpleURLConnection.m; path = ../../Shared/Foundation/KSSimpleURLConnection.m; sourceTree = SOURCE_ROOT; };
 		27CC249B11F0751A007FB3FE /* KSStringHTMLEntityUnescaping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSStringHTMLEntityUnescaping.h; sourceTree = "<group>"; };
@@ -4143,6 +4143,15 @@
 			name = 2.0;
 			sourceTree = "<group>";
 		};
+		27C969BF13B3583C00EBC76A /* KSCrypto */ = {
+			isa = PBXGroup;
+			children = (
+				27C969C013B3587700EBC76A /* KSSHA1Stream.h */,
+				27C969C113B3587700EBC76A /* KSSHA1Stream.m */,
+			);
+			path = KSCrypto;
+			sourceTree = "<group>";
+		};
 		27CC0E2511EFBA02007FB3FE /* KSExtensibleManagedObject */ = {
 			isa = PBXGroup;
 			children = (
@@ -5440,8 +5449,6 @@
 				2728C12412E31390008B6CD2 /* KSIsNotNSNotFound.m */,
 				27A8223B12EF532D00152934 /* KSDependenciesTracker.h */,
 				27A8223C12EF532D00152934 /* KSDependenciesTracker.m */,
-				27579B23132BD6D30006C605 /* KSSHA1Stream.h */,
-				27579B24132BD6D30006C605 /* KSSHA1Stream.m */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -5925,6 +5932,7 @@
 				CE22E5B80D7C71A10055D8E9 /* Interfaces */,
 				CE1BE7AF11D2AD0700D875AE /* Graphics */,
 				CE01A6B50EAFD63600BDF264 /* Foundation */,
+				27C969BF13B3583C00EBC76A /* KSCrypto */,
 				27FDEF10111B4C84001F4E60 /* Core Data */,
 				CE01A6210EAFD63600BDF264 /* AppKit */,
 				CE01A71E0EAFD63600BDF264 /* WebKit */,
@@ -6404,12 +6412,12 @@
 				275388E2131D190F00EFF536 /* SVFooterDOMController.h in Headers */,
 				2761E1A1132948E300266D69 /* KSOutputStreamWriter.h in Headers */,
 				27579A31132BAAE00006C605 /* KSMutableDataWriter.h in Headers */,
-				27579B25132BD6D30006C605 /* KSSHA1Stream.h in Headers */,
 				CE495E05133D4C690060FFDF /* SVColorBoxIndexPlugIn.h in Headers */,
 				27B5DA35133E4AA6002AAEA2 /* KSError.h in Headers */,
 				27A3ACC01369C1C7007D774D /* KSWorkspaceUtilities.h in Headers */,
 				271DFB8B137ECD540032D6F4 /* SVRawHTMLDOMController.h in Headers */,
 				276D4908137FFE6D004F4954 /* SVPublishingDigestStorage.h in Headers */,
+				27C969CF13B359D600EBC76A /* KSSHA1Stream.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8090,13 +8098,13 @@
 				275388E3131D190F00EFF536 /* SVFooterDOMController.m in Sources */,
 				2761E1A2132948E300266D69 /* KSOutputStreamWriter.m in Sources */,
 				27579A32132BAAE00006C605 /* KSMutableDataWriter.m in Sources */,
-				27579B26132BD6D30006C605 /* KSSHA1Stream.m in Sources */,
 				CE495E06133D4C690060FFDF /* SVColorBoxIndexPlugIn.m in Sources */,
 				27B5DA36133E4AA6002AAEA2 /* KSError.m in Sources */,
 				27A3ACC11369C1C7007D774D /* KSWorkspaceUtilities.m in Sources */,
 				2790F1CC137A8EF100BB0611 /* SVEntityMigrationPolicy.m in Sources */,
 				271DFB8C137ECD540032D6F4 /* SVRawHTMLDOMController.m in Sources */,
 				276D4909137FFE6D004F4954 /* SVPublishingDigestStorage.m in Sources */,
+				27C969CA13B3598100EBC76A /* KSSHA1Stream.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

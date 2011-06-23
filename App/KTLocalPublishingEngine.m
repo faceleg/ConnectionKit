@@ -173,7 +173,7 @@
     // Record digest of the data for after publishing
     if (!digest)
     {
-        digest = [data SHA1Digest]; // could do this on -defaultQueue, but may only be worth it for larger data
+        digest = [data ks_SHA1Digest]; // could do this on -defaultQueue, but may only be worth it for larger data
     }
     
     
@@ -272,7 +272,7 @@
     
     if (data)
     {
-        NSData *digest = [data SHA1Digest];
+        NSData *digest = [data ks_SHA1Digest];
         [data release];
         
         [[self ks_proxyOnThread:nil]    // WANT to wait until done, else might be queued AFTER disconnect
@@ -362,6 +362,7 @@
                                      initWithTarget:media
                                      selector:@selector(SHA1Digest)
                                      object:nil];
+    OBASSERT(result);
     
     [[self digestStorage] setHashingOperation:result
                                    forMediaRequest:sourceRequest];
@@ -487,7 +488,7 @@
     
     
     // Might as well hash while we're not on the main thread
-    if (!digest) digest = [data SHA1Digest];
+    if (!digest) digest = [data ks_SHA1Digest];
     
     
     [[self ks_proxyOnThread:nil] publishData:data

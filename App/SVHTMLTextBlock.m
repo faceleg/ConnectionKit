@@ -243,7 +243,7 @@
         NSString *ID = [NSString stringWithFormat:
                         @"%@-%@",
                         graphicalTextCode,
-                        [[text dataUsingEncoding:NSUTF8StringEncoding] sha1DigestString]];
+                        [[text dataUsingEncoding:NSUTF8StringEncoding] ks_SHA1DigestString]];
         
         url = [context addGraphicalTextData:data idName:ID];
         

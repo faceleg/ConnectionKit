@@ -246,7 +246,7 @@
     CFRelease(uuid);
     
     
-    NSData *hashData = [[seedString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES] SHA1Digest];
+    NSData *hashData = [[seedString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES] ks_SHA1Digest];
     unsigned char *bytes = (unsigned char *)[hashData bytes];
     [seedString release];
     // we have a nice 20-byte hash .... now to boil this down to a very small number!

@@ -215,7 +215,7 @@
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:
                                        @"x-sandvox-fake-url:///%@.%@",
-                                       [data sha1DigestString],
+                                       [data ks_SHA1DigestString],
                                        [[self filename] pathExtension]]];
     
     SVMedia *media = [[SVMedia alloc] initWithData:data URL:url];

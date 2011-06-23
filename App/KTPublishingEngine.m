@@ -754,7 +754,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         if (data)
         {
             // It's cached! Just need to calculate the hash which is pretty speedy            
-            if (!digest) digest = [data SHA1Digest];
+            if (!digest) digest = [data ks_SHA1Digest];
             return [self publishMediaWithRequest:request cachedData:data SHA1Digest:digest];
         }
         else
@@ -975,12 +975,12 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             NSData *data = [[request media] mediaData];
             if (data)
             {
-                digest = [data SHA1Digest];
+                digest = [data ks_SHA1Digest];
             }
             else
             {
                 NSURL *url = [[request media] mediaURL];
-                digest = [NSData SHA1DigestOfContentsOfURL:url];
+                digest = [KSSHA1Stream SHA1DigestOfContentsOfURL:url];
             
                 if (!digest) NSLog(@"Unable to hash file: %@", url);
             }
@@ -1063,7 +1063,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     OBPRECONDITION(data);
     OBPRECONDITION(request);
     
-    NSData *digest = [data SHA1Digest];
+    NSData *digest = [data ks_SHA1Digest];
     [[self ks_proxyOnThread:nil waitUntilDone:YES]  // wait before reporting op as finished
      publishMediaWithRequest:request cachedData:data SHA1Digest:digest];
     

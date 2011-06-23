@@ -142,7 +142,7 @@
     NSString *URLAsString = [[self URLAsHTTP] absoluteString];
     NSString *stringToDigest = [NSString stringWithFormat:@"%@:NSString", URLAsString];
     NSData *data = [stringToDigest dataUsingEncoding:NSUTF8StringEncoding];
-    return [data sha1DigestString];
+    return [data ks_SHA1DigestString];
 }
 
 #pragma mark -

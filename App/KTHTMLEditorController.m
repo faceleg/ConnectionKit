@@ -409,7 +409,7 @@ initial syntax coloring.
 	if (![stringToHash isEqualToString:@""])
 	{
 		NSData *dataToHash = [stringToHash dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-		digest = [dataToHash SHA1Digest];
+		digest = [dataToHash ks_SHA1Digest];
 //		NSLog(@"Hash of '%@' %@ is: %@", stringToHash, dataToHash, digest);
 	}
 	return digest;		// will be nil if the string is empty or white space only.
