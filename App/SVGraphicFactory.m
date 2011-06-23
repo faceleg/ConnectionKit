@@ -93,6 +93,11 @@
 - (NSString *)identifier { return @"com.karelia.sandvox.BlockQuote"; }
 - (NSString *)name { return NSLocalizedString(@"Block Quote", @"Graphic name"); }
 
+- (NSImage *)icon
+{
+    return [NSImage imageNamed:@"object_blockquote.tiff"];
+}
+
 - (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
 {
     SVGraphic *result = [super insertNewGraphicInManagedObjectContext:context];

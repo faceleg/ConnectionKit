@@ -633,6 +633,7 @@
 		27C6FE620F1EBC8C00B58822 /* KTCodeInjection.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C6FE600F1EBC8C00B58822 /* KTCodeInjection.m */; };
 		27C969CA13B3598100EBC76A /* KSSHA1Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C969C113B3587700EBC76A /* KSSHA1Stream.m */; };
 		27C969CF13B359D600EBC76A /* KSSHA1Stream.h in Headers */ = {isa = PBXBuildFile; fileRef = 27C969C013B3587700EBC76A /* KSSHA1Stream.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		27C96A1E13B36CDF00EBC76A /* object_blockquote.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 27C96A1D13B36CDF00EBC76A /* object_blockquote.tiff */; };
 		27CC249D11F0751A007FB3FE /* KSStringHTMLEntityUnescaping.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CC249B11F0751A007FB3FE /* KSStringHTMLEntityUnescaping.h */; };
 		27CC249E11F0751A007FB3FE /* KSStringHTMLEntityUnescaping.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CC249C11F0751A007FB3FE /* KSStringHTMLEntityUnescaping.m */; };
 		27CD0A2B11AD684A0069E5AB /* WEKWebKitPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CD0A2A11AD684A0069E5AB /* WEKWebKitPrivate.h */; };
@@ -2372,6 +2373,7 @@
 		27C6FE600F1EBC8C00B58822 /* KTCodeInjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTCodeInjection.m; sourceTree = "<group>"; };
 		27C969C013B3587700EBC76A /* KSSHA1Stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSSHA1Stream.h; sourceTree = "<group>"; };
 		27C969C113B3587700EBC76A /* KSSHA1Stream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSSHA1Stream.m; sourceTree = "<group>"; };
+		27C96A1D13B36CDF00EBC76A /* object_blockquote.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = object_blockquote.tiff; path = Objects/object_blockquote.tiff; sourceTree = "<group>"; };
 		27C98C9B0F1BA46B0079A84F /* KSSimpleURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSSimpleURLConnection.h; path = ../../Shared/Foundation/KSSimpleURLConnection.h; sourceTree = SOURCE_ROOT; };
 		27C98C9C0F1BA46B0079A84F /* KSSimpleURLConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSSimpleURLConnection.m; path = ../../Shared/Foundation/KSSimpleURLConnection.m; sourceTree = SOURCE_ROOT; };
 		27CC249B11F0751A007FB3FE /* KSStringHTMLEntityUnescaping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSStringHTMLEntityUnescaping.h; sourceTree = "<group>"; };
@@ -5531,6 +5533,7 @@
 		CE1BE7B811D2AD1E00D875AE /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				27C96A1D13B36CDF00EBC76A /* object_blockquote.tiff */,
 				CE1BE7B911D2AD1E00D875AE /* DesignPicker */,
 				CE1BE7C011D2AD1E00D875AE /* DiscoverPlugins */,
 				CE1BE7C211D2AD1E00D875AE /* FileIcons */,
@@ -7178,6 +7181,7 @@
 				CE6BB267134A8DDB00EEB1E2 /* UnpublishedTemplate.html in Resources */,
 				CEAD39B11384342400161C8F /* MediaInspector.xib in Resources */,
 				27350A9A1397E9AA00F0DC63 /* TextBoxInspector.xib in Resources */,
+				27C96A1E13B36CDF00EBC76A /* object_blockquote.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
