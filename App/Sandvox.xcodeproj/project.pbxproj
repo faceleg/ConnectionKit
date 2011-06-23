@@ -7341,7 +7341,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "#!/bin/bash\n\n###\n### UPDATE CFBundleVersion in Info.plist of BUILT_PRODUCT to match new tag\n###\n\nGIT_TAG=1000\n\n# set CFBundleVersion\nSANDVOX_PLIST_PATH=${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\n/usr/libexec/PlistBuddy -c \"Set CFBundleVersion ${GIT_TAG}\" ${SANDVOX_PLIST_PATH}\n\n# read CFBundleVerison and verifu\nSANDVOX_BUILD_NUMBER=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" ${SANDVOX_PLIST_PATH})\n\nif [ \"${SANDVOX_BUILD_NUMBER:-0}\" -eq ${SANDVOX_BUILD_NUMBER} ]\nthen\n\techo \"Info.plist Build Number Verified\"\n\texit 0\nfi\n\necho \"Could not verify CFBundleVersion in Info.plist. Cannot continue.\"\n\nexit 1\n";
+			shellScript = "#!/bin/bash\n\n###\n### UPDATE CFBundleVersion in Info.plist of BUILT_PRODUCT to match new tag\n###\n\nGIT_TAG=1000\n###\tLATEST_TAG=$(git describe --tags --match b*)\n###\tif LATEST_TAG contains '-'\n###\tthen\n###\t\tLATEST_TAG=[LATEST_TAG subStringUpToHyphen] + 1\n###\t\tgit tag LATEST_TAG\n###\tfi\n###\tGIT_TAG=[LATEST_TAG substringFromIndex:1]\n\n# set CFBundleVersion\nSANDVOX_PLIST_PATH=${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\n/usr/libexec/PlistBuddy -c \"Set CFBundleVersion ${GIT_TAG}\" ${SANDVOX_PLIST_PATH}\n\n# read CFBundleVerison and verifu\nSANDVOX_BUILD_NUMBER=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" ${SANDVOX_PLIST_PATH})\n\nif [ \"${SANDVOX_BUILD_NUMBER:-0}\" -eq ${SANDVOX_BUILD_NUMBER} ]\nthen\n\techo \"Info.plist Build Number Verified\"\n\texit 0\nfi\n\necho \"Could not verify CFBundleVersion in Info.plist. Cannot continue.\"\n\nexit 1\n";
 			showEnvVarsInLog = 0;
 		};
 		3C7D7D5713B3B04300B58137 /* Copy CFBundleVersion to Plug-Ins */ = {
