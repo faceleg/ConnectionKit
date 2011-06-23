@@ -1,12 +1,12 @@
 
 // include SVN_VERSION (the first step in any Sandvox build)
-#include "/private/tmp/build-sandvox/BuildSettings.xcconfig"
+//#include "/private/tmp/build-sandvox/BuildSettings.xcconfig"
 
 // the "marketing" version is baked into CFBundleShortVersionString
 SANDVOX_VERSION = 2.1b5
 
 // next number following move from Subversion to Github
-SVN_VERSION = 23593
+//SVN_VERSION = 23593
 
 
 // the SLA variant to wrap around the .dmg [ALPHA,BETA,RELEASE]
