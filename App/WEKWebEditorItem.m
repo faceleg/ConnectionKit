@@ -384,8 +384,21 @@
     OBPRECONDITION(object);
     
     id result = ([[self representedObject] isEqual:object] ? self : nil);
-    if (!result)
+    if (result)
     {
+        // Only search children, for a closer match
+        for (WEKWebEditorItem *anItem in [self childWebEditorItems])
+        {
+            if ([anItem representedObject] == result)
+            {
+                result = [anItem hitTestRepresentedObject:object];
+                break;
+            }
+        }
+    }
+    else
+    {
+        // Keep recursing
         for (WEKWebEditorItem *anItem in [self childWebEditorItems])
         {
             result = [anItem hitTestRepresentedObject:object];
