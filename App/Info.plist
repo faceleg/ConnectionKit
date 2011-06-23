@@ -119,7 +119,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>${SVN_VERSION}</string>
+	<string>XXXXXX</string>
 	<key>ClickToFlashOptOut</key>
 	<true/>
 	<key>KSFeedType</key>
