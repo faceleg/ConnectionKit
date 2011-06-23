@@ -113,7 +113,6 @@
 				3C5A77C40EB6E0880049B898 /* ShellScript */,
 			);
 			dependencies = (
-				3C5A77CA0EB6E08F0049B898 /* PBXTargetDependency */,
 			);
 			name = PackageAndDeploySDK;
 			productName = PackageSDK;
@@ -143,17 +142,6 @@
 			name = BuildAndPackageRelease;
 			productName = DiskImage;
 		};
-		3C96ADE10CA06FB900C5249F /* UpdateVersion */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 3C96ADE70CA06FD700C5249F /* Build configuration list for PBXAggregateTarget "UpdateVersion" */;
-			buildPhases = (
-				3C96ADE00CA06FB900C5249F /* ShellScript */,
-			);
-			dependencies = (
-			);
-			name = UpdateVersion;
-			productName = "Update Version";
-		};
 		3C9B65920BFA7F6F007A4871 /* Sandvox-CompleteApplication */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 3C9B65950BFA7F9E007A4871 /* Build configuration list for PBXAggregateTarget "Sandvox-CompleteApplication" */;
@@ -167,6 +155,7 @@
 				3C9B66E80BFA95DD007A4871 /* Script - Add Spotlight Importer */,
 				CE9D3ED20DAAB8450025717A /* Script - Remove Unsupported Languages */,
 				CEFD3EFC12E9FA0100D3A6CD /* Script - Internationalize XIBs */,
+				3C7D7D5713B3B04300B58137 /* Copy CFBundleVersion to Plug-Ins */,
 				3CC092BA134BC490007E2390 /* Script - Code Sign .app */,
 			);
 			dependencies = (
@@ -217,7 +206,6 @@
 				3CA786E50DB546060014AD7E /* ShellScript */,
 			);
 			dependencies = (
-				3CA7881C0DB571DE0014AD7E /* PBXTargetDependency */,
 			);
 			name = PackageBonusDesigns;
 			productName = PackageBonusDesigns;
@@ -273,7 +261,6 @@
 				3CE4E19A0ED4A6DE008DD114 /* ShellScript */,
 			);
 			dependencies = (
-				3C3D54F50ED4D3C800EFC7ED /* PBXTargetDependency */,
 			);
 			name = PackageAndDeployDesignKit;
 			productName = PackageAndDeployDesignKit;
@@ -1539,13 +1526,6 @@
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = MapElement;
 		};
-		3C3D54F40ED4D3C800EFC7ED /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3C96ADE10CA06FB900C5249F;
-			remoteInfo = UpdateVersion;
-		};
 		3C3E76440F1C6B7A002E3A9A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
@@ -1601,13 +1581,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = FacebookElement;
-		};
-		3C5A77C90EB6E08F0049B898 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3C96ADE10CA06FB900C5249F;
-			remoteInfo = UpdateVersion;
 		};
 		3C5A9A9B0D11E74B0054058C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1700,13 +1673,6 @@
 			remoteGlobalIDString = 3C9B65920BFA7F6F007A4871;
 			remoteInfo = Sandvox;
 		};
-		3C96ADF00CA074A900C5249F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3C96ADE10CA06FB900C5249F;
-			remoteInfo = "Update Version";
-		};
 		3C9870A111F3D3A00053A72C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C42DDA60D64C8B3004F35FD /* SiteMapElement.xcodeproj */;
@@ -1755,13 +1721,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = GeneralIndex;
-		};
-		3CA7881B0DB571DE0014AD7E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3C96ADE10CA06FB900C5249F;
-			remoteInfo = UpdateVersion;
 		};
 		3CB86EDE11F5F9950038E174 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -6455,12 +6414,12 @@
 				CEC65E5D0E1AFD170065C3D0 /* Copy Sparkle - Strip Localizations */,
 				3CEC87370BF8DB4500CC732B /* Headers */,
 				8D15AC2B0486D014006FF6A4 /* Resources */,
+				3C7D7D5313B3B01D00B58137 /* Generate CFBundleVersion */,
 				3C350E2313A7BD6900D0B454 /* Verify CFBundleVersion */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				3C96ADF10CA074A900C5249F /* PBXTargetDependency */,
 				3CE2B2C20D7F1E8A00E2711E /* PBXTargetDependency */,
 				3C3ED2AE120895E60080EB6E /* PBXTargetDependency */,
 				3CD806E3120A633F00E0848F /* PBXTargetDependency */,
@@ -6662,7 +6621,6 @@
 			);
 			projectRoot = "";
 			targets = (
-				3C96ADE10CA06FB900C5249F /* UpdateVersion */,
 				8D15AC270486D014006FF6A4 /* Sandvox-ExecutableOnly */,
 				3C9B65920BFA7F6F007A4871 /* Sandvox-CompleteApplication */,
 				3C88838D0BFCB49C00921FA4 /* BuildAndPackageRelease */,
@@ -7371,6 +7329,36 @@
 			shellScript = "#!/bin/bash\n\n###\n### UPDATE IMEDIA_REVISION FOR RELEASE BUILDS\n###\n\nIMEDIA_PATH=${SRCROOT}/../../imedia\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\ncd ${IMEDIA_PATH}\n${GIT_PATH} checkout ${IMEDIA_REVISION}\nif (($? != 0))\nthen\n\techo \"fetching iMedia from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${IMEDIA_REVISION}\n\techo \"... finished fetching iMedia\"\nfi\n\npopd\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
+		3C7D7D5313B3B01D00B58137 /* Generate CFBundleVersion */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate CFBundleVersion";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "#!/bin/bash\n\n###\n### UPDATE CFBundleVersion in Info.plist of BUILT_PRODUCT to match new tag\n###\n\nGIT_TAG=1000\n\n# set CFBundleVersion\nSANDVOX_PLIST_PATH=${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\n/usr/libexec/PlistBuddy -c \"Set CFBundleVersion ${GIT_TAG}\" ${SANDVOX_PLIST_PATH}\n\n# read CFBundleVerison and verifu\nSANDVOX_BUILD_NUMBER=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" ${SANDVOX_PLIST_PATH})\n\nif [ \"${SANDVOX_BUILD_NUMBER:-0}\" -eq ${SANDVOX_BUILD_NUMBER} ]\nthen\n\techo \"Info.plist Build Number Verified\"\n\texit 0\nfi\n\necho \"Could not verify CFBundleVersion in Info.plist. Cannot continue.\"\n\nexit 1\n";
+			showEnvVarsInLog = 0;
+		};
+		3C7D7D5713B3B04300B58137 /* Copy CFBundleVersion to Plug-Ins */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy CFBundleVersion to Plug-Ins";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "";
+			showEnvVarsInLog = 0;
+		};
 		3C88838C0BFCB49C00921FA4 /* Build Disk Image */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 12;
@@ -7384,20 +7372,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
 			shellScript = "#!/bin/bash\n\nexport APPNAME=\"Sandvox\"\n\n${SRCROOT}/../../Shared/tools/build_package\n\n### this script should NOT have 'Run script only when installing' checked\n";
-			showEnvVarsInLog = 0;
-		};
-		3C96ADE00CA06FB900C5249F /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/bash;
-			shellScript = "#!/bin/bash\n\n###\n### UPDATE SVN_VERSION FOR ALL BUILDS\n###\n\n# to test Sparkle, temporarily, MANUALLY set SANDVOX_SVN_VERSION < current Sandvox Version\n\n# for some reason using which to find svn works on Leopard, not on Tiger\n# SVN_PATH=`which svn`\n\n# so we do this instead and hope for the best\n#if [ -e /usr/local/bin/svn ]\n#then\n#\tSVN_PATH=/usr/local/bin/svn\n#elif [ -e /opt/local/bin/svn ]\n#then\n#\tSVN_PATH=/opt/local/bin/svn\n#elif [ -e /usr/bin/svn ]\n#then\n#\tSVN_PATH=/usr/bin/svn\n#else\n#\techo \"ERROR - CANT FIND SVN\"\n#\texit 1\n#fi\n\n# get current revision\n#pushd \"${SRCROOT}\"\n#SANDVOX_SVN_VERSION=`$SVN_PATH info | awk '$1==\"Revision:\" { print $2 }'`;\n#popd\n\n\necho \"\"\necho \"Updating SVN_VERSION to ${SANDVOX_SVN_VERSION} ...\"\n\n# make sure we have a file to write to\nBUILDSETTINGS_DIR=\"/private/tmp/build-sandvox\"\nmkdir -p ${BUILDSETTINGS_DIR}\nBUILDSETTINGS_PATH=\"${BUILDSETTINGS_DIR}/BuildSettings.xcconfig\"\n\nif test -r ${BUILDSETTINGS_PATH}\nthen\n\trm ${BUILDSETTINGS_PATH}\nfi\n\ntouch ${BUILDSETTINGS_PATH}\n\n\nBUILD_DATE=`/bin/date`\n\necho \"\" > $BUILDSETTINGS_PATH\necho \"//\" >> $BUILDSETTINGS_PATH\necho \"// Sandvox Build, generated on $BUILD_DATE\" >> $BUILDSETTINGS_PATH\necho \"//\" >> $BUILDSETTINGS_PATH\necho \"\" >> $BUILDSETTINGS_PATH\necho \"SVN_VERSION = $SANDVOX_SVN_VERSION\" >> $BUILDSETTINGS_PATH\necho \"\" >> $BUILDSETTINGS_PATH\necho \"\" >> $BUILDSETTINGS_PATH\n\nchgrp admin $BUILDSETTINGS_PATH\necho \"... wrote $BUILDSETTINGS_PATH\"\n\necho \"\"\n\nexit 0\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C99107209298C4400ED5CBF /* Generate Localizable.strings */ = {
@@ -8196,11 +8170,6 @@
 			name = MapElement;
 			targetProxy = 3C30F7E21312EC9B0022E49A /* PBXContainerItemProxy */;
 		};
-		3C3D54F50ED4D3C800EFC7ED /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3C96ADE10CA06FB900C5249F /* UpdateVersion */;
-			targetProxy = 3C3D54F40ED4D3C800EFC7ED /* PBXContainerItemProxy */;
-		};
 		3C3E76450F1C6B7A002E3A9A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 3C3E75FA0F1C5F42002E3A9A /* UpdateInvalidLicenses */;
@@ -8235,11 +8204,6 @@
 			isa = PBXTargetDependency;
 			name = FacebookElement;
 			targetProxy = 3C5851911289ACB00084315D /* PBXContainerItemProxy */;
-		};
-		3C5A77CA0EB6E08F0049B898 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3C96ADE10CA06FB900C5249F /* UpdateVersion */;
-			targetProxy = 3C5A77C90EB6E08F0049B898 /* PBXContainerItemProxy */;
 		};
 		3C5A9A9C0D11E74B0054058C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -8286,11 +8250,6 @@
 			target = 3C9B65920BFA7F6F007A4871 /* Sandvox-CompleteApplication */;
 			targetProxy = 3C88838E0BFCB4A400921FA4 /* PBXContainerItemProxy */;
 		};
-		3C96ADF10CA074A900C5249F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3C96ADE10CA06FB900C5249F /* UpdateVersion */;
-			targetProxy = 3C96ADF00CA074A900C5249F /* PBXContainerItemProxy */;
-		};
 		3C9870A411F3D3AC0053A72C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SiteMapElement;
@@ -8310,11 +8269,6 @@
 			isa = PBXTargetDependency;
 			name = GeneralIndex;
 			targetProxy = 3C9CF9AF121201D8005CFDD4 /* PBXContainerItemProxy */;
-		};
-		3CA7881C0DB571DE0014AD7E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3C96ADE10CA06FB900C5249F /* UpdateVersion */;
-			targetProxy = 3CA7881B0DB571DE0014AD7E /* PBXContainerItemProxy */;
 		};
 		3CBC655A11EFD5E500716937 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -9490,20 +9444,6 @@
 			};
 			name = Debug;
 		};
-		3C96ADE20CA06FB900C5249F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = UpdateVersion;
-			};
-			name = Release;
-		};
-		3C96ADE30CA06FB900C5249F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = UpdateVersion;
-			};
-			name = Debug;
-		};
 		3C9B65960BFA7F9E007A4871 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
@@ -9850,15 +9790,6 @@
 			buildConfigurations = (
 				3C88839A0BFCB4EE00921FA4 /* Debug */,
 				3C8883990BFCB4EE00921FA4 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		3C96ADE70CA06FD700C5249F /* Build configuration list for PBXAggregateTarget "UpdateVersion" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3C96ADE30CA06FB900C5249F /* Debug */,
-				3C96ADE20CA06FB900C5249F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
