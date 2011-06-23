@@ -416,127 +416,137 @@ NSUInteger kTwoThirdsTruncation;
     
 	OFF((@"writeSummary: iteratedPage = %@, Page we are writing to = %@  .... exclude %@", self, [context page], plugInToExclude));
 	
-	BOOL includeLargeMedia = ![context isWritingPagelet];		// do not allow large media if writing pagelet.
-	
-	SVGraphic *thumbnailToExclude = (options & SVPageWritingSkipThumbnail) ? [self thumbnailSourceGraphic] : nil;		// CORRECT FOR ALL CASES?
-	
-	SVTruncationType truncationType = [[self class] chooseTruncTypeFromMaxItemLength:maxItemLength];
-	BOOL result = NO;
-	
-	[context willWriteSummaryOfPage:self];
-    [context startElement:@"div" className:@"article-summary"];
-
-	// do we have a custom summary? if so just write it
-    if ( nil != [self customSummaryHTML] )
+    
+	[context beginGraphicContainer:[self article]];
+    @try
     {
-        [super writeContent:context truncation:maxItemLength plugIn:plugInToExclude options:options];
-		result = NO;		// Used to be yes, but why would we want to force this?
-    }
-    else
-	{
-		NSAttributedString *html = nil;
-		
-		if ( maxItemLength > 0 && kTruncateNone != truncationType )
-		{
-			html = [[[self article] attributedHTMLString] attributedHTMLStringWithTruncation:maxItemLength
-																						type:truncationType
-																		   includeLargeMedia:includeLargeMedia
-																				 didTruncate:&result];
-		}
-		else
-		{
-			// no truncation, just process the complete, normal summary
-			html = [[self article] attributedHTMLString];
-		}
-		NSMutableAttributedString *summary = [html mutableCopy];		// RETAINED HERE
-		
-		NSUInteger location = 0;
-		NSUInteger countOfAttachments = 0;
-		
-		while (location < summary.length)
-		{
-			NSRange effectiveRange;
-			SVTextAttachment *attachment = [summary attribute:@"SVAttachment"
-													  atIndex:location
-											   effectiveRange:&effectiveRange];			
-			if (attachment)
-			{
-				countOfAttachments++;
-				
-				BOOL shouldKeepAttachment = (includeLargeMedia && attachment );
-				// Take out && [[attachment causesWrap] boolValue] ... This meant that we were only keeping explicitly wrapped
-				// grahics, even though many graphics happen to be not causes-wrap and just happen to be on their own line.
-				// I cant think of why you would want to strip out in-line graphics!
-				SVGraphic *graphic = [attachment graphic];
-				
-				if (thumbnailToExclude == graphic)
-				{
-					OFF((@"Excluding thumbnail %@", thumbnailToExclude));
-					shouldKeepAttachment = NO;
-				}
-				
-				SVPlugIn *plugInOfGraphic = (void *) -1;	// illegal value, never going to match
-				if ([graphic respondsToSelector:@selector(plugIn)])
-				{
-					plugInOfGraphic = [((SVPlugInGraphic *)graphic) plugIn];
-				}
-				if (plugInToExclude == plugInOfGraphic)
-				{
-					OFF((@"Excluding plugin %@", plugInToExclude));
-					shouldKeepAttachment = NO;
-				}
-				
-				if (!shouldKeepAttachment)
-				{
-					[summary deleteCharactersInRange:effectiveRange];
-					countOfAttachments--;		// DELETING, SO LOWER THE COUNT WE JUST INCREMENTED.
-				}
-				else
-				{
-					location = location + effectiveRange.length;
-				}
-			}
-			else
-			{
-				location = location + effectiveRange.length;
-			}
-		}
+        BOOL includeLargeMedia = ![context isWritingPagelet];		// do not allow large media if writing pagelet.
+        
+        SVGraphic *thumbnailToExclude = (options & SVPageWritingSkipThumbnail) ? [self thumbnailSourceGraphic] : nil;		// CORRECT FOR ALL CASES?
+        
+        SVTruncationType truncationType = [[self class] chooseTruncTypeFromMaxItemLength:maxItemLength];
+        BOOL result = NO;
+        
+        [context willWriteSummaryOfPage:self];
+        [context startElement:@"div" className:@"article-summary"];
 
-		// TODO -- WHAT ABOUT CAPTION SETTING?
-		
-		
-		if (0 == countOfAttachments)
-		{
-			// Are we left with only whitespace? If so, fallback to caption of thumbnail's image
-			
-			NSString *text = [[summary string] stringByConvertingHTMLToPlainText];
-			if ([text isWhitespace])
-			{
-				[summary release]; summary = nil;
-				
-				if ([thumbnailToExclude showsCaption])
-				{
-					summary = [[[thumbnailToExclude caption] attributedHTMLString] retain];
-				}
-			}			
-		}
-		
-		// Write it
-        if ([summary length])
+        // do we have a custom summary? if so just write it
+        if ( nil != [self customSummaryHTML] )
         {
-            [context writeAttributedHTMLString:summary];
+            [super writeContent:context truncation:maxItemLength plugIn:plugInToExclude options:options];
+            result = NO;		// Used to be yes, but why would we want to force this?
         }
         else
         {
-			[super writeContent:context truncation:maxItemLength plugIn:plugInToExclude options:options];
+            NSAttributedString *html = nil;
+            
+            if ( maxItemLength > 0 && kTruncateNone != truncationType )
+            {
+                html = [[[self article] attributedHTMLString] attributedHTMLStringWithTruncation:maxItemLength
+                                                                                            type:truncationType
+                                                                               includeLargeMedia:includeLargeMedia
+                                                                                     didTruncate:&result];
+            }
+            else
+            {
+                // no truncation, just process the complete, normal summary
+                html = [[self article] attributedHTMLString];
+            }
+            NSMutableAttributedString *summary = [html mutableCopy];		// RETAINED HERE
+            
+            NSUInteger location = 0;
+            NSUInteger countOfAttachments = 0;
+            
+            while (location < summary.length)
+            {
+                NSRange effectiveRange;
+                SVTextAttachment *attachment = [summary attribute:@"SVAttachment"
+                                                          atIndex:location
+                                                   effectiveRange:&effectiveRange];			
+                if (attachment)
+                {
+                    countOfAttachments++;
+                    
+                    BOOL shouldKeepAttachment = (includeLargeMedia && attachment );
+                    // Take out && [[attachment causesWrap] boolValue] ... This meant that we were only keeping explicitly wrapped
+                    // grahics, even though many graphics happen to be not causes-wrap and just happen to be on their own line.
+                    // I cant think of why you would want to strip out in-line graphics!
+                    SVGraphic *graphic = [attachment graphic];
+                    
+                    if (thumbnailToExclude == graphic)
+                    {
+                        OFF((@"Excluding thumbnail %@", thumbnailToExclude));
+                        shouldKeepAttachment = NO;
+                    }
+                    
+                    SVPlugIn *plugInOfGraphic = (void *) -1;	// illegal value, never going to match
+                    if ([graphic respondsToSelector:@selector(plugIn)])
+                    {
+                        plugInOfGraphic = [((SVPlugInGraphic *)graphic) plugIn];
+                    }
+                    if (plugInToExclude == plugInOfGraphic)
+                    {
+                        OFF((@"Excluding plugin %@", plugInToExclude));
+                        shouldKeepAttachment = NO;
+                    }
+                    
+                    if (!shouldKeepAttachment)
+                    {
+                        [summary deleteCharactersInRange:effectiveRange];
+                        countOfAttachments--;		// DELETING, SO LOWER THE COUNT WE JUST INCREMENTED.
+                    }
+                    else
+                    {
+                        location = location + effectiveRange.length;
+                    }
+                }
+                else
+                {
+                    location = location + effectiveRange.length;
+                }
+            }
+
+            // TODO -- WHAT ABOUT CAPTION SETTING?
+            
+            
+            if (0 == countOfAttachments)
+            {
+                // Are we left with only whitespace? If so, fallback to caption of thumbnail's image
+                
+                NSString *text = [[summary string] stringByConvertingHTMLToPlainText];
+                if ([text isWhitespace])
+                {
+                    [summary release]; summary = nil;
+                    
+                    if ([thumbnailToExclude showsCaption])
+                    {
+                        summary = [[[thumbnailToExclude caption] attributedHTMLString] retain];
+                    }
+                }			
+            }
+            
+            // Write it
+            if ([summary length])
+            {
+                [context writeAttributedHTMLString:summary];
+            }
+            else
+            {
+                [super writeContent:context truncation:maxItemLength plugIn:plugInToExclude options:options];
+            }
+            
+            [summary release];
         }
-		
-		[summary release];
-	}
 
-    [context endElement];
+        [context endElement];
 
-	return result;
+        return result;
+    }
+    @finally
+    {
+        [context endGraphicContainer];
+    }
+    return NO;
 }
 
 /*!	Here is the main information about how summaryHTML works.

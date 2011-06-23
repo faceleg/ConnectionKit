@@ -667,7 +667,7 @@
 
 - (void)writeRSSFeedItemDescription { }
 
-- (BOOL)writeContent:(id <SVPlugInContext>)context
+- (BOOL)writeContent:(SVHTMLContext *)context
 			  plugIn:(SVPlugIn *)plugIn
 			 options:(SVPageWritingOptions)options;
 {
