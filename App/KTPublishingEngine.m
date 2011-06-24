@@ -124,6 +124,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         [_diskQueue setMaxConcurrentOperationCount:1];
         
         _defaultQueue = [[NSOperationQueue alloc] init];
+        [_defaultQueue setMaxConcurrentOperationCount:4];   // the operations placed on here aren't truly CPU-limited yet, because they talk back to the main thread, so set a sane limit. #129819
         
         // Name them for debugging
         if ([NSOperationQueue instancesRespondToSelector:@selector(setName:)])
