@@ -128,8 +128,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         // Name them for debugging
         if ([NSOperationQueue instancesRespondToSelector:@selector(setName:)])
         {
-            [_diskQueue performSelector:@selector(setName:) withObject:@"KTPublishingEngine: Disk Access Queue"];
-            [_defaultQueue performSelector:@selector(setName:) withObject:@"KTPublishingEngine: Default Queue"];
+            [_diskQueue setName:@"KTPublishingEngine: Disk Access Queue"];
+            [_defaultQueue setName:@"KTPublishingEngine: Default Queue"];
         }
         
         
