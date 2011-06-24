@@ -149,13 +149,13 @@
 				3C9B66B00BFA83D6007A4871 /* Script - Remove Framework Headers */,
 				CEF64406134B69A60011AC68 /* Script - Remove other resources */,
 				3C9B66B20BFA8423007A4871 /* Script - Remove PrivateHeaders */,
+				3C7D7D5713B3B04300B58137 /* Script - Copy CFBundleVersion to PlugIns */,
 				3C9B66C60BFA940C007A4871 /* Script - Add PlugIns */,
 				3C9B66CC0BFA94BA007A4871 /* Script - Add Designs */,
 				3C9B66E60BFA95B9007A4871 /* Script - Add png2ico */,
 				3C9B66E80BFA95DD007A4871 /* Script - Add Spotlight Importer */,
 				CE9D3ED20DAAB8450025717A /* Script - Remove Unsupported Languages */,
 				CEFD3EFC12E9FA0100D3A6CD /* Script - Internationalize XIBs */,
-				3C7D7D5713B3B04300B58137 /* Copy CFBundleVersion to Plug-Ins */,
 				3CC092BA134BC490007E2390 /* Script - Code Sign .app */,
 			);
 			dependencies = (
@@ -7325,22 +7325,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "#!/bin/bash\n\n###\n### UPDATE CFBundleVersion in Info.plist of TARGET to be LATEST_TAG\n### (computing and tagging as LATEST_TAG, if necessary)\n###\n\n# find git on local machine\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\n# if Release, fetch tags\nif [ \"${BUILD_STYLE}\" == \"Release\" ]\nthen\n\tpushd \"${SRCROOT}/..\" > /dev/null\n\t${GIT_PATH} fetch\n\tpopd > /dev/null\nfi\n\n# find latest tag\nLATEST_TAG=$(${GIT_PATH} describe --tags --match b*)\n\nif [[ ${LATEST_TAG} == *-* ]]\nthen\n\t# compute new tag\n\t# extract 5 character tag number starting at position 1\n\tTAG_NUM=${LATEST_TAG:1:5}\n\t\n\t# if Release, add 1\n\tif [ \"${BUILD_STYLE}\" == \"Release\" ]\n\tthen\n\t\tTAG_NUM=$(($TAG_NUM + 1))\n\tfi\n\n\t# create new LATEST_TAG\n\tLATEST_TAG=\"b${TAG_NUM}\"\n\t\n\t# if Release, tag Sandvox with new LATEST_TAG\n\tif [ \"${BUILD_STYLE}\" == \"Release\" ]\n\tthen\n\t\tpushd \"${SRCROOT}/..\" > /dev/null\n\t\t${GIT_PATH} tag ${LATEST_TAG}\n\t\tpopd > /dev/null\n\tfi\nfi\n\n# strip leading 'b' from LATEST_TAG to get GET_TAG\nGIT_TAG=${LATEST_TAG:1}\n\n# set CFBundleVersion\nSANDVOX_PLIST_PATH=${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\n/usr/libexec/PlistBuddy -c \"Set CFBundleVersion ${GIT_TAG}\" ${SANDVOX_PLIST_PATH}\n\n# read CFBundleVerison\nSANDVOX_BUILD_NUMBER=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" ${SANDVOX_PLIST_PATH})\n\n# verify\nif [ \"${SANDVOX_BUILD_NUMBER:-0}\" -eq ${GIT_TAG} ]\nthen\n\techo \"Info.plist Build Number Verified\"\n\texit 0\nfi\n\necho \"Could not verify CFBundleVersion in Info.plist. Cannot continue.\"\n\nexit 1\n";
+			shellScript = "#!/bin/bash\n\n###\n### UPDATE CFBundleVersion in Info.plist of TARGET to be LATEST_TAG\n### (computing and tagging as LATEST_TAG, if necessary)\n###\n\n# find git on local machine\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\n# if Release, fetch tags\nif [ \"${BUILD_STYLE}\" == \"Release\" ]\nthen\n\tpushd \"${SRCROOT}/..\" > /dev/null\n\t${GIT_PATH} fetch\n\tpopd > /dev/null\nfi\n\n# find latest tag\nLATEST_TAG=$(${GIT_PATH} describe --tags --match b*)\n\nif [[ ${LATEST_TAG} == *-* ]]\nthen\n\t# compute new tag\n\t# extract 5 character tag number starting at position 1\n\tTAG_NUM=${LATEST_TAG:1:5}\n\t\n\t# if Release, add 1\n\tif [ \"${BUILD_STYLE}\" == \"Release\" ]\n\tthen\n\t\tTAG_NUM=$(($TAG_NUM + 1))\n\tfi\n\n\t# create new LATEST_TAG\n\tLATEST_TAG=\"b${TAG_NUM}\"\n\t\n\t# if Release, tag Sandvox with new LATEST_TAG\n\tif [ \"${BUILD_STYLE}\" == \"Release\" ]\n\tthen\n\t\tpushd \"${SRCROOT}/..\" > /dev/null\n\t\t${GIT_PATH} tag ${LATEST_TAG}\n\t\t${GIT_PATH} push --tags\n\t\tpopd > /dev/null\n\tfi\nfi\n\n# strip leading 'b' from LATEST_TAG to get GET_TAG\nGIT_TAG=${LATEST_TAG:1}\n\n# set CFBundleVersion\nSANDVOX_PLIST_PATH=${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\n/usr/libexec/PlistBuddy -c \"Set CFBundleVersion ${GIT_TAG}\" ${SANDVOX_PLIST_PATH}\n\n# read CFBundleVerison\nSANDVOX_BUILD_NUMBER=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" ${SANDVOX_PLIST_PATH})\n\n# verify\nif [ \"${SANDVOX_BUILD_NUMBER:-0}\" -eq ${GIT_TAG} ]\nthen\n\techo \"Info.plist Build Number Verified\"\n\texit 0\nfi\n\necho \"Could not verify CFBundleVersion in Info.plist. Cannot continue.\"\n\nexit 1\n";
 			showEnvVarsInLog = 0;
 		};
-		3C7D7D5713B3B04300B58137 /* Copy CFBundleVersion to Plug-Ins */ = {
+		3C7D7D5713B3B04300B58137 /* Script - Copy CFBundleVersion to PlugIns */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy CFBundleVersion to Plug-Ins";
+			name = "Script - Copy CFBundleVersion to PlugIns";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "";
+			shellScript = "\n# read CFBundleVerison\nSANDVOX_PLIST_PATH=${TARGET_BUILD_DIR}/Sandvox.app/Contents/Info.plist\nSANDVOX_BUILD_NUMBER=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" ${SANDVOX_PLIST_PATH})\n\n# update each plug-in's CFBundleVersion\npushd ${TARGET_BUILD_DIR}\nfor i in *.svxElement\ndo\n\tPLUGIN_PLIST_PATH=${PWD}/${i}/Contents/Info.plist\n\t/usr/libexec/PlistBuddy -c \"Set CFBundleVersion ${SANDVOX_BUILD_NUMBER}\" ${PLUGIN_PLIST_PATH}\ndone\npopd\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C88838C0BFCB49C00921FA4 /* Build Disk Image */ = {
