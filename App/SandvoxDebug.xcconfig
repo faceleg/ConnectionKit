@@ -1,5 +1,5 @@
 
-// grab SANDVOX_VERSION and SVN_VERSION
+// grab SANDVOX_VERSION
 #include "../Xcode/Configurations/Sandvox.xcconfig"
 
 COPY_PHASE_STRIP = NO

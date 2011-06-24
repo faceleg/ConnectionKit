@@ -1,12 +1,7 @@
 
-// include SVN_VERSION (the first step in any Sandvox build)
-//#include "/private/tmp/build-sandvox/BuildSettings.xcconfig"
 
 // the "marketing" version is baked into CFBundleShortVersionString
 SANDVOX_VERSION = 2.1b5
-
-// next number following move from Subversion to Github
-//SVN_VERSION = 23593
 
 
 // the SLA variant to wrap around the .dmg [ALPHA,BETA,RELEASE]
@@ -16,17 +11,12 @@ SANDVOX_VERSION = 2.1b5
 PRODUCT_VARIANT = BETA
 
 
-
 // expiry for beta
 EXPIRY_TIMESTAMP = '@\"2011-06-30 11:59:59 -0800\"'
 
-// Release builds checkout and use these specific revisions
+// pull specific tags from dependent repositories
 
-
-// iMedia
-
-		/// FOR RELEASE, PLEASE TIE IMEDIA TO A PARTICULAR NUMBER. * * * * * * * * * * * * * * *
-
+	/// FOR RELEASE, PLEASE TIE IMEDIA TO A PARTICULAR NUMBER. * * * * * * * * * * * * * * *
 
 BDALIAS_COMMIT = 8ea89475440bdce1f6d880ddbdbed6f62e1e6f8d
 CK_COMMIT = release-1.2

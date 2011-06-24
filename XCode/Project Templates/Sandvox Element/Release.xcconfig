@@ -2,7 +2,7 @@
 // ../../Configurations/Debug.xcconfig
 // ../../Configurations/Release.xcconfig
 
-// we want to grab SANDVOX_VERSION and SVN_VERSION from Sandvox
+// we want to grab SANDVOX_VERSION from Sandvox
 
 // we want to "link" against Sandvox directly. CHANGE THESE IF YOU HAVE SANDVOX INSTALLED ELSEWHERE.
 USER_HEADER_SEARCH_PATHS =  "/Applications/Sandvox.app/Contents/Headers"
