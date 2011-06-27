@@ -639,8 +639,8 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     {
         // Fake a placeholder file ready for the store to save over
         result = [[NSData data] writeToURL:URL options:0 error:&error];
-        if (result) [coordinator setURL:URL forPersistentStore:store];
     }
+    if (result) [coordinator setURL:URL forPersistentStore:store];
     
     
     // Now we're sure store is available, can give it some metadata.
@@ -655,7 +655,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     
     // Restore persistent store URL after Save To-type operations. Even if save failed (just to be on the safe side)
-    if (saveOp == NSAutosaveOperation || saveOp == NSSaveToOperation)
+    if (saveOp == NSSaveToOperation)
     {
         [coordinator setURL:originalContentsURL forPersistentStore:store];
     }
