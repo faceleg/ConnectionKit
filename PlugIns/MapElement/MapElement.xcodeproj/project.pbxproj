@@ -13,7 +13,6 @@
 		3C43BC0813075A36007ED67D /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C43BC0613075A36007ED67D /* Inspector.xib */; };
 		3C43BC2813075B38007ED67D /* toolbar_map.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 3C43BC2713075B38007ED67D /* toolbar_map.tiff */; };
 		3CC1D5DD13B810CF00D09404 /* BUNDLED in Resources */ = {isa = PBXBuildFile; fileRef = 3CC1D5DC13B810CF00D09404 /* BUNDLED */; };
-		3CC1D5ED13B82F0100D09404 /* jquery.gmap.min.js in Sources */ = {isa = PBXBuildFile; fileRef = 3CC1D5EB13B82F0100D09404 /* jquery.gmap.min.js */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -229,7 +228,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C43BBD613075096007ED67D /* MapPlugIn.m in Sources */,
-				3CC1D5ED13B82F0100D09404 /* jquery.gmap.min.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
