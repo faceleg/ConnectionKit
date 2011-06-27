@@ -13,6 +13,7 @@
 		3C43BC0813075A36007ED67D /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C43BC0613075A36007ED67D /* Inspector.xib */; };
 		3C43BC2813075B38007ED67D /* toolbar_map.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 3C43BC2713075B38007ED67D /* toolbar_map.tiff */; };
 		3CC1D5DD13B810CF00D09404 /* BUNDLED in Resources */ = {isa = PBXBuildFile; fileRef = 3CC1D5DC13B810CF00D09404 /* BUNDLED */; };
+		3CC1D65813B8572200D09404 /* jquery.gmap.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 3CC1D5EB13B82F0100D09404 /* jquery.gmap.min.js */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -194,6 +195,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3CC1D65813B8572200D09404 /* jquery.gmap.min.js in Resources */,
 				27091DCD13166BF1002F3C08 /* InfoPlist.strings in Resources */,
 				3C43BC0813075A36007ED67D /* Inspector.xib in Resources */,
 				3C43BC0513075A09007ED67D /* License.rtf in Resources */,
