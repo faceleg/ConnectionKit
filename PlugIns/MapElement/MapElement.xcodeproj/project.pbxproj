@@ -28,8 +28,6 @@
 		3C43BBAD13074EDB007ED67D /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C43BBD413075096007ED67D /* MapPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapPlugIn.h; sourceTree = "<group>"; };
 		3C43BBD513075096007ED67D /* MapPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapPlugIn.m; sourceTree = "<group>"; };
-		3C43BBE81307513B007ED67D /* jquery.zgooglemap.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.zgooglemap.js; sourceTree = "<group>"; };
-		3C43BBE91307513B007ED67D /* jquery.zgooglemap.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.zgooglemap.min.js; sourceTree = "<group>"; };
 		3C43BC0413075A09007ED67D /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../License.rtf; sourceTree = SOURCE_ROOT; };
 		3C43BC2713075B38007ED67D /* toolbar_map.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_map.tiff; sourceTree = "<group>"; };
 		3CC1D5DC13B810CF00D09404 /* BUNDLED */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = BUNDLED; path = ../Configurations/BUNDLED; sourceTree = SOURCE_ROOT; };
@@ -83,8 +81,6 @@
 				3C43BC0613075A36007ED67D /* Inspector.xib */,
 				3CC1D5EA13B82F0100D09404 /* jquery.gmap.js */,
 				3CC1D5EB13B82F0100D09404 /* jquery.gmap.min.js */,
-				3C43BBE81307513B007ED67D /* jquery.zgooglemap.js */,
-				3C43BBE91307513B007ED67D /* jquery.zgooglemap.min.js */,
 				3C43BC2713075B38007ED67D /* toolbar_map.tiff */,
 				3C43BC0413075A09007ED67D /* License.rtf */,
 			);
