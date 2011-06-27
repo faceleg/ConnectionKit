@@ -19,6 +19,7 @@
 
 @implementation MapPlugIn
 
+
 #pragma mark SVPlugin
 
 + (NSArray *)plugInKeys
@@ -33,6 +34,11 @@
             @"showScaleControl",
             @"showStreetViewControl",
             nil];
+}
+
+- (BOOL)requiresPageLoad
+{
+    return YES;
 }
 
 
