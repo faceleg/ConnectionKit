@@ -12,7 +12,6 @@
 		3C43BC0513075A09007ED67D /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C43BC0413075A09007ED67D /* License.rtf */; };
 		3C43BC0813075A36007ED67D /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C43BC0613075A36007ED67D /* Inspector.xib */; };
 		3C43BC2813075B38007ED67D /* toolbar_map.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 3C43BC2713075B38007ED67D /* toolbar_map.tiff */; };
-		3CC1D5DD13B810CF00D09404 /* BUNDLED in Resources */ = {isa = PBXBuildFile; fileRef = 3CC1D5DC13B810CF00D09404 /* BUNDLED */; };
 		3CC1D65813B8572200D09404 /* jquery.gmap.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 3CC1D5EB13B82F0100D09404 /* jquery.gmap.min.js */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
@@ -30,7 +29,6 @@
 		3C43BBD513075096007ED67D /* MapPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapPlugIn.m; sourceTree = "<group>"; };
 		3C43BC0413075A09007ED67D /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../License.rtf; sourceTree = SOURCE_ROOT; };
 		3C43BC2713075B38007ED67D /* toolbar_map.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_map.tiff; sourceTree = "<group>"; };
-		3CC1D5DC13B810CF00D09404 /* BUNDLED */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = BUNDLED; path = ../Configurations/BUNDLED; sourceTree = SOURCE_ROOT; };
 		3CC1D5EA13B82F0100D09404 /* jquery.gmap.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.gmap.js; sourceTree = "<group>"; };
 		3CC1D5EB13B82F0100D09404 /* jquery.gmap.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.gmap.min.js; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* MapElement.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapElement.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -75,7 +73,6 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				3CC1D5DC13B810CF00D09404 /* BUNDLED */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				27091DCC13166BF1002F3C08 /* InfoPlist.strings */,
 				3C43BC0613075A36007ED67D /* Inspector.xib */,
@@ -196,7 +193,6 @@
 				3C43BC0813075A36007ED67D /* Inspector.xib in Resources */,
 				3C43BC0513075A09007ED67D /* License.rtf in Resources */,
 				3C43BC2813075B38007ED67D /* toolbar_map.tiff in Resources */,
-				3CC1D5DD13B810CF00D09404 /* BUNDLED in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
