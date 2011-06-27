@@ -5072,13 +5072,13 @@
 				3CA900670D63C76100815310 /* IFrameElement.xcodeproj */,
 				3C42E4830D64FCE3004F35FD /* IMStatusElement.xcodeproj */,
 				3CA901A20D63D45B00815310 /* LinkListElement.xcodeproj */,
+				3C30F7DC1312EC070022E49A /* MapElement.xcodeproj */,
 				3C42E2990D64D253004F35FD /* PageCounterElement.xcodeproj */,
 				3C42DDA60D64C8B3004F35FD /* SiteMapElement.xcodeproj */,
 				3CFEEEAF1228896D005A08FC /* TweetButtonElement.xcodeproj */,
 				3C53E41811EE783B005CF7B2 /* TwitterElement.xcodeproj */,
 				CEF12E770D908EB400FCAC70 /* YouTubeElement.xcodeproj */,
 				3C042ABE1307166B00D9F2A7 /* VictualElement.xcodeproj */,
-				3C30F7DC1312EC070022E49A /* MapElement.xcodeproj */,
 			);
 			name = Elements;
 			sourceTree = "<group>";
