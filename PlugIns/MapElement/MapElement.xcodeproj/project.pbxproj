@@ -9,12 +9,10 @@
 /* Begin PBXBuildFile section */
 		27091DCD13166BF1002F3C08 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 27091DCC13166BF1002F3C08 /* InfoPlist.strings */; };
 		3C43BBD613075096007ED67D /* MapPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C43BBD513075096007ED67D /* MapPlugIn.m */; };
-		3C43BBEB1307513B007ED67D /* jquery.zgooglemap.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 3C43BBE91307513B007ED67D /* jquery.zgooglemap.min.js */; };
 		3C43BC0513075A09007ED67D /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C43BC0413075A09007ED67D /* License.rtf */; };
 		3C43BC0813075A36007ED67D /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C43BC0613075A36007ED67D /* Inspector.xib */; };
 		3C43BC2813075B38007ED67D /* toolbar_map.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 3C43BC2713075B38007ED67D /* toolbar_map.tiff */; };
 		3CC1D5DD13B810CF00D09404 /* BUNDLED in Resources */ = {isa = PBXBuildFile; fileRef = 3CC1D5DC13B810CF00D09404 /* BUNDLED */; };
-		3CC1D5EC13B82F0100D09404 /* jquery.gmap.js in Sources */ = {isa = PBXBuildFile; fileRef = 3CC1D5EA13B82F0100D09404 /* jquery.gmap.js */; };
 		3CC1D5ED13B82F0100D09404 /* jquery.gmap.min.js in Sources */ = {isa = PBXBuildFile; fileRef = 3CC1D5EB13B82F0100D09404 /* jquery.gmap.min.js */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
@@ -199,7 +197,6 @@
 			files = (
 				27091DCD13166BF1002F3C08 /* InfoPlist.strings in Resources */,
 				3C43BC0813075A36007ED67D /* Inspector.xib in Resources */,
-				3C43BBEB1307513B007ED67D /* jquery.zgooglemap.min.js in Resources */,
 				3C43BC0513075A09007ED67D /* License.rtf in Resources */,
 				3C43BC2813075B38007ED67D /* toolbar_map.tiff in Resources */,
 				3CC1D5DD13B810CF00D09404 /* BUNDLED in Resources */,
@@ -232,7 +229,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C43BBD613075096007ED67D /* MapPlugIn.m in Sources */,
-				3CC1D5EC13B82F0100D09404 /* jquery.gmap.js in Sources */,
 				3CC1D5ED13B82F0100D09404 /* jquery.gmap.min.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
