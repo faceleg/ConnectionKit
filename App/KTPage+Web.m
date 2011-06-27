@@ -278,6 +278,7 @@
 		}
 		
 		// On the ROOT page only, I think -- put up apple-touch-icon.png
+        /*
 		if ([self isRoot])
 		{
 			SVMedia *appleTouchIcon = [[self customThumbnail] media];		// Not quite right - what about non-custom thumbnail?  We don't have an API that returns media though.
@@ -297,7 +298,7 @@
 					[context endElement];
 				}
 			}
-		}
+		}*/
 	}
 }
 
