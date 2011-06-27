@@ -2,9 +2,9 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10J869</string>
+		<string key="IBDocument.SystemVersion">10K540</string>
 		<string key="IBDocument.InterfaceBuilderVersion">823</string>
-		<string key="IBDocument.AppKitVersion">1038.35</string>
+		<string key="IBDocument.AppKitVersion">1038.36</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -476,7 +476,7 @@
 					<object class="NSSlider" id="295987319">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{10, 381}, {210, 18}}</string>
+						<string key="NSFrame">{{10, 382}, {210, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSSliderCell" key="NSCell" id="55333982">
@@ -484,11 +484,11 @@
 							<int key="NSCellFlags2">131072</int>
 							<string key="NSContents"/>
 							<reference key="NSControlView" ref="295987319"/>
-							<double key="NSMaxValue">20</double>
-							<double key="NSMinValue">0.0</double>
-							<double key="NSValue">10</double>
+							<double key="NSMaxValue">19</double>
+							<double key="NSMinValue">1</double>
+							<double key="NSValue">9.4705882352941178</double>
 							<double key="NSAltIncValue">0.0</double>
-							<int key="NSNumberOfTickMarks">21</int>
+							<int key="NSNumberOfTickMarks">18</int>
 							<int key="NSTickMarkPosition">0</int>
 							<bool key="NSAllowsTickMarkValuesOnly">YES</bool>
 							<bool key="NSVertical">NO</bool>
@@ -503,7 +503,7 @@
 						<object class="NSButtonCell" key="NSCell" id="108369821">
 							<int key="NSCellFlags">-2080244224</int>
 							<int key="NSCellFlags2">131072</int>
-							<string key="NSContents">Show title tooltips on pins</string>
+							<string key="NSContents">Show pan control</string>
 							<reference key="NSSupport" ref="26"/>
 							<reference key="NSControlView" ref="725944434"/>
 							<int key="NSButtonFlags">1211912703</int>
@@ -530,7 +530,7 @@
 						<object class="NSButtonCell" key="NSCell" id="874262440">
 							<int key="NSCellFlags">-2080244224</int>
 							<int key="NSCellFlags2">131072</int>
-							<string key="NSContents">Show details on pin popup</string>
+							<string key="NSContents">Scale legend</string>
 							<reference key="NSSupport" ref="26"/>
 							<reference key="NSControlView" ref="442954997"/>
 							<int key="NSButtonFlags">1211912703</int>
@@ -604,8 +604,9 @@
 				<object class="NSMutableArray" key="NSDeclaredKeys">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>title</string>
-					<string>location</string>
 					<string>details</string>
+					<string>address</string>
+					<string>location</string>
 				</object>
 				<bool key="NSEditable">YES</bool>
 				<object class="_NSManagedProxy" key="_NSManagedProxy"/>
@@ -629,38 +630,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: inspectedObjectsController.selection.tooltip</string>
-						<reference key="source" ref="725944434"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="725944434"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">value: inspectedObjectsController.selection.tooltip</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.tooltip</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">28</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: inspectedObjectsController.selection.clickable</string>
-						<reference key="source" ref="442954997"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="442954997"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">value: inspectedObjectsController.selection.clickable</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.clickable</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">29</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: inspectedObjectsController.selection.zoom</string>
 						<reference key="source" ref="295987319"/>
 						<reference key="destination" ref="1001"/>
@@ -677,38 +646,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">selectedTag: inspectedObjectsController.selection.type</string>
-						<reference key="source" ref="24810193"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="24810193"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">selectedTag: inspectedObjectsController.selection.type</string>
-							<string key="NSBinding">selectedTag</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.type</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">33</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">contentArray: inspectedObjectsController.selection.locations</string>
-						<reference key="source" ref="1055307693"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="1055307693"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">contentArray: inspectedObjectsController.selection.locations</string>
-							<string key="NSBinding">contentArray</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.locations</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">51</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: arrangedObjects.location</string>
 						<reference key="source" ref="445986001"/>
 						<reference key="destination" ref="1055307693"/>
@@ -722,22 +659,6 @@
 						</object>
 					</object>
 					<int key="connectionID">65</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.location</string>
-						<reference key="source" ref="146922836"/>
-						<reference key="destination" ref="1055307693"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="146922836"/>
-							<reference key="NSDestination" ref="1055307693"/>
-							<string key="NSLabel">value: selection.location</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.location</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">66</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -789,35 +710,83 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: inspectedObjectsController.selection.tooltip</string>
-						<reference key="source" ref="419271904"/>
+						<string key="label">selectedTag: inspectedObjectsController.selection.mapType</string>
+						<reference key="source" ref="24810193"/>
 						<reference key="destination" ref="1001"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="419271904"/>
+							<reference key="NSSource" ref="24810193"/>
 							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">enabled: inspectedObjectsController.selection.tooltip</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.tooltip</string>
+							<string key="NSLabel">selectedTag: inspectedObjectsController.selection.mapType</string>
+							<string key="NSBinding">selectedTag</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.mapType</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">72</int>
+					<int key="connectionID">74</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: inspectedObjectsController.selection.clickable</string>
-						<reference key="source" ref="648928190"/>
+						<string key="label">value: inspectedObjectsController.selection.showPanControl</string>
+						<reference key="source" ref="725944434"/>
 						<reference key="destination" ref="1001"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="648928190"/>
+							<reference key="NSSource" ref="725944434"/>
 							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">enabled: inspectedObjectsController.selection.clickable</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.clickable</string>
+							<string key="NSLabel">value: inspectedObjectsController.selection.showPanControl</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.showPanControl</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">73</int>
+					<int key="connectionID">75</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.showScaleControl</string>
+						<reference key="source" ref="442954997"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="442954997"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.showScaleControl</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.showScaleControl</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">76</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">contentArray: inspectedObjectsController.selection.locations</string>
+						<reference key="source" ref="1055307693"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="1055307693"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">contentArray: inspectedObjectsController.selection.locations</string>
+							<string key="NSBinding">contentArray</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.locations</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">79</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: selection.location</string>
+						<reference key="source" ref="146922836"/>
+						<reference key="destination" ref="1055307693"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="146922836"/>
+							<reference key="NSDestination" ref="1055307693"/>
+							<string key="NSLabel">value: selection.location</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">selection.location</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">80</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1264,7 +1233,7 @@
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{322, 378}, {230, 478}}</string>
+					<string>{{299, 378}, {230, 478}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{628, 654}</string>
 					<string>{{217, 442}, {480, 272}}</string>
@@ -1298,7 +1267,7 @@
 						<bytes key="NSTransformStruct">P4AAAL+AAABBiAAAw4YAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{318, 754}, {110, 71}}</string>
+					<string>{{295, 754}, {216, 71}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1382,7 +1351,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">73</int>
+			<int key="maxID">80</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">

@@ -9,22 +9,33 @@
 #import <Sandvox.h>
 
 
+// uses gMap <http://www.smashinglabs.pl/gmap-intro>
+
 @interface MapPlugIn : SVPlugIn
 {
     NSArray *_locations;
-    NSUInteger _type;
+    NSUInteger _mapType;
     NSUInteger _zoom;
-    BOOL _clickable;
-    BOOL _tooltip;
+    BOOL _showMapTypeControl;
+    BOOL _showZoomControl;
+    BOOL _showPanControl;
+    BOOL _showScaleControl;
+    BOOL _showStreetViewControl;
 }
 
-// array of dictionaries, keys are location, title, details
+// array of dictionaries, keys are location, title, details 
 @property (nonatomic, retain) NSArray *locations;
 
 // options
-@property (nonatomic) NSUInteger type;
+@property (nonatomic) NSUInteger mapType;
 @property (nonatomic) NSUInteger zoom;
-@property (nonatomic) BOOL clickable;
-@property (nonatomic) BOOL tooltip;
+@property (nonatomic) BOOL showMapTypeControl;
+@property (nonatomic) BOOL showZoomControl;
+@property (nonatomic) BOOL showPanControl;
+@property (nonatomic) BOOL showScaleControl;
+@property (nonatomic) BOOL showStreetViewControl;
+
+// starting point
+@property (nonatomic, readonly) NSMutableDictionary *defaultLocation;
 
 @end
