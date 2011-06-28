@@ -49,7 +49,7 @@
 #import "SVDocumentUndoManager.h"
 #import "KTSite.h"
 #import "KTElementPlugInWrapper.h"
-#import "SVGraphicFactory.h"
+#import "SVPlugInGraphicFactory.h"
 #import "KTHostProperties.h"
 #import "KTHostSetupController.h"
 #import "SVInspector.h"
