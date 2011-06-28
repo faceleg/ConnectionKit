@@ -60,42 +60,31 @@
 // The "rule" on the SVPlugInDescription is that it should be presented as a verb that you, the website creator, do by having this in your website.
 - (NSString *)graphicDescription; { return [[self plugInBundle] objectForInfoDictionaryKey:@"SVPlugInDescription"]; }
 
-- (NSImage *)iconWithName:(NSString *)aName;
+- (NSImage *)newIconWithName:(NSString *)name;
 {
 	NSImage *result = nil;
 	// It could be a relative (to the bundle) or absolute path
-	NSString *filename = [[self plugInBundle] objectForInfoDictionaryKey:aName];
 	NSString *path = nil;
-	if ([filename isAbsolutePath])
+	if ([name isAbsolutePath])
 	{
-		path = filename;
+		path = name;
 	}
 	else
 	{
-		path = [[self plugInBundle] pathForImageResource:filename];
+		path = [[self plugInBundle] pathForImageResource:name];
 		if (!path)
 		{
-			path = [[NSBundle mainBundle] pathForImageResource:filename];
+			path = [[NSBundle mainBundle] pathForImageResource:name];
 		}
 	}
     
     
-    // HACK to fall back to plug-in icon
-    if (!path && [aName isEqualToString:@"KTPageIconName"])
-    {
-        return [self icon];
-    }
-    
-	
-	// TODO: We should not be referencing absolute paths.  Instead, we should check for 'XXXX' pattern and convert that to an OSType.
+    // TODO: We should not be referencing absolute paths.  Instead, we should check for 'XXXX' pattern and convert that to an OSType.
 	
 	//	Create the icon, falling back to the broken image if necessary
 	/// BUGSID:34635	Used to use -initByReferencingFile: but seems to upset Tiger and the Pages/Pagelets popups
-	result = [[[NSImage alloc] initWithContentsOfFile:path] autorelease];
-	if (!result)
-	{
-		result = [NSImage brokenImage];
-	}
+	result = [[NSImage alloc] initWithContentsOfFile:path];
+	
 	
 	return result;
 }
@@ -105,7 +94,9 @@
 	// The icon is cached; load it if not cached yet
 	if (!_icon)
 	{
-		_icon = [[self iconWithName:@"SVPlugInIconPath"] retain];
+		_icon = [self newIconWithName:
+                  [[self plugInBundle] objectForInfoDictionaryKey:@"SVPlugInIconPath"]];
+        if (!_icon) _icon = [[NSImage brokenImage] retain];
 	}
 	return _icon;
 }
@@ -115,7 +106,12 @@
 	// The icon is cached; load it if not cached yet
 	if (!_pageIcon)
 	{
-		_pageIcon = [[self iconWithName:@"KTPageIconName"] retain];
+		_pageIcon = [self newIconWithName:
+                      [[self plugInBundle] objectForInfoDictionaryKey:@"KTPageIconName"]];
+        if (!_pageIcon)
+        {
+            _pageIcon = [[self icon] retain];
+        }
 	}
 	return _pageIcon;
 }
