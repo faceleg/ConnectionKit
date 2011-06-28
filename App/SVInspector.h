@@ -9,14 +9,12 @@
 #import "KSInspector.h"
 
 
-@class KSInspectorViewController, SVWrapInspector, SVLinkInspector;
+@class KSInspectorViewController, SVWrapInspector, SVLinkInspector, SVPlugInInspector;
 
 
 @interface SVInspector : KSInspector
 {
-  @private
-    id <KSCollectionController> _inspectedPagesController;
-    
+  @private    
     KSInspectorViewController   *_documentInspector;
     KSInspectorViewController   *_pageInspector;
     KSInspectorViewController   *_collectionInspector;
@@ -24,10 +22,8 @@
     //KSInspectorViewController   *_graphicInspector;
     KSInspectorViewController   *_metricsInspector;
     SVLinkInspector             *_linkInspector;
-    KSInspectorViewController   *_plugInInspector;
+    SVPlugInInspector           *_plugInInspector;
 }
-
-@property(nonatomic, retain) id <KSCollectionController> inspectedPagesController;
 
 @property(nonatomic, retain, readonly) SVLinkInspector *linkInspector;
 
