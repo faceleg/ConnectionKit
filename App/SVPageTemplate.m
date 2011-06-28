@@ -63,11 +63,13 @@
     NSImage *icon = nil;
     if (plugin)
     {
-        icon = [[factory newIconWithName:[presetDict objectForKey:@"SVPlugInIconPath"]] autorelease];
+        icon = [factory newIconWithName:[presetDict objectForKey:@"SVPlugInIconPath"]];
         
-        if (!icon) icon = [factory icon];
+        if (!icon) icon = [factory newIconWithName:[[factory plugInBundle] objectForInfoDictionaryKey:@"KTPageIconName"]];
+        
+        if (!icon) icon = [[factory icon] retain];
 #ifdef DEBUG
-        if (nil == icon)
+        if (!icon)
         {
             NSLog(@"nil pluginIcon for %@", presetTitle);
         }
@@ -77,7 +79,13 @@
     {
         icon = [presetDict objectForKey:@"KTPageIconName"];
     }
-    if (icon) [self setIcon:icon];
+    
+    if (icon)
+    {
+        [self setIcon:icon];
+        [icon release];
+    }
+    
     
     
     
