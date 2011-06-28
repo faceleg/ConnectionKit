@@ -21,13 +21,13 @@ typedef enum {
 } KTPluginCategory;
 
 
-@class SVGraphicFactory;
+@class SVPlugInGraphicFactory;
 
 
 @interface KTElementPlugInWrapper : KSPlugInWrapper
 {
 @private
-    SVGraphicFactory    *_factory;
+    SVPlugInGraphicFactory    *_factory;
 }
 
 + (NSSet *)pageletPlugins;
@@ -36,7 +36,7 @@ typedef enum {
 // Inserts one item per known collection preset into aMenu at the specified index.
 + (NSSet *)collectionPresets;
 
-- (SVGraphicFactory *)graphicFactory;
+- (SVPlugInGraphicFactory *)graphicFactory;
 
 - (KTPluginCategory)category;
 

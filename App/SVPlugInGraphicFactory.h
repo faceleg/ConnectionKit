@@ -22,6 +22,10 @@
 
 @property(nonatomic, retain, readonly) NSBundle *plugInBundle;
 
+
+#pragma mark Icons
 - (NSImage *)pageIcon;
+- (NSImage *)newIconWithName:(NSString *)name;
+
 
 @end

@@ -9,7 +9,7 @@
 #import "SVPageTemplate.h"
 
 #import "KTElementPlugInWrapper.h"
-#import "SVGraphicFactory.h"
+#import "SVPlugInGraphicFactory.h"
 
 #import "NSDictionary+Karelia.h"
 #import "NSSet+Karelia.h"
@@ -32,7 +32,7 @@
     
     
     // Init with the right graphic factory
-    SVGraphicFactory *factory = [plugin graphicFactory];
+    SVPlugInGraphicFactory *factory = [plugin graphicFactory];
     if (factory)
     {
         [self initWithGraphicFactory:factory];
@@ -63,7 +63,9 @@
     NSImage *icon = nil;
     if (plugin)
     {
-        icon = [[plugin graphicFactory] pageIcon];
+        icon = [[factory newIconWithName:[presetDict objectForKey:@"SVPlugInIconPath"]] autorelease];
+        
+        if (!icon) icon = [factory pageIcon];
 #ifdef DEBUG
         if (nil == icon)
         {
