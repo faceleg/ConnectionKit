@@ -457,8 +457,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 }
 
 @synthesize designIdentityWindow = _designIdentityWindow;
-
-- (void) setDesignIdentityWindow: (MAAttachedWindow *) aDesignIdentityWindow
+- (void)setDesignIdentityWindow:(MAAttachedWindow *)aDesignIdentityWindow
 {
 	if (_designIdentityWindow)
 	{
@@ -466,8 +465,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	}
 	
     [aDesignIdentityWindow retain];
-    [_designIdentityWindow release];
-    _designIdentityWindow = aDesignIdentityWindow;
+    [_designIdentityWindow release]; _designIdentityWindow = aDesignIdentityWindow;
 }
 
 
