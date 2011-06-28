@@ -866,8 +866,6 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     // When scaling an image, need full suite of parameters
     if (width || height)
     {
-        OBPRECONDITION(width);
-        OBPRECONDITION(height);
         OBPRECONDITION(type);
     }
     
