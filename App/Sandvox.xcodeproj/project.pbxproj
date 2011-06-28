@@ -142,6 +142,17 @@
 			name = BuildAndPackageRelease;
 			productName = DiskImage;
 		};
+		3C979D9013BA506000E7CF7C /* Preflight Build */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 3C979D9713BA509C00E7CF7C /* Build configuration list for PBXAggregateTarget "Preflight Build" */;
+			buildPhases = (
+				3C979D8F13BA506000E7CF7C /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = "Preflight Build";
+			productName = "Preflight Build";
+		};
 		3C9B65920BFA7F6F007A4871 /* Sandvox-CompleteApplication */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 3C9B65950BFA7F9E007A4871 /* Build configuration list for PBXAggregateTarget "Sandvox-CompleteApplication" */;
@@ -6622,6 +6633,7 @@
 			targets = (
 				8D15AC270486D014006FF6A4 /* Sandvox-ExecutableOnly */,
 				3C9B65920BFA7F6F007A4871 /* Sandvox-CompleteApplication */,
+				3C979D9013BA506000E7CF7C /* Preflight Build */,
 				3C88838D0BFCB49C00921FA4 /* BuildAndPackageRelease */,
 				3CA0FEE40D7614AB0093562D /* DeployRelease */,
 				3CA786E60DB546060014AD7E /* PackageBonusDesigns */,
@@ -7357,6 +7369,19 @@
 			shellPath = /bin/bash;
 			shellScript = "#!/bin/bash\n\nexport APPNAME=\"Sandvox\"\n\n${SRCROOT}/../../Shared/tools/build_package\n\n### this script should NOT have 'Run script only when installing' checked\n";
 			showEnvVarsInLog = 0;
+		};
+		3C979D8F13BA506000E7CF7C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "# shell script goes here\nexit 0";
 		};
 		3C99107209298C4400ED5CBF /* Generate Localizable.strings */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -9428,6 +9453,27 @@
 			};
 			name = Debug;
 		};
+		3C979D9513BA506000E7CF7C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = "Preflight Build";
+			};
+			name = Debug;
+		};
+		3C979D9613BA506000E7CF7C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = "Preflight Build";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		3C9B65960BFA7F9E007A4871 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
@@ -9774,6 +9820,15 @@
 			buildConfigurations = (
 				3C88839A0BFCB4EE00921FA4 /* Debug */,
 				3C8883990BFCB4EE00921FA4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3C979D9713BA509C00E7CF7C /* Build configuration list for PBXAggregateTarget "Preflight Build" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3C979D9513BA506000E7CF7C /* Debug */,
+				3C979D9613BA506000E7CF7C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
