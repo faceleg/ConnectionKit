@@ -288,6 +288,8 @@
 		title = @"";		// better than nil, which crashes!
 	}
 	NSString *textToWrite = [format stringByReplacingOccurrencesOfString:@"@@" withString:title];
+    if (!textToWrite) textToWrite = title;
+    
 	[context writeCharacters:textToWrite];
 	[context endElement];	// </a>
 	[context endElement];	// </div> continue-reading-link
