@@ -6,7 +6,7 @@
 //  Copyright 2010-2011 Karelia Software. All rights reserved.
 //
 
-#import "SVGraphicFactory.h"
+#import "SVPlugInGraphicFactory.h"
 
 #import "KTDataSourceProtocol.h"
 #import "KTElementPlugInWrapper.h"
@@ -747,7 +747,6 @@ static SVGraphicFactory *sRawHTMLFactory;
 - (NSString *)name { SUBCLASSMUSTIMPLEMENT; return nil; }
 - (NSString *)graphicDescription { SUBCLASSMUSTIMPLEMENT; return nil; }
 - (NSImage *)icon { return nil; }
-- (NSImage *)pageIcon { return nil; }
 - (NSUInteger)priority; { return 5; }
 
 - (BOOL)isIndex; { return NO; }
@@ -783,7 +782,6 @@ static SVGraphicFactory *sRawHTMLFactory;
     [aCoder encodeObject:[self name] forKey:@"name"];
     [aCoder encodeObject:[self graphicDescription] forKey:@"graphicDescription"];
     [aCoder encodeObject:[self icon] forKey:@"icon"];
-    [aCoder encodeObject:[self pageIcon] forKey:@"pageIcon"];
     [aCoder encodeInteger:[self priority] forKey:@"priority"];
     [aCoder encodeBool:[self isIndex] forKey:@"isIndex"];
     [aCoder encodeObject:[self identifier] forKey:@"identifier"];

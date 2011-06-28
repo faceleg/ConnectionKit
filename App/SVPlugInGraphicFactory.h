@@ -24,7 +24,6 @@
 
 
 #pragma mark Icons
-- (NSImage *)pageIcon;
 - (NSImage *)newIconWithName:(NSString *)name;
 
 

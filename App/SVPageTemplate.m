@@ -65,7 +65,7 @@
     {
         icon = [[factory newIconWithName:[presetDict objectForKey:@"SVPlugInIconPath"]] autorelease];
         
-        if (!icon) icon = [factory pageIcon];
+        if (!icon) icon = [factory icon];
 #ifdef DEBUG
         if (nil == icon)
         {
@@ -77,7 +77,7 @@
     {
         icon = [presetDict objectForKey:@"KTPageIconName"];
     }
-    [self setIcon:icon];
+    if (icon) [self setIcon:icon];
     
     
     
@@ -92,7 +92,7 @@
     
     _graphicFactory = [factory retain]; // TOOD: Factories are immutable at the moment, so could copy instead
     
-    [self setIcon:[factory pageIcon]];
+    [self setIcon:[factory icon]];
     
     return self;
 }

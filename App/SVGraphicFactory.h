@@ -62,7 +62,6 @@ typedef NSUInteger SVPlugInPasteboardReadingOptions;
 - (NSString *)name;
 - (NSString *)graphicDescription;
 - (NSImage *)icon;
-- (NSImage *)pageIcon;
 - (NSUInteger)priority; // 0-9, where 9 is Pro status
 
 - (BOOL)isIndex;

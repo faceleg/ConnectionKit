@@ -101,21 +101,6 @@
 	return _icon;
 }
 
-- (NSImage *)pageIcon;
-{
-	// The icon is cached; load it if not cached yet
-	if (!_pageIcon)
-	{
-		_pageIcon = [self newIconWithName:
-                      [[self plugInBundle] objectForInfoDictionaryKey:@"KTPageIconName"]];
-        if (!_pageIcon)
-        {
-            _pageIcon = [[self icon] retain];
-        }
-	}
-	return _pageIcon;
-}
-
 #pragma mark Factory
 
 - (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
