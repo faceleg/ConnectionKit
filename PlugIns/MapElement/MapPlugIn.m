@@ -184,7 +184,10 @@
             NSString *label3 = SVLocalizedString(@"To here", "label for map popup");
             NSString *label4 = SVLocalizedString(@"From here", "label for map popup");
             
-            NSString *htmlDescription = [NSString stringWithFormat:@"%@<br/>%@<br/>%@ <a href=\"%@\">%@</a> - <a href=\"%@\">%@</a>",
+            NSString *htmlDescription = [NSString stringWithFormat:
+                                         @"<p style=\"font-size:12pt; font-weight:bold\">%@</p>"
+                                         @"<p style=\"font-size:10pt\">%@</p>"
+                                         @"<p style=\"font-size:8pt\">%@ <a href=\"%@\">%@</a> - <a href=\"%@\">%@</a><p>",
                                          label1,
                                          address,
                                          label2,
