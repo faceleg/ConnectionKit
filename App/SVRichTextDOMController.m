@@ -927,14 +927,25 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     
     if ([[self webEditor] shouldChangeTextInDOMRange:selection])
     {
+        // Search upwards so we get start of range from UI perspective
+        while ([selection startOffset] == 0)
+        {
+            DOMNode *parent = [selection startContainer];
+            if (parent == [self innerTextHTMLElement]) break;
+            
+            [selection setStartBefore:parent];
+        }
+        
+        
         // Walk through the selection, stripping out class and style attributes
+        DOMNode *aNode = [selection ks_startNode:NULL];
+        
         DOMTreeWalker *iterator = [[[self HTMLElement] ownerDocument]
                                    createTreeWalker:[selection commonAncestorContainer]
                                    whatToShow:DOM_SHOW_ALL
                                    filter:nil
                                    expandEntityReferences:NO];
         
-        DOMNode *aNode = [selection ks_startNode:NULL];
         [iterator setCurrentNode:aNode];
         
         while (YES)
