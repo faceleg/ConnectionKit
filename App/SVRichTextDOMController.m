@@ -741,7 +741,10 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
         // Tell the graphic what's happened. Wait until after -didChangeText so full model has been hooked up
         KTPage *page = [context page];        
         [graphic pageDidChange:page];
-        [controller update];	// push it through quickly
+        
+        // Push it through quickly
+        [controller setNeedsUpdate];
+        [controller updateIfNeeded];	
     }
     
 }
