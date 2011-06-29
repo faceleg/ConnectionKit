@@ -998,7 +998,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
         
         // It's possible that WebKit has adjusted the selection slightly to be smaller than the selected item. If so, correct by copying the item
         WEKWebEditorItem *item = [[self webEditor] selectedItem];
-        if (![selection containsNode:[item selectableDOMElement]])
+        if (![selection intersectsNode:[item selectableDOMElement]])
         {
             selection = [item selectableDOMRange];
             OBASSERT(selection);
