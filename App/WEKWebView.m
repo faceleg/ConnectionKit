@@ -101,6 +101,20 @@
     }
 }
 
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem;
+{
+    if ([menuItem action] == @selector(clearStyles:))
+    {
+        DOMDocument *document = [[self selectedFrame] DOMDocument];
+        BOOL result = [document queryCommandEnabled:@"removeFormat"];
+        return result;
+    }
+    else
+    {
+        return [super validateMenuItem:menuItem];
+    }
+}
+
 #pragma mark Dragging Destination
 
 - (NSDragOperation)willUpdateDrag:(id <NSDraggingInfo>)sender result:(NSDragOperation)result;
