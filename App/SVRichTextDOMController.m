@@ -921,6 +921,51 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     }
 }
 
+- (void)clearStyles:(id)sender;
+{
+    DOMRange *selection = [self selectedDOMRange];
+    
+    if ([[self webEditor] shouldChangeTextInDOMRange:selection])
+    {
+        // Search upwards so we get start of range from UI perspective
+        while ([selection startOffset] == 0)
+        {
+            DOMNode *parent = [selection startContainer];
+            if (parent == [self innerTextHTMLElement]) break;
+            
+            [selection setStartBefore:parent];
+        }
+        
+        
+        // Walk through the selection, stripping out class and style attributes
+        DOMNode *aNode = [selection ks_startNode:NULL];
+        
+        DOMTreeWalker *iterator = [[[self HTMLElement] ownerDocument]
+                                   createTreeWalker:[selection commonAncestorContainer]
+                                   whatToShow:DOM_SHOW_ALL
+                                   filter:nil
+                                   expandEntityReferences:NO];
+        
+        [iterator setCurrentNode:aNode];
+        
+        while (YES)
+        {
+            if ([aNode nodeType] == DOM_ELEMENT_NODE)
+            {
+                [(DOMElement *)aNode removeAttribute:@"class"];
+                [(DOMElement *)aNode removeAttribute:@"style"];
+            }
+            
+            if (aNode == [selection ks_endNode:NULL]) break;
+            
+            aNode = [iterator nextNode];
+        }
+        
+        
+        [[self webEditor] didChangeText];
+    }
+}
+
 #pragma mark Queries
 
 - (DOMNode *)isDOMRangeStartOfParagraph:(DOMRange *)range;

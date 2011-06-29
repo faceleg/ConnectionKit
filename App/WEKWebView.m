@@ -111,8 +111,13 @@
     }
     else
     {
-        return [super validateMenuItem:menuItem];
+        if ([[self superclass] instancesRespondToSelector:_cmd])
+        {
+            return [super validateMenuItem:menuItem];
+        }
     }
+    
+    return YES;
 }
 
 #pragma mark Dragging Destination
