@@ -178,10 +178,20 @@
                                              path:@"/maps"
                                   queryParameters:[NSDictionary dictionaryWithObject:address forKey:@"saddr"]];
             
-            NSString *htmlDescription = [NSString stringWithFormat:@"<h3>Address:</h3><br/><br/>%@<br/><br/><h4>Get directions: <a href=\"%@\">To here</a> - <a href=\"%@\">From here</a></h4>",
+            // localize popup
+            NSString *label1 = SVLocalizedString(@"Location:", "label for map popup");
+            NSString *label2 = SVLocalizedString(@"Get directions:", "label for map popup");
+            NSString *label3 = SVLocalizedString(@"To here", "label for map popup");
+            NSString *label4 = SVLocalizedString(@"From here", "label for map popup");
+            
+            NSString *htmlDescription = [NSString stringWithFormat:@"<h3>%@</h3><br/>%@<br/><h4>%@ <a href=\"%@\">%@</a> - <a href=\"%@\">%@</a></h4>",
+                                         label1,
                                          address,
+                                         label2,
                                          [dAddr absoluteString],
-                                         [sAddr absoluteString]];            
+                                         label3,
+                                         [sAddr absoluteString],
+                                         label4];            
 
             // just one marker
             NSDictionary *marker = [NSDictionary dictionaryWithObjectsAndKeys:
