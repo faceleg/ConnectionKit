@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
+		2743ED2613BBAE7E009EA6D3 /* UpdateJSONKit */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 2743ED2B13BBAED4009EA6D3 /* Build configuration list for PBXAggregateTarget "UpdateJSONKit" */;
+			buildPhases = (
+				2743ED2513BBAE7E009EA6D3 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = UpdateJSONKit;
+			productName = UpdateJSONKit;
+		};
 		3C15B85E0DC790A100DE9957 /* UpdateDesigns */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 3C15B8670DC790A500DE9957 /* Build configuration list for PBXAggregateTarget "UpdateDesigns" */;
@@ -1385,6 +1396,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = AmazonElement;
+		};
+		2743ED3E13BBAF66009EA6D3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2743ED2613BBAE7E009EA6D3 /* UpdateJSONKit */;
+			remoteInfo = UpdateJSONKit;
 		};
 		274E827F0D627180004F89C2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -6430,6 +6448,7 @@
 				3C3003711313011A0022E49A /* PBXTargetDependency */,
 				3C3003731313011D0022E49A /* PBXTargetDependency */,
 				3C3ED2A8120895C70080EB6E /* PBXTargetDependency */,
+				2743ED3F13BBAF66009EA6D3 /* PBXTargetDependency */,
 				3C3ED2AC120895D50080EB6E /* PBXTargetDependency */,
 				27E4D4510EC30CEE000E85DD /* PBXTargetDependency */,
 				CED864B110AA41DC002DF34F /* PBXTargetDependency */,
@@ -6641,6 +6660,7 @@
 				3C3ED287120894800080EB6E /* UpdateKSThreadProxy */,
 				3C3ED29D120895580080EB6E /* UpdateYRKSpinningProgressIndicator */,
 				3C5A9A850D11E4DF0054058C /* iMedia-UpdateRevision */,
+				2743ED2613BBAE7E009EA6D3 /* UpdateJSONKit */,
 				CEF9D0AE0D862B5100BD9895 /* ImageWebKitPlugin */,
 				CE16DC580D8711790077C779 /* MovieWebKitPlugin */,
 				3C1F510911D575510036B375 /* xibLocalizationPostprocessor */,
@@ -7159,6 +7179,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		2743ED2513BBAE7E009EA6D3 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\n\n###\n### UPDATE JSONKIT\n###\n\nJSONKIT_PATH=${SRCROOT}/../Code/JSONKIT\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\ncd ${JSONKIT_PATH}\nif (($? != 0))\nthen\n\techo \"fetching JSONKit from GitHub ...\"\n\tcd ..\n\t${GIT_PATH} submodule update --init\n\techo \"... finished fetching JSONKit\"\n\t\n\tcd ${JSONKIT_PATH}\nfi\n${GIT_PATH} checkout ${JSONKIT_CHECKOUT}\n\npopd\n\nexit 0\n";
+			showEnvVarsInLog = 0;
+		};
 		3C15B85D0DC790A100DE9957 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 8;
@@ -8093,6 +8127,11 @@
 			isa = PBXTargetDependency;
 			name = AmazonElement;
 			targetProxy = 27275735124146B20043C223 /* PBXContainerItemProxy */;
+		};
+		2743ED3F13BBAF66009EA6D3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2743ED2613BBAE7E009EA6D3 /* UpdateJSONKit */;
+			targetProxy = 2743ED3E13BBAF66009EA6D3 /* PBXContainerItemProxy */;
 		};
 		274E82800D627180004F89C2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -9123,6 +9162,28 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		2743ED2713BBAE7E009EA6D3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = UpdateJSONKit;
+			};
+			name = Debug;
+		};
+		2743ED2813BBAE7E009EA6D3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = UpdateJSONKit;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		3C0CF98B085E3D50009E3AD3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3CECB524085EA76A000A9A69 /* SandvoxRelease.xcconfig */;
@@ -9661,6 +9722,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2743ED2B13BBAED4009EA6D3 /* Build configuration list for PBXAggregateTarget "UpdateJSONKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2743ED2713BBAE7E009EA6D3 /* Debug */,
+				2743ED2813BBAE7E009EA6D3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		3C15B8670DC790A500DE9957 /* Build configuration list for PBXAggregateTarget "UpdateDesigns" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
