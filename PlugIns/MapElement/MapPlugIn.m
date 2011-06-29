@@ -184,7 +184,7 @@
             NSString *label3 = SVLocalizedString(@"To here", "label for map popup");
             NSString *label4 = SVLocalizedString(@"From here", "label for map popup");
             
-            NSString *htmlDescription = [NSString stringWithFormat:@"<h3>%@</h3><br/>%@<br/><h4>%@ <a href=\"%@\">%@</a> - <a href=\"%@\">%@</a></h4>",
+            NSString *htmlDescription = [NSString stringWithFormat:@"%@<br/>%@<br/>%@ <a href=\"%@\">%@</a> - <a href=\"%@\">%@</a>",
                                          label1,
                                          address,
                                          label2,
@@ -206,6 +206,8 @@
             NSData *markersJSONData = [SVJSONSerialization dataWithJSONObject:markers options:0 error:nil];
             NSString *markersJSONString = [[[NSString alloc] initWithData:markersJSONData encoding:NSUTF8StringEncoding] autorelease];
             
+            // try to style it up a bit
+            //(void)[context addCSSString:@".gmap_marker {font-family: Verdana; font-size: 12pt; color: red; }"];
             
             // append gMap <script> to end body
             NSString *map = [NSString stringWithFormat:
