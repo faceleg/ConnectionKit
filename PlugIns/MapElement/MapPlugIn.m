@@ -169,12 +169,12 @@
             
             NSURL *dAddr = [NSURL svURLWithScheme:@"http"
                                              host:@"maps.google.com"
-                                             path:@"maps"
+                                             path:@"/maps"
                                   queryParameters:[NSDictionary dictionaryWithObject:address forKey:@"daddr"]];
             
             NSURL *sAddr = [NSURL svURLWithScheme:@"http"
                                              host:@"maps.google.com"
-                                             path:@"maps"
+                                             path:@"/maps"
                                   queryParameters:[NSDictionary dictionaryWithObject:address forKey:@"saddr"]];
             
             
