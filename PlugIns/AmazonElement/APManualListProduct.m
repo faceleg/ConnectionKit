@@ -78,7 +78,7 @@
 	[self init];
 	
 	[self setASIN:[coder decodeObjectForKey:@"ASIN"]];
-	[self setProductCode: [coder decodeObjectForKey:@"code"]];
+	myProductCode = [[coder decodeObjectForKey:@"code"] copy];
 	[self setTitle: [coder decodeObjectForKey: @"title"]];
 	//[self setURL: [coder decodeObjectForKey: @"URL"]];	/// No longer needed, now generated automatically
 	[self setCreator: [coder decodeObjectForKey: @"creator"]];
@@ -155,6 +155,8 @@
 	code = [code copy];
 	[myProductCode release];
 	myProductCode = code;
+    
+    _isNew = YES;   // easter egg!
 }
 
 - (BOOL)validateProductCode:(NSString **)code error:(NSError **)error
