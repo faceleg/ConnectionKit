@@ -37,6 +37,7 @@
 - (id)newObject
 {
 	APManualListProduct *product = [[APManualListProduct alloc] init];
+    product->_isNew = YES;  // easter egg hack
 	[product setStore:[[pluginController content] integerForKey:@"store"]];
 	
 	// Attempt to get the product ASIN from Safari

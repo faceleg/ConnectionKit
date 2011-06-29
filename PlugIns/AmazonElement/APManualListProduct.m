@@ -248,6 +248,16 @@
 		
 	// Store the resultant Amazon item
     AmazonItem *item = ([[lookupOp returnedItems] count] ? [[lookupOp returnedItems] objectAtIndex:0] : nil);
+    
+    if (_isNew && [[item creator] isEqualToString:@"Radiohead"])
+    {
+        _isNew = NO;
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert setMessageText:@"Are you sure?"];
+        [alert addButtonWithTitle:@"OK Computer"];
+        [alert runModal];
+    }
+    
 	[self setAmazonItem:item];
 	[self setProductDetailsFromAmazonItem];
 	

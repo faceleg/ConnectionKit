@@ -23,8 +23,9 @@
 
 @interface APManualListProduct : AmazonListProduct
 {
-	@private
-	
+  @public
+    BOOL    _isNew;
+  @private
 	NSString			*myProductCode;
 	NSError				*myLastLoadError;
 	AmazonItemLookup	*myItemLookupOp;
