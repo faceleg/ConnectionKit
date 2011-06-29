@@ -82,7 +82,7 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
 		else
 		{
 			[self setMessageText:NSLocalizedString(@"Publishing…", @"Publishing sheet title")];
-			[self setInformativeText:NSLocalizedString(@"Preparing to upload…", @"Uploading progress info")];
+			[self setInformativeText:NSLocalizedString(@"Looking for changes…", @"Uploading progress info")];
 		}
 		
 		_dockProgress = [[UKDockProgressIndicator alloc] init];

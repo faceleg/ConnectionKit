@@ -844,6 +844,14 @@ const int kDesignThumbHeight = 65;
 		}
         
         
+        // Blockquote compatibility
+        NSString *identifier = [self identifier];
+        if ([identifier hasPrefix:@"com.11Mystics.Sandvox.Aerolite."])
+        {
+            [context addCSSString:@"blockquote { float:none; width:auto; }"];
+        }
+        
+        
         // Graphic clearing
         NSString *clearRule = [NSString stringWithFormat:
                                @".callout-container, .graphic-container { clear:%@; }",

@@ -302,7 +302,7 @@ static void *sPlugInMinWidthObservationContext = &sPlugInMinWidthObservationCont
         }
         @catch (NSException *exception)
         {
-            // TODO: Log or report exception
+            NSLog(@"Plug-in threw exception: %@ %@", [exception name], [exception reason]);
             
             // Correct open elements count if plug-in managed to break this. #88083
             while ([context openElementsCount] > openElements)

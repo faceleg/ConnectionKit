@@ -26,6 +26,7 @@
 #import "KTImageScalingURLProtocol.h"
 
 #import "NSBundle+KTExtensions.h"
+#import "NSManagedObjectContext+KTExtensions.h"
 #import "NSString+KTExtensions.h"
 
 #import "NSData+Karelia.h"
