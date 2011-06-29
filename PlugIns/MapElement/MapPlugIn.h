@@ -38,29 +38,23 @@
 
 @interface MapPlugIn : SVPlugIn
 {
-    NSArray *_locations;
-    NSUInteger _mapType;
-    NSUInteger _zoom;
-    BOOL _showMapTypeControl;
-    BOOL _showZoomControl;
+    NSString *_location;
+    BOOL _showAddressBubble;
     BOOL _showPanControl;
     BOOL _showScaleControl;
     BOOL _showStreetViewControl;
+    BOOL _showZoomControl;
 }
 
-// array of dictionaries, keys are location, title, details 
-@property (nonatomic, retain) NSArray *locations;
-
-// options
-@property (nonatomic) NSUInteger mapType;
-@property (nonatomic) NSUInteger zoom;
-@property (nonatomic) BOOL showMapTypeControl;
-@property (nonatomic) BOOL showZoomControl;
+// plug-in keys
+@property (nonatomic, retain) NSString *location;
+@property (nonatomic) BOOL showAddressBubble;
 @property (nonatomic) BOOL showPanControl;
 @property (nonatomic) BOOL showScaleControl;
 @property (nonatomic) BOOL showStreetViewControl;
+@property (nonatomic) BOOL showZoomControl;
 
 // starting point
-@property (nonatomic, readonly) NSMutableDictionary *defaultLocation;
+@property (nonatomic, readonly) NSString *defaultLocation;
 
 @end

@@ -38,7 +38,6 @@
 
 
 @interface MapPlugIn ()
-- (NSString *)stringForLocation:(NSDictionary *)location;
 @end
 
 
@@ -50,10 +49,8 @@
 + (NSArray *)plugInKeys
 { 
     return [NSArray arrayWithObjects:
-            @"locations",
-            @"mapType",
-            @"zoom",
-            @"showMapTypeControl",
+            @"location",
+            @"showAddressBubble",
             @"showZoomControl",
             @"showPanControl",
             @"showScaleControl",
@@ -74,54 +71,40 @@
     [super awakeFromNew];
     
     // make some initial guesses at params
-    self.locations = [NSArray arrayWithObject:self.defaultLocation];
-    self.mapType = 0;
-    self.zoom = 10;
-    
+    self.location = [self defaultLocation];
+    self.showAddressBubble = YES;
+
     // defaults from gMap docs
-    self.showMapTypeControl = YES;
     self.showZoomControl = YES;
     self.showPanControl = NO;
     self.showScaleControl = NO;
     self.showStreetViewControl = YES;
 }
 
-- (NSMutableDictionary *)defaultLocation
+- (NSString *)defaultLocation
 {
-    // pick a number between 1 and 3
+    
+    NSString *result = nil;
+    
+    // try to find a general location in Me card
+    
+    // fallback to a Karelia outpost, pick a number between 1 and 3
     NSInteger min = 1;
     NSInteger max = 3;
     NSInteger adjustedMax = (max + 1) - min; // arc4random returns within the set {min, (max - 1)}
     NSInteger random = arc4random() % adjustedMax;
-    NSInteger location = random + min;
-    
-    NSMutableDictionary *result = nil;
+    NSInteger location = random + min;    
     switch ( location) 
     {
         case 1:
-            result = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                      @"Alameda, CA", @"location",
-                      @"Karelia Software HQ", @"title",
-                      @"Where it all began...", @"details",
-                      nil];
-            
+            result = @"Alameda, CA";
             break;
         case 2:
-            result = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                      @"Altadena, CA", @"location",
-                      @"Karelia Software SoCal", @"title",
-                      @"Where the builds happen...", @"details",
-                      nil];
-            
+            result = @"Altadena, CA";
             break;
         case 3:
         default:
-            result = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                      @"Reading, England", @"location",
-                      @"Karelia Software Europe", @"title",
-                      @"Code + Band + Pubs = Rock Solid Surfaces", @"details",
-                      nil];
-            
+            result = @"Reading, England";
             break;
     }
     
@@ -134,17 +117,14 @@
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
     // add dependencies
-    [context addDependencyForKeyPath:@"locations" ofObject:self];
-    [context addDependencyForKeyPath:@"mapType" ofObject:self];
-    [context addDependencyForKeyPath:@"zoom" ofObject:self];
-    [context addDependencyForKeyPath:@"showMapTypeControl" ofObject:self];
+    [context addDependencyForKeyPath:@"location" ofObject:self];
     [context addDependencyForKeyPath:@"showZoomControl" ofObject:self];
     [context addDependencyForKeyPath:@"showPanControl" ofObject:self];
     [context addDependencyForKeyPath:@"showScaleControl" ofObject:self];
     [context addDependencyForKeyPath:@"showStreetViewControl" ofObject:self];
     
     // write HTML
-    if ( self.locations )
+    if ( self.location )
     {
         if ( [context liveDataFeeds] )
         {
@@ -171,39 +151,16 @@
 
             
             // prepare parameters, JSON-style
+            
+            // we always show a ROADMAP
+            NSString *type = @"google.maps.MapTypeId.ROADMAP";
+
             NSString *panControl = (self.showPanControl) ? @"true" : @"false";
             NSString *scaleControl = (self.showScaleControl) ? @"true" : @"false";
+            NSString *streetViewControl = (self.showStreetViewControl) ? @"true" : @"false";
+            NSString *zoomControl = (self.showZoomControl) ? @"true" : @"false";
             
-            NSString *type = @"google.maps.MapTypeId.ROADMAP";
-            switch ( self.mapType )
-            {
-                case 0:
-                    type = @"google.maps.MapTypeId.ROADMAP";
-                    break;                    
-                case 1:
-                    type = @"google.maps.MapTypeId.SATELLITE";
-                    break;
-                case 2:
-                    type = @"google.maps.MapTypeId.HYBRID";
-                    break;
-                case 3:
-                    type = @"google.maps.MapTypeId.TERRAIN";
-                    break;
-                default:
-                    break;
-            }
-            
-            NSMutableString *mapMarkers = [NSMutableString stringWithString:@"["];
-            for ( NSDictionary *location in self.locations )
-            {
-                if ( [location objectForKey:@"location"] )
-                {
-                    [mapMarkers appendString:[self stringForLocation:location]];
-                    [mapMarkers appendString:@","];
-                }
-            }
-            [mapMarkers appendString:@"]"];
-            
+            NSString *address = self.location;
             
             // append gMap <script> to end body
             NSString *map = [NSString stringWithFormat:
@@ -211,19 +168,21 @@
                              @"$(document).ready(function () {\n"
                              @"	$('#%@').gMap({\n"
                              @"	maptype: %@,\n"
-                             @"	zoom: %@,\n"
+                             @"	zoomControl: %@,\n"
                              @"	panControl: %@,\n"
                              @"	scaleControl: %@,\n"
-                             @"	markers: %@\n"
+                             @"	streetViewControl: %@,\n"
+                             @"	address: %@\n"
                              @"})\n"
                              @"});\n"
                              @"</script>\n",
                              idName,
                              type,
-                             [[NSNumber numberWithUnsignedInt:self.zoom] stringValue],
+                             zoomControl,
                              panControl,
                              scaleControl,
-                             mapMarkers];
+                             streetViewControl,
+                             address];
             [context addMarkupToEndOfBody:map];
         }
     }
@@ -232,7 +191,7 @@
 - (NSString *)placeholderString
 {
     NSString *result = nil;
-    if ( !self.locations )
+    if ( !self.location )
     {
         result = SVLocalizedString(@"Enter a location in the Inspector", "");
     }
@@ -244,14 +203,6 @@
     return result;
 }
 
-- (NSString *)stringForLocation:(NSDictionary *)location
-{
-    // return JSON-style dictionary
-    return [NSString stringWithFormat:@"{ address: \"%@\", title: \"%@\", html: \"%@\"}",
-            [location objectForKey:@"location"],
-            [location objectForKey:@"title"],
-            [location objectForKey:@"details"]];
-}
 
 #pragma mark Metrics
 
@@ -267,13 +218,11 @@
 
 #pragma mark Properties
 
-@synthesize locations = _locations;
-@synthesize mapType = _mapType;
-@synthesize zoom = _zoom;
-@synthesize showMapTypeControl = _showMapTypeControl;
-@synthesize showZoomControl = _showZoomControl;
-@synthesize showScaleControl = _showScaleControl;
+@synthesize location = _location;
+@synthesize showAddressBubble = _showAddressBubble;
 @synthesize showPanControl = _showPanControl;
+@synthesize showScaleControl = _showScaleControl;
 @synthesize showStreetViewControl = _showStreetViewControl;
+@synthesize showZoomControl = _showZoomControl;
 
 @end
