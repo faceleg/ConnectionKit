@@ -163,9 +163,10 @@
             
             
             // construct marker for location
+            
+            // assemble popup
             NSString *popup = (self.showAddressBubble) ? @"true" : @"false";
             NSString *address = self.location;
-            
             
             NSURL *dAddr = [NSURL svURLWithScheme:@"http"
                                              host:@"maps.google.com"
@@ -177,17 +178,17 @@
                                              path:@"/maps"
                                   queryParameters:[NSDictionary dictionaryWithObject:address forKey:@"saddr"]];
             
-            
             NSString *htmlDescription = [NSString stringWithFormat:@"<h3>Address:</h3><br/><br/>%@<br/><br/><h4>Get directions: <a href=\"%@\">To here</a> - <a href=\"%@\">From here</a></h4>",
                                          address,
                                          [dAddr absoluteString],
                                          [sAddr absoluteString]];            
-            NSLog(@"html is %@", htmlDescription);
+
             // just one marker
             NSString *markers = [NSString stringWithFormat:@"[{ address: \"%@\", html: \"%@\", popup: \"%@\"}]",
                                 address,
                                 htmlDescription,
                                 popup];
+            
             
             // append gMap <script> to end body
             NSString *map = [NSString stringWithFormat:
