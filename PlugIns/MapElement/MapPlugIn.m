@@ -217,6 +217,7 @@
                              @"	panControl: %@,\n"
                              @"	scaleControl: %@,\n"
                              @"	streetViewControl: %@,\n"
+                             @"	zoom: 15,\n"
                              @"	markers: %@\n"
                              @"})\n"
                              @"});\n"
