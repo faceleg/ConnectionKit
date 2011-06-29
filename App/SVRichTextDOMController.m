@@ -921,6 +921,34 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     }
 }
 
+- (void)clearStyles:(id)sender;
+{
+    // Walk through the selection, stripping out class and style attributes
+    DOMRange *selection = [self selectedDOMRange];
+    
+    DOMTreeWalker *iterator = [[[self HTMLElement] ownerDocument]
+                               createTreeWalker:[selection commonAncestorContainer]
+                               whatToShow:DOM_SHOW_ALL
+                               filter:nil
+                               expandEntityReferences:NO];
+    
+    DOMNode *aNode = [selection ks_startNode:NULL];
+    [iterator setCurrentNode:aNode];
+    
+    while (YES)
+    {
+        if ([aNode nodeType] == DOM_ELEMENT_NODE)
+        {
+            [(DOMElement *)aNode removeAttribute:@"class"];
+            [(DOMElement *)aNode removeAttribute:@"style"];
+        }
+        
+        if (aNode == [selection ks_endNode:NULL]) break;
+        
+        aNode = [iterator nextNode];
+    }
+}
+
 #pragma mark Queries
 
 - (DOMNode *)isDOMRangeStartOfParagraph:(DOMRange *)range;
