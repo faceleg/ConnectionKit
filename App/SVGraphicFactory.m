@@ -93,6 +93,8 @@
 - (NSString *)identifier { return @"com.karelia.sandvox.BlockQuote"; }
 - (NSString *)name { return NSLocalizedString(@"Block Quote", @"Graphic name"); }
 
+- (NSString *)graphicDescription { return NSLocalizedString(@"A text box designed for quotes", @"graphic description"); }
+
 - (NSImage *)icon
 {
     return [NSImage imageNamed:@"object_blockquote.tiff"];
