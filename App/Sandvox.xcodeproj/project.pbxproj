@@ -390,6 +390,8 @@
 		27403E00130D72D3001006D6 /* SVMigrationDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 27403DFE130D72D3001006D6 /* SVMigrationDocument.m */; };
 		27422441106A926E0058C8DA /* WEKWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2742243F106A926E0058C8DA /* WEKWebView.h */; };
 		27422442106A926E0058C8DA /* WEKWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27422440106A926E0058C8DA /* WEKWebView.m */; };
+		2743EDEF13BBB351009EA6D3 /* JSONKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 2743EDED13BBB351009EA6D3 /* JSONKit.h */; };
+		2743EDF013BBB351009EA6D3 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 2743EDEE13BBB351009EA6D3 /* JSONKit.m */; };
 		27443266103D8693007E7FF0 /* LoadingPlaceholder.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27443265103D8693007E7FF0 /* LoadingPlaceholder.xib */; };
 		274593E1123925A8005D0640 /* KSFileWrapperExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 274593DF123925A8005D0640 /* KSFileWrapperExtensions.h */; };
 		274593E2123925A8005D0640 /* KSFileWrapperExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 274593E0123925A8005D0640 /* KSFileWrapperExtensions.m */; };
@@ -1401,7 +1403,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 2743ED2613BBAE7E009EA6D3 /* UpdateJSONKit */;
+			remoteGlobalIDString = 2743ED2613BBAE7E009EA6D3;
 			remoteInfo = UpdateJSONKit;
 		};
 		274E827F0D627180004F89C2 /* PBXContainerItemProxy */ = {
@@ -2092,6 +2094,8 @@
 		2742243F106A926E0058C8DA /* WEKWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEKWebView.h; sourceTree = "<group>"; };
 		27422440106A926E0058C8DA /* WEKWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEKWebView.m; sourceTree = "<group>"; };
 		274339E90D77339B00164FA5 /* CollectionArchiveElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CollectionArchiveElement.xcodeproj; path = ../PlugIns/CollectionArchiveElement/CollectionArchiveElement.xcodeproj; sourceTree = SOURCE_ROOT; };
+		2743EDED13BBB351009EA6D3 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
+		2743EDEE13BBB351009EA6D3 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		27443265103D8693007E7FF0 /* LoadingPlaceholder.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingPlaceholder.xib; sourceTree = "<group>"; };
 		274593DF123925A8005D0640 /* KSFileWrapperExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSFileWrapperExtensions.h; sourceTree = "<group>"; };
 		274593E0123925A8005D0640 /* KSFileWrapperExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSFileWrapperExtensions.m; sourceTree = "<group>"; };
@@ -3672,6 +3676,16 @@
 			);
 			name = "Data Migration";
 			sourceTree = "<group>";
+		};
+		2743EDEC13BBB32F009EA6D3 /* JSONKit */ = {
+			isa = PBXGroup;
+			children = (
+				2743EDED13BBB351009EA6D3 /* JSONKit.h */,
+				2743EDEE13BBB351009EA6D3 /* JSONKit.m */,
+			);
+			name = JSONKit;
+			path = ../Code/JSONKit;
+			sourceTree = SOURCE_ROOT;
 		};
 		274DF472114E486600AC8C03 /* Site Items */ = {
 			isa = PBXGroup;
@@ -5938,6 +5952,7 @@
 		CEC69B02108E6F91000E6E84 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				2743EDEC13BBB32F009EA6D3 /* JSONKit */,
 				CE75EA90111A550600474753 /* ESCursors */,
 				CEC69AF8108E6F7D000E6E84 /* MAAttachedWindow */,
 				3C2DA6E0104C7A790037D270 /* MGScopeBar */,
@@ -6398,6 +6413,7 @@
 				271DFB8B137ECD540032D6F4 /* SVRawHTMLDOMController.h in Headers */,
 				276D4908137FFE6D004F4954 /* SVPublishingDigestStorage.h in Headers */,
 				27C969CF13B359D600EBC76A /* KSSHA1Stream.h in Headers */,
+				2743EDEF13BBB351009EA6D3 /* JSONKit.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8101,6 +8117,7 @@
 				271DFB8C137ECD540032D6F4 /* SVRawHTMLDOMController.m in Sources */,
 				276D4909137FFE6D004F4954 /* SVPublishingDigestStorage.m in Sources */,
 				27C969CA13B3598100EBC76A /* KSSHA1Stream.m in Sources */,
+				2743EDF013BBB351009EA6D3 /* JSONKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
