@@ -184,10 +184,17 @@
                                          [sAddr absoluteString]];            
 
             // just one marker
-            NSString *markers = [NSString stringWithFormat:@"[{ address: \"%@\", html: \"%@\", popup: \"%@\"}]",
-                                address,
-                                htmlDescription,
-                                popup];
+            NSDictionary *marker = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    address, @"address",
+                                    htmlDescription, @"html",
+                                    popup, @"popup",
+                                    nil];
+            // in an array
+            NSArray *markers = [NSArray arrayWithObject:marker];
+            
+            // as JSON
+            NSData *markersJSONData = [SVJSONSerialization dataWithJSONObject:markers options:0 error:nil];
+            NSString *markersJSONString = [[[NSString alloc] initWithData:markersJSONData encoding:NSUTF8StringEncoding] autorelease];
             
             
             // append gMap <script> to end body
@@ -210,7 +217,7 @@
                              panControl,
                              scaleControl,
                              streetViewControl,
-                             markers];
+                             markersJSONString];
             [context addMarkupToEndOfBody:map];
         }
     }
