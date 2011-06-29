@@ -40,6 +40,7 @@
 #import "SVLabel.h"
 #import "SVFieldFormatter.h"
 #import "SVPasteboardItem.h"
+#import "SVJSONSerialization.h"
 #import "SVURLFormatter.h"
 
 // Localization
