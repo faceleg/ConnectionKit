@@ -172,7 +172,7 @@
                              @"	panControl: %@,\n"
                              @"	scaleControl: %@,\n"
                              @"	streetViewControl: %@,\n"
-                             @"	address: %@\n"
+                             @"	address: \"%@\"\n"
                              @"})\n"
                              @"});\n"
                              @"</script>\n",
