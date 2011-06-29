@@ -34,6 +34,7 @@
 #import "NSString+Karelia.h"
 #import "DOMNode+Karelia.h"
 #import "DOMRange+Karelia.h"
+#import "DOMTreeWalker+Karelia.h"
 
 #import "KSOrderedManagedObjectControllers.h"
 #import "KSStringWriter.h"
@@ -952,8 +953,17 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
         {
             if ([aNode nodeType] == DOM_ELEMENT_NODE)
             {
-                [(DOMElement *)aNode removeAttribute:@"class"];
-                [(DOMElement *)aNode removeAttribute:@"style"];
+                // Anything outside of this controller should be skipped over
+                if ([self hitTestDOMNode:aNode] == self)
+                {
+                    [(DOMElement *)aNode removeAttribute:@"class"];
+                    [(DOMElement *)aNode removeAttribute:@"style"];
+                }
+                else
+                {
+                    [iterator ks_nextNodeIgnoringChildren];
+                    [iterator previousNode];    // to balance -nextNode followup
+                }
             }
             
             if (aNode == [selection ks_endNode:NULL]) break;
