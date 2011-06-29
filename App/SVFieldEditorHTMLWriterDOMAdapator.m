@@ -152,6 +152,12 @@
             return [self handleInvalidDOMElement:element];
         }
         
+        // Remove attribute-less spans since they're basically worthless
+        if ([tagName isEqualToString:@"SPAN"] && [[element attributes] length] == 0)
+        {
+            return [self unlinkDOMElementBeforeWriting:element];
+        }
+        
         
         
         // Are we about to open an inline element which matches the one just written? If so, merge them into one. This is made possible by not yet having written the end tag of the element.
