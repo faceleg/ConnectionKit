@@ -81,6 +81,26 @@
     }
 }
 
+#pragma mark Formatting
+
+- (IBAction)clearStyles:(id)sender
+{
+    // Check delegate does not wish to intercept instead
+    if ([[self editingDelegate] webView:self doCommandBySelector:_cmd]) return;
+    
+    
+    DOMDocument *document = [[self selectedFrame] DOMDocument];
+    if ([document execCommand:@"removeFormat" userInterface:NO value:nil])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification
+                                                            object:self];
+    }
+    else
+    {
+        NSBeep();
+    }
+}
+
 #pragma mark Dragging Destination
 
 - (NSDragOperation)willUpdateDrag:(id <NSDraggingInfo>)sender result:(NSDragOperation)result;
