@@ -7376,7 +7376,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "\n# read CFBundleVerison\nSANDVOX_PLIST_PATH=${TARGET_BUILD_DIR}/Sandvox.app/Contents/Info.plist\nSANDVOX_BUILD_NUMBER=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" ${SANDVOX_PLIST_PATH})\n\n# update each plug-in's CFBundleVersion\npushd ${TARGET_BUILD_DIR}\nfor i in *.svxElement\ndo\n\tPLUGIN_PLIST_PATH=${PWD}/${i}/Contents/Info.plist\n\t/usr/libexec/PlistBuddy -c \"Set CFBundleVersion ${SANDVOX_BUILD_NUMBER}\" ${PLUGIN_PLIST_PATH}\ndone\npopd\n\n";
+			shellScript = "\n# read CFBundleVersion\nSANDVOX_PLIST_PATH=${TARGET_BUILD_DIR}/Sandvox.app/Contents/Info.plist\nSANDVOX_BUILD_NUMBER=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" ${SANDVOX_PLIST_PATH})\nSANDVOX_VERSION=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" ${SANDVOX_PLIST_PATH})\n\n# update each plug-in's CFBundleVersion and CFBundleShortVersionString\npushd ${TARGET_BUILD_DIR}\nfor i in *.svxElement\ndo\n\tPLUGIN_PLIST_PATH=${PWD}/${i}/Contents/Info.plist\n\t/usr/libexec/PlistBuddy -c \"Set CFBundleVersion ${SANDVOX_BUILD_NUMBER}\" ${PLUGIN_PLIST_PATH}\n\t/usr/libexec/PlistBuddy -c \"Set CFBundleShortVersionString ${SANDVOX_VERSION}\" ${PLUGIN_PLIST_PATH}\ndone\npopd\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C88838C0BFCB49C00921FA4 /* Build Disk Image */ = {
