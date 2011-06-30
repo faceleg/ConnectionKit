@@ -67,7 +67,7 @@ typedef enum {
     
     SVPublishingDigestStorage   *_digestStorage;
     NSDictionary                *_pagesByID;
-    NSMutableDictionary         * _publishingRecordsByContentHash;
+    NSMutableDictionary         *_publishingRecordsByContentHash;
     
     NSMutableArray      *_plugInCSS;    // mixture of string CSS snippets, and CSS URLs
     
@@ -126,7 +126,7 @@ typedef enum {
 // Given a file's digest, where should it be placed? This is likely to be because the file has already been queued for upload; test with -shouldPublishToPath:
 - (NSString *)pathForFileWithSHA1Digest:(NSData *)digest;
 
-- (SVPublishingRecord *)publishingRecordForContentHash: (NSData*) digest ;
+- (SVPublishingRecord *)publishingRecordForContentHash:(NSData *)digest;
 - (void)setContentHash:(NSData *)hash forPublishingRecord:(SVPublishingRecord *)record;
 
 
