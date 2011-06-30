@@ -171,7 +171,11 @@
         // If media with the same content hash was already published, want to publish there instead
         if (hash)
         {
-            SVPublishingRecord *record = [self publishingRecordForImageRecipe:hash];
+            SVImageRecipe *recipe = [[SVImageRecipe alloc] initWithContentHash:hash];
+            OBASSERT(recipe);
+            SVPublishingRecord *record = [self publishingRecordForImageRecipe:recipe];
+            [recipe release];
+            
             if (record) remotePath = [record path];
         }
     }
