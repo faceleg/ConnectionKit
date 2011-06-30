@@ -85,6 +85,11 @@
     return result;
 }
 
+- (NSUInteger)hash;
+{
+    return [[self SHA1DigestOfSourceMedia] hash];
+}
+
 #pragma mark NSCopying
 
 - (id)copyWithZone:(NSZone *)zone;
