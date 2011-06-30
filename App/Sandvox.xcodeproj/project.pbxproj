@@ -405,6 +405,8 @@
 		2743EDF013BBB351009EA6D3 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 2743EDEE13BBB351009EA6D3 /* JSONKit.m */; };
 		2743EE7F13BBB942009EA6D3 /* SVJSONSerialization.h in Headers */ = {isa = PBXBuildFile; fileRef = 2743EE7D13BBB942009EA6D3 /* SVJSONSerialization.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2743EE8013BBB942009EA6D3 /* SVJSONSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 2743EE7E13BBB942009EA6D3 /* SVJSONSerialization.m */; };
+		2743F0C513BC755A009EA6D3 /* SVImageRecipe.h in Headers */ = {isa = PBXBuildFile; fileRef = 2743F0C313BC755A009EA6D3 /* SVImageRecipe.h */; };
+		2743F0C613BC755A009EA6D3 /* SVImageRecipe.m in Sources */ = {isa = PBXBuildFile; fileRef = 2743F0C413BC755A009EA6D3 /* SVImageRecipe.m */; };
 		27443266103D8693007E7FF0 /* LoadingPlaceholder.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27443265103D8693007E7FF0 /* LoadingPlaceholder.xib */; };
 		274593E1123925A8005D0640 /* KSFileWrapperExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 274593DF123925A8005D0640 /* KSFileWrapperExtensions.h */; };
 		274593E2123925A8005D0640 /* KSFileWrapperExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 274593E0123925A8005D0640 /* KSFileWrapperExtensions.m */; };
@@ -2118,6 +2120,8 @@
 		2743EDEE13BBB351009EA6D3 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		2743EE7D13BBB942009EA6D3 /* SVJSONSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVJSONSerialization.h; sourceTree = "<group>"; };
 		2743EE7E13BBB942009EA6D3 /* SVJSONSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVJSONSerialization.m; sourceTree = "<group>"; };
+		2743F0C313BC755A009EA6D3 /* SVImageRecipe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVImageRecipe.h; sourceTree = "<group>"; };
+		2743F0C413BC755A009EA6D3 /* SVImageRecipe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVImageRecipe.m; sourceTree = "<group>"; };
 		27443265103D8693007E7FF0 /* LoadingPlaceholder.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingPlaceholder.xib; sourceTree = "<group>"; };
 		274593DF123925A8005D0640 /* KSFileWrapperExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSFileWrapperExtensions.h; sourceTree = "<group>"; };
 		274593E0123925A8005D0640 /* KSFileWrapperExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSFileWrapperExtensions.m; sourceTree = "<group>"; };
@@ -4096,6 +4100,8 @@
 				27A1892C11F864F0004BEFC2 /* SVPublisher.h */,
 				276D4906137FFE6D004F4954 /* SVPublishingDigestStorage.h */,
 				276D4907137FFE6D004F4954 /* SVPublishingDigestStorage.m */,
+				2743F0C313BC755A009EA6D3 /* SVImageRecipe.h */,
+				2743F0C413BC755A009EA6D3 /* SVImageRecipe.m */,
 			);
 			name = "Publishing Engine";
 			sourceTree = "<group>";
@@ -6439,6 +6445,7 @@
 				27C969CF13B359D600EBC76A /* KSSHA1Stream.h in Headers */,
 				2743EDEF13BBB351009EA6D3 /* JSONKit.h in Headers */,
 				2743EE7F13BBB942009EA6D3 /* SVJSONSerialization.h in Headers */,
+				2743F0C513BC755A009EA6D3 /* SVImageRecipe.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8176,6 +8183,7 @@
 				27C969CA13B3598100EBC76A /* KSSHA1Stream.m in Sources */,
 				2743EDF013BBB351009EA6D3 /* JSONKit.m in Sources */,
 				2743EE8013BBB942009EA6D3 /* SVJSONSerialization.m in Sources */,
+				2743F0C613BC755A009EA6D3 /* SVImageRecipe.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
