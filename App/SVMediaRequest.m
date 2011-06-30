@@ -180,7 +180,7 @@ preferredUploadPath:(NSString *)path
 {
     if (otherMedia == self) return YES;
     
-    // Evalutating -mediaData is expensive, so compare "recipes"
+    // Evaluating -mediaData is expensive, so compare "recipes"
     return ([otherMedia.media isEqualToMedia:self.media] &&
             KSISEQUAL(otherMedia.width, self.width) &&
             KSISEQUAL(otherMedia.height, self.height) &&
