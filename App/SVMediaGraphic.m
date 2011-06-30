@@ -456,9 +456,9 @@
 #pragma mark Thumbnail
 
 - (NSURL *)addImageRepresentationToContext:(SVHTMLContext *)context
-                                  width:(NSUInteger)width
-                                 height:(NSUInteger)height
-                                options:(SVPageImageRepresentationOptions)options;
+                                     width:(NSUInteger)width
+                                    height:(NSUInteger)height
+                                   options:(SVPageImageRepresentationOptions)options;
 {
     SVMedia *media = (id)[[self plugIn] thumbnailMedia];
     if (media)
@@ -485,11 +485,11 @@
                 [context addDependencyOnObject:self keyPath:@"height"];
             }
             
-            if (aspectRatio > 1.0f)
+            if (aspectRatio > (width / height))
             {
                 height = width / aspectRatio;
             }
-            else if (aspectRatio < 1.0f)
+            else
             {
                 width = height * aspectRatio;
             }
