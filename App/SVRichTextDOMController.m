@@ -34,6 +34,7 @@
 #import "NSString+Karelia.h"
 #import "DOMNode+Karelia.h"
 #import "DOMRange+Karelia.h"
+#import "DOMTreeWalker+Karelia.h"
 
 #import "KSOrderedManagedObjectControllers.h"
 #import "KSStringWriter.h"
@@ -741,7 +742,10 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
         // Tell the graphic what's happened. Wait until after -didChangeText so full model has been hooked up
         KTPage *page = [context page];        
         [graphic pageDidChange:page];
-        [controller update];	// push it through quickly
+        
+        // Push it through quickly
+        [controller setNeedsUpdate];
+        [controller updateIfNeeded];	
     }
     
 }
@@ -918,6 +922,60 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     }
 }
 
+- (void)clearStyles:(id)sender;
+{
+    DOMRange *selection = [self selectedDOMRange];
+    
+    if ([[self webEditor] shouldChangeTextInDOMRange:selection])
+    {
+        // Search upwards so we get start of range from UI perspective
+        while ([selection startOffset] == 0)
+        {
+            DOMNode *parent = [selection startContainer];
+            if (parent == [self innerTextHTMLElement]) break;
+            
+            [selection setStartBefore:parent];
+        }
+        
+        
+        // Walk through the selection, stripping out class and style attributes
+        DOMNode *aNode = [selection ks_startNode:NULL];
+        
+        DOMTreeWalker *iterator = [[[self HTMLElement] ownerDocument]
+                                   createTreeWalker:[selection commonAncestorContainer]
+                                   whatToShow:DOM_SHOW_ALL
+                                   filter:nil
+                                   expandEntityReferences:NO];
+        
+        [iterator setCurrentNode:aNode];
+        
+        while (YES)
+        {
+            if ([aNode nodeType] == DOM_ELEMENT_NODE)
+            {
+                // Anything outside of this controller should be skipped over
+                if ([self hitTestDOMNode:aNode] == self)
+                {
+                    [(DOMElement *)aNode removeAttribute:@"class"];
+                    [(DOMElement *)aNode removeAttribute:@"style"];
+                }
+                else
+                {
+                    [iterator ks_nextNodeIgnoringChildren];
+                    [iterator previousNode];    // to balance -nextNode followup
+                }
+            }
+            
+            if (aNode == [selection ks_endNode:NULL]) break;
+            
+            aNode = [iterator nextNode];
+        }
+        
+        
+        [[self webEditor] didChangeText];
+    }
+}
+
 #pragma mark Queries
 
 - (DOMNode *)isDOMRangeStartOfParagraph:(DOMRange *)range;
@@ -995,7 +1053,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
         
         // It's possible that WebKit has adjusted the selection slightly to be smaller than the selected item. If so, correct by copying the item
         WEKWebEditorItem *item = [[self webEditor] selectedItem];
-        if (![selection containsNode:[item selectableDOMElement]])
+        if (![selection intersectsNode:[item selectableDOMElement]])
         {
             selection = [item selectableDOMRange];
             OBASSERT(selection);

@@ -24,7 +24,7 @@
 
 - (DOMElement *)replaceDOMElement:(DOMElement *)element withElementWithTagName:(NSString *)tagName;
 - (void)moveDOMElementToAfterParent:(DOMElement *)element;
-- (DOMNode *)unlinkDOMElementBeforeWriting:(DOMElement *)element;
+- (DOMNode *)replaceDOMElementWithChildNodes:(DOMElement *)element;
 - (void)populateSpanElementAttributes:(DOMElement *)span
                       fromFontElement:(DOMHTMLFontElement *)fontElement;
 
@@ -150,6 +150,12 @@
         if (![self validateElement:tagName])
         {
             return [self handleInvalidDOMElement:element];
+        }
+        
+        // Remove attribute-less spans since they're basically worthless
+        if ([tagName isEqualToString:@"SPAN"] && [[element attributes] length] == 0)
+        {
+            return [self replaceDOMElementWithChildNodes:element];
         }
         
         
@@ -375,7 +381,7 @@
         }
         else
         {
-            result = [self unlinkDOMElementBeforeWriting:element];
+            result = [self replaceDOMElementWithChildNodes:element];
         }
         
         
@@ -443,7 +449,7 @@
     }
 }
 
-- (DOMNode *)unlinkDOMElementBeforeWriting:(DOMElement *)element
+- (DOMNode *)replaceDOMElementWithChildNodes:(DOMElement *)element
 {
     //  Called when the element hasn't fitted the whitelist. Unlinks it, and returns the correct node to write
     // Figure out the preferred next node
