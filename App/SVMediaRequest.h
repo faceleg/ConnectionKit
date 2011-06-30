@@ -62,7 +62,7 @@ preferredUploadPath:(NSString *)path
 - (SVMediaRequest *)requestWithScalingSuffixApplied;
 
 // Given the SHA1 digest of source media, what should the content hash of this request be?
-- (NSData *)contentHashWithMediaDigest:(NSData *)digest;
+- (NSData *)contentHashWithSourceMediaDigest:(NSData *)digest;
 
 
 #pragma mark Equality

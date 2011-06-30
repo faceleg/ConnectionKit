@@ -160,7 +160,7 @@ preferredUploadPath:(NSString *)path
                                     scalingSuffix:nil] autorelease];
 }
 
-- (NSData *)contentHashWithMediaDigest:(NSData *)digest;
+- (NSData *)contentHashWithSourceMediaDigest:(NSData *)digest;
 {
     NSData *result = nil;
     

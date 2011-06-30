@@ -793,7 +793,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         NSData *sourceDigest = [digestStore digestForMediaRequest:[request sourceRequest]]; 
         if (sourceDigest)
         {
-            NSData *hash = [request contentHashWithMediaDigest:sourceDigest];
+            NSData *hash = [request contentHashWithSourceMediaDigest:sourceDigest];
             if (hash)
             {
                 result = [[self publishingRecordForContentHash:hash] path];
@@ -839,7 +839,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             
             if (sourceDigest)
             {
-                hash = [request contentHashWithMediaDigest:sourceDigest];
+                hash = [request contentHashWithSourceMediaDigest:sourceDigest];
             }
             
             [self publishData:data
@@ -875,7 +875,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                     
                     if (sourceDigest)
                     {
-                        hash = [request contentHashWithMediaDigest:sourceDigest];
+                        hash = [request contentHashWithSourceMediaDigest:sourceDigest];
                     }
                     
                     [self publishData:data

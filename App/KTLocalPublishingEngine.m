@@ -145,7 +145,7 @@
             
             if (sourceDigest)
             {
-                hash = [mediaRequest contentHashWithMediaDigest:sourceDigest];
+                hash = [mediaRequest contentHashWithSourceMediaDigest:sourceDigest];
             }
             else
             {
@@ -435,7 +435,7 @@
                 }
                 
                 
-                NSData *hash = [request contentHashWithMediaDigest:sourceDigest];
+                NSData *hash = [request contentHashWithSourceMediaDigest:sourceDigest];
                 if (hash)
                 {
                     // Seek an existing instance of that media
@@ -485,7 +485,7 @@
         NSData *sourceDigest = [[request media] SHA1Digest];
         if (sourceDigest)
         {
-            hash = [request contentHashWithMediaDigest:sourceDigest];
+            hash = [request contentHashWithSourceMediaDigest:sourceDigest];
         }
         
         // Signify a failure with NSNull so we don't get stuck in an endless loop
