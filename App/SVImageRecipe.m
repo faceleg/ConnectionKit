@@ -19,7 +19,7 @@
 - (id)initWithSHA1DigestOfSourceMedia:(NSData *)sourceDigest parameters:(NSDictionary *)parameters;
 {
     OBPRECONDITION(sourceDigest);
-    OBPRECONDITION(parameters);
+    OBPRECONDITION([parameters count]);
     
     self = [self init];
     
@@ -44,21 +44,24 @@
 
 - (id)initWithContentHash:(NSData *)hash;
 {
-    NSData *paramData = [hash subdataWithRange:NSMakeRange(CC_SHA1_DIGEST_LENGTH, [hash length] - CC_SHA1_DIGEST_LENGTH)];
-    NSString *query = [[NSString alloc] initWithData:paramData encoding:NSASCIIStringEncoding];
-    if (query)
+    if ([hash length] > CC_SHA1_DIGEST_LENGTH + 4)  // minimum to include a parameter
     {
-        self = [self initWithSHA1DigestOfSourceMedia:[hash subdataWithRange:NSMakeRange(0, CC_SHA1_DIGEST_LENGTH)]
-                                          parameters:[NSURL ks_parametersOfQuery:query]];
+#define PARAMETERS_START (CC_SHA1_DIGEST_LENGTH + 1)
         
-        [query release];
-    }
-    else
-    {
-        [self release]; self = nil;
+        NSData *paramData = [hash subdataWithRange:NSMakeRange(PARAMETERS_START, [hash length] - PARAMETERS_START)];
+        NSString *query = [[NSString alloc] initWithData:paramData encoding:NSASCIIStringEncoding];
+        if (query)
+        {
+            self = [self initWithSHA1DigestOfSourceMedia:[hash subdataWithRange:NSMakeRange(0, CC_SHA1_DIGEST_LENGTH)]
+                                              parameters:[NSURL ks_parametersOfQuery:query]];
+            
+            [query release];
+            
+            return self;
+        }
     }
     
-    return self;
+    [self release]; return nil;
 }
 
 - (NSData *)contentHash;
