@@ -887,6 +887,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
                                                               width:width
                                                              height:height
                                                                type:type
+                                                            options:0
                                                 preferredUploadPath:path
                                                       scalingSuffix:suffix];
     
