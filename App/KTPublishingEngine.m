@@ -11,6 +11,7 @@
 #import "KTPage+Internal.h"
 #import "KTDesign.h"
 #import "KTHostProperties.h"
+#import "SVImageRecipe.h"
 #import "KTSite.h"
 #import "KTMaster.h"
 #import "SVPublishingDigestStorage.h"
@@ -149,9 +150,17 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                             predicate:[NSPredicate predicateWithFormat:@"contentHash != nil"]
                             error:NULL];
         
-        _publishingRecordsByContentHash = [[NSMutableDictionary alloc]
-                                           initWithObjects:records
-                                           forKeys:[records valueForKey:@"contentHash"]];
+        _publishingRecordsByImageRecipe = [[NSMutableDictionary alloc] initWithCapacity:[records count]];
+        
+        for (SVPublishingRecord *aRecord in records)
+        {
+            SVImageRecipe *recipe = [[SVImageRecipe alloc] initWithContentHash:[aRecord contentHash]];
+            if (recipe)
+            {
+                [_publishingRecordsByImageRecipe setObject:aRecord forKey:recipe];
+                [recipe release];
+            }
+        }
 	}
 	
 	return self;
@@ -177,7 +186,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [_nextOp release];
     
     [_pagesByID release];
-	[_publishingRecordsByContentHash release];
+	[_publishingRecordsByImageRecipe release];
     
 	[super dealloc];
 }
@@ -796,7 +805,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             NSData *hash = [request contentHashWithSourceMediaDigest:sourceDigest];
             if (hash)
             {
-                result = [[self publishingRecordForContentHash:hash] path];
+                SVImageRecipe *recipe = [[SVImageRecipe alloc] initWithContentHash:hash];
+                result = [[self publishingRecordForImageRecipe:recipe] path];
+                [recipe release];
             }
         }
     }
@@ -1115,9 +1126,10 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     return result;
 }
 
-- (SVPublishingRecord *)publishingRecordForContentHash:(NSData *)digest;
+- (SVPublishingRecord *)publishingRecordForImageRecipe:(SVImageRecipe *)recipe;
 {
-    return [_publishingRecordsByContentHash objectForKey:digest];
+    OBPRECONDITION([recipe isKindOfClass:[SVImageRecipe class]]);
+    return [_publishingRecordsByImageRecipe objectForKey:recipe];
 }
 
 - (void)setContentHash:(NSData *)hash forPublishingRecord:(SVPublishingRecord *)record;
@@ -1125,12 +1137,26 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     NSData *oldHash = [record contentHash];
     if (!KSISEQUAL(hash, oldHash))
     {
-        if (oldHash) [_publishingRecordsByContentHash removeObjectForKey:oldHash];
+        if (oldHash)
+        {
+            SVImageRecipe *oldRecipe = [[SVImageRecipe alloc] initWithContentHash:oldHash];
+            if (oldRecipe)
+            {
+                [_publishingRecordsByImageRecipe removeObjectForKey:oldRecipe];
+                [oldRecipe release];
+            }
+                
+        }
         
         [record setContentHash:hash];
         if (hash)
         {
-            [_publishingRecordsByContentHash setObject:record forKey:hash];
+            SVImageRecipe *recipe = [[SVImageRecipe alloc] initWithContentHash:hash];
+            if (recipe)
+            {
+                [_publishingRecordsByImageRecipe setObject:record forKey:recipe];
+                [recipe release];
+            }
         }
         else if (oldHash)
         {

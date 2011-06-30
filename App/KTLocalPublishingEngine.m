@@ -10,6 +10,7 @@
 
 #import "KTSite.h"
 #import "KTHostProperties.h"
+#import "SVImageRecipe.h"
 #import "KTMaster.h"
 #import "SVPublishingDigestStorage.h"
 #import "KTPage.h"
@@ -170,7 +171,7 @@
         // If media with the same content hash was already published, want to publish there instead
         if (hash)
         {
-            SVPublishingRecord *record = [self publishingRecordForContentHash:hash];
+            SVPublishingRecord *record = [self publishingRecordForImageRecipe:hash];
             if (record) remotePath = [record path];
         }
     }
@@ -439,7 +440,10 @@
                 if (hash)
                 {
                     // Seek an existing instance of that media
-                    SVPublishingRecord *record = [self publishingRecordForContentHash:hash];
+                    SVImageRecipe *recipe = [[SVImageRecipe alloc] initWithContentHash:hash];
+                    SVPublishingRecord *record = [self publishingRecordForImageRecipe:recipe];
+                    [recipe release];
+                    
                     if (record)
                     {
                         // Pretend the media was uploaded
