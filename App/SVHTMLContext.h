@@ -34,6 +34,7 @@ enum {
 typedef NSUInteger SVPlaceholderOptions;
 
 enum {
+    SVPageImageRepresentationLink = 1 << 5,     // if possible an <A> element will also be written linking to the page
     SVImagePushSizeToCurrentElement = 1 << 10,    // placeholder represents content visible only on published site
 };
 typedef NSUInteger SVPageImageRepresentationOptions2;

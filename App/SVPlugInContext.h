@@ -26,7 +26,6 @@ typedef NSUInteger SVResizingOptions;
 enum {
     SVImageScaleAspectFit = 1 << 0,             // without this, image will be cropped to fill width & height
                                                 // one day, might have option to control if can scale up
-    SVPageImageRepresentationLink = 1 << 5,     // if possible an <A> element will also be written linking to the page
 };
 typedef NSUInteger SVPageImageRepresentationOptions;
 
