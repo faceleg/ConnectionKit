@@ -127,7 +127,7 @@
                                 width:128
                                height:128
                            attributes:nil
-                              options:(SVImageScaleAspectFit | SVPageImageRepresentationLink)];
+                              options:(SVImageScaleAspectFit | (1 << 5)/*SVPageImageRepresentationLink*/)];
         [context startElement:@"h3"];
         if ([context page]) [context startAnchorElementWithPage:[context page]];
         [context startElement:@"span" attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
@@ -183,7 +183,7 @@ height="[[mediainfo info:height media:aPage.thumbnail sizeToFit:thumbnailImageSi
                             width:128
                            height:128
                        attributes:nil
-                          options:(SVImageScaleAspectFit | SVPageImageRepresentationLink)];
+                          options:(SVImageScaleAspectFit | (1 << 5)/*SVPageImageRepresentationLink*/)];
 }
 
 

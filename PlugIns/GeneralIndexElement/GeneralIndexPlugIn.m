@@ -420,7 +420,7 @@
 	NSURL *thumbnailImage = [context URLForImageRepresentationOfPage:iteratedPage
 															   width:64
 															  height:64
-															 options:(SVImageScaleAspectFit | SVPageImageRepresentationLink)];
+															 options:SVImageScaleAspectFit];
     if (thumbnailImage)
     {
         [context startElement:@"div" className:@"article-thumbnail"];
@@ -429,7 +429,7 @@
                                 width:64
                                height:64
                            attributes:nil
-                              options:(SVImageScaleAspectFit | SVPageImageRepresentationLink)];
+                              options:(SVImageScaleAspectFit | (1 << 5)/*SVPageImageRepresentationLink*/)];
         
         [context endElement];
     }
