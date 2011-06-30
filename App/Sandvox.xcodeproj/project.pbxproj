@@ -1579,6 +1579,13 @@
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = IMStatusElement;
 		};
+		3C535FFB13BC247F004222D5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3C979D9013BA506000E7CF7C /* Preflight Build */;
+			remoteInfo = "Preflight Build";
+		};
 		3C58518F1289AC980084315D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C5851881289AC980084315D /* FacebookElement.xcodeproj */;
@@ -6430,6 +6437,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				3C535FFC13BC247F004222D5 /* PBXTargetDependency */,
 				3CE2B2C20D7F1E8A00E2711E /* PBXTargetDependency */,
 				3C3ED2AE120895E60080EB6E /* PBXTargetDependency */,
 				3CD806E3120A633F00E0848F /* PBXTargetDependency */,
@@ -8208,6 +8216,11 @@
 			isa = PBXTargetDependency;
 			name = IMStatusElement;
 			targetProxy = 3C4CDF2E1207413A002AF966 /* PBXContainerItemProxy */;
+		};
+		3C535FFC13BC247F004222D5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3C979D9013BA506000E7CF7C /* Preflight Build */;
+			targetProxy = 3C535FFB13BC247F004222D5 /* PBXContainerItemProxy */;
 		};
 		3C5851921289ACB00084315D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
