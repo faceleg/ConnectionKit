@@ -1583,7 +1583,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 3C979D9013BA506000E7CF7C /* Preflight Build */;
+			remoteGlobalIDString = 3C979D9013BA506000E7CF7C;
 			remoteInfo = "Preflight Build";
 		};
 		3C58518F1289AC980084315D /* PBXContainerItemProxy */ = {
@@ -7389,7 +7389,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "# shell script goes here\nexit 0";
+			shellScript = "#!/bin/bash\n\n###\n### peform any necessary checks before commencing build\n###\n\n# find git on local machine\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\n# if Debug, what would we check for a Debug build?\nif [ \"${BUILD_STYLE}\" == \"Debug\" ]\nthen\n\t# we could do something here before doing Debug builds\nfi\n\n# if Release, make sure there are no uncommitted changes\nif [ \"${BUILD_STYLE}\" == \"Release\" ]\nthen\n\t# some magic git incantation that returns exit 1 if we have unstaged changes / unpushed changes?\nfi\n\nexit 0\n";
+			showEnvVarsInLog = 0;
 		};
 		3C99107209298C4400ED5CBF /* Generate Localizable.strings */ = {
 			isa = PBXShellScriptBuildPhase;
