@@ -18,6 +18,9 @@
 
 - (id)initWithSHA1DigestOfSourceMedia:(NSData *)sourceDigest parameters:(NSDictionary *)parameters;
 {
+    OBPRECONDITION(sourceDigest);
+    OBPRECONDITION(parameters);
+    
     self = [self init];
     
     _sourceDigest = [sourceDigest copy];
@@ -26,7 +29,7 @@
     return self;
 }
 
-- (void) dealloc;
+- (void)dealloc;
 {
     [_sourceDigest release];
     [_parameters release];
