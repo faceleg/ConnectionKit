@@ -1,7 +1,7 @@
 
 
 // the "marketing" version is baked into CFBundleShortVersionString
-SANDVOX_VERSION = 2.1b11
+SANDVOX_VERSION = 2.1b12
 
 
 // the SLA variant to wrap around the .dmg [ALPHA,BETA,RELEASE]
