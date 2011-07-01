@@ -879,6 +879,8 @@
                                preferredFilename:nil
                                    scalingSuffix:nil];
 	}
+    [context addDependencyOnObject:self keyPath:@"enablePoster"];
+    
 		
 	BOOL wroteUnknownTag = NO;	// will be set below if nothing can be generated
 	NSString *videoID = nil;
