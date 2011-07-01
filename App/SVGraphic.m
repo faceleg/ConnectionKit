@@ -517,6 +517,9 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
         {
             [context pushClassName:@"graphic-container"];
             
+            NSString *type = [self graphicClassName];
+            if (type) [context pushClassName:type];
+            
             if (includeWrap) [self buildWrapClassName:context];
         }
     }
