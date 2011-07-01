@@ -27,6 +27,17 @@ NSString *KTApplicationDidSendFlagsChangedEvent = @"KTApplicationDidSendFlagsCha
 
 @implementation KTApplication
 
+- (void)reportException:(NSException *)theException;
+{
+    // Go through usual report
+    [super reportException:theException];
+    
+#ifdef RELEASE
+    // Then terminate since the exception really shoudln't have happened, and has a tendency to mess up saving; it's better for them to go back to autosaved doc
+    exit(0);
+#endif
+}
+
 - (void)sendEvent:(NSEvent *)theEvent
 {
     [super sendEvent:theEvent];
