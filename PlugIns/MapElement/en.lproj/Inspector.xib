@@ -75,7 +75,7 @@
 					<object class="NSButton" id="720093067">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">266</int>
-						<string key="NSFrame">{{7, 68}, {215, 18}}</string>
+						<string key="NSFrame">{{7, 88}, {215, 18}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="916003938">
@@ -128,7 +128,7 @@
 					<object class="NSButton" id="791543124">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">266</int>
-						<string key="NSFrame">{{7, 48}, {215, 18}}</string>
+						<string key="NSFrame">{{7, 68}, {215, 18}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="513120925">
@@ -150,7 +150,7 @@
 					<object class="NSButton" id="512300329">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">266</int>
-						<string key="NSFrame">{{7, 88}, {215, 18}}</string>
+						<string key="NSFrame">{{7, 48}, {215, 18}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="924231772">
@@ -583,7 +583,7 @@
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{872, 810}, {230, 216}}</string>
+					<string>{{871, 810}, {230, 216}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{628, 654}</string>
 					<string>{{217, 442}, {480, 272}}</string>
