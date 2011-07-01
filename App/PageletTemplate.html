@@ -1,4 +1,4 @@
-<div class="pagelet [[=className]][[if showBorder]] bordered[[endif]] [[if showsTitle]]titled[[else]]untitled[[endif]] [[i]] [[eo]][[last]]"[[if !parser.isPublishing]][[if parser.HTMLContext.currentDOMController.elementIdName]] id="[[=parser.HTMLContext.currentDOMController.elementIdName]]"[[endif2]][[endif]]>
+<div class="pagelet[[if showBorder]] bordered[[endif]] [[if showsTitle]]titled[[else]]untitled[[endif]] [[i]] [[eo]][[last]]"[[if !parser.isPublishing]][[if parser.HTMLContext.currentDOMController.elementIdName]] id="[[=parser.HTMLContext.currentDOMController.elementIdName]]"[[endif2]][[endif]]>
 [[if showsTitle]]	[[textblock property:titleBox flags:"line" tag:h4 class:"title pagelet-title"]][[endif]]
     <div class="pagelet-body[[if inlineGraphicClassName]] [[=inlineGraphicClassName]][[endif]]">
 [[if showsIntroduction]]		[[textblock property:introduction flags:"block imageable" class:"elementIntroduction"]][[endif]]
