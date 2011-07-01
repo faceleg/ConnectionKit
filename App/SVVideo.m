@@ -889,6 +889,12 @@
 	
 	if (quicktimeTag)
 	{
+        // QuickTime can't handle data-only poster images it seems, so forget about it for now. #131268
+        if (posterSourceURL && self.posterFrame.media.mediaData)
+        {
+            posterSourceURL = nil;
+        }
+        
 		[self startQuickTimeObjects:context movieSourceURL:movieSourceURL posterSourceURL:posterSourceURL];
 	}
 	else if (microsoftTag)
