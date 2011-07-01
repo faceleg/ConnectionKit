@@ -193,6 +193,7 @@ extern NSString *kSVGraphicPboardType;
 
 - (void)buildClassName:(SVHTMLContext *)context includeWrap:(BOOL)includeWrap;
 - (void)buildWrapClassName:(SVHTMLContext *)context;
+- (NSString *)graphicClassName;
 - (NSString *)inlineGraphicClassName;
 
 + (SVTemplate *)template;

@@ -183,6 +183,8 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     [context writeGraphic:self];
 }
 
+- (NSString *)graphicClassName; { return nil; }
+
 - (NSString *)calloutWrapClassName; // nil if not a callout
 {
     //  We are a callout if a floated pagelet

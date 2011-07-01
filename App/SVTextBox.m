@@ -97,6 +97,11 @@
     [parser release];
 }
 
+- (NSString *)graphicClassName;
+{
+    return ([[self isBlockQuote] boolValue] ? @"blockquote" : [super graphicClassName]);
+}
+
 #pragma mark Serialization
 
 - (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
