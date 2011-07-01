@@ -1077,6 +1077,7 @@
 {
     NSTreeNode *node = [[self content] nodeForObject:page];
     
+    /*  Commenting this logic out for now. #131273
     if (node && [[self outlineView] isItemExpanded:node])
     {
         NSArray *nodes = [self nodesToWriteToPasteboard];
@@ -1102,7 +1103,7 @@
         
         return result;
     }
-    else
+    else*/
     {
         // Collapsed items should serialize all descendants
         return [[page sortedChildren] valueForKey:@"serializedProperties"];
