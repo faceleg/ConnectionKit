@@ -2,8 +2,33 @@
 //  MapPlugIn.m
 //  MapElement
 //
-//  Created by Terrence Talbot on 2/12/11.
-//  Copyright 2011 Terrence Talbot. All rights reserved.
+//  Copyright 2006-2011 Karelia Software. All rights reserved.
+//
+//  Redistribution and use in source and binary forms, with or without
+//  modification, are permitted provided that the following conditions are met:
+//
+//  *  Redistribution of source code must retain the above copyright notice,
+//     this list of conditions and the follow disclaimer.
+//
+//  *  Redistributions in binary form must reproduce the above copyright notice,
+//     this list of conditions and the following disclaimer in the documentation
+//     and/or other material provided with the distribution.
+//
+//  *  Neither the name of Karelia Software nor the names of its contributors
+//     may be used to endorse or promote products derived from this software
+//     without specific prior written permission.
+//
+//  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS-IS"
+//  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+//  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+//  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+//  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+//  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+//  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+//  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+//  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+//  ARISING IN ANY WAY OUR OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+//  POSSIBILITY OF SUCH DAMAGE.
 //
 
 #import "MapPlugIn.h"
@@ -25,10 +50,8 @@
 + (NSArray *)plugInKeys
 { 
     return [NSArray arrayWithObjects:
-            @"locations",
-            @"mapType",
-            @"zoom",
-            @"showMapTypeControl",
+            @"location",
+            @"showAddressBubble",
             @"showZoomControl",
             @"showPanControl",
             @"showScaleControl",
@@ -49,54 +72,40 @@
     [super awakeFromNew];
     
     // make some initial guesses at params
-    self.locations = [NSArray arrayWithObject:self.defaultLocation];
-    self.mapType = 0;
-    self.zoom = 10;
-    
+    self.location = [self defaultLocation];
+    self.showAddressBubble = YES;
+
     // defaults from gMap docs
-    self.showMapTypeControl = YES;
     self.showZoomControl = YES;
     self.showPanControl = NO;
     self.showScaleControl = NO;
     self.showStreetViewControl = YES;
 }
 
-- (NSMutableDictionary *)defaultLocation
+- (NSString *)defaultLocation
 {
-    // pick a number between 1 and 3
+    
+    NSString *result = nil;
+    
+    // try to find a general location in Me card
+    
+    // fallback to a Karelia outpost, pick a number between 1 and 3
     NSInteger min = 1;
     NSInteger max = 3;
     NSInteger adjustedMax = (max + 1) - min; // arc4random returns within the set {min, (max - 1)}
     NSInteger random = arc4random() % adjustedMax;
-    NSInteger location = random + min;
-    
-    NSMutableDictionary *result = nil;
+    NSInteger location = random + min;    
     switch ( location) 
     {
         case 1:
-            result = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                      @"Alameda, CA", @"location",
-                      @"Karelia Software HQ", @"title",
-                      @"Where it all began...", @"details",
-                      nil];
-            
+            result = @"Alameda, CA";
             break;
         case 2:
-            result = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                      @"Altadena, CA", @"location",
-                      @"Karelia Software SoCal", @"title",
-                      @"Where the builds happen...", @"details",
-                      nil];
-            
+            result = @"Altadena, CA";
             break;
         case 3:
         default:
-            result = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                      @"Reading, England", @"location",
-                      @"Karelia Software Europe", @"title",
-                      @"Code + Band + Pubs = Rock Solid Surfaces", @"details",
-                      nil];
-            
+            result = @"Reading, England";
             break;
     }
     
@@ -109,17 +118,14 @@
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
     // add dependencies
-    [context addDependencyForKeyPath:@"locations" ofObject:self];
-    [context addDependencyForKeyPath:@"mapType" ofObject:self];
-    [context addDependencyForKeyPath:@"zoom" ofObject:self];
-    [context addDependencyForKeyPath:@"showMapTypeControl" ofObject:self];
+    [context addDependencyForKeyPath:@"location" ofObject:self];
     [context addDependencyForKeyPath:@"showZoomControl" ofObject:self];
     [context addDependencyForKeyPath:@"showPanControl" ofObject:self];
     [context addDependencyForKeyPath:@"showScaleControl" ofObject:self];
     [context addDependencyForKeyPath:@"showStreetViewControl" ofObject:self];
     
     // write HTML
-    if ( self.locations )
+    if ( self.location )
     {
         if ( [context liveDataFeeds] )
         {
@@ -146,39 +152,65 @@
 
             
             // prepare parameters, JSON-style
+            
+            // we always show a ROADMAP
+            NSString *type = @"google.maps.MapTypeId.ROADMAP";
+
             NSString *panControl = (self.showPanControl) ? @"true" : @"false";
             NSString *scaleControl = (self.showScaleControl) ? @"true" : @"false";
+            NSString *streetViewControl = (self.showStreetViewControl) ? @"true" : @"false";
+            NSString *zoomControl = (self.showZoomControl) ? @"true" : @"false";
             
-            NSString *type = @"google.maps.MapTypeId.ROADMAP";
-            switch ( self.mapType )
-            {
-                case 0:
-                    type = @"google.maps.MapTypeId.ROADMAP";
-                    break;                    
-                case 1:
-                    type = @"google.maps.MapTypeId.SATELLITE";
-                    break;
-                case 2:
-                    type = @"google.maps.MapTypeId.HYBRID";
-                    break;
-                case 3:
-                    type = @"google.maps.MapTypeId.TERRAIN";
-                    break;
-                default:
-                    break;
-            }
             
-            NSMutableString *mapMarkers = [NSMutableString stringWithString:@"["];
-            for ( NSDictionary *location in self.locations )
-            {
-                if ( [location objectForKey:@"location"] )
-                {
-                    [mapMarkers appendString:[self stringForLocation:location]];
-                    [mapMarkers appendString:@","];
-                }
-            }
-            [mapMarkers appendString:@"]"];
+            // construct marker for location
             
+            // assemble popup
+            NSString *popup = (self.showAddressBubble) ? @"true" : @"false";
+            NSString *address = self.location;
+            
+            NSURL *dAddr = [NSURL svURLWithScheme:@"http"
+                                             host:@"maps.google.com"
+                                             path:@"/maps"
+                                  queryParameters:[NSDictionary dictionaryWithObject:address forKey:@"daddr"]];
+            
+            NSURL *sAddr = [NSURL svURLWithScheme:@"http"
+                                             host:@"maps.google.com"
+                                             path:@"/maps"
+                                  queryParameters:[NSDictionary dictionaryWithObject:address forKey:@"saddr"]];
+            
+            // localize popup
+            NSString *label1 = SVLocalizedString(@"Location:", "label for map popup");
+            NSString *label2 = SVLocalizedString(@"Get directions:", "label for map popup");
+            NSString *label3 = SVLocalizedString(@"To here", "label for map popup");
+            NSString *label4 = SVLocalizedString(@"From here", "label for map popup");
+            
+            NSString *htmlDescription = [NSString stringWithFormat:
+                                         @"<p style=\"font-size:12pt; font-weight:bold\">%@</p>"
+                                         @"<p style=\"font-size:10pt\">%@</p>"
+                                         @"<p style=\"font-size:8pt\">%@ <a href=\"%@\">%@</a> - <a href=\"%@\">%@</a><p>",
+                                         label1,
+                                         address,
+                                         label2,
+                                         [dAddr absoluteString],
+                                         label3,
+                                         [sAddr absoluteString],
+                                         label4];            
+
+            // just one marker
+            NSDictionary *marker = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    address, @"address",
+                                    htmlDescription, @"html",
+                                    popup, @"popup",
+                                    nil];
+            // in an array
+            NSArray *markers = [NSArray arrayWithObject:marker];
+            
+            // as JSON
+            NSData *markersJSONData = [SVJSONSerialization dataWithJSONObject:markers options:0 error:nil];
+            NSString *markersJSONString = [[[NSString alloc] initWithData:markersJSONData encoding:NSUTF8StringEncoding] autorelease];
+            
+            // try to style it up a bit
+            //(void)[context addCSSString:@".gmap_marker {font-family: Verdana; font-size: 12pt; color: red; }"];
             
             // append gMap <script> to end body
             NSString *map = [NSString stringWithFormat:
@@ -186,19 +218,22 @@
                              @"$(document).ready(function () {\n"
                              @"	$('#%@').gMap({\n"
                              @"	maptype: %@,\n"
-                             @"	zoom: %@,\n"
+                             @"	zoomControl: %@,\n"
                              @"	panControl: %@,\n"
                              @"	scaleControl: %@,\n"
+                             @"	streetViewControl: %@,\n"
+                             @"	zoom: 15,\n"
                              @"	markers: %@\n"
                              @"})\n"
                              @"});\n"
                              @"</script>\n",
                              idName,
                              type,
-                             [[NSNumber numberWithUnsignedInt:self.zoom] stringValue],
+                             zoomControl,
                              panControl,
                              scaleControl,
-                             mapMarkers];
+                             streetViewControl,
+                             markersJSONString];
             [context addMarkupToEndOfBody:map];
         }
     }
@@ -207,7 +242,7 @@
 - (NSString *)placeholderString
 {
     NSString *result = nil;
-    if ( !self.locations )
+    if ( !self.location )
     {
         result = SVLocalizedString(@"Enter a location in the Inspector", "");
     }
@@ -225,7 +260,7 @@
     return [NSString stringWithFormat:@"{ address: \"%@\", title: \"%@\", html: \"%@\"}",
             [location objectForKey:@"location"],
             [location objectForKey:@"title"],
-            [location objectForKey:@"details"]];
+            [location objectForKey:@"html"]];
 }
 
 #pragma mark Metrics
@@ -242,13 +277,11 @@
 
 #pragma mark Properties
 
-@synthesize locations = _locations;
-@synthesize mapType = _mapType;
-@synthesize zoom = _zoom;
-@synthesize showMapTypeControl = _showMapTypeControl;
-@synthesize showZoomControl = _showZoomControl;
-@synthesize showScaleControl = _showScaleControl;
+@synthesize location = _location;
+@synthesize showAddressBubble = _showAddressBubble;
 @synthesize showPanControl = _showPanControl;
+@synthesize showScaleControl = _showScaleControl;
 @synthesize showStreetViewControl = _showStreetViewControl;
+@synthesize showZoomControl = _showZoomControl;
 
 @end

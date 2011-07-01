@@ -26,6 +26,8 @@
 	<string>MapPlugIn</string>
 	<key>SVPlugInIconPath</key>
 	<string>toolbar_map.tiff</string>
+	<key>SVPlugInDescription</key>
+	<string>Embed a Google Map on your site</string>
 	<key>SVMinimumAppVersion</key>
 	<string>2.0</string>
 	<key>NSHumanReadableCopyright</key>
