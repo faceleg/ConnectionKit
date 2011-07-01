@@ -172,13 +172,13 @@
 					<object class="NSButton" id="444250075">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">266</int>
-						<string key="NSFrame">{{112, 8}, {49, 18}}</string>
+						<string key="NSFrame">{{112, 8}, {75, 18}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="338522044">
 							<int key="NSCellFlags">-2080244224</int>
 							<int key="NSCellFlags2">131072</int>
-							<string key="NSContents">Scale</string>
+							<string key="NSContents">Map Scale</string>
 							<reference key="NSSupport" ref="26"/>
 							<reference key="NSControlView" ref="444250075"/>
 							<int key="NSButtonFlags">1211912703</int>
