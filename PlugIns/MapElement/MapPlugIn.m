@@ -38,7 +38,6 @@
 
 
 @interface MapPlugIn ()
-- (NSString *)stringForLocation:(NSDictionary *)location;
 @end
 
 
@@ -254,14 +253,6 @@
     return result;
 }
 
-- (NSString *)stringForLocation:(NSDictionary *)location
-{
-    // return JSON-style dictionary
-    return [NSString stringWithFormat:@"{ address: \"%@\", title: \"%@\", html: \"%@\"}",
-            [location objectForKey:@"location"],
-            [location objectForKey:@"title"],
-            [location objectForKey:@"html"]];
-}
 
 #pragma mark Metrics
 
