@@ -118,6 +118,7 @@
 {
     // add dependencies
     [context addDependencyForKeyPath:@"location" ofObject:self];
+    [context addDependencyForKeyPath:@"showAddressBubble" ofObject:self];
     [context addDependencyForKeyPath:@"showZoomControl" ofObject:self];
     [context addDependencyForKeyPath:@"showPanControl" ofObject:self];
     [context addDependencyForKeyPath:@"showScaleControl" ofObject:self];
@@ -155,6 +156,7 @@
             // we always show a ROADMAP
             NSString *type = @"google.maps.MapTypeId.ROADMAP";
 
+            // we show or not show various controls
             NSString *panControl = (self.showPanControl) ? @"true" : @"false";
             NSString *scaleControl = (self.showScaleControl) ? @"true" : @"false";
             NSString *streetViewControl = (self.showStreetViewControl) ? @"true" : @"false";
@@ -162,45 +164,49 @@
             
             
             // construct marker for location
-            
-            // assemble popup
-            NSString *popup = (self.showAddressBubble) ? @"true" : @"false";
-            NSString *address = self.location;
-            
-            NSURL *dAddr = [NSURL svURLWithScheme:@"http"
-                                             host:@"maps.google.com"
-                                             path:@"/maps"
-                                  queryParameters:[NSDictionary dictionaryWithObject:address forKey:@"daddr"]];
-            
-            NSURL *sAddr = [NSURL svURLWithScheme:@"http"
-                                             host:@"maps.google.com"
-                                             path:@"/maps"
-                                  queryParameters:[NSDictionary dictionaryWithObject:address forKey:@"saddr"]];
-            
-            // localize popup
-            NSString *label1 = SVLocalizedString(@"Location:", "label for map popup");
-            NSString *label2 = SVLocalizedString(@"Get directions:", "label for map popup");
-            NSString *label3 = SVLocalizedString(@"To here", "label for map popup");
-            NSString *label4 = SVLocalizedString(@"From here", "label for map popup");
-            
-            NSString *htmlDescription = [NSString stringWithFormat:
-                                         @"<p style=\"font-size:12pt; font-weight:bold\">%@</p>"
-                                         @"<p style=\"font-size:10pt\">%@</p>"
-                                         @"<p style=\"font-size:8pt\">%@ <a href=\"%@\">%@</a> - <a href=\"%@\">%@</a><p>",
-                                         label1,
-                                         address,
-                                         label2,
-                                         [dAddr absoluteString],
-                                         label3,
-                                         [sAddr absoluteString],
-                                         label4];            
-
+                        
             // just one marker
-            NSDictionary *marker = [NSDictionary dictionaryWithObjectsAndKeys:
-                                    address, @"address",
-                                    htmlDescription, @"html",
-                                    popup, @"popup",
-                                    nil];
+            NSString *address = self.location;
+            NSMutableDictionary *marker = [NSMutableDictionary dictionaryWithObject:address
+                                                                             forKey:@"address"];
+            
+            // with an optional popup
+            if ( self.showAddressBubble )
+            {
+                // URLs with query parameters
+                NSURL *dAddr = [NSURL svURLWithScheme:@"http"
+                                                 host:@"maps.google.com"
+                                                 path:@"/maps"
+                                      queryParameters:[NSDictionary dictionaryWithObject:address forKey:@"daddr"]];
+                
+                NSURL *sAddr = [NSURL svURLWithScheme:@"http"
+                                                 host:@"maps.google.com"
+                                                 path:@"/maps"
+                                      queryParameters:[NSDictionary dictionaryWithObject:address forKey:@"saddr"]];
+                
+                // localize labels
+                NSString *label1 = SVLocalizedString(@"Location:", "label for map popup");
+                NSString *label2 = SVLocalizedString(@"Get directions:", "label for map popup");
+                NSString *label3 = SVLocalizedString(@"To here", "label for map popup");
+                NSString *label4 = SVLocalizedString(@"From here", "label for map popup");
+                
+                // construct HTML
+                NSString *htmlDescription = [NSString stringWithFormat:
+                                             @"<p style=\"font-size:11pt; font-weight:bold\">%@</p>"
+                                             @"<p style=\"font-size:9pt\">%@</p>"
+                                             @"<p style=\"font-size:8pt\">%@ <a href=\"%@\">%@</a> - <a href=\"%@\">%@</a><p>",
+                                             label1,
+                                             address,
+                                             label2,
+                                             [dAddr absoluteString],
+                                             label3,
+                                             [sAddr absoluteString],
+                                             label4];            
+                
+                [marker setObject:htmlDescription forKey:@"html"];
+                [marker setObject:@"true" forKey:@"popup"];
+            }
+            
             // in an array
             NSArray *markers = [NSArray arrayWithObject:marker];
             
@@ -208,7 +214,7 @@
             NSData *markersJSONData = [SVJSONSerialization dataWithJSONObject:markers options:0 error:nil];
             NSString *markersJSONString = [[[NSString alloc] initWithData:markersJSONData encoding:NSUTF8StringEncoding] autorelease];
             
-            // try to style it up a bit
+            // apply uniform style
             //(void)[context addCSSString:@".gmap_marker {font-family: Verdana; font-size: 12pt; color: red; }"];
             
             // append gMap <script> to end body
