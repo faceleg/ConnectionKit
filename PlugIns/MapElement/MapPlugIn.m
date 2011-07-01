@@ -192,9 +192,9 @@
                 
                 // construct HTML
                 NSString *htmlDescription = [NSString stringWithFormat:
-                                             @"<p style=\"font-size:11pt; font-weight:bold\">%@</p>"
-                                             @"<p style=\"font-size:9pt\">%@</p>"
-                                             @"<p style=\"font-size:8pt\">%@ <a href=\"%@\">%@</a> - <a href=\"%@\">%@</a><p>",
+                                             @"<p class=\"locationlabel\">%@</p>"
+                                             @"<p class=\"location\">%@</p>"
+                                             @"<p class=\"directions\">%@ <a href=\"%@\">%@</a> - <a href=\"%@\">%@</a><p>",
                                              label1,
                                              address,
                                              label2,
@@ -215,7 +215,11 @@
             NSString *markersJSONString = [[[NSString alloc] initWithData:markersJSONData encoding:NSUTF8StringEncoding] autorelease];
             
             // apply uniform style
-            //(void)[context addCSSString:@".gmap_marker {font-family: Verdana; font-size: 12pt; color: red; }"];
+            (void)[context addCSSString:
+                   @".gmap_marker       { font-family: Helvetica, Verdana, Arial, sans-serif; margin: .9em; } "
+                   @"p.locationlabel    { font-size: medium; font-weight: bold; margin: 0px } "
+                   @"p.location         { font-size: small; margin: 0px  } "
+                   @"p.directions       { font-size: smaller; margin: 0px padding-top: .5em}"];
             
             // append gMap <script> to end body
             NSString *map = [NSString stringWithFormat:
@@ -227,7 +231,7 @@
                              @"	panControl: %@,\n"
                              @"	scaleControl: %@,\n"
                              @"	streetViewControl: %@,\n"
-                             @"	zoom: 15,\n"
+                             @"	zoom: 16,\n"
                              @"	markers: %@\n"
                              @"})\n"
                              @"});\n"
