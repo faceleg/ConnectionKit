@@ -98,7 +98,7 @@ typedef enum {
 // Control
 - (KTPublishingEngineStatus)status;
 
-// Publishing won't finish until the operation runs. Threadsafe. If queue is nil, targets the main thread on Snowy, -defaultQueue before that
+// Publishing won't finish until the operation runs. Threadsafe. If queue is nil, targets the main thread
 - (void)addOperation:(NSOperation *)operation queue:(NSOperationQueue *)queue;
 @property(retain, readonly) NSOperationQueue *defaultQueue; // want this to be threadsafe
 - (NSOperationQueue *)diskOperationQueue;

@@ -264,10 +264,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)mainPublishing
 {
-    if (![NSThread isMainThread])
-    {
-        return [[self ks_proxyOnThread:nil waitUntilDone:NO] mainPublishing];
-    }
+    OBASSERT([NSThread isMainThread]);
     
     
     /* All media that didn't have a slot available for it before can now be published
@@ -1371,10 +1368,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)finishPublishing;
 {
-    if (![NSThread isMainThread])
-    {
-        return [[self ks_proxyOnThread:nil] finishPublishing];
-    }
+    OBASSERT([NSThread isMainThread]);
+    
     
     // Upload sitemap if the site has one
     [self uploadGoogleSiteMapIfNeeded];
