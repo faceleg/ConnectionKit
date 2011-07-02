@@ -32,7 +32,7 @@
 //
 
 #import "MapPlugIn.h"
-
+#import <AddressBook/AddressBook.h>
 
 // <http://www.smashinglabs.pl/gmap-documentation>
 
@@ -87,25 +87,41 @@
     NSString *result = nil;
     
     // try to find a general location in Me card
+    ABPerson *me = [[ABAddressBook sharedAddressBook] me];
+    ABMultiValue *addresses = [me valueForProperty:kABAddressProperty];
+    NSUInteger primaryIndex = [addresses indexForIdentifier:[addresses primaryIdentifier]];
+    NSDictionary *primaryAddress = [addresses valueAtIndex:primaryIndex];
     
-    // fallback to a Karelia outpost, pick a number between 1 and 3
-    NSInteger min = 1;
-    NSInteger max = 3;
-    NSInteger adjustedMax = (max + 1) - min; // arc4random returns within the set {min, (max - 1)}
-    NSInteger random = arc4random() % adjustedMax;
-    NSInteger location = random + min;    
-    switch ( location) 
+    NSString *city = [primaryAddress objectForKey:kABAddressCityKey];
+    NSString *state = [primaryAddress objectForKey:kABAddressStateKey];
+    //NSString *zip = [primaryAddress objectForKey:kABAddressZIPKey];
+    //NSString *country = [primaryAddress objectForKey:kABAddressCountryKey];
+    
+    if ( city && state )
     {
-        case 1:
-            result = @"Alameda, CA";
-            break;
-        case 2:
-            result = @"Altadena, CA";
-            break;
-        case 3:
-        default:
-            result = @"Reading, England";
-            break;
+        result = [NSString stringWithFormat:@"%@, %@", city, state];
+    }
+    else
+    {
+        // fallback to a Karelia outpost, pick a number between 1 and 3
+        NSInteger min = 1;
+        NSInteger max = 3;
+        NSInteger adjustedMax = (max + 1) - min; // arc4random returns within the set {min, (max - 1)}
+        NSInteger random = arc4random() % adjustedMax;
+        NSInteger location = random + min;    
+        switch ( location) 
+        {
+            case 1:
+                result = @"Alameda, CA";
+                break;
+            case 2:
+                result = @"Altadena, CA";
+                break;
+            case 3:
+            default:
+                result = @"Reading, England";
+                break;
+        }
     }
     
     return result;

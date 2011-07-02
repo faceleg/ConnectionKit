@@ -13,6 +13,7 @@
 		3C43BC0813075A36007ED67D /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C43BC0613075A36007ED67D /* Inspector.xib */; };
 		3C43BC2813075B38007ED67D /* toolbar_map.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 3C43BC2713075B38007ED67D /* toolbar_map.tiff */; };
 		3CC1D65813B8572200D09404 /* jquery.gmap.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 3CC1D5EB13B82F0100D09404 /* jquery.gmap.min.js */; };
+		3CD5DD0213BD8E3000AC306C /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CD5DD0113BD8E3000AC306C /* AddressBook.framework */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +32,7 @@
 		3C43BC2713075B38007ED67D /* toolbar_map.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_map.tiff; sourceTree = "<group>"; };
 		3CC1D5EA13B82F0100D09404 /* jquery.gmap.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.gmap.js; sourceTree = "<group>"; };
 		3CC1D5EB13B82F0100D09404 /* jquery.gmap.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.gmap.min.js; sourceTree = "<group>"; };
+		3CD5DD0113BD8E3000AC306C /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		8D5B49B6048680CD000E48DA /* MapElement.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapElement.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
@@ -42,6 +44,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */,
+				3CD5DD0213BD8E3000AC306C /* AddressBook.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -57,6 +60,7 @@
 				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
 				19C28FB8FE9D52D311CA2CBB /* Products */,
 				3C43BBB013074EE0007ED67D /* Xcode Configurations */,
+				3CD5DD0113BD8E3000AC306C /* AddressBook.framework */,
 			);
 			name = MapElement;
 			sourceTree = "<group>";
