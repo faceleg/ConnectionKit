@@ -230,12 +230,10 @@
             NSData *markersJSONData = [SVJSONSerialization dataWithJSONObject:markers options:0 error:nil];
             NSString *markersJSONString = [[[NSString alloc] initWithData:markersJSONData encoding:NSUTF8StringEncoding] autorelease];
             
-            // apply uniform style
-            (void)[context addCSSString:
-                   @".gmap_marker       { font-family: Helvetica, Verdana, Arial, sans-serif; margin: .9em; } "
-                   @"p.locationlabel    { font-size: medium; font-weight: bold; margin: 0px } "
-                   @"p.location         { font-size: small; margin: 0px  } "
-                   @"p.directions       { font-size: smaller; margin: 0px padding-top: .5em}"];
+            // apply uniform style            
+            NSString *cssPath = [[NSBundle bundleForClass:[self class]] pathForResource:@"bubble" ofType:@"css"];
+            NSURL *cssURL = [NSURL fileURLWithPath:cssPath];
+            (void)[context addCSSWithTemplateAtURL:cssURL object:self];
             
             // append gMap <script> to end body
             NSString *map = [NSString stringWithFormat:
