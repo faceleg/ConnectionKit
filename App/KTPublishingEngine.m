@@ -38,6 +38,7 @@
 #import "KSPathUtilities.h"
 
 #import "KSCSSWriter.h"
+#import "KSPerformOnThreadOperation.h"
 #import "KSPlugInWrapper.h"
 #import "KSSHA1Stream.h"
 #import "KSThreadProxy.h"
@@ -353,6 +354,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         }
         else
         {
+            operation = [[[KSPerformOnThreadOperation alloc] initWithOperation:operation
+                                                                             thread:nil] autorelease];
+            
             queue = [self defaultQueue];
         }
     }

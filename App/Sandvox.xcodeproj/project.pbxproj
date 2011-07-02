@@ -722,6 +722,8 @@
 		27F36591115EB7BA003BDA5F /* SVArticle.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F3658F115EB7BA003BDA5F /* SVArticle.m */; };
 		27F365ED11602161003BDA5F /* SVMetricsInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F365EB11602161003BDA5F /* SVMetricsInspector.h */; };
 		27F365EE11602161003BDA5F /* SVMetricsInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F365EC11602161003BDA5F /* SVMetricsInspector.m */; };
+		27F503E813BF3E1300F0FFD7 /* KSPerformOnThreadOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F503E613BF3E1300F0FFD7 /* KSPerformOnThreadOperation.h */; };
+		27F503E913BF3E1300F0FFD7 /* KSPerformOnThreadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F503E713BF3E1300F0FFD7 /* KSPerformOnThreadOperation.m */; };
 		27F63BD40D463F7800FAEB48 /* KTMaster.h in Headers */ = {isa = PBXBuildFile; fileRef = 273C2F8E0CCE58C100E48E22 /* KTMaster.h */; settings = {ATTRIBUTES = (); }; };
 		27F790D9106BABA6007DF81B /* KSDragging.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F790D8106BABA6007DF81B /* KSDragging.h */; };
 		27F91ECD12EB3B1600372364 /* KSTreeController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F91ECB12EB3B1600372364 /* KSTreeController.h */; };
@@ -2464,6 +2466,8 @@
 		27F3658F115EB7BA003BDA5F /* SVArticle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVArticle.m; sourceTree = "<group>"; };
 		27F365EB11602161003BDA5F /* SVMetricsInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMetricsInspector.h; sourceTree = "<group>"; };
 		27F365EC11602161003BDA5F /* SVMetricsInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMetricsInspector.m; sourceTree = "<group>"; };
+		27F503E613BF3E1300F0FFD7 /* KSPerformOnThreadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSPerformOnThreadOperation.h; sourceTree = "<group>"; };
+		27F503E713BF3E1300F0FFD7 /* KSPerformOnThreadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSPerformOnThreadOperation.m; sourceTree = "<group>"; };
 		27F71A7210F7641D0029AE3A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/LinkInspector.xib; sourceTree = "<group>"; };
 		27F790D8106BABA6007DF81B /* KSDragging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSDragging.h; sourceTree = "<group>"; };
 		27F91ECB12EB3B1600372364 /* KSTreeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSTreeController.h; sourceTree = "<group>"; };
@@ -4219,6 +4223,8 @@
 			children = (
 				CE01A67B0EAFD63600BDF264 /* KSThreadProxy.h */,
 				CE01A67C0EAFD63600BDF264 /* KSThreadProxy.m */,
+				27F503E613BF3E1300F0FFD7 /* KSPerformOnThreadOperation.h */,
+				27F503E713BF3E1300F0FFD7 /* KSPerformOnThreadOperation.m */,
 			);
 			name = KSThreadProxy;
 			path = ../KSThreadProxy;
@@ -6446,6 +6452,7 @@
 				2743EDEF13BBB351009EA6D3 /* JSONKit.h in Headers */,
 				2743EE7F13BBB942009EA6D3 /* SVJSONSerialization.h in Headers */,
 				2743F0C513BC755A009EA6D3 /* SVImageRecipe.h in Headers */,
+				27F503E813BF3E1300F0FFD7 /* KSPerformOnThreadOperation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8184,6 +8191,7 @@
 				2743EDF013BBB351009EA6D3 /* JSONKit.m in Sources */,
 				2743EE8013BBB942009EA6D3 /* SVJSONSerialization.m in Sources */,
 				2743F0C613BC755A009EA6D3 /* SVImageRecipe.m in Sources */,
+				27F503E913BF3E1300F0FFD7 /* KSPerformOnThreadOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
