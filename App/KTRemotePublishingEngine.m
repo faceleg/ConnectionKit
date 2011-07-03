@@ -113,6 +113,11 @@
     }
 }
 
+- (void)SFTPSession:(CK2SFTPSession *)session didFailWithError:(NSError *)error;
+{
+    [session release];
+}
+
 - (void)SFTPSession:(CK2SFTPSession *)session didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge;
 {
     [self connection:nil didReceiveAuthenticationChallenge:challenge];
