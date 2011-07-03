@@ -194,7 +194,8 @@
             // construct marker for location
                         
             // just one marker
-            NSString *address = self.location;
+            // replace newlines with spaces for Google
+            NSString *address = [[self location] stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
             NSMutableDictionary *marker = [NSMutableDictionary dictionaryWithObject:address
                                                                              forKey:@"address"];
             
