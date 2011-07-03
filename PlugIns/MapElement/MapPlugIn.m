@@ -98,9 +98,15 @@
     //NSString *zip = [primaryAddress objectForKey:kABAddressZIPKey];
     //NSString *country = [primaryAddress objectForKey:kABAddressCountryKey];
     
-    if ( city && state )
+    NSMutableArray *components = [[NSMutableArray alloc] initWithCapacity:3];
+    if (street) [components addObject:street];
+    if (city) [components addObject:city];
+    if (state) [components addObject:state];
+    
+    
+    if ([components count])
     {
-        result = [NSString stringWithFormat:@"%@, %@", city, state];
+        result = [components componentsJoinedByString:@", "];
     }
     else
     {
@@ -124,6 +130,8 @@
                 break;
         }
     }
+    
+    [components release];
     
     return result;
 }
