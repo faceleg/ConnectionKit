@@ -14,8 +14,6 @@
 
 #import "NSError+Karelia.h"
 
-#import "CK2SFTPHandle.h"
-
 
 @implementation KTRemotePublishingEngine
 
@@ -40,7 +38,7 @@
     //[request setSFTPLoggingLevel:1];
     
     // Let's also make an SFTP handle
-    [[CK2SFTPHandle alloc] initWithURL:[request URL]];
+    [[CK2SFTPSession alloc] initWithURL:[request URL] delegate:self];
     
     
     
@@ -113,6 +111,11 @@
         
 		[self engineDidPublish:NO error:error];
     }
+}
+
+- (void)SFTPSession:(CK2SFTPSession *)session didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge;
+{
+    [self connection:nil didReceiveAuthenticationChallenge:challenge];
 }
 
 @end

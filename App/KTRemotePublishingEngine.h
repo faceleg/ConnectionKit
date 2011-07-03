@@ -8,7 +8,9 @@
 
 #import "KTLocalPublishingEngine.h"
 
+#import "CK2SFTPSession.h"
 
-@interface KTRemotePublishingEngine : KTLocalPublishingEngine
+
+@interface KTRemotePublishingEngine : KTLocalPublishingEngine <CK2SFTPSessionDelegate>
 
 @end
