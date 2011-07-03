@@ -107,6 +107,9 @@
     if ([components count])
     {
         result = [components componentsJoinedByString:@", "];
+        
+        // Newlines aren't usually enterable by the user, and Gmaps seems to choke on them somewhat
+        result = [result stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
     }
     else
     {
