@@ -705,8 +705,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [self publishData:mainCSSData toPath:cssUploadPath];
 }
 
-- (void)addDependencyOnObject:(NSObject *)object keyPath:(NSString *)keyPath { }
-
 #pragma mark Media
 
 - (NSString *)startPublishingMedia:(SVMediaRequest *)request cachedSHA1Digest:(NSData *)digest;
