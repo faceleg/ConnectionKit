@@ -95,14 +95,14 @@
     NSString *street = [primaryAddress objectForKey:kABAddressStreetKey];
     NSString *city = [primaryAddress objectForKey:kABAddressCityKey];
     NSString *state = [primaryAddress objectForKey:kABAddressStateKey];
-    //NSString *zip = [primaryAddress objectForKey:kABAddressZIPKey];
+    NSString *zip = [primaryAddress objectForKey:kABAddressZIPKey];
     //NSString *country = [primaryAddress objectForKey:kABAddressCountryKey];
     
     NSMutableArray *components = [[NSMutableArray alloc] initWithCapacity:3];
     if (street) [components addObject:street];
     if (city) [components addObject:city];
     if (state) [components addObject:state];
-    
+    if (zip) [components addObject:zip];
     
     if ([components count])
     {
