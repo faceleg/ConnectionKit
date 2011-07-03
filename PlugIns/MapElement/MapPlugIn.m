@@ -92,6 +92,7 @@
     NSUInteger primaryIndex = [addresses indexForIdentifier:[addresses primaryIdentifier]];
     NSDictionary *primaryAddress = [addresses valueAtIndex:primaryIndex];
     
+    NSString *street = [primaryAddress objectForKey:kABAddressStreetKey];
     NSString *city = [primaryAddress objectForKey:kABAddressCityKey];
     NSString *state = [primaryAddress objectForKey:kABAddressStateKey];
     //NSString *zip = [primaryAddress objectForKey:kABAddressZIPKey];
