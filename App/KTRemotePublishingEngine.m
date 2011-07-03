@@ -14,6 +14,8 @@
 
 #import "NSError+Karelia.h"
 
+#import "CK2SFTPHandle.h"
+
 
 @implementation KTRemotePublishingEngine
 
@@ -37,6 +39,11 @@
     [request setFTPDataConnectionType:[[NSUserDefaults standardUserDefaults] stringForKey:@"FTPDataConnectionType"]];   // Nil by default
     //[request setSFTPLoggingLevel:1];
     
+    // Let's also make an SFTP handle
+    [[CK2SFTPHandle alloc] initWithURL:[request URL]];
+    
+    
+    
     
     // Create connection object
     id <CKConnection> result = [[CKConnectionRegistry sharedConnectionRegistry] connectionWithRequest:request];
@@ -44,6 +51,10 @@
     [request release];
     
     [self setConnection:result];
+    
+    
+    
+    
 }
 
 /*  Use the password we have stored in the keychain corresponding to the challenge's protection space

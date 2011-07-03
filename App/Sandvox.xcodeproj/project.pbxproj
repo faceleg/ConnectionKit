@@ -737,6 +737,12 @@
 		27FAD5541146AEF80040FA44 /* SVTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FAD5521146AEF80040FA44 /* SVTabViewController.m */; };
 		27FC47EF1030CE7500A4A5E2 /* NSSet+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FC47ED1030CE7500A4A5E2 /* NSSet+Karelia.h */; settings = {ATTRIBUTES = (); }; };
 		27FC47F01030CE7500A4A5E2 /* NSSet+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FC47EE1030CE7500A4A5E2 /* NSSet+Karelia.m */; };
+		27FD6A6713C08B7900E9D407 /* CK2SFTPHandle.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FD6A6513C08B7900E9D407 /* CK2SFTPHandle.h */; };
+		27FD6A6813C08B7900E9D407 /* CK2SFTPHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FD6A6613C08B7900E9D407 /* CK2SFTPHandle.m */; };
+		27FD6B4113C09BD400E9D407 /* libssh2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 27FD6B4013C09BD400E9D407 /* libssh2.dylib */; };
+		27FD6B4713C09C4500E9D407 /* libssh2_publickey.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FD6B4413C09C4500E9D407 /* libssh2_publickey.h */; };
+		27FD6B4813C09C4500E9D407 /* libssh2_sftp.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FD6B4513C09C4500E9D407 /* libssh2_sftp.h */; };
+		27FD6B4913C09C4500E9D407 /* libssh2.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FD6B4613C09C4500E9D407 /* libssh2.h */; };
 		27FDA7081238F4C3006E1A0D /* KSURLUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FDA7061238F4C3006E1A0D /* KSURLUtilities.h */; };
 		27FDA7091238F4C3006E1A0D /* KSURLUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FDA7071238F4C3006E1A0D /* KSURLUtilities.m */; };
 		27FDA7211238F66F006E1A0D /* KSPathUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FDA71F1238F66F006E1A0D /* KSPathUtilities.h */; };
@@ -2481,6 +2487,12 @@
 		27FAD5521146AEF80040FA44 /* SVTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVTabViewController.m; sourceTree = "<group>"; };
 		27FC47ED1030CE7500A4A5E2 /* NSSet+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSSet+Karelia.h"; path = "../../Shared/Foundation/NSSet+Karelia.h"; sourceTree = "<group>"; };
 		27FC47EE1030CE7500A4A5E2 /* NSSet+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSSet+Karelia.m"; path = "../../Shared/Foundation/NSSet+Karelia.m"; sourceTree = "<group>"; };
+		27FD6A6513C08B7900E9D407 /* CK2SFTPHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CK2SFTPHandle.h; sourceTree = "<group>"; };
+		27FD6A6613C08B7900E9D407 /* CK2SFTPHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CK2SFTPHandle.m; sourceTree = "<group>"; };
+		27FD6B4013C09BD400E9D407 /* libssh2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssh2.dylib; path = usr/local/lib/libssh2.dylib; sourceTree = SDKROOT; };
+		27FD6B4413C09C4500E9D407 /* libssh2_publickey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libssh2_publickey.h; path = include/libssh2_publickey.h; sourceTree = "<group>"; };
+		27FD6B4513C09C4500E9D407 /* libssh2_sftp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libssh2_sftp.h; path = include/libssh2_sftp.h; sourceTree = "<group>"; };
+		27FD6B4613C09C4500E9D407 /* libssh2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libssh2.h; path = include/libssh2.h; sourceTree = "<group>"; };
 		27FDA7061238F4C3006E1A0D /* KSURLUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSURLUtilities.h; sourceTree = "<group>"; };
 		27FDA7071238F4C3006E1A0D /* KSURLUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSURLUtilities.m; sourceTree = "<group>"; };
 		27FDA71F1238F66F006E1A0D /* KSPathUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSPathUtilities.h; sourceTree = "<group>"; };
@@ -3376,6 +3388,7 @@
 				CEBEB32D10AA7B07006E7D8A /* iMedia.framework in Frameworks */,
 				CEE1BE67117D2299002AA67D /* Symbolication.framework in Frameworks */,
 				CEF2889F11CC2D7300122D03 /* JSTalk.framework in Frameworks */,
+				27FD6B4113C09BD400E9D407 /* libssh2.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4386,6 +4399,27 @@
 			name = Shared;
 			sourceTree = "<group>";
 		};
+		27FD6A6313C08AD600E9D407 /* libssh2 */ = {
+			isa = PBXGroup;
+			children = (
+				27FD6B4413C09C4500E9D407 /* libssh2_publickey.h */,
+				27FD6B4513C09C4500E9D407 /* libssh2_sftp.h */,
+				27FD6B4613C09C4500E9D407 /* libssh2.h */,
+			);
+			name = libssh2;
+			path = ../Code/SFTP/libssh2;
+			sourceTree = "<group>";
+		};
+		27FD6A6413C08AFD00E9D407 /* SFTP */ = {
+			isa = PBXGroup;
+			children = (
+				27FD6A6513C08B7900E9D407 /* CK2SFTPHandle.h */,
+				27FD6A6613C08B7900E9D407 /* CK2SFTPHandle.m */,
+			);
+			name = SFTP;
+			path = ../Code/SFTP;
+			sourceTree = "<group>";
+		};
 		27FDA7051238F483006E1A0D /* KSFileUtilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -4597,6 +4631,8 @@
 				27AE74720EEDE6AD00409D80 /* Publishing Engine */,
 				275666F10F015E9900878A05 /* Publishing UI */,
 				27AE74710EEDE68600409D80 /* Host Properties */,
+				27FD6A6413C08AFD00E9D407 /* SFTP */,
+				27FD6A6313C08AD600E9D407 /* libssh2 */,
 			);
 			name = "Remote Transfer";
 			sourceTree = "<group>";
@@ -4650,6 +4686,7 @@
 				3C3F547C0D625919004885E7 /* Connection.framework */,
 				79D35F950974C84000241EDA /* Growl.framework */,
 				3C3F54530D6258AA004885E7 /* Sparkle.framework */,
+				27FD6B4013C09BD400E9D407 /* libssh2.dylib */,
 			);
 			name = "Third Party Frameworks";
 			sourceTree = SOURCE_ROOT;
@@ -6453,6 +6490,10 @@
 				2743EE7F13BBB942009EA6D3 /* SVJSONSerialization.h in Headers */,
 				2743F0C513BC755A009EA6D3 /* SVImageRecipe.h in Headers */,
 				27F503E813BF3E1300F0FFD7 /* KSPerformOnThreadOperation.h in Headers */,
+				27FD6A6713C08B7900E9D407 /* CK2SFTPHandle.h in Headers */,
+				27FD6B4713C09C4500E9D407 /* libssh2_publickey.h in Headers */,
+				27FD6B4813C09C4500E9D407 /* libssh2_sftp.h in Headers */,
+				27FD6B4913C09C4500E9D407 /* libssh2.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8192,6 +8233,7 @@
 				2743EE8013BBB942009EA6D3 /* SVJSONSerialization.m in Sources */,
 				2743F0C613BC755A009EA6D3 /* SVImageRecipe.m in Sources */,
 				27F503E913BF3E1300F0FFD7 /* KSPerformOnThreadOperation.m in Sources */,
+				27FD6A6813C08B7900E9D407 /* CK2SFTPHandle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
