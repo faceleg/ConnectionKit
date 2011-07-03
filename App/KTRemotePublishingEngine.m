@@ -37,11 +37,6 @@
     [request setFTPDataConnectionType:[[NSUserDefaults standardUserDefaults] stringForKey:@"FTPDataConnectionType"]];   // Nil by default
     //[request setSFTPLoggingLevel:1];
     
-    // Let's also make an SFTP handle
-    [[CK2SFTPSession alloc] initWithURL:[request URL] delegate:self];
-    
-    
-    
     
     // Create connection object
     id <CKConnection> result = [[CKConnectionRegistry sharedConnectionRegistry] connectionWithRequest:request];
@@ -49,10 +44,6 @@
     [request release];
     
     [self setConnection:result];
-    
-    
-    
-    
 }
 
 /*  Use the password we have stored in the keychain corresponding to the challenge's protection space
@@ -111,16 +102,6 @@
         
 		[self engineDidPublish:NO error:error];
     }
-}
-
-- (void)SFTPSession:(CK2SFTPSession *)session didFailWithError:(NSError *)error;
-{
-    [session release];
-}
-
-- (void)SFTPSession:(CK2SFTPSession *)session didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge;
-{
-    [self connection:nil didReceiveAuthenticationChallenge:challenge];
 }
 
 @end
