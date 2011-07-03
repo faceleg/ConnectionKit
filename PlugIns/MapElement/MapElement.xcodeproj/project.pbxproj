@@ -13,6 +13,7 @@
 		3C43BC0813075A36007ED67D /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C43BC0613075A36007ED67D /* Inspector.xib */; };
 		3C43BC2813075B38007ED67D /* toolbar_map.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 3C43BC2713075B38007ED67D /* toolbar_map.tiff */; };
 		3CC1D65813B8572200D09404 /* jquery.gmap.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 3CC1D5EB13B82F0100D09404 /* jquery.gmap.min.js */; };
+		3CCEE83E13BFD056004B65DA /* bubble.css in Resources */ = {isa = PBXBuildFile; fileRef = 3CCEE83D13BFD056004B65DA /* bubble.css */; };
 		3CD5DD0213BD8E3000AC306C /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CD5DD0113BD8E3000AC306C /* AddressBook.framework */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
@@ -32,6 +33,7 @@
 		3C43BC2713075B38007ED67D /* toolbar_map.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_map.tiff; sourceTree = "<group>"; };
 		3CC1D5EA13B82F0100D09404 /* jquery.gmap.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.gmap.js; sourceTree = "<group>"; };
 		3CC1D5EB13B82F0100D09404 /* jquery.gmap.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.gmap.min.js; sourceTree = "<group>"; };
+		3CCEE83D13BFD056004B65DA /* bubble.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = bubble.css; sourceTree = "<group>"; };
 		3CD5DD0113BD8E3000AC306C /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		8D5B49B6048680CD000E48DA /* MapElement.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapElement.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				27091DCC13166BF1002F3C08 /* InfoPlist.strings */,
 				3C43BC0613075A36007ED67D /* Inspector.xib */,
+				3CCEE83D13BFD056004B65DA /* bubble.css */,
 				3CC1D5EA13B82F0100D09404 /* jquery.gmap.js */,
 				3CC1D5EB13B82F0100D09404 /* jquery.gmap.min.js */,
 				3C43BC2713075B38007ED67D /* toolbar_map.tiff */,
@@ -197,6 +200,7 @@
 				3C43BC0813075A36007ED67D /* Inspector.xib in Resources */,
 				3C43BC0513075A09007ED67D /* License.rtf in Resources */,
 				3C43BC2813075B38007ED67D /* toolbar_map.tiff in Resources */,
+				3CCEE83E13BFD056004B65DA /* bubble.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

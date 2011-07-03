@@ -200,11 +200,27 @@
                                                  path:@"/maps"
                                       queryParameters:[NSDictionary dictionaryWithObject:address forKey:@"saddr"]];
                 
-                // localize labels
-                NSString *label1 = SVLocalizedString(@"Location:", "label for map popup");
-                NSString *label2 = SVLocalizedString(@"Get directions:", "label for map popup");
-                NSString *label3 = SVLocalizedString(@"To here", "label for map popup");
-                NSString *label4 = SVLocalizedString(@"From here", "label for map popup");
+                // localize labels (to the language of the site visitor)
+                NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+                NSString *language = [[context page] language];
+                
+                // determine strings based on language of page
+                
+                // These are various strings, randomly chosen, for the blurb on the badge.  This will help direct
+                // Traffic to the Sandvox site!
+                
+                NSString *label1 = [bundle localizedStringForString:@"Location:"
+                                                           language:language 
+                                                           fallback:SVLocalizedString(@"Location:", "label for map popup")];
+                NSString *label2 = [bundle localizedStringForString:@"Get directions:"
+                                                           language:language 
+                                                           fallback:SVLocalizedString(@"Get directions:", "label for map popup")];
+                NSString *label3 = [bundle localizedStringForString:@"To here"
+                                                           language:language 
+                                                           fallback:SVLocalizedString(@"To here", "label for map popup")];
+                NSString *label4 = [bundle localizedStringForString:@"From here"
+                                                           language:language 
+                                                           fallback:SVLocalizedString(@"From here", "label for map popup")];
                 
                 // construct HTML
                 NSString *htmlDescription = [NSString stringWithFormat:
@@ -221,6 +237,11 @@
                 
                 [marker setObject:htmlDescription forKey:@"html"];
                 [marker setObject:@"true" forKey:@"popup"];
+                
+                // apply uniform style            
+                NSString *cssPath = [bundle pathForResource:@"bubble" ofType:@"css"];
+                NSURL *cssURL = [NSURL fileURLWithPath:cssPath];
+                (void)[context addCSSWithTemplateAtURL:cssURL object:self];                
             }
             
             // in an array
@@ -230,12 +251,6 @@
             NSData *markersJSONData = [SVJSONSerialization dataWithJSONObject:markers options:0 error:nil];
             NSString *markersJSONString = [[[NSString alloc] initWithData:markersJSONData encoding:NSUTF8StringEncoding] autorelease];
             
-            // apply uniform style
-            (void)[context addCSSString:
-                   @".gmap_marker       { font-family: Helvetica, Verdana, Arial, sans-serif; margin: .9em; } "
-                   @"p.locationlabel    { font-size: medium; font-weight: bold; margin: 0px } "
-                   @"p.location         { font-size: small; margin: 0px  } "
-                   @"p.directions       { font-size: smaller; margin: 0px padding-top: .5em}"];
             
             // append gMap <script> to end body
             NSString *map = [NSString stringWithFormat:
