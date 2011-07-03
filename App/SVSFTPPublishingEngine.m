@@ -31,6 +31,13 @@
     _SFTPSession = [[CK2SFTPSession alloc] initWithURL:[request URL] delegate:self];
 }
 
+#pragma mark SFTP session delegate
+
+- (void)SFTPSessionDidInitialize:(CK2SFTPSession *)session;
+{
+    
+}
+
 - (void)SFTPSession:(CK2SFTPSession *)session didFailWithError:(NSError *)error;
 {
     [_SFTPSession release]; _SFTPSession = nil;
