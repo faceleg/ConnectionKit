@@ -31,6 +31,49 @@
     _SFTPSession = [[CK2SFTPSession alloc] initWithURL:[request URL] delegate:self];
 }
 
+#pragma mark Upload
+
+- (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath;
+{
+    CKTransferRecord *result = nil;
+    
+    CKTransferRecord *parent = [self willUploadToPath:remotePath];
+    
+    if (_SFTPSession)
+    {
+        LIBSSH2_SFTP_HANDLE *handle = [_SFTPSession openHandleAtPath:remotePath
+                                                               flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
+                                                                mode:LIBSSH2_SFTP_S_IRUSR|LIBSSH2_SFTP_S_IWUSR|LIBSSH2_SFTP_S_IRGRP|LIBSSH2_SFTP_S_IROTH];
+        
+        NSUInteger remainder = [data length];
+        while (remainder)
+        {
+            const void *bytes = [data bytes];
+            NSUInteger offset = 0;
+             
+            NSInteger written = [_SFTPSession write:bytes+offset maxLength:remainder handle:handle];
+            offset+=written;
+            remainder-=written;
+        }
+        
+        [_SFTPSession closeHandle:handle]; handle = NULL;
+        
+        
+        [result setName:[remotePath lastPathComponent]];
+        
+        if (result)
+        {
+            [self didEnqueueUpload:result toDirectory:parent];
+        }
+        else
+        {
+            NSLog(@"Unable to create transfer record for path:%@ data:%@", remotePath, data); // case 40520 logging
+        }
+    }
+    
+    return result;
+}
+
 #pragma mark SFTP session delegate
 
 - (void)SFTPSessionDidInitialize:(CK2SFTPSession *)session;
