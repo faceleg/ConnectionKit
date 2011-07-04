@@ -203,7 +203,7 @@
 
 - (void)SFTPSession:(CK2SFTPSession *)session didFailWithError:(NSError *)error;
 {
-    [_session release]; _session = nil;
+    [self engineDidPublish:NO error:error];
 }
 
 - (void)SFTPSession:(CK2SFTPSession *)session didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge;
