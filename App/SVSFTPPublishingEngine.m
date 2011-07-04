@@ -10,6 +10,7 @@
 
 #import "KTHostProperties.h"
 #import "KTSite.h"
+#import "KSThreadProxy.h"
 
 
 @implementation SVSFTPPublishingEngine
@@ -57,40 +58,35 @@
     
     if (_SFTPSession)
     {
-        NSInvocation *invocation = [NSInvocation invocationWithSelector:@selector(threaded_writeData:toPath:)
+        result = [CKTransferRecord recordWithName:[path lastPathComponent] size:[data length]];
+        
+        
+        NSInvocation *invocation = [NSInvocation invocationWithSelector:@selector(threaded_writeData:toPath:transferRecord:)
                                                                  target:self
-                                                              arguments:NSARRAY(data, path)];
+                                                              arguments:NSARRAY(data, path, result)];
         
         NSInvocationOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
         [_queue addOperation:op];
         [op release];
         
         
-        result = [CKTransferRecord recordWithName:[path lastPathComponent] size:[data length]];
         
-        
-        if (result)
-        {
-            [self didEnqueueUpload:result toDirectory:parent];
-        }
-        else
-        {
-            NSLog(@"Unable to create transfer record for path:%@ data:%@", path, data); // case 40520 logging
-        }
+        [self didEnqueueUpload:result toDirectory:parent];
     }
     
     return result;
 }
 
-- (void)threaded_writeData:(NSData *)data toPath:(NSString *)path;
+- (void)threaded_writeData:(NSData *)data toPath:(NSString *)path transferRecord:(CKTransferRecord *)record;
 {
+    NSError *error = nil;
     NSFileHandle *handle = [_SFTPSession openHandleAtPath:path
                                                     flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
                                                      mode:[self remoteFilePermissions]];
     
     if (!handle)
     {
-        NSError *error = [_SFTPSession sessionError];
+        error = [_SFTPSession sessionError];
         
         if ([[error domain] isEqualToString:CK2LibSSH2SFTPErrorDomain] &&
             [error code] == LIBSSH2_FX_NO_SUCH_FILE)
@@ -105,12 +101,18 @@
                 handle = [_SFTPSession openHandleAtPath:path
                                                   flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
                                                    mode:[self remoteFilePermissions]];
+                
+                if (!handle) error = [_SFTPSession sessionError];
             }
         }
     }
     
+    if (handle) [[record ks_proxyOnThread:nil waitUntilDone:NO] transferDidBegin:record];
+    
     [handle writeData:data];
     [handle closeFile];
+    
+    [[record ks_proxyOnThread:nil waitUntilDone:NO] transferDidFinish:record error:error];
 }
 
 #pragma mark SFTP session delegate
