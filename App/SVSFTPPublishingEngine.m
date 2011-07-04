@@ -43,7 +43,7 @@
     {
         NSFileHandle *handle = [_SFTPSession openHandleAtPath:remotePath
                                                         flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
-                                                         mode:LIBSSH2_SFTP_S_IRUSR|LIBSSH2_SFTP_S_IWUSR|LIBSSH2_SFTP_S_IRGRP|LIBSSH2_SFTP_S_IROTH];
+                                                         mode:[self remoteFilePermissions]];
         
         [handle writeData:data];
         [handle closeFile];
