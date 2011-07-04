@@ -47,9 +47,20 @@
 {
     if (!didPublish)
     {
-        [_queue setSuspended:YES];
+        // Stop any pending ops
         [_queue cancelAllOperations];
+        
+        // Close the connection as quick as possible
+        NSOperation *closeOp = [[NSInvocationOperation alloc] initWithTarget:_SFTPSession
+                                                                    selector:@selector(close)
+                                                                      object:nil];
+        
+        [closeOp setQueuePriority:NSOperationQueuePriorityVeryHigh];
+        [_queue addOperation:closeOp];
+        
+        // Clear out ivars, the actual objects will get torn down as the queue finishes its work
         [_queue release]; _queue = nil;
+        [_SFTPSession release]; _SFTPSession = nil;
     }
     
     [super engineDidPublish:didPublish error:error];
