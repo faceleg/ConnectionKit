@@ -321,7 +321,7 @@ static void *sPlugInMinWidthObservationContext = &sPlugInMinWidthObservationCont
         }
         else
         {
-            [context writePlaceholderWithText:NSLocalizedString(@"Plug-in not found", "placeholder")
+            [context writePlaceholderWithText:[NSString stringWithFormat:NSLocalizedString(@"Plug-in not found (%@)", "placeholder"), [self plugInIdentifier]]
                                       options:0];
         }
     }
