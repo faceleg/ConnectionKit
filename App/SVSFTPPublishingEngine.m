@@ -44,6 +44,11 @@
 
 #pragma mark Upload
 
+- (void)didEnqueueUpload:(CKTransferRecord *)record toDirectory:(CKTransferRecord *)parent;
+{
+    [parent addContent:record];
+}
+
 - (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)path;
 {
     CKTransferRecord *result = nil;
@@ -61,7 +66,7 @@
         [op release];
         
         
-        [result setName:[path lastPathComponent]];
+        result = [CKTransferRecord recordWithName:[path lastPathComponent] size:[data length]];
         
         
         if (result)
