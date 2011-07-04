@@ -738,7 +738,8 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     SVGraphicFactory *factory = [SVGraphicFactory graphicFactoryForTag:[sender tag]];
     if (factory == [SVGraphicFactory rawHTMLFactory])
     {
-        [self editRawHTMLInSelectedBlock:sender];
+        // HACK so that we try to open editor after update has gone through
+        [self performSelector:@selector(editRawHTMLInSelectedBlock:) withObject:sender afterDelay:0.1];
     }
 }
 

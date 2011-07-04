@@ -99,7 +99,7 @@
 
 - (NSString *)graphicClassName;
 {
-    return ([[self isBlockQuote] boolValue] ? @"blockquote" : [super graphicClassName]);
+    return ([[self isBlockQuote] boolValue] ? @"blockquote-container" : [super graphicClassName]);
 }
 
 #pragma mark Serialization
