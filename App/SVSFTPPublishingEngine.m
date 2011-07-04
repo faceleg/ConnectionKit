@@ -43,6 +43,18 @@
     _SFTPSession = [[CK2SFTPSession alloc] initWithURL:[request URL] delegate:self];
 }
 
+- (void)engineDidPublish:(BOOL)didPublish error:(NSError *)error
+{
+    if (!didPublish)
+    {
+        [_queue setSuspended:YES];
+        [_queue cancelAllOperations];
+        [_queue release]; _queue = nil;
+    }
+    
+    [super engineDidPublish:didPublish error:error];
+}
+
 #pragma mark Upload
 
 - (void)didEnqueueUpload:(CKTransferRecord *)record toDirectory:(CKTransferRecord *)parent;
