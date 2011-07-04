@@ -1,0 +1,35 @@
+/*
+    CSS for Address Bubble inside Google Map
+    
+    Example markup:
+    
+    <div class="gmap_marker">
+        <p class="locationlabel">Location:</p>
+        <p class="location">Pasadena, CA</p>
+        <p class="directions">Get directions:<p>
+    </div>
+    
+*/
+
+.gmap_marker {
+	margin: 0.9em;
+	font-family: Helvetica, Verdana, Arial, sans-serif;
+}
+
+p.locationlabel {
+	margin: 0px;
+	font-weight: bold;
+	font-size: medium;
+}
+
+p.location {
+	margin: 0px;
+	font-size: small;
+}
+
+p.directions {
+	padding-top: 0.5em;
+	margin: 0px;
+	font-size: smaller;
+}
+

@@ -1,9 +1,4 @@
 
-
-// the "marketing" version is baked into CFBundleShortVersionString
-SANDVOX_VERSION = 2.1b11
-
-
 // the SLA variant to wrap around the .dmg [ALPHA,BETA,RELEASE]
 // Also determines if VARIANT_ALPHA or VARIANT_BETA or VARIANT_RELEASE is defined.
 // For checking alpha/beta behaviors, better to test for being *not* VARIANT_RELEASE
@@ -27,7 +22,7 @@ KSEXTENSIBLEMANAGEDOBJECT_COMMIT = v2.0
 KSFILEUTILS_COMMIT = v1.1.2
 KSHTMLWRITER_COMMIT = v1.2
 KSSELECTIONBORDER_COMMIT = v1.0
-KSTHREADPROXY_COMMIT = v1.0
+KSTHREADPROXY_COMMIT = v1.1
 SHARED_COMMIT = master
 YRKSPINNINGPROGRESSINDICATOR_COMMIT = fe71a17098f56e62e65b36da0d2ba639481e4899
 

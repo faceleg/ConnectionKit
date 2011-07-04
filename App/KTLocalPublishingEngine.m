@@ -356,14 +356,6 @@
 
 #pragma mark Media
 
-- (void)threaded_didHashSourceOfMediaRequest:(SVMediaRequest *)request;
-{
-    /*  Trampoline method pretty much, to fling us back to main thread!
-     */
-    
-    [[self ks_proxyOnThread:nil] publishMediaWithRequest:request];
-}
-
 - (NSInvocationOperation *)startHashingSourceOfMediaRequest:(SVMediaRequest *)request;
 {
     SVMediaRequest *sourceRequest = [request sourceRequest];
@@ -427,7 +419,7 @@
                     // Retry once source is hashed
                     NSOperation *op = [[NSInvocationOperation alloc]
                                        initWithTarget:self
-                                       selector:@selector(threaded_didHashSourceOfMediaRequest:)
+                                       selector:@selector(publishMediaWithRequest:)
                                        object:request];
                     
                     [op addDependency:hashingOp];

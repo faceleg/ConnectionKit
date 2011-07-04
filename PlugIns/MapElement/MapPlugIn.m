@@ -32,7 +32,7 @@
 //
 
 #import "MapPlugIn.h"
-
+#import <AddressBook/AddressBook.h>
 
 // <http://www.smashinglabs.pl/gmap-documentation>
 
@@ -87,26 +87,51 @@
     NSString *result = nil;
     
     // try to find a general location in Me card
+    ABPerson *me = [[ABAddressBook sharedAddressBook] me];
+    ABMultiValue *addresses = [me valueForProperty:kABAddressProperty];
+    NSUInteger primaryIndex = [addresses indexForIdentifier:[addresses primaryIdentifier]];
+    NSDictionary *primaryAddress = [addresses valueAtIndex:primaryIndex];
     
-    // fallback to a Karelia outpost, pick a number between 1 and 3
-    NSInteger min = 1;
-    NSInteger max = 3;
-    NSInteger adjustedMax = (max + 1) - min; // arc4random returns within the set {min, (max - 1)}
-    NSInteger random = arc4random() % adjustedMax;
-    NSInteger location = random + min;    
-    switch ( location) 
+    NSString *street = [primaryAddress objectForKey:kABAddressStreetKey];
+    NSString *city = [primaryAddress objectForKey:kABAddressCityKey];
+    NSString *state = [primaryAddress objectForKey:kABAddressStateKey];
+    NSString *zip = [primaryAddress objectForKey:kABAddressZIPKey];
+    //NSString *country = [primaryAddress objectForKey:kABAddressCountryKey];
+    
+    NSMutableArray *components = [[NSMutableArray alloc] initWithCapacity:3];
+    if (street) [components addObject:street];
+    if (city) [components addObject:city];
+    if (state) [components addObject:state];
+    if (zip) [components addObject:zip];
+    
+    if ([components count])
     {
-        case 1:
-            result = @"Alameda, CA";
-            break;
-        case 2:
-            result = @"Altadena, CA";
-            break;
-        case 3:
-        default:
-            result = @"Reading, England";
-            break;
+        result = [components componentsJoinedByString:@",\n"];
     }
+    else
+    {
+        // fallback to a Karelia outpost, pick a number between 1 and 3
+        NSInteger min = 1;
+        NSInteger max = 3;
+        NSInteger adjustedMax = (max + 1) - min; // arc4random returns within the set {min, (max - 1)}
+        NSInteger random = arc4random() % adjustedMax;
+        NSInteger location = random + min;    
+        switch ( location) 
+        {
+            case 1:
+                result = @"Alameda, CA";
+                break;
+            case 2:
+                result = @"Altadena, CA";
+                break;
+            case 3:
+            default:
+                result = @"Reading, England";
+                break;
+        }
+    }
+    
+    [components release];
     
     return result;
 }
@@ -166,7 +191,8 @@
             // construct marker for location
                         
             // just one marker
-            NSString *address = self.location;
+            // replace newlines with spaces for Google
+            NSString *address = [[self location] stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
             NSMutableDictionary *marker = [NSMutableDictionary dictionaryWithObject:address
                                                                              forKey:@"address"];
             
@@ -184,11 +210,27 @@
                                                  path:@"/maps"
                                       queryParameters:[NSDictionary dictionaryWithObject:address forKey:@"saddr"]];
                 
-                // localize labels
-                NSString *label1 = SVLocalizedString(@"Location:", "label for map popup");
-                NSString *label2 = SVLocalizedString(@"Get directions:", "label for map popup");
-                NSString *label3 = SVLocalizedString(@"To here", "label for map popup");
-                NSString *label4 = SVLocalizedString(@"From here", "label for map popup");
+                // localize labels (to the language of the site visitor)
+                NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+                NSString *language = [[context page] language];
+                
+                // determine strings based on language of page
+                
+                // These are various strings, randomly chosen, for the blurb on the badge.  This will help direct
+                // Traffic to the Sandvox site!
+                
+                NSString *label1 = [bundle localizedStringForString:@"Location:"
+                                                           language:language 
+                                                           fallback:SVLocalizedString(@"Location:", "label for map popup")];
+                NSString *label2 = [bundle localizedStringForString:@"Get directions:"
+                                                           language:language 
+                                                           fallback:SVLocalizedString(@"Get directions:", "label for map popup")];
+                NSString *label3 = [bundle localizedStringForString:@"To here"
+                                                           language:language 
+                                                           fallback:SVLocalizedString(@"To here", "label for map popup")];
+                NSString *label4 = [bundle localizedStringForString:@"From here"
+                                                           language:language 
+                                                           fallback:SVLocalizedString(@"From here", "label for map popup")];
                 
                 // construct HTML
                 NSString *htmlDescription = [NSString stringWithFormat:
@@ -205,6 +247,11 @@
                 
                 [marker setObject:htmlDescription forKey:@"html"];
                 [marker setObject:@"true" forKey:@"popup"];
+                
+                // apply uniform style            
+                NSString *cssPath = [bundle pathForResource:@"bubble" ofType:@"css"];
+                NSURL *cssURL = [NSURL fileURLWithPath:cssPath];
+                (void)[context addCSSWithTemplateAtURL:cssURL object:self];                
             }
             
             // in an array
@@ -214,12 +261,6 @@
             NSData *markersJSONData = [SVJSONSerialization dataWithJSONObject:markers options:0 error:nil];
             NSString *markersJSONString = [[[NSString alloc] initWithData:markersJSONData encoding:NSUTF8StringEncoding] autorelease];
             
-            // apply uniform style
-            (void)[context addCSSString:
-                   @".gmap_marker       { font-family: Helvetica, Verdana, Arial, sans-serif; margin: .9em; } "
-                   @"p.locationlabel    { font-size: medium; font-weight: bold; margin: 0px } "
-                   @"p.location         { font-size: small; margin: 0px  } "
-                   @"p.directions       { font-size: smaller; margin: 0px padding-top: .5em}"];
             
             // append gMap <script> to end body
             NSString *map = [NSString stringWithFormat:

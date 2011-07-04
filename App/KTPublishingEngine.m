@@ -38,6 +38,7 @@
 #import "KSPathUtilities.h"
 
 #import "KSCSSWriter.h"
+#import "KSPerformOnThreadOperation.h"
 #import "KSPlugInWrapper.h"
 #import "KSSHA1Stream.h"
 #import "KSThreadProxy.h"
@@ -263,10 +264,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)mainPublishing
 {
-    if (![NSThread isMainThread])
-    {
-        return [[self ks_proxyOnThread:nil waitUntilDone:NO] mainPublishing];
-    }
+    OBASSERT([NSThread isMainThread]);
     
     
     /* All media that didn't have a slot available for it before can now be published
@@ -353,6 +351,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         }
         else
         {
+            operation = [[[KSPerformOnThreadOperation alloc] initWithOperation:operation
+                                                                             thread:nil] autorelease];
+            
             queue = [self defaultQueue];
         }
     }
@@ -703,8 +704,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     [self publishData:mainCSSData toPath:cssUploadPath];
 }
-
-- (void)addDependencyOnObject:(NSObject *)object keyPath:(NSString *)keyPath { }
 
 #pragma mark Media
 
@@ -1367,10 +1366,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)finishPublishing;
 {
-    if (![NSThread isMainThread])
-    {
-        return [[self ks_proxyOnThread:nil] finishPublishing];
-    }
+    OBASSERT([NSThread isMainThread]);
+    
     
     // Upload sitemap if the site has one
     [self uploadGoogleSiteMapIfNeeded];
