@@ -14,7 +14,8 @@
 @interface SVSFTPPublishingEngine : KTRemotePublishingEngine <CK2SFTPSessionDelegate>
 {
   @private
-    CK2SFTPSession  *_SFTPSession;
+    CK2SFTPSession      *_SFTPSession;
+    NSOperationQueue    *_queue;
 }
 
 @end

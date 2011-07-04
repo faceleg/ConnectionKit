@@ -14,6 +14,17 @@
 
 @implementation SVSFTPPublishingEngine
 
+- (id)init;
+{
+    if (self = [super init])
+    {
+        _queue = [[NSOperationQueue alloc] init];
+        [_queue setMaxConcurrentOperationCount:1];
+    }
+    
+    return self;
+}
+
 - (void)createConnection
 {
     // Build the request object
@@ -33,44 +44,25 @@
 
 #pragma mark Upload
 
-- (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath;
+- (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)path;
 {
     CKTransferRecord *result = nil;
     
-    CKTransferRecord *parent = [self willUploadToPath:remotePath];
+    CKTransferRecord *parent = [self willUploadToPath:path];
     
     if (_SFTPSession)
     {
-        NSFileHandle *handle = [_SFTPSession openHandleAtPath:remotePath
-                                                        flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
-                                                         mode:[self remoteFilePermissions]];
+        NSInvocation *invocation = [NSInvocation invocationWithSelector:@selector(threaded_writeData:toPath:)
+                                                                 target:self
+                                                              arguments:NSARRAY(data, path)];
         
-        if (!handle)
-        {
-            NSError *error = [_SFTPSession sessionError];
-            
-            if ([[error domain] isEqualToString:CK2LibSSH2SFTPErrorDomain] &&
-                [error code] == LIBSSH2_FX_NO_SUCH_FILE)
-            {
-                // Parent directory probably doesn't exist, so create it
-                BOOL madeDir = [_SFTPSession createDirectoryAtPath:[remotePath stringByDeletingLastPathComponent]
-                                       withIntermediateDirectories:YES
-                                                              mode:[self remoteDirectoryPermissions]];
-                
-                if (madeDir)
-                {
-                    handle = [_SFTPSession openHandleAtPath:remotePath
-                                                      flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
-                                                       mode:[self remoteFilePermissions]];
-                }
-            }
-        }
-        
-        [handle writeData:data];
-        [handle closeFile];
+        NSInvocationOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
+        [_queue addOperation:op];
+        [op release];
         
         
-        [result setName:[remotePath lastPathComponent]];
+        [result setName:[path lastPathComponent]];
+        
         
         if (result)
         {
@@ -78,11 +70,42 @@
         }
         else
         {
-            NSLog(@"Unable to create transfer record for path:%@ data:%@", remotePath, data); // case 40520 logging
+            NSLog(@"Unable to create transfer record for path:%@ data:%@", path, data); // case 40520 logging
         }
     }
     
     return result;
+}
+
+- (void)threaded_writeData:(NSData *)data toPath:(NSString *)path;
+{
+    NSFileHandle *handle = [_SFTPSession openHandleAtPath:path
+                                                    flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
+                                                     mode:[self remoteFilePermissions]];
+    
+    if (!handle)
+    {
+        NSError *error = [_SFTPSession sessionError];
+        
+        if ([[error domain] isEqualToString:CK2LibSSH2SFTPErrorDomain] &&
+            [error code] == LIBSSH2_FX_NO_SUCH_FILE)
+        {
+            // Parent directory probably doesn't exist, so create it
+            BOOL madeDir = [_SFTPSession createDirectoryAtPath:[path stringByDeletingLastPathComponent]
+                                   withIntermediateDirectories:YES
+                                                          mode:[self remoteDirectoryPermissions]];
+            
+            if (madeDir)
+            {
+                handle = [_SFTPSession openHandleAtPath:path
+                                                  flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
+                                                   mode:[self remoteFilePermissions]];
+            }
+        }
+    }
+    
+    [handle writeData:data];
+    [handle closeFile];
 }
 
 #pragma mark SFTP session delegate
