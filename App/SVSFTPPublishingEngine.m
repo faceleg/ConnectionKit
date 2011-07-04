@@ -10,6 +10,9 @@
 
 #import "KTHostProperties.h"
 #import "KTSite.h"
+
+#import "NSFileManager+Karelia.h"
+
 #import "KSThreadProxy.h"
 
 
@@ -100,6 +103,42 @@
     return result;
 }
 
+- (CKTransferRecord *)uploadContentsOfURL:(NSURL *)localURL toPath:(NSString *)path
+{
+    // Cheat and send non-file URLs direct
+    if (![localURL isFileURL]) return [self uploadData:[NSData dataWithContentsOfURL:localURL] toPath:path];
+    
+    
+    CKTransferRecord *result = nil;
+    
+    CKTransferRecord *parent = [self willUploadToPath:path];
+    
+    if (_SFTPSession)
+    {
+        NSNumber *size = [[NSFileManager defaultManager] sizeOfFileAtPath:[localURL path]];
+        
+        if (size)   // if size can't be determined, no chance of being able to upload
+        {
+            result = [CKTransferRecord recordWithName:[path lastPathComponent] size:[size unsignedLongLongValue]];
+            
+            
+            NSInvocation *invocation = [NSInvocation invocationWithSelector:@selector(threaded_writeContentsOfURL:toPath:transferRecord:)
+                                                                     target:self
+                                                                  arguments:NSARRAY(localURL, path, result)];
+            
+            NSInvocationOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
+            [_queue addOperation:op];
+            [op release];
+            
+            
+            
+            [self didEnqueueUpload:result toDirectory:parent];
+        }
+    }
+    
+    return result;
+}
+
 - (void)threaded_writeData:(NSData *)data toPath:(NSString *)path transferRecord:(CKTransferRecord *)record;
 {
     NSError *error = nil;
@@ -134,6 +173,60 @@
     
     [handle writeData:data];
     [handle closeFile];
+    
+    [[record ks_proxyOnThread:nil waitUntilDone:NO] transferDidFinish:record error:error];
+}
+
+- (void)threaded_writeContentsOfURL:(NSURL *)URL toPath:(NSString *)path transferRecord:(CKTransferRecord *)record;
+{
+    NSError *error = nil;
+    NSFileHandle *handle = [NSFileHandle fileHandleForReadingAtPath:[URL path]];
+    if (handle)
+    {
+        NSFileHandle *sftpHandle = [_SFTPSession openHandleAtPath:path
+                                                            flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
+                                                             mode:[self remoteFilePermissions]];
+        
+        if (!sftpHandle)
+        {
+            error = [_SFTPSession sessionError];
+            
+            if ([[error domain] isEqualToString:CK2LibSSH2SFTPErrorDomain] &&
+                [error code] == LIBSSH2_FX_NO_SUCH_FILE)
+            {
+                // Parent directory probably doesn't exist, so create it
+                BOOL madeDir = [_SFTPSession createDirectoryAtPath:[path stringByDeletingLastPathComponent]
+                                       withIntermediateDirectories:YES
+                                                              mode:[self remoteDirectoryPermissions]];
+                
+                if (madeDir)
+                {
+                    sftpHandle = [_SFTPSession openHandleAtPath:path
+                                                      flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
+                                                       mode:[self remoteFilePermissions]];
+                    
+                    if (!sftpHandle) error = [_SFTPSession sessionError];
+                }
+            }
+        }
+        
+        if (sftpHandle) [[record ks_proxyOnThread:nil waitUntilDone:NO] transferDidBegin:record];
+        
+        while (YES)
+        {
+            NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+            {
+                NSData *data = [handle readDataOfLength:CK2SFTPPreferredChunkSize];
+                if (![data length]) break;
+                
+                [sftpHandle writeData:data];
+            }
+            [pool release];
+        }
+        
+        [handle closeFile];
+        [sftpHandle closeFile];
+    }
     
     [[record ks_proxyOnThread:nil waitUntilDone:NO] transferDidFinish:record error:error];
 }
