@@ -85,8 +85,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 - (void)addResourceFile:(NSURL *)resourceURL;
 
 - (CKTransferRecord *)createDirectory:(NSString *)remotePath;
-- (unsigned long)remoteFilePermissions;
-- (unsigned long)remoteDirectoryPermissions;
 
 @end
 

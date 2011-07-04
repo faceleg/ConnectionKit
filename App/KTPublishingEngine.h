@@ -161,6 +161,9 @@ typedef enum {
 - (void)setConnection:(id <CKConnection>)connection;
 - (void)createConnection;
 
+// Permissions
+- (unsigned long)remoteFilePermissions;
+- (unsigned long)remoteDirectoryPermissions;
 
 @end
 
