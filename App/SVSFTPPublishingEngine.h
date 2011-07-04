@@ -14,8 +14,10 @@
 @interface SVSFTPPublishingEngine : KTRemotePublishingEngine <CK2SFTPSessionDelegate>
 {
   @private
-    CK2SFTPSession      *_SFTPSession;
+    CK2SFTPSession      *_session;
     NSOperationQueue    *_queue;
 }
+
+@property(nonatomic, retain, readonly) CK2SFTPSession *SFTPSession;
 
 @end
