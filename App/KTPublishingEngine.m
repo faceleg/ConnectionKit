@@ -1189,7 +1189,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
  */
 - (void)engineDidPublish:(BOOL)didPublish error:(NSError *)error
 {
-    OBPRECONDITION([self status] > KTPublishingEngineStatusNotStarted && [self status] < KTPublishingEngineStatusFinished);
+    //OBPRECONDITION([self status] > KTPublishingEngineStatusNotStarted && [self status] < KTPublishingEngineStatusFinished);
+    // Why did I ever care about the status? It's possible to file while trying to get started. Mike
     
     
     // In the event of failure, end page parsing and media URL connections
