@@ -45,6 +45,27 @@
                                                         flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
                                                          mode:[self remoteFilePermissions]];
         
+        if (!handle)
+        {
+            NSError *error = [_SFTPSession sessionError];
+            
+            if ([[error domain] isEqualToString:CK2LibSSH2SFTPErrorDomain] &&
+                [error code] == LIBSSH2_FX_NO_SUCH_FILE)
+            {
+                // Parent directory probably doesn't exist, so create it
+                BOOL madeDir = [_SFTPSession createDirectoryAtPath:[remotePath stringByDeletingLastPathComponent]
+                                       withIntermediateDirectories:YES
+                                                              mode:[self remoteDirectoryPermissions]];
+                
+                if (madeDir)
+                {
+                    handle = [_SFTPSession openHandleAtPath:remotePath
+                                                      flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
+                                                       mode:[self remoteFilePermissions]];
+                }
+            }
+        }
+        
         [handle writeData:data];
         [handle closeFile];
         
