@@ -12,8 +12,7 @@
 #import "SVMediaRecord.h"
 #import "KTPage+Paths.h"
 #import "SVPublisher.h"
-
-#import "NSImage+KTExtensions.h"
+#import "SVWorkspaceIconProtocol.h"
 
 #import "KSSHA1Stream.h"
 #import "NSString+Karelia.h"
@@ -71,16 +70,10 @@
         }
         else
         {
-            NSImage *icon = [KSWORKSPACE iconForFileType:type];
-            NSData *png = [icon PNGRepresentation];
-            
             // Derive a URL from the source media that can't accidentally correspond to a real file
-            NSURL *URL = [[[self media] media] mediaURL];
-            URL = [[URL ks_URLByDeletingPathExtension] ks_URLByAppendingPathExtension:@"png"];
-            URL = [URL ks_URLWithScheme:@"x-sandvox"];
-            if (!URL) return NO;
+            NSURL *URL = [SVWorkspaceIconProtocol URLForWorkspaceIconOfURL:[[[self media] media] mediaURL]];
             
-            SVMedia *media = [[SVMedia alloc] initWithData:png URL:URL];
+            SVMedia *media = [[SVMedia alloc] initByReferencingURL:URL];
             
             NSURL *result = [context addImageMedia:media
                                              width:[NSNumber numberWithUnsignedInteger:width]
