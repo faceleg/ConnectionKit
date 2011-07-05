@@ -76,7 +76,7 @@
         {
             error = [KSError errorWithDomain:NSURLErrorDomain
                                         code:NSURLErrorResourceUnavailable
-                  localizedDescriptionFormat:@"Couldn't get icon for file: %@", URL];
+                  localizedDescriptionFormat:NSLocalizedString(@"Couldn't get icon for file: %@", "error"), URL];
             
             [[self client] URLProtocol:self didFailWithError:error];
         }
