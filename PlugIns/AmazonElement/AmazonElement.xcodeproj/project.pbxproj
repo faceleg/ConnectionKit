@@ -494,6 +494,7 @@
 					0x504c0000,
 				);
 				PRODUCT_NAME = Amazon;
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = svxElement;
 			};
 			name = Debug;
@@ -508,6 +509,7 @@
 					0x504c0000,
 				);
 				PRODUCT_NAME = Amazon;
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = svxElement;
 			};
 			name = Release;
@@ -518,7 +520,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -532,7 +534,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
