@@ -265,6 +265,7 @@
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = MapElement;
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = svxElement;
 			};
 			name = Debug;
@@ -275,6 +276,7 @@
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = MapElement;
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = svxElement;
 			};
 			name = Release;
@@ -289,7 +291,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				SDKROOT = macosx10.5;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -301,7 +303,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = macosx10.5;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
