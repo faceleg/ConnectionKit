@@ -642,11 +642,14 @@
     
     
     // Should any of these nodes get added to the site menu?
-    for (NSTreeNode *aNode in nodes)
+    if ([startingIndexPath length] <= 2)
     {
-        if ([[aNode indexPath] length] > 2)
+        for (NSTreeNode *aNode in nodes)
         {
-            [self willInsertOrMoveObjectToTopLevel:[aNode representedObject]];
+            if ([[aNode indexPath] length] > 2)
+            {
+                [self willInsertOrMoveObjectToTopLevel:[aNode representedObject]];
+            }
         }
     }
     

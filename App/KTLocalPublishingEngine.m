@@ -395,7 +395,7 @@
                 if (!sourceDigest)
                 {
                     NSInvocationOperation *hashingOp = [digestStorage
-                                                        hashingOperationForMediaRequest:request];
+                                                        hashingOperationForMediaRequest:sourceRequest];
                     
                     
                     // It might be that hashing failed, so go ahead and try to publish
