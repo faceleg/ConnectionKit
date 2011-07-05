@@ -84,6 +84,16 @@
     else
     {
         sourceImage = [[CIImage alloc] initWithContentsOfURL:[_sourceMedia mediaURL]];
+        if (!sourceImage)
+        {
+            // Maybe it's a custom URL protocol
+            NSData *data = [[NSData alloc] initWithContentsOfURL:[_sourceMedia mediaURL]];
+            if (data)
+            {
+                sourceImage = [[CIImage alloc] initWithData:data];
+                [data release];
+            }
+        }
     }
     
     if (!sourceImage)
