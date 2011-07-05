@@ -2466,25 +2466,24 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 {
     // TODO: Could any of logic be shared with how media system imports images?
     
-    if ([pboard availableTypeFromArray:[NSBitmapImageRep imageTypes]])
+    
+    NSURL *URL = [pboard URL];
+    
+    if ([URL isFileURL] &&
+        [KSWORKSPACE ks_type:[KSWORKSPACE ks_typeOfFileAtURL:URL]
+        conformsToOneOfTypes:[NSBitmapImageRep imageTypes]])
+    {
+        [[node mutableChildDOMNodes] removeAllObjects];
+        
+        DOMHTMLImageElement *image = (DOMHTMLImageElement *)[[node ownerDocument] createElement:@"IMG"];
+        [image setSrc:[URL absoluteString]];
+        
+        [node appendChild:image];
+        return YES;
+    }
+    else if ([pboard availableTypeFromArray:[NSBitmapImageRep imageTypes]])
     {
         // FIXME: Import as subresource using fake URL
-    }
-    else
-    {
-        NSURL *URL = [pboard URL];
-        if ([URL isFileURL] &&
-            [KSWORKSPACE ks_type:[KSWORKSPACE ks_typeOfFileAtURL:URL]
-                              conformsToOneOfTypes:[NSBitmapImageRep imageTypes]])
-        {
-            [[node mutableChildDOMNodes] removeAllObjects];
-            
-            DOMHTMLImageElement *image = (DOMHTMLImageElement *)[[node ownerDocument] createElement:@"IMG"];
-            [image setSrc:[URL absoluteString]];
-            
-            [node appendChild:image];
-            return YES;
-        }
     }
     
     return NO;
@@ -2498,7 +2497,11 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     // In the case of dragging text within the editor, WebKit should ask our permission to edit the source range too, but doesn't in my testing. #92432. We'll have to fake it until Apple make it!
     if (result)
     {
-        if (action == WebViewInsertActionDropped)
+        NSPasteboard *pboard = nil;
+        if (action == WebViewInsertActionDropped) pboard = [NSPasteboard pasteboardWithName:NSDragPboard];
+        if (action == WebViewInsertActionPasted) pboard = [NSPasteboard generalPasteboard];
+        
+        if (pboard)
         {
             DOMRange *selection = [self selectedDOMRange];
             if (selection) result = [self webView:webView shouldDeleteDOMRange:selection];
@@ -2507,7 +2510,6 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
             {
                 // Import images off the pboard. #103882
                 // But not if there's a web archive there, because WebKit will handle that right
-                NSPasteboard *pboard = [NSPasteboard pasteboardWithName:NSDragPboard];
                 if (![pboard availableTypeFromArray:NSARRAY((NSString *)kUTTypeWebArchive, WebArchivePboardType)])
                 {
                     [self tryToPopulateNode:node withImagesFromPasteboard:pboard];
