@@ -82,6 +82,12 @@
                                  preferredFilename:nil
                                      scalingSuffix:nil];
             
+            if (options & SVImagePushSizeToCurrentElement)
+            {
+                [context pushAttribute:@"width" value:[NSNumber numberWithUnsignedInteger:width]];
+                [context pushAttribute:@"height" value:[NSNumber numberWithUnsignedInteger:height]];
+            }
+            
             [media release];
             return result;
         }
