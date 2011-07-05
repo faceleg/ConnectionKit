@@ -16,6 +16,7 @@
 		3CCEE83E13BFD056004B65DA /* bubble.css in Resources */ = {isa = PBXBuildFile; fileRef = 3CCEE83D13BFD056004B65DA /* bubble.css */; };
 		3CD5DD0213BD8E3000AC306C /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CD5DD0113BD8E3000AC306C /* AddressBook.framework */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+		CE82BC8B13C3A5BD00C4978F /* Inspector.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE82BC8A13C3A5BD00C4978F /* Inspector.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,12 @@
 		3CD5DD0113BD8E3000AC306C /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		8D5B49B6048680CD000E48DA /* Map.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Map.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE82BC7113C3A4A300C4978F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CE82BC7213C3A4A700C4978F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CE82BC7313C3A4AA00C4978F /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CE82BC8C13C3A5C500C4978F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Inspector.strings; sourceTree = "<group>"; };
+		CE82BC8D13C3A5C800C4978F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Inspector.strings; sourceTree = "<group>"; };
+		CE82BC8E13C3A5CD00C4978F /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Inspector.strings; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -82,6 +89,7 @@
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				27091DCC13166BF1002F3C08 /* InfoPlist.strings */,
 				3C43BC0613075A36007ED67D /* Inspector.xib */,
+				CE82BC8A13C3A5BD00C4978F /* Inspector.strings */,
 				3CCEE83D13BFD056004B65DA /* bubble.css */,
 				3CC1D5EA13B82F0100D09404 /* jquery.gmap.js */,
 				3CC1D5EB13B82F0100D09404 /* jquery.gmap.min.js */,
@@ -204,6 +212,7 @@
 				3C43BC0513075A09007ED67D /* License.rtf in Resources */,
 				3C43BC2813075B38007ED67D /* toolbar_map.tiff in Resources */,
 				3CCEE83E13BFD056004B65DA /* bubble.css in Resources */,
+				CE82BC8B13C3A5BD00C4978F /* Inspector.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,6 +252,9 @@
 			isa = PBXVariantGroup;
 			children = (
 				27091DCE13166C06002F3C08 /* en */,
+				CE82BC7113C3A4A300C4978F /* fr */,
+				CE82BC7213C3A4A700C4978F /* de */,
+				CE82BC7313C3A4AA00C4978F /* pt_BR */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -253,6 +265,16 @@
 				27091DD213166C2E002F3C08 /* en */,
 			);
 			name = Inspector.xib;
+			sourceTree = "<group>";
+		};
+		CE82BC8A13C3A5BD00C4978F /* Inspector.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE82BC8C13C3A5C500C4978F /* fr */,
+				CE82BC8D13C3A5C800C4978F /* de */,
+				CE82BC8E13C3A5CD00C4978F /* pt_BR */,
+			);
+			name = Inspector.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
