@@ -2466,27 +2466,34 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 {
     // TODO: Could any of logic be shared with how media system imports images?
     
+    BOOL result = NO;
     
-    NSURL *URL = [pboard URL];
-    
-    if ([URL isFileURL] &&
-        [KSWORKSPACE ks_type:[KSWORKSPACE ks_typeOfFileAtURL:URL]
-        conformsToOneOfTypes:[NSBitmapImageRep imageTypes]])
+    NSArray *items = [pboard sv_pasteboardItems];
+    for (id <SVPasteboardItem> anItem in items)
     {
-        [[node mutableChildDOMNodes] removeAllObjects];
+        NSURL *URL = [anItem URL];
         
-        DOMHTMLImageElement *image = (DOMHTMLImageElement *)[[node ownerDocument] createElement:@"IMG"];
-        [image setSrc:[URL absoluteString]];
-        
-        [node appendChild:image];
-        return YES;
-    }
-    else if ([pboard availableTypeFromArray:[NSBitmapImageRep imageTypes]])
-    {
-        // FIXME: Import as subresource using fake URL
+        if ([URL isFileURL] &&
+            [KSWORKSPACE ks_type:[KSWORKSPACE ks_typeOfFileAtURL:URL]
+            conformsToOneOfTypes:[NSBitmapImageRep imageTypes]])
+        {
+            if (!result) [[node mutableChildDOMNodes] removeAllObjects];
+            
+            DOMHTMLImageElement *image = (DOMHTMLImageElement *)[[node ownerDocument] createElement:@"IMG"];
+            [image setSrc:[URL absoluteString]];
+            
+            [node appendChild:image];
+            result = YES;
+        }
+        else if ([anItem availableTypeFromArray:[NSBitmapImageRep imageTypes]])
+        {
+            // FIXME: Import as subresource using fake URL
+        }
     }
     
-    return NO;
+    
+    
+    return result;
 }
 
 - (BOOL)webView:(WebView *)webView shouldInsertNode:(DOMNode *)node replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
