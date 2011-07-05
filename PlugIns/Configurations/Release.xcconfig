@@ -1,15 +1,13 @@
 
-// we want to grab SANDVOX_VERSION from Sandvox
+// take notice of Sandvox config flags
 #include "../../Xcode/Configurations/Sandvox.xcconfig"
 
 // we want to "link" against Sandvox directly
 USER_HEADER_SEARCH_PATHS = "$(SYMROOT)/Release/Sandvox.app/Contents/PrivateHeaders" "$(SYMROOT)/Release/Sandvox.app/Contents/Headers"
 BUNDLE_LOADER = $(SYMROOT)/Release/Sandvox.app/Contents/MacOS/Sandvox
 
-// release builds are Universal, using Leopard's SDK
-ARCHS = ppc i386
+// we're building for Leopard and above
 MACOSX_DEPLOYMENT_TARGET = 10.5
-SDKROOT = macosx10.5
 
 // plugins are Cocoa Bundles
 INSTALL_PATH = $(HOME)/Library/Bundles
