@@ -438,7 +438,7 @@ toSidebarOfDescendantsOfPageIfApplicable:(KTPage *)page;
     
     for (SVGraphic *aPagelet in pagelets)
     {
-        [aPagelet setShowsTitle:YES];
+        //[aPagelet setShowsTitle:YES];     Why? Why did I ever want this? Mike. #119375
         [self insertObject:aPagelet atArrangedObjectIndex:index];
         result = YES;
     }
