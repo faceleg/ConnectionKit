@@ -1324,7 +1324,13 @@
 	
 	NSSize movieSize = NSZeroSize;
 	
-	NSArray* vtracks = [aMovie tracksOfMediaType:QTMediaTypeVideo];
+	// Look for a QTVR track first, as it has a more accurate dimension than video tracks.
+	NSArray* vtracks = [aMovie tracksOfMediaType:QTMediaTypeQTVR];
+	if (![vtracks count])
+	{
+		// Most movies won't be QTVR so this will give you the correct value.
+		vtracks = [aMovie tracksOfMediaType:QTMediaTypeVideo];
+	}
 	if ([vtracks count] && [[vtracks objectAtIndex:0] respondsToSelector:@selector(apertureModeDimensionsForMode:)])
 	{
 		QTTrack* track = [vtracks objectAtIndex:0];
