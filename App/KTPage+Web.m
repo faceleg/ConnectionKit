@@ -263,7 +263,6 @@
 													  options:SVImageScaleAspectFit];
 		if (URL)
 		{
-			[context writeComment:@"Don't panic!  This line will likely not validate by W3C. That's expected."];
 			NSString *href = [URL absoluteString];	// leave it an absolute URL for Facebook's benefit
 			
 			NSString *pathExtension = [[URL path] pathExtension];
