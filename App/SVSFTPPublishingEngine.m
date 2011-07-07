@@ -156,15 +156,14 @@
 
 - (void)threaded_writeData:(NSData *)data toPath:(NSString *)path transferRecord:(CKTransferRecord *)record;
 {
-    NSError *error = nil;
+    NSError *error;
     NSFileHandle *handle = [_session openHandleAtPath:path
-                                                    flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
-                                                     mode:[self remoteFilePermissions]];
+                                                flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
+                                                 mode:[self remoteFilePermissions]
+                                                error:&error];
     
     if (!handle)
     {
-        error = [_session sessionError];
-        
         if ([[error domain] isEqualToString:CK2LibSSH2SFTPErrorDomain] &&
             [error code] == LIBSSH2_FX_NO_SUCH_FILE)
         {
@@ -176,10 +175,9 @@
             if (madeDir)
             {
                 handle = [_session openHandleAtPath:path
-                                                  flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
-                                                   mode:[self remoteFilePermissions]];
-                
-                if (!handle) error = [_session sessionError];
+                                              flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
+                                               mode:[self remoteFilePermissions]
+                                              error:&error];
             }
         }
     }
@@ -189,7 +187,8 @@
     [handle writeData:data];
     [handle closeFile];
     
-    [[record ks_proxyOnThread:nil waitUntilDone:NO] transferDidFinish:record error:error];
+    [[record ks_proxyOnThread:nil waitUntilDone:NO] transferDidFinish:record
+                                                                error:(handle ? nil : error)];
 }
 
 #pragma mark SFTP session
@@ -244,18 +243,18 @@
 
 - (void)main
 {
-    NSError *error = nil;
+    NSError *error;
     NSFileHandle *handle = [NSFileHandle fileHandleForReadingAtPath:[_URL path]];
+    
     if (handle)
     {
         NSFileHandle *sftpHandle = [[_engine SFTPSession] openHandleAtPath:_path
-                                                            flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
-                                                             mode:[_engine remoteFilePermissions]];
+                                                                     flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
+                                                                      mode:[_engine remoteFilePermissions]
+                                                                     error:&error];
         
         if (!sftpHandle)
         {
-            error = [[_engine SFTPSession] sessionError];
-            
             if ([[error domain] isEqualToString:CK2LibSSH2SFTPErrorDomain] &&
                 [error code] == LIBSSH2_FX_NO_SUCH_FILE)
             {
@@ -267,10 +266,9 @@
                 if (madeDir)
                 {
                     sftpHandle = [[_engine SFTPSession] openHandleAtPath:_path
-                                                          flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
-                                                           mode:[_engine remoteFilePermissions]];
-                    
-                    if (!sftpHandle) error = [[_engine SFTPSession] sessionError];
+                                                                   flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
+                                                                    mode:[_engine remoteFilePermissions]
+                                                                   error:&error];
                 }
             }
         }
@@ -300,7 +298,7 @@
         [sftpHandle closeFile];
     }
     
-    [[_record ks_proxyOnThread:nil waitUntilDone:NO] transferDidFinish:_record error:error];
+    [[_record ks_proxyOnThread:nil waitUntilDone:NO] transferDidFinish:_record error:(sftpHandle ? nil : error)];
 }
 
 @end
