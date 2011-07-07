@@ -14,10 +14,13 @@
 {
 @private
     NSMutableArray  *_subelements;
+    id <SVGraphic>  _graphic;
 }
 
 @property(nonatomic, copy, readonly) NSArray *subelements;
 - (void)addSubelement:(KSElementInfo *)element;
+
+@property(nonatomic, retain) id <SVGraphic> graphic;
 
 @end
 
@@ -29,7 +32,9 @@
 {
   @private
     NSMutableArray  *_topLevelElements;
+    
     NSMutableArray  *_openElementInfos;
+    id <SVGraphic>  _currentGraphic;
 }
 
 @property(nonatomic, copy, readonly) NSArray *topLevelElements;

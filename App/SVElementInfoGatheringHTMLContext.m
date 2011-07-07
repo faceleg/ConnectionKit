@@ -8,6 +8,8 @@
 
 #import "SVElementInfoGatheringHTMLContext.h"
 
+#import "SVGraphic.h"
+
 
 @implementation SVElementInfoGatheringHTMLContext
 
@@ -53,6 +55,7 @@
     {
         SVElementInfo *info = [[SVElementInfo alloc] initWithElementInfo:[self currentElementInfo]];
         [info setName:element];
+        [info setGraphic:_currentGraphic]; _currentGraphic = nil;
         
         [[self currentElement] addSubelement:info];
         [_openElementInfos addObject:info];
@@ -66,6 +69,20 @@
 {
     [super endElement];
     [_openElementInfos removeLastObject];
+}
+
+#pragma mark Graphics
+
+- (void)writeGraphic:(id <SVGraphic>)graphic;
+{
+    OBASSERTSTRING(_currentGraphic == nil || _currentGraphic == graphic,
+                   @"Trying to write two graphics at once");
+    
+    _currentGraphic = graphic;
+    [super writeGraphic:graphic];
+    
+    OBASSERTSTRING(_currentGraphic == nil,
+                   @"Graphic doesn't seem to have actually been written");
 }
 
 @end
@@ -89,6 +106,8 @@
 - (void)dealloc;
 {
     [_subelements release];
+    [_graphic release];
+    
     [super dealloc];
 }
 
@@ -98,5 +117,7 @@
 {
     [_subelements addObject:element];
 }
+
+@synthesize graphic = _graphic;
 
 @end
