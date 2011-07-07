@@ -12,3 +12,13 @@
 @implementation SVElementInfoGatheringHTMLContext
 
 @end
+
+
+#pragma mark -
+
+
+@implementation SVElementInfo
+
+
+
+@end

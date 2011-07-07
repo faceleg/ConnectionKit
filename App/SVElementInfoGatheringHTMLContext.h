@@ -7,11 +7,24 @@
 //
 
 #import "SVHTMLContext.h"
+#import "KSElementInfo.h"
 
 
 @interface SVElementInfoGatheringHTMLContext : SVHTMLContext
 {
 
 }
+
+@end
+
+
+#pragma mark -
+
+
+@interface SVElementInfo : KSElementInfo
+{
+  
+}
+
 
 @end
