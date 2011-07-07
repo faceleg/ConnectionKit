@@ -154,6 +154,54 @@
     return result;
 }
 
+- (BOOL)threaded_createDirectoryAtPath:(NSString *)path error:(NSError **)outError;
+{
+    // Parent directory probably doesn't exist, so create it
+    NSError *error;
+    BOOL result = [[self SFTPSession] createDirectoryAtPath:path
+                                withIntermediateDirectories:YES
+                                                       mode:[self remoteDirectoryPermissions]
+                                                      error:&error];
+    
+    
+    if (!result)
+    {
+        if (outError) *outError = error;
+        
+        // It's possible directory creation failed because there's already a FILE by the same name…
+        if ([[error domain] isEqualToString:CK2LibSSH2SFTPErrorDomain] &&
+            [error code] == LIBSSH2_FX_FAILURE)
+        {
+            NSString *failedPath = [[error userInfo] objectForKey:NSFilePathErrorKey];  // might be a parent dir
+            if (failedPath)
+            {
+                // …so try to destroy that file…
+                if ([[self SFTPSession] removeFileAtPath:failedPath error:outError])
+                {
+                    // …then create the directory
+                    if ([[self SFTPSession] createDirectoryAtPath:failedPath
+                                      withIntermediateDirectories:YES
+                                                             mode:[self remoteDirectoryPermissions]
+                                                            error:outError])
+                    {
+                        // And finally, might still need to make some child dirs
+                        if ([failedPath isEqualToString:path])
+                        {
+                            result = YES;
+                        }
+                        else
+                        {
+                            result = [self threaded_createDirectoryAtPath:path error:outError];
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    return result;
+}
+
 - (NSFileHandle *)threaded_openHandleAtPath:(NSString *)path error:(NSError **)outError;
 {
     NSError *error;
@@ -169,11 +217,8 @@
         if ([[error domain] isEqualToString:CK2LibSSH2SFTPErrorDomain] &&
             [error code] == LIBSSH2_FX_NO_SUCH_FILE)
         {
-            // Parent directory probably doesn't exist, so create it
-            BOOL madeDir = [[self SFTPSession] createDirectoryAtPath:[path stringByDeletingLastPathComponent]
-                                         withIntermediateDirectories:YES
-                                                                mode:[self remoteDirectoryPermissions]
-                                                               error:outError];
+            BOOL madeDir = [self threaded_createDirectoryAtPath:[path stringByDeletingLastPathComponent]
+                                                          error:outError];
             
             if (madeDir)
             {
