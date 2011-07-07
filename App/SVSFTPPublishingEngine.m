@@ -243,11 +243,11 @@
 
 - (void)main
 {
-    NSError *error;
     NSFileHandle *handle = [NSFileHandle fileHandleForReadingAtPath:[_URL path]];
     
     if (handle)
     {
+        NSError *error;
         NSFileHandle *sftpHandle = [[_engine SFTPSession] openHandleAtPath:_path
                                                                      flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
                                                                       mode:[_engine remoteFilePermissions]
@@ -273,32 +273,39 @@
             }
         }
         
-        if (sftpHandle) [[_record ks_proxyOnThread:nil waitUntilDone:NO] transferDidBegin:_record];
-        
-        while (YES)
+        if (sftpHandle)
         {
-            NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-            @try
+            [[_record ks_proxyOnThread:nil waitUntilDone:NO] transferDidBegin:_record];
+            
+            while (YES)
             {
-                if ([self isCancelled]) break;
+                NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+                @try
+                {
+                    if ([self isCancelled]) break;
 
-                NSData *data = [handle readDataOfLength:CK2SFTPPreferredChunkSize];
-                if (![data length]) break;
-                if ([self isCancelled]) break;
-                
-                [sftpHandle writeData:data];
-            }
-            @finally
-            {
-                [pool release];
+                    NSData *data = [handle readDataOfLength:CK2SFTPPreferredChunkSize];
+                    if (![data length]) break;
+                    if ([self isCancelled]) break;
+                    
+                    [sftpHandle writeData:data];
+                }
+                @finally
+                {
+                    [pool release];
+                }
             }
         }
         
         [handle closeFile];
         [sftpHandle closeFile];
+        
+        [[_record ks_proxyOnThread:nil waitUntilDone:NO] transferDidFinish:_record error:(sftpHandle ? nil : error)];
     }
-    
-    [[_record ks_proxyOnThread:nil waitUntilDone:NO] transferDidFinish:_record error:(sftpHandle ? nil : error)];
+    else
+    {
+        [[_record ks_proxyOnThread:nil waitUntilDone:NO] transferDidFinish:_record error:nil];
+    }
 }
 
 @end
