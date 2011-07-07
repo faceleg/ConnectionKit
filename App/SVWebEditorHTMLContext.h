@@ -6,7 +6,7 @@
 //  Copyright 2009-2011 Karelia Software. All rights reserved.
 //
 
-#import "SVHTMLContext.h"
+#import "SVElementInfoGatheringHTMLContext.h"
 
 #import "SVGraphicDOMController.h"
 
@@ -16,7 +16,7 @@
 @class SVMediaRecord;
 
 
-@interface SVWebEditorHTMLContext : SVHTMLContext
+@interface SVWebEditorHTMLContext : SVElementInfoGatheringHTMLContext
 {
   @private
     SVContentDOMController  *_rootController;
