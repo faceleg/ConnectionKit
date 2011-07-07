@@ -19,6 +19,27 @@
 
 @implementation SVElementInfo
 
+- (id)init
+{
+    if (self = [super init])
+    {
+        _subelements = [[NSMutableArray alloc] init];
+    }
+    
+    return self;
+}
 
+- (void)dealloc;
+{
+    [_subelements release];
+    [super dealloc];
+}
+
+- (NSArray *)subelements; { return [[_subelements copy] autorelease]; }
+
+- (void)addSubelement:(KSElementInfo *)element;
+{
+    [_subelements addObject:element];
+}
 
 @end

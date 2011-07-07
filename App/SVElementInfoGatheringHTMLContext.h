@@ -23,8 +23,11 @@
 
 @interface SVElementInfo : KSElementInfo
 {
-  
+  @private
+    NSMutableArray  *_subelements;
 }
 
+@property(nonatomic, copy, readonly) NSArray *subelements;
+- (void)addSubelement:(KSElementInfo *)element;
 
 @end
