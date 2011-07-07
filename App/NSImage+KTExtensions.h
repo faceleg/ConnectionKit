@@ -11,7 +11,7 @@
 #import "CIImage+Karelia.h"
 
 
-@class KTImageScalingSettings, KTMedia;
+@class KTImageScalingSettings;
 
 
 @interface NSImage ( KTApplication )
@@ -44,12 +44,7 @@
 #pragma mark Specific representations
 
 - (NSData *)PNGRepresentation;
-- (NSData *)PNGRepresentationWithOriginalMedia:(KTMedia *)parentMedia;
-
 - (NSData *)JPEGRepresentationWithCompressionFactor:(float)aQuality;
-- (NSData *)JPEGRepresentationWithCompressionFactor:(float)aQuality
-                                      originalMedia:(KTMedia *)parentMedia;
-
 - (NSData *)faviconRepresentation;
 
 

@@ -597,7 +597,10 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     if (![graphic awakeFromPasteboardItems:[[NSPasteboard generalPasteboard] sv_pasteboardItems]])
     {
-        NSBeep();
+        if (![[self nextResponder] tryToPerform:_cmd with:sender])
+        {
+            NSBeep();
+        }
     }
 }
 

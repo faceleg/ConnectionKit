@@ -476,6 +476,8 @@
 		276AB40A125F444C006FED25 /* SVPasteboardItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 276AB408125F444C006FED25 /* SVPasteboardItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		276AB40B125F444C006FED25 /* SVPasteboardItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 276AB409125F444C006FED25 /* SVPasteboardItem.m */; };
 		276AB462125F4B43006FED25 /* SVPasteboardItemInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 276AB461125F4B43006FED25 /* SVPasteboardItemInternal.h */; };
+		276BC94713C34DDC00EB2798 /* SVWorkspaceIconProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 276BC94513C34DDC00EB2798 /* SVWorkspaceIconProtocol.h */; };
+		276BC94813C34DDC00EB2798 /* SVWorkspaceIconProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 276BC94613C34DDC00EB2798 /* SVWorkspaceIconProtocol.m */; };
 		276C004E129BE40500568A73 /* SVGraphicContainerDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 276C004C129BE40500568A73 /* SVGraphicContainerDOMController.h */; };
 		276C004F129BE40500568A73 /* SVGraphicContainerDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 276C004D129BE40500568A73 /* SVGraphicContainerDOMController.m */; };
 		276C010C129C00F800568A73 /* DOMTreeWalker+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 276C010A129C00F800568A73 /* DOMTreeWalker+Karelia.h */; };
@@ -2203,6 +2205,8 @@
 		276AB408125F444C006FED25 /* SVPasteboardItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPasteboardItem.h; sourceTree = "<group>"; };
 		276AB409125F444C006FED25 /* SVPasteboardItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPasteboardItem.m; sourceTree = "<group>"; };
 		276AB461125F4B43006FED25 /* SVPasteboardItemInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPasteboardItemInternal.h; sourceTree = "<group>"; };
+		276BC94513C34DDC00EB2798 /* SVWorkspaceIconProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWorkspaceIconProtocol.h; sourceTree = "<group>"; };
+		276BC94613C34DDC00EB2798 /* SVWorkspaceIconProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWorkspaceIconProtocol.m; sourceTree = "<group>"; };
 		276C004C129BE40500568A73 /* SVGraphicContainerDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVGraphicContainerDOMController.h; sourceTree = "<group>"; };
 		276C004D129BE40500568A73 /* SVGraphicContainerDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVGraphicContainerDOMController.m; sourceTree = "<group>"; };
 		276C010A129C00F800568A73 /* DOMTreeWalker+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOMTreeWalker+Karelia.h"; sourceTree = "<group>"; };
@@ -4823,7 +4827,7 @@
 		3C30F7DD1312EC080022E49A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3C30F7E11312EC080022E49A /* MapElement.svxElement */,
+				3C30F7E11312EC080022E49A /* Map.svxElement */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -6054,6 +6058,8 @@
 				CEF9D0C20D862C4A00BD9895 /* KTImageWebKitViewFactory.m */,
 				CE16DC510D870FC40077C779 /* KTMovieViewPlugin.h */,
 				CE16DC520D870FC40077C779 /* KTMovieViewPlugin.m */,
+				276BC94513C34DDC00EB2798 /* SVWorkspaceIconProtocol.h */,
+				276BC94613C34DDC00EB2798 /* SVWorkspaceIconProtocol.m */,
 			);
 			name = "WebKit Plug-ins";
 			sourceTree = "<group>";
@@ -6508,6 +6514,7 @@
 				27FD6B4913C09C4500E9D407 /* libssh2.h in Headers */,
 				27FD6D0713C10D3500E9D407 /* SVSFTPPublishingEngine.h in Headers */,
 				27FD6DEB13C1229200E9D407 /* CK2SFTPFileHandle.h in Headers */,
+				276BC94713C34DDC00EB2798 /* SVWorkspaceIconProtocol.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6838,10 +6845,10 @@
 			remoteRef = 3C104A21121B016700899C3B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		3C30F7E11312EC080022E49A /* MapElement.svxElement */ = {
+		3C30F7E11312EC080022E49A /* Map.svxElement */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = MapElement.svxElement;
+			path = Map.svxElement;
 			remoteRef = 3C30F7E01312EC080022E49A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -8250,6 +8257,7 @@
 				27FD6A6813C08B7900E9D407 /* CK2SFTPSession.m in Sources */,
 				27FD6D0813C10D3500E9D407 /* SVSFTPPublishingEngine.m in Sources */,
 				27FD6DEC13C1229200E9D407 /* CK2SFTPFileHandle.m in Sources */,
+				276BC94813C34DDC00EB2798 /* SVWorkspaceIconProtocol.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

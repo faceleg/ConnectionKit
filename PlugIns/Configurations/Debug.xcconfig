@@ -1,5 +1,5 @@
 
-// we want to grab SANDVOX_VERSION from Sandvox
+// take notice of Sandvox config flags
 #include "../../Xcode/Configurations/Sandvox.xcconfig"
 
 // we want to "link" against Sandvox directly
@@ -8,7 +8,6 @@ BUNDLE_LOADER = $(SYMROOT)/Debug/Sandvox.app/Contents/MacOS/Sandvox
 
 // we're building for Leopard and above
 MACOSX_DEPLOYMENT_TARGET = 10.5
-SDKROOT = macosx10.5
 
 // plugins are Cocoa Bundles
 INSTALL_PATH = $(HOME)/Library/Bundles

@@ -804,7 +804,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 - (IBAction)paste:(id)sender;
 {
     // Get first responder item to do it hopefully
-    if (![[[self webEditor] selectedItem] tryToPerform:_cmd with:sender])
+    if (![[[self webEditor] firstResponderItem] tryToPerform:_cmd with:sender])
     {
         SVSidebarPageletsController *sidebarPageletsController =
         [_graphicsController sidebarPageletsController];
