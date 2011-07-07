@@ -322,6 +322,9 @@
                     if ([self isCancelled]) break;
                     
                     [sftpHandle writeData:data];
+                    
+                    [[_record ks_proxyOnThread:nil waitUntilDone:NO]
+                     transfer:_record transferredDataOfLength:[data length]];
                 }
                 @finally
                 {
