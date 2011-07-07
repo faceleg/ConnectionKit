@@ -922,8 +922,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		else
 		{
 			// WARN OF EXPIRING BETA VERSION -- but not if it's apple design awards or development build.
-#ifndef DEBUG
-#ifndef APPLE_DESIGN_AWARDS_KEY
+#if !defined(VARIANT_RELEASE) && defined(EXPIRY_TIMESTAMP)
             @try    // because if warning throws an exception, still want to continue!
             {
                 [self warnExpiring:nil];
@@ -931,7 +930,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
             @catch (NSException *e)
             {
             }
-#endif
 #endif
 			// TODO: I've turned off the progress panel for now. In my opinion the app is fast enough to launch now that we don't need the panel. If this is confirmed, take out the panel code completely. Mike.
             
