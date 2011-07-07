@@ -28,10 +28,11 @@
 @interface SVElementInfoGatheringHTMLContext : SVHTMLContext
 {
   @private
-    NSMutableArray  *_openElementInfo;
+    NSMutableArray  *_topLevelElements;
+    NSMutableArray  *_openElementInfos;
 }
 
-@property(nonatomic, retain, readonly) SVElementInfo *rootElement;
+@property(nonatomic, copy, readonly) NSArray *topLevelElements;
 @property(nonatomic, retain, readonly) SVElementInfo *currentElement;
 
 

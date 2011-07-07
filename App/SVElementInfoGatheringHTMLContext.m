@@ -15,7 +15,8 @@
 {
     if (self = [super initWithOutputWriter:output])
     {
-        _openElementInfo = [[NSMutableArray alloc] init];
+        _topLevelElements = [[NSMutableArray alloc] init];
+        _openElementInfos = [[NSMutableArray alloc] init];
     }
     
     return self;
@@ -23,14 +24,16 @@
 
 - (void)dealloc;
 {
-    [_openElementInfo release];
+    [_topLevelElements release];
+    [_openElementInfos release];
+    
     [super dealloc];
 }
 
 #pragma mark Elements
 
-- (SVElementInfo *)rootElement; { return [_openElementInfo objectAtIndex:0]; }
-- (SVElementInfo *)currentElement; { return [_openElementInfo lastObject]; }
+- (NSArray *)topLevelElements; { return [[_topLevelElements copy] autorelease]; }
+- (SVElementInfo *)currentElement; { return [_openElementInfos lastObject]; }
 
 - (void)willStartElement:(NSString *)element;
 {
@@ -43,14 +46,16 @@
     [info setName:element];
     
     [[self currentElement] addSubelement:info];
-    [_openElementInfo addObject:info];
+    [_openElementInfos addObject:info];
+    if ([_openElementInfos count] == 1) [_topLevelElements addObject:info];
+    
     [info release];
 }
 
 - (void)endElement
 {
     [super endElement];
-    [_openElementInfo removeLastObject];
+    [_openElementInfos removeLastObject];
 }
 
 @end
