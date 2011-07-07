@@ -154,34 +154,44 @@
     return result;
 }
 
-- (void)threaded_writeData:(NSData *)data toPath:(NSString *)path transferRecord:(CKTransferRecord *)record;
+- (NSFileHandle *)threaded_openHandleAtPath:(NSString *)path error:(NSError **)outError;
 {
     NSError *error;
-    NSFileHandle *handle = [_session openHandleAtPath:path
-                                                flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
-                                                 mode:[self remoteFilePermissions]
-                                                error:&error];
+    NSFileHandle *result = [[self SFTPSession] openHandleAtPath:path
+                                                          flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
+                                                           mode:[self remoteFilePermissions]
+                                                          error:&error];
     
-    if (!handle)
+    if (!result)
     {
+        if (outError) *outError = error;
+        
         if ([[error domain] isEqualToString:CK2LibSSH2SFTPErrorDomain] &&
             [error code] == LIBSSH2_FX_NO_SUCH_FILE)
         {
             // Parent directory probably doesn't exist, so create it
-            BOOL madeDir = [_session createDirectoryAtPath:[path stringByDeletingLastPathComponent]
-                               withIntermediateDirectories:YES
-                                                      mode:[self remoteDirectoryPermissions]
-                                                     error:&error];
+            BOOL madeDir = [[self SFTPSession] createDirectoryAtPath:[path stringByDeletingLastPathComponent]
+                                         withIntermediateDirectories:YES
+                                                                mode:[self remoteDirectoryPermissions]
+                                                               error:outError];
             
             if (madeDir)
             {
-                handle = [_session openHandleAtPath:path
-                                              flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
-                                               mode:[self remoteFilePermissions]
-                                              error:&error];
+                result = [[self SFTPSession] openHandleAtPath:path
+                                                        flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
+                                                         mode:[self remoteFilePermissions]
+                                                        error:outError];
             }
         }
     }
+    
+    return result;
+}
+
+- (void)threaded_writeData:(NSData *)data toPath:(NSString *)path transferRecord:(CKTransferRecord *)record;
+{
+    NSError *error;
+    NSFileHandle *handle = [self threaded_openHandleAtPath:path error:&error];
     
     if (handle) [[record ks_proxyOnThread:nil waitUntilDone:NO] transferDidBegin:record];
     
@@ -249,31 +259,7 @@
     if (handle)
     {
         NSError *error;
-        NSFileHandle *sftpHandle = [[_engine SFTPSession] openHandleAtPath:_path
-                                                                     flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
-                                                                      mode:[_engine remoteFilePermissions]
-                                                                     error:&error];
-        
-        if (!sftpHandle)
-        {
-            if ([[error domain] isEqualToString:CK2LibSSH2SFTPErrorDomain] &&
-                [error code] == LIBSSH2_FX_NO_SUCH_FILE)
-            {
-                // Parent directory probably doesn't exist, so create it
-                BOOL madeDir = [[_engine SFTPSession] createDirectoryAtPath:[_path stringByDeletingLastPathComponent]
-                                                withIntermediateDirectories:YES
-                                                                       mode:[_engine remoteDirectoryPermissions]
-                                                                      error:&error];
-                
-                if (madeDir)
-                {
-                    sftpHandle = [[_engine SFTPSession] openHandleAtPath:_path
-                                                                   flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
-                                                                    mode:[_engine remoteFilePermissions]
-                                                                   error:&error];
-                }
-            }
-        }
+        NSFileHandle *sftpHandle = [_engine threaded_openHandleAtPath:_path error:&error];
         
         if (sftpHandle)
         {
