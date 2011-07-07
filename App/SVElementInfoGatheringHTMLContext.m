@@ -11,6 +11,20 @@
 
 @implementation SVElementInfoGatheringHTMLContext
 
+@synthesize rootElement = _rootElement;
+
+- (void)willStartElement:(NSString *)element;
+{
+    // Let superclasses queue up any last minute stuff as they like
+    [super willStartElement:element];
+    
+    // Stash a copy of the element
+    if (!_rootElement)
+    {
+        _rootElement = [[SVElementInfo alloc] initWithElementInfo:[self currentElementInfo]];
+    }
+}
+
 @end
 
 

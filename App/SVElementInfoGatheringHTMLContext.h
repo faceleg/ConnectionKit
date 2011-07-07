@@ -10,10 +10,14 @@
 #import "KSElementInfo.h"
 
 
-@interface SVElementInfoGatheringHTMLContext : SVHTMLContext
+@interface SVElementInfo : KSElementInfo
 {
-
+@private
+    NSMutableArray  *_subelements;
 }
+
+@property(nonatomic, copy, readonly) NSArray *subelements;
+- (void)addSubelement:(KSElementInfo *)element;
 
 @end
 
@@ -21,13 +25,13 @@
 #pragma mark -
 
 
-@interface SVElementInfo : KSElementInfo
+@interface SVElementInfoGatheringHTMLContext : SVHTMLContext
 {
   @private
-    NSMutableArray  *_subelements;
+    SVElementInfo   *_rootElement;
 }
 
-@property(nonatomic, copy, readonly) NSArray *subelements;
-- (void)addSubelement:(KSElementInfo *)element;
+@property(nonatomic, retain, readonly) SVElementInfo *rootElement;
+
 
 @end
