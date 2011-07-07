@@ -38,5 +38,5 @@
 #import "DNDArrayController.h"
 
 
-@interface LinkListArrayController : DNDArrayController {}
+@interface LinkListArrayController : DNDArrayController <NSTableViewDataSource, NSTableViewDelegate>
 @end
