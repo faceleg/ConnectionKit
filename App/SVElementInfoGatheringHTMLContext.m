@@ -11,18 +11,46 @@
 
 @implementation SVElementInfoGatheringHTMLContext
 
-@synthesize rootElement = _rootElement;
+- (id) initWithOutputWriter:(id <KSWriter>)output;
+{
+    if (self = [super initWithOutputWriter:output])
+    {
+        _openElementInfo = [[NSMutableArray alloc] init];
+    }
+    
+    return self;
+}
+
+- (void)dealloc;
+{
+    [_openElementInfo release];
+    [super dealloc];
+}
+
+#pragma mark Elements
+
+- (SVElementInfo *)rootElement; { return [_openElementInfo objectAtIndex:0]; }
+- (SVElementInfo *)currentElement; { return [_openElementInfo lastObject]; }
 
 - (void)willStartElement:(NSString *)element;
 {
     // Let superclasses queue up any last minute stuff as they like
     [super willStartElement:element];
     
+    
     // Stash a copy of the element
-    if (!_rootElement)
-    {
-        _rootElement = [[SVElementInfo alloc] initWithElementInfo:[self currentElementInfo]];
-    }
+    SVElementInfo *info = [[SVElementInfo alloc] initWithElementInfo:[self currentElementInfo]];
+    [info setName:element];
+    
+    [[self currentElement] addSubelement:info];
+    [_openElementInfo addObject:info];
+    [info release];
+}
+
+- (void)endElement
+{
+    [super endElement];
+    [_openElementInfo removeLastObject];
 }
 
 @end
