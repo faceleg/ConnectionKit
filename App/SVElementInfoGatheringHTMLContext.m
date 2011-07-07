@@ -22,10 +22,17 @@
     return self;
 }
 
+- (void)close;
+{
+    [super close];
+    
+    [_openElementInfos release]; _openElementInfos = nil;   // so more can't be added
+}
+
 - (void)dealloc;
 {
     [_topLevelElements release];
-    [_openElementInfos release];
+    // _openElementInfos is handled by super calling through to -close
     
     [super dealloc];
 }
@@ -42,14 +49,17 @@
     
     
     // Stash a copy of the element
-    SVElementInfo *info = [[SVElementInfo alloc] initWithElementInfo:[self currentElementInfo]];
-    [info setName:element];
-    
-    [[self currentElement] addSubelement:info];
-    [_openElementInfos addObject:info];
-    if ([_openElementInfos count] == 1) [_topLevelElements addObject:info];
-    
-    [info release];
+    if (_openElementInfos)
+    {
+        SVElementInfo *info = [[SVElementInfo alloc] initWithElementInfo:[self currentElementInfo]];
+        [info setName:element];
+        
+        [[self currentElement] addSubelement:info];
+        [_openElementInfos addObject:info];
+        if ([_openElementInfos count] == 1) [_topLevelElements addObject:info];
+        
+        [info release];
+    }
 }
 
 - (void)endElement
