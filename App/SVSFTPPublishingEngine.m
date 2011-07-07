@@ -169,8 +169,9 @@
         {
             // Parent directory probably doesn't exist, so create it
             BOOL madeDir = [_session createDirectoryAtPath:[path stringByDeletingLastPathComponent]
-                                   withIntermediateDirectories:YES
-                                                          mode:[self remoteDirectoryPermissions]];
+                               withIntermediateDirectories:YES
+                                                      mode:[self remoteDirectoryPermissions]
+                                                     error:&error];
             
             if (madeDir)
             {
@@ -260,8 +261,9 @@
             {
                 // Parent directory probably doesn't exist, so create it
                 BOOL madeDir = [[_engine SFTPSession] createDirectoryAtPath:[_path stringByDeletingLastPathComponent]
-                                       withIntermediateDirectories:YES
-                                                              mode:[_engine remoteDirectoryPermissions]];
+                                                withIntermediateDirectories:YES
+                                                                       mode:[_engine remoteDirectoryPermissions]
+                                                                      error:&error];
                 
                 if (madeDir)
                 {
