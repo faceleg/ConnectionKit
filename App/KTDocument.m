@@ -400,6 +400,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	
     
     // Configure
+    [result setIncludeInSiteMenu:NSBOOL(YES)];
 	[result setValue:[self site] forKey:@"site"];	// point to yourself
     
     

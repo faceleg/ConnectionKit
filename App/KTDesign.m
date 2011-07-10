@@ -846,7 +846,8 @@ const int kDesignThumbHeight = 65;
         
         // Blockquote compatibility
         NSString *identifier = [self identifier];
-        if ([identifier hasPrefix:@"com.11Mystics.Sandvox.Aerolite."])
+        if ([identifier hasPrefix:@"com.11Mystics.Sandvox.Aerolite."] ||
+            [identifier isEqualToString:@"com.11Mystics.Sandvox.Daroo"])
         {
             [context addCSSString:@"blockquote { float:none; width:auto; }"];
         }

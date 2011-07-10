@@ -155,7 +155,7 @@
 {
     NSString *result = [self menuTitle];
     
-	result = [result stringByEscapingXMLEntities:nil];		// This is supposed to be HTML escaped
+	result = [KSHTMLWriter stringFromCharacters:result];    // This is supposed to be HTML escaped
     if ([[[self master] design] menusUseNonBreakingSpaces])
     {
         result = [result stringByReplacingOccurrencesOfString:@" " withString:@"&nbsp;"];
@@ -167,7 +167,7 @@
 - (NSString *)menuTitleHTMLString;
 {
     NSString *result = [self menuTitle];
-	result = [result stringByEscapingXMLEntities:nil];		// This is supposed to be HTML escaped
+	result = [KSHTMLWriter stringFromCharacters:result];    // This is supposed to be HTML escaped
     return result;
 }
 + (NSSet *)keyPathsForValuesAffectingMenuTitleHTMLString; { return [NSSet setWithObject:@"menuTitle"]; }
