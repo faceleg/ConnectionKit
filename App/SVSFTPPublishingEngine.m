@@ -241,7 +241,7 @@
     
     if (handle)
     {
-        [[record ks_proxyOnThread:nil waitUntilDone:NO] transferDidBegin:record];
+        [[self ks_proxyOnThread:nil waitUntilDone:NO] transferDidBegin:record];
         
         BOOL result = [handle writeData:data error:&error];
         [handle closeFile];         // don't really care if this fails
@@ -250,6 +250,12 @@
     
     [[record ks_proxyOnThread:nil waitUntilDone:NO] transferDidFinish:record
                                                                 error:(handle ? nil : error)];
+}
+
+- (void)transferDidBegin:(CKTransferRecord *)record;
+{
+    [record transferDidBegin:record];
+    [[self delegate] publishingEngine:self didBeginUploadToPath:[record path]];
 }
 
 #pragma mark SFTP session
@@ -313,7 +319,7 @@
         
         if (sftpHandle)
         {
-            [[_record ks_proxyOnThread:nil waitUntilDone:NO] transferDidBegin:_record];
+            [[_engine ks_proxyOnThread:nil waitUntilDone:NO] transferDidBegin:_record];
             
             while (YES)
             {
