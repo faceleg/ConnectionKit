@@ -43,10 +43,6 @@
 	return self;
 }
 
-#pragma mark Delegate
-
-@dynamic delegate;
-
 #pragma mark -
 #pragma mark Handy Keypaths
 
@@ -67,6 +63,8 @@
 
 #pragma mark -
 #pragma mark Delegate
+
+@synthesize delegate = myDelegate;
 
 - (void)didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object
 {
@@ -93,6 +91,13 @@
 }
 
 - (void)didParseTextBlock:(SVHTMLTextBlock *)textBlock { }
+
+- (id)newChildParserWithTemplate:(NSString *)template component:(id)component
+{
+    id result = [super newChildParserWithTemplate:template component:component];
+    [result setDelegate:[self delegate]];
+    return result;
+}
 
 #pragma mark Parsing
 
