@@ -179,7 +179,6 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	SVTemplateParser *result = [[[self class] alloc] initWithTemplate:template component:component];
 	
 	[result setParentParser:self];
-	[result setDelegate:[self delegate]];
 	
 	return result;
 }
@@ -221,10 +220,6 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 #pragma mark -
 #pragma mark Delegate
 
-- (id)delegate { return myDelegate; }
-
-- (void)setDelegate:(id)delegate { myDelegate = delegate; }		// It's a weak ref
-
 - (void)didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object
 {
 	// Does nothing, but subclasses can reimplement
@@ -259,14 +254,6 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 			NSString *template = [self template];
 			if (template)
 			{
-				// Let the delegate know
-				id delegate = [self delegate];
-				if (delegate && [delegate respondsToSelector:@selector(parserDidStartTemplate:)])
-				{
-					[delegate parserDidStartTemplate:self];
-				}
-				
-				
 				// Parse!
 				NSScanner *scanner = [NSScanner scannerWithString:template];
 				[scanner setCharactersToBeSkipped:nil];
