@@ -1874,7 +1874,7 @@
 								</object>
 								<object class="NSMenuItem" id="913170029">
 									<reference key="NSMenu" ref="900881952"/>
-									<string key="NSTitle">Visit Support Forum</string>
+									<string key="NSTitle">Visit Community Forum</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
