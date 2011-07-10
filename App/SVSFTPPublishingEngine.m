@@ -77,6 +77,7 @@
         
         [closeOp setQueuePriority:NSOperationQueuePriorityVeryHigh];
         [_queue addOperation:closeOp];
+        [closeOp release];
         
         // Clear out ivars, the actual objects will get torn down as the queue finishes its work
         [_queue release]; _queue = nil;
