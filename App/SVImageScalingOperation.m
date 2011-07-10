@@ -144,7 +144,12 @@
     
     // Render a CGImage
     CGRect neededContextRect = [scaledImage extent];    // Clang, we assert scaledImage is non-nil above
-    CGColorSpaceRef colorSpace = [sourceImage colorSpace];
+    
+    CGColorSpaceRef colorSpace = NULL;
+    if ([sourceImage respondsToSelector:@selector(colorSpace)])
+    {
+        colorSpace = [sourceImage colorSpace];
+    }
     
     CGImageRef finalImage = NULL;
     if (colorSpace)
