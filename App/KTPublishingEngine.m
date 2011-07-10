@@ -170,8 +170,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     // The connection etc. should already have been shut down
     OBASSERT(!_connection);
     
-    [_baseTransferRecord release];
-    [_rootTransferRecord release];
+    [self setRootTransferRecord:nil];
+    
     [_site release];
 	[_documentRootPath release];
     [_subfolderPath release];
@@ -366,13 +366,20 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (CKTransferRecord *)rootTransferRecord { return _rootTransferRecord; }
 
+static void *sProgressObservationContext = &sProgressObservationContext;
+
 /*  Also has the side-effect of updating the base transfer record
  */
 - (void)setRootTransferRecord:(CKTransferRecord *)rootRecord
 {
+    [_rootTransferRecord removeObserver:self forKeyPath:@"progress"];
+    
     [rootRecord retain];
     [_rootTransferRecord release];
     _rootTransferRecord = rootRecord;
+    
+    [rootRecord addObserver:self forKeyPath:@"progress" options:0 context:sProgressObservationContext];
+    
     
     // If there is a subfolder, create it. This also gives us a valid -baseTransferRecord
     [self willChangeValueForKey:@"baseTransferRecord"]; // Automatic KVO-notifications are used for rootTransferRecord
@@ -1174,6 +1181,18 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)setDelegate:(id <KTPublishingEngineDelegate>)delegate { _delegate = delegate; }
 
+- (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (context == sProgressObservationContext)
+    {
+        [[self delegate] publishingEngineDidUpdateProgress:self];
+    }
+    else
+    {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
+
 @end
 
 
@@ -1262,7 +1281,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	[[self delegate] publishingEngine:self didBeginUploadToPath:remotePath];
 }
 
-- (void)connection:(id <CKConnection>)con upload:(NSString *)remotePath progressedTo:(NSNumber *)percent;
+- (void)recordDidProgress:(NSNotification *)notification;
 {
     if ([self status] <= KTPublishingEngineStatusUploading)
     {
