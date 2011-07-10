@@ -26,6 +26,15 @@
 
 @implementation SVTextFieldDOMController
 
+- (id)init;
+{
+    if (self = [super init])
+    {
+        _alignment = NSNaturalTextAlignment;
+    }
+    return self;
+}
+
 - (void)dealloc
 {
     // Bindings don't automatically unbind themselves; have to do it ourself

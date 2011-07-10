@@ -32,7 +32,6 @@
 - (void)setParentParser:(SVTemplateParser *)parser;
 
 // Parsing
-- (void)finishParsing;
 - (BOOL)startHTMLStringByScanning:(NSScanner *)inScanner;
 - (BOOL)HTMLStringByScanning:(NSScanner *)inScanner;
 + (NSCharacterSet *)keyPathIndicatorCharacters;
@@ -179,7 +178,6 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	SVTemplateParser *result = [[[self class] alloc] initWithTemplate:template component:component];
 	
 	[result setParentParser:self];
-	[result setDelegate:[self delegate]];
 	
 	return result;
 }
@@ -221,10 +219,6 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 #pragma mark -
 #pragma mark Delegate
 
-- (id)delegate { return myDelegate; }
-
-- (void)setDelegate:(id)delegate { myDelegate = delegate; }		// It's a weak ref
-
 - (void)didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object
 {
 	// Does nothing, but subclasses can reimplement
@@ -253,34 +247,34 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	BOOL result = NO;
 	@try
 	{
-		result = [self prepareToParse];
-		if (result)
-		{
-			NSString *template = [self template];
-			if (template)
-			{
-				// Let the delegate know
-				id delegate = [self delegate];
-				if (delegate && [delegate respondsToSelector:@selector(parserDidStartTemplate:)])
-				{
-					[delegate parserDidStartTemplate:self];
-				}
-				
-				
-				// Parse!
-				NSScanner *scanner = [NSScanner scannerWithString:template];
-				[scanner setCharactersToBeSkipped:nil];
+        result = [self prepareToParse];
+        
+        if (result)
+        {
+            NSString *template = [self template];
+            if (template)
+            {
+                // Parse!
+                NSScanner *scanner = [NSScanner scannerWithString:template];
+                [scanner setCharactersToBeSkipped:nil];
+                
                 _writer = stream;
-				result = [self startHTMLStringByScanning:scanner];
-                _writer = nil;
-			}
-		}
+                @try
+                {
+                    result = [self startHTMLStringByScanning:scanner];
+                }
+                @finally
+                {
+                    _writer = nil;
+                }
+            }
+        }
+        
+        [self setCache:nil];
 	}
     @finally
 	{
-		[self finishParsing];
-        
-        [pool release];
+		[pool release];
 	}
 	
     
@@ -315,11 +309,6 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	
 	
 	return result;
-}
-
-- (void)finishParsing
-{
-	[self setCache:nil];
 }
 
 - (BOOL)startHTMLStringByScanning:(NSScanner *)inScanner;
