@@ -32,7 +32,6 @@
 - (void)setParentParser:(SVTemplateParser *)parser;
 
 // Parsing
-- (void)finishParsing;
 - (BOOL)startHTMLStringByScanning:(NSScanner *)inScanner;
 - (BOOL)HTMLStringByScanning:(NSScanner *)inScanner;
 + (NSCharacterSet *)keyPathIndicatorCharacters;
@@ -248,26 +247,34 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	BOOL result = NO;
 	@try
 	{
-		result = [self prepareToParse];
-		if (result)
-		{
-			NSString *template = [self template];
-			if (template)
-			{
-				// Parse!
-				NSScanner *scanner = [NSScanner scannerWithString:template];
-				[scanner setCharactersToBeSkipped:nil];
+        result = [self prepareToParse];
+        
+        if (result)
+        {
+            NSString *template = [self template];
+            if (template)
+            {
+                // Parse!
+                NSScanner *scanner = [NSScanner scannerWithString:template];
+                [scanner setCharactersToBeSkipped:nil];
+                
                 _writer = stream;
-				result = [self startHTMLStringByScanning:scanner];
-                _writer = nil;
-			}
-		}
+                @try
+                {
+                    result = [self startHTMLStringByScanning:scanner];
+                }
+                @finally
+                {
+                    _writer = nil;
+                }
+            }
+        }
+        
+        [self setCache:nil];
 	}
     @finally
 	{
-		[self finishParsing];
-        
-        [pool release];
+		[pool release];
 	}
 	
     
@@ -302,11 +309,6 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	
 	
 	return result;
-}
-
-- (void)finishParsing
-{
-	[self setCache:nil];
 }
 
 - (BOOL)startHTMLStringByScanning:(NSScanner *)inScanner;
