@@ -203,13 +203,13 @@
     return result;
 }
 
-- (NSFileHandle *)threaded_openHandleAtPath:(NSString *)path error:(NSError **)outError;
+- (CK2SFTPFileHandle *)threaded_openHandleAtPath:(NSString *)path error:(NSError **)outError;
 {
     NSError *error;
-    NSFileHandle *result = [[self SFTPSession] openHandleAtPath:path
-                                                          flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
-                                                           mode:[self remoteFilePermissions]
-                                                          error:&error];
+    CK2SFTPFileHandle *result = [[self SFTPSession] openHandleAtPath:path
+                                                               flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
+                                                                mode:[self remoteFilePermissions]
+                                                               error:&error];
     
     if (!result)
     {
@@ -237,12 +237,16 @@
 - (void)threaded_writeData:(NSData *)data toPath:(NSString *)path transferRecord:(CKTransferRecord *)record;
 {
     NSError *error;
-    NSFileHandle *handle = [self threaded_openHandleAtPath:path error:&error];
+    CK2SFTPFileHandle *handle = [self threaded_openHandleAtPath:path error:&error];
     
-    if (handle) [[record ks_proxyOnThread:nil waitUntilDone:NO] transferDidBegin:record];
-    
-    [handle writeData:data];
-    [handle closeFile];
+    if (handle)
+    {
+        [[record ks_proxyOnThread:nil waitUntilDone:NO] transferDidBegin:record];
+        
+        BOOL result = [handle writeData:data error:&error];
+        [handle closeFile];         // don't really care if this fails
+        if (!result) handle = nil;  // so error gets sent
+    }
     
     [[record ks_proxyOnThread:nil waitUntilDone:NO] transferDidFinish:record
                                                                 error:(handle ? nil : error)];
@@ -305,7 +309,7 @@
     if (handle)
     {
         NSError *error;
-        NSFileHandle *sftpHandle = [_engine threaded_openHandleAtPath:_path error:&error];
+        CK2SFTPFileHandle *sftpHandle = [_engine threaded_openHandleAtPath:_path error:&error];
         
         if (sftpHandle)
         {
@@ -322,7 +326,12 @@
                     if (![data length]) break;
                     if ([self isCancelled]) break;
                     
-                    [sftpHandle writeData:data];
+                    if (![sftpHandle writeData:data error:&error])
+                    {
+                        [sftpHandle closeFile]; // don't care if it fails
+                        sftpHandle = nil;   // so error gets sent
+                        break;
+                    }
                     
                     [[_record ks_proxyOnThread:nil waitUntilDone:NO]
                      transfer:_record transferredDataOfLength:[data length]];
