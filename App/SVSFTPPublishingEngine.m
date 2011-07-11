@@ -35,6 +35,8 @@
 
 @implementation SVSFTPPublishingEngine
 
+#pragma mark Lifecycle
+
 - (id)init;
 {
     if (self = [super init])
@@ -61,6 +63,26 @@
                                                                                                         port:port];
     
     _session = [[CK2SFTPSession alloc] initWithURL:[request URL] delegate:self];
+}
+
+- (void)finishPublishing;
+{
+    [super finishPublishing];
+    
+    // Disconnect once all else is done
+    NSOperation *closeOp = [[NSInvocationOperation alloc] initWithTarget:_session
+                                                                selector:@selector(close)
+                                                                  object:nil];
+    
+    NSArray *operations = [_queue operations];
+    for (NSOperation *anOp in operations)
+    {
+        [closeOp addDependency:anOp];
+    }
+
+    [_queue addOperation:closeOp];
+    [closeOp release];
+    
 }
 
 - (void)engineDidPublish:(BOOL)didPublish error:(NSError *)error
