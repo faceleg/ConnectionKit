@@ -69,9 +69,10 @@
 {
     [super finishGeneratingContent];
     
+    
     // Disconnect once all else is done
-    NSOperation *closeOp = [[NSInvocationOperation alloc] initWithTarget:_session
-                                                                selector:@selector(cancel)
+    NSOperation *closeOp = [[NSInvocationOperation alloc] initWithTarget:self
+                                                                selector:@selector(threaded_finish)
                                                                   object:nil];
     
     NSArray *operations = [_queue operations];
@@ -79,10 +80,18 @@
     {
         [closeOp addDependency:anOp];
     }
-
+    
     [_queue addOperation:closeOp];
     [closeOp release];
     
+}
+
+- (void)threaded_finish;
+{
+    [_session cancel];
+    [_session release]; _session = nil;
+    
+    [[self ks_proxyOnThread:nil waitUntilDone:NO] finishPublishing:YES error:nil];
 }
 
 - (void)finishPublishing:(BOOL)didPublish error:(NSError *)error
