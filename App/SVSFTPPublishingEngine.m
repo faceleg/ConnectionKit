@@ -71,7 +71,7 @@
     
     // Disconnect once all else is done
     NSOperation *closeOp = [[NSInvocationOperation alloc] initWithTarget:_session
-                                                                selector:@selector(close)
+                                                                selector:@selector(cancel)
                                                                   object:nil];
     
     NSArray *operations = [_queue operations];
@@ -94,7 +94,7 @@
         
         // Close the connection as quick as possible
         NSOperation *closeOp = [[NSInvocationOperation alloc] initWithTarget:_session
-                                                                    selector:@selector(close)
+                                                                    selector:@selector(cancel)
                                                                       object:nil];
         
         [closeOp setQueuePriority:NSOperationQueuePriorityVeryHigh];
