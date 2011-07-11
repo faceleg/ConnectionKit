@@ -27,7 +27,7 @@ function twitterCallback_withOptions(obj, divid, username, linksinnewwindows, in
 		
 		statusHTML += ('<li><span>'+posttext+'</span>');
 		if (includetimestamp) {
-			statusHTML += (' <a style="font-size:85%" href="http://twitter.com/'+username+'/status/'+twitters[i].id+'" title="[["Tweet Permalink]]">'+relative_time(twitters[i].created_at)+'</a>');
+			statusHTML += (' <a style="font-size:85%" href="http://twitter.com/'+username+'/status/'+twitters[i].id_str+'" title="[["Tweet Permalink]]">'+relative_time(twitters[i].created_at)+'</a>');
 		}
 		statusHTML += ('</li>');
 	}
