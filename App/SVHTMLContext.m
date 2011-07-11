@@ -66,12 +66,17 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 
 @interface SVHTMLContext ()
+
 - (void)pushAttributes:(NSDictionary *)attributes;
 
 - (SVHTMLIterator *)currentIterator;
 
 - (void)startPlaceholder;
 - (void)endPlaceholder;
+
+- (NSMutableString *)extraHeaderMarkup;
+- (NSMutableString *)endBodyMarkup; // can append to, query, as you like while parsing
+
 @end
 
 
@@ -1406,6 +1411,14 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 }
 
 #pragma mark Extra markup
+
+- (void)addMarkupToHead:(NSString *)markup;
+{
+    if ([[self extraHeaderMarkup] rangeOfString:markup].location == NSNotFound)
+    {
+        [[self extraHeaderMarkup] appendString:markup];
+    }
+}
 
 - (void)addMarkupToEndOfBody:(NSString *)markup;
 {
