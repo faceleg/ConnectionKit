@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "SVPageProtocol.h"		// for truncation types
+#import "Sandvox.h"		// for truncation types
 
 @interface LogValueTransformer : NSValueTransformer
 @end

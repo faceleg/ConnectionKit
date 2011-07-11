@@ -13,7 +13,7 @@
 #import "KSHTMLWriter.h"
 
 #import "SVGraphicContainer.h"
-#import "SVPlugIn.h"
+#import "Sandvox.h"
 #import "KSMegaBufferedWriter.h"
 #import "KT.h"
 

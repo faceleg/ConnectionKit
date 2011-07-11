@@ -6,7 +6,7 @@
 //  Copyright 2009-2011 Karelia Software. All rights reserved.
 //
 
-#import "SVPlugIn.h"
+#import "Sandvox.h"
 #import "SVPlugInGraphic.h"
 
 #import "SVPageProtocol.h"

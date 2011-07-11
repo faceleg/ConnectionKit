@@ -8,7 +8,7 @@
 
 #import "SVColorBoxIndexPlugIn.h"
 
-#import "SVPageProtocol.h"
+#import "Sandvox.h"
 #import "SVPagesController.h"
 #import "SVHTMLContext.h"
 #import "NSBundle+Karelia.h"

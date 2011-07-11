@@ -14,7 +14,7 @@
 #import "SVContentObject.h"
 #import "SVGraphicContainer.h"
 
-#import "SVPlugIn.h"
+#import "Sandvox.h"
 
 #import "NSManagedObject+KTExtensions.h"    // for serialization
 
