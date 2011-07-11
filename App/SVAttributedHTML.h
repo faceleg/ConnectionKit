@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "KSWriter.h"
-#import "SVPageProtocol.h"
+#import "Sandvox.h"
 #import "KTPage.h"
 
 @class SVHTMLContext, SVGraphic;

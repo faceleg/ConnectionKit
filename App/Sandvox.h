@@ -22,6 +22,9 @@
 //  http://www.karelia.com/sandvox/help/z/Sandvox_Developers_Guide.html
 
 
+#define AVAILABLE_SANDVOX_VERSION_2_1_AND_LATER 
+
+
 // Core
 #import "SVPlugIn.h"
 #import "SVInspectorViewController.h"

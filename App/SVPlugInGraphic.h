@@ -12,7 +12,7 @@
 
 #import "SVGraphic.h"
 #import "SVMediaProtocol.h"
-#import "SVPlugIn.h"
+#import "Sandvox.h"
 
 
 @class KTElementPlugInWrapper;

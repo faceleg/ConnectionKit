@@ -16,7 +16,7 @@
 #import "SVAudio.h"
 #import "SVFlash.h"
 #import "SVMediaGraphic.h"
-#import "SVPlugIn.h"
+#import "Sandvox.h"
 #import "SVRawHTMLGraphic.h"
 #import "SVTextBox.h"
 #import "KTToolbars.h"
