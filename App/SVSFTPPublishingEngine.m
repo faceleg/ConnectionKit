@@ -177,6 +177,7 @@
         if (size)   // if size can't be determined, no chance of being able to upload
         {
             result = [CKTransferRecord recordWithName:[path lastPathComponent] size:[size unsignedLongLongValue]];
+            [self didEnqueueUpload:result toDirectory:parent];  // so record has correct path
             
             
             NSOperation *op = [[SVWriteContentsOfURLToSFTPHandleOperation alloc] initWithURL:localURL
@@ -187,7 +188,6 @@
             
             
             
-            [self didEnqueueUpload:result toDirectory:parent];
         }
     }
     
