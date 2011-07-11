@@ -65,12 +65,15 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
 #pragma mark -
 #pragma mark Init & Dealloc
 
+static void *sEngineFinishedObservationContext = &sEngineFinishedObservationContext;
+
 - (id)initWithPublishingEngine:(KTPublishingEngine *)engine
 {
     if (self = [self initWithWindowNibName:@"Publishing"])
     {
         _publishingEngine = [engine retain];
         [engine setDelegate:self];
+        [engine addObserver:self forKeyPath:@"isFinished" options:0 context:sEngineFinishedObservationContext];
 		
 		
 		// There's a minimum of localized text in this nib, so we're handling it in entirely in code
@@ -98,7 +101,9 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
+    [_publishingEngine removeObserver:self forKeyPath:@"isFinished"];
     [_publishingEngine setDelegate:nil];
+    
     [_publishingEngine release];
 	[_dockProgress release];
 	
@@ -396,7 +401,18 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
     }
 }
 
-#pragma mark -
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (context == sEngineFinishedObservationContext)
+    {
+        if (!_didFail) [self publishingEngineDidFinish:object];
+    }
+    else
+    {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
+
 #pragma mark Outline View
 
 /*  There's no point allowing the user to select items in the publishing sheet.
