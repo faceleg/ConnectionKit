@@ -196,13 +196,9 @@ static void *sEngineFinishedObservationContext = &sEngineFinishedObservationCont
 	[windowController submitSiteToDirectory:sender];
 }
 
-#pragma mark -
 #pragma mark Publishing Engine
 
-- (KTPublishingEngine *)publishingEngine;
-{
-    return _publishingEngine;
-}
+@synthesize publishingEngine = _publishingEngine;
 
 - (BOOL)isExporting
 {

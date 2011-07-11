@@ -450,11 +450,7 @@
 	
 	NSString *oneTimeScript = @"<script type='text/javascript'>\nfunction fallback(av) {\n while (av.firstChild) {\n  if (av.firstChild.nodeName == 'SOURCE') {\n   av.removeChild(av.firstChild);\n  } else {\n   av.parentNode.insertBefore(av.firstChild, av);\n  }\n }\n av.parentNode.removeChild(av);\n}\n</script>\n";
 	
-	NSRange whereOneTimeScript = [[context extraHeaderMarkup] rangeOfString:oneTimeScript];
-	if (NSNotFound == whereOneTimeScript.location)
-	{
-		[[context extraHeaderMarkup] appendString:oneTimeScript];
-	}
+	[context addMarkupToHead:oneTimeScript];
 }
 
 // For Firefox compatibility, we apparently need two nested <object> tags.  Nasty!  

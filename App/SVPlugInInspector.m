@@ -10,7 +10,7 @@
 
 #import "KSCollectionController.h"
 #import "SVInspectorViewController.h"
-#import "SVPlugIn.h"
+#import "Sandvox.h"
 
 #import "NSArrayController+Karelia.h"
 #import "NSObject+Karelia.h"
