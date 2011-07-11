@@ -225,7 +225,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	self.countOfPublishedItems = 0;
 	
 	if ([self status] != KTPublishingEngineStatusNotStarted) return;
+    
     _status = KTPublishingEngineStatusGatheringMedia;
+    _isExecuting = YES;
     
     [self main];
 }
@@ -1229,15 +1231,22 @@ static void *sProgressObservationContext = &sProgressObservationContext;
     
     
     // Inform the delegate
-    if (didPublish)
-    {
-        [[self delegate] publishingEngineDidFinish:self];
-    }
-    else
+    [self willChangeValueForKey:@"isFinished"];
+    [self willChangeValueForKey:@"isExecuting"];
+    
+    if (!didPublish)
     {
         [[self delegate] publishingEngine:self didFailWithError:error];
     }
+    
+    _isFinished = YES;
+    _isExecuting = NO;
+    [self didChangeValueForKey:@"isFinished"];
+    [self didChangeValueForKey:@"isExecuting"];
 }
+
+- (BOOL)isExecuting; { return _isExecuting; }
+- (BOOL)isFinished; { return _isFinished; }
 
 #pragma mark Connection
 

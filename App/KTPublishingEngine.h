@@ -53,6 +53,9 @@ typedef enum {
 @interface KTPublishingEngine : NSOperation <SVPublisher>
 {
   @private
+    BOOL    _isFinished;
+    BOOL    _isExecuting;
+    
 	KTSite      *_site;
     NSString    *_documentRootPath;
     NSString    *_subfolderPath;    // nil if there is no subfolder
@@ -145,7 +148,6 @@ typedef enum {
 - (void)publishingEngineDidFinishGeneratingContent:(KTPublishingEngine *)engine;
 - (void)publishingEngineDidUpdateProgress:(KTPublishingEngine *)engine;
 
-- (void)publishingEngineDidFinish:(KTPublishingEngine *)engine;
 - (void)publishingEngine:(KTPublishingEngine *)engine didFailWithError:(NSError *)error;
 @end
 
