@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 #import "SVMediaProtocol.h"
-#import "SVPlugInContext.h"
+#import "Sandvox.h"
 
 
 @class SVMedia;

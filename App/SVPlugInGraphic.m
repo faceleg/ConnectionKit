@@ -12,7 +12,7 @@
 #import "SVLogoImage.h"
 #import "SVMediaProtocol.h"
 #import "KTPage.h"
-#import "SVPlugIn.h"
+#import "Sandvox.h"
 #import "SVGraphicFactory.h"
 #import "SVHTMLContext.h"
 

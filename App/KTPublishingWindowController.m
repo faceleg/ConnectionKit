@@ -191,13 +191,9 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
 	[windowController submitSiteToDirectory:sender];
 }
 
-#pragma mark -
 #pragma mark Publishing Engine
 
-- (KTPublishingEngine *)publishingEngine;
-{
-    return _publishingEngine;
-}
+@synthesize publishingEngine = _publishingEngine;
 
 - (BOOL)isExporting
 {

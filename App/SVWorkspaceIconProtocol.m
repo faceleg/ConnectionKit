@@ -46,6 +46,7 @@
     NSWorkspace *workspace = KSWORKSPACETHREADPROXY;
     NSURL *URL = [[self request] URL];
     
+    OBASSERT(workspace);    // something's crashing and I can't figure what! #132360
     NSError *error;
     NSString *type = [workspace typeOfFile:[URL path] error:&error];
     

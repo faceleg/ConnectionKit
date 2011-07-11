@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface SVJSONSerialization : NSObject
+@interface SVJSONSerialization : NSObject AVAILABLE_SANDVOX_VERSION_2_1_AND_LATER
 
 // Pass in an array or dictionary as the object
 // No options are available yet

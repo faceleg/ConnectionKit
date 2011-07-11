@@ -450,11 +450,7 @@
 	
 	NSString *oneTimeScript = @"<script type='text/javascript'>\nfunction fallback(av) {\n while (av.firstChild) {\n  if (av.firstChild.nodeName == 'SOURCE') {\n   av.removeChild(av.firstChild);\n  } else {\n   av.parentNode.insertBefore(av.firstChild, av);\n  }\n }\n av.parentNode.removeChild(av);\n}\n</script>\n";
 	
-	NSRange whereOneTimeScript = [[context extraHeaderMarkup] rangeOfString:oneTimeScript];
-	if (NSNotFound == whereOneTimeScript.location)
-	{
-		[[context extraHeaderMarkup] appendString:oneTimeScript];
-	}
+	[context addMarkupToHead:oneTimeScript];
 }
 
 // For Firefox compatibility, we apparently need two nested <object> tags.  Nasty!  
@@ -1324,7 +1320,13 @@
 	
 	NSSize movieSize = NSZeroSize;
 	
-	NSArray* vtracks = [aMovie tracksOfMediaType:QTMediaTypeVideo];
+	// Look for a QTVR track first, as it has a more accurate dimension than video tracks.
+	NSArray* vtracks = [aMovie tracksOfMediaType:QTMediaTypeQTVR];
+	if (![vtracks count])
+	{
+		// Most movies won't be QTVR so this will give you the correct value.
+		vtracks = [aMovie tracksOfMediaType:QTMediaTypeVideo];
+	}
 	if ([vtracks count] && [[vtracks objectAtIndex:0] respondsToSelector:@selector(apertureModeDimensionsForMode:)])
 	{
 		QTTrack* track = [vtracks objectAtIndex:0];

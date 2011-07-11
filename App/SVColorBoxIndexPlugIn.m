@@ -8,7 +8,7 @@
 
 #import "SVColorBoxIndexPlugIn.h"
 
-#import "SVPageProtocol.h"
+#import "Sandvox.h"
 #import "SVPagesController.h"
 #import "SVHTMLContext.h"
 #import "NSBundle+Karelia.h"
@@ -200,7 +200,7 @@
 		NSString *colorString = [alphaLessColor htmlString];
 		NSString *colorCSS = [NSString stringWithFormat:@"#cboxOverlay{background:%@;}", colorString];
 		
-		[[context extraHeaderMarkup] appendFormat:@"\n<style type='text/css'>%@</style>", colorCSS];
+		[context addMarkupToHead:[NSString stringWithFormat:@"\n<style type='text/css'>%@</style>", colorCSS]];
 	}
 }
 

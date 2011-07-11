@@ -45,7 +45,7 @@
 - (void)setTextHTMLElement:(DOMHTMLElement *)element;
 {
     [super setTextHTMLElement:element];
-    [self updateDOMWithPlaceholderStringIfNeeded];
+    if (element) [self updateDOMWithPlaceholderStringIfNeeded];
 }
 
 - (void)webEditorTextDidEndEditing:(NSNotification *)notification;

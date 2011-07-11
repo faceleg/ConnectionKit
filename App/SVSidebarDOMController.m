@@ -337,6 +337,17 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     // TODO: this duplicates -[SVWebEditorViewController _insertPageletInSidebar:] somewhat
 }
 
+- (void)paste:(id)sender;
+{
+    SVSidebarPageletsController *sidebarPageletsController = [self pageletsController];
+    
+    NSUInteger index = [sidebarPageletsController selectionIndex];
+    if (index >= NSNotFound) index = 0;
+    
+    [sidebarPageletsController insertPageletsFromPasteboard:[NSPasteboard generalPasteboard]
+                                      atArrangedObjectIndex:index];
+}
+
 #pragma mark Drop
 
 /*  Similar to NSTableView's concept of dropping above a given row

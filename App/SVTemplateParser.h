@@ -24,8 +24,6 @@
 
 @class KTHTMLParserMasterCache;
 
-@protocol KTTemplateParserDelegate;
-
 
 @interface SVTemplateParser : NSObject <KSWriter>
 {
@@ -34,7 +32,6 @@
 	NSString				*myTemplate;
 	id						myComponent;
 	KTHTMLParserMasterCache	*myCache;
-	id						myDelegate;
 	SVTemplateParser		*myParentParser;	// Weak ref
 	
     id <KSWriter> _writer;  // weak ref, only used mid-parse
@@ -52,8 +49,6 @@
 - (NSString *)parserID;
 - (NSString *)template;
 - (id)component;
-
-@property(nonatomic, assign) id <KTTemplateParserDelegate> delegate;
 
 // KVC Overrides
 - (NSSet *)overriddenKeys;
@@ -112,13 +107,6 @@
 + (NSDictionary *)parametersDictionaryWithString:(NSString *)parametersString;
 
 
-@end
-
-
-@protocol KTTemplateParserDelegate
-@optional
-- (void)parserDidStartTemplate:(SVTemplateParser *)parser;
-- (void)parser:(SVTemplateParser *)parser willParseSubcomponentAtIndex:(unsigned)index;
 @end
 
 

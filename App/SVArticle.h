@@ -8,7 +8,7 @@
 
 #import "SVRichText.h"
 
-#import "SVPageProtocol.h"
+#import "Sandvox.h"
 
 
 @class KTPage;

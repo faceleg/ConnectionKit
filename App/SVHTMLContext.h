@@ -13,7 +13,7 @@
 #import "KSHTMLWriter.h"
 
 #import "SVGraphicContainer.h"
-#import "SVPlugIn.h"
+#import "Sandvox.h"
 #import "KSMegaBufferedWriter.h"
 #import "KT.h"
 
@@ -249,9 +249,6 @@ typedef NSUInteger SVPageImageRepresentationOptions2;
 
 
 #pragma mark Extra markup
-
-- (NSMutableString *)extraHeaderMarkup;
-- (NSMutableString *)endBodyMarkup; // can append to, query, as you like while parsing
 
 - (void)writeExtraHeaders;  // writes any code plug-ins etc. have requested should be inside the <head> element
 
