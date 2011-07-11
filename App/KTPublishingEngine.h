@@ -155,8 +155,8 @@ typedef enum {
 @interface KTPublishingEngine (SubclassSupport)
 
 // Control
-- (void)engineDidPublish:(BOOL)didPublish error:(NSError *)error;
-- (void)finishPublishing;
+- (void)finishPublishing:(BOOL)didPublish error:(NSError *)error;
+- (void)finishGeneratingContent;
 
 // Connection
 - (id <CKConnection>)connection;

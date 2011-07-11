@@ -65,9 +65,9 @@
     _session = [[CK2SFTPSession alloc] initWithURL:[request URL] delegate:self];
 }
 
-- (void)finishPublishing;
+- (void)finishGeneratingContent;
 {
-    [super finishPublishing];
+    [super finishGeneratingContent];
     
     // Disconnect once all else is done
     NSOperation *closeOp = [[NSInvocationOperation alloc] initWithTarget:_session
@@ -85,7 +85,7 @@
     
 }
 
-- (void)engineDidPublish:(BOOL)didPublish error:(NSError *)error
+- (void)finishPublishing:(BOOL)didPublish error:(NSError *)error
 {
     if (!didPublish)
     {
@@ -106,7 +106,7 @@
         [_session release]; _session = nil;
     }
     
-    [super engineDidPublish:didPublish error:error];
+    [super finishPublishing:didPublish error:error];
 }
 
 - (void)dealloc;
@@ -299,7 +299,7 @@
 
 - (void)SFTPSession:(CK2SFTPSession *)session didFailWithError:(NSError *)error;
 {
-    [self engineDidPublish:NO error:error];
+    [self finishPublishing:NO error:error];
 }
 
 - (void)SFTPSession:(CK2SFTPSession *)session didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge;

@@ -287,7 +287,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     // Store the op ready for dependencies to be added
     NSOperation *nextOp = [[NSInvocationOperation alloc]
                                      initWithTarget:self
-                                     selector:@selector(finishPublishing)
+                                     selector:@selector(finishGeneratingContent)
                                      object:nil];
     
     [self setStartNextPhaseOperation:nextOp];
@@ -321,7 +321,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     // Mark self as finished
     if ([self status] > KTPublishingEngineStatusNotStarted && [self status] < KTPublishingEngineStatusFinished)
     {
-        [self engineDidPublish:NO error:[NSError errorWithDomain:NSCocoaErrorDomain code:NSUserCancelledError userInfo:nil]];
+        [self finishPublishing:NO error:[NSError errorWithDomain:NSCocoaErrorDomain code:NSUserCancelledError userInfo:nil]];
     }
 }
 
@@ -1208,7 +1208,7 @@ static void *sProgressObservationContext = &sProgressObservationContext;
 /*  Call this method once publishing has ended, whether it be successfully or not.
  *  This method is responsible for cleaning up after publishing, and informing the delegate.
  */
-- (void)engineDidPublish:(BOOL)didPublish error:(NSError *)error
+- (void)finishPublishing:(BOOL)didPublish error:(NSError *)error
 {
     //OBPRECONDITION([self status] > KTPublishingEngineStatusNotStarted && [self status] < KTPublishingEngineStatusFinished);
     // Why did I ever care about the status? It's possible to file while trying to get started. Mike
@@ -1316,7 +1316,7 @@ static void *sProgressObservationContext = &sProgressObservationContext;
         ![con isConnected] &&
         [[(CKAbstractQueueConnection *)con commandQueue] count] == 0)
     {
-        [self engineDidPublish:YES error:nil];
+        [self finishPublishing:YES error:nil];
     }
     else
     {
@@ -1355,7 +1355,7 @@ static void *sProgressObservationContext = &sProgressObservationContext;
 	}
 	else
 	{
-		[self engineDidPublish:NO error:error];
+		[self finishPublishing:NO error:error];
 	}
 }
 
@@ -1391,7 +1391,7 @@ static void *sProgressObservationContext = &sProgressObservationContext;
     }
 }
 
-- (void)finishPublishing;
+- (void)finishGeneratingContent;
 {
     OBASSERT([NSThread isMainThread]);
     
@@ -1407,7 +1407,7 @@ static void *sProgressObservationContext = &sProgressObservationContext;
     
     // Once everything is uploaded, disconnect. May be that nothing was published, so end immediately
     [[self connection] disconnect];
-    if (![[[self baseTransferRecord] contents] count]) [self engineDidPublish:YES error:NULL];
+    if (![[[self baseTransferRecord] contents] count]) [self finishPublishing:YES error:NULL];
 }
 
 #pragma mark Uploading Support
