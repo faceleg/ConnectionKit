@@ -321,7 +321,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     // Mark self as finished
     if ([self status] > KTPublishingEngineStatusNotStarted && [self status] < KTPublishingEngineStatusFinished)
     {
-        [self finishPublishing:NO error:[NSError errorWithDomain:NSCocoaErrorDomain code:NSUserCancelledError userInfo:nil]];
+        [self finishPublishing:YES error:nil];
     }
 }
 

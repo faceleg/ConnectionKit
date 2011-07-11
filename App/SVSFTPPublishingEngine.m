@@ -87,7 +87,7 @@
 
 - (void)finishPublishing:(BOOL)didPublish error:(NSError *)error
 {
-    if (!didPublish)
+    if (!didPublish || [self isCancelled])
     {
         // Stop any pending ops
         [_queue cancelAllOperations];

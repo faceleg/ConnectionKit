@@ -405,7 +405,7 @@ static void *sEngineFinishedObservationContext = &sEngineFinishedObservationCont
 {
     if (context == sEngineFinishedObservationContext)
     {
-        if (!_didFail) [self publishingEngineDidFinish:object];
+        if (!_didFail && ![object isCancelled]) [self publishingEngineDidFinish:object];
     }
     else
     {
