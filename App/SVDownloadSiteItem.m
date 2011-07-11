@@ -72,7 +72,8 @@
         {
             // Derive a URL from the source media that can't accidentally correspond to a real file
             NSURL *URL = [SVWorkspaceIconProtocol URLForWorkspaceIconOfURL:[[[self media] media] mediaURL]];
-            
+            if (!URL) return nil;
+
             SVMedia *media = [[SVMedia alloc] initByReferencingURL:URL];
             
             NSURL *result = [context addImageMedia:media
