@@ -109,6 +109,14 @@
     [super engineDidPublish:didPublish error:error];
 }
 
+- (void)dealloc;
+{
+    OBASSERT(!_session);    // should have already been handled
+    [_queue release];
+    
+    [super dealloc];
+}
+
 #pragma mark Upload
 
 - (void)didEnqueueUpload:(CKTransferRecord *)record toDirectory:(CKTransferRecord *)parent;
