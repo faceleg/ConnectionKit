@@ -484,16 +484,9 @@
         // BUGSID: 30402. NSNotFound really shouldn't happen, but if so we need to track it down.
         if (index == NSNotFound)
         {
-            if ([[parent childItems] containsObject:self])
-            {
-                OBASSERT_NOT_REACHED("parent's -sortedChildren must be out of date");
-            }
-            else
-            {
-                NSLog(@"Parent to child relationship is broken.\nChild:\n%@\nDeleted:%d\n",
-                      self,                     // Used to be an assertion. Now, we return nil and expect the
-                      [self isDeleted]);       // original caller to tidy up.
-            }
+            NSLog(@"Parent to child relationship is broken.\nChild:\n%@\nDeleted:%d\n",
+                  self,                     // Used to be an assertion. Now, we return nil and expect the
+                  [self isDeleted]);       // original caller to tidy up.
         }
 		else
         {

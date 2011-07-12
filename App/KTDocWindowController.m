@@ -457,28 +457,19 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 }
 
 @synthesize designIdentityWindow = _designIdentityWindow;
-- (void)setDesignIdentityWindow:(MAAttachedWindow *)aDesignIdentityWindow
-{
-	if (_designIdentityWindow)
-	{
-		[[self window] removeChildWindow:_designIdentityWindow];
-	}
-	
-    [aDesignIdentityWindow retain];
-    [_designIdentityWindow release]; _designIdentityWindow = aDesignIdentityWindow;
-}
 
-
-- (void) hideDesignIdentityWindow
+- (void)hideDesignIdentityWindow
 {
 	[[NSAnimationContext currentContext] setDuration:1.0f];
-	[_designIdentityWindow.animator setAlphaValue:0.0];	// animate closed
-	
+	[[self designIdentityWindow].animator setAlphaValue:0.0];	// animate closed
 }
-- (void) showDesignIdentityWindow:(KTDesign *)aDesign;
-{
-	self.designIdentityWindow = nil;		// make sure old one is released before creating new one
 
+- (void)showDesignIdentityWindow:(KTDesign *)aDesign;
+{
+    // Ditch the old in preparation
+	[[self.designIdentityWindow parentWindow] removeChildWindow:self.designIdentityWindow];
+    
+    
 	SVWebContentAreaController *contentAreaController = [self webContentAreaController];
 	NSTabView *tabview = [contentAreaController tabView];
 
@@ -515,24 +506,25 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	
 	NSPoint attachmentPoint = NSMakePoint( tabviewRectInWindow.origin.x+ (tabviewWidth)/2.0,
 										  tabviewRectInWindow.origin.y + (tabviewHeight)/2.0);
-	_designIdentityWindow = [[MAAttachedWindow alloc]
-							 initWithView:contentView
-							 attachedToPoint:attachmentPoint
-							 inWindow:parentWindow
-							 onSide:MAPositionTop
-							 atDistance:0.0 ];
+    
+    [_designIdentityWindow release]; _designIdentityWindow = [[MAAttachedWindow alloc]
+                                                              initWithView:contentView
+                                                              attachedToPoint:attachmentPoint
+                                                              inWindow:parentWindow
+                                                              onSide:MAPositionTop
+                                                              atDistance:0.0];
 	
-	[_designIdentityWindow setHasArrow:NO];
-	[_designIdentityWindow setBorderWidth:0.0];
-	[_designIdentityWindow setAlphaValue:0.0];		// initially ZERO ALPHA!
+	[[self designIdentityWindow] setHasArrow:NO];
+	[[self designIdentityWindow] setBorderWidth:0.0];
+	[[self designIdentityWindow] setAlphaValue:0.0];		// initially ZERO ALPHA!
 
-	[parentWindow addChildWindow:_designIdentityWindow ordered:NSWindowAbove];
+	[parentWindow addChildWindow:[self designIdentityWindow] ordered:NSWindowAbove];
 
 	[_designIdentityTitle setStringValue:[aDesign title]];
 	[_designIdentityThumbnail setImage:[aDesign thumbnail]];
 	
 	[[NSAnimationContext currentContext] setDuration:0.25f];
-	[_designIdentityWindow.animator setAlphaValue:1.0];	// animate open
+	[[self designIdentityWindow].animator setAlphaValue:1.0];	// animate open
 	[self performSelector:@selector(hideDesignIdentityWindow) withObject:nil afterDelay:1.0];
 
 }
