@@ -3,11 +3,8 @@
 // Also determines if VARIANT_ALPHA or VARIANT_BETA or VARIANT_RELEASE is defined.
 // For checking alpha/beta behaviors, better to test for being *not* VARIANT_RELEASE
 // We use the macro with the secret key so that sparkle can match with key on the server end.
-PRODUCT_VARIANT = BETA
+PRODUCT_VARIANT = RELEASE
 
-
-// expiry for beta
-EXPIRY_TIMESTAMP = '@\"2011-07-20 11:59:59 -0800\"'
 
 // pull specific tags from dependent repositories
 
