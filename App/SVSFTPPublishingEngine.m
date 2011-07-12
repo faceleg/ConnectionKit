@@ -196,6 +196,8 @@
 
 - (BOOL)threaded_createDirectoryAtPath:(NSString *)path error:(NSError **)outError;
 {
+    [[self SFTPSession] start];
+    
     NSError *error;
     BOOL result = [[self SFTPSession] createDirectoryAtPath:path
                                 withIntermediateDirectories:YES
@@ -243,6 +245,8 @@
 
 - (CK2SFTPFileHandle *)threaded_openHandleAtPath:(NSString *)path error:(NSError **)outError;
 {
+    [[self SFTPSession] start];
+
     NSError *error;
     CK2SFTPFileHandle *result = [[self SFTPSession] openHandleAtPath:path
                                                                flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
@@ -275,6 +279,8 @@
 
 - (void)threaded_writeData:(NSData *)data toPath:(NSString *)path transferRecord:(CKTransferRecord *)record;
 {
+    [[self SFTPSession] start];
+
     NSError *error;
     CK2SFTPFileHandle *handle = [self threaded_openHandleAtPath:path error:&error];
     
