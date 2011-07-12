@@ -8,7 +8,7 @@
 
 #import "SVColorBoxIndexPlugIn.h"
 
-#import "SVPageProtocol.h"
+#import "Sandvox.h"
 #import "SVPagesController.h"
 #import "SVHTMLContext.h"
 #import "NSBundle+Karelia.h"
@@ -111,7 +111,7 @@
 									  (int)(2000 + (1.0 - self.slideshowSpeed) * 8000)];
 	
 	
-	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+	NSBundle *bundle = [NSBundle mainBundle];
 	NSString *language = [[self indexedCollection] language];
 	NSString *startString	= [bundle ks_localizedStringForString:@"Slideshow" language:language fallback:NSLocalizedString(@"Slideshow", @"Button Text/Tooltip")];
 	NSString *stopString	= [bundle ks_localizedStringForString:@"Stop" language:language fallback:NSLocalizedString(@"Stop", @"Button Text/Tooltip")];
@@ -200,7 +200,7 @@
 		NSString *colorString = [alphaLessColor htmlString];
 		NSString *colorCSS = [NSString stringWithFormat:@"#cboxOverlay{background:%@;}", colorString];
 		
-		[[context extraHeaderMarkup] appendFormat:@"\n<style type='text/css'>%@</style>", colorCSS];
+		[context addMarkupToHead:[NSString stringWithFormat:@"\n<style type='text/css'>%@</style>", colorCSS]];
 	}
 }
 

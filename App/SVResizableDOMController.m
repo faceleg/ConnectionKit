@@ -10,7 +10,7 @@
 
 #import "SVGraphicDOMController.h"
 #import "SVPlugInGraphic.h"
-#import "SVPlugIn.h"
+#import "Sandvox.h"
 #import "SVWebEditorHTMLContext.h"
 
 

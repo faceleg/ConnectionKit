@@ -145,10 +145,26 @@
     // Render a CGImage
     CGRect neededContextRect = [scaledImage extent];    // Clang, we assert scaledImage is non-nil above
     
-    CGImageRef finalImage = [coreImageContext createCGImage:scaledImage
-                                                   fromRect:neededContextRect
-                                                     format:kCIFormatARGB8
-                                                 colorSpace:[sourceImage colorSpace]];
+    CGColorSpaceRef colorSpace = NULL;
+    if ([sourceImage respondsToSelector:@selector(colorSpace)])
+    {
+        colorSpace = [sourceImage colorSpace];
+    }
+    
+    CGImageRef finalImage = NULL;
+    if (colorSpace)
+    {
+        finalImage = [coreImageContext createCGImage:scaledImage
+                                            fromRect:neededContextRect
+                                              format:kCIFormatARGB8
+                                          colorSpace:colorSpace];
+    }
+    
+    if (!finalImage)
+    {
+        finalImage = [coreImageContext createCGImage:scaledImage fromRect:neededContextRect];
+    }
+    
     OBASSERT(finalImage);
     
     

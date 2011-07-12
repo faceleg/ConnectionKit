@@ -6,11 +6,10 @@
 //  Copyright 2011 Karelia Software. All rights reserved.
 //
 
-#import "SVIndexInspectorViewController.h"
+#import "Sandvox.h"
+
 #import "KTLinkSourceView.h"
 #import "NSBundle+Karelia.h"
-#import "SVIndexPlugIn.h"
-#import "SVPageProtocol.h"
 #import "KTDocument.h"
 
 

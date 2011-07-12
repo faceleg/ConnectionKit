@@ -400,8 +400,15 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	
     
     // Configure
+    [result setIncludeInSiteMenu:NSBOOL(YES)];
 	[result setValue:[self site] forKey:@"site"];	// point to yourself
     
+    NSString *language = [[[NSUserDefaults standardUserDefaults] objectForKey:@"AppleLanguages"] objectAtIndex:0];
+    NSString *defaultRootPageMenuText = [[NSBundle mainBundle] ks_localizedStringForString:@"defaultRootPageMenuText"
+                                                                                  language:language
+                                                                                  fallback:
+                                         NSLocalizedStringWithDefaultValue(@"defaultRootPageMenuText", nil, [NSBundle mainBundle], @"Home", @"Site Menu title of initial home page")];
+    [result setCustomMenuTitle:defaultRootPageMenuText];
     
 	return [result autorelease];
 }

@@ -6,7 +6,7 @@
 //  Copyright 2011 Karelia Software. All rights reserved.
 //
 
-#import "SVJSONSerialization.h"
+#import "Sandvox.h"
 
 #import "JSONKit.h"
 

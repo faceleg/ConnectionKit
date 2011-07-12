@@ -17,7 +17,7 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "SVPlugIn.h"
+#import "Sandvox.h"
 
 
 @protocol KTDataSource

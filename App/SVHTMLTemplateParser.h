@@ -34,6 +34,7 @@
   @private
     SVHTMLContext   *_context;          // weak, temporary ref
     id              _iterationObject;   // weak, temporary ref
+	id				myDelegate;
 }
 
 - (id)initWithPage:(KTPage *)page;	// Convenience method that parses the whole page
@@ -83,7 +84,7 @@
 @end
 
 
-@protocol SVHTMLTemplateParserDelegate <KTTemplateParserDelegate>
+@protocol SVHTMLTemplateParserDelegate
 @optional
 - (void)HTMLParser:(SVHTMLTemplateParser *)parser didEncounterResourceFile:(NSURL *)resourcePath;
 - (void)HTMLParser:(SVHTMLTemplateParser *)parser didParseMediaFile:(id <SVMedia>)mediaFile upload:(KTMediaFileUpload *)upload;

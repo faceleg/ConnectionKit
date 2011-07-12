@@ -145,9 +145,11 @@
 	NSManagedObjectModel *model = [[[self managedObjectContext] persistentStoreCoordinator] managedObjectModel];
 	NSFetchRequest *request = [model fetchRequestTemplateForName:@"SiteOutlinePages"];
 	
-	NSError *error = nil;
+	NSError *error;
 	NSArray *unsortedResult = [[self managedObjectContext] executeFetchRequest:request error:&error];
-	if (error) {
+	
+    if (!unsortedResult)
+    {
 		NSAlert *alert = [NSAlert alertWithError:error];
 		[alert setIcon:[NSApp applicationIconImage]];
 		[alert runModal];	
