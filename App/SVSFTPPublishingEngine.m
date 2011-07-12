@@ -62,7 +62,7 @@
                                                                                                         host:hostName 
                                                                                                         port:port];
     
-    _session = [[CK2SFTPSession alloc] initWithURL:[request URL] delegate:self];
+    _session = [[CK2SFTPSession alloc] initWithURL:[request URL] delegate:self startImmediately:NO];
 }
 
 - (void)finishGeneratingContent;
@@ -102,7 +102,7 @@
         [_queue cancelAllOperations];
         
         // Close the connection as quick as possible
-        NSOperation *closeOp = [[NSInvocationOperation alloc] initWithTarget:_session
+        NSOperation *closeOp = [[NSInvocationOperation alloc] initWithTarget:[self SFTPSession]
                                                                     selector:@selector(cancel)
                                                                       object:nil];
         
@@ -139,7 +139,7 @@
     
     CKTransferRecord *parent = [self willUploadToPath:path];
     
-    if (_session)
+    if ([self SFTPSession])
     {
         result = [CKTransferRecord recordWithName:[path lastPathComponent] size:[data length]];
         
@@ -170,7 +170,7 @@
     
     CKTransferRecord *parent = [self willUploadToPath:path];
     
-    if (_session)
+    if ([self SFTPSession])
     {
         NSNumber *size = [[NSFileManager defaultManager] sizeOfFileAtPath:[localURL path]];
         
