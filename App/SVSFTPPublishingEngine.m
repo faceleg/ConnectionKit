@@ -196,7 +196,6 @@
 
 - (BOOL)threaded_createDirectoryAtPath:(NSString *)path error:(NSError **)outError;
 {
-    // Parent directory probably doesn't exist, so create it
     NSError *error;
     BOOL result = [[self SFTPSession] createDirectoryAtPath:path
                                 withIntermediateDirectories:YES
@@ -257,6 +256,7 @@
         if ([[error domain] isEqualToString:CK2LibSSH2SFTPErrorDomain] &&
             [error code] == LIBSSH2_FX_NO_SUCH_FILE)
         {
+            // Parent directory probably doesn't exist, so create it
             BOOL madeDir = [self threaded_createDirectoryAtPath:[path stringByDeletingLastPathComponent]
                                                           error:outError];
             
