@@ -111,7 +111,7 @@
 									  (int)(2000 + (1.0 - self.slideshowSpeed) * 8000)];
 	
 	
-	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+	NSBundle *bundle = [NSBundle mainBundle];
 	NSString *language = [[self indexedCollection] language];
 	NSString *startString	= [bundle ks_localizedStringForString:@"Slideshow" language:language fallback:NSLocalizedString(@"Slideshow", @"Button Text/Tooltip")];
 	NSString *stopString	= [bundle ks_localizedStringForString:@"Stop" language:language fallback:NSLocalizedString(@"Stop", @"Button Text/Tooltip")];

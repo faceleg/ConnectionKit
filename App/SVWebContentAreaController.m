@@ -322,6 +322,14 @@
             id object = [bindingInfo objectForKey:NSObservedObjectKey];
             NSString *keyPath = [bindingInfo objectForKey:NSObservedKeyPathKey];
             [object setValue:[NSArray arrayWithObject:page] forKeyPath:keyPath];
+            
+            // In rare cases, the page isn't in the tree because it's parent-child relationship is incomplete. #132715
+            NSArray *selection = [object valueForKeyPath:keyPath];
+            if (![selection isEqualToArray:[NSArray arrayWithObject:page]])
+            {
+                [[[page parentPage] mutableSetValueForKey:@"childItems"] addObject:page];
+                [object setValue:[NSArray arrayWithObject:page] forKeyPath:keyPath];
+            }
         }
     }
 }
