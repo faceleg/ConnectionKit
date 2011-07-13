@@ -263,7 +263,6 @@
 													  options:SVImageScaleAspectFit];
 		if (URL)
 		{
-			[context writeComment:@"Don't panic!  This line will likely not validate by W3C. That's expected."];
 			NSString *href = [URL absoluteString];	// leave it an absolute URL for Facebook's benefit
 			
 			NSString *pathExtension = [[URL path] pathExtension];
@@ -278,6 +277,7 @@
 		}
 		
 		// On the ROOT page only, I think -- put up apple-touch-icon.png
+        /*
 		if ([self isRoot])
 		{
 			SVMedia *appleTouchIcon = [[self customThumbnail] media];		// Not quite right - what about non-custom thumbnail?  We don't have an API that returns media though.
@@ -297,7 +297,7 @@
 					[context endElement];
 				}
 			}
-		}
+		}*/
 	}
 }
 

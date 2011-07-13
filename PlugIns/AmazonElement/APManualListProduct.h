@@ -23,11 +23,11 @@
 
 @interface APManualListProduct : AmazonListProduct
 {
-	@private
-	
+  @private
 	NSString			*myProductCode;
 	NSError				*myLastLoadError;
 	AmazonItemLookup	*myItemLookupOp;
+    BOOL                _isNew;
 }
 
 // Init & Load

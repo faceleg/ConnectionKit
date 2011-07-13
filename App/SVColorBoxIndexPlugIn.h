@@ -6,7 +6,7 @@
 //  Copyright 2011 Karelia Software. All rights reserved.
 //
 
-#import "SVIndexPlugIn.h"
+#import "Sandvox.h"
 
 enum { kOverlayTransitionNone, kOverlayTransitionElastic, kOverlayTransitionFade };
 enum { kSlideshowNone, kSlideshowManual, kSlideshowAutomatic };

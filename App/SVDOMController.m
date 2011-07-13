@@ -64,12 +64,21 @@
 
 - (WEKWebEditorItem *)itemForDOMNode:(DOMNode *)node;
 {
-    for (WEKWebEditorItem *anItem in [self childWebEditorItems])
+    // We're looking for a child of self, whose HTML element is the node
+    
+    WEKWebEditorItem *result = [self hitTestDOMNode:node];  // will hook up images etc. on-demand
+    if (result == self) return nil;
+    
+    while ([result parentWebEditorItem] != self)
     {
-        if ([anItem HTMLElement] == node) return anItem;
+        if (!result) return nil;
+        
+        result = [result parentWebEditorItem];
     }
     
-    return nil;
+    if ([result HTMLElement] != node) return nil;
+    
+    return result;
 }
 
 #pragma mark DOM Element Loading

@@ -66,12 +66,17 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 
 @interface SVHTMLContext ()
+
 - (void)pushAttributes:(NSDictionary *)attributes;
 
 - (SVHTMLIterator *)currentIterator;
 
 - (void)startPlaceholder;
 - (void)endPlaceholder;
+
+- (NSMutableString *)extraHeaderMarkup;
+- (NSMutableString *)endBodyMarkup; // can append to, query, as you like while parsing
+
 @end
 
 
@@ -866,8 +871,6 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     // When scaling an image, need full suite of parameters
     if (width || height)
     {
-        OBPRECONDITION(width);
-        OBPRECONDITION(height);
         OBPRECONDITION(type);
     }
     
@@ -889,6 +892,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
                                                               width:width
                                                              height:height
                                                                type:type
+                                                            options:0
                                                 preferredUploadPath:path
                                                       scalingSuffix:suffix];
     
@@ -1407,6 +1411,14 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 }
 
 #pragma mark Extra markup
+
+- (void)addMarkupToHead:(NSString *)markup;
+{
+    if ([[self extraHeaderMarkup] rangeOfString:markup].location == NSNotFound)
+    {
+        [[self extraHeaderMarkup] appendString:markup];
+    }
+}
 
 - (void)addMarkupToEndOfBody:(NSString *)markup;
 {

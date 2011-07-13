@@ -738,7 +738,8 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     SVGraphicFactory *factory = [SVGraphicFactory graphicFactoryForTag:[sender tag]];
     if (factory == [SVGraphicFactory rawHTMLFactory])
     {
-        [self editRawHTMLInSelectedBlock:sender];
+        // HACK so that we try to open editor after update has gone through
+        [self performSelector:@selector(editRawHTMLInSelectedBlock:) withObject:sender afterDelay:0.1];
     }
 }
 
@@ -803,7 +804,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 - (IBAction)paste:(id)sender;
 {
     // Get first responder item to do it hopefully
-    if (![[[self webEditor] selectedItem] tryToPerform:_cmd with:sender])
+    if (![[[self webEditor] firstResponderItem] tryToPerform:_cmd with:sender])
     {
         SVSidebarPageletsController *sidebarPageletsController =
         [_graphicsController sidebarPageletsController];

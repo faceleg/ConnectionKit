@@ -84,6 +84,16 @@
     else
     {
         sourceImage = [[CIImage alloc] initWithContentsOfURL:[_sourceMedia mediaURL]];
+        if (!sourceImage)
+        {
+            // Maybe it's a custom URL protocol
+            NSData *data = [[NSData alloc] initWithContentsOfURL:[_sourceMedia mediaURL]];
+            if (data)
+            {
+                sourceImage = [[CIImage alloc] initWithData:data];
+                [data release];
+            }
+        }
     }
     
     if (!sourceImage)
@@ -135,7 +145,26 @@
     // Render a CGImage
     CGRect neededContextRect = [scaledImage extent];    // Clang, we assert scaledImage is non-nil above
     
-    CGImageRef finalImage = [coreImageContext createCGImage:scaledImage fromRect:neededContextRect];
+    CGColorSpaceRef colorSpace = NULL;
+    if ([sourceImage respondsToSelector:@selector(colorSpace)])
+    {
+        colorSpace = [sourceImage colorSpace];
+    }
+    
+    CGImageRef finalImage = NULL;
+    if (colorSpace)
+    {
+        finalImage = [coreImageContext createCGImage:scaledImage
+                                            fromRect:neededContextRect
+                                              format:kCIFormatARGB8
+                                          colorSpace:colorSpace];
+    }
+    
+    if (!finalImage)
+    {
+        finalImage = [coreImageContext createCGImage:scaledImage fromRect:neededContextRect];
+    }
+    
     OBASSERT(finalImage);
     
     

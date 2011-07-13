@@ -12,7 +12,7 @@
 
 #import "SVGraphic.h"
 #import "SVMediaProtocol.h"
-#import "SVPlugIn.h"
+#import "Sandvox.h"
 
 
 @class KTElementPlugInWrapper;
@@ -35,9 +35,6 @@
 
 
 #pragma mark Metrics
-
-@property(nonatomic, copy) NSNumber *contentHeight;
-
 @property(nonatomic) BOOL constrainsProportions;
 - (BOOL)isConstrainProportionsEditable;
 

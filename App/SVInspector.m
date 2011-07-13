@@ -16,6 +16,7 @@
 #import "SVWrapInspector.h"
 
 #import "KTDocWindowController.h"
+#import "SVPagesTreeController.h"
 
 #import "NSImage+Karelia.h"
 
@@ -43,23 +44,29 @@
     return sInspectedPagesController;
 }
 
-@synthesize inspectedPagesController = _inspectedPagesController;
-- (void)setInspectedPagesController:(id <KSCollectionController>)controller
+- (void)populateInspectedPagesControllerFromTreeController:(NSTreeController *)treeController
 {
-    if (controller)
+    NSArrayController *controller = [[self class] inspectedPagesController];
+    
+    if (treeController)
     {
-        [[[self class] inspectedPagesController]
-         bind:NSContentArrayBinding
-         toObject:controller
-         withKeyPath:@"selectedObjects"
-         options:NSDICT(NSBOOL(YES), NSSelectsAllWhenSettingContentBindingOption)];
+        [controller bind:NSContentArrayBinding
+                toObject:treeController
+             withKeyPath:@"selectedObjects"
+                 options:NSDICT(NSBOOL(YES), NSSelectsAllWhenSettingContentBindingOption)];
         
-        [_plugInInspector bind:@"inspectedPages" toObject:controller withKeyPath:@"selectedObjects" options:nil];
+        [_plugInInspector bind:@"inspectedPages"
+                      toObject:controller
+                   withKeyPath:@"selectedObjects"
+                       options:nil];
     }
     else
     {
-        [[[self class] inspectedPagesController] unbind:NSContentArrayBinding];
+        [controller unbind:NSContentArrayBinding];
+        [controller setContent:nil];
+        
         [_plugInInspector unbind:@"inspectedPages"];
+        [_plugInInspector setInspectedPages:nil];
     }
 }
 
@@ -67,23 +74,10 @@
 
 - (void)setInspectedWindow:(NSWindow *)window
 {
-    if (!window)
-    {
-        [self unbind:@"inspectedPagesController"];
-        [self setInspectedPagesController:[[[NSTreeController alloc] init] autorelease]];
-    }
-    
-    
     [super setInspectedWindow:window];
     
     
-    if (window)
-    {
-        [self bind:@"inspectedPagesController"
-          toObject:window
-       withKeyPath:@"windowController.siteOutlineViewController.pagesController"
-           options:nil];
-    }
+    [self populateInspectedPagesControllerFromTreeController:[[window windowController] pagesController]];
     
     
     // Document

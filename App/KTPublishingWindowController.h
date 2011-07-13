@@ -39,7 +39,7 @@
 - (IBAction)firstButtonAction:(NSButton *)sender;
 
 - (id)initWithPublishingEngine:(KTPublishingEngine *)engine;
-- (KTPublishingEngine *)publishingEngine;
+@property(nonatomic, retain, readonly) KTPublishingEngine *publishingEngine;
 - (BOOL)isExporting;
 
 // Presentation

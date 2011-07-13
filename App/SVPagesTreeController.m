@@ -642,11 +642,14 @@
     
     
     // Should any of these nodes get added to the site menu?
-    for (NSTreeNode *aNode in nodes)
+    if ([startingIndexPath length] <= 2)
     {
-        if ([[aNode indexPath] length] > 2)
+        for (NSTreeNode *aNode in nodes)
         {
-            [self willInsertOrMoveObjectToTopLevel:[aNode representedObject]];
+            if ([[aNode indexPath] length] > 2)
+            {
+                [self willInsertOrMoveObjectToTopLevel:[aNode representedObject]];
+            }
         }
     }
     
@@ -987,7 +990,7 @@
     BOOL result = NO;
     
     
-    NSArray *pages = [pagesController objectsWithContentFromPasteboard:pboard];
+    NSArray *pages = [pagesController makeSiteItemsFromPasteboard:pboard];
     if (pages)
     {
         // Ignore the selection settings and insert directly into array controller for speeeeed!
@@ -995,6 +998,7 @@
         NSIndexSet *indexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(index, [pages count])];
         
         [pagesController insertObjects:pages atArrangedObjectIndexes:indexes];
+        [pagesController didInsertSiteItemsFromPasteboard:pages];
         result = YES;
     }
     

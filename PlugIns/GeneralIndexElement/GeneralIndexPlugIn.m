@@ -288,7 +288,9 @@
 		title = @"";		// better than nil, which crashes!
 	}
 	NSString *textToWrite = [format stringByReplacingOccurrencesOfString:@"@@" withString:title];
-	[context writeHTMLString:textToWrite];
+    if (!textToWrite) textToWrite = title;
+    
+	[context writeCharacters:textToWrite];
 	[context endElement];	// </a>
 	[context endElement];	// </div> continue-reading-link
 }
@@ -418,7 +420,7 @@
 	NSURL *thumbnailImage = [context URLForImageRepresentationOfPage:iteratedPage
 															   width:64
 															  height:64
-															 options:(SVImageScaleAspectFit | SVPageImageRepresentationLink)];
+															 options:SVImageScaleAspectFit];
     if (thumbnailImage)
     {
         [context startElement:@"div" className:@"article-thumbnail"];
@@ -427,7 +429,7 @@
                                 width:64
                                height:64
                            attributes:nil
-                              options:(SVImageScaleAspectFit | SVPageImageRepresentationLink)];
+                              options:(SVImageScaleAspectFit | (1 << 5)/*SVPageImageRepresentationLink*/)];
         
         [context endElement];
     }

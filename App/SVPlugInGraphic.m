@@ -12,7 +12,7 @@
 #import "SVLogoImage.h"
 #import "SVMediaProtocol.h"
 #import "KTPage.h"
-#import "SVPlugIn.h"
+#import "Sandvox.h"
 #import "SVGraphicFactory.h"
 #import "SVHTMLContext.h"
 
@@ -302,7 +302,7 @@ static void *sPlugInMinWidthObservationContext = &sPlugInMinWidthObservationCont
         }
         @catch (NSException *exception)
         {
-            // TODO: Log or report exception
+            NSLog(@"Plug-in threw exception: %@ %@", [exception name], [exception reason]);
             
             // Correct open elements count if plug-in managed to break this. #88083
             while ([context openElementsCount] > openElements)
@@ -321,7 +321,7 @@ static void *sPlugInMinWidthObservationContext = &sPlugInMinWidthObservationCont
         }
         else
         {
-            [context writePlaceholderWithText:NSLocalizedString(@"Plug-in not found", "placeholder")
+            [context writePlaceholderWithText:[NSString stringWithFormat:NSLocalizedString(@"Plug-in not found (%@)", "placeholder"), [self plugInIdentifier]]
                                       options:0];
         }
     }

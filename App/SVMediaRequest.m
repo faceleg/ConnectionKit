@@ -25,6 +25,7 @@
               width:(NSNumber *)width
              height:(NSNumber *)height
                type:(NSString *)type
+            options:(SVPageImageRepresentationOptions)options
 preferredUploadPath:(NSString *)path
       scalingSuffix:(NSString *)suffix;
 {
@@ -59,6 +60,7 @@ preferredUploadPath:(NSString *)path
     _type = [type copy];
     _uploadPath = [path copy];
     _scalingOrConversionPathSuffix = [suffix copy];
+    _options = options;
     
     return self;
 }
@@ -69,6 +71,7 @@ preferredUploadPath:(NSString *)path
                          width:nil
                         height:nil
                           type:nil
+                       options:0
            preferredUploadPath:path
                  scalingSuffix:nil];
 }
@@ -98,6 +101,7 @@ preferredUploadPath:(NSString *)path
 @synthesize width = _width;
 @synthesize height = _height;
 @synthesize type = _type;
+@synthesize options = _options;
 @synthesize scalingPathSuffix = _scalingOrConversionPathSuffix;
 
 
@@ -156,11 +160,12 @@ preferredUploadPath:(NSString *)path
                                             width:[self width]
                                            height:[self height]
                                              type:[self type]
+                                          options:[self options]
                               preferredUploadPath:path
                                     scalingSuffix:nil] autorelease];
 }
 
-- (NSData *)contentHashWithMediaDigest:(NSData *)digest;
+- (NSData *)contentHashWithSourceMediaDigest:(NSData *)digest;
 {
     NSData *result = nil;
     
@@ -176,15 +181,16 @@ preferredUploadPath:(NSString *)path
     return result;
 }
 
-- (BOOL)isEqualToMediaRequest:(SVMediaRequest *)otherMedia;
+- (BOOL)isEqualToMediaRequest:(SVMediaRequest *)otherRequest;
 {
-    if (otherMedia == self) return YES;
+    if (otherRequest == self) return YES;
     
-    // Evalutating -mediaData is expensive, so compare "recipes"
-    return ([otherMedia.media isEqualToMedia:self.media] &&
-            KSISEQUAL(otherMedia.width, self.width) &&
-            KSISEQUAL(otherMedia.height, self.height) &&
-            KSISEQUAL(otherMedia.type, self.type));
+    // Evaluating -mediaData is expensive, so compare "recipes"
+    return ([otherRequest.media isEqualToMedia:self.media] &&
+            KSISEQUAL(otherRequest.width, self.width) &&
+            KSISEQUAL(otherRequest.height, self.height) &&
+            KSISEQUAL(otherRequest.type, self.type) &&
+            otherRequest.options == self.options);
 }
 
 - (BOOL)isEqual:(id)object;

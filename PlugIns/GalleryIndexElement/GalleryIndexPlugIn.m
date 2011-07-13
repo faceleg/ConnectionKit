@@ -134,7 +134,7 @@
 									width:128
 								   height:128
 							   attributes:[NSDictionary dictionaryWithObjectsAndKeys:title, @"title", nil]
-								  options:(SVImageScaleAspectFit | SVPageImageRepresentationLink)];
+								  options:(SVImageScaleAspectFit | (1 << 5)/*SVPageImageRepresentationLink*/)];
 		}
 		
 		if (self.showCollectionTitle)

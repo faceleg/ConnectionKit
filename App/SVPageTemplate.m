@@ -9,7 +9,7 @@
 #import "SVPageTemplate.h"
 
 #import "KTElementPlugInWrapper.h"
-#import "SVGraphicFactory.h"
+#import "SVPlugInGraphicFactory.h"
 
 #import "NSDictionary+Karelia.h"
 #import "NSSet+Karelia.h"
@@ -32,7 +32,7 @@
     
     
     // Init with the right graphic factory
-    SVGraphicFactory *factory = [plugin graphicFactory];
+    SVPlugInGraphicFactory *factory = [plugin graphicFactory];
     if (factory)
     {
         [self initWithGraphicFactory:factory];
@@ -63,9 +63,13 @@
     NSImage *icon = nil;
     if (plugin)
     {
-        icon = [[plugin graphicFactory] pageIcon];
+        icon = [factory newIconWithName:[presetDict objectForKey:@"SVPlugInIconPath"]];
+        
+        if (!icon) icon = [factory newIconWithName:[[factory plugInBundle] objectForInfoDictionaryKey:@"KTPageIconName"]];
+        
+        if (!icon) icon = [[factory icon] retain];
 #ifdef DEBUG
-        if (nil == icon)
+        if (!icon)
         {
             NSLog(@"nil pluginIcon for %@", presetTitle);
         }
@@ -75,7 +79,13 @@
     {
         icon = [presetDict objectForKey:@"KTPageIconName"];
     }
-    [self setIcon:icon];
+    
+    if (icon)
+    {
+        [self setIcon:icon];
+        [icon release];
+    }
+    
     
     
     
@@ -90,7 +100,7 @@
     
     _graphicFactory = [factory retain]; // TOOD: Factories are immutable at the moment, so could copy instead
     
-    [self setIcon:[factory pageIcon]];
+    [self setIcon:[factory icon]];
     
     return self;
 }

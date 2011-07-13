@@ -123,7 +123,7 @@ enum LAYOUTS { STANDARD_LAYOUT = 0, BOX_COUNT_LAYOUT, BUTTON_COUNT_LAYOUT };
                 NSURL *pageURL = [context baseURL];
                 if ( nil != pageURL )
                 {
-                    [parameters setObject:pageURL forKey:@"href"];
+                    [parameters setObject:[pageURL absoluteString] forKey:@"href"];
                 }
             }
                 break;

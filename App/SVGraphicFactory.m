@@ -6,7 +6,7 @@
 //  Copyright 2010-2011 Karelia Software. All rights reserved.
 //
 
-#import "SVGraphicFactory.h"
+#import "SVPlugInGraphicFactory.h"
 
 #import "KTDataSourceProtocol.h"
 #import "KTElementPlugInWrapper.h"
@@ -16,7 +16,7 @@
 #import "SVAudio.h"
 #import "SVFlash.h"
 #import "SVMediaGraphic.h"
-#import "SVPlugIn.h"
+#import "Sandvox.h"
 #import "SVRawHTMLGraphic.h"
 #import "SVTextBox.h"
 #import "KTToolbars.h"
@@ -92,6 +92,8 @@
 
 - (NSString *)identifier { return @"com.karelia.sandvox.BlockQuote"; }
 - (NSString *)name { return NSLocalizedString(@"Block Quote", @"Graphic name"); }
+
+- (NSString *)graphicDescription { return NSLocalizedString(@"A text box designed for quotes", @"graphic description"); }
 
 - (NSImage *)icon
 {
@@ -747,7 +749,6 @@ static SVGraphicFactory *sRawHTMLFactory;
 - (NSString *)name { SUBCLASSMUSTIMPLEMENT; return nil; }
 - (NSString *)graphicDescription { SUBCLASSMUSTIMPLEMENT; return nil; }
 - (NSImage *)icon { return nil; }
-- (NSImage *)pageIcon { return nil; }
 - (NSUInteger)priority; { return 5; }
 
 - (BOOL)isIndex; { return NO; }
@@ -783,7 +784,6 @@ static SVGraphicFactory *sRawHTMLFactory;
     [aCoder encodeObject:[self name] forKey:@"name"];
     [aCoder encodeObject:[self graphicDescription] forKey:@"graphicDescription"];
     [aCoder encodeObject:[self icon] forKey:@"icon"];
-    [aCoder encodeObject:[self pageIcon] forKey:@"pageIcon"];
     [aCoder encodeInteger:[self priority] forKey:@"priority"];
     [aCoder encodeBool:[self isIndex] forKey:@"isIndex"];
     [aCoder encodeObject:[self identifier] forKey:@"identifier"];

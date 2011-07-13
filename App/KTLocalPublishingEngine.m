@@ -10,6 +10,7 @@
 
 #import "KTSite.h"
 #import "KTHostProperties.h"
+#import "SVImageRecipe.h"
 #import "KTMaster.h"
 #import "SVPublishingDigestStorage.h"
 #import "KTPage.h"
@@ -35,9 +36,15 @@
 
 
 @interface KTLocalPublishingEngine ()
+
 - (SVPublishingRecord *)publishingRecordForPath:(NSString *)path;
 - (SVPublishingRecord *)regularFilePublishingRecordWithPath:(NSString *)path;
+- (SVPublishingRecord *)updatePublishingRecordForPath:(NSString *)path
+                                           SHA1Digest:(NSData *)digest
+                                          contentHash:(NSData *)contentHash;
+
 - (void)pingURL:(NSURL *)URL;
+
 @end
 
 
@@ -139,7 +146,7 @@
             
             if (sourceDigest)
             {
-                hash = [mediaRequest contentHashWithMediaDigest:sourceDigest];
+                hash = [mediaRequest contentHashWithSourceMediaDigest:sourceDigest];
             }
             else
             {
@@ -164,7 +171,11 @@
         // If media with the same content hash was already published, want to publish there instead
         if (hash)
         {
-            SVPublishingRecord *record = [self publishingRecordForContentHash:hash];
+            SVImageRecipe *recipe = [[SVImageRecipe alloc] initWithContentHash:hash];
+            OBASSERT(recipe);
+            SVPublishingRecord *record = [self publishingRecordForImageRecipe:recipe];
+            [recipe release];
+            
             if (record) remotePath = [record path];
         }
     }
@@ -345,14 +356,6 @@
 
 #pragma mark Media
 
-- (void)threaded_didHashSourceOfMediaRequest:(SVMediaRequest *)request;
-{
-    /*  Trampoline method pretty much, to fling us back to main thread!
-     */
-    
-    [[self ks_proxyOnThread:nil] publishMediaWithRequest:request];
-}
-
 - (NSInvocationOperation *)startHashingSourceOfMediaRequest:(SVMediaRequest *)request;
 {
     SVMediaRequest *sourceRequest = [request sourceRequest];
@@ -392,7 +395,7 @@
                 if (!sourceDigest)
                 {
                     NSInvocationOperation *hashingOp = [digestStorage
-                                                        hashingOperationForMediaRequest:request];
+                                                        hashingOperationForMediaRequest:sourceRequest];
                     
                     
                     // It might be that hashing failed, so go ahead and try to publish
@@ -416,7 +419,7 @@
                     // Retry once source is hashed
                     NSOperation *op = [[NSInvocationOperation alloc]
                                        initWithTarget:self
-                                       selector:@selector(threaded_didHashSourceOfMediaRequest:)
+                                       selector:@selector(publishMediaWithRequest:)
                                        object:request];
                     
                     [op addDependency:hashingOp];
@@ -429,11 +432,14 @@
                 }
                 
                 
-                NSData *hash = [request contentHashWithMediaDigest:sourceDigest];
+                NSData *hash = [request contentHashWithSourceMediaDigest:sourceDigest];
                 if (hash)
                 {
                     // Seek an existing instance of that media
-                    SVPublishingRecord *record = [self publishingRecordForContentHash:hash];
+                    SVImageRecipe *recipe = [[SVImageRecipe alloc] initWithContentHash:hash];
+                    SVPublishingRecord *record = [self publishingRecordForImageRecipe:recipe];
+                    [recipe release];
+                    
                     if (record)
                     {
                         // Pretend the media was uploaded
@@ -479,7 +485,7 @@
         NSData *sourceDigest = [[request media] SHA1Digest];
         if (sourceDigest)
         {
-            hash = [request contentHashWithMediaDigest:sourceDigest];
+            hash = [request contentHashWithSourceMediaDigest:sourceDigest];
         }
         
         // Signify a failure with NSNull so we don't get stuck in an endless loop
@@ -607,7 +613,7 @@
         
         if (oldDigest) [_publishingRecordsBySHA1Digest removeObjectForKey:oldDigest];
         [record setSHA1Digest:digest];
-        [_publishingRecordsBySHA1Digest setObject:record forKey:digest];
+        if (digest) [_publishingRecordsBySHA1Digest setObject:record forKey:digest];
     }
     
     return record;

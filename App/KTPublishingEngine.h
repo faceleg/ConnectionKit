@@ -45,7 +45,8 @@ typedef enum {
     KTPublishingEngineStatusFinished,
 } KTPublishingEngineStatus;
 
-@class KTSite, KTPage, SVPublishingDigestStorage, SVPublishingRecord;
+
+@class KTSite, KTPage, SVPublishingDigestStorage, SVPublishingRecord, SVImageRecipe;
 @protocol KTPublishingEngineDelegate;
 
 
@@ -67,7 +68,7 @@ typedef enum {
     
     SVPublishingDigestStorage   *_digestStorage;
     NSDictionary                *_pagesByID;
-    NSMutableDictionary         * _publishingRecordsByContentHash;
+    NSMutableDictionary         *_publishingRecordsByImageRecipe;
     
     NSMutableArray      *_plugInCSS;    // mixture of string CSS snippets, and CSS URLs
     
@@ -97,7 +98,7 @@ typedef enum {
 // Control
 - (KTPublishingEngineStatus)status;
 
-// Publishing won't finish until the operation runs. Threadsafe. If queue is nil, targets the main thread on Snowy, -defaultQueue before that
+// Publishing won't finish until the operation runs. Threadsafe. If queue is nil, targets the main thread
 - (void)addOperation:(NSOperation *)operation queue:(NSOperationQueue *)queue;
 @property(retain, readonly) NSOperationQueue *defaultQueue; // want this to be threadsafe
 - (NSOperationQueue *)diskOperationQueue;
@@ -126,7 +127,7 @@ typedef enum {
 // Given a file's digest, where should it be placed? This is likely to be because the file has already been queued for upload; test with -shouldPublishToPath:
 - (NSString *)pathForFileWithSHA1Digest:(NSData *)digest;
 
-- (SVPublishingRecord *)publishingRecordForContentHash: (NSData*) digest ;
+- (SVPublishingRecord *)publishingRecordForImageRecipe:(SVImageRecipe *)recipe;
 - (void)setContentHash:(NSData *)hash forPublishingRecord:(SVPublishingRecord *)record;
 
 

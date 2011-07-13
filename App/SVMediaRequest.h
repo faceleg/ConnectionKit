@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 #import "SVMediaProtocol.h"
+#import "Sandvox.h"
 
 
 @class SVMedia;
@@ -22,12 +23,14 @@
     NSString        *_type;
     NSString        *_uploadPath;
     NSString        *_scalingOrConversionPathSuffix;
+    SVPageImageRepresentationOptions    _options;
 }
 
 - (id)initWithMedia:(SVMedia *)media
               width:(NSNumber *)width
              height:(NSNumber *)height
                type:(NSString *)type
+            options:(SVPageImageRepresentationOptions)options
 preferredUploadPath:(NSString *)path
       scalingSuffix:(NSString *)suffix;
 
@@ -43,6 +46,7 @@ preferredUploadPath:(NSString *)path
 
 @property(nonatomic, copy, readonly) NSNumber *width;
 @property(nonatomic, copy, readonly) NSNumber *height;
+@property(nonatomic, readonly) SVPageImageRepresentationOptions options;
 - (NSDictionary *)imageScalingParameters;
 
 // If scaling was required, add this on to .preferredUploadPath using -ks_stringWithPathSuffix;
@@ -62,7 +66,7 @@ preferredUploadPath:(NSString *)path
 - (SVMediaRequest *)requestWithScalingSuffixApplied;
 
 // Given the SHA1 digest of source media, what should the content hash of this request be?
-- (NSData *)contentHashWithMediaDigest:(NSData *)digest;
+- (NSData *)contentHashWithSourceMediaDigest:(NSData *)digest;
 
 
 #pragma mark Equality

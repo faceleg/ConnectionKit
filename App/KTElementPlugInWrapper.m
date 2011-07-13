@@ -70,7 +70,7 @@
 
 #pragma mark Properties
 
-- (SVGraphicFactory *)graphicFactory;
+- (SVPlugInGraphicFactory *)graphicFactory;
 {
     if (!_factory)
     {

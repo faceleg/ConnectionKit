@@ -11,6 +11,7 @@
 #import "KTPage+Internal.h"
 #import "KTDesign.h"
 #import "KTHostProperties.h"
+#import "SVImageRecipe.h"
 #import "KTSite.h"
 #import "KTMaster.h"
 #import "SVPublishingDigestStorage.h"
@@ -26,6 +27,7 @@
 #import "KTImageScalingURLProtocol.h"
 
 #import "NSBundle+KTExtensions.h"
+#import "NSManagedObjectContext+KTExtensions.h"
 #import "NSString+KTExtensions.h"
 
 #import "NSData+Karelia.h"
@@ -36,6 +38,7 @@
 #import "KSPathUtilities.h"
 
 #import "KSCSSWriter.h"
+#import "KSPerformOnThreadOperation.h"
 #import "KSPlugInWrapper.h"
 #import "KSSHA1Stream.h"
 #import "KSThreadProxy.h"
@@ -148,9 +151,17 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                             predicate:[NSPredicate predicateWithFormat:@"contentHash != nil"]
                             error:NULL];
         
-        _publishingRecordsByContentHash = [[NSMutableDictionary alloc]
-                                           initWithObjects:records
-                                           forKeys:[records valueForKey:@"contentHash"]];
+        _publishingRecordsByImageRecipe = [[NSMutableDictionary alloc] initWithCapacity:[records count]];
+        
+        for (SVPublishingRecord *aRecord in records)
+        {
+            SVImageRecipe *recipe = [[SVImageRecipe alloc] initWithContentHash:[aRecord contentHash]];
+            if (recipe)
+            {
+                [_publishingRecordsByImageRecipe setObject:aRecord forKey:recipe];
+                [recipe release];
+            }
+        }
 	}
 	
 	return self;
@@ -176,7 +187,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [_nextOp release];
     
     [_pagesByID release];
-	[_publishingRecordsByContentHash release];
+	[_publishingRecordsByImageRecipe release];
     
 	[super dealloc];
 }
@@ -253,10 +264,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)mainPublishing
 {
-    if (![NSThread isMainThread])
-    {
-        return [[self ks_proxyOnThread:nil waitUntilDone:NO] mainPublishing];
-    }
+    OBASSERT([NSThread isMainThread]);
     
     
     /* All media that didn't have a slot available for it before can now be published
@@ -343,6 +351,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         }
         else
         {
+            operation = [[[KSPerformOnThreadOperation alloc] initWithOperation:operation
+                                                                             thread:nil] autorelease];
+            
             queue = [self defaultQueue];
         }
     }
@@ -694,8 +705,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [self publishData:mainCSSData toPath:cssUploadPath];
 }
 
-- (void)addDependencyOnObject:(NSObject *)object keyPath:(NSString *)keyPath { }
-
 #pragma mark Media
 
 - (NSString *)startPublishingMedia:(SVMediaRequest *)request cachedSHA1Digest:(NSData *)digest;
@@ -792,10 +801,12 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         NSData *sourceDigest = [digestStore digestForMediaRequest:[request sourceRequest]]; 
         if (sourceDigest)
         {
-            NSData *hash = [request contentHashWithMediaDigest:sourceDigest];
+            NSData *hash = [request contentHashWithSourceMediaDigest:sourceDigest];
             if (hash)
             {
-                result = [[self publishingRecordForContentHash:hash] path];
+                SVImageRecipe *recipe = [[SVImageRecipe alloc] initWithContentHash:hash];
+                result = [[self publishingRecordForImageRecipe:recipe] path];
+                [recipe release];
             }
         }
     }
@@ -838,7 +849,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             
             if (sourceDigest)
             {
-                hash = [request contentHashWithMediaDigest:sourceDigest];
+                hash = [request contentHashWithSourceMediaDigest:sourceDigest];
             }
             
             [self publishData:data
@@ -874,7 +885,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                     
                     if (sourceDigest)
                     {
-                        hash = [request contentHashWithMediaDigest:sourceDigest];
+                        hash = [request contentHashWithSourceMediaDigest:sourceDigest];
                     }
                     
                     [self publishData:data
@@ -1114,9 +1125,10 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     return result;
 }
 
-- (SVPublishingRecord *)publishingRecordForContentHash:(NSData *)digest;
+- (SVPublishingRecord *)publishingRecordForImageRecipe:(SVImageRecipe *)recipe;
 {
-    return [_publishingRecordsByContentHash objectForKey:digest];
+    OBPRECONDITION([recipe isKindOfClass:[SVImageRecipe class]]);
+    return [_publishingRecordsByImageRecipe objectForKey:recipe];
 }
 
 - (void)setContentHash:(NSData *)hash forPublishingRecord:(SVPublishingRecord *)record;
@@ -1124,12 +1136,26 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     NSData *oldHash = [record contentHash];
     if (!KSISEQUAL(hash, oldHash))
     {
-        if (oldHash) [_publishingRecordsByContentHash removeObjectForKey:oldHash];
+        if (oldHash)
+        {
+            SVImageRecipe *oldRecipe = [[SVImageRecipe alloc] initWithContentHash:oldHash];
+            if (oldRecipe)
+            {
+                [_publishingRecordsByImageRecipe removeObjectForKey:oldRecipe];
+                [oldRecipe release];
+            }
+                
+        }
         
         [record setContentHash:hash];
         if (hash)
         {
-            [_publishingRecordsByContentHash setObject:record forKey:hash];
+            SVImageRecipe *recipe = [[SVImageRecipe alloc] initWithContentHash:hash];
+            if (recipe)
+            {
+                [_publishingRecordsByImageRecipe setObject:record forKey:recipe];
+                [recipe release];
+            }
         }
         else if (oldHash)
         {
@@ -1340,10 +1366,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)finishPublishing;
 {
-    if (![NSThread isMainThread])
-    {
-        return [[self ks_proxyOnThread:nil] finishPublishing];
-    }
+    OBASSERT([NSThread isMainThread]);
+    
     
     // Upload sitemap if the site has one
     [self uploadGoogleSiteMapIfNeeded];

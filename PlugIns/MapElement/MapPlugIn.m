@@ -2,50 +2,65 @@
 //  MapPlugIn.m
 //  MapElement
 //
-//  Created by Terrence Talbot on 2/12/11.
-//  Copyright 2011 Terrence Talbot. All rights reserved.
+//  Copyright 2006-2011 Karelia Software. All rights reserved.
+//
+//  Redistribution and use in source and binary forms, with or without
+//  modification, are permitted provided that the following conditions are met:
+//
+//  *  Redistribution of source code must retain the above copyright notice,
+//     this list of conditions and the follow disclaimer.
+//
+//  *  Redistributions in binary form must reproduce the above copyright notice,
+//     this list of conditions and the following disclaimer in the documentation
+//     and/or other material provided with the distribution.
+//
+//  *  Neither the name of Karelia Software nor the names of its contributors
+//     may be used to endorse or promote products derived from this software
+//     without specific prior written permission.
+//
+//  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS-IS"
+//  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+//  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+//  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+//  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+//  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+//  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+//  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+//  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+//  ARISING IN ANY WAY OUR OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+//  POSSIBILITY OF SUCH DAMAGE.
 //
 
 #import "MapPlugIn.h"
+#import <AddressBook/AddressBook.h>
+
+// <http://www.smashinglabs.pl/gmap-documentation>
 
 
-// <http://www.zazar.net/developers/zgooglemap/>
-// This plugin simplifies the adding Google Maps via the Google Map API (v3) and plots custom locations with pop-up descriptions. Simple and easy to use.
-
-//Parameters
-//
-//Parameter Required    Description
-//locations Yes         Array containing the addresses of the locations to be added.
-//titles    Yes         Array containing the titles of the locations. These are used for the tooltip and pop-up heading.
-//details   Yes         Array containing the details of the locations for the pop-up. This may be include HTML formatting.
-//options   No          Optional settings for the plug-in (see below).
-//
-//
-//Plug-in options
-//
-//Parameter	Default     Description
-//type      0           The type of map: 0 - Road map, 1 - Satellite, 2 - Hybrid or 3 - Terrain.
-//width     '600px'     The width of the map in any CSS format. ie px, em, %
-//height    '400px'     The height of the map in any CSS format.
-//zoom      10          The initial zoom level of the map.
-//clickable true        If true, will enable a pop-up by clicking on the location pin.
-//tooltip	true        If true, will display a tooltip for each location pin.
-//tipsuffix	' (click for more)'     When enabled the tooltip text will be the same as the title. This setting adds a definable suffix.
+@interface MapPlugIn ()
+@end
 
 
 @implementation MapPlugIn
+
 
 #pragma mark SVPlugin
 
 + (NSArray *)plugInKeys
 { 
     return [NSArray arrayWithObjects:
-            @"locations",
-            @"type",
-            @"zoom",
-            @"clickable",
-            @"tooltip",
+            @"location",
+            @"showAddressBubble",
+            @"showZoomControl",
+            @"showPanControl",
+            @"showScaleControl",
+            @"showStreetViewControl",
             nil];
+}
+
+- (BOOL)requiresPageLoad
+{
+    return YES;
 }
 
 
@@ -56,49 +71,69 @@
     [super awakeFromNew];
     
     // make some initial guesses at params
+    self.location = [self defaultLocation];
+    self.showAddressBubble = YES;
+
+    // defaults from gMap docs
+    self.showZoomControl = YES;
+    self.showPanControl = NO;
+    self.showScaleControl = NO;
+    self.showStreetViewControl = YES;
+}
+
+- (NSString *)defaultLocation
+{
     
-    // pick a number between 1 and 3
-    NSInteger min = 1;
-    NSInteger max = 3;
-    NSInteger adjustedMax = (max + 1) - min; // arc4random returns within the set {min, (max - 1)}
-    NSInteger random = arc4random() % adjustedMax;
-    NSInteger location = random + min;
+    NSString *result = nil;
     
-    NSMutableDictionary *defaultLocation = nil;
-    switch ( location) 
+    // try to find a general location in Me card
+    ABPerson *me = [[ABAddressBook sharedAddressBook] me];
+    ABMultiValue *addresses = [me valueForProperty:kABAddressProperty];
+    NSUInteger primaryIndex = [addresses indexForIdentifier:[addresses primaryIdentifier]];
+    NSDictionary *primaryAddress = [addresses valueAtIndex:primaryIndex];
+    
+    NSString *street = [primaryAddress objectForKey:kABAddressStreetKey];
+    NSString *city = [primaryAddress objectForKey:kABAddressCityKey];
+    NSString *state = [primaryAddress objectForKey:kABAddressStateKey];
+    NSString *zip = [primaryAddress objectForKey:kABAddressZIPKey];
+    //NSString *country = [primaryAddress objectForKey:kABAddressCountryKey];
+    
+    NSMutableArray *components = [[NSMutableArray alloc] initWithCapacity:3];
+    if (street) [components addObject:street];
+    if (city) [components addObject:city];
+    if (state) [components addObject:state];
+    if (zip) [components addObject:zip];
+    
+    if ([components count])
     {
-        case 1:
-            defaultLocation = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                               @"Alameda, CA", @"location",
-                               @"Karelia Software HQ", @"title",
-                               @"Where it all began...", @"details",
-                               nil];
-            
-            break;
-        case 2:
-            defaultLocation = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                               @"Altadena, CA", @"location",
-                               @"Karelia Software SoCal", @"title",
-                               @"Where the builds happen...", @"details",
-                               nil];
-            
-            break;
-        case 3:
-        default:
-            defaultLocation = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                               @"Reading, England", @"location",
-                               @"Karelia Software Europe", @"title",
-                               @"Code + Band + Pubs = Rock Solid Surfaces", @"details",
-                               nil];
-            
-            break;
+        result = [components componentsJoinedByString:@",\n"];
     }
-    self.locations = [NSArray arrayWithObject:defaultLocation];
+    else
+    {
+        // fallback to a Karelia outpost, pick a number between 1 and 3
+        NSInteger min = 1;
+        NSInteger max = 3;
+        NSInteger adjustedMax = (max + 1) - min; // arc4random returns within the set {min, (max - 1)}
+        NSInteger random = arc4random() % adjustedMax;
+        NSInteger location = random + min;    
+        switch ( location) 
+        {
+            case 1:
+                result = @"Alameda, CA";
+                break;
+            case 2:
+                result = @"Altadena, CA";
+                break;
+            case 3:
+            default:
+                result = @"Reading, England";
+                break;
+        }
+    }
     
-    self.type = 0;
-    self.zoom = 10;
-    self.clickable = YES;
-    self.tooltip = YES;
+    [components release];
+    
+    return result;
 }
 
 
@@ -107,105 +142,148 @@
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
     // add dependencies
-    [context addDependencyForKeyPath:@"locations" ofObject:self];
-    [context addDependencyForKeyPath:@"type" ofObject:self];
-    [context addDependencyForKeyPath:@"zoom" ofObject:self];
-    [context addDependencyForKeyPath:@"clickable" ofObject:self];
-    [context addDependencyForKeyPath:@"tooltip" ofObject:self];
+    [context addDependencyForKeyPath:@"location" ofObject:self];
+    [context addDependencyForKeyPath:@"showAddressBubble" ofObject:self];
+    [context addDependencyForKeyPath:@"showZoomControl" ofObject:self];
+    [context addDependencyForKeyPath:@"showPanControl" ofObject:self];
+    [context addDependencyForKeyPath:@"showScaleControl" ofObject:self];
+    [context addDependencyForKeyPath:@"showStreetViewControl" ofObject:self];
     
     // write HTML
-    if ( self.locations )
+    if ( self.location )
     {
         if ( [context liveDataFeeds] )
         {
             // bind size
             NSString *idName = [context startResizableElement:@"div"
-                                                        plugIn:self
-                                                       options:0
-                                               preferredIdName:@"googlemap"
-                                                    attributes:nil];
+                                                       plugIn:self
+                                                      options:0
+                                              preferredIdName:@"googlemap"
+                                                   attributes:nil];
             [context endElement]; // </div>
+            
             
             // append Google Maps API functions to end body
             // sensor=false means "we are not using a GPS device to get this map"
             NSString *script = @"<script type=\"text/javascript\" src=\"http://maps.google.com/maps/api/js?sensor=false\"></script>\n";
             [context addMarkupToEndOfBody:script];
-
-            // append zGoogleMap jquery functions to end body (assumes jquery is already loaded)
-            NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"jquery.zgooglemap.min" ofType:@"js"];
+            
+            
+            // append gMap jquery functions to end body (assumes jquery is already loaded)
+            NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"jquery.gmap.min" ofType:@"js"];
             NSURL *URL = [context addResourceAtURL:[NSURL fileURLWithPath:path] destination:SVDestinationResourcesDirectory options:0];
             script = [NSString stringWithFormat:@"<script type=\"text/javascript\" src=\"%@\"></script>\n", [context relativeStringFromURL:URL]];
             [context addMarkupToEndOfBody:script];
+
             
-            // prepare parameters
-            NSString *pin = (self.clickable) ? @"true" : @"false"; // clicking pin shows details pop-up
-            NSString *more = (self.tooltip) ? @"true" : @"false"; // display tooltip of title on pin
+            // prepare parameters, JSON-style
+            
+            // we always show a ROADMAP
+            NSString *type = @"google.maps.MapTypeId.ROADMAP";
+
+            // we show or not show various controls
+            NSString *panControl = (self.showPanControl) ? @"true" : @"false";
+            NSString *scaleControl = (self.showScaleControl) ? @"true" : @"false";
+            NSString *streetViewControl = (self.showStreetViewControl) ? @"true" : @"false";
+            NSString *zoomControl = (self.showZoomControl) ? @"true" : @"false";
+            
+            
+            // construct marker for location
                         
-            NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-            NSString *language = [[context page] language];
-            NSString *suffix = [bundle localizedStringForString:@"\' (click for details)\'" language:language fallback:SVLocalizedString(@"\' (click for details)\'", @"tooltip suffix")];
+            // just one marker
+            // replace newlines with spaces for Google
+            NSString *address = [[self location] stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
+            NSMutableDictionary *marker = [NSMutableDictionary dictionaryWithObject:address
+                                                                             forKey:@"address"];
             
-            
-            NSString *theLocations = @"";
-            NSString *theTitles = @"";
-            NSString *theDetails = @"";
-            
-            for ( NSDictionary *location in self.locations )
+            // with an optional popup
+            if ( self.showAddressBubble )
             {
-                if ( [location objectForKey:@"location"] )
-                {
-                    theLocations = [theLocations stringByAppendingFormat:@"\'%@\', ", [location objectForKey:@"location"]];
-                }
-                else 
-                {
-                    theLocations = [theLocations stringByAppendingString:@"\'\', "];
-                }
-
-                if ( [location objectForKey:@"title"] )
-                {
-                    theTitles = [theTitles stringByAppendingFormat:@"\'%@\', ", [location objectForKey:@"title"]];
-                }
-                else 
-                {
-                    theTitles = [theTitles stringByAppendingString:@"\'\', "];
-                }
-
-                if ( [location objectForKey:@"details"] )
-                {
-                    theDetails = [theDetails stringByAppendingFormat:@"\'%@\', ", [location objectForKey:@"details"]];
-                }
-                else 
-                {
-                    theDetails = [theDetails stringByAppendingString:@"\'\', "];
-                }
+                // URLs with query parameters
+                NSURL *dAddr = [NSURL svURLWithScheme:@"http"
+                                                 host:@"maps.google.com"
+                                                 path:@"/maps"
+                                      queryParameters:[NSDictionary dictionaryWithObject:address forKey:@"daddr"]];
+                
+                NSURL *sAddr = [NSURL svURLWithScheme:@"http"
+                                                 host:@"maps.google.com"
+                                                 path:@"/maps"
+                                      queryParameters:[NSDictionary dictionaryWithObject:address forKey:@"saddr"]];
+                
+                // localize labels (to the language of the site visitor)
+                NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+                NSString *language = [[context page] language];
+                
+                // determine strings based on language of page
+                
+                // These are various strings, randomly chosen, for the blurb on the badge.  This will help direct
+                // Traffic to the Sandvox site!
+                
+                NSString *label1 = [bundle localizedStringForString:@"Location:"
+                                                           language:language 
+                                                           fallback:SVLocalizedString(@"Location:", "label for map popup")];
+                NSString *label2 = [bundle localizedStringForString:@"Get directions:"
+                                                           language:language 
+                                                           fallback:SVLocalizedString(@"Get directions:", "label for map popup")];
+                NSString *label3 = [bundle localizedStringForString:@"To here"
+                                                           language:language 
+                                                           fallback:SVLocalizedString(@"To here", "label for map popup")];
+                NSString *label4 = [bundle localizedStringForString:@"From here"
+                                                           language:language 
+                                                           fallback:SVLocalizedString(@"From here", "label for map popup")];
+                
+                // construct HTML
+                NSString *htmlDescription = [NSString stringWithFormat:
+                                             @"<p class=\"locationlabel\">%@</p>"
+                                             @"<p class=\"location\">%@</p>"
+                                             @"<p class=\"directions\">%@ <a href=\"%@\">%@</a> - <a href=\"%@\">%@</a><p>",
+                                             label1,
+                                             address,
+                                             label2,
+                                             [dAddr absoluteString],
+                                             label3,
+                                             [sAddr absoluteString],
+                                             label4];            
+                
+                [marker setObject:htmlDescription forKey:@"html"];
+                [marker setObject:@"true" forKey:@"popup"];
+                
+                // apply uniform style            
+                NSString *cssPath = [bundle pathForResource:@"bubble" ofType:@"css"];
+                NSURL *cssURL = [NSURL fileURLWithPath:cssPath];
+                (void)[context addCSSWithTemplateAtURL:cssURL object:self];                
             }
-                        
-            // append zGoogleMap <script> to end body
+            
+            // in an array
+            NSArray *markers = [NSArray arrayWithObject:marker];
+            
+            // as JSON
+            NSData *markersJSONData = [SVJSONSerialization dataWithJSONObject:markers options:0 error:nil];
+            NSString *markersJSONString = [[[NSString alloc] initWithData:markersJSONData encoding:NSUTF8StringEncoding] autorelease];
+            
+            
+            // append gMap <script> to end body
             NSString *map = [NSString stringWithFormat:
                              @"<script type=\"text/javascript\">\n"
-                             "  var aLocations = new Array();\n"
-                             "  var aTitles = new Array();\n"
-                             "  var aDetails = new Array();\n"
-                             "\n"
-                             "  aLocations = [%@];\n"
-                             "  aTitles = [%@];\n"
-                             "  aDetails = [%@];\n"
-                             "\n"
                              @"$(document).ready(function () {\n"
-                             @"	$('#%@').GoogleMap(aLocations, aTitles, aDetails, {type:%@, zoom:%@, clickable:%@, tooltip:%@, tipsuffix:%@, width:'%@px', height:'%@px'});\n"
+                             @"	$('#%@').gMap({\n"
+                             @"	maptype: %@,\n"
+                             @"	zoomControl: %@,\n"
+                             @"	panControl: %@,\n"
+                             @"	scaleControl: %@,\n"
+                             @"	streetViewControl: %@,\n"
+                             @"	zoom: 16,\n"
+                             @"	markers: %@\n"
+                             @"})\n"
                              @"});\n"
                              @"</script>\n",
-                             theLocations,
-                             theTitles,
-                             theDetails,
                              idName,
-                             [[NSNumber numberWithUnsignedInt:self.type] stringValue],
-                             [[NSNumber numberWithUnsignedInt:self.zoom] stringValue],
-                             pin,
-                             more,
-                             suffix,
-                             [self.width stringValue],
-                             [self.height stringValue]];
+                             type,
+                             zoomControl,
+                             panControl,
+                             scaleControl,
+                             streetViewControl,
+                             markersJSONString];
             [context addMarkupToEndOfBody:map];
         }
     }
@@ -214,13 +292,14 @@
 - (NSString *)placeholderString
 {
     NSString *result = nil;
-    if ( !self.locations )
+    if ( !self.location )
     {
         result = SVLocalizedString(@"Enter a location in the Inspector", "");
     }
     else if ( ![[self currentContext] liveDataFeeds] )
     {
-        result = SVLocalizedString(@"Google Map", "placeholder");
+        result = SVLocalizedString(@"This is a placeholder for a Google Map. It will appear on your published site, or view it in Sandvox by enabling 'Load data from the Internet' in Preferences.", "WebView Placeholder");
+
     }
     return result;
 }
@@ -240,10 +319,11 @@
 
 #pragma mark Properties
 
-@synthesize locations = _locations;
-@synthesize type = _type;
-@synthesize zoom = _zoom;
-@synthesize clickable = _clickable;
-@synthesize tooltip = _tooltip;
+@synthesize location = _location;
+@synthesize showAddressBubble = _showAddressBubble;
+@synthesize showPanControl = _showPanControl;
+@synthesize showScaleControl = _showScaleControl;
+@synthesize showStreetViewControl = _showStreetViewControl;
+@synthesize showZoomControl = _showZoomControl;
 
 @end

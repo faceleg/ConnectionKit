@@ -922,16 +922,8 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		else
 		{
 			// WARN OF EXPIRING BETA VERSION -- but not if it's apple design awards or development build.
-#ifndef DEBUG
-#ifndef APPLE_DESIGN_AWARDS_KEY
-            @try    // because if warning throws an exception, still want to continue!
-            {
-                [self warnExpiring:nil];
-            }
-            @catch (NSException *e)
-            {
-            }
-#endif
+#if !defined(VARIANT_RELEASE) && defined(EXPIRY_TIMESTAMP)
+			[self warnExpiring:nil];
 #endif
 			// TODO: I've turned off the progress panel for now. In my opinion the app is fast enough to launch now that we don't need the panel. If this is confirmed, take out the panel code completely. Mike.
             
@@ -1221,21 +1213,8 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 #ifndef NSAppKitVersionNumber10_7
 #define NSAppKitVersionNumber10_7 1100  // wild ass guess for now...
 #endif
-    // check Lion
-    if ( NSAppKitVersionNumber >= NSAppKitVersionNumber10_7 )
-    {
-        LOG((@"running on Lion (OS X 10.7) in unsupported"));
-        NSString *title = NSLocalizedString(@"Unsupported Operating System", "");
-        NSString *msg = NSLocalizedString(@"Sandvox 2 is not yet fully supported under Lion (Mac OS X 10.7). This application may unexpectedly Quit at any time. Proceed with caution.", "");
-        NSString *defaultButton = NSLocalizedString(@"No thanks. I'll wait for official support.", "");
-        NSString *alternateButton = NSLocalizedString(@"I'll take my chances. Proceed.", "");
-        NSInteger lionChoice = NSRunCriticalAlertPanel(title, msg, defaultButton, alternateButton, nil);
-        if ( lionChoice != NSAlertAlternateReturn )
-        {
-            [NSApp terminate:self];
-        }
-    }
-	
+    
+    
 	// Fix menus appropriately
 	[pool release];
 

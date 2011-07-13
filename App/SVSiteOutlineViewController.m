@@ -1075,7 +1075,8 @@
 
 - (id)serializeChildrenOfPage:(KTPage *)page;
 {
-    NSTreeNode *node = [[self content] nodeForObject:page];
+    /*  Commenting this logic out for now. #131273
+     NSTreeNode *node = [[self content] nodeForObject:page];
     
     if (node && [[self outlineView] isItemExpanded:node])
     {
@@ -1102,7 +1103,7 @@
         
         return result;
     }
-    else
+    else*/
     {
         // Collapsed items should serialize all descendants
         return [[page sortedChildren] valueForKey:@"serializedProperties"];

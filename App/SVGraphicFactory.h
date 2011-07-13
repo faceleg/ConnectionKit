@@ -12,7 +12,7 @@
 #import <Cocoa/Cocoa.h>
 #import "SVGraphic.h"
 #import "SVPasteboardItemInternal.h"
-#import "SVPlugIn.h"
+#import "Sandvox.h"
 
 
 /*  NSPasteboardReadingOptions specify how data is read from the pasteboard.  You can specify only one option from this list.  If you do not specify an option, the default NSPasteboardReadingAsData is used.  The first three options specify how and if pasteboard data should be pre-processed by the pasteboard before being passed to -initWithPasteboardPropertyList:ofType.  The fourth option, NSPasteboardReadingAsKeyedArchive, should be used when the data on the pasteboard is a keyed archive of this class.  Using this option, a keyed unarchiver will be used and -initWithCoder: will be called to initialize the new instance. 
@@ -62,7 +62,6 @@ typedef NSUInteger SVPlugInPasteboardReadingOptions;
 - (NSString *)name;
 - (NSString *)graphicDescription;
 - (NSImage *)icon;
-- (NSImage *)pageIcon;
 - (NSUInteger)priority; // 0-9, where 9 is Pro status
 
 - (BOOL)isIndex;
