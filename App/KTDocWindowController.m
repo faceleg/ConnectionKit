@@ -520,6 +520,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
                                                               onSide:MAPositionTop
                                                               atDistance:0.0];
 	
+    [[self designIdentityWindow] setReleasedWhenClosed:NO];
 	[[self designIdentityWindow] setHasArrow:NO];
 	[[self designIdentityWindow] setBorderWidth:0.0];
 	[[self designIdentityWindow] setAlphaValue:0.0];		// initially ZERO ALPHA!
