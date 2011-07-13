@@ -998,6 +998,7 @@
         NSIndexSet *indexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(index, [pages count])];
         
         [pagesController insertObjects:pages atArrangedObjectIndexes:indexes];
+        [pagesController didInsertSiteItemsFromPasteboard:pages];
         result = YES;
     }
     
