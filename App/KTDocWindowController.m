@@ -471,11 +471,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 }
 
 - (void)showDesignIdentityWindow:(KTDesign *)aDesign;
-{
-    // Ditch the old in preparation
-	[[self.designIdentityWindow parentWindow] removeChildWindow:self.designIdentityWindow];
-    
-    
+{    
 	SVWebContentAreaController *contentAreaController = [self webContentAreaController];
 	NSTabView *tabview = [contentAreaController tabView];
 
@@ -487,45 +483,52 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 
 	const NSUInteger kDesignIDThumbY   = 70;
-	
-	NSView *contentView = [[[NSView alloc] initWithFrame:NSMakeRect(0,0,kDesignIDWindowWidth, kDesignIDWindowHeight)] autorelease];
-	_designIdentityThumbnail = [[[NSImageView alloc] initWithFrame:
-								 NSMakeRect((kDesignIDWindowWidth- kDesignThumbWidth)/2.0,kDesignIDThumbY,
-											kDesignThumbWidth, kDesignThumbHeight)] autorelease];
-	[_designIdentityThumbnail setImageScaling:NSImageScaleProportionallyDown];
-	_designIdentityTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(0,0,kDesignIDWindowWidth, 40)];
-	[_designIdentityTitle setAlignment:NSCenterTextAlignment];
-	[[_designIdentityTitle cell] setLineBreakMode:NSLineBreakByTruncatingMiddle];
-	[_designIdentityTitle setTextColor:[NSColor whiteColor]];
-	[_designIdentityTitle setBordered:NO];
-	[_designIdentityTitle setBezeled:NO];
-	[_designIdentityTitle setSelectable:NO];
-	[_designIdentityTitle setDrawsBackground:NO];
-	[_designIdentityTitle setFont:[NSFont systemFontOfSize:[NSFont systemFontSize] * 2.0]];
-	
-	[contentView addSubview:_designIdentityThumbnail];
-	[contentView addSubview:_designIdentityTitle];
 
-	NSWindow *parentWindow = [self window];
-	
 	NSRect tabviewRectInWindow = [tabview convertRect:[tabview bounds] toView:nil];
 	
 	NSPoint attachmentPoint = NSMakePoint( tabviewRectInWindow.origin.x+ (tabviewWidth)/2.0,
 										  tabviewRectInWindow.origin.y + (tabviewHeight)/2.0);
-    
-    [_designIdentityWindow release]; _designIdentityWindow = [[MAAttachedWindow alloc]
-                                                              initWithView:contentView
-                                                              attachedToPoint:attachmentPoint
-                                                              inWindow:parentWindow
-                                                              onSide:MAPositionTop
-                                                              atDistance:0.0];
-	
-    [[self designIdentityWindow] setReleasedWhenClosed:NO];
-	[[self designIdentityWindow] setHasArrow:NO];
-	[[self designIdentityWindow] setBorderWidth:0.0];
-	[[self designIdentityWindow] setAlphaValue:0.0];		// initially ZERO ALPHA!
 
-	[parentWindow addChildWindow:[self designIdentityWindow] ordered:NSWindowAbove];
+	if (!_designIdentityWindow)
+	{
+		NSView *contentView = [[[NSView alloc] initWithFrame:NSMakeRect(0,0,kDesignIDWindowWidth, kDesignIDWindowHeight)] autorelease];
+		_designIdentityThumbnail = [[[NSImageView alloc] initWithFrame:
+									 NSMakeRect((kDesignIDWindowWidth- kDesignThumbWidth)/2.0,kDesignIDThumbY,
+												kDesignThumbWidth, kDesignThumbHeight)] autorelease];
+		[_designIdentityThumbnail setImageScaling:NSImageScaleProportionallyDown];
+		_designIdentityTitle = [[NSTextField alloc] initWithFrame:NSMakeRect(0,0,kDesignIDWindowWidth, 40)];
+		[_designIdentityTitle setAlignment:NSCenterTextAlignment];
+		[[_designIdentityTitle cell] setLineBreakMode:NSLineBreakByTruncatingMiddle];
+		[_designIdentityTitle setTextColor:[NSColor whiteColor]];
+		[_designIdentityTitle setBordered:NO];
+		[_designIdentityTitle setBezeled:NO];
+		[_designIdentityTitle setSelectable:NO];
+		[_designIdentityTitle setDrawsBackground:NO];
+		[_designIdentityTitle setFont:[NSFont systemFontOfSize:[NSFont systemFontSize] * 2.0]];
+		
+		[contentView addSubview:_designIdentityThumbnail];
+		[contentView addSubview:_designIdentityTitle];
+
+		NSWindow *parentWindow = [self window];
+    
+		_designIdentityWindow = [[MAAttachedWindow alloc]
+								 initWithView:contentView
+								 attachedToPoint:attachmentPoint
+								 inWindow:parentWindow
+								 onSide:MAPositionTop
+								 atDistance:0.0];
+		[[self designIdentityWindow] setReleasedWhenClosed:NO];
+		[[self designIdentityWindow] setHasArrow:NO];
+		[[self designIdentityWindow] setBorderWidth:0.0];
+		[[self designIdentityWindow] setAlphaValue:0.0];		// initially ZERO ALPHA!
+
+		[parentWindow addChildWindow:[self designIdentityWindow] ordered:NSWindowAbove];
+	}
+	else
+	{
+		[_designIdentityWindow setPoint:attachmentPoint side:MAPositionTop];
+	}
+	
 
 	[_designIdentityTitle setStringValue:[aDesign title]];
 	[_designIdentityThumbnail setImage:[aDesign thumbnail]];
