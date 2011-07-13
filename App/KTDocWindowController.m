@@ -95,7 +95,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (void)dealloc
 {
-	self.designIdentityWindow = nil;		// Try doing this sooner, crash 108258
+	[_designIdentityWindow release];
 
 	// Get rid of view controllers
 	[self setSiteOutlineViewController:nil];
@@ -462,35 +462,14 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
                                                      didEndSelector:@selector(designChooserDidEnd:returnCode:)];
 }
 
-@synthesize designIdentityWindow = _designIdentityWindow;
-
-- (void)hideDesignIdentityWindow
+- (MAAttachedWindow *)designIdentityWindow;
 {
-	[[NSAnimationContext currentContext] setDuration:1.0f];
-	[[self designIdentityWindow].animator setAlphaValue:0.0];	// animate closed
-}
-
-- (void)showDesignIdentityWindow:(KTDesign *)aDesign;
-{    
-	SVWebContentAreaController *contentAreaController = [self webContentAreaController];
-	NSTabView *tabview = [contentAreaController tabView];
-
-	NSUInteger tabviewHeight = [tabview bounds].size.height;
-	NSUInteger tabviewWidth = [tabview bounds].size.width - 16;	// don't include scroll bars
-
-	NSUInteger kDesignIDWindowHeight = kDesignThumbHeight + 100;
-	NSUInteger kDesignIDWindowWidth = 350;
-
-
-	const NSUInteger kDesignIDThumbY   = 70;
-
-	NSRect tabviewRectInWindow = [tabview convertRect:[tabview bounds] toView:nil];
-	
-	NSPoint attachmentPoint = NSMakePoint( tabviewRectInWindow.origin.x+ (tabviewWidth)/2.0,
-										  tabviewRectInWindow.origin.y + (tabviewHeight)/2.0);
-
-	if (!_designIdentityWindow)
+    if (!_designIdentityWindow)
 	{
+        NSUInteger kDesignIDWindowWidth = 350;
+        NSUInteger kDesignIDWindowHeight = kDesignThumbHeight + 100;
+        const NSUInteger kDesignIDThumbY   = 70;
+
 		NSView *contentView = [[[NSView alloc] initWithFrame:NSMakeRect(0,0,kDesignIDWindowWidth, kDesignIDWindowHeight)] autorelease];
 		_designIdentityThumbnail = [[[NSImageView alloc] initWithFrame:
 									 NSMakeRect((kDesignIDWindowWidth- kDesignThumbWidth)/2.0,kDesignIDThumbY,
@@ -508,12 +487,12 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		
 		[contentView addSubview:_designIdentityThumbnail];
 		[contentView addSubview:_designIdentityTitle];
-
+        
 		NSWindow *parentWindow = [self window];
-    
+        
 		_designIdentityWindow = [[MAAttachedWindow alloc]
 								 initWithView:contentView
-								 attachedToPoint:attachmentPoint
+								 attachedToPoint:NSZeroPoint
 								 inWindow:parentWindow
 								 onSide:MAPositionTop
 								 atDistance:0.0];
@@ -521,13 +500,36 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		[[self designIdentityWindow] setHasArrow:NO];
 		[[self designIdentityWindow] setBorderWidth:0.0];
 		[[self designIdentityWindow] setAlphaValue:0.0];		// initially ZERO ALPHA!
-
+        
 		[parentWindow addChildWindow:[self designIdentityWindow] ordered:NSWindowAbove];
 	}
-	else
-	{
-		[_designIdentityWindow setPoint:attachmentPoint side:MAPositionTop];
-	}
+	
+    return _designIdentityWindow;
+}
+
+- (void)hideDesignIdentityWindow
+{
+	[[NSAnimationContext currentContext] setDuration:1.0f];
+	[[self designIdentityWindow].animator setAlphaValue:0.0];	// animate closed
+}
+
+- (void)showDesignIdentityWindow:(KTDesign *)aDesign;
+{    
+	SVWebContentAreaController *contentAreaController = [self webContentAreaController];
+	NSTabView *tabview = [contentAreaController tabView];
+
+	NSUInteger tabviewHeight = [tabview bounds].size.height;
+	NSUInteger tabviewWidth = [tabview bounds].size.width - 16;	// don't include scroll bars
+
+
+
+
+	NSRect tabviewRectInWindow = [tabview convertRect:[tabview bounds] toView:nil];
+	
+	NSPoint attachmentPoint = NSMakePoint( tabviewRectInWindow.origin.x+ (tabviewWidth)/2.0,
+										  tabviewRectInWindow.origin.y + (tabviewHeight)/2.0);
+
+	[[self designIdentityWindow] setPoint:attachmentPoint side:MAPositionTop];
 	
 
 	[_designIdentityTitle setStringValue:[aDesign title]];
