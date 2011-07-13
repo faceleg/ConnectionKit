@@ -55,6 +55,7 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 
 @property(nonatomic, copy) NSNumber *width;
 @property(nonatomic, copy) NSNumber *contentWidth;  // what appears in the Inspector
+@property(nonatomic, copy) NSNumber *contentHeight;
 - (NSNumber *)containerWidth;
 - (BOOL)isExplicitlySized:(SVHTMLContext *)context; // context may be nil
 

@@ -990,7 +990,7 @@
     BOOL result = NO;
     
     
-    NSArray *pages = [pagesController objectsWithContentFromPasteboard:pboard];
+    NSArray *pages = [pagesController makeSiteItemsFromPasteboard:pboard];
     if (pages)
     {
         // Ignore the selection settings and insert directly into array controller for speeeeed!
@@ -998,6 +998,7 @@
         NSIndexSet *indexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(index, [pages count])];
         
         [pagesController insertObjects:pages atArrangedObjectIndexes:indexes];
+        [pagesController didInsertSiteItemsFromPasteboard:pages];
         result = YES;
     }
     
