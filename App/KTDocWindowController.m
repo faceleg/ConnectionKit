@@ -199,6 +199,12 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     
 	// Check for missing media
 	//[self performSelector:@selector(checkForMissingMedia) withObject:nil afterDelay:0.0];
+    
+    
+    // Finally, clear the undo stack for Leopard. #130933
+#if MAC_OS_X_VERSION_MIN_REQUIRED <= MAC_OS_X_VERSION_10_5
+    [[[self window] undoManager] removeAllActions];
+#endif
 }
 
 #pragma mark Controllers
