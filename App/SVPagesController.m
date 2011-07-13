@@ -495,7 +495,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     
     
     // Fallback to creating graphics/links from the pasteboard
-    NSArray *pages = [self objectsWithContentFromPasteboard:pboard];
+    NSArray *pages = [self makeSiteItemsFromPasteboard:pboard];
     if (pages)
     {
         [self addObjects:pages];
@@ -505,7 +505,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     return result;
 }
 
-- (NSArray *)objectsWithContentFromPasteboard:(NSPasteboard *)pboard;
+- (NSArray *)makeSiteItemsFromPasteboard:(NSPasteboard *)pboard;
 {
     // Create graphics for the content
     NSArray *items = [pboard sv_pasteboardItems];

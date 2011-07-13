@@ -51,8 +51,10 @@ extern NSString *SVPagesControllerDidInsertObjectNotification;
 
 
 #pragma mark Pasteboard Support
+
 - (BOOL)addObjectsFromPasteboard:(NSPasteboard *)pboard;
-- (NSArray *)objectsWithContentFromPasteboard:(NSPasteboard *)pboard;
+
+- (NSArray *)makeSiteItemsFromPasteboard:(NSPasteboard *)pboard;
 - (id)newObjectFromPasteboardItem:(id <SVPasteboardItem>)pboardItem;
 - (SVSiteItem *)newObjectFromPropertyList:(id)aPlist;
 
