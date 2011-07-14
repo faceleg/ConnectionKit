@@ -35,9 +35,6 @@
 
 
 #pragma mark Metrics
-
-@property(nonatomic, copy) NSNumber *contentHeight;
-
 @property(nonatomic) BOOL constrainsProportions;
 - (BOOL)isConstrainProportionsEditable;
 
