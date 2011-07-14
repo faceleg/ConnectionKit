@@ -28,7 +28,6 @@
 {
   @private
     // Loading
-    NSString    *_elementID;
     BOOL        _shouldPublishElementID;
     
     // Updating
@@ -62,12 +61,7 @@
 
 #pragma mark DOM Element Loading
 
-//  Asks content object to locate node in the DOM, then stores it as receiver's .HTMLElement. Removes the element's ID attribute from the DOM if it's only there for editing support (so as to keep the Web Inspector tidy)
-- (void)loadHTMLElementFromDocument:(DOMDocument *)document;
-
-@property(nonatomic, copy, readonly) NSString *elementIdName;
-- (BOOL)hasElementIdName;   // NO if no ID has been set or generated yet
-- (void)setElementIdName:(NSString *)ID includeWhenPublishing:(BOOL)shouldPublish;
+@property(nonatomic) BOOL shouldIncludeElementIdNameWhenPublishing;
 
 @property(nonatomic, retain, readwrite) SVWebEditorHTMLContext *HTMLContext;
 

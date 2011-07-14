@@ -50,7 +50,6 @@
     [_dependenciesTracker release];
     
     [_updateSelectors release];
-    [_elementID release];
     [_context release];
     
     [_dragTypes release];
@@ -83,27 +82,6 @@
 
 #pragma mark DOM Element Loading
 
-- (DOMHTMLElement *)HTMLElement;
-{
-    DOMHTMLElement *result = [super HTMLElement];
-    if (!result)
-    {
-        DOMDocument *document = [[[self parentWebEditorItem] HTMLElement] ownerDocument];
-        if (!document)
-        {
-            document = [[self webEditor] HTMLDocument];
-        }
-        
-        if (document)
-        {
-            [self loadHTMLElementFromDocument:document];
-            if ([self isHTMLElementCreated]) result = [self HTMLElement];
-        }
-    }
-    
-    return result;
-}
-
 // No point observing if there's no DOM to affect
 // At least that's the theory, I found in practice it broke dragging onto media placeholders
 - (void)XsetHTMLElement:(DOMHTMLElement *)element;
@@ -120,8 +98,29 @@
     }
 }
 
-- (void)createHTMLElement
+- (void)setHTMLElement:(DOMHTMLElement *)element;
 {
+    if (element)
+    {
+        // Load descendants since they might share the same element
+        [[self childWebEditorItems] makeObjectsPerformSelector:@selector(HTMLElement)];
+        
+        
+        if (!_shouldPublishElementID)
+        {
+            // Ideally, as we're clearing out value from the DOM, should also stop referencing it ourselves. If an update occurs, the id should be regenerated. This isn't quite working yet though.
+            //[_elementID release]; _elementID = nil;
+            [element setIdName:nil];
+        }
+    }
+    
+    [super setHTMLElement:element];
+}
+
+- (void)loadHTMLElement
+{
+    if ([self elementIdName]) return [super loadHTMLElement];
+    
     // Gather the HTML
     NSMutableString *htmlString = [[NSMutableString alloc] init];
     
@@ -152,63 +151,15 @@
     [context release];
 }
 
-- (void)loadHTMLElementFromDocument:(DOMDocument *)document;
+- (DOMHTMLDocument *)HTMLDocument;
 {
-    if ([self hasElementIdName])
-    {
-        // Load the element
-        NSString *idName = [self elementIdName];
-        DOMHTMLElement *element = (DOMHTMLElement *)[document getElementById:idName];
-        
-        
-        if (element)
-        {
-            // Load descendants since they might share the same element
-            [[self childWebEditorItems] makeObjectsPerformSelector:_cmd withObject:document];
-            
-            
-            if (!_shouldPublishElementID)
-            {
-                // Ideally, as we're clearing out value from the DOM, should also stop referencing it ourselves. If an update occurs, the id should be regenerated. This isn't quite working yet though.
-                [_elementID release]; _elementID = nil;
-                [element setIdName:nil];
-            }
-        }
-        
-        [self setHTMLElement:element];
-    }
+    DOMHTMLDocument *result = [super HTMLDocument];
+    if (!result) result = [[[self parentWebEditorItem] HTMLElement] ownerDocument];
+    if (!result) result = [[self webEditor] HTMLDocument];
+    return result;
 }
 
-- (NSString *)elementIdName;
-{
-    if (!_elementID)
-    {
-        // No ID has been specified by HTML writer, so generate our own
-        _elementID = [[NSString alloc] initWithFormat:
-                      @"%@-%p",
-                      [self className],
-                      self];
-        
-        // Are we sharing the same HTML element as parent? If so, assign same ID to it
-        SVDOMController *parent = (id)[self parentWebEditorItem];
-        if (![parent hasElementIdName])
-        {
-            [parent setElementIdName:[self elementIdName] includeWhenPublishing:NO];
-        }
-    }
-    
-    return _elementID;
-}
-
-- (BOOL)hasElementIdName; { return _elementID != nil; }
-
-- (void)setElementIdName:(NSString *)ID includeWhenPublishing:(BOOL)shouldPublish;
-{
-    ID = [ID copy];
-    [_elementID release]; _elementID = ID;
-    
-    _shouldPublishElementID = shouldPublish;
-}
+@synthesize shouldIncludeElementIdNameWhenPublishing = _shouldPublishElementID;
 
 @synthesize HTMLContext = _context;
 
@@ -302,7 +253,7 @@
     
     
     // Ignore such preposterous claims if not even attached to an element yet
-    if (![self HTMLElement] && [self hasElementIdName])
+    if (![self HTMLElement] && [self elementIdName])
     {
         // But this could be because the Web Editor is mid reload. If so, do a full update (nasty, but best option available right now I think). #93345
         [viewController setNeedsUpdate];
