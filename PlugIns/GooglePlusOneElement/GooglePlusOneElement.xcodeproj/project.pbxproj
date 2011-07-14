@@ -13,6 +13,8 @@
 		3C57D96513CF4DE900DD6E85 /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C57D96213CF4DE900DD6E85 /* Inspector.xib */; };
 		3C57D98413CF4F7500DD6E85 /* toolbar_plusone.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 3C57D98313CF4F7500DD6E85 /* toolbar_plusone.tiff */; };
 		3CA0B2C213976AFF006D61F5 /* GooglePlusOnePlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA0B2C113976AFF006D61F5 /* GooglePlusOnePlugIn.m */; };
+		3CF4878213CF9A2D00FF4387 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CF4878113CF9A2D00FF4387 /* icon.png */; };
+		3CF4879113CF9AC100FF4387 /* GooglePlusOneInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CF4879013CF9AC100FF4387 /* GooglePlusOneInspector.m */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -28,6 +30,9 @@
 		3C57D98313CF4F7500DD6E85 /* toolbar_plusone.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_plusone.tiff; sourceTree = "<group>"; };
 		3CA0B2C013976AFF006D61F5 /* GooglePlusOnePlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GooglePlusOnePlugIn.h; sourceTree = "<group>"; };
 		3CA0B2C113976AFF006D61F5 /* GooglePlusOnePlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GooglePlusOnePlugIn.m; sourceTree = "<group>"; };
+		3CF4878113CF9A2D00FF4387 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		3CF4878F13CF9AC100FF4387 /* GooglePlusOneInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GooglePlusOneInspector.h; sourceTree = "<group>"; };
+		3CF4879013CF9AC100FF4387 /* GooglePlusOneInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GooglePlusOneInspector.m; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* GooglePlusOne.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GooglePlusOne.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
@@ -70,6 +75,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3CF4878113CF9A2D00FF4387 /* icon.png */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				3C57D96013CF4DE900DD6E85 /* InfoPlist.strings */,
 				3C57D96213CF4DE900DD6E85 /* Inspector.xib */,
@@ -83,6 +89,8 @@
 			children = (
 				3CA0B2C013976AFF006D61F5 /* GooglePlusOnePlugIn.h */,
 				3CA0B2C113976AFF006D61F5 /* GooglePlusOnePlugIn.m */,
+				3CF4878F13CF9AC100FF4387 /* GooglePlusOneInspector.h */,
+				3CF4879013CF9AC100FF4387 /* GooglePlusOneInspector.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -186,6 +194,7 @@
 				3C57D96413CF4DE900DD6E85 /* InfoPlist.strings in Resources */,
 				3C57D96513CF4DE900DD6E85 /* Inspector.xib in Resources */,
 				3C57D98413CF4F7500DD6E85 /* toolbar_plusone.tiff in Resources */,
+				3CF4878213CF9A2D00FF4387 /* icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,6 +206,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3CA0B2C213976AFF006D61F5 /* GooglePlusOnePlugIn.m in Sources */,
+				3CF4879113CF9AC100FF4387 /* GooglePlusOneInspector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
