@@ -79,10 +79,14 @@
     id <SVGraphicContainer> container = [element graphicContainer];
     if (container)
     {
-        SVDOMController *aController = [container newDOMController];
-        [controller addChildWebEditorItem:aController];
-        controller = aController;
-        [aController release];
+        NSString *elementID = [[element attributes] objectForKey:@"id"];
+        if (elementID)
+        {
+            SVDOMController *aController = [container newDOMControllerWithElementIdName:elementID];
+            [controller addChildWebEditorItem:aController];
+            controller = aController;
+            [aController release];
+        }
     }
     
     // Step on down to child elements

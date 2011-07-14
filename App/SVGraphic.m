@@ -872,6 +872,13 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     [self setWidth:width];
 }
 
+- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID;
+{
+    SVDOMController *result = [self newDOMController];
+    [result setElementIdName:elementID includeWhenPublishing:YES];
+    return result;
+}
+
 @end
 
 

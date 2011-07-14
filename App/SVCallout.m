@@ -46,4 +46,11 @@
     [SVGraphic write:context pagelet:graphic];
 }
 
+- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID;
+{
+    SVDOMController *result = [self newDOMController];
+    [result setElementIdName:elementID includeWhenPublishing:YES];
+    return result;
+}
+
 @end
