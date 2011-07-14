@@ -96,6 +96,7 @@
     if (self = [super init])
     {
         _subelements = [[NSMutableArray alloc] init];
+        _dependencies = [[NSMutableSet alloc] init];
     }
     
     return self;
@@ -106,6 +107,7 @@
     [_attributes release];
     [_subelements release];
     [_graphicContainer release];
+    [_dependencies release];
     
     [super dealloc];
 }
@@ -120,5 +122,12 @@
 }
 
 @synthesize graphicContainer = _graphicContainer;
+
+- (NSSet *)dependencies; { return [[_dependencies copy] autorelease]; }
+
+- (void)addDependency:(KSObjectKeyPathPair *)dependency;
+{
+    [_dependencies addObject:dependency];
+}
 
 @end

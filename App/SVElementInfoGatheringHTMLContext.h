@@ -10,12 +10,17 @@
 #import "KSXMLAttributes.h"
 
 
+@class KSObjectKeyPathPair;
+
+
 @interface SVElementInfo : NSObject
 {
 @private
     NSDictionary            *_attributes;
     NSMutableArray          *_subelements;
+    
     id <SVGraphicContainer> _graphicContainer;
+    NSMutableSet            *_dependencies;
 }
 
 @property(nonatomic, copy) NSDictionary *attributes;
@@ -24,6 +29,9 @@
 - (void)addSubelement:(SVElementInfo *)element;
 
 @property(nonatomic, retain) id <SVGraphicContainer> graphicContainer;
+
+- (NSSet *)dependencies;
+- (void)addDependency:(KSObjectKeyPathPair *)dependency;
 
 @end
 
