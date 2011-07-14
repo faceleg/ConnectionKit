@@ -380,6 +380,10 @@
 		if (self.autoplay)				[flashVars appendString:@"&autoplay=1"];
 //		if (kPreloadAuto == self.preload)	[flashVars appendString:@"&autoload=1"];
 		if (self.loop)					[flashVars appendString:@"&loop=1"];
+		if (self.width)
+		{
+			[flashVars appendFormat:@"&width=%d", [self.width intValue]];
+		}
 	}
 	else if ([audioFlashPlayer isEqualToString:@"dewplayer"])
 	{
