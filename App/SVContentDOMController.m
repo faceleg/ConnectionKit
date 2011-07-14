@@ -15,7 +15,8 @@
 
 - (void)populateDOMController:(SVDOMController *)controller
                   fromElement:(SVElementInfo *)element
-                      context:(SVWebEditorHTMLContext *)context;
+                      context:(SVWebEditorHTMLContext *)context
+                     document:(DOMHTMLDocument *)document;
 {
     id <SVGraphicContainer> container = [element graphicContainer];
     if (container)
@@ -23,7 +24,9 @@
         NSString *elementID = [[element attributes] objectForKey:@"id"];
         if (elementID)
         {
-            SVDOMController *aController = [container newDOMControllerWithElementIdName:elementID];
+            SVDOMController *aController = [container newDOMControllerWithElementIdName:elementID
+                                                                               document:document];
+            
             [aController awakeFromHTMLContext:context];
             
             [controller addChildWebEditorItem:aController];
@@ -35,15 +38,18 @@
     // Step on down to child elements
     for (SVElementInfo *anElement in [element subelements])
     {
-        [self populateDOMController:controller fromElement:anElement context:context];
+        [self populateDOMController:controller fromElement:anElement context:context document:document];
     }
 }
 
-- (id)initWithWebEditorHTMLContext:(SVWebEditorHTMLContext *)context;
+- (id)initWithWebEditorHTMLContext:(SVWebEditorHTMLContext *)context document:(DOMHTMLDocument *)document;
 {
+    OBPRECONDITION(context);
+    OBPRECONDITION(document);
+    
     self = [self init];
     
-    [self populateDOMController:self fromElement:[context rootElement] context:context];
+    [self populateDOMController:self fromElement:[context rootElement] context:context document:document];
     
     return self;
 }
@@ -56,6 +62,7 @@
 }
 
 // Never want to be hooked up
-- (NSString *) elementIdName; { return nil; }
+- (DOMHTMLElement *)HTMLElement { return nil; }
+- (NSString *)elementIdName; { return nil; }
 
 @end

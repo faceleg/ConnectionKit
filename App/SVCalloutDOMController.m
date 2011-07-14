@@ -50,14 +50,14 @@
 {
     [super loadHTMLElementFromDocument:document];
     
-    if ([self isHTMLElementCreated])
+    if ([self isHTMLElementLoaded])
     {
         DOMNodeList *nodes = [[self HTMLElement] getElementsByClassName:@"callout-content"];
         [self setCalloutContentElement:(DOMElement *)[nodes item:0]];
     }
 }
 
-- (void)createHTMLElement;
+- (void)loadHTMLElement;
 {
     DOMHTMLDocument *document = [self HTMLDocument];
     
@@ -164,7 +164,7 @@
     SVCalloutDOMController *calloutController = [[[self class] alloc] initWithHTMLDocument:
                                                  (id)[myElement ownerDocument]];
     
-    [calloutController createHTMLElement];  // hopefully -HTMLElement will call this internally one day
+    [calloutController loadHTMLElement];  // hopefully -HTMLElement will call this internally one day
     DOMElement *calloutElement = [calloutController HTMLElement];
     [[myElement parentNode] insertBefore:calloutElement refChild:myElement];
     [[self parentWebEditorItem] addChildWebEditorItem:calloutController];
@@ -209,7 +209,7 @@
     SVCalloutDOMController *calloutController = [[[self class] alloc] initWithHTMLDocument:
                                                  (id)[myElement ownerDocument]];
     
-    [calloutController createHTMLElement];  // hopefully -HTMLElement will call this internally one day
+    [calloutController loadHTMLElement];  // hopefully -HTMLElement will call this internally one day
     DOMElement *calloutElement = [calloutController HTMLElement];
     [[myElement parentNode] insertBefore:calloutElement refChild:[myElement nextSibling]];
     [[self parentWebEditorItem] addChildWebEditorItem:calloutController];

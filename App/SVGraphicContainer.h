@@ -15,7 +15,7 @@
 
 @protocol SVGraphicContainer <NSObject>
 
-- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID;
+- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID document:(DOMHTMLDocument *)document;
 
 @optional
 // Override to call -beginGraphicContainer etc. if you're not happy with default behaviour

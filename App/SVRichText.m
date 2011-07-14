@@ -414,10 +414,10 @@
     }
 }
 
-- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID;
+- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID document:(DOMHTMLDocument *)document;
 {
-    SVDOMController *result = [self newDOMController];
-    [result setElementIdName:elementID includeWhenPublishing:YES];
+    SVDOMController *result = [[SVDOMController alloc] initWithElementIdName:elementID document:document];
+    [result setRepresentedObject:self];
     return result;
 }
 

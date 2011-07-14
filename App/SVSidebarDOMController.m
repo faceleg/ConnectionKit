@@ -856,17 +856,3 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 }
 
 @end
-
-
-
-#pragma mark -
-
-
-@implementation SVSidebar (SVSidebarDOMController)
-
-- (SVDOMController *)newDOMController;
-{
-    return [[SVSidebarDOMController alloc] initWithRepresentedObject:self];
-}
-
-@end

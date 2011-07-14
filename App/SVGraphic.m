@@ -15,6 +15,7 @@
 #import "SVHTMLTemplateParser.h"
 #import "KTImageScalingSettings.h"
 #import "KTMaster.h"
+#import "SVMediaDOMController.h"
 #import "KTPage.h"
 #import "SVPagelet.h"
 #import "SVRichText.h"
@@ -892,10 +893,10 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     [self setWidth:width];
 }
 
-- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID;
+- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID document:(DOMHTMLDocument *)document;
 {
-    SVDOMController *result = [self newDOMController];
-    [result setElementIdName:elementID includeWhenPublishing:YES];
+    SVDOMController *result = [[SVMediaGraphicDOMController alloc] initWithElementIdName:elementID document:document];
+    [result setRepresentedObject:self];
     return result;
 }
 

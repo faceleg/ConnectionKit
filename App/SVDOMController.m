@@ -32,16 +32,6 @@
     return self;
 }
 
-- (id)initWithRepresentedObject:(id <SVDOMControllerRepresentedObject>)content;
-{
-    // Use the object's own ID if it has one. Otherwise make up our own
-    if (self = [self init])
-    {
-        [self setRepresentedObject:content];
-    }
-    return self;
-}
-
 - (void)dealloc
 {
     [self stopObservingDependencies];
@@ -856,24 +846,7 @@
 #pragma mark -
 
 
-@implementation SVContentObject (SVDOMController)
-
-- (SVDOMController *)newDOMController;
-{
-    return [[SVDOMController alloc] initWithRepresentedObject:self];
-}
-
-@end
-
-
-#pragma mark -
-
-
 @implementation WEKWebEditorItem (SVDOMController)
-
-#pragma mark Content
-
-- (void)loadHTMLElementFromDocument:(DOMDocument *)document; { }
 
 #pragma mark Updating
 

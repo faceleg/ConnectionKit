@@ -104,7 +104,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     // Locate body element too
     SVGraphic *graphic = [self representedObject];
-    if ([self isHTMLElementCreated])
+    if ([self isHTMLElementLoaded])
     {
         if ([graphic isPagelet])
         {
@@ -113,7 +113,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
         }
         else
         {
-            if ([self isHTMLElementCreated]) [self setBodyHTMLElement:[self HTMLElement]];
+            if ([self isHTMLElementLoaded]) [self setBodyHTMLElement:[self HTMLElement]];
         }
     }
 }
@@ -308,7 +308,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     {
         // Create a callout stack where we are know
         SVCalloutDOMController *calloutController = [[SVCalloutDOMController alloc] initWithHTMLDocument:(DOMHTMLDocument *)document];
-        [calloutController createHTMLElement];
+        [calloutController loadHTMLElement];
         
         [[[self HTMLElement] parentNode] replaceChild:[calloutController HTMLElement]
                                              oldChild:[self HTMLElement]];
@@ -894,7 +894,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 {
     [super loadHTMLElementFromDocument:document];
     
-    if ([self isHTMLElementCreated])    // #103629
+    if ([self isHTMLElementLoaded])    // #103629
     {
         DOMNode *elementToTest = [self HTMLElement];
         DOMNodeList *contents = [elementToTest getElementsByClassName:@"figure-content"];

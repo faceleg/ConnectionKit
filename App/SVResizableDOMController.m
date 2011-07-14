@@ -33,7 +33,7 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 {
     [super loadHTMLElementFromDocument:document];
     
-    if ([self isHTMLElementCreated])
+    if ([self isHTMLElementLoaded])
     {
         DOMElement *element = [self HTMLElement];
         if (![element hasChildNodes] && ![[element tagName] isEqualToString:@"IMG"])

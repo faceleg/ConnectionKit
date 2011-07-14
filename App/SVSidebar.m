@@ -11,6 +11,7 @@
 #import "SVGraphic.h"
 #import "SVHTMLTemplateParser.h"
 #import "KTPage.h"
+#import "SVSidebarDOMController.h"
 #import "SVSidebarPageletsController.h"
 #import "SVTemplate.h"
 #import "SVWebEditorHTMLContext.h"
@@ -87,10 +88,9 @@
     [SVGraphic write:context pagelet:graphic];
 }
 
-- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID;
+- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID document:(DOMHTMLDocument *)document;
 {
-    SVDOMController *result = [self newDOMController];
-    [result setElementIdName:elementID includeWhenPublishing:YES];
+    SVDOMController *result = [[SVSidebarDOMController alloc] initWithElementIdName:elementID document:document];
     return result;
 }
 

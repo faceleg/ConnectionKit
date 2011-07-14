@@ -182,7 +182,7 @@
     // Is this a change due to being orphaned while editing? If so, pass down to image controller too. #83312
     for (WEKWebEditorItem *anItem in [self childWebEditorItems])
     {
-        if ([self isHTMLElementCreated] && ([self HTMLElement] == [anItem HTMLElement]))
+        if ([self isHTMLElementLoaded] && ([self HTMLElement] == [anItem HTMLElement]))
         {
             [anItem setHTMLElement:element];
         }
@@ -252,20 +252,6 @@
     
     
     return size;
-}
-
-@end
-
-
-#pragma mark -
-
-
-@implementation SVMediaGraphic (SVDOMController)
-
-- (SVDOMController *)newDOMController;
-{
-    //Class class = ([self isPagelet] ? [SVImagePageletDOMController class] : [SVImageDOMController class]);
-    return [[SVMediaGraphicDOMController alloc] initWithRepresentedObject:self];
 }
 
 @end

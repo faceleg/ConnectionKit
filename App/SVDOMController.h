@@ -47,14 +47,6 @@
     NSArray *_dragTypes;
 }
 
-#pragma mark Creating a DOM Controller
-
-//  1.  -init
-//  2.  Set elementIdName to a string based off of self and the content object. The context will correct this if a different ID actually gets written
-//  3.  Set content as .representedObject
-- (id)initWithRepresentedObject:(id <SVDOMControllerRepresentedObject>)content;
-
-
 #pragma mark Hierarchy
 - (WEKWebEditorItem *)itemForDOMNode:(DOMNode *)node;
 

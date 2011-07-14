@@ -28,10 +28,10 @@
     [super dealloc];
 }
 
-- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID
+- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID document:(DOMHTMLDocument *)document;
 {
-    SVDOMController *result = [[SVPageletDOMController alloc] initWithRepresentedObject:_graphic];
-    [result setElementIdName:elementID includeWhenPublishing:NO];
+    SVDOMController *result = [[SVPageletDOMController alloc] initWithElementIdName:elementID document:document];
+    [result setRepresentedObject:self];
     return result;
 }
 
