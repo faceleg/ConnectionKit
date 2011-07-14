@@ -31,7 +31,7 @@
 - (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID
 {
     SVDOMController *result = [[SVPageletDOMController alloc] initWithRepresentedObject:_graphic];
-    [result setElementIdName:elementID includeWhenPublishing:YES];
+    [result setElementIdName:elementID includeWhenPublishing:NO];
     return result;
 }
 
