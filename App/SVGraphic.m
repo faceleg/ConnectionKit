@@ -396,21 +396,21 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
         context = [[SVExplicitlySizedTestHTMLContext alloc] initWithOutputWriter:nil];
         [context setLiveDataFeeds:[[NSUserDefaults standardUserDefaults] boolForKey:kSVLiveDataFeedsKey]];
     }
-    [[context rootDOMController] stopObservingDependencies];
+    //[[context rootDOMController] stopObservingDependencies];
     
     
     [self writeBody:context];
     
     
     BOOL result = NO;
-    for (WEKWebEditorItem *anItem in [[context rootDOMController] enumerator])
+    /*for (WEKWebEditorItem *anItem in [[context rootDOMController] enumerator])
     {
         if ([anItem isKindOfClass:[SVResizableDOMController class]])
         {
             result = YES;
             break;
         }
-    }
+    }*/
     
     [context release];
     return result;

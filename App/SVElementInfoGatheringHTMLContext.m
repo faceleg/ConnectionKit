@@ -88,7 +88,7 @@
 
 - (void)beginGraphicContainer:(id <SVGraphicContainer>)container;
 {
-    OBPRECONDITION(!_earlyElement);
+    //OBPRECONDITION(!_earlyElement);
     _earlyElement = [[SVElementInfo alloc] initWithGraphicContainer:container];
     
     [super beginGraphicContainer:container];

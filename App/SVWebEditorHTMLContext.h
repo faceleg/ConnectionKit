@@ -19,20 +19,9 @@
 @interface SVWebEditorHTMLContext : SVElementInfoGatheringHTMLContext
 {
   @private
-    SVContentDOMController  *_rootController;
-    SVDOMController         *_currentDOMController;  // weak ref
-    NSIndexPath             *_DOMControllerPoints;
-        
     NSMutableSet        *_media;
     NSMutableDictionary *_mediaByData;
-    
-    SVSidebarDOMController      *_sidebarDOMController;
 }
-
-#pragma mark Root
-@property(nonatomic, retain, readonly) SVContentDOMController *rootDOMController;
-- (void)addDOMController:(SVDOMController *)controller; // adds to the current controller
-
 
 #pragma mark Media
 - (NSSet *)media;
@@ -49,10 +38,6 @@
 #pragma mark Sidebar
 
 - (void)startSidebar:(SVSidebar *)sidebar; // call -endElement after writing contents
-
-
-#pragma mark Current Item
-- (SVDOMController *)currentDOMController;
 
 
 @end
