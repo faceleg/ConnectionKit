@@ -334,6 +334,7 @@
 		2713C0691078177A000864C2 /* SVLayoutView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2713C0671078177A000864C2 /* SVLayoutView.h */; };
 		2713C06A1078177A000864C2 /* SVLayoutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2713C0681078177A000864C2 /* SVLayoutView.m */; };
 		271575CE0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 271575CC0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.m */; };
+		2718591013CFAEB700FCF04E /* libssh2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CB7531713CFA9C90033600F /* libssh2.dylib */; };
 		271884431296A28000139C89 /* KSElementInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 271884411296A28000139C89 /* KSElementInfo.h */; };
 		271884441296A28000139C89 /* KSElementInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 271884421296A28000139C89 /* KSElementInfo.m */; };
 		27196F631090A9D40096B612 /* SVInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = 27196F611090A9D40096B612 /* SVInspector.h */; settings = {ATTRIBUTES = (); }; };
@@ -742,7 +743,6 @@
 		27FC47F01030CE7500A4A5E2 /* NSSet+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FC47EE1030CE7500A4A5E2 /* NSSet+Karelia.m */; };
 		27FD6A6713C08B7900E9D407 /* CK2SFTPSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FD6A6513C08B7900E9D407 /* CK2SFTPSession.h */; };
 		27FD6A6813C08B7900E9D407 /* CK2SFTPSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FD6A6613C08B7900E9D407 /* CK2SFTPSession.m */; };
-		27FD6B4113C09BD400E9D407 /* libssh2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 27FD6B4013C09BD400E9D407 /* libssh2.dylib */; };
 		27FD6B4713C09C4500E9D407 /* libssh2_publickey.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FD6B4413C09C4500E9D407 /* libssh2_publickey.h */; };
 		27FD6B4813C09C4500E9D407 /* libssh2_sftp.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FD6B4513C09C4500E9D407 /* libssh2_sftp.h */; };
 		27FD6B4913C09C4500E9D407 /* libssh2.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FD6B4613C09C4500E9D407 /* libssh2.h */; };
@@ -2524,7 +2524,6 @@
 		27FC47EE1030CE7500A4A5E2 /* NSSet+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSSet+Karelia.m"; path = "../../Shared/Foundation/NSSet+Karelia.m"; sourceTree = "<group>"; };
 		27FD6A6513C08B7900E9D407 /* CK2SFTPSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CK2SFTPSession.h; sourceTree = "<group>"; };
 		27FD6A6613C08B7900E9D407 /* CK2SFTPSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CK2SFTPSession.m; sourceTree = "<group>"; };
-		27FD6B4013C09BD400E9D407 /* libssh2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssh2.dylib; path = usr/local/lib/libssh2.dylib; sourceTree = SDKROOT; };
 		27FD6B4413C09C4500E9D407 /* libssh2_publickey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libssh2_publickey.h; path = include/libssh2_publickey.h; sourceTree = "<group>"; };
 		27FD6B4513C09C4500E9D407 /* libssh2_sftp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libssh2_sftp.h; path = include/libssh2_sftp.h; sourceTree = "<group>"; };
 		27FD6B4613C09C4500E9D407 /* libssh2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libssh2.h; path = include/libssh2.h; sourceTree = "<group>"; };
@@ -3403,6 +3402,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2718591013CFAEB700FCF04E /* libssh2.dylib in Frameworks */,
 				775DFF38067A968500C5B868 /* Cocoa.framework in Frameworks */,
 				3C202DB507E00B9300DE4994 /* AddressBook.framework in Frameworks */,
 				3C72D3C6094A23880061A876 /* Carbon.framework in Frameworks */,
@@ -3429,7 +3429,6 @@
 				CEBEB32D10AA7B07006E7D8A /* iMedia.framework in Frameworks */,
 				CEE1BE67117D2299002AA67D /* Symbolication.framework in Frameworks */,
 				CEF2889F11CC2D7300122D03 /* JSTalk.framework in Frameworks */,
-				27FD6B4113C09BD400E9D407 /* libssh2.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4731,7 +4730,6 @@
 				3C3F547C0D625919004885E7 /* Connection.framework */,
 				79D35F950974C84000241EDA /* Growl.framework */,
 				3C3F54530D6258AA004885E7 /* Sparkle.framework */,
-				27FD6B4013C09BD400E9D407 /* libssh2.dylib */,
 			);
 			name = "Third Party Frameworks";
 			sourceTree = SOURCE_ROOT;
@@ -9430,6 +9428,10 @@
 					"\"$(SRCROOT)/../../Shared/ThirdParty/JSTalk\"",
 				);
 				INFOPLIST_FILE = Info.plist;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				PRODUCT_NAME = Sandvox;
 				WRAPPER_EXTENSION = app;
 			};
@@ -9456,6 +9458,10 @@
 					"\"$(SRCROOT)/../../Shared/ThirdParty/JSTalk\"",
 				);
 				INFOPLIST_FILE = Info.plist;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				MOMC_NO_WARNINGS = YES;
 				PRODUCT_NAME = Sandvox;
 				WRAPPER_EXTENSION = app;
