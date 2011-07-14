@@ -10,9 +10,6 @@
 #import "KSXMLAttributes.h"
 
 
-@class SVDOMController;
-
-
 @interface SVElementInfo : NSObject
 {
 @private
@@ -40,6 +37,7 @@
     NSMutableArray  *_topLevelElements;
     
     NSMutableArray  *_openElementInfos;
+    BOOL            _wantsDOMController;
 }
 
 @property(nonatomic, copy, readonly) NSArray *topLevelElements;

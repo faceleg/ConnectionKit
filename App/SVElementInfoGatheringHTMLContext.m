@@ -56,7 +56,12 @@
     {
         SVElementInfo *info = [[SVElementInfo alloc] init];
         [info setAttributes:[[self currentAttributes] attributesAsDictionary]];
-        [info setGraphicContainer:[self currentGraphicContainer]];
+        
+        if (_wantsDOMController)
+        {
+            [info setGraphicContainer:[self currentGraphicContainer]];
+            _wantsDOMController = NO;
+        }
         
         [[self currentElement] addSubelement:info];
         [_openElementInfos addObject:info];
@@ -70,6 +75,12 @@
 {
     [super endElement];
     [_openElementInfos removeLastObject];
+}
+
+- (void)beginGraphicContainer:(id <SVGraphicContainer>)container;
+{
+    _wantsDOMController = YES;
+    [super beginGraphicContainer:container];
 }
 
 @end
