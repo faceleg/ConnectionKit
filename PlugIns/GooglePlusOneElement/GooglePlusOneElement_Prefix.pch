@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'GooglePlusOneElement' target in the 'GooglePlusOneElement' project.
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
