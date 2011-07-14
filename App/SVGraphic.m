@@ -414,6 +414,10 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 }
 + (NSSet *)keyPathsForValuesAffectingContentWidth; { return [NSSet setWithObject:@"width"]; }
 
+- (NSNumber *)contentHeight; { return [self height]; }
+- (void)setContentHeight:(NSNumber *)height; { [self setHeight:height]; }
++ (NSSet *)keyPathsForValuesAffectingContentHeight; { return [NSSet setWithObject:@"height"]; }
+
 #pragma mark Sidebar
 
 + (BOOL)validateSortKeyForPagelets:(NSSet **)pagelets error:(NSError **)error;
