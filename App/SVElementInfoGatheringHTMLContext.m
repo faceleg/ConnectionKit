@@ -83,6 +83,8 @@
         if (elementID)
         {
             SVDOMController *aController = [container newDOMControllerWithElementIdName:elementID];
+            [aController awakeFromHTMLContext:self];
+            
             [controller addChildWebEditorItem:aController];
             controller = aController;
             [aController release];
