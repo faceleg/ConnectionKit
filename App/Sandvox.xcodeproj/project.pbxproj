@@ -665,6 +665,8 @@
 		27D353B911A9CC7200BC4DB8 /* KSComparisonValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D353B711A9CC7200BC4DB8 /* KSComparisonValueTransformer.m */; };
 		27D47EBF115A60CB007550F6 /* SVCalloutDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 273D705810E8ECB4003F5BA8 /* SVCalloutDOMController.h */; };
 		27D47EC0115A60CB007550F6 /* SVCalloutDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273D705910E8ECB4003F5BA8 /* SVCalloutDOMController.m */; };
+		27D68FD013CF6D2E00D7B867 /* SVPagelet.h in Headers */ = {isa = PBXBuildFile; fileRef = 27D68FCE13CF6D2E00D7B867 /* SVPagelet.h */; };
+		27D68FD113CF6D2E00D7B867 /* SVPagelet.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D68FCF13CF6D2E00D7B867 /* SVPagelet.m */; };
 		27D6DE9C0DCFA95800C8834F /* KTHostProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = CEAE1667084530C1007025D4 /* KTHostProperties.h */; settings = {ATTRIBUTES = (); }; };
 		27D7340612118E3400722189 /* SVIndexPlugIn.h in Headers */ = {isa = PBXBuildFile; fileRef = 27D7340412118E3400722189 /* SVIndexPlugIn.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27D7340712118E3400722189 /* SVIndexPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D7340512118E3400722189 /* SVIndexPlugIn.m */; };
@@ -2403,6 +2405,8 @@
 		27CFC5DF123E280800BF018C /* Sandvox 1.5.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = "Sandvox 1.5.xcdatamodel"; sourceTree = "<group>"; };
 		27D353B611A9CC7200BC4DB8 /* KSComparisonValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSComparisonValueTransformer.h; sourceTree = "<group>"; };
 		27D353B711A9CC7200BC4DB8 /* KSComparisonValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSComparisonValueTransformer.m; sourceTree = "<group>"; };
+		27D68FCE13CF6D2E00D7B867 /* SVPagelet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPagelet.h; sourceTree = "<group>"; };
+		27D68FCF13CF6D2E00D7B867 /* SVPagelet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPagelet.m; sourceTree = "<group>"; };
 		27D7340412118E3400722189 /* SVIndexPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndexPlugIn.h; sourceTree = "<group>"; };
 		27D7340512118E3400722189 /* SVIndexPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndexPlugIn.m; sourceTree = "<group>"; };
 		27D7345312119C6600722189 /* SVMediaGraphicInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaGraphicInspector.h; sourceTree = "<group>"; };
@@ -3901,6 +3905,8 @@
 				27629966131553BE001EC943 /* SVCallout.m */,
 				278645B513C62D1C0098C34F /* SVElementInfoGatheringHTMLContext.h */,
 				278645B613C62D1C0098C34F /* SVElementInfoGatheringHTMLContext.m */,
+				27D68FCE13CF6D2E00D7B867 /* SVPagelet.h */,
+				27D68FCF13CF6D2E00D7B867 /* SVPagelet.m */,
 			);
 			name = "HTML Context";
 			sourceTree = "<group>";
@@ -6467,6 +6473,7 @@
 				27F503E813BF3E1300F0FFD7 /* KSPerformOnThreadOperation.h in Headers */,
 				276BC94713C34DDC00EB2798 /* SVWorkspaceIconProtocol.h in Headers */,
 				278645B713C62D1C0098C34F /* SVElementInfoGatheringHTMLContext.h in Headers */,
+				27D68FD013CF6D2E00D7B867 /* SVPagelet.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8208,6 +8215,7 @@
 				27F503E913BF3E1300F0FFD7 /* KSPerformOnThreadOperation.m in Sources */,
 				276BC94813C34DDC00EB2798 /* SVWorkspaceIconProtocol.m in Sources */,
 				278645B813C62D1C0098C34F /* SVElementInfoGatheringHTMLContext.m in Sources */,
+				27D68FD113CF6D2E00D7B867 /* SVPagelet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
