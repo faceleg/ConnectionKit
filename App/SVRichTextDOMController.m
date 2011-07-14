@@ -15,7 +15,7 @@
 #import "SVContentDOMController.h"
 #import "KTDocument.h"
 #import "KTPage.h"
-#import "SVGraphicDOMController.h"
+#import "SVPageletDOMController.h"
 #import "SVGraphicFactory.h"
 #import "SVHTMLContext.h"
 #import "SVImage.h"
@@ -719,7 +719,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
         
         
         // Create controller for graphic
-        SVGraphicDOMController *controller = [[graphic newDOMController] autorelease];
+        SVPageletDOMController *controller = [[graphic newDOMController] autorelease];
         [controller loadPlaceholderDOMElementInDocument:[[self HTMLElement] ownerDocument]];
         [controller setHTMLContext:context];
         
@@ -905,7 +905,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     if ([webEditor shouldChangeText:self])
     {
         NSArray *selection = [self selectedItems];
-        for (SVGraphicDOMController *anItem in selection)
+        for (SVPageletDOMController *anItem in selection)
         {
             // Only graphics can be deleted with -delete. #108128
             if ([anItem graphicContainerDOMController] == [anItem parentWebEditorItem])

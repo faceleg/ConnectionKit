@@ -82,7 +82,7 @@
 
 - (SVDOMController *)newDOMController;
 {
-    return [[SVGraphicDOMController alloc] initWithRepresentedObject:self];
+    return [[SVPageletDOMController alloc] initWithRepresentedObject:self];
 }
 
 - (SVTextDOMController *)newTextDOMController;

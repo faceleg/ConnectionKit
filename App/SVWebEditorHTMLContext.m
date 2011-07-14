@@ -11,7 +11,6 @@
 #import "SVApplicationController.h"
 #import "SVCalloutDOMController.h"
 #import "SVContentDOMController.h"
-#import "SVGraphicDOMController.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVHTMLTextBlock.h"
 #import "SVMediaDOMController.h"

@@ -8,7 +8,7 @@
 
 #import "SVResizableDOMController.h"
 
-#import "SVGraphicDOMController.h"
+#import "SVPageletDOMController.h"
 #import "SVPlugInGraphic.h"
 #import "Sandvox.h"
 #import "SVWebEditorHTMLContext.h"
@@ -70,7 +70,7 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 - (void)delete;
 {
     // Remove parent controller instead of ourself
-    SVGraphicDOMController *parent = [self enclosingGraphicDOMController];
+    SVPageletDOMController *parent = [self enclosingGraphicDOMController];
     OBASSERT(parent);
     
     [parent delete];

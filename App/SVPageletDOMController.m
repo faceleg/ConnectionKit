@@ -1,12 +1,12 @@
 //
-//  SVGraphicDOMController.m
+//  SVPageletDOMController.m
 //  Sandvox
 //
 //  Created by Mike on 23/02/2010.
 //  Copyright 2010-2011 Karelia Software. All rights reserved.
 //
 
-#import "SVGraphicDOMController.h"
+#import "SVPageletDOMController.h"
 #import "SVGraphic.h"
 
 #import "SVCalloutDOMController.h"
@@ -42,7 +42,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 @end
 
 
-@interface SVGraphicPlaceholderDOMController : SVGraphicDOMController
+@interface SVGraphicPlaceholderDOMController : SVPageletDOMController
 @end
 
 
@@ -57,7 +57,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 #pragma mark -
 
 
-@implementation SVGraphicDOMController
+@implementation SVPageletDOMController
 
 - (void)dealloc;
 {
@@ -75,9 +75,9 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 #pragma mark Factory
 
-+ (SVGraphicDOMController *)graphicPlaceholderDOMController;
++ (SVPageletDOMController *)graphicPlaceholderDOMController;
 {
-    SVGraphicDOMController *result = [[[SVGraphicPlaceholderDOMController alloc] init] autorelease];
+    SVPageletDOMController *result = [[[SVGraphicPlaceholderDOMController alloc] init] autorelease];
     return result;
 }
 
@@ -858,11 +858,11 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 @implementation WEKWebEditorItem (SVGraphicDOMController)
 
-- (SVGraphicDOMController *)enclosingGraphicDOMController;
+- (SVPageletDOMController *)enclosingGraphicDOMController;
 {
     id result = [self parentWebEditorItem];
     
-    if (![result isKindOfClass:[SVGraphicDOMController class]])
+    if (![result isKindOfClass:[SVPageletDOMController class]])
     {
         result = [result enclosingGraphicDOMController];
     }

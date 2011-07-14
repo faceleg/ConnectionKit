@@ -1,5 +1,5 @@
 //
-//  SVGraphicDOMController.h
+//  SVPageletDOMController.h
 //  Sandvox
 //
 //  Created by Mike on 23/02/2010.
@@ -14,7 +14,7 @@
 #import "SVOffscreenWebViewController.h"
 
 
-@interface SVGraphicDOMController : SVDOMController <SVOffscreenWebViewControllerDelegate>
+@interface SVPageletDOMController : SVDOMController <SVOffscreenWebViewControllerDelegate>
 {
   @private
     DOMHTMLElement  *_bodyElement;
@@ -25,7 +25,7 @@
     NSArray                         *_offscreenDOMControllers;
 }
 
-+ (SVGraphicDOMController *)graphicPlaceholderDOMController;
++ (SVPageletDOMController *)graphicPlaceholderDOMController;
 
 @property(nonatomic, retain) DOMHTMLElement *bodyHTMLElement;
 - (DOMElement *)graphicDOMElement;
@@ -42,7 +42,7 @@
 
 
 @interface WEKWebEditorItem (SVGraphicDOMController)
-- (SVGraphicDOMController *)enclosingGraphicDOMController;
+- (SVPageletDOMController *)enclosingGraphicDOMController;
 @end
 
 

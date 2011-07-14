@@ -17,7 +17,7 @@
 #import "SVParagraphedHTMLWriterDOMAdaptor.h"
 
 
-@class SVHTMLTextBlock, SVGraphicDOMController;
+@class SVHTMLTextBlock, SVPageletDOMController;
 
 
 @interface SVTextDOMController : SVDOMController <SVWebEditorText, SVGraphicContainerDOMController, DOMEventListener, KSXMLWriterDOMAdaptorDelegate>

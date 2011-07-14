@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "SVGraphicDOMController.h"
+#import "SVPageletDOMController.h"
 
 
 @protocol SVGraphicContainerDOMController <NSObject>

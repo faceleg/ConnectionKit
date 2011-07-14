@@ -7,7 +7,7 @@
 //
 
 #import "SVResizableDOMController.h"
-#import "SVGraphicDOMController.h"
+#import "SVPageletDOMController.h"
 
 #import "SVMediaGraphic.h"
 
@@ -26,5 +26,5 @@
 #pragma mark -
 
 
-@interface SVMediaGraphicDOMController : SVGraphicDOMController
+@interface SVMediaGraphicDOMController : SVPageletDOMController
 @end

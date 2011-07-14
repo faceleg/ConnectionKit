@@ -6,11 +6,11 @@
 //  Copyright 2011 Karelia Software. All rights reserved.
 //
 
-#import "SVGraphicDOMController.h"
+#import "SVPageletDOMController.h"
 #import "SVRawHTMLGraphic.h"
 
 
-@interface SVRawHTMLDOMController : SVGraphicDOMController
+@interface SVRawHTMLDOMController : SVPageletDOMController
 
 - (void)editRawHTMLInSelectedBlock:(id)sender;
 

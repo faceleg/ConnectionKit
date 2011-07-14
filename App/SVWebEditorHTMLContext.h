@@ -8,7 +8,7 @@
 
 #import "SVElementInfoGatheringHTMLContext.h"
 
-#import "SVGraphicDOMController.h"
+#import "SVPageletDOMController.h"
 
 
 @class SVWebEditorViewController, SVContentDOMController, SVSidebarDOMController;
