@@ -189,6 +189,7 @@
 				3C5851921289ACB00084315D /* PBXTargetDependency */,
 				3C79F2F211F3BF9900B699EE /* PBXTargetDependency */,
 				3CBC728B11F0C6A600716937 /* PBXTargetDependency */,
+				3CF4877413CF93CA00FF4387 /* PBXTargetDependency */,
 				3C0049581210CB9A006BAD9C /* PBXTargetDependency */,
 				3C4CDF2F1207413A002AF966 /* PBXTargetDependency */,
 				3C9870F111F3D6020053A72C /* PBXTargetDependency */,
@@ -1835,6 +1836,20 @@
 			remoteGlobalIDString = 3CE2B2B70D7F1DD900E2711E;
 			remoteInfo = "Shared-UpdateToT";
 		};
+		3CF4877113CF93BB00FF4387 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3CF4876D13CF93BB00FF4387 /* GooglePlusOneElement.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* GooglePlusOne.svxElement */;
+			remoteInfo = GooglePlusOneElement;
+		};
+		3CF4877313CF93CA00FF4387 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3CF4876D13CF93BB00FF4387 /* GooglePlusOneElement.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* GooglePlusOneElement */;
+			remoteInfo = GooglePlusOneElement;
+		};
 		3CFCF2F1123EC863003A635C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C42DE160D64CCC7004F35FD /* RSSBadgeElement.xcodeproj */;
@@ -2683,6 +2698,7 @@
 		3CE79DB80D6261B300FCEE6D /* NSOutlineView+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSOutlineView+KTExtensions.m"; sourceTree = "<group>"; };
 		3CECB4FA085EA759000A9A69 /* SandvoxDebug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = SandvoxDebug.xcconfig; sourceTree = "<group>"; };
 		3CECB524085EA76A000A9A69 /* SandvoxRelease.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = SandvoxRelease.xcconfig; sourceTree = "<group>"; };
+		3CF4876D13CF93BB00FF4387 /* GooglePlusOneElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GooglePlusOneElement.xcodeproj; path = ../PlugIns/GooglePlusOneElement/GooglePlusOneElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3CF941DA0D623E4900B1C83D /* NSImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSImagePicker.h; sourceTree = "<group>"; };
 		3CF941DC0D623E5400B1C83D /* ContactPassword.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactPassword.h; sourceTree = "<group>"; };
 		3CF941F80D623ECF00B1C83D /* KTPageTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = KTPageTemplate.html; sourceTree = "<group>"; };
@@ -5153,6 +5169,7 @@
 				3C5851881289AC980084315D /* FacebookElement.xcodeproj */,
 				3CA9FF820D63C4DA00815310 /* FeedElement.xcodeproj */,
 				3C42E4F10D650429004F35FD /* FlickrElement.xcodeproj */,
+				3CF4876D13CF93BB00FF4387 /* GooglePlusOneElement.xcodeproj */,
 				3CA900670D63C76100815310 /* IFrameElement.xcodeproj */,
 				3C42E4830D64FCE3004F35FD /* IMStatusElement.xcodeproj */,
 				3CA901A20D63D45B00815310 /* LinkListElement.xcodeproj */,
@@ -5211,6 +5228,14 @@
 				CEB721BB108FCEA500511E74 /* QuickLook.framework */,
 			);
 			name = "Cocoa Frameworks";
+			sourceTree = "<group>";
+		};
+		3CF4876E13CF93BB00FF4387 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3CF4877213CF93BB00FF4387 /* GooglePlusOne.svxElement */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		3CFCF2EE123EC863003A635C /* Products */ = {
@@ -6651,6 +6676,10 @@
 					ProjectRef = 3C095BE20D5D27FA00DE6F62 /* GeneralIndex.xcodeproj */;
 				},
 				{
+					ProductGroup = 3CF4876E13CF93BB00FF4387 /* Products */;
+					ProjectRef = 3CF4876D13CF93BB00FF4387 /* GooglePlusOneElement.xcodeproj */;
+				},
+				{
 					ProductGroup = 3C0049521210CB87006BAD9C /* Products */;
 					ProjectRef = 3CA900670D63C76100815310 /* IFrameElement.xcodeproj */;
 				},
@@ -6886,6 +6915,13 @@
 			fileType = wrapper.cfbundle;
 			path = Flickr.svxElement;
 			remoteRef = 3CBC728811F0C69900716937 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3CF4877213CF93BB00FF4387 /* GooglePlusOne.svxElement */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = GooglePlusOne.svxElement;
+			remoteRef = 3CF4877113CF93BB00FF4387 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3CFCF2F2123EC863003A635C /* RSSBadge.svxElement */ = {
@@ -8442,6 +8478,11 @@
 			isa = PBXTargetDependency;
 			target = 3CE2B2B70D7F1DD900E2711E /* UpdateShared */;
 			targetProxy = 3CE2B2C10D7F1E8A00E2711E /* PBXContainerItemProxy */;
+		};
+		3CF4877413CF93CA00FF4387 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GooglePlusOneElement;
+			targetProxy = 3CF4877313CF93CA00FF4387 /* PBXContainerItemProxy */;
 		};
 		3CFCF2F4123EC88F003A635C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
