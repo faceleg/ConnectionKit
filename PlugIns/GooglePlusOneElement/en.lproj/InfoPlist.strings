@@ -1,5 +1,5 @@
 ﻿/* Localized versions of Info.plist keys */
 
-CFBundleDisplayName = "+1";
+CFBundleDisplayName = "+1 button";
 /* Description of plugin, as a verb that you (the website creator) do by putting this in your website. */
-"SVPlugInDescription" = "Add a Google +1 to your page";
+"SVPlugInDescription" = "Add a Google +1 button to your page";
