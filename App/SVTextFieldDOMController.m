@@ -198,7 +198,7 @@
 {
     _alignment = alignment;
     
-    if ([self isHTMLElementCreated])
+    if ([self isHTMLElementLoaded])
     {
         DOMCSSStyleDeclaration *style = [[self textHTMLElement] style];
         
@@ -421,7 +421,7 @@
 
 - (NSString *)blurb
 {
-    if ([self isHTMLElementCreated]) return [[self textHTMLElement] innerText];
+    if ([self isHTMLElementLoaded]) return [[self textHTMLElement] innerText];
     return [super blurb];
 }
 
@@ -436,9 +436,10 @@
 
 @implementation SVTitleBox (SVDOMController)
 
-- (SVTextDOMController *)newTextDOMController;
+- (SVTextDOMController *)newTextDOMControllerWithElementIdName:(NSString *)elementID document:(DOMHTMLDocument *)document;
 {
-    SVTextFieldDOMController *result = [[SVTextFieldDOMController alloc] initWithRepresentedObject:self];
+    SVTextFieldDOMController *result = [[SVTextFieldDOMController alloc] initWithElementIdName:elementID document:document];
+    [result setRepresentedObject:self];
     [result setPlaceholderHTMLString:NSLocalizedString(@"Title", "placeholder")];
     [result setRichText:YES];
     [result setFieldEditor:YES];

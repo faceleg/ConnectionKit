@@ -417,22 +417,22 @@
 
 #pragma mark DOM Controller
 
-- (SVDOMController *)newDOMController;
-{    
+- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID document:(DOMHTMLDocument *)document;
+{
     // Use the right sort of text area
     id value = HTML_VALUE;
     
-    if ([value respondsToSelector:@selector(newTextDOMController)])
+    if ([value respondsToSelector:@selector(newTextDOMControllerWithElementIdName:document:)])
     {
         // Copy basic properties from text block
-        SVTextDOMController *controller = [value newTextDOMController];
+        SVTextDOMController *controller = [value newTextDOMControllerWithElementIdName:elementID document:document];
         [controller setTextBlock:self];
         return controller;
     }
     
     
     // Copy basic properties from text block
-    SVTextFieldDOMController *result = [[SVTextFieldDOMController alloc] init];
+    SVTextFieldDOMController *result = [[SVTextFieldDOMController alloc] initWithElementIdName:elementID document:document];
     [result setTextBlock:self];
     [result setEditable:[self isEditable]];
     [result setRichText:[self isRichText]];
@@ -448,13 +448,6 @@
              options:nil];
     }
     
-    return result;
-}
-
-- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID;
-{
-    SVDOMController *result = [self newDOMController];
-    [result setElementIdName:elementID includeWhenPublishing:YES];
     return result;
 }
 

@@ -74,7 +74,7 @@
 {
     [super loadHTMLElementFromDocument:document];
     
-    if (![self isHTMLElementCreated]) return;
+    if (![self isHTMLElementLoaded]) return;
     
     
     // Text element is the kBlock
@@ -1354,9 +1354,10 @@
 
 @implementation SVArticle (SVArticleDOMController)
 
-- (SVTextDOMController *)newTextDOMController;
+- (SVTextDOMController *)newTextDOMControllerWithElementIdName:(NSString *)elementID document:(DOMHTMLDocument *)document;
 {
-    SVArticleDOMController *result = [[SVArticleDOMController alloc] initWithRepresentedObject:self];
+    SVArticleDOMController *result = [[SVArticleDOMController alloc] initWithElementIdName:elementID document:document];
+    [result setRepresentedObject:self];
     [result setRichText:YES];
     [result setImportsGraphics:YES];
     

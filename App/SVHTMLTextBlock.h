@@ -91,6 +91,6 @@
 
 
 @interface NSObject (SVHTMLTextBlock)
-- (SVTextDOMController *)newTextDOMController;
+- (SVTextDOMController *)newTextDOMControllerWithElementIdName:(NSString *)elementID document:(DOMHTMLDocument *)document;
 @end
 
