@@ -55,7 +55,7 @@
     {
         SVElementInfo *info = [[SVElementInfo alloc] init];
         [info setAttributes:[[self currentAttributes] attributesAsDictionary]];
-        [info setGraphic:_currentGraphic]; _currentGraphic = nil;
+        [info setGraphicContainer:[self currentGraphicContainer]];
         
         [[self currentElement] addSubelement:info];
         [_openElementInfos addObject:info];
@@ -69,20 +69,6 @@
 {
     [super endElement];
     [_openElementInfos removeLastObject];
-}
-
-#pragma mark Graphics
-
-- (void)writeGraphic:(id <SVGraphic>)graphic;
-{
-    OBASSERTSTRING(_currentGraphic == nil || _currentGraphic == graphic,
-                   @"Trying to write two graphics at once");
-    
-    _currentGraphic = graphic;
-    [super writeGraphic:graphic];
-    
-    OBASSERTSTRING(_currentGraphic == nil,
-                   @"Graphic doesn't seem to have actually been written");
 }
 
 @end
@@ -107,7 +93,7 @@
 {
     [_attributes release];
     [_subelements release];
-    [_graphic release];
+    [_graphicContainer release];
     
     [super dealloc];
 }
@@ -121,6 +107,6 @@
     [_subelements addObject:element];
 }
 
-@synthesize graphic = _graphic;
+@synthesize graphicContainer = _graphicContainer;
 
 @end

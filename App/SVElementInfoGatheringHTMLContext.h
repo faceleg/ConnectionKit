@@ -13,9 +13,9 @@
 @interface SVElementInfo : NSObject
 {
 @private
-    NSDictionary    *_attributes;
-    NSMutableArray  *_subelements;
-    id <SVGraphic>  _graphic;
+    NSDictionary            *_attributes;
+    NSMutableArray          *_subelements;
+    id <SVGraphicContainer> _graphicContainer;
 }
 
 @property(nonatomic, copy) NSDictionary *attributes;
@@ -23,7 +23,7 @@
 @property(nonatomic, copy, readonly) NSArray *subelements;
 - (void)addSubelement:(SVElementInfo *)element;
 
-@property(nonatomic, retain) id <SVGraphic> graphic;
+@property(nonatomic, retain) id <SVGraphicContainer> graphicContainer;
 
 @end
 
@@ -37,7 +37,6 @@
     NSMutableArray  *_topLevelElements;
     
     NSMutableArray  *_openElementInfos;
-    id <SVGraphic>  _currentGraphic;
 }
 
 @property(nonatomic, copy, readonly) NSArray *topLevelElements;
