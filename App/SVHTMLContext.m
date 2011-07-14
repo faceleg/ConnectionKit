@@ -753,8 +753,16 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 #pragma mark Text Blocks
 
-- (void)willBeginWritingHTMLTextBlock:(SVHTMLTextBlock *)block; { }
-- (void)didEndWritingHTMLTextBlock; { }
+- (void)willBeginWritingHTMLTextBlock:(SVHTMLTextBlock *)block;
+{
+    [self beginGraphicContainer:block];
+}
+
+- (void)didEndWritingHTMLTextBlock;
+{
+    [self endGraphicContainer];
+}
+
 - (void)willWriteSummaryOfPage:(SVSiteItem *)page; { }
 
 #pragma mark Sidebar
