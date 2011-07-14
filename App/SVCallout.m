@@ -41,7 +41,7 @@
     [context endGraphicContainer];
 }
 
-- (void)write:(SVHTMLContext *)context graphic:(id <SVGraphic>)graphic;
+- (void)write:(SVHTMLContext *)context graphic:(SVGraphic *)graphic;
 {
     [SVGraphic write:context pagelet:graphic];
 }

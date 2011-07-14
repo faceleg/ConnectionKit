@@ -14,6 +14,11 @@
 
 
 @protocol SVGraphicContainer <NSObject>
-- (void)write:(SVHTMLContext *)context graphic:(id <SVGraphic>)graphic;
+
 - (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID;
+
+@optional
+// Override to call -beginGraphicContainer etc. if you're not happy with default behaviour
+- (void)write:(SVHTMLContext *)context graphic:(id <SVGraphic>)graphic;
+
 @end

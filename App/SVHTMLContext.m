@@ -559,9 +559,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     _numberOfGraphics++;
     
     id <SVGraphicContainer> container = [self currentGraphicContainer];
-    [self beginGraphicContainer:graphic];
-    
-    if (container)
+    if ([container respondsToSelector:@selector(write:graphic:)])
     {
         if ([graphic isPagelet])
         {
@@ -580,12 +578,12 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
             [container write:self graphic:graphic];
         }
     }
-    else 
+    else
     {
+        [self beginGraphicContainer:graphic];
         [graphic writeBody:self];
+        [self endGraphicContainer];
     }
-    
-    [self endGraphicContainer];
 }
 
 - (void)writeGraphics:(NSArray *)graphics;  // convenience

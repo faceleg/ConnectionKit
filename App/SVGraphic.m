@@ -154,54 +154,51 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 + (void)write:(SVHTMLContext *)context pagelet:(SVGraphic *)graphic;
 {
     // Write as a pagelet
-    id <SVGraphicContainer> currentContainer = graphic;
-    [context endGraphicContainer];  // cancel the graphic
+    SVPagelet *pagelet = [[SVPagelet alloc] initWithGraphic:graphic];
+    [context beginGraphicContainer:pagelet];
+    
     {
-        SVPagelet *pagelet = [[SVPagelet alloc] initWithGraphic:graphic];
-        [context beginGraphicContainer:pagelet];
+        // Pagelets are expected to have <H4> titles. #67430
+        NSUInteger level = [context currentHeaderLevel];
+        [context setCurrentHeaderLevel:4];
+        @try
         {
-            // Pagelets are expected to have <H4> titles. #67430
-            NSUInteger level = [context currentHeaderLevel];
-            [context setCurrentHeaderLevel:4];
-            @try
+            // Pagelet
+            [context pushClassName:@"pagelet"];
+            
+            if ([graphic graphicClassName]) [context pushClassName:[graphic graphicClassName]];
+            if ([[graphic showBorder] boolValue]) [context pushClassName:@"bordered"];
+            [context pushClassName:([graphic showsTitle] ? @"titled" : @"untitled")];
+            
+            unsigned iteration = [context currentIteration];
+            [context pushClassName:[NSString stringWithFormat:@"i%i", iteration + 1]];
+            [context pushClassName:(0 == ((iteration + 1) % 2)) ? @"e" : @"o"];
+            if (iteration == ([context currentIterationsCount] - 1)) [context pushClassName:@"last-item"];
+            
+            [context startElement:@"div"];
             {
-                // Pagelet
-                [context pushClassName:@"pagelet"];
+                [context startNewline];        // needed to simulate a call to -startElement:
+                [context stopWritingInline];
                 
-                if ([graphic graphicClassName]) [context pushClassName:[graphic graphicClassName]];
-                if ([[graphic showBorder] boolValue]) [context pushClassName:@"bordered"];
-                [context pushClassName:([graphic showsTitle] ? @"titled" : @"untitled")];
+                SVTemplate *template = [self template];
                 
-                unsigned iteration = [context currentIteration];
-                [context pushClassName:[NSString stringWithFormat:@"i%i", iteration + 1]];
-                [context pushClassName:(0 == ((iteration + 1) % 2)) ? @"e" : @"o"];
-                if (iteration == ([context currentIterationsCount] - 1)) [context pushClassName:@"last-item"];
+                SVHTMLTemplateParser *parser =
+                [[SVHTMLTemplateParser alloc] initWithTemplate:[template templateString]
+                                                     component:graphic];
                 
-                [context startElement:@"div"];
-                {
-                    [context startNewline];        // needed to simulate a call to -startElement:
-                    [context stopWritingInline];
-                    
-                    SVTemplate *template = [self template];
-                    
-                    SVHTMLTemplateParser *parser =
-                    [[SVHTMLTemplateParser alloc] initWithTemplate:[template templateString]
-                                                         component:graphic];
-                    
-                    [parser parseIntoHTMLContext:context];
-                    [parser release];
-                }
-                [context endElement];
+                [parser parseIntoHTMLContext:context];
+                [parser release];
             }
-            @finally
-            {
-                [context setCurrentHeaderLevel:level];
-            }
+            [context endElement];
         }
-        [context endGraphicContainer];
-        [pagelet release];
+        @finally
+        {
+            [context setCurrentHeaderLevel:level];
+        }
     }
-    [context beginGraphicContainer:currentContainer];
+    
+    [context endGraphicContainer];
+    [pagelet release];
 }
 
 // For the benefit of pagelet HTML template
@@ -632,11 +629,6 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     SVTemplate *template = [[self class] placeholderTemplate];
 	NSString *result = [context parseTemplate:template object:self];
 	return result;
-}
-
-- (void)write:(SVHTMLContext *)context graphic:(id <SVGraphic>)graphic;
-{
-    [graphic writeBody:context];
 }
 
 #pragma mark Thumbnail

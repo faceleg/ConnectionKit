@@ -28,12 +28,6 @@
     [super dealloc];
 }
 
-- (void)write:(SVHTMLContext *)context graphic:(id <SVGraphic>)graphic;
-{
-    OBASSERT(graphic == _graphic);
-    [graphic writeBody:context];
-}
-
 - (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID
 {
     SVDOMController *result = [[SVGraphicDOMController alloc] initWithRepresentedObject:_graphic];

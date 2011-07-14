@@ -276,64 +276,72 @@
 
 - (void)write:(SVHTMLContext *)context graphic:(id <SVGraphic>)graphic;
 {
-    if ([graphic shouldWriteHTMLInline])
-    {
-        return [context writeGraphic:graphic];
-    }
-    
-    
-    // Indexes want <H3>s
-    NSUInteger level = [context currentHeaderLevel];
-    [context setCurrentHeaderLevel:2];
+    [context beginGraphicContainer:graphic];
     @try
     {
-        // Register dependencies that come into play regardless of the route writing takes
-        [context addDependencyOnObject:graphic keyPath:@"showsCaption"];
-        
-        // <div class="graphic-container center">
-        [(SVGraphic *)graphic buildClassName:context includeWrap:YES];
-        [context startElement:@"div"];
-        
-        
-        // <div class="graphic"> or <img class="graphic">
-        [context pushClassName:@"graphic"];
-        if (![graphic captionGraphic] && [graphic isKindOfClass:[SVMediaGraphic class]]) // special case for media
+        if ([graphic shouldWriteHTMLInline])
         {
-            [graphic writeBody:context];
-            [context endElement];
-            return;
+            return [context writeGraphic:graphic];
         }
         
-        NSString *className = [(SVGraphic *)graphic inlineGraphicClassName];
-        if (className) [context pushClassName:className];
         
-        if (![graphic isExplicitlySized:context])
+        // Indexes want <H3>s
+        NSUInteger level = [context currentHeaderLevel];
+        [context setCurrentHeaderLevel:2];
+        @try
         {
-            NSNumber *width = [graphic containerWidth];
-            if (width)
+            // Register dependencies that come into play regardless of the route writing takes
+            [context addDependencyOnObject:graphic keyPath:@"showsCaption"];
+            
+            // <div class="graphic-container center">
+            [(SVGraphic *)graphic buildClassName:context includeWrap:YES];
+            [context startElement:@"div"];
+            
+            
+            // <div class="graphic"> or <img class="graphic">
+            [context pushClassName:@"graphic"];
+            if (![graphic captionGraphic] && [graphic isKindOfClass:[SVMediaGraphic class]]) // special case for media
             {
-                NSString *style = [NSString stringWithFormat:@"width:%upx", [width unsignedIntValue]];
-                [context pushAttribute:@"style" value:style];
+                [graphic writeBody:context];
+                [context endElement];
+                return;
             }
+            
+            NSString *className = [(SVGraphic *)graphic inlineGraphicClassName];
+            if (className) [context pushClassName:className];
+            
+            if (![graphic isExplicitlySized:context])
+            {
+                NSNumber *width = [graphic containerWidth];
+                if (width)
+                {
+                    NSString *style = [NSString stringWithFormat:@"width:%upx", [width unsignedIntValue]];
+                    [context pushAttribute:@"style" value:style];
+                }
+            }
+            
+            [context writeGraphic:graphic];
+            
+            
+            // Caption if requested
+            id <SVGraphic> caption = [graphic captionGraphic];
+            if (caption) // was registered as dependency at start of if block
+            {
+                [context writeGraphic:caption];
+            }
+            
+            
+            // Finish up
+            [context endElement];
         }
-        
-        [context writeGraphic:graphic];
-        
-        
-        // Caption if requested
-        id <SVGraphic> caption = [graphic captionGraphic];
-        if (caption) // was registered as dependency at start of if block
+        @finally
         {
-            [context writeGraphic:caption];
+            [context setCurrentHeaderLevel:level];
         }
-        
-        
-        // Finish up
-        [context endElement];
     }
     @finally
     {
-        [context setCurrentHeaderLevel:level];
+        [context endGraphicContainer];
     }
 }
 
