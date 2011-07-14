@@ -18,8 +18,12 @@
 {
     if (self = [super initWithOutputWriter:output])
     {
-        _topLevelElements = [[NSMutableArray alloc] init];
-        _openElementInfos = [[NSMutableArray alloc] init];
+        SVElementInfo *root = [[SVElementInfo alloc] init];   // start catching dependencies immediately
+        
+        _topLevelElements = [[NSMutableArray alloc] initWithObjects:root, nil];
+        _openElementInfos = [_topLevelElements mutableCopy];
+        
+        [root release];
     }
     
     return self;
@@ -99,7 +103,9 @@
 
 - (void)addDependency:(KSObjectKeyPathPair *)dependency
 {
-    [[self currentElement] addDependency:dependency];
+    SVElementInfo *element = [self currentElement];
+    OBASSERT(element);
+    [element addDependency:dependency];
 }
     
 - (void)addDependencyOnObject:(NSObject *)object keyPath:(NSString *)keyPath;
