@@ -7,20 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C57D8A513CE671C00DD6E85 /* Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3C57D8A313CE671C00DD6E85 /* Debug.xcconfig */; };
+		3C57D8A613CE671C00DD6E85 /* Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3C57D8A413CE671C00DD6E85 /* Release.xcconfig */; };
+		3C57D96413CF4DE900DD6E85 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C57D96013CF4DE900DD6E85 /* InfoPlist.strings */; };
+		3C57D96513CF4DE900DD6E85 /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C57D96213CF4DE900DD6E85 /* Inspector.xib */; };
+		3C57D98413CF4F7500DD6E85 /* toolbar_plusone.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 3C57D98313CF4F7500DD6E85 /* toolbar_plusone.tiff */; };
 		3CA0B2C213976AFF006D61F5 /* GooglePlusOnePlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA0B2C113976AFF006D61F5 /* GooglePlusOnePlugIn.m */; };
-		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		089C167EFE841241C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF630370AF2F00C91783 /* GooglePlusOneElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GooglePlusOneElement_Prefix.pch; sourceTree = "<group>"; };
+		3C57D8A313CE671C00DD6E85 /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
+		3C57D8A413CE671C00DD6E85 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
+		3C57D96113CF4DE900DD6E85 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3C57D96313CF4DE900DD6E85 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Inspector.xib; sourceTree = "<group>"; };
+		3C57D98313CF4F7500DD6E85 /* toolbar_plusone.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_plusone.tiff; sourceTree = "<group>"; };
 		3CA0B2C013976AFF006D61F5 /* GooglePlusOnePlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GooglePlusOnePlugIn.h; sourceTree = "<group>"; };
 		3CA0B2C113976AFF006D61F5 /* GooglePlusOnePlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GooglePlusOnePlugIn.m; sourceTree = "<group>"; };
-		8D5B49B6048680CD000E48DA /* GooglePlusOneElement.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GooglePlusOneElement.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D5B49B6048680CD000E48DA /* GooglePlusOne.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GooglePlusOne.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
@@ -45,6 +53,7 @@
 				089C167CFE841241C02AAC07 /* Resources */,
 				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
 				19C28FB8FE9D52D311CA2CBB /* Products */,
+				3C57D8A913CE672200DD6E85 /* Xcode Configurations */,
 			);
 			name = GooglePlusOneElement;
 			sourceTree = "<group>";
@@ -62,7 +71,9 @@
 			isa = PBXGroup;
 			children = (
 				8D5B49B7048680CD000E48DA /* Info.plist */,
-				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
+				3C57D96013CF4DE900DD6E85 /* InfoPlist.strings */,
+				3C57D96213CF4DE900DD6E85 /* Inspector.xib */,
+				3C57D98313CF4F7500DD6E85 /* toolbar_plusone.tiff */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -97,7 +108,7 @@
 		19C28FB8FE9D52D311CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D5B49B6048680CD000E48DA /* GooglePlusOneElement.bundle */,
+				8D5B49B6048680CD000E48DA /* GooglePlusOne.svxElement */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -108,6 +119,15 @@
 				32DBCF630370AF2F00C91783 /* GooglePlusOneElement_Prefix.pch */,
 			);
 			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		3C57D8A913CE672200DD6E85 /* Xcode Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				3C57D8A313CE671C00DD6E85 /* Debug.xcconfig */,
+				3C57D8A413CE671C00DD6E85 /* Release.xcconfig */,
+			);
+			name = "Xcode Configurations";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -128,7 +148,7 @@
 			name = GooglePlusOneElement;
 			productInstallPath = "$(HOME)/Library/Bundles";
 			productName = GooglePlusOneElement;
-			productReference = 8D5B49B6048680CD000E48DA /* GooglePlusOneElement.bundle */;
+			productReference = 8D5B49B6048680CD000E48DA /* GooglePlusOne.svxElement */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -145,6 +165,7 @@
 				Japanese,
 				French,
 				German,
+				en,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* GooglePlusOneElement */;
 			projectDirPath = "";
@@ -160,7 +181,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
+				3C57D8A513CE671C00DD6E85 /* Debug.xcconfig in Resources */,
+				3C57D8A613CE671C00DD6E85 /* Release.xcconfig in Resources */,
+				3C57D96413CF4DE900DD6E85 /* InfoPlist.strings in Resources */,
+				3C57D96513CF4DE900DD6E85 /* Inspector.xib in Resources */,
+				3C57D98413CF4F7500DD6E85 /* toolbar_plusone.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,12 +203,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		089C167DFE841241C02AAC07 /* InfoPlist.strings */ = {
+		3C57D96013CF4DE900DD6E85 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				089C167EFE841241C02AAC07 /* English */,
+				3C57D96113CF4DE900DD6E85 /* en */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		3C57D96213CF4DE900DD6E85 /* Inspector.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3C57D96313CF4DE900DD6E85 /* en */,
+			);
+			name = Inspector.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -191,34 +224,21 @@
 /* Begin XCBuildConfiguration section */
 		1DEB913B08733D840010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C57D8A313CE671C00DD6E85 /* Debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = GooglePlusOneElement_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = GooglePlusOneElement;
-				WRAPPER_EXTENSION = bundle;
+				PRODUCT_NAME = GooglePlusOne;
+				WRAPPER_EXTENSION = svxElement;
 			};
 			name = Debug;
 		};
 		1DEB913C08733D840010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C57D8A413CE671C00DD6E85 /* Release.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = GooglePlusOneElement_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = GooglePlusOneElement;
-				WRAPPER_EXTENSION = bundle;
+				PRODUCT_NAME = GooglePlusOne;
+				WRAPPER_EXTENSION = svxElement;
 			};
 			name = Release;
 		};
@@ -232,7 +252,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -244,7 +264,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
