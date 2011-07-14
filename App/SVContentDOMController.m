@@ -43,10 +43,7 @@
 {
     self = [self init];
     
-    for (SVElementInfo *anElement in [context topLevelElements])
-    {
-        [self populateDOMController:self fromElement:anElement context:context];
-    }
+    [self populateDOMController:self fromElement:[context rootElement] context:context];
     
     return self;
 }

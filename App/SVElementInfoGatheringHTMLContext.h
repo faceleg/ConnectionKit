@@ -44,13 +44,13 @@
 @interface SVElementInfoGatheringHTMLContext : SVHTMLContext
 {
   @private
-    NSMutableArray  *_topLevelElements;
+    SVElementInfo  *_root;
     
     NSMutableArray  *_openElementInfos;
     SVElementInfo   *_earlyElement;
 }
 
-@property(nonatomic, copy, readonly) NSArray *topLevelElements;
+@property(nonatomic, retain, readonly) SVElementInfo *rootElement;
 @property(nonatomic, retain, readonly) SVElementInfo *currentElement;
 
 - (void)addDependency:(KSObjectKeyPathPair *)dependency;

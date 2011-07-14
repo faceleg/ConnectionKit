@@ -18,12 +18,8 @@
 {
     if (self = [super initWithOutputWriter:output])
     {
-        SVElementInfo *root = [[SVElementInfo alloc] init];   // start catching dependencies immediately
-        
-        _topLevelElements = [[NSMutableArray alloc] initWithObjects:root, nil];
-        _openElementInfos = [_topLevelElements mutableCopy];
-        
-        [root release];
+        _root = [[SVElementInfo alloc] init];   // start catching dependencies immediately
+        _openElementInfos = [[NSMutableArray alloc] initWithObjects:_root, nil];
     }
     
     return self;
@@ -38,7 +34,7 @@
 
 - (void)dealloc;
 {
-    [_topLevelElements release];
+    [_root release];
     // _openElementInfos is handled by super calling through to -close
     
     [super dealloc];
@@ -46,7 +42,7 @@
 
 #pragma mark Elements
 
-- (NSArray *)topLevelElements; { return [[_topLevelElements copy] autorelease]; }
+@synthesize rootElement = _root;
 
 - (SVElementInfo *)currentElement;
 {
@@ -79,7 +75,6 @@
                 
         [[self currentElement] addSubelement:info];
         [_openElementInfos addObject:info];
-        if ([_openElementInfos count] == 1) [_topLevelElements addObject:info];
         
         [info release];
     }
