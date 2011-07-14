@@ -613,7 +613,7 @@
         
         if (oldDigest) [_publishingRecordsBySHA1Digest removeObjectForKey:oldDigest];
         [record setSHA1Digest:digest];
-        [_publishingRecordsBySHA1Digest setObject:record forKey:digest];
+        if (digest) [_publishingRecordsBySHA1Digest setObject:record forKey:digest];
     }
     
     return record;

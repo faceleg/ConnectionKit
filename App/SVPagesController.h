@@ -51,10 +51,14 @@ extern NSString *SVPagesControllerDidInsertObjectNotification;
 
 
 #pragma mark Pasteboard Support
+
 - (BOOL)addObjectsFromPasteboard:(NSPasteboard *)pboard;
-- (NSArray *)objectsWithContentFromPasteboard:(NSPasteboard *)pboard;
+
+// If you use one of these APIs to create pages from pasteboard, probably want to call -didInsertSiteItemsFromPasteboard: after insert, to finish things off
+- (NSArray *)makeSiteItemsFromPasteboard:(NSPasteboard *)pboard;
 - (id)newObjectFromPasteboardItem:(id <SVPasteboardItem>)pboardItem;
 - (SVSiteItem *)newObjectFromPropertyList:(id)aPlist;
 
+- (void)didInsertSiteItemsFromPasteboard:(NSArray *)siteItems;
 
 @end
