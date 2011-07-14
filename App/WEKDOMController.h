@@ -23,14 +23,14 @@
     id              _representedObject;
     
     // Loading by creation
+    NSString        *_elementID;
     DOMHTMLDocument *_DOMDocument;
 }
 
 #pragma mark Init
 
 // For subclasses that know how to load HTML element from the document
-- (id)initWithHTMLDocument:(DOMHTMLDocument *)document;
-@property(nonatomic, retain, readonly) DOMHTMLDocument *HTMLDocument;
+- (id)initWithElementIdName:(NSString *)elementID document:(DOMHTMLDocument *)document;
 
 // Convenience method:
 - (id)initWithHTMLElement:(DOMHTMLElement *)element;
@@ -40,10 +40,15 @@
 
 // Unlike NSViewController it's generally OK for a DOM Controller to have no HTMLElement. This is because they may need to be created before the DOM has loaded. It might be good to have an init method that does demand element be created though.
 @property(nonatomic, retain) DOMHTMLElement *HTMLElement;
-- (void)createHTMLElement;
-- (BOOL)isHTMLElementCreated;
+- (void)loadHTMLElement;
+- (BOOL)isHTMLElementLoaded;
+
+@property(nonatomic, copy, readonly) NSString *elementIdName;
+@property(nonatomic, retain, readonly) DOMHTMLDocument *HTMLDocument;
 
 - (DOMRange *)DOMRange; // returns -HTMLElement as a range
+
+#pragma mark Events
 
 //  Somewhat problematically, the DOM will retain any event listeners added to it. This can quite easily leave a DOM controller and its HTML element in a retain cycle. When the DOM is torn down, it somehow releases the listener repeatedly, causing a crash.
 //  The best solution I can come up with is to avoid the retain cycle between listener and DOM by creating a simple proxy to listen to events and forward them on to the real target, but not retain either object. That object is automatically managed for you and returned here.

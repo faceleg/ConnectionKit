@@ -28,13 +28,16 @@
 
 #pragma mark Init & Dealloc
 
-- (id)initWithHTMLDocument:(DOMHTMLDocument *)document;
+- (id)initWithElementIdName:(NSString *)elementID document:(DOMHTMLDocument *)document;
 {
-    self = [self init];
-    _DOMDocument = [document retain];
+    if (self = [self init])
+    {
+        _elementID = [elementID copy];
+        _DOMDocument = [document retain];
+    }
+    
     return self;
 }
-@synthesize HTMLDocument = _DOMDocument;
 
 - (id)initWithHTMLElement:(DOMHTMLElement *)element;
 {
@@ -47,6 +50,7 @@
 {
     [_eventListener setEventsTarget:nil];
     
+    [_elementID release];
     [_DOMDocument release];
     [_DOMElement release];
     [_eventListener release];
@@ -58,13 +62,31 @@
 #pragma mark DOM
 
 @synthesize HTMLElement = _DOMElement;
-
-- (void)createHTMLElement
+- (DOMHTMLElement *)HTMLElement
 {
-    // Nothing to do by default
+    if (!_DOMElement) [self loadHTMLElement];
+    return _DOMElement;
 }
 
-- (BOOL)isHTMLElementCreated { return (_DOMElement != nil); }
+- (void)loadHTMLElement
+{
+    NSString *idName = [self elementIdName];
+    if (idName)
+    {
+        DOMDocument *document = [self HTMLDocument];
+        if (document)
+        {
+            // Load the element
+            DOMHTMLElement *element = (DOMHTMLElement *)[document getElementById:idName];
+            [self setHTMLElement:element];
+        }
+    }
+}
+
+- (BOOL)isHTMLElementLoaded { return (_DOMElement != nil); }
+
+@synthesize elementIdName = _elementID;
+@synthesize HTMLDocument = _DOMDocument;
 
 - (DOMRange *)DOMRange; // returns -HTMLElement as a range
 {
@@ -73,6 +95,8 @@
     [result selectNode:element];
     return result;
 }
+
+#pragma mark Events
 
 - (id <DOMEventListener>)eventsListener;
 {
