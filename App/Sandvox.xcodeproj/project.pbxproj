@@ -7738,7 +7738,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "#!/bin/bash\nEXECFILE=${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\nLIBPATH=${BUILT_PRODUCTS_DIR}/${SHARED_SUPPORT_FOLDER_PATH}\nNEWLIBPATH=\"@rpath/../SharedSupport\"\n\n# space separated list of libraries\nTARGETS=\"libssh2.dylib\"\nfor TARGET in ${TARGETS} ; do\n\tLIBFILE=${LIBPATH}/${TARGET}\n\tTARGETID=`otool -DX ${LIBPATH}/$TARGET`\n\tNEWTARGETID=${NEWLIBPATH}/${TARGET}\n\tinstall_name_tool -id ${NEWTARGETID} ${LIBFILE}\n\tinstall_name_tool -change ${TARGETID} ${NEWTARGETID} ${EXECFILE}\ndone\n";
+			shellScript = "#!/bin/bash\nEXECFILE=${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\nLIBPATH=${BUILT_PRODUCTS_DIR}/${SHARED_SUPPORT_FOLDER_PATH}\nNEWLIBPATH=\"@loader_path/../SharedSupport\"\n\n# space separated list of libraries\nTARGETS=\"libssh2.dylib\"\nfor TARGET in ${TARGETS} ; do\n\tLIBFILE=${LIBPATH}/${TARGET}\n\tTARGETID=`otool -DX ${LIBPATH}/$TARGET`\n\tNEWTARGETID=${NEWLIBPATH}/${TARGET}\n\tinstall_name_tool -id ${NEWTARGETID} ${LIBFILE}\n\tinstall_name_tool -change ${TARGETID} ${NEWTARGETID} ${EXECFILE}\ndone\n";
 			showEnvVarsInLog = 0;
 		};
 		3CBC651A11EFD04800716937 /* ShellScript */ = {
