@@ -8,6 +8,7 @@
 
 #import "SVElementInfoGatheringHTMLContext.h"
 
+#import "SVDOMController.h"
 #import "SVGraphic.h"
 
 
@@ -69,6 +70,52 @@
 {
     [super endElement];
     [_openElementInfos removeLastObject];
+}
+
+#pragma mark DOM Controllers
+
+- (void)addDOMControllersForElement:(SVElementInfo *)element toMutableArray:(NSMutableArray *)result;
+{
+    id <SVGraphicContainer> container = [element graphicContainer];
+    if (container)
+    {
+        SVDOMController *controller = [container newDOMController];
+        [result addObject:controller];
+        
+        // Step on down to its children
+        NSMutableArray *childControllers = [[NSMutableArray alloc] init];
+        for (SVElementInfo *anElement in [element subelements])
+        {
+            [self addDOMControllersForElement:anElement toMutableArray:childControllers];
+        }
+        
+        for (SVDOMController *aController in childControllers)
+        {
+            [controller addChildWebEditorItem:aController];
+        }
+        
+        [childControllers release];
+        [controller release];
+    }
+    else
+    {
+        // Step on down to child elements
+        for (SVElementInfo *anElement in [element subelements])
+        {
+            [self addDOMControllersForElement:anElement toMutableArray:result];
+        }
+    }
+}
+
+- (NSArray *)makeDOMControllers;
+{
+    NSMutableArray *result = [NSMutableArray array];
+    for (SVElementInfo *anElement in [self topLevelElements])
+    {
+        [self addDOMControllersForElement:anElement toMutableArray:result];
+    }
+    
+    return result;
 }
 
 @end
