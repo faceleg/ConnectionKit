@@ -72,40 +72,6 @@
     [_openElementInfos removeLastObject];
 }
 
-#pragma mark DOM Controllers
-
-- (void)populateDOMController:(SVDOMController *)controller fromElement:(SVElementInfo *)element;
-{
-    id <SVGraphicContainer> container = [element graphicContainer];
-    if (container)
-    {
-        NSString *elementID = [[element attributes] objectForKey:@"id"];
-        if (elementID)
-        {
-            SVDOMController *aController = [container newDOMControllerWithElementIdName:elementID];
-            [aController awakeFromHTMLContext:self];
-            
-            [controller addChildWebEditorItem:aController];
-            controller = aController;
-            [aController release];
-        }
-    }
-    
-    // Step on down to child elements
-    for (SVElementInfo *anElement in [element subelements])
-    {
-        [self populateDOMController:controller fromElement:anElement];
-    }
-}
-
-- (void)populateDOMController:(SVDOMController *)controller;
-{
-    for (SVElementInfo *anElement in [self topLevelElements])
-    {
-        [self populateDOMController:controller fromElement:anElement];
-    }
-}
-
 @end
 
 

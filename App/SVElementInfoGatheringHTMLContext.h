@@ -45,6 +45,4 @@
 @property(nonatomic, copy, readonly) NSArray *topLevelElements;
 @property(nonatomic, retain, readonly) SVElementInfo *currentElement;
 
-- (void)populateDOMController:(SVDOMController *)controller;
-
 @end

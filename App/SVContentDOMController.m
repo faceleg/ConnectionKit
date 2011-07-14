@@ -8,8 +8,48 @@
 
 #import "SVContentDOMController.h"
 
+#import "SVWebEditorHTMLContext.h"
+
 
 @implementation SVContentDOMController
+
+- (void)populateDOMController:(SVDOMController *)controller
+                  fromElement:(SVElementInfo *)element
+                      context:(SVWebEditorHTMLContext *)context;
+{
+    id <SVGraphicContainer> container = [element graphicContainer];
+    if (container)
+    {
+        NSString *elementID = [[element attributes] objectForKey:@"id"];
+        if (elementID)
+        {
+            SVDOMController *aController = [container newDOMControllerWithElementIdName:elementID];
+            [aController awakeFromHTMLContext:context];
+            
+            [controller addChildWebEditorItem:aController];
+            controller = aController;
+            [aController release];
+        }
+    }
+    
+    // Step on down to child elements
+    for (SVElementInfo *anElement in [element subelements])
+    {
+        [self populateDOMController:controller fromElement:anElement context:context];
+    }
+}
+
+- (id)initWithWebEditorHTMLContext:(SVWebEditorHTMLContext *)context;
+{
+    self = [self init];
+    
+    for (SVElementInfo *anElement in [context topLevelElements])
+    {
+        [self populateDOMController:self fromElement:anElement context:context];
+    }
+    
+    return self;
+}
 
 @synthesize webEditorViewController = _viewController;
 
