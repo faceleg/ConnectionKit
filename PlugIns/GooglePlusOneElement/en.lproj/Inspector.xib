@@ -81,8 +81,8 @@
 					</object>
 					<object class="NSPopUpButton" id="953528873">
 						<reference key="NSNextResponder" ref="1005"/>
-						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{7, 172}, {100, 22}}</string>
+						<int key="NSvFlags">266</int>
+						<string key="NSFrame">{{7, 172}, {216, 22}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSPopUpButtonCell" key="NSCell" id="838012132">
