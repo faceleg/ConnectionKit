@@ -217,9 +217,7 @@
     if ([graphic isPagelet])
     {
         // Pagelets are using a HTML template, so context can't track them properly. By using the private element stack API, can maniuplate for the desired result
-        [self pushElement:@"pagelet"];
         [super writeGraphic:graphic];
-        [self popElement];
     }
     else
     {

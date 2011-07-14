@@ -150,7 +150,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     return ([self calloutWrapClassName] != nil);
 }
 
-+ (void)write:(SVHTMLContext *)context pagelet:(id <SVGraphic>)graphic;
++ (void)write:(SVHTMLContext *)context pagelet:(SVGraphic *)graphic;
 {
     // Pagelets are expected to have <H4> titles. #67430
     NSUInteger level = [context currentHeaderLevel];
@@ -158,17 +158,32 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     @try
     {
         // Pagelet
-        [context startNewline];        // needed to simulate a call to -startElement:
-        [context stopWritingInline];
+        [context pushClassName:@"pagelet"];
         
-        SVTemplate *template = [self template];
+        if ([graphic graphicClassName]) [context pushClassName:[graphic graphicClassName]];
+        if ([[graphic showBorder] boolValue]) [context pushClassName:@"bordered"];
+        [context pushClassName:([graphic showsTitle] ? @"titled" : @"untitled")];
         
-        SVHTMLTemplateParser *parser =
-        [[SVHTMLTemplateParser alloc] initWithTemplate:[template templateString]
-                                             component:graphic];
+        unsigned iteration = [context currentIteration];
+        [context pushClassName:[NSString stringWithFormat:@"i%i", iteration + 1]];
+        [context pushClassName:(0 == ((iteration + 1) % 2)) ? @"e" : @"o"];
+        if (iteration == ([context currentIterationsCount] - 1)) [context pushClassName:@"last-item"];
         
-        [parser parseIntoHTMLContext:context];
-        [parser release];
+        [context startElement:@"div"];
+        {
+            [context startNewline];        // needed to simulate a call to -startElement:
+            [context stopWritingInline];
+            
+            SVTemplate *template = [self template];
+            
+            SVHTMLTemplateParser *parser =
+            [[SVHTMLTemplateParser alloc] initWithTemplate:[template templateString]
+                                                 component:graphic];
+            
+            [parser parseIntoHTMLContext:context];
+            [parser release];
+        }
+        [context endElement];
     }
     @finally
     {

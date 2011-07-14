@@ -108,7 +108,7 @@ extern NSString *kSVGraphicPboardType;
 - (BOOL)isCallout;  // whether to generate enclosing <div class="callout"> etc.
 - (NSString *)calloutWrapClassName; // nil if not a callout
 
-+ (void)write:(SVHTMLContext *)context pagelet:(id <SVGraphic>)graphic;
++ (void)write:(SVHTMLContext *)context pagelet:(SVGraphic *)graphic;
 
 
 #pragma mark Title
