@@ -82,17 +82,9 @@
     [self writePageletsHTML:[[SVHTMLTemplateParser currentTemplateParser] HTMLContext]];
 }
 
-- (void)write:(SVHTMLContext *)context graphic:(id <SVGraphic>)graphic;
+- (void)write:(SVHTMLContext *)context graphic:(SVGraphic *)graphic;
 {
-    //_writingPagelet = YES;
-    @try
-    {
-        [SVGraphic write:context pagelet:graphic];
-    }
-    @finally
-    {
-        //_writingPagelet = NO;
-    }
+    [SVGraphic write:context pagelet:graphic];
 }
 
 - (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID;

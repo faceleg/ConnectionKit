@@ -1119,11 +1119,6 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 - (SVDOMController *)newDOMController;
 {
-    return [[SVGraphicDOMController alloc] initWithRepresentedObject:self];
-}
-
-- (SVDOMController *)newBodyDOMController;
-{
     return [[SVGraphicBodyDOMController alloc] initWithRepresentedObject:self];
 }
 

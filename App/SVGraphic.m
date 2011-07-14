@@ -16,6 +16,7 @@
 #import "KTImageScalingSettings.h"
 #import "KTMaster.h"
 #import "KTPage.h"
+#import "SVPagelet.h"
 #import "SVRichText.h"
 #import "SVResizableDOMController.h"
 #import "SVTemplate.h"
@@ -152,43 +153,55 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 + (void)write:(SVHTMLContext *)context pagelet:(SVGraphic *)graphic;
 {
-    // Pagelets are expected to have <H4> titles. #67430
-    NSUInteger level = [context currentHeaderLevel];
-    [context setCurrentHeaderLevel:4];
-    @try
+    // Write as a pagelet
+    id <SVGraphicContainer> currentContainer = graphic;
+    [context endGraphicContainer];  // cancel the graphic
     {
-        // Pagelet
-        [context pushClassName:@"pagelet"];
-        
-        if ([graphic graphicClassName]) [context pushClassName:[graphic graphicClassName]];
-        if ([[graphic showBorder] boolValue]) [context pushClassName:@"bordered"];
-        [context pushClassName:([graphic showsTitle] ? @"titled" : @"untitled")];
-        
-        unsigned iteration = [context currentIteration];
-        [context pushClassName:[NSString stringWithFormat:@"i%i", iteration + 1]];
-        [context pushClassName:(0 == ((iteration + 1) % 2)) ? @"e" : @"o"];
-        if (iteration == ([context currentIterationsCount] - 1)) [context pushClassName:@"last-item"];
-        
-        [context startElement:@"div"];
+        SVPagelet *pagelet = [[SVPagelet alloc] initWithGraphic:graphic];
+        [context beginGraphicContainer:pagelet];
         {
-            [context startNewline];        // needed to simulate a call to -startElement:
-            [context stopWritingInline];
-            
-            SVTemplate *template = [self template];
-            
-            SVHTMLTemplateParser *parser =
-            [[SVHTMLTemplateParser alloc] initWithTemplate:[template templateString]
-                                                 component:graphic];
-            
-            [parser parseIntoHTMLContext:context];
-            [parser release];
+            // Pagelets are expected to have <H4> titles. #67430
+            NSUInteger level = [context currentHeaderLevel];
+            [context setCurrentHeaderLevel:4];
+            @try
+            {
+                // Pagelet
+                [context pushClassName:@"pagelet"];
+                
+                if ([graphic graphicClassName]) [context pushClassName:[graphic graphicClassName]];
+                if ([[graphic showBorder] boolValue]) [context pushClassName:@"bordered"];
+                [context pushClassName:([graphic showsTitle] ? @"titled" : @"untitled")];
+                
+                unsigned iteration = [context currentIteration];
+                [context pushClassName:[NSString stringWithFormat:@"i%i", iteration + 1]];
+                [context pushClassName:(0 == ((iteration + 1) % 2)) ? @"e" : @"o"];
+                if (iteration == ([context currentIterationsCount] - 1)) [context pushClassName:@"last-item"];
+                
+                [context startElement:@"div"];
+                {
+                    [context startNewline];        // needed to simulate a call to -startElement:
+                    [context stopWritingInline];
+                    
+                    SVTemplate *template = [self template];
+                    
+                    SVHTMLTemplateParser *parser =
+                    [[SVHTMLTemplateParser alloc] initWithTemplate:[template templateString]
+                                                         component:graphic];
+                    
+                    [parser parseIntoHTMLContext:context];
+                    [parser release];
+                }
+                [context endElement];
+            }
+            @finally
+            {
+                [context setCurrentHeaderLevel:level];
+            }
         }
-        [context endElement];
+        [context endGraphicContainer];
+        [pagelet release];
     }
-    @finally
-    {
-        [context setCurrentHeaderLevel:level];
-    }
+    [context beginGraphicContainer:currentContainer];
 }
 
 // For the benefit of pagelet HTML template

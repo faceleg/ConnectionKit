@@ -51,7 +51,6 @@
 
 // And provide a base implementation of the protocol:
 @interface SVGraphic (SVDOMController) <SVDOMControllerRepresentedObject>
-- (SVDOMController *)newBodyDOMController;
 - (BOOL)requiresPageLoad;
 @end
 

@@ -44,14 +44,14 @@
 
 @implementation SVPlugInGraphic (SVIndexDOMController)
 
-- (SVDOMController *)newBodyDOMController;
+- (SVDOMController *)newDOMController;
 {
     if ([[self plugIn] isKindOfClass:[SVIndexPlugIn class]])
     {
         return [[SVIndexDOMController alloc] initWithRepresentedObject:self];
     }
     
-    return [super newBodyDOMController];
+    return [super newDOMController];
 }
 
 @end
