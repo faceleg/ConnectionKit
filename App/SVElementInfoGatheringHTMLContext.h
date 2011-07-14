@@ -51,4 +51,6 @@
 @property(nonatomic, copy, readonly) NSArray *topLevelElements;
 @property(nonatomic, retain, readonly) SVElementInfo *currentElement;
 
+- (void)addDependency:(KSObjectKeyPathPair *)dependency;
+
 @end
