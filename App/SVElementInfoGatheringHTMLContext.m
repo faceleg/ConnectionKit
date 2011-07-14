@@ -43,7 +43,13 @@
 #pragma mark Elements
 
 - (NSArray *)topLevelElements; { return [[_topLevelElements copy] autorelease]; }
-- (SVElementInfo *)currentElement; { return [_openElementInfos lastObject]; }
+
+- (SVElementInfo *)currentElement;
+{
+    SVElementInfo *result = _earlyElement;
+    if (!result) result = [_openElementInfos lastObject];
+    return result;
+}
 
 - (void)willStartElement:(NSString *)element;
 {
@@ -54,15 +60,19 @@
     // Stash a copy of the element
     if (_openElementInfos)
     {
-        SVElementInfo *info = [[SVElementInfo alloc] init];
-        [info setAttributes:[[self currentAttributes] attributesAsDictionary]];
-        
-        if (_wantsDOMController)
+        SVElementInfo *info;
+        if (_earlyElement)
         {
-            [info setGraphicContainer:[self currentGraphicContainer]];
-            _wantsDOMController = NO;
+            info = _earlyElement;
+            _earlyElement = nil;
+        }
+        else
+        {
+            info = [[SVElementInfo alloc] init];
         }
         
+        [info setAttributes:[[self currentAttributes] attributesAsDictionary]];
+                
         [[self currentElement] addSubelement:info];
         [_openElementInfos addObject:info];
         if ([_openElementInfos count] == 1) [_topLevelElements addObject:info];
@@ -79,7 +89,9 @@
 
 - (void)beginGraphicContainer:(id <SVGraphicContainer>)container;
 {
-    _wantsDOMController = YES;
+    OBPRECONDITION(!_earlyElement);
+    _earlyElement = [[SVElementInfo alloc] initWithGraphicContainer:container];
+    
     [super beginGraphicContainer:container];
 }
 
@@ -134,6 +146,15 @@
         _dependencies = [[NSMutableSet alloc] init];
     }
     
+    return self;
+}
+
+- (id)initWithGraphicContainer:(id <SVGraphicContainer>)container;
+{
+    if (self = [self init])
+    {
+        _graphicContainer = [container retain];
+    }
     return self;
 }
 

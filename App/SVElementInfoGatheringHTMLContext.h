@@ -23,12 +23,14 @@
     NSMutableSet            *_dependencies;
 }
 
+- (id)initWithGraphicContainer:(id <SVGraphicContainer>)container;
+@property(nonatomic, retain, readonly) id <SVGraphicContainer> graphicContainer;
+
 @property(nonatomic, copy) NSDictionary *attributes;
 
 @property(nonatomic, copy, readonly) NSArray *subelements;
 - (void)addSubelement:(SVElementInfo *)element;
 
-@property(nonatomic, retain) id <SVGraphicContainer> graphicContainer;
 
 - (NSSet *)dependencies;
 - (void)addDependency:(KSObjectKeyPathPair *)dependency;
@@ -45,7 +47,7 @@
     NSMutableArray  *_topLevelElements;
     
     NSMutableArray  *_openElementInfos;
-    BOOL            _wantsDOMController;
+    SVElementInfo   *_earlyElement;
 }
 
 @property(nonatomic, copy, readonly) NSArray *topLevelElements;
