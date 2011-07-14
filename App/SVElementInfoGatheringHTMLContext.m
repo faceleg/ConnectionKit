@@ -13,7 +13,7 @@
 
 @implementation SVElementInfoGatheringHTMLContext
 
-- (id) initWithOutputWriter:(id <KSWriter>)output;
+- (id)initWithOutputWriter:(id <KSWriter>)output;
 {
     if (self = [super initWithOutputWriter:output])
     {
@@ -53,8 +53,8 @@
     // Stash a copy of the element
     if (_openElementInfos)
     {
-        SVElementInfo *info = [[SVElementInfo alloc] initWithElementInfo:[self currentElementInfo]];
-        [info setName:element];
+        SVElementInfo *info = [[SVElementInfo alloc] init];
+        [info setAttributes:[[self currentAttributes] attributesAsDictionary]];
         [info setGraphic:_currentGraphic]; _currentGraphic = nil;
         
         [[self currentElement] addSubelement:info];
@@ -105,15 +105,18 @@
 
 - (void)dealloc;
 {
+    [_attributes release];
     [_subelements release];
     [_graphic release];
     
     [super dealloc];
 }
 
+@synthesize attributes = _attributes;
+
 - (NSArray *)subelements; { return [[_subelements copy] autorelease]; }
 
-- (void)addSubelement:(KSElementInfo *)element;
+- (void)addSubelement:(SVElementInfo *)element;
 {
     [_subelements addObject:element];
 }

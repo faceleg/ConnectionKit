@@ -383,7 +383,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     SVHTMLContext *context = [[SVHTMLContext alloc] initWithOutputWriter:nil];
     [graphic buildClassName:context includeWrap:YES];
     
-    NSString *className = [[[context currentElementInfo] attributesAsDictionary] objectForKey:@"class"];
+    NSString *className = [[[context currentAttributes] attributesAsDictionary] objectForKey:@"class"];
     DOMHTMLElement *element = [self HTMLElement];
     [element setClassName:className];
     

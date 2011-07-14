@@ -7,18 +7,21 @@
 //
 
 #import "SVHTMLContext.h"
-#import "KSElementInfo.h"
+#import "KSXMLAttributes.h"
 
 
-@interface SVElementInfo : KSElementInfo
+@interface SVElementInfo : NSObject
 {
 @private
+    NSDictionary    *_attributes;
     NSMutableArray  *_subelements;
     id <SVGraphic>  _graphic;
 }
 
+@property(nonatomic, copy) NSDictionary *attributes;
+
 @property(nonatomic, copy, readonly) NSArray *subelements;
-- (void)addSubelement:(KSElementInfo *)element;
+- (void)addSubelement:(SVElementInfo *)element;
 
 @property(nonatomic, retain) id <SVGraphic> graphic;
 
