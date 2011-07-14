@@ -11,6 +11,7 @@
 #import "NSImage+KTExtensions.h"
 
 #import "NSImage+Karelia.h"
+#import "NSString+Karelia.h"
 
 #import "KSError.h"
 #import "KSThreadProxy.h"
@@ -43,16 +44,14 @@
 
 - (void)startLoading
 {
-    NSWorkspace *workspace = KSWORKSPACETHREADPROXY;
-    NSURL *URL = [[self request] URL];
+    NSURL *URL = [[[self request] URL] ks_URLWithScheme:@"file"];
     
-    OBASSERT(workspace);    // something's crashing and I can't figure what! #132360
     NSError *error;
-    NSString *type = [workspace typeOfFile:[URL path] error:&error];
+    NSString *type = [NSString UTIForFileAtPath:[URL path]];
     
     if (type)
     {
-        NSImage *icon = [workspace iconForFileType:type];
+        NSImage *icon = [KSWORKSPACETHREADPROXY iconForFileType:type];
         NSImageRep *bestRep = [icon ks_largestRepresentation];
         if (bestRep) [icon setSize:[bestRep size]];
         
@@ -84,6 +83,9 @@
     }
     else
     {
+        error = [KSError errorWithDomain:NSCocoaErrorDomain
+                                    code:NSFileReadUnknownError
+              localizedDescriptionFormat:@"Couldn't determine type of file: %@", URL];
         [[self client] URLProtocol:self didFailWithError:error];
     }
 }

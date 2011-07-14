@@ -2651,7 +2651,8 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         else if (command == @selector(clearStyles:))
         {
             // Get no other delegate method warning of impending change, so fake one here
-            if (![self shouldChangeTextInDOMRange:[self selectedDOMRange]])
+            DOMRange *range = [self selectedDOMRange];
+            if (!range || ![self shouldChangeTextInDOMRange:range])
             {
                 result = YES;
                 NSBeep();

@@ -389,7 +389,7 @@
         // Only search children, for a closer match
         for (WEKWebEditorItem *anItem in [self childWebEditorItems])
         {
-            if ([anItem representedObject] == result)
+            if ([anItem representedObject] == object)
             {
                 result = [anItem hitTestRepresentedObject:object];
                 break;

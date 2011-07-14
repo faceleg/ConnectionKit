@@ -495,17 +495,18 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     
     
     // Fallback to creating graphics/links from the pasteboard
-    NSArray *pages = [self objectsWithContentFromPasteboard:pboard];
+    NSArray *pages = [self makeSiteItemsFromPasteboard:pboard];
     if (pages)
     {
         [self addObjects:pages];
+        [self didInsertSiteItemsFromPasteboard:pages];
         result = YES;
     }
     
     return result;
 }
 
-- (NSArray *)objectsWithContentFromPasteboard:(NSPasteboard *)pboard;
+- (NSArray *)makeSiteItemsFromPasteboard:(NSPasteboard *)pboard;
 {
     // Create graphics for the content
     NSArray *items = [pboard sv_pasteboardItems];
@@ -624,6 +625,27 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
     }
     
     return result;
+}
+
+- (void)didInsertSiteItemsFromPasteboard:(NSArray *)siteItems;
+{
+    for (id aPage in siteItems)
+    {
+        if ([aPage isKindOfClass:[KTPage class]])
+        {
+            SVArticle *article = [aPage article];
+            NSSet *graphics = [[article attachments] valueForKey:@"graphic"];
+            
+            for (SVGraphic *aGraphic in graphics)
+            {
+                // Inserting the page will call -pageDidChange: on all graphics, but that will only keep width within page bounds; don't want images to get weirdly tall. #132665
+                if ([[aGraphic height] isGreaterThan:[aGraphic width]])
+                {
+                    [aGraphic setContentHeight:[aGraphic width]];
+                }
+            }
+        }
+    }
 }
 
 #pragma mark KTPageDetailsController compatibility

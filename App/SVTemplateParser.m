@@ -244,38 +244,32 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 {
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
-	BOOL result = NO;
-	@try
-	{
-        result = [self prepareToParse];
-        
-        if (result)
+	BOOL result = [self prepareToParse];
+    
+    if (result)
+    {
+        NSString *template = [self template];
+        if (template)
         {
-            NSString *template = [self template];
-            if (template)
+            // Parse!
+            NSScanner *scanner = [NSScanner scannerWithString:template];
+            [scanner setCharactersToBeSkipped:nil];
+            
+            _writer = stream;
+            @try
             {
-                // Parse!
-                NSScanner *scanner = [NSScanner scannerWithString:template];
-                [scanner setCharactersToBeSkipped:nil];
-                
-                _writer = stream;
-                @try
-                {
-                    result = [self startHTMLStringByScanning:scanner];
-                }
-                @finally
-                {
-                    _writer = nil;
-                }
+                result = [self startHTMLStringByScanning:scanner];
+            }
+            @finally
+            {
+                _writer = nil;
             }
         }
-        
-        [self setCache:nil];
-	}
-    @finally
-	{
-		[pool release];
-	}
+    }
+    
+    [self setCache:nil];
+    
+    [pool release];
 	
     
     // Finish up
