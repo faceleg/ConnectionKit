@@ -40,7 +40,9 @@
 - (void)replaceChildWebEditorItem:(WEKWebEditorItem *)oldItem withItems:(NSArray *)newItems;
 - (void)removeFromParentWebEditorItem;
 
-- (void)itemWillMoveToParentWebEditorItem:(WEKWebEditorItem *)newParentItem;
+// Be sure to call super from these methods
+- (void)itemWillMoveToParentWebEditorItem:(WEKWebEditorItem *)newParentItem; 
+- (void)itemWillMoveToWebEditor:(WEKWebEditorView *)newWebEditor;
 - (void)itemDidMoveToParentWebEditorItem;
 
 - (NSEnumerator *)enumerator;
