@@ -120,6 +120,15 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     [controllersByID release];
 }
 
+- (WEKWebEditorItem *)childItemForRepresentedObject:(id)object;
+{
+    for (WEKWebEditorItem *anItem in [self childWebEditorItems])
+    {
+        if ([[anItem representedObject] isEqual:object]) return anItem;
+    }
+    return nil;
+}
+
 - (void)updatePageletOrdering;
 {
     // Arrange DOM nodes to match. Start by removing all
@@ -162,7 +171,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         
         
         // Grab controller for item. Create it if needed
-        id controller = [self hitTestRepresentedObject:aPagelet];
+        id controller = [self childItemForRepresentedObject:aPagelet];
         if (controller)
         {
             // Update attributes from new element
