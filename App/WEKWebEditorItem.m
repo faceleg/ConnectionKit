@@ -208,6 +208,13 @@
         WEKWebEditorView *webEditor = [self webEditor];
         [webEditor willRemoveItem:self];
     }
+    
+    [self itemWillMoveToWebEditor:[newParentItem webEditor]];
+}
+
+- (void)itemWillMoveToWebEditor:(WEKWebEditorView *)newWebEditor;
+{
+    [[self childWebEditorItems] makeObjectsPerformSelector:_cmd withObject:newWebEditor];
 }
 
 - (void)itemDidMoveToParentWebEditorItem; { }

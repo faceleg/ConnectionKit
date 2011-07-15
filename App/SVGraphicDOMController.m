@@ -244,6 +244,13 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 	}
 }
 
+- (void)stopUpdate;
+{
+    [_offscreenWebViewController setDelegate:nil];
+    [_offscreenWebViewController release]; _offscreenWebViewController = nil;
+    [_offscreenDOMControllers release]; _offscreenDOMControllers = nil;
+}
+
 - (void)offscreenWebViewController:(SVOffscreenWebViewController *)controller
                        didLoadBody:(DOMHTMLElement *)loadedBody;
 {
@@ -333,9 +340,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     
     // Teardown
-    [_offscreenWebViewController setDelegate:nil];
-    [_offscreenWebViewController release]; _offscreenWebViewController = nil;
-    [_offscreenDOMControllers release]; _offscreenDOMControllers = nil;
+    [self stopUpdate];
 }
 
 - (void)updateSize;
@@ -403,6 +408,25 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     else
     {
         [super setNeedsUpdate];
+    }
+}
+
+- (void)itemWillMoveToWebEditor:(WEKWebEditorView *)newWebEditor;
+{
+    [super itemWillMoveToWebEditor:newWebEditor];
+    
+    if (_offscreenWebViewController)
+    {
+        // If the update finishes while we're away from a web editor, there's no way to tell it so. So pretend the update has finished when removed. Likewise, pretend the update has started if added back to the editor. #131984
+        if (newWebEditor)
+        {
+            [[newWebEditor delegate] performSelector:@selector(willUpdate)];
+        }
+        else
+        {
+            //[self stopUpdate];
+            [self didUpdateWithSelector:@selector(update)];
+        }
     }
 }
 
