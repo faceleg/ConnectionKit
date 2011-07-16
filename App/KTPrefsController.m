@@ -17,7 +17,6 @@
 #import "NSImage+KTExtensions.h"
 #import "NSApplication+Karelia.h"
 #import "KSAbstractBugReporter.h"
-#import <Sparkle/Sparkle.h>
 
 
 @implementation KTPrefsController

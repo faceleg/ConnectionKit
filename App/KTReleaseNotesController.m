@@ -7,7 +7,6 @@
 //
 #import <Cocoa/Cocoa.h>
 #import "KTReleaseNotesController.h"
-#import <Sparkle/Sparkle.h>
 #import "NSString+Karelia.h"
 #import "KSURLUtilities.h"
 #import "NSBundle+Karelia.h"

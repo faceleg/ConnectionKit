@@ -79,7 +79,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import <Quartz/Quartz.h>
 #import <ScreenSaver/ScreenSaver.h>
 #import <SystemConfiguration/SystemConfiguration.h>
-#import <Sparkle/Sparkle.h>
 #import <JSTalk/JSTalk.h>
 
 #import "Debug.h"
