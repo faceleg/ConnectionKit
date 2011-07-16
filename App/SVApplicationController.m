@@ -131,7 +131,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 #if !defined(VARIANT_RELEASE) && defined(EXPIRY_TIMESTAMP)
 - (void)warnExpiring:(id)bogus;
 #endif
-- (void)informAppHasExpired;
 
 
 @end
@@ -794,7 +793,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 {
 	if ([self appIsExpired])
 	{
-		[self informAppHasExpired];
 		return NO;
 	}
 	
@@ -910,11 +908,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
             [PrivateClass setDebugDefault:YES];
         }
 #endif
-        if ([self appIsExpired])
-		{
-			[self informAppHasExpired];
-		}
-		else
+        if (![self appIsExpired])
 		{
 			// WARN OF EXPIRING BETA VERSION -- but not if it's apple design awards or development build.
 #if !defined(VARIANT_RELEASE) && defined(EXPIRY_TIMESTAMP)
@@ -1095,19 +1089,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		_checkedExpiration = YES;
 	}
 	return _appIsExpired;
-}
-
-- (void)informAppHasExpired
-{	
-	NSRunCriticalAlertPanel(
-							NSLocalizedString(@"This version of Sandvox has expired.", @""),
-							NSLocalizedString(@"This version of Sandvox is no longer functional. Sandvox will now check for updates; please install the newest version if available.", @""), 
-							NSLocalizedString(@"Check for Updates", @"button title"),
-							nil,
-							nil
-							);
-	
-	[[self sparkleUpdater] checkForUpdatesInBackground];	// check Sparkle before alerting
 }
 
 
