@@ -123,24 +123,4 @@
 	[self updateImageSettingsBlowAway:NO];
 }
 
-- (void)observeValueForKeyPath:(NSString *)aKeyPath
-                      ofObject:(id)anObject
-                        change:(NSDictionary *)aChange
-                       context:(void *)aContext
-{
-//	NSLog(@"observeValueForKeyPath: %@", aKeyPath);
-//	NSLog(@"                object: %@", anObject);
-//	NSLog(@"                change: %@", [aChange description]);
-
-	if ([aKeyPath isEqualToString:@"sparkleOption"])
-	{
-		[super observeValueForKeyPath:aKeyPath ofObject:anObject change:aChange context:aContext];
-	}
-	else
-	{
-		[self updateImageSettingsBlowAway:(nil != aKeyPath)];
-	}
-}
-
-
 @end
