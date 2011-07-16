@@ -684,10 +684,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	{
 		result = [KSNetworkNotifier isNetworkAvailable];
 	}
-	else if (action == @selector(checkForUpdates:))
-	{
-		result = [KSNetworkNotifier isNetworkAvailable] && [[self sparkleUpdater] validateMenuItem:menuItem];
-	}
 
 	return result;
 }
