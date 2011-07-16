@@ -1236,16 +1236,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 			  );
 }
 
-- (void)awakeFromNib
-{
-//	[oInsertExternalLinkMenuItem setIconImage:[NSImage imageFromOSType:kGenericURLIcon]];
-//	[oInsertRawHTMLMenuItem setIconImage:[NSImage imageNamed:@"HTML"]];
-//	[oInsertHTMLTextMenuItem setIconImage:[NSImage imageNamed:@"html_element"]];	// different?
-//	[oInsertBlankPageMenuItem setIconImage:[NSImage imageNamed:@"toolbar_new_page.tiff"]];
-	
-	[super awakeFromNib];
-}
-
 #pragma mark -
 #pragma mark IBActions
 
