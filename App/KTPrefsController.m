@@ -23,18 +23,6 @@
 
 #pragma mark Initialization Methods
 
-
-- (id)init
-{
-	self = [super init];
-    if (self)
-	{
-		
-    }
-    return self;
-}
-
-
 - (void)dealloc
 {
 	NSUserDefaultsController *controller = [NSUserDefaultsController sharedUserDefaultsController];
