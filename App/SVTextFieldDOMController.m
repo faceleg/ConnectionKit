@@ -101,14 +101,14 @@
 - (void)updateStyle
 {
     // Regenerate style
-      SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc]
+    SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc]
                                        initWithOutputWriter:nil
                                        inheritFromContext:[self HTMLContext]];
     [[self textBlock] buildGraphicalText:context];
     
     
     // Copy across dependencies. #117522
-    for (KSObjectKeyPathPair *aDependency in [[context rootDOMController] dependencies])
+    for (KSObjectKeyPathPair *aDependency in [[context rootElement] dependencies])
     {
         [self addDependency:aDependency];
     }
