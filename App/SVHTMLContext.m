@@ -504,8 +504,6 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 - (void)writeBodyOfGraphic:(id <SVGraphic>)graphic;
 {
-    [self incrementHeaderLevel];
-    @try
     {
         // Graphic body
         if (![graphic isPagelet] && ![graphic shouldWriteHTMLInline])
@@ -539,10 +537,6 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
         {
             [self endElement];
         }
-    }
-    @finally
-    {
-        [self decrementHeaderLevel];
     }
 }
 

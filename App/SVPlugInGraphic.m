@@ -285,7 +285,9 @@ static void *sPlugInMinWidthObservationContext = &sPlugInMinWidthObservationCont
 
 - (void)writeBody:(SVHTMLContext *)context
 {
+    [context incrementHeaderLevel];
     [context startElement:@"div"];
+    @try
     {
         NSUInteger openElements = [context openElementsCount];
             
@@ -335,7 +337,11 @@ static void *sPlugInMinWidthObservationContext = &sPlugInMinWidthObservationCont
             [context writeComment:[NSString stringWithFormat:@" /%@ ", identifier]];
         }
     }
-    [context endElement];
+    @finally
+    {
+        [context endElement];
+        [context decrementHeaderLevel];
+    }
 }
 
 - (NSString *)inlineGraphicClassName;
