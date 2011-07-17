@@ -316,7 +316,15 @@
                 }
             }
             
-            [context writeGraphic:graphic];
+            
+            // Graphic body
+            OBASSERT(![graphic isPagelet]);
+            [context startElement:@"div"]; // <div class="graphic">
+            {
+                [context pushClassName:@"figure-content"];  // identifies for #84956
+                [context writeGraphic:graphic];
+            }
+            [context endElement];
             
             
             // Caption if requested

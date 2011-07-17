@@ -502,53 +502,8 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 #pragma mark Graphics
 
-- (void)writeBodyOfGraphic:(id <SVGraphic>)graphic;
-{
-    {
-        // Graphic body
-        if (![graphic isPagelet] && ![graphic shouldWriteHTMLInline])
-        {
-            [self startElement:@"div"]; // <div class="graphic">
-            
-            
-            [self pushClassName:@"figure-content"];  // identifies for #84956
-        }
-        
-        if (![graphic isKindOfClass:[SVPlugInGraphic class]] || [graphic isKindOfClass:[SVMediaGraphic class]])
-        {
-            // It's almost certainly media, generate DOM controller to match
-            [graphic writeHTML:self];
-        }
-        else
-        {
-            @try
-            {
-                [[self writeElement:@"div" contentsInvocationTarget:graphic]
-                 writeHTML:self];
-            }
-            @catch (NSException *exception)
-            {
-                // Was probably caused by a plug-in. Log and soldier on. #88083
-                NSLog(@"Writing graphic body raised exception, probably due to incorrect use of HTML Writer");
-            }
-        }
-        
-        if (![graphic isPagelet] && ![graphic shouldWriteHTMLInline])
-        {
-            [self endElement];
-        }
-    }
-}
-
 - (void)writeGraphic:(id <SVGraphic>)graphic;
 {
-    // Special case. When writing a graphic nested in itself that's our cue to generate the body
-    if (graphic == [self currentGraphicContainer])
-    {
-        return [self writeBodyOfGraphic:graphic];
-    }
-    
-    
     // Update number of graphics
     _numberOfGraphics++;
     
