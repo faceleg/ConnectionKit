@@ -28,14 +28,8 @@ YRKSPINNINGPROGRESSINDICATOR_COMMIT = fe71a17098f56e62e65b36da0d2ba639481e4899
 // Building -- common settings across all configurations
 
 
-// GCC 4.2
-GCC_VERSION = 4.2
-
-// Clang LLVM 1.0 (Waiting for one update to Clang to accept Class<...>)
-// GCC_VERSION = com.apple.compilers.llvm.clang.1_0
-
-// LLVM GCC 4.2
-// GCC_VERSION = com.apple.compilers.llvmgcc42
+// Compiler
+GCC_VERSION = com.apple.compilers.llvmgcc42
 
 // For testing out the TOT clang installed.  Useful to get new warnings.
 //GCC_VERSION = com.apple.compilers.llvm.clang.1_0
