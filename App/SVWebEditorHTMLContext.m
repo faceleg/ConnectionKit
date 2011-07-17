@@ -289,6 +289,7 @@
             // Invent an ID for the controller if needed
             NSString *idName = [NSString stringWithFormat:@"component-%p", elementInfo];
             [self pushPreferredIdName:idName];
+            [elementInfo setElementIdNameWasInvented:YES];
         }
     }
     

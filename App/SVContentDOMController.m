@@ -27,6 +27,7 @@
     SVDOMController *aController = [element newDOMControllerWithDocument:document];
     if (aController)
     {
+        [aController setShouldIncludeElementIdNameWhenPublishing:![element elementIdNameWasInvented]];
         [aController awakeFromHTMLContext:context];
         
         [controller addChildWebEditorItem:aController];

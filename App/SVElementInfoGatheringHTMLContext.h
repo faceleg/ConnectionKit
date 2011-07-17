@@ -20,6 +20,7 @@
     NSMutableArray          *_subelements;
     
     id <SVGraphicContainer> _graphicContainer;
+    BOOL                    _elementIdNameWasInvented;
     NSMutableSet            *_dependencies;
     BOOL                    _horizontallyResizable;
     BOOL                    _verticallyResizable;
@@ -35,6 +36,8 @@
 
 
 #pragma mark Sandvox Properties
+
+@property(nonatomic) BOOL elementIdNameWasInvented;
 
 - (NSSet *)dependencies;
 - (void)addDependency:(KSObjectKeyPathPair *)dependency;

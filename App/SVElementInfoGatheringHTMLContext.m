@@ -205,6 +205,7 @@
 #pragma mark Sandvox Properties
 
 @synthesize graphicContainer = _graphicContainer;
+@synthesize elementIdNameWasInvented = _elementIdNameWasInvented;
 
 - (NSSet *)dependencies; { return [[_dependencies copy] autorelease]; }
 
