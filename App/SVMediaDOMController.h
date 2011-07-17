@@ -26,5 +26,5 @@
 #pragma mark -
 
 
-@interface SVMediaGraphicDOMController : SVGraphicContainerDOMController
+@interface SVMediaContainerDOMController : SVGraphicContainerDOMController
 @end

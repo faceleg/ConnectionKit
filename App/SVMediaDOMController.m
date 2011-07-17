@@ -173,7 +173,7 @@
 #pragma mark -
 
 
-@implementation SVMediaGraphicDOMController
+@implementation SVMediaContainerDOMController
 
 #pragma mark DOM
 
