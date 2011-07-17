@@ -21,6 +21,8 @@
     
     id <SVGraphicContainer> _graphicContainer;
     NSMutableSet            *_dependencies;
+    BOOL                    _horizontallyResizable;
+    BOOL                    _verticallyResizable;
 }
 
 - (id)initWithGraphicContainer:(id <SVGraphicContainer>)container;
@@ -32,8 +34,13 @@
 - (void)addSubelement:(SVElementInfo *)element;
 
 
+#pragma mark Sandvox Properties
+
 - (NSSet *)dependencies;
 - (void)addDependency:(KSObjectKeyPathPair *)dependency;
+
+@property(nonatomic, getter=isHorizontallyResizable) BOOL horizontallyResizable;
+@property(nonatomic, getter=isVerticallyResizable) BOOL verticallyResizable;
 
 @end
 

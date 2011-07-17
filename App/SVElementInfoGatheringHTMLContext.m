@@ -94,6 +94,16 @@
     [super beginGraphicContainer:container];
 }
 
+#pragma mark Resizable Elements
+
+- (void)buildAttributesForResizableElement:(NSString *)elementName object:(NSObject *)object DOMControllerClass:(Class)controllerClass sizeDelta:(NSSize)sizeDelta options:(SVResizingOptions)options;
+{
+    [super buildAttributesForResizableElement:elementName object:object DOMControllerClass:controllerClass sizeDelta:sizeDelta options:options];
+    
+    [[self currentElement] setHorizontallyResizable:YES];
+    [[self currentElement] setVerticallyResizable:!(options & SVResizingDisableVertically)];
+}
+
 #pragma mark Dependencies
 
 - (void)addDependency:(KSObjectKeyPathPair *)dependency
@@ -178,6 +188,8 @@
     [_subelements addObject:element];
 }
 
+#pragma mark Sandvox Properties
+
 @synthesize graphicContainer = _graphicContainer;
 
 - (NSSet *)dependencies; { return [[_dependencies copy] autorelease]; }
@@ -186,5 +198,8 @@
 {
     [_dependencies addObject:dependency];
 }
+
+@synthesize horizontallyResizable = _horizontallyResizable;
+@synthesize verticallyResizable = _verticallyResizable;
 
 @end
