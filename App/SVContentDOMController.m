@@ -8,7 +8,13 @@
 
 #import "SVContentDOMController.h"
 
+#import "SVResizableDOMController.h"
 #import "SVWebEditorHTMLContext.h"
+
+
+@interface SVElementInfo (SVContentDOMController)
+- (SVDOMController *)newDOMControllerWithDocument:(DOMHTMLDocument *)document;
+@end
 
 
 @implementation SVContentDOMController
@@ -18,22 +24,16 @@
                       context:(SVWebEditorHTMLContext *)context
                      document:(DOMHTMLDocument *)document;
 {
-    id <SVGraphicContainer> container = [element graphicContainer];
-    if (container)
+    SVDOMController *aController = [element newDOMControllerWithDocument:document];
+    if (aController)
     {
-        NSString *elementID = [[element attributes] objectForKey:@"id"];
-        if (elementID)
-        {
-            SVDOMController *aController = [container newDOMControllerWithElementIdName:elementID
-                                                                               document:document];
-            
-            [aController awakeFromHTMLContext:context];
-            
-            [controller addChildWebEditorItem:aController];
-            controller = aController;
-            [aController release];
-        }
+        [aController awakeFromHTMLContext:context];
+        
+        [controller addChildWebEditorItem:aController];
+        controller = aController;
+        [aController release];
     }
+    
     
     // Step on down to child elements
     for (SVElementInfo *anElement in [element subelements])
@@ -64,5 +64,35 @@
 // Never want to be hooked up
 - (DOMHTMLElement *)HTMLElement { return nil; }
 - (NSString *)elementIdName; { return nil; }
+
+@end
+
+
+#pragma mark -
+
+
+@implementation SVElementInfo (SVContentDOMController)
+
+- (SVDOMController *)newDOMControllerWithDocument:(DOMHTMLDocument *)document;
+{
+    id <SVGraphicContainer> container = [self graphicContainer];
+    if (container)
+    {
+        NSString *elementID = [[self attributes] objectForKey:@"id"];
+        if (elementID)
+        {
+            if ([self isHorizontallyResizable] || [self isVerticallyResizable])
+            {
+                return [[SVResizableDOMController alloc] initWithElementIdName:elementID document:document];
+            }
+            else
+            {
+                return [container newDOMControllerWithElementIdName:elementID document:document];
+            }
+        }
+    }
+    
+    return nil;
+}
 
 @end
