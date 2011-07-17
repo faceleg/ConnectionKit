@@ -8,7 +8,42 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "SVPageletDOMController.h"
+#import "SVGraphicDOMController.h"
+
+
+@interface SVGraphicContainerDOMController : SVDOMController <SVOffscreenWebViewControllerDelegate>
+{
+@private
+    DOMHTMLElement  *_bodyElement;
+    
+    BOOL    _observingWidth;
+    
+    SVOffscreenWebViewController    *_offscreenWebViewController;
+    NSArray                         *_offscreenDOMControllers;
+}
+
++ (SVGraphicContainerDOMController *)graphicPlaceholderDOMController;
+
+@property(nonatomic, retain) DOMHTMLElement *bodyHTMLElement;
+- (DOMElement *)graphicDOMElement;
+- (void)loadPlaceholderDOMElementInDocument:(DOMDocument *)document;
+
+- (void)update;
+- (void)updateSize;
+
+
+@end
+
+
+#pragma mark -
+
+
+@interface WEKWebEditorItem (SVPageletDOMController)
+- (SVGraphicContainerDOMController *)enclosingGraphicDOMController;
+@end
+
+
+#pragma mark -
 
 
 @protocol SVGraphicContainerDOMController <NSObject>

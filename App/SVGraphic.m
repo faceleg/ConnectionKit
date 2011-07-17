@@ -895,7 +895,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID document:(DOMHTMLDocument *)document;
 {
-    SVDOMController *result = [[SVGraphicBodyDOMController alloc] initWithElementIdName:elementID document:document];
+    SVDOMController *result = [[SVGraphicDOMController alloc] initWithElementIdName:elementID document:document];
     [result setRepresentedObject:self];
     return result;
 }

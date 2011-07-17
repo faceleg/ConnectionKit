@@ -8,7 +8,7 @@
 
 #import "SVPagelet.h"
 
-#import "SVPageletDOMController.h"
+#import "SVGraphicContainerDOMController.h"
 
 
 @implementation SVPagelet
@@ -30,7 +30,7 @@
 
 - (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID document:(DOMHTMLDocument *)document;
 {
-    SVDOMController *result = [[SVPageletDOMController alloc] initWithElementIdName:elementID document:document];
+    SVDOMController *result = [[SVGraphicContainerDOMController alloc] initWithElementIdName:elementID document:document];
     [result setRepresentedObject:self];
     return result;
 }

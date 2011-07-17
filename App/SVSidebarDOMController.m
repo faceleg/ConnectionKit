@@ -10,7 +10,7 @@
 
 #import "SVArticleDOMController.h"
 #import "SVAttributedHTML.h"
-#import "SVPageletDOMController.h"
+#import "SVGraphicContainerDOMController.h"
 #import "KTPage.h"
 #import "SVTextAttachment.h"
 #import "SVWebEditorViewController.h"
@@ -715,7 +715,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     
     if (index < [pagelets count])
     {
-        SVPageletDOMController *nextPagelet = [pagelets objectAtIndex:index];
+        SVGraphicContainerDOMController *nextPagelet = [pagelets objectAtIndex:index];
         if (2 * gapAvailable > [[nextPagelet HTMLElement] boundingBox].size.height)
         {
             // Make the swap
@@ -748,7 +748,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         
     if (index > 0)
     {
-        SVPageletDOMController *previousPagelet = [pagelets objectAtIndex:index-1];
+        SVGraphicContainerDOMController *previousPagelet = [pagelets objectAtIndex:index-1];
         if (2 * -gapAvailable > [[previousPagelet HTMLElement] boundingBox].size.height)
         {
             // Make the swap

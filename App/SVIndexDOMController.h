@@ -6,12 +6,12 @@
 //  Copyright 2010-2011 Karelia Software. All rights reserved.
 //
 
-#import "SVPageletDOMController.h"
+#import "SVGraphicDOMController.h"
 
 #import "SVIndexPlugIn.h"
 
 
-@interface SVIndexDOMController : SVGraphicBodyDOMController
+@interface SVIndexDOMController : SVGraphicDOMController
 
 
 @end

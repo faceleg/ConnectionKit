@@ -8979,6 +8979,14 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
+					<string key="className">SVGraphicContainerDOMController</string>
+					<string key="superclassName">SVDOMController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBUserSource</string>
+						<string key="minorKey"/>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">SVLinkManager</string>
 					<string key="superclassName">NSObject</string>
 					<object class="NSMutableDictionary" key="actions">
@@ -8993,14 +9001,6 @@
 						</object>
 					</object>
 					<reference key="sourceIdentifier" ref="238281729"/>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">SVPageletDOMController</string>
-					<string key="superclassName">SVDOMController</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBUserSource</string>
-						<string key="minorKey"/>
-					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">SVPagesTreeController</string>
@@ -9023,7 +9023,7 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">SVRawHTMLDOMController</string>
-					<string key="superclassName">SVPageletDOMController</string>
+					<string key="superclassName">SVGraphicContainerDOMController</string>
 					<object class="NSMutableDictionary" key="actions">
 						<string key="NS.key.0">editRawHTMLInSelectedBlock:</string>
 						<string key="NS.object.0">id</string>

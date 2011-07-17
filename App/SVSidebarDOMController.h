@@ -13,7 +13,7 @@
 #import "SVSidebarPageletsController.h"
 
 
-@class SVPageletDOMController;
+@class SVGraphicContainerDOMController;
 
 @interface SVSidebarDOMController : SVDOMController <SVGraphicContainerDOMController>
 {

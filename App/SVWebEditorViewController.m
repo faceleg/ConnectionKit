@@ -18,7 +18,7 @@
 #import "SVLogoImage.h"
 #import "KTMaster.h"
 #import "KTPage.h"
-#import "SVPageletDOMController.h"
+#import "SVGraphicContainerDOMController.h"
 #import "SVGraphicFactory.h"
 #import "KTImageScalingURLProtocol.h"
 #import "SVLinkManager.h"
