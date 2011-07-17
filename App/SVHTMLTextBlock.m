@@ -437,7 +437,6 @@
     [result setEditable:[self isEditable]];
     [result setRichText:[self isRichText]];
     [result setFieldEditor:[self isFieldEditor]];
-    if (![self isFieldEditor]) [result setPlaceholderHTMLString:@"<p><br /></p>"];
     
     // Bind to model
     if ([self HTMLSourceObject] && [self HTMLSourceKeyPath])
@@ -447,6 +446,8 @@
          withKeyPath:[self HTMLSourceKeyPath]
              options:nil];
     }
+    
+    if (![self isFieldEditor]) [result setPlaceholderHTMLString:@"<p><br /></p>"]; // do after so doesn't overrite binding
     
     return result;
 }

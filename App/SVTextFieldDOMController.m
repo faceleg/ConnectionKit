@@ -440,7 +440,6 @@
 {
     SVTextFieldDOMController *result = [[SVTextFieldDOMController alloc] initWithElementIdName:elementID document:document];
     [result setRepresentedObject:self];
-    [result setPlaceholderHTMLString:NSLocalizedString(@"Title", "placeholder")];
     [result setRichText:YES];
     [result setFieldEditor:YES];
     
@@ -449,6 +448,8 @@
         toObject:self
      withKeyPath:@"textHTMLString"
          options:nil];
+    
+    [result setPlaceholderHTMLString:NSLocalizedString(@"Title", "placeholder")];   // do after binding, avoids accidental overwrite
     
     [result bind:NSAlignmentBinding toObject:self withKeyPath:@"alignment" options:nil];
     
