@@ -88,10 +88,21 @@
 
 - (void)beginGraphicContainer:(id <SVGraphicContainer>)container;
 {
-    //OBPRECONDITION(!_earlyElement);
-    _earlyElement = [[SVElementInfo alloc] initWithGraphicContainer:container];
+    if (container)
+    {
+        //OBPRECONDITION(!_earlyElement);
+        _earlyElement = [[SVElementInfo alloc] initWithGraphicContainer:container];
+    }
     
     [super beginGraphicContainer:container];
+}
+
+- (void)endGraphicContainer;
+{
+    [super endGraphicContainer];
+    
+    // If early is still around, that means it never go written
+    [_earlyElement release]; _earlyElement = nil;
 }
 
 #pragma mark Resizable Elements
