@@ -306,7 +306,7 @@
     // Display new placeholder if appropriate
     if ([[self HTMLString] length] == 0)
     {
-        [[self textHTMLElement] setInnerText:placeholder];
+        [[self textHTMLElement] setInnerHTML:placeholder];  // placeholder is HTML
     }
 }
 
