@@ -58,9 +58,16 @@
         return;
     }
     
-    [[self document] autosaveDocumentWithDelegate:self
-                              didAutosaveSelector:@selector(document:didAutosave:contextInfo:)
-                                      contextInfo:selector];
+    if ([[self document] hasUnautosavedChanges])
+    {
+        [[self document] autosaveDocumentWithDelegate:self
+                                  didAutosaveSelector:@selector(document:didAutosave:contextInfo:)
+                                          contextInfo:selector];
+    }
+    else
+    {
+        [self performSelector:selector];
+    }
 }
 
 - (void)maybeShowRestrictedPublishingAlertAndContinueWith:(SEL)aSelector;
