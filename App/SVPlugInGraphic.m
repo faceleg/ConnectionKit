@@ -8,13 +8,14 @@
 
 #import "SVPlugInGraphic.h"
 
-#import "SVDOMController.h"
+#import "Sandvox.h"
+
+#import "SVGraphicFactory.h"
+#import "SVHTMLContext.h"
+#import "SVIndexDOMController.h"
 #import "SVLogoImage.h"
 #import "SVMediaProtocol.h"
 #import "KTPage.h"
-#import "Sandvox.h"
-#import "SVGraphicFactory.h"
-#import "SVHTMLContext.h"
 
 #import "NSManagedObject+KTExtensions.h"
 #import "NSObject+Karelia.h"
@@ -524,6 +525,20 @@ static void *sPlugInMinWidthObservationContext = &sPlugInMinWidthObservationCont
 }
 
 #pragma mark DOM
+
+- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID
+                                              document:(DOMHTMLDocument *)document;
+{
+    if ([[self plugIn] isKindOfClass:[SVIndexPlugIn class]])
+    {
+        SVDOMController *result = [[SVIndexDOMController alloc] initWithElementIdName:elementID
+                                                                             document:document];
+        [result setRepresentedObject:self];
+        return result;
+    }
+    
+    return [super newDOMControllerWithElementIdName:elementID document:document];
+}
 
 - (BOOL)requiresPageLoad;
 {
