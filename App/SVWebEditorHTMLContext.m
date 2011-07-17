@@ -87,45 +87,6 @@
 
 - (KTHTMLGenerationPurpose)generationPurpose; { return kSVHTMLGenerationPurposeEditing; }
 
-#pragma mark Graphics
-
-- (void)XwriteGraphic:(id <SVGraphic, SVDOMControllerRepresentedObject>)graphic;
-{
-    OBPRECONDITION(graphic);
-    
-    
-    // Special case, want to write the body of the graphic
-    if (graphic == [self currentGraphicContainer])
-    {
-        if ([graphic respondsToSelector:@selector(newBodyDOMController)] &&
-             ![graphic isKindOfClass:[SVMediaGraphic class]])
-        {
-            SVDOMController *controller = [(SVGraphic *)graphic newBodyDOMController];
-            [self startDOMController:controller];
-            [controller release];
-        }
-        
-        return [super writeGraphic:graphic];
-    }
-    
-    
-    // Create controller for the graphic
-    SVDOMController *controller = [graphic newDOMController];
-    [self startDOMController:controller];
-    [controller release];
-    
-    
-    if ([graphic isPagelet])
-    {
-        // Pagelets are using a HTML template, so context can't track them properly. By using the private element stack API, can maniuplate for the desired result
-        [super writeGraphic:graphic];
-    }
-    else
-    {
-        [super writeGraphic:graphic];
-    }
-}
-
 #pragma mark Metrics
 
 - (void)XbuildAttributesForResizableElement:(NSString *)elementName object:(NSObject *)object DOMControllerClass:(Class)controllerClass sizeDelta:(NSSize)sizeDelta options:(SVResizingOptions)options;
