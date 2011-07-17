@@ -285,53 +285,57 @@ static void *sPlugInMinWidthObservationContext = &sPlugInMinWidthObservationCont
 
 - (void)writeBody:(SVHTMLContext *)context
 {
-    NSUInteger openElements = [context openElementsCount];
-        
-    NSString *identifier = [self plugInIdentifier];
-    if (![self shouldWriteHTMLInline])
+    [context startElement:@"div"];
     {
-        [context writeComment:[NSString stringWithFormat:@" %@ ", identifier]];
-    }
-    
-    
-    SVPlugIn *plugIn = [self plugIn];
-    if (plugIn)
-    {
-        @try
-        {
-            [[self plugIn] writeHTML:context];
-        }
-        @catch (NSException *exception)
-        {
-            NSLog(@"Plug-in threw exception: %@ %@", [exception name], [exception reason]);
+        NSUInteger openElements = [context openElementsCount];
             
-            // Correct open elements count if plug-in managed to break this. #88083
-            while ([context openElementsCount] > openElements)
-            {
-                [context endElement];
-            }
-        }
-    }
-    else
-    {
-        SVGraphicFactory *factory = [SVGraphicFactory factoryWithIdentifier:[self plugInIdentifier]];
-        if (factory)
+        NSString *identifier = [self plugInIdentifier];
+        if (![self shouldWriteHTMLInline])
         {
-            [context writePlaceholderWithText:NSLocalizedString(@"Plug-in failed to load", "placeholder")
-                                  options:0];
+            [context writeComment:[NSString stringWithFormat:@" %@ ", identifier]];
+        }
+        
+        
+        SVPlugIn *plugIn = [self plugIn];
+        if (plugIn)
+        {
+            @try
+            {
+                [[self plugIn] writeHTML:context];
+            }
+            @catch (NSException *exception)
+            {
+                NSLog(@"Plug-in threw exception: %@ %@", [exception name], [exception reason]);
+                
+                // Correct open elements count if plug-in managed to break this. #88083
+                while ([context openElementsCount] > openElements)
+                {
+                    [context endElement];
+                }
+            }
         }
         else
         {
-            [context writePlaceholderWithText:[NSString stringWithFormat:NSLocalizedString(@"Plug-in not found (%@)", "placeholder"), [self plugInIdentifier]]
+            SVGraphicFactory *factory = [SVGraphicFactory factoryWithIdentifier:[self plugInIdentifier]];
+            if (factory)
+            {
+                [context writePlaceholderWithText:NSLocalizedString(@"Plug-in failed to load", "placeholder")
                                       options:0];
+            }
+            else
+            {
+                [context writePlaceholderWithText:[NSString stringWithFormat:NSLocalizedString(@"Plug-in not found (%@)", "placeholder"), [self plugInIdentifier]]
+                                          options:0];
+            }
+        }
+        
+        
+        if (![self shouldWriteHTMLInline])
+        {
+            [context writeComment:[NSString stringWithFormat:@" /%@ ", identifier]];
         }
     }
-    
-    
-    if (![self shouldWriteHTMLInline])
-    {
-        [context writeComment:[NSString stringWithFormat:@" /%@ ", identifier]];
-    }
+    [context endElement];
 }
 
 - (NSString *)inlineGraphicClassName;
