@@ -298,7 +298,7 @@
             [context pushClassName:@"graphic"];
             if (![graphic captionGraphic] && [graphic isKindOfClass:[SVMediaGraphic class]]) // special case for media
             {
-                [graphic writeBody:context];
+                [graphic writeHTML:context];
                 [context endElement];
                 return;
             }

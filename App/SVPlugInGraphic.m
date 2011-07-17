@@ -283,7 +283,7 @@ static void *sPlugInMinWidthObservationContext = &sPlugInMinWidthObservationCont
 
 #pragma mark HTML
 
-- (void)writeBody:(SVHTMLContext *)context
+- (void)writeHTML:(SVHTMLContext *)context
 {
     [context incrementHeaderLevel];
     [context startElement:@"div"];

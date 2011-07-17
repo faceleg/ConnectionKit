@@ -37,7 +37,7 @@
 
 #pragma mark HTML
 
-- (void)writeBody:(SVHTMLContext *)context;
+- (void)writeHTML:(SVHTMLContext *)context;
 {
     [context pushClassName:@"HTMLElement"];
     [context addCSSString:@".HTMLElement { overflow:hidden; }"];

@@ -63,7 +63,7 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 
 
 #pragma mark HTML
-- (void)writeBody:(SVHTMLContext *)context;  // Subclasses MUST override
+- (void)writeHTML:(SVHTMLContext *)context;  // Subclasses MUST override
 - (BOOL)shouldWriteHTMLInline;
 - (BOOL)displayInline;
 - (BOOL)isPagelet;      // whether to generate <div class="pagelet"> etc. HTML. KVO-compliant
@@ -190,7 +190,7 @@ extern NSString *kSVGraphicPboardType;
 
 #pragma mark HTML
 
-- (void)writeBody:(SVHTMLContext *)context;  // Subclasses MUST override
+- (void)writeHTML:(SVHTMLContext *)context;  // Subclasses MUST override
 
 - (void)buildClassName:(SVHTMLContext *)context includeWrap:(BOOL)includeWrap;
 - (void)buildWrapClassName:(SVHTMLContext *)context;

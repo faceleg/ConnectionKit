@@ -400,7 +400,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     //[[context rootDOMController] stopObservingDependencies];
     
     
-    [self writeBody:context];
+    [self writeHTML:context];
     
     
     BOOL result = NO;
@@ -591,7 +591,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (NSString *)inlineGraphicClassName; { return nil; }
 
-- (void)writeBody:(SVHTMLContext *)context;
+- (void)writeHTML:(SVHTMLContext *)context;
 {
     SUBCLASSMUSTIMPLEMENT;
     [self doesNotRecognizeSelector:_cmd];

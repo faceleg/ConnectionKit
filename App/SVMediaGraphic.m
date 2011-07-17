@@ -406,7 +406,7 @@
 
 #pragma mark HTML
 
-- (void)writeBody:(SVHTMLContext *)context
+- (void)writeHTML:(SVHTMLContext *)context
 {
     [context addDependencyOnObject:self keyPath:@"media"];
     if (![self media]) [context addDependencyOnObject:self keyPath:@"externalSourceURL"];
@@ -422,14 +422,14 @@
         [context startElement:@"div" className:elementClass];
         [context startElement:@"div" className:contentClass];
         
-        [super writeBody:context];
+        [super writeHTML:context];
         
         [context endElement];
         [context endElement];
     }
     else
     {
-        [super writeBody:context];
+        [super writeHTML:context];
     }
 }
 

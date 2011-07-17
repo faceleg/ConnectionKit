@@ -517,14 +517,14 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
         if (![graphic isKindOfClass:[SVPlugInGraphic class]] || [graphic isKindOfClass:[SVMediaGraphic class]])
         {
             // It's almost certainly media, generate DOM controller to match
-            [graphic writeBody:self];
+            [graphic writeHTML:self];
         }
         else
         {
             @try
             {
                 [[self writeElement:@"div" contentsInvocationTarget:graphic]
-                 writeBody:self];
+                 writeHTML:self];
             }
             @catch (NSException *exception)
             {
@@ -575,7 +575,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     else
     {
         [self beginGraphicContainer:graphic];
-        [graphic writeBody:self];
+        [graphic writeHTML:self];
         [self endGraphicContainer];
     }
 }

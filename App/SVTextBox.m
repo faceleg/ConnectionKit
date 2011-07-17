@@ -81,7 +81,7 @@
 
 #pragma mark HTML
 
-- (void)writeBody:(SVHTMLContext *)context;
+- (void)writeHTML:(SVHTMLContext *)context;
 {
     static SVTemplate *sBodyTemplate;
     if (!sBodyTemplate)
