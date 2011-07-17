@@ -258,8 +258,6 @@
 
 - (void)writeText:(SVHTMLContext *)context range:(NSRange)searchRange;
 {
-    [context beginGraphicContainer:self];
-    
     NSAttributedString *html = [[self attributedHTMLString] attributedSubstringFromRange:searchRange];
     
     
@@ -268,8 +266,6 @@
     
     //[context addDependencyOnObject:self keyPath:@"string"];
     // Don't register this dependency as SVRichTextDOMController will handle its own dependencies
-    
-    [context endGraphicContainer];
 }
 
 - (void)writeText; { [self writeText:[[SVHTMLTemplateParser currentTemplateParser] HTMLContext]]; }
