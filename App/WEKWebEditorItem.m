@@ -593,9 +593,24 @@
     
     
     DOMHTMLElement *element = [self HTMLElement];
-    [element setAttribute:@"width" value:[[self width] description]];
-    [element setAttribute:@"height" value:[[self height] description]];
     
+    if ([element respondsToSelector:@selector(setWidth:)])
+    {
+        [element setAttribute:@"width" value:[[self width] description]];
+    }
+    else
+    {
+        [[element style] setWidth:[[[self width] description] stringByAppendingString:@"px"]];
+    }
+    
+    if ([element respondsToSelector:@selector(setHeight:)])
+    {
+        [element setAttribute:@"height" value:[[self height] description]];
+    }
+    else
+    {
+        [[element style] setHeight:[[[self height] description] stringByAppendingString:@"px"]];
+    }
     
     
     // Finish
