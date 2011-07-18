@@ -14,18 +14,26 @@
 #import "SVWebEditorHTMLContext.h"
 
 
-static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
-
-
 @implementation SVResizableDOMController
 
-#pragma mark Dealloc
+#pragma mark Lifecycle
+
++ (void)initialize;
+{
+    [self exposeBinding:NSWidthBinding];
+    [self exposeBinding:@"height"];
+}
 
 - (void)dealloc
 {
+    [self unbind:NSWidthBinding];
+    [self unbind:@"height"];
+    
     [self setRepresentedObject:nil];
+    
     [_width release];
     [_height release];
+    
     [super dealloc];
 }
 
@@ -80,17 +88,6 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     [_height release]; _height = height;
     
     [self setNeedsUpdateWithSelector:@selector(updateSize)];
-}
-
-- (void)setRepresentedObject:(id)object
-{
-    [[self representedObject] removeObserver:self forKeyPath:@"width"];
-    [[self representedObject] removeObserver:self forKeyPath:@"height"];
-    
-    [super setRepresentedObject:object];
-    
-    [object addObserver:self forKeyPath:@"width" options:0 context:sObjectSizeObservationContext];
-    [object addObserver:self forKeyPath:@"height" options:0 context:sObjectSizeObservationContext];
 }
 
 #pragma mark Selection
@@ -161,21 +158,6 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     [self didUpdateWithSelector:_cmd];
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context
-{
-    if (context == sObjectSizeObservationContext)
-    {
-        [self setNeedsUpdateWithSelector:@selector(updateSize)];
-    }
-    else
-    {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    }
-}
-
 #pragma mark Resize
 
 - (BOOL)shouldResizeInline; { return [[self representedObject] shouldWriteHTMLInline]; }
@@ -199,17 +181,28 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     NSNumber *width = (size.width > 0 ? [NSNumber numberWithInt:size.width] : nil);
     NSNumber *height = (size.height > 0 ? [NSNumber numberWithInt:size.height] : nil);
     
-    SVPlugInGraphic *graphic = [self representedObject];
-    if (graphic)
+    NSDictionary *info = [self infoForBinding:NSWidthBinding];
+    if (info)
     {
-        [graphic setWidth:width];
-        [graphic setHeight:height];
+        [[info objectForKey:NSObservedObjectKey] setValue:width
+                                               forKeyPath:[info objectForKey:NSObservedKeyPathKey]];
     }
     else
     {
         [self setWidth:width];
+    }
+    
+    info = [self infoForBinding:@"height"];
+    if (info)
+    {
+        [[info objectForKey:NSObservedObjectKey] setValue:height
+                                               forKeyPath:[info objectForKey:NSObservedKeyPathKey]];
+    }
+    else
+    {
         [self setHeight:height];
     }
+    
     
     // Push into view immediately
     [self updateIfNeeded];
