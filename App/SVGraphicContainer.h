@@ -22,3 +22,18 @@
 - (void)write:(SVHTMLContext *)context graphic:(id <SVGraphic>)graphic;
 
 @end
+
+
+#pragma mark -
+
+
+@interface SVInlineGraphicContainer : NSObject <SVGraphicContainer>
+{
+  @private
+    id <SVGraphic>  _graphic;
+}
+
+- (id)initWithGraphic:(id <SVGraphic>)graphic;
+
+@end
+

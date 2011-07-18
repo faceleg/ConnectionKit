@@ -742,6 +742,7 @@
 		27FA98961194BF06003B8308 /* SidebarTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 27FA98951194BF06003B8308 /* SidebarTemplate.html */; };
 		27FAD5531146AEF80040FA44 /* SVTabViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FAD5511146AEF80040FA44 /* SVTabViewController.h */; };
 		27FAD5541146AEF80040FA44 /* SVTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FAD5521146AEF80040FA44 /* SVTabViewController.m */; };
+		27FBC9BD13D4F0A3002F720B /* SVInlineGraphicContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FBC9BC13D4F0A3002F720B /* SVInlineGraphicContainer.m */; };
 		27FC47EF1030CE7500A4A5E2 /* NSSet+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FC47ED1030CE7500A4A5E2 /* NSSet+Karelia.h */; settings = {ATTRIBUTES = (); }; };
 		27FC47F01030CE7500A4A5E2 /* NSSet+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FC47EE1030CE7500A4A5E2 /* NSSet+Karelia.m */; };
 		27FDA7081238F4C3006E1A0D /* KSURLUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FDA7061238F4C3006E1A0D /* KSURLUtilities.h */; };
@@ -2506,6 +2507,7 @@
 		27FA98951194BF06003B8308 /* SidebarTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SidebarTemplate.html; sourceTree = "<group>"; };
 		27FAD5511146AEF80040FA44 /* SVTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVTabViewController.h; sourceTree = "<group>"; };
 		27FAD5521146AEF80040FA44 /* SVTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVTabViewController.m; sourceTree = "<group>"; };
+		27FBC9BC13D4F0A3002F720B /* SVInlineGraphicContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVInlineGraphicContainer.m; sourceTree = "<group>"; };
 		27FC47ED1030CE7500A4A5E2 /* NSSet+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSSet+Karelia.h"; path = "../../Shared/Foundation/NSSet+Karelia.h"; sourceTree = "<group>"; };
 		27FC47EE1030CE7500A4A5E2 /* NSSet+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSSet+Karelia.m"; path = "../../Shared/Foundation/NSSet+Karelia.m"; sourceTree = "<group>"; };
 		27FDA7061238F4C3006E1A0D /* KSURLUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSURLUtilities.h; sourceTree = "<group>"; };
@@ -3923,6 +3925,7 @@
 				278645B613C62D1C0098C34F /* SVElementInfoGatheringHTMLContext.m */,
 				27D68FCE13CF6D2E00D7B867 /* SVPagelet.h */,
 				27D68FCF13CF6D2E00D7B867 /* SVPagelet.m */,
+				27FBC9BC13D4F0A3002F720B /* SVInlineGraphicContainer.m */,
 			);
 			name = "HTML Context";
 			sourceTree = "<group>";
@@ -8252,6 +8255,7 @@
 				276BC94813C34DDC00EB2798 /* SVWorkspaceIconProtocol.m in Sources */,
 				278645B813C62D1C0098C34F /* SVElementInfoGatheringHTMLContext.m in Sources */,
 				27D68FD113CF6D2E00D7B867 /* SVPagelet.m in Sources */,
+				27FBC9BD13D4F0A3002F720B /* SVInlineGraphicContainer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

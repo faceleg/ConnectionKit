@@ -11,6 +11,7 @@
 #import "SVHTMLTemplateParser.h"
 #import "SVMediaGraphic.h"
 #import "KTPage.h"
+#import "SVGraphicContainer.h"
 #import "SVRichTextDOMController.h"
 #import "SVTextAttachment.h"
 
@@ -272,7 +273,10 @@
 
 - (void)write:(SVHTMLContext *)context graphic:(id <SVGraphic>)graphic;
 {
-    [context beginGraphicContainer:graphic];
+    SVInlineGraphicContainer *container = [[SVInlineGraphicContainer alloc] initWithGraphic:graphic]; // yes, fake it!
+    [context beginGraphicContainer:container];
+    [container release];
+    
     @try
     {
         if ([graphic shouldWriteHTMLInline])
@@ -317,14 +321,7 @@
             }
             
             
-            // Graphic body
-            OBASSERT(![graphic isPagelet]);
-            [context startElement:@"div"]; // <div class="graphic">
-            {
-                [context pushClassName:@"figure-content"];  // identifies for #84956
-                [context writeGraphic:graphic];
-            }
-            [context endElement];
+            [context writeGraphic:graphic];
             
             
             // Caption if requested
