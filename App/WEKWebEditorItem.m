@@ -13,6 +13,8 @@
 #import "NSString+Karelia.h"
 #import "DOMNode+Karelia.h"
 
+#import <Carbon/Carbon.h>
+
 
 @interface SVWebEditorItemEnumerator : NSEnumerator
 {
@@ -30,14 +32,63 @@
 
 @implementation WEKWebEditorItem
 
+#pragma mark Lifecycle
+
++ (void)initialize;
+{
+    [self exposeBinding:NSWidthBinding];
+    [self exposeBinding:@"height"];
+}
+
 - (void)dealloc
 {
+    [self unbind:NSWidthBinding];
+    [self unbind:@"height"];
+        
     [self setChildWebEditorItems:nil];
+    
+    [_width release];
+    [_height release];
     
     [super dealloc];
 }
 
+#pragma mark DOM
+
+- (void)setHTMLElement:(DOMHTMLElement *)element;
+{
+    [super setHTMLElement:element];
+    
+    NSNumber *width = nil;
+    NSString *widthString = [element getAttribute:@"width"];
+    if ([widthString length]) width = [NSNumber numberWithInteger:[widthString integerValue]];
+    [_width release]; _width = [width copy];
+    
+    NSNumber *height = nil;
+    NSString *heightString = [element getAttribute:@"height"];
+    if ([heightString length]) height = [NSNumber numberWithInteger:[heightString integerValue]];
+    [_height release]; _height = [height copy];
+}
+
 #pragma mark Accessors
+
+@synthesize width = _width;
+- (void)setWidth:(NSNumber *)width;
+{
+    width = [width copy];
+    [_width release]; _width = width;
+    
+    [self setNeedsUpdateWithSelector:@selector(updateSize)];
+}
+
+@synthesize height = _height;
+- (void)setHeight:(NSNumber *)height;
+{
+    height = [height copy];
+    [_height release]; _height = height;
+    
+    [self setNeedsUpdateWithSelector:@selector(updateSize)];
+}
 
 - (WEKWebEditorView *)webEditor
 {
@@ -261,9 +312,27 @@
 
 - (BOOL)isSelectable; { return [self selectableDOMElement] != nil; }
 
-- (DOMElement *)selectableDOMElement; { return nil; }
+- (DOMElement *)selectableDOMElement;
+{
+    return (([self isHorizontallyResizable] || [self isVerticallyResizable]) ?
+            [self HTMLElement] :
+            nil);
+}
 
-- (DOMRange *)selectableDOMRange; { return nil; }
+- (DOMRange *)selectableDOMRange;
+{
+    if ([self shouldTrySelectingInline])
+    {
+        DOMElement *element = [self selectableDOMElement];
+        DOMRange *result = [[element ownerDocument] createRange];
+        [result selectNode:element];
+        return result;
+    }
+    else
+    {
+        return nil;
+    }
+}
 
 - (BOOL)shouldTrySelectingInline;
 {
@@ -478,13 +547,245 @@
 
 #pragma mark Resizing
 
-- (unsigned int)resizingMask; { return 0; }
+@synthesize horizontallyResizable = _horizontallyResizable;
+@synthesize verticallyResizable = _verticallyResizable;
+@synthesize sizeDelta = _delta;
+
+- (NSSize)minSize; { return NSMakeSize(200.0f, 16.0f); }
+
+- (void)updateSize;
+{
+    // Workaround for #94381. Make sure any selectable parent redraws
+    [[[self selectableAncestors] lastObject] setNeedsDisplay];
+    
+    
+    
+    DOMHTMLElement *element = [self HTMLElement];
+    [element setAttribute:@"width" value:[[self width] description]];
+    [element setAttribute:@"height" value:[[self height] description]];
+    
+    
+    
+    // Finish
+    [self didUpdateWithSelector:_cmd];
+}
+
+- (unsigned int)resizingMaskForDOMElement:(DOMElement *)element;
+{
+    unsigned int result = kCALayerRightEdge; // default to adjustment from right-hand edge
+    
+    
+    DOMCSSStyleDeclaration *style = [[element ownerDocument] getComputedStyle:element pseudoElement:@""];
+    
+    
+    // Is the aligned/floated left/center/right?
+    if ([[style cssFloat] isEqualToString:@"right"] ||
+        [[style textAlign] isEqualToString:@"right"])
+    {
+        result = kCALayerLeftEdge;
+        return result;
+    }
+    else if ([[style textAlign] isEqualToString:@"center"])
+    {
+        result = result | kCALayerLeftEdge;
+        return result;
+    }
+    
+    
+    // Couldn't tell from float/alignment. For inline elements, maybe parent is more helpful?
+    if ([[style display] isEqualToString:@"inline"])
+    {
+        return [self resizingMaskForDOMElement:(DOMElement *)[element parentNode]];
+    }
+    
+    
+    // Fall back to guessing from block margins
+    DOMCSSRuleList *rules = [[element ownerDocument] getMatchedCSSRules:element pseudoElement:@""];
+    
+    for (int i = 0; i < [rules length]; i++)
+    {
+        DOMCSSRule *aRule = [rules item:i];
+        DOMCSSStyleDeclaration *ruleStyle = [(DOMElement *)aRule style];  // not published in our version of WebKit
+        
+        if ([[ruleStyle marginLeft] isEqualToString:@"auto"])
+        {
+            result = kCALayerLeftEdge;
+            if ([[ruleStyle marginRight] isEqualToString:@"auto"]) result = result | kCALayerRightEdge;
+            return result;
+        }
+    }
+    
+    
+    // Finish up
+    return result;
+}
+
+- (unsigned int)resizingMask;
+{
+    unsigned int result = 0;
+    if ([self isHorizontallyResizable])
+    {
+        result = [self resizingMaskForDOMElement:[self selectableDOMElement]];
+    }
+    if ([self isVerticallyResizable])
+    {
+        result = result | kCALayerBottomEdge;
+    }
+    
+    return result;
+}
 
 - (SVGraphicHandle)resizeUsingHandle:(SVGraphicHandle)handle event:(NSEvent *)event;
 {
-    SUBCLASSMUSTIMPLEMENT;
-    [self doesNotRecognizeSelector:_cmd];
+    NSPoint point = NSZeroPoint;
+    
+    BOOL resizeInline = [self shouldResizeInline];
+    if (!resizeInline)
+    {
+        NSView *docView = [[self HTMLElement] documentView];
+        point = [docView convertPoint:[event locationInWindow] fromView:nil];
+    }
+    
+    
+    
+    // Start with the original bounds.
+    NSRect bounds = [self selectionFrame];
+    
+    // Is the user changing the width of the graphic?
+    if (handle == kSVGraphicUpperLeftHandle ||
+        handle == kSVGraphicMiddleLeftHandle ||
+        handle == kSVGraphicLowerLeftHandle)
+    {
+        // Change the left edge of the graphic
+        if (resizeInline)
+        {
+            bounds.size.width -= [event deltaX];
+            bounds.origin.x -= [event deltaX];
+        }
+        else
+        {
+            bounds.size.width = NSMaxX(bounds) - point.x;
+            bounds.origin.x = point.x;
+        }
+    }
+    else if (handle == kSVGraphicUpperRightHandle ||
+             handle == kSVGraphicMiddleRightHandle ||
+             handle == kSVGraphicLowerRightHandle)
+    {
+        // Change the right edge of the graphic
+        if (resizeInline)
+        {
+            bounds.size.width += [event deltaX];
+        }
+        else
+        {
+            bounds.size.width = point.x - bounds.origin.x;
+        }
+    }
+    
+    // Did the user actually flip the graphic over?   OR RESIZE TO TOO SMALL?
+    NSSize minSize = [self minSize];
+    if (bounds.size.width <= minSize.width) bounds.size.width = minSize.width;
+    
+    
+    
+    // Is the user changing the height of the graphic?
+    if (handle == kSVGraphicUpperLeftHandle ||
+        handle == kSVGraphicUpperMiddleHandle ||
+        handle == kSVGraphicUpperRightHandle) 
+    {
+        // Change the top edge of the graphic
+        if (resizeInline)
+        {
+            bounds.size.height -= [event deltaY];
+            bounds.origin.y -= [event deltaY];
+        }
+        else
+        {
+            bounds.size.height = NSMaxY(bounds) - point.y;
+            bounds.origin.y = point.y;
+        }
+    }
+    else if (handle == kSVGraphicLowerLeftHandle ||
+             handle == kSVGraphicLowerMiddleHandle ||
+             handle == kSVGraphicLowerRightHandle)
+    {
+        // Change the bottom edge of the graphic
+        if (resizeInline)
+        {
+            bounds.size.height += [event deltaY];
+        }
+        else
+        {
+            bounds.size.height = point.y - bounds.origin.y;
+        }
+    }
+    
+    // Did the user actually flip the graphic upside down?   OR RESIZE TO TOO SMALL?
+    if (bounds.size.height<=minSize.height) bounds.size.height = minSize.height;
+    
+    
+    // Apply constraints. Snap to guides UNLESS the command key is held down. Why not use current NSEvent? - Mike
+    NSSize size = [self constrainSize:bounds.size
+                               handle:handle
+                            snapToFit:((GetCurrentKeyModifiers() & cmdKey) == 0)];
+    
+    
+    // Finally, we can go ahead and resize
+    [self resizeToSize:size byMovingHandle:handle];
+    
+    
     return handle;
+}
+
+- (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
+{
+    // Apply the change
+    NSNumber *width = (size.width > 0 ? [NSNumber numberWithInt:size.width] : nil);
+    NSNumber *height = (size.height > 0 ? [NSNumber numberWithInt:size.height] : nil);
+    
+    NSDictionary *info = [self infoForBinding:NSWidthBinding];
+    if (info)
+    {
+        [[info objectForKey:NSObservedObjectKey] setValue:width
+                                               forKeyPath:[info objectForKey:NSObservedKeyPathKey]];
+    }
+    else
+    {
+        [self setWidth:width];
+    }
+    
+    info = [self infoForBinding:@"height"];
+    if (info)
+    {
+        [[info objectForKey:NSObservedObjectKey] setValue:height
+                                               forKeyPath:[info objectForKey:NSObservedKeyPathKey]];
+    }
+    else
+    {
+        [self setHeight:height];
+    }
+    
+    
+    // Push into view immediately
+    [self updateIfNeeded];
+}
+
+- (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;
+{
+    if (snapToFit)
+    {
+        // Whew, what a lot of questions! Now, should this drag be disallowed on account of making the DOM element bigger than its container? #84958
+        DOMNode *parent = [[self HTMLElement] parentNode];
+        DOMCSSStyleDeclaration *style = [[[self HTMLElement] ownerDocument] 
+                                         getComputedStyle:(DOMElement *)parent
+                                         pseudoElement:@""];
+        
+        CGFloat maxWidth = [[style width] floatValue];
+        if (size.width > maxWidth) size.width = maxWidth;
+    }
+    
+    return size;
 }
 
 - (BOOL)shouldResizeInline; // Default is NO. If YES, cursor will be locked to match the resize
@@ -514,6 +815,26 @@
     if (element)
     {
         result = [element boundingBox];
+        
+        // Take into account padding and border
+        DOMCSSStyleDeclaration *style = [[element ownerDocument] getComputedStyle:element
+                                                                    pseudoElement:nil];
+        
+        CGFloat padding = [[style paddingLeft] floatValue];
+        result.origin.x += padding;
+        result.size.width -= [[style paddingRight] floatValue] + padding;
+        
+        padding = [[style paddingTop] floatValue];
+        result.origin.y += padding;
+        result.size.height -= [[style paddingBottom] floatValue] + padding;
+        
+        padding = [[style borderLeftWidth] floatValue];
+        result.origin.x += padding;
+        result.size.width -= [[style borderRightWidth] floatValue] + padding;
+        
+        padding = [[style borderTopWidth] floatValue];
+        result.origin.y += padding;
+        result.size.height -= [[style borderBottomWidth] floatValue] + padding;
     }
     
     return result;

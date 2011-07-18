@@ -16,27 +16,6 @@
 
 @implementation SVResizableDOMController
 
-#pragma mark Lifecycle
-
-+ (void)initialize;
-{
-    [self exposeBinding:NSWidthBinding];
-    [self exposeBinding:@"height"];
-}
-
-- (void)dealloc
-{
-    [self unbind:NSWidthBinding];
-    [self unbind:@"height"];
-    
-    [self setRepresentedObject:nil];
-    
-    [_width release];
-    [_height release];
-    
-    [super dealloc];
-}
-
 #pragma mark DOM
 
 - (void)loadHTMLElementFromDocument:(DOMDocument *)document;
@@ -55,62 +34,7 @@
     }
 }
 
-- (void)setHTMLElement:(DOMHTMLElement *)element;
-{
-    [super setHTMLElement:element];
-    
-    NSNumber *width = nil;
-    NSString *widthString = [element getAttribute:@"width"];
-    if ([widthString length]) width = [NSNumber numberWithInteger:[widthString integerValue]];
-    [_width release]; _width = [width copy];
-    
-    NSNumber *height = nil;
-    NSString *heightString = [element getAttribute:@"height"];
-    if ([heightString length]) height = [NSNumber numberWithInteger:[heightString integerValue]];
-    [_height release]; _height = [height copy];
-}
-
-#pragma mark Content
-
-@synthesize width = _width;
-- (void)setWidth:(NSNumber *)width;
-{
-    width = [width copy];
-    [_width release]; _width = width;
-    
-    [self setNeedsUpdateWithSelector:@selector(updateSize)];
-}
-
-@synthesize height = _height;
-- (void)setHeight:(NSNumber *)height;
-{
-    height = [height copy];
-    [_height release]; _height = height;
-    
-    [self setNeedsUpdateWithSelector:@selector(updateSize)];
-}
-
 #pragma mark Selection
-
-- (DOMElement *)selectableDOMElement;
-{
-    return [self HTMLElement];
-}
-
-- (DOMRange *)selectableDOMRange;
-{
-    if ([self shouldTrySelectingInline])
-    {
-        DOMElement *element = [self selectableDOMElement];
-        DOMRange *result = [[element ownerDocument] createRange];
-        [result selectNode:element];
-        return result;
-    }
-    else
-    {
-        return [super selectableDOMRange];
-    }
-}
 
 - (BOOL)allowsDirectAccessToWebViewWhenSelected;
 {
@@ -137,27 +61,6 @@
 
 - (BOOL)shouldHighlightWhileEditing; { return YES; }
 
-#pragma mark Updating
-
-@synthesize sizeDelta = _delta;
-
-- (void)updateSize;
-{
-    // Workaround for #94381. Make sure any selectable parent redraws
-    [[[self selectableAncestors] lastObject] setNeedsDisplay];
-    
-    
-    
-    DOMHTMLElement *element = [self HTMLElement];
-    [element setAttribute:@"width" value:[[self width] description]];
-    [element setAttribute:@"height" value:[[self height] description]];
-    
-    
-    
-    // Finish
-    [self didUpdateWithSelector:_cmd];
-}
-
 #pragma mark Resize
 
 - (BOOL)shouldResizeInline; { return [[self representedObject] shouldWriteHTMLInline]; }
@@ -174,39 +77,6 @@
 }
 
 - (CGFloat)maxWidth; { return [[self enclosingGraphicDOMController] maxWidth]; }
-
-- (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
-{
-    // Apply the change
-    NSNumber *width = (size.width > 0 ? [NSNumber numberWithInt:size.width] : nil);
-    NSNumber *height = (size.height > 0 ? [NSNumber numberWithInt:size.height] : nil);
-    
-    NSDictionary *info = [self infoForBinding:NSWidthBinding];
-    if (info)
-    {
-        [[info objectForKey:NSObservedObjectKey] setValue:width
-                                               forKeyPath:[info objectForKey:NSObservedKeyPathKey]];
-    }
-    else
-    {
-        [self setWidth:width];
-    }
-    
-    info = [self infoForBinding:@"height"];
-    if (info)
-    {
-        [[info objectForKey:NSObservedObjectKey] setValue:height
-                                               forKeyPath:[info objectForKey:NSObservedKeyPathKey]];
-    }
-    else
-    {
-        [self setHeight:height];
-    }
-    
-    
-    // Push into view immediately
-    [self updateIfNeeded];
-}
 
 - (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;
 {
@@ -340,9 +210,6 @@
     return size;
 }
 
-@synthesize horizontallyResizable = _horizontallyResizable;
-@synthesize verticallyResizable = _verticallyResizable;
-
 - (unsigned int)resizingMask
 {
     // TODO: Figure out how to disallow width change on inapplicable objects
@@ -351,45 +218,7 @@
     unsigned int result = [[self enclosingGraphicDOMController] resizingMask];  // inline
     if (!result) result = [self resizingMaskForDOMElement:[self HTMLElement]];  // sidebar & callout
     
-    if ([self isVerticallyResizable])
-    {
-        result = (result | kCALayerBottomEdge);
-    }
-    
-    return result;
-}
-
-#pragma mark Layout
-
-- (NSRect)selectionFrame;
-{
-    NSRect result = NSZeroRect;
-    
-    DOMElement *element = [self selectableDOMElement];
-    if (element)
-    {
-        result = [element boundingBox];
-        
-        // Take into account padding and border
-        DOMCSSStyleDeclaration *style = [[element ownerDocument] getComputedStyle:element
-                                                                    pseudoElement:nil];
-        
-        CGFloat padding = [[style paddingLeft] floatValue];
-        result.origin.x += padding;
-        result.size.width -= [[style paddingRight] floatValue] + padding;
-        
-        padding = [[style paddingTop] floatValue];
-        result.origin.y += padding;
-        result.size.height -= [[style paddingBottom] floatValue] + padding;
-        
-        padding = [[style borderLeftWidth] floatValue];
-        result.origin.x += padding;
-        result.size.width -= [[style borderRightWidth] floatValue] + padding;
-        
-        padding = [[style borderTopWidth] floatValue];
-        result.origin.y += padding;
-        result.size.height -= [[style borderBottomWidth] floatValue] + padding;
-    }
+    result = (result | [super resizingMask]);
     
     return result;
 }

@@ -14,6 +14,9 @@
 @class WEKWebEditorView;
 
 
+#define MIN_GRAPHIC_LIVE_RESIZE 16.0f
+
+
 @interface WEKWebEditorItem : WEKDOMController
 {
   @private
@@ -23,6 +26,12 @@
     
     BOOL    _selected;
     BOOL    _editing;
+    
+    NSNumber    *_width;
+    NSNumber    *_height;
+    BOOL        _horizontallyResizable;
+    BOOL        _verticallyResizable;
+    NSSize      _delta;
 }
 
 @property(nonatomic, assign, readonly) WEKWebEditorView *webEditor;  // NOT KVO-compliant
@@ -95,10 +104,24 @@
 - (CGPoint)position;    // center point (for moving) in doc view coordinates
 
 
-#pragma mark Resizing
+#pragma mark Metrics
+
+@property(nonatomic, copy) NSNumber *width;
+@property(nonatomic, copy) NSNumber *height;
+
+@property(nonatomic, getter=isHorizontallyResizable) BOOL horizontallyResizable;
+@property(nonatomic, getter=isVerticallyResizable) BOOL verticallyResizable;
+
+@property(nonatomic) NSSize sizeDelta;
+- (NSSize)minSize;
+
 - (unsigned int)resizingMask;   // default is 0
-- (SVGraphicHandle)resizeUsingHandle:(SVGraphicHandle)handle event:(NSEvent *)event;
 - (BOOL)shouldResizeInline; // Default is NO. If YES, cursor will be locked to match the resize
+
+- (SVGraphicHandle)resizeUsingHandle:(SVGraphicHandle)handle event:(NSEvent *)event;
+- (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
+- (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;
+
 
 
 #pragma mark Layout
