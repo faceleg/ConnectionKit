@@ -15,11 +15,14 @@
 @interface SVResizableDOMController : SVDOMController
 {
   @private
+    BOOL    _horizontallyResizable;
+    BOOL    _verticallyResizable;
+    
     NSSize              _delta;
-    SVResizingOptions   _resizeOptions;
 }
 
+@property(nonatomic, getter=isHorizontallyResizable) BOOL horizontallyResizable;
+@property(nonatomic, getter=isVerticallyResizable) BOOL verticallyResizable;
 @property(nonatomic) NSSize sizeDelta;
-@property(nonatomic) SVResizingOptions resizeOptions;
 
 @end

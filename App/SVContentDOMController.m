@@ -84,7 +84,10 @@
         {
             if ([self isHorizontallyResizable] || [self isVerticallyResizable])
             {
-                return [[SVResizableDOMController alloc] initWithElementIdName:elementID document:document];
+                SVResizableDOMController *result = [[SVResizableDOMController alloc] initWithElementIdName:elementID document:document];
+                [result setHorizontallyResizable:[self isHorizontallyResizable]];
+                [result setVerticallyResizable:[self isVerticallyResizable]];
+                return result;
             }
             else
             {

@@ -163,8 +163,6 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 
 #pragma mark Resize
 
-@synthesize resizeOptions = _resizeOptions;
-
 - (BOOL)shouldResizeInline; { return [[self representedObject] shouldWriteHTMLInline]; }
 
 - (NSSize)minSize;
@@ -213,7 +211,7 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     
     
     // Disregard height if requested
-    if ([self resizeOptions] & SVResizingDisableVertically)
+    if (![self isVerticallyResizable])
     {
         size.height = [[graphic height] unsignedIntegerValue];
     }
@@ -326,6 +324,9 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     return size;
 }
 
+@synthesize horizontallyResizable = _horizontallyResizable;
+@synthesize verticallyResizable = _verticallyResizable;
+
 - (unsigned int)resizingMask
 {
     // TODO: Figure out how to disallow width change on inapplicable objects
@@ -334,9 +335,7 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     unsigned int result = [[self enclosingGraphicDOMController] resizingMask];  // inline
     if (!result) result = [self resizingMaskForDOMElement:[self HTMLElement]];  // sidebar & callout
     
-    SVPlugInGraphic *graphic = [self representedObject];
-    if (!([self resizeOptions] & SVResizingDisableVertically) &&
-        [graphic isExplicitlySized])
+    if ([self isVerticallyResizable])
     {
         result = (result | kCALayerBottomEdge);
     }
