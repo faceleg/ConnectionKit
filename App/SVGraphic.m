@@ -383,6 +383,18 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 - (NSNumber *)elementWidthPadding; { return nil; }
 - (NSNumber *)elementHeightPadding; { return nil; }
 
+- (BOOL)elementOrDescendantsIsResizable:(SVElementInfo *)element;
+{
+    if ([element isHorizontallyResizable] || [element isVerticallyResizable]) return YES;
+    
+    for (SVElementInfo *anElement in [element subelements])
+    {
+        if ([self elementOrDescendantsIsResizable:anElement]) return YES;
+    }
+    
+    return NO;
+}
+
 - (BOOL)isExplicitlySized:(SVHTMLContext *)existingContext; // context may be nil
 {
     // See if our HTML includes size-binding anywhere
@@ -403,15 +415,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     [self writeHTML:context];
     
     
-    BOOL result = NO;
-    /*for (WEKWebEditorItem *anItem in [[context rootDOMController] enumerator])
-    {
-        if ([anItem isKindOfClass:[SVResizableDOMController class]])
-        {
-            result = YES;
-            break;
-        }
-    }*/
+    BOOL result = [self elementOrDescendantsIsResizable:[context rootElement]];
     
     [context release];
     return result;
