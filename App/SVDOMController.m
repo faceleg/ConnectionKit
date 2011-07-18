@@ -9,7 +9,7 @@
 #import "SVDOMController.h"
 
 #import "SVSidebarDOMController.h"
-#import "SVResizableDOMController.h"
+#import "SVPlugInDOMController.h"
 #import "SVTextDOMController.h"
 #import "SVWebEditorViewController.h"
 

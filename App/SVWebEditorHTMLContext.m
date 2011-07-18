@@ -13,7 +13,7 @@
 #import "SVContentDOMController.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVHTMLTextBlock.h"
-#import "SVResizableDOMController.h"
+#import "SVPlugInDOMController.h"
 #import "SVMediaPlugIn.h"
 #import "SVMediaRequest.h"
 #import "SVIndexDOMController.h"
@@ -94,12 +94,12 @@
     // Figure out a decent controller class
     if (!controllerClass) 
     {
-        controllerClass = [SVResizableDOMController class];
+        controllerClass = [SVPlugInDOMController class];
     }
     
     
     // 
-    SVResizableDOMController *controller = [[controllerClass alloc] initWithRepresentedObject:
+    SVPlugInDOMController *controller = [[controllerClass alloc] initWithRepresentedObject:
                                               [[self currentDOMController] representedObject]];
     [controller setSizeDelta:sizeDelta];
     [controller setResizeOptions:options];

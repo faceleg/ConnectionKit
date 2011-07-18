@@ -10,7 +10,7 @@
 #import "SVGraphic.h"
 
 #import "SVParagraphedHTMLWriterDOMAdaptor.h"
-#import "SVResizableDOMController.h"
+#import "SVPlugInDOMController.h"
 #import "SVSidebarDOMController.h"
 #import "SVWebEditorHTMLContext.h"
 

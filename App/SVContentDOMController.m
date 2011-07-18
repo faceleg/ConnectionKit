@@ -8,7 +8,7 @@
 
 #import "SVContentDOMController.h"
 
-#import "SVResizableDOMController.h"
+#import "SVPlugInDOMController.h"
 #import "SVWebEditorHTMLContext.h"
 
 
@@ -84,7 +84,7 @@
         {
             if ([self isHorizontallyResizable] || [self isVerticallyResizable])
             {
-                SVResizableDOMController *result = [[SVResizableDOMController alloc] initWithElementIdName:elementID document:document];
+                SVPlugInDOMController *result = [[SVPlugInDOMController alloc] initWithElementIdName:elementID document:document];
                 [result setRepresentedObject:container];
                 
                 [result setHorizontallyResizable:[self isHorizontallyResizable]];

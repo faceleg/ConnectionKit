@@ -1,12 +1,12 @@
 //
-//  SVResizableDOMController.m
+//  SVPlugInDOMController.m
 //  Sandvox
 //
 //  Created by Mike on 12/08/2010.
 //  Copyright 2010-2011 Karelia Software. All rights reserved.
 //
 
-#import "SVResizableDOMController.h"
+#import "SVPlugInDOMController.h"
 
 #import "SVGraphicContainerDOMController.h"
 #import "SVPlugInGraphic.h"
@@ -14,7 +14,7 @@
 #import "SVWebEditorHTMLContext.h"
 
 
-@implementation SVResizableDOMController
+@implementation SVPlugInDOMController
 
 #pragma mark DOM
 

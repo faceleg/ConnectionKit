@@ -1,5 +1,5 @@
 //
-//  SVResizableDOMController.h
+//  SVPlugInDOMController.h
 //  Sandvox
 //
 //  Created by Mike on 12/08/2010.
@@ -9,7 +9,7 @@
 #import "SVDOMController.h"
 
 
-@interface SVResizableDOMController : SVDOMController
+@interface SVPlugInDOMController : SVDOMController
 {
   @private
     

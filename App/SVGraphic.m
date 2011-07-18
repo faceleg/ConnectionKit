@@ -19,7 +19,7 @@
 #import "KTPage.h"
 #import "SVPagelet.h"
 #import "SVRichText.h"
-#import "SVResizableDOMController.h"
+#import "SVPlugInDOMController.h"
 #import "SVTemplate.h"
 #import "SVTextAttachment.h"
 #import "SVTitleBox.h"

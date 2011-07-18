@@ -9,7 +9,7 @@
 #import "SVTextDOMController.h"
 
 #import "SVHTMLTextBlock.h"
-#import "SVResizableDOMController.h"
+#import "SVPlugInDOMController.h"
 #import "SVTitleBox.h"
 #import "WebEditingKit.h"
 #import "SVWebEditorViewController.h"
@@ -117,7 +117,7 @@
         }
         else
         {
-            result = [[SVResizableDOMController alloc] init];
+            result = [[SVPlugInDOMController alloc] init];
             [result setHTMLElement:(DOMHTMLElement *)node];
             
             [self addChildWebEditorItem:result];
