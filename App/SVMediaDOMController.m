@@ -16,20 +16,9 @@
 
 @implementation SVMediaDOMController
 
-#pragma mark Properties
-
-- (BOOL)isMediaPlaceholder;
-{
-    // Don't accept drops on inline images
-    SVPlugInGraphic *graphic = [self representedObject];
-    BOOL result = ![graphic textAttachment] || ![graphic shouldWriteHTMLInline];
-    
-    return result;
-}
-
 #pragma mark Selection
 
-- (DOMElement *) selectableDOMElement;
+- (DOMElement *)selectableDOMElement;
 {
     // Media is always selectable. #102520
     return [self HTMLElement];
@@ -74,93 +63,7 @@
     return result;
 }
 
-#pragma mark Drag & Drop
-
-- (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender;
-{
-    if ([self isMediaPlaceholder])
-    {
-        _drawAsDropTarget = YES;
-        [self setNeedsDisplay];
-        return NSDragOperationCopy;
-    }
-    
-    return NSDragOperationNone;
-}
-
-- (void)draggingExited:(id <NSDraggingInfo>)sender;
-{
-    [self setNeedsDisplay];
-    _drawAsDropTarget = NO;
-}
-
-- (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender;
-{
-    [self setNeedsDisplay];
-    _drawAsDropTarget = NO;
-    
-    return YES;
-}
-
-- (BOOL)performDragOperation:(id <NSDraggingInfo>)sender;
-{
-    NSPasteboard *pboard = [sender draggingPasteboard];
-    
-    NSString *type = [pboard availableTypeFromArray:[SVMediaPlugIn readableTypesForPasteboard:pboard]];
-    if (type)
-    {
-        [[self representedObject] awakeFromPasteboardItems:[pboard sv_pasteboardItems]];
-        return YES;
-    }
-    
-    return NO;
-}
-
-- (NSArray *)registeredDraggedTypes;
-{
-    return [SVMediaPlugIn readableTypesForPasteboard:
-            [NSPasteboard pasteboardWithName:NSDragPboard]];
-}
-
 #pragma mark Drawing
-
-- (NSRect)dropTargetRect;
-{
-    NSRect result = [[self HTMLElement] boundingBox];
-    
-    // Movies draw using Core Animation so sit above any custom drawing of our own. Workaround by outsetting the rect
-    NSString *tagName = [[self HTMLElement] tagName];
-    if ([tagName isEqualToString:@"VIDEO"] || [tagName isEqualToString:@"OBJECT"])
-    {
-        result = NSInsetRect(result, -2.0f, -2.0f);
-    }
-    
-    return result;
-}
-
-- (NSRect)drawingRect;
-{
-    NSRect result = [super drawingRect];
-    
-    if (_drawAsDropTarget)
-    {
-        result = NSUnionRect(result, [self dropTargetRect]);
-    }
-    
-    return result;
-}
-
-- (void)drawRect:(NSRect)dirtyRect inView:(NSView *)view;
-{
-    [super drawRect:dirtyRect inView:view];
-    
-    // Draw outline
-    if (_drawAsDropTarget)
-    {
-        [[NSColor aquaColor] set];
-        NSFrameRectWithWidth([self dropTargetRect], 2.0f);
-    }
-}
 
 - (void)updateToReflectSelection;
 {

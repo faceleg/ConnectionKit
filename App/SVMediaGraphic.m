@@ -604,6 +604,12 @@
 
 #pragma mark Pasteboard
 
+- (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
+{
+    if ([self shouldWriteHTMLInline]) return nil;
+    return [super readableTypesForPasteboard:pasteboard];
+}
+
 - (BOOL)awakeFromPasteboardItems:(NSArray *)items;
 {
     BOOL result = [super awakeFromPasteboardItems:items];

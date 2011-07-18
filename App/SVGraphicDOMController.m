@@ -132,7 +132,7 @@
 
 #pragma mark Drag & Drop
 
-- (void) setRepresentedObject:(id)object;
+- (void)setRepresentedObject:(id)object;
 {
     [super setRepresentedObject:object];
     
@@ -162,7 +162,7 @@
     _drawAsDropTarget = NO;
 }
 
-- (BOOL) prepareForDragOperation:(id <NSDraggingInfo>)sender;
+- (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender;
 {
     [self setNeedsDisplay];
     _drawAsDropTarget = NO;
@@ -200,7 +200,19 @@
 
 - (NSRect)dropTargetRect;
 {
-    NSRect result = [[self HTMLElement] boundingBox];
+    // Figure best element to draw
+    DOMElement *element = [self selectableDOMElement];
+    if (!element)
+    {
+        for (WEKWebEditorItem *anItem in [self childWebEditorItems])
+        {
+            element = [anItem selectableDOMElement];
+            if (element) break;
+        }
+    }
+    if (!element) element = [self HTMLElement];
+    
+    NSRect result = [element boundingBox];
     
     // Movies draw using Core Animation so sit above any custom drawing of our own. Workaround by outsetting the rect
     NSString *tagName = [[self HTMLElement] tagName];

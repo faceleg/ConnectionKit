@@ -13,13 +13,6 @@
 
 
 @interface SVMediaDOMController : SVResizableDOMController
-{
-@private
-    BOOL    _drawAsDropTarget;
-}
-
-- (BOOL)isMediaPlaceholder;
-
 @end
 
 
