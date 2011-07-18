@@ -24,6 +24,8 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 - (void)dealloc
 {
     [self setRepresentedObject:nil];
+    [_width release];
+    [_height release];
     [super dealloc];
 }
 
@@ -45,7 +47,40 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     }
 }
 
+- (void)setHTMLElement:(DOMHTMLElement *)element;
+{
+    [super setHTMLElement:element];
+    
+    NSNumber *width = nil;
+    NSString *widthString = [element getAttribute:@"width"];
+    if ([widthString length]) width = [NSNumber numberWithInteger:[widthString integerValue]];
+    [_width release]; _width = [width copy];
+    
+    NSNumber *height = nil;
+    NSString *heightString = [element getAttribute:@"height"];
+    if ([heightString length]) height = [NSNumber numberWithInteger:[heightString integerValue]];
+    [_height release]; _height = [height copy];
+}
+
 #pragma mark Content
+
+@synthesize width = _width;
+- (void)setWidth:(NSNumber *)width;
+{
+    width = [width copy];
+    [_width release]; _width = width;
+    
+    [self setNeedsUpdateWithSelector:@selector(updateSize)];
+}
+
+@synthesize height = _height;
+- (void)setHeight:(NSNumber *)height;
+{
+    height = [height copy];
+    [_height release]; _height = height;
+    
+    [self setNeedsUpdateWithSelector:@selector(updateSize)];
+}
 
 - (void)setRepresentedObject:(id)object
 {
@@ -117,28 +152,8 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     
     
     DOMHTMLElement *element = [self HTMLElement];
-    
-    NSObject *object = [self representedObject];
-    if ([object isKindOfClass:[SVPlugInGraphic class]]) object = [(SVPlugInGraphic *)object plugIn];
-    
-    
-    // Push size change into DOM
-    SVHTMLContext *context = [[SVHTMLContext alloc] initWithOutputWriter:nil
-                                                      inheritFromContext:[self HTMLContext]];
-    
-    [context buildAttributesForResizableElement:[[element tagName] lowercaseString]
-                      object:object
-                    DOMControllerClass:[self class]
-							 sizeDelta:[self sizeDelta]
-                               options:[self resizeOptions]];			// Need something dynamic here?
-    
-    NSDictionary *attributes = [[context currentAttributes] attributesAsDictionary];
-    [element setAttribute:@"width" value:[attributes objectForKey:@"width"]];
-    [element setAttribute:@"height" value:[attributes objectForKey:@"height"]];
-    [element setAttribute:@"style" value:[attributes objectForKey:@"style"]];
-    
-    [context close];
-    [context release];
+    [element setAttribute:@"width" value:[[self width] description]];
+    [element setAttribute:@"height" value:[[self height] description]];
     
     
     
@@ -181,12 +196,20 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 - (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
 {
     // Apply the change
-    SVPlugInGraphic *graphic = [self representedObject];
-    
     NSNumber *width = (size.width > 0 ? [NSNumber numberWithInt:size.width] : nil);
     NSNumber *height = (size.height > 0 ? [NSNumber numberWithInt:size.height] : nil);
-    [graphic setWidth:width];
-    [graphic setHeight:height];
+    
+    SVPlugInGraphic *graphic = [self representedObject];
+    if (graphic)
+    {
+        [graphic setWidth:width];
+        [graphic setHeight:height];
+    }
+    else
+    {
+        [self setWidth:width];
+        [self setHeight:height];
+    }
     
     // Push into view immediately
     [self updateIfNeeded];

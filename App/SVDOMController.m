@@ -295,11 +295,11 @@
 
 #pragma mark Size Binding
 
-@synthesize width = _width;
+@synthesize width = _width2;
 - (void)setWidth:(NSNumber *)width;
 {
     width = [width copy];
-    [_width release]; _width = width;
+    [_width2 release]; _width2 = width;
     
     
 }

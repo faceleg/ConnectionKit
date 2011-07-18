@@ -32,7 +32,7 @@
     
     // Updating
     NSMutableSet            *_updateSelectors;
-    NSNumber                *_width;
+    NSNumber                *_width2;
     KSDependenciesTracker   *_dependenciesTracker;
     SVWebEditorHTMLContext  *_context;
     
