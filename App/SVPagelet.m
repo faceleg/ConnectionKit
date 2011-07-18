@@ -35,5 +35,9 @@
     return result;
 }
 
+- (CGFloat)maxWidthOnPage:(KTPage *)page;
+{
+    return [_graphic maxWidthOnPage:page];
+}
 
 @end
