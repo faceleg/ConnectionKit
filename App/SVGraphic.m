@@ -899,8 +899,13 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID document:(DOMHTMLDocument *)document;
 {
-    SVDOMController *result = [[SVGraphicDOMController alloc] initWithElementIdName:elementID document:document];
+    SVDOMController *result = [[SVGraphicDOMController alloc] initWithElementIdName:elementID
+                                                                           document:document];
+    
     [result setRepresentedObject:self];
+    [result bind:NSWidthBinding toObject:self withKeyPath:@"width" options:nil];
+    [result setHorizontallyResizable:YES];
+    
     return result;
 }
 

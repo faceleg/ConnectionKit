@@ -293,17 +293,6 @@
     [self release];
 }
 
-#pragma mark Size Binding
-
-@synthesize width = _width2;
-- (void)setWidth:(NSNumber *)width;
-{
-    width = [width copy];
-    [_width2 release]; _width2 = width;
-    
-    
-}
-
 #pragma mark Generic Dependencies
 
 - (NSSet *)dependencies { return [_dependenciesTracker dependencies]; }
@@ -394,30 +383,6 @@
 - (BOOL)shouldHighlightWhileEditing; { return NO; }
 
 #pragma mark Resizing
-
-- (CGFloat)maxWidth;
-{
-    // Whew, what a lot of questions! Now, should this drag be disallowed on account of making the DOM element bigger than its container? #84958
-    DOMNode *parent = [[self HTMLElement] parentNode];
-    DOMCSSStyleDeclaration *style = [[[self HTMLElement] ownerDocument] 
-                                     getComputedStyle:(DOMElement *)parent
-                                     pseudoElement:@""];
-    
-    CGFloat result = [[style width] floatValue];
-    
-    
-    // Bring back down to take into account margin/border/padding. #94079
-    DOMElement *graphic = [self HTMLElement];
-        
-    style = [[[self HTMLElement] ownerDocument] getComputedStyle:graphic
-                                                   pseudoElement:@""];
-    
-    result -= ([[style borderLeftWidth] integerValue] + [[style paddingLeft] integerValue] +
-               [[style borderRightWidth] integerValue] + [[style paddingRight] integerValue]);
-    
-    
-    return result;
-}
 
 - (unsigned int)resizingMask
 {

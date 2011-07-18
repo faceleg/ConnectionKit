@@ -115,8 +115,11 @@
 
 @property(nonatomic) NSSize sizeDelta;
 - (NSSize)minSize;
+- (CGFloat)maxWidth;
 
 - (unsigned int)resizingMask;   // default is 0
+- (unsigned int)resizingMaskForDOMElement:(DOMElement *)element;    // support
+
 - (BOOL)shouldResizeInline; // Default is NO. If YES, cursor will be locked to match the resize
 
 - (SVGraphicHandle)resizeUsingHandle:(SVGraphicHandle)handle event:(NSEvent *)event;

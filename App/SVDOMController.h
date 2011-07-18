@@ -8,7 +8,6 @@
 
 //  
 //  Sandvox's general class for other controllers to subclass.
-//  Supports NSWidthBinding.
 //
 
 
@@ -32,7 +31,6 @@
     
     // Updating
     NSMutableSet            *_updateSelectors;
-    NSNumber                *_width2;
     KSDependenciesTracker   *_dependenciesTracker;
     SVWebEditorHTMLContext  *_context;
     
@@ -78,11 +76,6 @@
 - (void)updateIfNeeded; // recurses down the tree
 
 
-#pragma mark Size Binding
-// Width value is stored in an ivar, NOT read from the DOM. You can bind it with NSWidthBinding
-@property(nonatomic, copy) NSNumber *width;
-
-
 #pragma mark Generic Dependencies
 @property(nonatomic, copy, readonly) NSSet *dependencies;
 - (void)addDependency:(KSObjectKeyPathPair *)pair;
@@ -100,13 +93,6 @@
 #pragma mark Editing
 - (void)delete;
 - (BOOL)shouldHighlightWhileEditing;
-
-
-#pragma mark Resizing
-- (CGFloat)maxWidth;
-- (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
-- (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;
-- (unsigned int)resizingMaskForDOMElement:(DOMElement *)element;    // support
 
 
 #pragma mark Moving
