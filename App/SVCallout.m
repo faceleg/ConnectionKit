@@ -8,6 +8,7 @@
 
 #import "SVCallout.h"
 
+#import "SVCalloutDOMController.h"
 #import "SVGraphic.h"
 #import "SVWebEditorHTMLContext.h"
 
@@ -19,12 +20,8 @@
     [context beginGraphicContainer:self];
     
     // Write the opening tags
-    [context startElement:@"div"
-                   idName:[[context currentDOMController] elementIdName]
-                className:@"callout-container"];
-    
+    [context startElement:@"div" className:@"callout-container"];
     [context startElement:@"div" className:@"callout"];
-    
     [context startElement:@"div" className:@"callout-content"];
     
     
@@ -48,8 +45,10 @@
 
 - (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID document:(DOMHTMLDocument *)document;
 {
-    SVDOMController *result = [self newDOMController];
-    [result setElementIdName:elementID includeWhenPublishing:YES];
+    SVDOMController *result = [[SVCalloutDOMController alloc] initWithElementIdName:elementID
+                                                                           document:document];
+    
+    [result setRepresentedObject:self];
     return result;
 }
 
