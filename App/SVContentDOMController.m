@@ -85,12 +85,13 @@
             if ([self isHorizontallyResizable] || [self isVerticallyResizable])
             {
                 SVResizableDOMController *result = [[SVResizableDOMController alloc] initWithElementIdName:elementID document:document];
+                [result setRepresentedObject:container];
                 
                 [result setHorizontallyResizable:[self isHorizontallyResizable]];
                 [result setVerticallyResizable:[self isVerticallyResizable]];
-                
                 [result bind:NSWidthBinding toObject:container withKeyPath:@"width" options:nil];
                 [result bind:@"height" toObject:container withKeyPath:@"height" options:nil];
+                
                 return result;
             }
             else
