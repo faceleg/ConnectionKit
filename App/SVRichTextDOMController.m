@@ -21,8 +21,7 @@
 #import "SVImage.h"
 #import "SVLinkManager.h"
 #import "SVLink.h"
-#import "SVMedia.h"
-#import "SVMediaDOMController.h"
+#import "SVMediaGraphic.h"
 #import "SVParagraphedHTMLWriterDOMAdaptor.h"
 #import "SVTextAttachment.h"
 #import "SVTextBox.h"
@@ -553,7 +552,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     
     
     // Create controller for graphic and hook up to imported node
-    SVMediaContainerDOMController *result = (SVMediaContainerDOMController *)[image newDOMController];
+    SVDOMController *result = [image newDOMController];
     [result awakeFromHTMLContext:[self HTMLContext]];
     [result setHTMLElement:imageElement];
     

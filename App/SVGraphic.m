@@ -15,7 +15,7 @@
 #import "SVHTMLTemplateParser.h"
 #import "KTImageScalingSettings.h"
 #import "KTMaster.h"
-#import "SVMediaDOMController.h"
+#import "SVGraphicContainerDOMController.h"
 #import "KTPage.h"
 #import "SVPagelet.h"
 #import "SVRichText.h"

@@ -11,7 +11,6 @@
 #import "SVApplicationController.h"
 #import "SVHTMLContext.h"
 #import "SVLink.h"
-#import "SVMediaDOMController.h"
 #import "SVMediaGraphicInspector.h"
 #import "SVMediaRecord.h"
 #import "SVSiteItem.h"
