@@ -9,6 +9,7 @@
 #import "SVPagelet.h"
 
 #import "SVGraphicContainerDOMController.h"
+#import "KTPage.h"
 
 
 @implementation SVPagelet
