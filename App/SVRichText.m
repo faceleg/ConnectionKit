@@ -300,12 +300,6 @@
             
             // <div class="graphic"> or <img class="graphic">
             [context pushClassName:@"graphic"];
-            if (![graphic captionGraphic] && [graphic isKindOfClass:[SVMediaGraphic class]]) // special case for media
-            {
-                [graphic writeHTML:context];
-                [context endElement];
-                return;
-            }
             
             NSString *className = [(SVGraphic *)graphic inlineGraphicClassName];
             if (className) [context pushClassName:className];
