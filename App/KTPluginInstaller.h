@@ -12,7 +12,7 @@
 @class KSProgressPanel;
 
 
-@interface KTPluginInstaller : NSDocument
+@interface KTPluginInstaller : NSDocument <NSAlertDelegate>
 {
     @private
     NSMutableArray  *myURLs;
