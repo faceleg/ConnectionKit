@@ -415,7 +415,12 @@
     return result;
 }
 
-#pragma mark DOM Controller
+#pragma mark Graphic Container
+
+- (void)write:(SVHTMLContext *)context graphic:(id <SVGraphic>)graphic;
+{
+    [HTML_VALUE write:context graphic:graphic];
+}
 
 - (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID document:(DOMHTMLDocument *)document;
 {
