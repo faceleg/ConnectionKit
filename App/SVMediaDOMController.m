@@ -16,23 +16,6 @@
 
 @implementation SVMediaContainerDOMController
 
-#pragma mark DOM
-
-- (void)setHTMLElement:(DOMHTMLElement *)element;
-{
-    // Is this a change due to being orphaned while editing? If so, pass down to image controller too. #83312
-    for (WEKWebEditorItem *anItem in [self childWebEditorItems])
-    {
-        if ([self isHTMLElementLoaded] && ([self HTMLElement] == [anItem HTMLElement]))
-        {
-            [anItem setHTMLElement:element];
-        }
-    }
-    
-    
-    [super setHTMLElement:element];
-}
-
 #pragma mark Update
 
 - (void)updateSize;
