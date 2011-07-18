@@ -14,68 +14,6 @@
 #import "NSColor+Karelia.h"
 
 
-@implementation SVMediaDOMController
-
-#pragma mark Selection
-
-- (DOMElement *)selectableDOMElement;
-{
-    // Media is always selectable. #102520
-    return [self HTMLElement];
-}
-
-- (DOMRange *)selectableDOMRange;
-{
-    if ([self shouldTrySelectingInline])
-    {
-        DOMElement *element = [self selectableDOMElement];
-        DOMRange *result = [[element ownerDocument] createRange];
-        [result selectNode:element];
-        return result;
-    }
-    else
-    {
-        return [super selectableDOMRange];
-    }
-}
-
-- (BOOL)allowsDirectAccessToWebViewWhenSelected;
-{
-    // Generally, no. EXCEPT for inline, non-wrap-causing images
-    BOOL result = NO;
-    
-    SVMediaGraphic *image = [self representedObject];
-    if ([image displayInline])
-    {
-        result = YES;
-    }
-    
-    return result;
-}
-
-#pragma mark Resize
-
-- (NSSize)minSize;
-{
-    // Remove the 200px width restriction
-    NSSize result = [super minSize];
-    result.width = result.height;
-    return result;
-}
-
-#pragma mark Drawing
-
-- (void)updateToReflectSelection;
-{
-    // Do nothing!!
-}
-
-@end
-
-
-#pragma mark -
-
-
 @implementation SVMediaContainerDOMController
 
 #pragma mark DOM

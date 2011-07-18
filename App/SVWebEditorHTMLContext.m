@@ -13,7 +13,7 @@
 #import "SVContentDOMController.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVHTMLTextBlock.h"
-#import "SVMediaDOMController.h"
+#import "SVResizableDOMController.h"
 #import "SVMediaPlugIn.h"
 #import "SVMediaRequest.h"
 #import "SVIndexDOMController.h"
@@ -94,14 +94,7 @@
     // Figure out a decent controller class
     if (!controllerClass) 
     {
-        if ([object isKindOfClass:[SVMediaPlugIn class]])
-        {
-            controllerClass = [SVMediaDOMController class];
-        }
-        else
-        {
-            controllerClass = [SVResizableDOMController class];
-        }
+        controllerClass = [SVResizableDOMController class];
     }
     
     

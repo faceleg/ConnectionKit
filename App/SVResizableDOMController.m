@@ -65,6 +65,35 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     return [self HTMLElement];
 }
 
+- (DOMRange *)selectableDOMRange;
+{
+    if ([self shouldTrySelectingInline])
+    {
+        DOMElement *element = [self selectableDOMElement];
+        DOMRange *result = [[element ownerDocument] createRange];
+        [result selectNode:element];
+        return result;
+    }
+    else
+    {
+        return [super selectableDOMRange];
+    }
+}
+
+- (BOOL)allowsDirectAccessToWebViewWhenSelected;
+{
+    // Generally, no. EXCEPT for inline, non-wrap-causing images
+    BOOL result = NO;
+    
+    SVPlugInGraphic *image = [self representedObject];
+    if ([image displayInline])
+    {
+        result = YES;
+    }
+    
+    return result;
+}
+
 - (void)delete;
 {
     // Remove parent controller instead of ourself
