@@ -83,10 +83,6 @@
 - (NSString *)processHTML:(NSString *)originalHTML context:(SVHTMLContext *)context;
 
 
-#pragma mark DOM Controller
-- (SVDOMController *)newDOMController;
-
-
 @end
 
 
