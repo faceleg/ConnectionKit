@@ -41,4 +41,18 @@
     return [_graphic maxWidthOnPage:page];
 }
 
+#pragma mark Equality
+
+- (BOOL)isEqual:(id)object;
+{
+    if (self == object) return YES;
+    if (![object isKindOfClass:[SVPagelet class]]) return NO;
+    return [_graphic isEqual:((SVPagelet *)object)->_graphic];
+}
+
+- (int)hash;
+{
+    return [_graphic hash];
+}
+
 @end
