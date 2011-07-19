@@ -217,14 +217,6 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
                                        argument:nil
                                           order:(NSDisplayWindowRunLoopOrdering - 1)
                                           modes:[NSArray arrayWithObject:NSRunLoopCommonModes]];
-    
-    
-    SVContentDOMController *contentController = [[SVContentDOMController alloc]
-                                                 initWithWebEditorHTMLContext:[self HTMLContext]
-                                                 document:[[self webEditor] HTMLDocument]];
-    
-    [self setContentDOMController:contentController];
-    [contentController release];
 }
 
 - (void)switchToLoadingPlaceholderViewIfNeeded
@@ -348,7 +340,14 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     
     SVWebEditorHTMLContext *context = [self HTMLContext];
     [_loadedPage release]; _loadedPage = [[context page] retain];
-    [webEditor setContentItem:[self contentDOMController]];
+    
+    SVContentDOMController *contentController = [[SVContentDOMController alloc]
+                                                 initWithWebEditorHTMLContext:[self HTMLContext]
+                                                 document:[[self webEditor] HTMLDocument]];
+    
+    [self setContentDOMController:contentController];
+    [webEditor setContentItem:contentController];
+    [contentController release];
     
     [[self graphicsController] setSelectedObjects:selection];    // restore selection
     
