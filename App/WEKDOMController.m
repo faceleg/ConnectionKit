@@ -28,23 +28,12 @@
 
 #pragma mark Init & Dealloc
 
-- (id)initWithElementIdName:(NSString *)elementID document:(DOMHTMLDocument *)document;
+- (id)initWithElementIdName:(NSString *)elementID node:(DOMNode *)node;
 {
     if (self = [self init])
     {
         _elementID = [elementID copy];
-        _document = [document retain];
-    }
-    
-    return self;
-}
-
-- (id)initWithElementIdName:(NSString *)elementID documentFragment:(DOMDocumentFragment *)fragment;
-{
-    if (self = [self init])
-    {
-        _elementID = [elementID copy];
-        _fragment = [fragment retain];
+        _node = [node retain];
     }
     
     return self;
@@ -62,8 +51,7 @@
     [_eventListener setEventsTarget:nil];
     
     [_elementID release];
-    [_document release];
-    [_fragment release];
+    [_node release];
     [_DOMElement release];
     [_eventListener release];
     [_representedObject release];
@@ -89,37 +77,47 @@
     NSString *idName = [self elementIdName];
     if (idName)
     {
+        DOMHTMLElement *element = nil;
         DOMDocument *document = [self HTMLDocument];
+        
         if (document)
         {
             // Load the element
-            DOMHTMLElement *element = (DOMHTMLElement *)[document getElementById:idName];
-            [self setHTMLElement:element];
+            element = (DOMHTMLElement *)[document getElementById:idName];
         }
-        else
+        
+        if (!element)
         {
-            DOMDocumentFragment *fragment = [self documentFragment];
+            DOMNode *fragment = [self node];
             
             // TODO: ought to search more than top-level of tree
-            DOMHTMLElement *anElement = [fragment firstChildOfClass:[DOMHTMLElement class]];
-            while (anElement)
+            DOMHTMLElement *element = [fragment firstChildOfClass:[DOMHTMLElement class]];
+            while (element)
             {
-                if ([[anElement getAttribute:@"id"] isEqualToString:idName])
+                if ([[element getAttribute:@"id"] isEqualToString:idName])
                 {
-                    [self setHTMLElement:anElement];
+                    break;
                 }
                 
-                anElement = [anElement nextSiblingOfClass:[DOMElement class]];
+                element = [element nextSiblingOfClass:[DOMElement class]];
             }
         }
+        
+        [self setHTMLElement:element];
     }
 }
 
 - (BOOL)isHTMLElementLoaded { return (_DOMElement != nil); }
 
 @synthesize elementIdName = _elementID;
-@synthesize HTMLDocument = _document;
-@synthesize documentFragment = _fragment;
+@synthesize node = _node;
+
+- (DOMHTMLDocument *)HTMLDocument;
+{
+    id result = [self node];
+    if (![result isKindOfClass:[DOMHTMLDocument class]]) result = nil;
+    return result;
+}
 
 - (DOMRange *)DOMRange; // returns -HTMLElement as a range
 {

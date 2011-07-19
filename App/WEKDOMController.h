@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
 
+
 @class WEKDOMEventListener;
 
 
@@ -23,16 +24,15 @@
     id              _representedObject;
     
     // Loading by creation
-    NSString            *_elementID;
-    DOMHTMLDocument     *_document;
-    DOMDocumentFragment *_fragment;
+    NSString    *_elementID;
+    DOMNode     *_node;
 }
 
 #pragma mark Init
 
-// For subclasses that know how to load HTML element from the document
-- (id)initWithElementIdName:(NSString *)elementID document:(DOMHTMLDocument *)document;
-- (id)initWithElementIdName:(NSString *)elementID documentFragment:(DOMDocumentFragment *)fragment;
+// For subclasses that know how to load HTML element from within an existing node
+// Pass in a DOMDocument or subclass to improve speed of searching the DOM for your element
+- (id)initWithElementIdName:(NSString *)elementID node:(DOMNode *)node;
 
 // Convenience method:
 - (id)initWithHTMLElement:(DOMHTMLElement *)element;
@@ -46,8 +46,8 @@
 - (BOOL)isHTMLElementLoaded;
 
 @property(nonatomic, copy, readonly) NSString *elementIdName;
+@property(nonatomic, retain, readonly) DOMNode *node;
 @property(nonatomic, retain, readonly) DOMHTMLDocument *HTMLDocument;
-@property(nonatomic, retain, readonly) DOMDocumentFragment *documentFragment;
 
 - (DOMRange *)DOMRange; // returns -HTMLElement as a range
 
