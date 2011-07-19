@@ -49,7 +49,11 @@
             {
                 case 1:
                     OBASSERT([[[children objectAtIndex:0] childWebEditorItems] count] <= 1);
-                    [[[children objectAtIndex:0] HTMLElement] setInnerHTML:parsedPlaceholderHTML];
+                    DOMHTMLElement *child = [[children objectAtIndex:0] HTMLElement];
+                    if (![[child tagName] isEqualToString:@"IMG"])  // images already have their own placeholder
+                    {
+                        [child setInnerHTML:parsedPlaceholderHTML];
+                    }
                     break;
                     
                 default:
