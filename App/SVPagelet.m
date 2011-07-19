@@ -52,7 +52,7 @@
     return [[self graphic] isEqual:[object graphic]];
 }
 
-- (int)hash;
+- (NSUInteger)hash;
 {
     return [[self graphic] hash];
 }
