@@ -19,7 +19,7 @@
     BOOL    _observingWidth;
     
     SVOffscreenWebViewController    *_offscreenWebViewController;
-    NSArray                         *_offscreenDOMControllers;
+    SVWebEditorHTMLContext          *_offscreenContext;
 }
 
 + (SVGraphicContainerDOMController *)graphicPlaceholderDOMController;

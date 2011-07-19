@@ -42,7 +42,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     [_offscreenWebViewController setDelegate:nil];
     [_offscreenWebViewController release];  // dealloc-ing mid-update
-    [_offscreenDOMControllers release];
+    [_offscreenContext release];
     
     [self setRepresentedObject:nil];
     
@@ -134,26 +134,26 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     [context writeJQueryImport];    // for any plug-ins that might depend on it
     [context writeExtraHeaders];
     
-    [[context rootDOMController] setWebEditorViewController:[self webEditorViewController]];
+    //[[context rootDOMController] setWebEditorViewController:[self webEditorViewController]];
     
     
     // Write HTML
-    SVGraphic *graphic = [self representedObject];
+    id object = [self representedObject];
     id <SVGraphicContainer> container = [[self graphicContainerDOMController] representedObject];   // rarely nil, but sometimes is. #116816
     
     if (container) [context beginGraphicContainer:container];
-    [context writeGraphic:graphic];
+    [context writeGraphic:[object graphic]];
     if (container) [context endGraphicContainer];
     
     
     // Copy out controllers
-    [_offscreenDOMControllers release];
-    _offscreenDOMControllers = [[[context rootDOMController] childWebEditorItems] copy];
+    [_offscreenContext release];
+    _offscreenContext = [context retain];
     
     
     // Copy top-level dependencies across to parent. #79396
     [context flush];    // you never know!
-    for (KSObjectKeyPathPair *aDependency in [[context rootDOMController] dependencies])
+    for (KSObjectKeyPathPair *aDependency in [[context rootElement] dependencies])
     {
         [(SVDOMController *)[self parentWebEditorItem] addDependency:aDependency];
     }
@@ -239,7 +239,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 {
     [_offscreenWebViewController setDelegate:nil];
     [_offscreenWebViewController release]; _offscreenWebViewController = nil;
-    [_offscreenDOMControllers release]; _offscreenDOMControllers = nil;
+    [_offscreenContext release]; _offscreenContext = nil;
 }
 
 - (void)offscreenWebViewController:(SVOffscreenWebViewController *)controller
@@ -267,8 +267,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
             {
                 DOMHTMLElement *element = (DOMHTMLElement *)imported;
                 NSString *ID = [element idName];
-                
-                if ([ID isEqualToString:[[_offscreenDOMControllers objectAtIndex:0] elementIdName]])
+                if (ID)
                 {
                     [fragment appendChild:imported];
                     importedContent = YES;
@@ -301,7 +300,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     
     // Are we missing a callout?
-    SVGraphic *graphic = [self representedObject];
+    SVGraphic *graphic = (SVGraphic *)[[self representedObject] graphic];
     if ([graphic isCallout] && ![self calloutDOMController])
     {
         // Create a callout stack where we are know
@@ -323,7 +322,13 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     
     // Update
-    [self updateWithDOMNode:fragment items:_offscreenDOMControllers];
+    SVContentDOMController *rootController = [[SVContentDOMController alloc]
+                                              initWithWebEditorHTMLContext:_offscreenContext
+                                              node:fragment];
+    
+    [self updateWithDOMNode:fragment items:[rootController childWebEditorItems]];
+    [rootController release];
+    
     
     DOMNode *body = [(DOMHTMLDocument *)document body];
     [body insertBefore:bodyFragment refChild:[body firstChild]];
