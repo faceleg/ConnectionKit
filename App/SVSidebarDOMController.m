@@ -67,6 +67,16 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 {
     [super awakeFromHTMLContext:context];
     [self setPageletDOMControllers:[self childWebEditorItems]];
+    
+    if (!_pageletsController)
+    {
+        _pageletsController = [[context sidebarPageletsController] retain];
+        
+        [_pageletsController addObserver:self
+                              forKeyPath:@"arrangedObjects"
+                                 options:0
+                                 context:sSVSidebarDOMControllerPageletsObservation];
+    }
 }
 
 - (void)dealloc;
