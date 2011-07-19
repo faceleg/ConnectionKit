@@ -13,7 +13,7 @@
 
 
 @interface SVElementInfo (SVContentDOMController)
-- (SVDOMController *)newDOMControllerWithDocument:(DOMHTMLDocument *)document;
+- (SVDOMController *)newDOMControllerWithNode:(DOMNode *)node;
 @end
 
 
@@ -22,9 +22,9 @@
 - (void)populateDOMController:(SVDOMController *)controller
                   fromElement:(SVElementInfo *)element
                       context:(SVWebEditorHTMLContext *)context
-                     document:(DOMHTMLDocument *)document;
+                         node:(DOMNode *)node;
 {
-    SVDOMController *aController = [element newDOMControllerWithDocument:document];
+    SVDOMController *aController = [element newDOMControllerWithNode:node];
     if (aController)
     {
         [aController setShouldIncludeElementIdNameWhenPublishing:![element elementIdNameWasInvented]];
@@ -39,18 +39,18 @@
     // Step on down to child elements
     for (SVElementInfo *anElement in [element subelements])
     {
-        [self populateDOMController:controller fromElement:anElement context:context document:document];
+        [self populateDOMController:controller fromElement:anElement context:context node:node];
     }
 }
 
-- (id)initWithWebEditorHTMLContext:(SVWebEditorHTMLContext *)context document:(DOMHTMLDocument *)document;
+- (id)initWithWebEditorHTMLContext:(SVWebEditorHTMLContext *)context node:(DOMNode *)node;
 {
     OBPRECONDITION(context);
-    OBPRECONDITION(document);
+    OBPRECONDITION(node);
     
     self = [self init];
     
-    [self populateDOMController:self fromElement:[context rootElement] context:context document:document];
+    [self populateDOMController:self fromElement:[context rootElement] context:context node:node];
     
     return self;
 }
@@ -74,7 +74,7 @@
 
 @implementation SVElementInfo (SVContentDOMController)
 
-- (SVDOMController *)newDOMControllerWithDocument:(DOMHTMLDocument *)document;
+- (SVDOMController *)newDOMControllerWithNode:(DOMNode *)node;
 {
     id <SVGraphicContainer> container = [self graphicContainer];
     if (container)
@@ -84,7 +84,7 @@
         {
             if ([self isHorizontallyResizable] || [self isVerticallyResizable])
             {
-                SVPlugInDOMController *result = [[SVPlugInDOMController alloc] initWithElementIdName:elementID document:document];
+                SVPlugInDOMController *result = [[SVPlugInDOMController alloc] initWithElementIdName:elementID document:node];
                 [result setRepresentedObject:container];
                 
                 [result setHorizontallyResizable:[self isHorizontallyResizable]];
@@ -96,7 +96,7 @@
             }
             else
             {
-                return [container newDOMControllerWithElementIdName:elementID document:document];
+                return [container newDOMControllerWithElementIdName:elementID document:node];
             }
         }
     }

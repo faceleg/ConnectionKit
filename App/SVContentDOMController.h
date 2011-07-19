@@ -16,7 +16,7 @@
 }
 
 // Creates a full tree of controllers from the context contents
-- (id)initWithWebEditorHTMLContext:(SVWebEditorHTMLContext *)context document:(DOMHTMLDocument *)document;
+- (id)initWithWebEditorHTMLContext:(SVWebEditorHTMLContext *)context node:(DOMNode *)node;
 
 @property(nonatomic, assign) SVWebEditorViewController *webEditorViewController;
 

@@ -343,7 +343,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     
     SVContentDOMController *contentController = [[SVContentDOMController alloc]
                                                  initWithWebEditorHTMLContext:[self HTMLContext]
-                                                 document:[[self webEditor] HTMLDocument]];
+                                                 node:[[self webEditor] HTMLDocument]];
     
     [self setContentDOMController:contentController];
     [webEditor setContentItem:contentController];
