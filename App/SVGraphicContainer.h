@@ -1,5 +1,5 @@
 //
-//  SVGraphicContainer.h
+//  SVComponent.h
 //  Sandvox
 //
 //  Created by Mike on 23/02/2011.
@@ -13,7 +13,7 @@
 @protocol SVGraphic;
 
 
-@protocol SVGraphicContainer <NSObject>
+@protocol SVComponent <NSObject>
 
 - (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID node:(DOMNode *)document;
 
@@ -27,7 +27,7 @@
 #pragma mark -
 
 
-@interface SVInlineGraphicContainer : NSObject <SVGraphicContainer>
+@interface SVInlineGraphicContainer : NSObject <SVComponent>
 {
   @private
     id <SVGraphic>  _graphic;

@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "SVGraphicContainer.h"
+#import "SVComponent.h"
 
 #import "KTDocument.h"
 
@@ -15,7 +15,7 @@
 @class SVHTMLContext, SVDOMController, SVTextDOMController;
 
 
-@interface SVHTMLTextBlock : NSObject <SVGraphicContainer>
+@interface SVHTMLTextBlock : NSObject <SVComponent>
 {
 //@private
 	BOOL			myIsEditable;

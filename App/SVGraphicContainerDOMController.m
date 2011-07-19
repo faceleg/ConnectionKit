@@ -139,7 +139,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     // Write HTML
     id object = [self representedObject];
-    id <SVGraphicContainer> container = [[self graphicContainerDOMController] representedObject];   // rarely nil, but sometimes is. #116816
+    id <SVComponent> container = [[self graphicContainerDOMController] representedObject];   // rarely nil, but sometimes is. #116816
     
     if (container) [context beginGraphicContainer:container];
     [context writeGraphic:[object graphic]];

@@ -12,7 +12,7 @@
 
 
 #import "SVContentObject.h"
-#import "SVGraphicContainer.h"
+#import "SVComponent.h"
 
 #import "Sandvox.h"
 
@@ -51,7 +51,7 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 #pragma mark -
 
 
-@protocol SVGraphic <SVGraphicContainer>
+@protocol SVGraphic <SVComponent>
 
 @property(nonatomic, copy) NSNumber *width;
 @property(nonatomic, copy) NSNumber *contentWidth;  // what appears in the Inspector

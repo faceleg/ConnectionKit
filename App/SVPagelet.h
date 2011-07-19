@@ -9,7 +9,7 @@
 #import "SVGraphic.h"
 
 
-@interface SVPagelet : NSObject <SVGraphicContainer>
+@interface SVPagelet : NSObject <SVComponent>
 {
   @private
     SVGraphic   *_graphic;

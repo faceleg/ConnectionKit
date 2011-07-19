@@ -19,15 +19,15 @@
     NSDictionary            *_attributes;
     NSMutableArray          *_subelements;
     
-    id <SVGraphicContainer> _graphicContainer;
+    id <SVComponent> _graphicContainer;
     BOOL                    _elementIdNameWasInvented;
     NSMutableSet            *_dependencies;
     BOOL                    _horizontallyResizable;
     BOOL                    _verticallyResizable;
 }
 
-- (id)initWithGraphicContainer:(id <SVGraphicContainer>)container;
-@property(nonatomic, retain, readonly) id <SVGraphicContainer> graphicContainer;
+- (id)initWithGraphicContainer:(id <SVComponent>)container;
+@property(nonatomic, retain, readonly) id <SVComponent> graphicContainer;
 
 @property(nonatomic, copy) NSDictionary *attributes;
 

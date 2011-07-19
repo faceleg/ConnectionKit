@@ -86,7 +86,7 @@
     [_openElementInfos removeLastObject];
 }
 
-- (void)beginGraphicContainer:(id <SVGraphicContainer>)container;
+- (void)beginGraphicContainer:(id <SVComponent>)container;
 {
     if (container)
     {
@@ -109,7 +109,7 @@
 
 - (void)buildAttributesForResizableElement:(NSString *)elementName object:(NSObject *)object DOMControllerClass:(Class)controllerClass sizeDelta:(NSSize)sizeDelta options:(SVResizingOptions)options;
 {
-    id <SVGraphicContainer> container = ([object isKindOfClass:[SVPlugIn class]] ?
+    id <SVComponent> container = ([object isKindOfClass:[SVPlugIn class]] ?
                                          [object valueForKey:@"container"] :
                                          object);
     
@@ -178,7 +178,7 @@
     return self;
 }
 
-- (id)initWithGraphicContainer:(id <SVGraphicContainer>)container;
+- (id)initWithGraphicContainer:(id <SVComponent>)container;
 {
     if (self = [self init])
     {

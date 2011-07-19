@@ -8,14 +8,14 @@
 
 #import "SVContentObject.h"
 
-#import "SVGraphicContainer.h"
+#import "SVComponent.h"
 
 
 @class KTPage;
 @class SVGraphic, SVHTMLContext;
 
 
-@interface SVSidebar : NSManagedObject <SVGraphicContainer>
+@interface SVSidebar : NSManagedObject <SVComponent>
 
 @property (nonatomic, retain) KTPage *page;
 

@@ -507,7 +507,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     // Update number of graphics
     _numberOfGraphics++;
     
-    id <SVGraphicContainer> container = [self currentGraphicContainer];
+    id <SVComponent> container = [self currentGraphicContainer];
     if ([container respondsToSelector:@selector(write:graphic:)])
     {
         if ([graphic isPagelet])
@@ -551,12 +551,12 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 #pragma mark Graphic Containers
 
-- (id <SVGraphicContainer>)currentGraphicContainer;
+- (id <SVComponent>)currentGraphicContainer;
 {
     return [_graphicContainers lastObject];
 }
 
-- (void)beginGraphicContainer:(id <SVGraphicContainer>)container;
+- (void)beginGraphicContainer:(id <SVComponent>)container;
 {
     [_graphicContainers addObject:container];
 }
