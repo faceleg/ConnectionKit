@@ -78,29 +78,28 @@
     if (idName)
     {
         DOMHTMLElement *element = nil;
-        DOMDocument *document = [self HTMLDocument];
+        DOMNode *node = [self node];
         
-        if (document)
+        if ([node respondsToSelector:@selector(getElementById:)])
         {
             // Load the element
-            element = (DOMHTMLElement *)[document getElementById:idName];
+            element = [(id)node getElementById:idName];
         }
         
         if (!element)
         {
-            DOMNode *fragment = [self node];
+            // Search through all descendants of the node
+            DOMNodeIterator *iterator = [[node ownerDocument] createNodeIterator:node
+                                                                      whatToShow:DOM_SHOW_ELEMENT
+                                                                          filter:nil
+                                                          expandEntityReferences:NO];
             
-            // TODO: ought to search more than top-level of tree
-            DOMHTMLElement *element = [fragment firstChildOfClass:[DOMHTMLElement class]];
-            while (element)
+            while (element = (DOMHTMLElement *)[iterator nextNode])
             {
-                if ([[element getAttribute:@"id"] isEqualToString:idName])
-                {
-                    break;
-                }
-                
-                element = [element nextSiblingOfClass:[DOMElement class]];
+                if ([[element idName] isEqualToString:idName]) break;
             }
+            
+            [iterator detach];
         }
         
         [self setHTMLElement:element];
