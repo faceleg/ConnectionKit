@@ -64,7 +64,11 @@
 @synthesize HTMLElement = _DOMElement;
 - (DOMHTMLElement *)HTMLElement
 {
-    if (!_DOMElement) [self loadHTMLElement];
+    if (!_DOMElement)
+    {
+        [self loadHTMLElement];
+        OBASSERT(_DOMElement);
+    }
     return _DOMElement;
 }
 
