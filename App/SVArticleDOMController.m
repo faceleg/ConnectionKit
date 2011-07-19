@@ -1354,9 +1354,9 @@
 
 @implementation SVArticle (SVArticleDOMController)
 
-- (SVTextDOMController *)newTextDOMControllerWithElementIdName:(NSString *)elementID document:(DOMHTMLDocument *)document;
+- (SVTextDOMController *)newTextDOMControllerWithElementIdName:(NSString *)elementID node:(DOMNode *)node;
 {
-    SVArticleDOMController *result = [[SVArticleDOMController alloc] initWithElementIdName:elementID document:document];
+    SVArticleDOMController *result = [[SVArticleDOMController alloc] initWithElementIdName:elementID node:node];
     [result setRepresentedObject:self];
     [result setRichText:YES];
     [result setImportsGraphics:YES];

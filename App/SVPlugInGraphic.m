@@ -537,12 +537,12 @@ static void *sPlugInMinWidthObservationContext = &sPlugInMinWidthObservationCont
 #pragma mark DOM
 
 - (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID
-                                              document:(DOMHTMLDocument *)document;
+                                                  node:(DOMNode *)node;
 {
     if ([[self plugIn] isKindOfClass:[SVIndexPlugIn class]])
     {
         SVDOMController *result = [[SVIndexDOMController alloc] initWithElementIdName:elementID
-                                                                             document:document];
+                                                                             node:node];
         [result setRepresentedObject:self];
         
         if ([self textAttachment])
@@ -554,7 +554,7 @@ static void *sPlugInMinWidthObservationContext = &sPlugInMinWidthObservationCont
         return result;
     }
     
-    return [super newDOMControllerWithElementIdName:elementID document:document];
+    return [super newDOMControllerWithElementIdName:elementID node:node];
 }
 
 - (BOOL)requiresPageLoad;

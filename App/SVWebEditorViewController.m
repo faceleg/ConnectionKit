@@ -1447,11 +1447,11 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     }
     else if (action == @selector(moveUp:))
     {
-        [[self firstResponderItem] doCommandBySelector:@selector(moveObjectUp:)];
+        [[sender firstResponderItem] doCommandBySelector:@selector(moveObjectUp:)];
     }
     else if (action == @selector(moveDown:))
     {
-        [[self firstResponderItem] doCommandBySelector:@selector(moveObjectDown:)];
+        [[sender firstResponderItem] doCommandBySelector:@selector(moveObjectDown:)];
     }
     else if (action == @selector(reload:))
     {

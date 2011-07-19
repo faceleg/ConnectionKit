@@ -84,7 +84,7 @@
         {
             if ([self isHorizontallyResizable] || [self isVerticallyResizable])
             {
-                SVPlugInDOMController *result = [[SVPlugInDOMController alloc] initWithElementIdName:elementID document:node];
+                SVPlugInDOMController *result = [[SVPlugInDOMController alloc] initWithElementIdName:elementID node:node];
                 [result setRepresentedObject:container];
                 
                 [result setHorizontallyResizable:[self isHorizontallyResizable]];
@@ -96,7 +96,7 @@
             }
             else
             {
-                return [container newDOMControllerWithElementIdName:elementID document:node];
+                return [container newDOMControllerWithElementIdName:elementID node:node];
             }
         }
     }

@@ -107,29 +107,6 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 
 #pragma mark Updating
 
-+ (void)loadHTMLElementsOfDOMControllers:(NSArray *)controllers fromDocumentFragment:(DOMDocumentFragment *)fragment;
-{
-    // TODO: ought to search more than top-level of tree
-    NSDictionary *controllersByID = [[NSDictionary alloc]
-                                     initWithObjects:controllers
-                                     forKeys:[controllers valueForKey:@"elementIdName"]];
-    
-    DOMHTMLElement *anElement = [fragment firstChildOfClass:[DOMElement class]];
-    while (anElement)
-    {
-        NSString *ID = [anElement getAttribute:@"id"];
-        if (ID)
-        {
-            SVDOMController *controller = [controllersByID objectForKey:ID];
-            [controller setHTMLElement:anElement];
-        }
-        
-        anElement = [anElement nextSiblingOfClass:[DOMElement class]];
-    }
-    
-    [controllersByID release];
-}
-
 - (WEKWebEditorItem *)childItemForRepresentedObject:(id)object;
 {
     for (WEKWebEditorItem *anItem in [self childWebEditorItems])
@@ -160,15 +137,18 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     
     
     // Load HTML into DOM, hooking up to controllers
-    DOMDocumentFragment *fragment = [(DOMHTMLDocument *)[[self HTMLElement] ownerDocument]
+    DOMDocument *doc = [[self HTMLElement] ownerDocument];
+    DOMDocumentFragment *fragment = [doc
                                      createDocumentFragmentWithMarkupString:html
                                      baseURL:nil];
     [html release];
     
-    NSMutableArray *controllers = [[[context rootDOMController] childWebEditorItems] mutableCopy];
+    SVContentDOMController *rootController = [[SVContentDOMController alloc]
+                                              initWithWebEditorHTMLContext:context
+                                              documentFragment:fragment];
+    NSMutableArray *controllers = [[rootController childWebEditorItems] mutableCopy];
+    [rootController release];
     [context release];
-    
-    [[self class] loadHTMLElementsOfDOMControllers:controllers fromDocumentFragment:fragment];
     
     
     // Figure out correct DOM controllers for pagelets

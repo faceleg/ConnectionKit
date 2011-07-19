@@ -422,22 +422,22 @@
     [HTML_VALUE write:context graphic:graphic];
 }
 
-- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID document:(DOMHTMLDocument *)document;
+- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID node:(DOMNode *)node;
 {
     // Use the right sort of text area
     id value = HTML_VALUE;
     
-    if ([value respondsToSelector:@selector(newTextDOMControllerWithElementIdName:document:)])
+    if ([value respondsToSelector:@selector(newTextDOMControllerWithElementIdName:node:)])
     {
         // Copy basic properties from text block
-        SVTextDOMController *controller = [value newTextDOMControllerWithElementIdName:elementID document:document];
+        SVTextDOMController *controller = [value newTextDOMControllerWithElementIdName:elementID node:node];
         [controller setTextBlock:self];
         return controller;
     }
     
     
     // Copy basic properties from text block
-    SVTextFieldDOMController *result = [[SVTextFieldDOMController alloc] initWithElementIdName:elementID document:document];
+    SVTextFieldDOMController *result = [[SVTextFieldDOMController alloc] initWithElementIdName:elementID node:node];
     [result setTextBlock:self];
     [result setEditable:[self isEditable]];
     [result setRichText:[self isRichText]];

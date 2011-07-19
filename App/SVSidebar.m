@@ -88,9 +88,9 @@
     [SVGraphic write:context pagelet:graphic];
 }
 
-- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID document:(DOMHTMLDocument *)document;
+- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID node:(DOMNode *)node;
 {
-    SVDOMController *result = [[SVSidebarDOMController alloc] initWithElementIdName:elementID document:document];
+    SVDOMController *result = [[SVSidebarDOMController alloc] initWithElementIdName:elementID node:node];
     [result setRepresentedObject:self];
     return result;
 }

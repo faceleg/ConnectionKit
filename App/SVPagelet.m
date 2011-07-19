@@ -29,9 +29,9 @@
     [super dealloc];
 }
 
-- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID document:(DOMHTMLDocument *)document;
+- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID node:(DOMNode *)node;
 {
-    SVDOMController *result = [[SVGraphicContainerDOMController alloc] initWithElementIdName:elementID document:document];
+    SVDOMController *result = [[SVGraphicContainerDOMController alloc] initWithElementIdName:elementID node:node];
     [result setRepresentedObject:self];
     return result;
 }
