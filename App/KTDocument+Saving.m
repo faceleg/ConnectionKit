@@ -7,7 +7,6 @@
 //
 
 #import "KTDocument.h"
-#import "NSDocument+KTExtensions.h"
 
 #import "KTDesign.h"
 #import "KTDocumentController.h"

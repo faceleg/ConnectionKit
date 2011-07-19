@@ -466,8 +466,6 @@
 		2764AA1E1188D16C00D8E1BB /* SVArticleDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2764AA1C1188D16C00D8E1BB /* SVArticleDOMController.h */; };
 		2764AA1F1188D16C00D8E1BB /* SVArticleDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2764AA1D1188D16C00D8E1BB /* SVArticleDOMController.m */; };
 		2765059A0EADF91900461A0E /* KTPage+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 276505990EADF91900461A0E /* KTPage+Internal.h */; };
-		2765061E0EAE417200461A0E /* NSDocument+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 2765061C0EAE417200461A0E /* NSDocument+KTExtensions.h */; };
-		2765061F0EAE417200461A0E /* NSDocument+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2765061D0EAE417200461A0E /* NSDocument+KTExtensions.m */; };
 		276688F60D63625F0019686C /* CIImage+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 276688F40D63625F0019686C /* CIImage+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
 		276688F70D63625F0019686C /* CIImage+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 276688F50D63625F0019686C /* CIImage+KTExtensions.m */; };
 		276A6E8F110B4312006FD9F7 /* SVMediaRecord.h in Headers */ = {isa = PBXBuildFile; fileRef = 276A6E8D110B4312006FD9F7 /* SVMediaRecord.h */; };
@@ -2204,8 +2202,6 @@
 		2764AA1C1188D16C00D8E1BB /* SVArticleDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVArticleDOMController.h; sourceTree = "<group>"; };
 		2764AA1D1188D16C00D8E1BB /* SVArticleDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVArticleDOMController.m; sourceTree = "<group>"; };
 		276505990EADF91900461A0E /* KTPage+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTPage+Internal.h"; sourceTree = "<group>"; };
-		2765061C0EAE417200461A0E /* NSDocument+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDocument+KTExtensions.h"; sourceTree = "<group>"; };
-		2765061D0EAE417200461A0E /* NSDocument+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDocument+KTExtensions.m"; sourceTree = "<group>"; };
 		276688F40D63625F0019686C /* CIImage+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CIImage+KTExtensions.h"; sourceTree = "<group>"; };
 		276688F50D63625F0019686C /* CIImage+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CIImage+KTExtensions.m"; sourceTree = "<group>"; };
 		276A6E8D110B4312006FD9F7 /* SVMediaRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaRecord.h; sourceTree = "<group>"; };
@@ -4613,8 +4609,6 @@
 				27B306D50D74266F00903807 /* KTDocument+Saving.m */,
 				3C89AD7008E0BE1400CA0522 /* KTDocumentController.h */,
 				3C89AD7108E0BE1400CA0522 /* KTDocumentController.m */,
-				2765061C0EAE417200461A0E /* NSDocument+KTExtensions.h */,
-				2765061D0EAE417200461A0E /* NSDocument+KTExtensions.m */,
 				27E1BF49115B8235000FF123 /* SVDocumentUndoManager.h */,
 				27E1BF4A115B8235000FF123 /* SVDocumentUndoManager.m */,
 				CEFD1D3512E9F7FC00D3A6CD /* DocumentSavePanelAccessoryView.xib */,
@@ -6157,7 +6151,6 @@
 				2730D66D0DE18ACA004858F5 /* SVTemplateParser.h in Headers */,
 				2799832C0DF01BE8003C84B9 /* KTDesignPlaceholder.h in Headers */,
 				2765059A0EADF91900461A0E /* KTPage+Internal.h in Headers */,
-				2765061E0EAE417200461A0E /* NSDocument+KTExtensions.h in Headers */,
 				CE01A7270EAFD63600BDF264 /* CIImage+Karelia.h in Headers */,
 				CE01A7290EAFD63600BDF264 /* KSAbstractBugReporter.h in Headers */,
 				CE01A72B0EAFD63600BDF264 /* KSAlert.h in Headers */,
@@ -7911,7 +7904,6 @@
 				27EF1BD00DC1F9BF00976C66 /* SVSiteOutlineViewController.m in Sources */,
 				2730D66E0DE18ACA004858F5 /* SVTemplateParser.m in Sources */,
 				2799832D0DF01BE8003C84B9 /* KTDesignPlaceholder.m in Sources */,
-				2765061F0EAE417200461A0E /* NSDocument+KTExtensions.m in Sources */,
 				CE01A7280EAFD63600BDF264 /* CIImage+Karelia.m in Sources */,
 				CE01A72A0EAFD63600BDF264 /* KSAbstractBugReporter.m in Sources */,
 				CE01A72C0EAFD63600BDF264 /* KSAlert.m in Sources */,
