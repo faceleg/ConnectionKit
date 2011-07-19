@@ -711,6 +711,8 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 - (void)tryToMovePagelet:(SVDOMController *)pagelet downToPosition:(CGPoint)position;
 {
     NSArray *pagelets = [self pageletDOMControllers];
+    OBASSERT(pagelets);
+    
     NSUInteger index = [pagelets indexOfObjectIdenticalTo:pagelet]  + 1;
     
     CGPoint startPosition = [pagelet positionIgnoringRelativePosition];
