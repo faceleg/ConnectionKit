@@ -94,15 +94,26 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 #pragma mark DOM
 
 @synthesize sidebarDivElement = _sidebarDiv;
-@synthesize contentDOMElement = _contentElement;
-
-- (void)loadHTMLElementFromDocument:(DOMDocument *)document;
+- (DOMElement *)sidebarDivElement;
 {
-    [super loadHTMLElementFromDocument:document];
+    [self HTMLElement]; // make sure it's loaded
+    return _sidebarDiv;
+}
+
+@synthesize contentDOMElement = _contentElement;
+- (DOMElement *)contentDOMElement;
+{
+    [self HTMLElement]; // make sure it's loaded
+    return _contentElement;
+}
+
+- (void)loadHTMLElement;
+{
+    [super loadHTMLElement];
     
     // Also seek out sidebar divs
-    [self setSidebarDivElement:[document getElementById:@"sidebar"]];
-    [self setContentDOMElement:[document getElementById:@"sidebar-content"]];
+    [self setSidebarDivElement:[[self HTMLDocument] getElementById:@"sidebar"]];
+    [self setContentDOMElement:[[self HTMLDocument] getElementById:@"sidebar-content"]];
 }
 
 #pragma mark Updating
@@ -120,6 +131,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 {
     // Arrange DOM nodes to match. Start by removing all
     DOMElement *contentElement = [self contentDOMElement];
+    OBASSERT(contentElement);
     [[contentElement mutableChildDOMNodes] removeAllObjects];
     
     
