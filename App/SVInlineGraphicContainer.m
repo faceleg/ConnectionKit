@@ -29,6 +29,8 @@
     [super dealloc];
 }
 
+@synthesize graphic = _graphic;
+
 - (void)write:(SVHTMLContext *)context graphic:(id <SVGraphic>)graphic;
 {
     // Graphic body

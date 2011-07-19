@@ -16,5 +16,6 @@
 }
 
 - (id)initWithGraphic:(SVGraphic *)graphic;
+@property(nonatomic, retain, readonly) SVGraphic *graphic;
 
 @end

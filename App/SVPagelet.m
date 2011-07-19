@@ -29,6 +29,8 @@
     [super dealloc];
 }
 
+@synthesize graphic = _graphic;
+
 - (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID node:(DOMNode *)node;
 {
     SVDOMController *result = [[SVGraphicContainerDOMController alloc] initWithElementIdName:elementID node:node];
@@ -38,7 +40,7 @@
 
 - (CGFloat)maxWidthOnPage:(KTPage *)page;
 {
-    return [_graphic maxWidthOnPage:page];
+    return [[self graphic] maxWidthOnPage:page];
 }
 
 #pragma mark Equality
@@ -47,12 +49,12 @@
 {
     if (self == object) return YES;
     if (![object isKindOfClass:[SVPagelet class]]) return NO;
-    return [_graphic isEqual:((SVPagelet *)object)->_graphic];
+    return [[self graphic] isEqual:[object graphic]];
 }
 
 - (int)hash;
 {
-    return [_graphic hash];
+    return [[self graphic] hash];
 }
 
 @end
