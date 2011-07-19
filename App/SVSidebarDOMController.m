@@ -13,6 +13,7 @@
 #import "SVContentDOMController.h"
 #import "SVGraphicContainerDOMController.h"
 #import "KTPage.h"
+#import "SVPagelet.h"
 #import "SVTextAttachment.h"
 #import "SVWebEditorViewController.h"
 #import "WebEditingKit.h"
@@ -165,7 +166,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     
     
     // Figure out correct DOM controllers for pagelets
-    SVGraphic *aPagelet;
+    SVPagelet *aPagelet;
     WEKWebEditorItem *nextController = nil;
     
     for (NSUInteger i = [controllers count] - 1; i < NSNotFound;)
@@ -640,7 +641,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
                 result = YES;
                 [webEditor forgetDraggedItems];
                 
-                SVGraphic *pagelet = [aPageletItem representedObject];
+                SVGraphic *pagelet = [[aPageletItem representedObject] graphic];
                 [pageletsController
                  moveObject:pagelet toIndex:dropIndex];
             }
@@ -722,8 +723,8 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         if (2 * gapAvailable > [[nextPagelet HTMLElement] boundingBox].size.height)
         {
             // Make the swap
-            [[self pageletsController] moveObject:[pagelet representedObject]
-                                      afterObject:[nextPagelet representedObject]];
+            [[self pageletsController] moveObject:[[pagelet representedObject] graphic]
+                                      afterObject:[[nextPagelet representedObject] graphic]];
             
             // By calling back in, we should account for a drag that somehow covers multiple pagelets
             [self updateIfNeeded];
@@ -755,8 +756,8 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         if (2 * -gapAvailable > [[previousPagelet HTMLElement] boundingBox].size.height)
         {
             // Make the swap
-            [[self pageletsController] moveObject:[pagelet representedObject]
-                                     beforeObject:[previousPagelet representedObject]];
+            [[self pageletsController] moveObject:[[pagelet representedObject] graphic]
+                                     beforeObject:[[previousPagelet representedObject] graphic]];
             
             // By calling back in, we should account for a drag that somehow covers multiple pagelets
             [self updateIfNeeded];
