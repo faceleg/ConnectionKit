@@ -7,7 +7,7 @@
 //
 
 
-#import "SVComponent.h"
+#import "SVGraphicContainer.h"
 
 #import "SVGraphicContainerDOMController.h"
 

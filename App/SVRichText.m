@@ -11,7 +11,7 @@
 #import "SVHTMLTemplateParser.h"
 #import "SVMediaGraphic.h"
 #import "KTPage.h"
-#import "SVComponent.h"
+#import "SVGraphicContainer.h"
 #import "SVRichTextDOMController.h"
 #import "SVTextAttachment.h"
 
