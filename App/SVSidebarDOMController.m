@@ -10,6 +10,7 @@
 
 #import "SVArticleDOMController.h"
 #import "SVAttributedHTML.h"
+#import "SVContentDOMController.h"
 #import "SVGraphicContainerDOMController.h"
 #import "KTPage.h"
 #import "SVTextAttachment.h"
@@ -157,7 +158,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     
     SVContentDOMController *rootController = [[SVContentDOMController alloc]
                                               initWithWebEditorHTMLContext:context
-                                              documentFragment:fragment];
+                                              node:fragment];
     NSMutableArray *controllers = [[rootController childWebEditorItems] mutableCopy];
     [rootController release];
     [context release];
