@@ -33,7 +33,18 @@
     if (self = [self init])
     {
         _elementID = [elementID copy];
-        _DOMDocument = [document retain];
+        _document = [document retain];
+    }
+    
+    return self;
+}
+
+- (id)initWithElementIdName:(NSString *)elementID documentFragment:(DOMDocumentFragment *)fragment;
+{
+    if (self = [self init])
+    {
+        _elementID = [elementID copy];
+        _fragment = [fragment retain];
     }
     
     return self;
@@ -51,7 +62,8 @@
     [_eventListener setEventsTarget:nil];
     
     [_elementID release];
-    [_DOMDocument release];
+    [_document release];
+    [_fragment release];
     [_DOMElement release];
     [_eventListener release];
     [_representedObject release];
@@ -84,13 +96,30 @@
             DOMHTMLElement *element = (DOMHTMLElement *)[document getElementById:idName];
             [self setHTMLElement:element];
         }
+        else
+        {
+            DOMDocumentFragment *fragment = [self documentFragment];
+            
+            // TODO: ought to search more than top-level of tree
+            DOMHTMLElement *anElement = [fragment firstChildOfClass:[DOMHTMLElement class]];
+            while (anElement)
+            {
+                if ([[anElement getAttribute:@"id"] isEqualToString:idName])
+                {
+                    [self setHTMLElement:anElement];
+                }
+                
+                anElement = [anElement nextSiblingOfClass:[DOMElement class]];
+            }
+        }
     }
 }
 
 - (BOOL)isHTMLElementLoaded { return (_DOMElement != nil); }
 
 @synthesize elementIdName = _elementID;
-@synthesize HTMLDocument = _DOMDocument;
+@synthesize HTMLDocument = _document;
+@synthesize documentFragment = _fragment;
 
 - (DOMRange *)DOMRange; // returns -HTMLElement as a range
 {

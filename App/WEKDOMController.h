@@ -23,14 +23,16 @@
     id              _representedObject;
     
     // Loading by creation
-    NSString        *_elementID;
-    DOMHTMLDocument *_DOMDocument;
+    NSString            *_elementID;
+    DOMHTMLDocument     *_document;
+    DOMDocumentFragment *_fragment;
 }
 
 #pragma mark Init
 
 // For subclasses that know how to load HTML element from the document
 - (id)initWithElementIdName:(NSString *)elementID document:(DOMHTMLDocument *)document;
+- (id)initWithElementIdName:(NSString *)elementID documentFragment:(DOMDocumentFragment *)fragment;
 
 // Convenience method:
 - (id)initWithHTMLElement:(DOMHTMLElement *)element;
@@ -45,6 +47,7 @@
 
 @property(nonatomic, copy, readonly) NSString *elementIdName;
 @property(nonatomic, retain, readonly) DOMHTMLDocument *HTMLDocument;
+@property(nonatomic, retain, readonly) DOMDocumentFragment *documentFragment;
 
 - (DOMRange *)DOMRange; // returns -HTMLElement as a range
 
