@@ -91,6 +91,7 @@
 - (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID document:(DOMHTMLDocument *)document;
 {
     SVDOMController *result = [[SVSidebarDOMController alloc] initWithElementIdName:elementID document:document];
+    [result setRepresentedObject:self];
     return result;
 }
 
