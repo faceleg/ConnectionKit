@@ -28,7 +28,6 @@
     if (aController)
     {
         [aController setShouldIncludeElementIdNameWhenPublishing:![element elementIdNameWasInvented]];
-        [aController awakeFromHTMLContext:context];
         
         [controller addChildWebEditorItem:aController];
         controller = aController;
@@ -41,6 +40,10 @@
     {
         [self populateDOMController:controller fromElement:anElement context:context node:node];
     }
+    
+    
+    // Once all descendants are in place, time to awake
+    [aController awakeFromHTMLContext:context];
 }
 
 - (id)initWithWebEditorHTMLContext:(SVWebEditorHTMLContext *)context node:(DOMNode *)node;
