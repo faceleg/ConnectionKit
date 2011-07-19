@@ -544,6 +544,13 @@ static void *sPlugInMinWidthObservationContext = &sPlugInMinWidthObservationCont
         SVDOMController *result = [[SVIndexDOMController alloc] initWithElementIdName:elementID
                                                                              document:document];
         [result setRepresentedObject:self];
+        
+        if ([self textAttachment])
+        {
+            [result bind:NSWidthBinding toObject:self withKeyPath:@"width" options:nil];
+            [result setHorizontallyResizable:YES];
+        }
+        
         return result;
     }
     
