@@ -203,6 +203,14 @@
             keyPath = [keyPath substringFromIndex:[@"currentPage." length]];
         }
     }
+    else if ([object isKindOfClass:[SVPlugIn class]])
+    {
+        if ([keyPath hasPrefix:@"currentContext."])
+        {
+            object = [object valueForKey:@"currentContext"];
+            keyPath = [keyPath substringFromIndex:[@"currentContext." length]];
+        }
+    }
     
     
     
