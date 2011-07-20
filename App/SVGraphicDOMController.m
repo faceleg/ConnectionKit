@@ -912,19 +912,13 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     {
         [element ks_addClassName:@"svx-dragging-destination"];
     }
-}
-
-- (void)loadHTMLElementFromDocument:(DOMDocument *)document
-{
-    [super loadHTMLElementFromDocument:document];
     
-    if ([self isHTMLElementCreated])    // #103629
+    if (element)    // #103629
     {
-        DOMNode *elementToTest = [self HTMLElement];
-        DOMNodeList *contents = [elementToTest getElementsByClassName:@"figure-content"];
-        if ([contents length]) elementToTest = [contents item:0];
+        DOMNodeList *contents = [element getElementsByClassName:@"figure-content"];
+        if ([contents length]) element = (DOMHTMLElement *)[contents item:0];
         
-        NSRect box = [elementToTest boundingBox];
+        NSRect box = [element boundingBox];
         if (box.size.width <= 0.0f || box.size.height <= 0.0f)
         {
             // Replace with placeholder
@@ -939,10 +933,18 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
                     break;
                     
                 default:
-                    [[self HTMLElement] setInnerHTML:parsedPlaceholderHTML];
+                    [element setInnerHTML:parsedPlaceholderHTML];
             }
         }
     }
+}
+
+- (void)itemDidMoveToWebEditor;
+{
+    [super itemDidMoveToWebEditor];
+    
+    // Try to load it, since in an update this may be the only chance available.
+    if ([self webEditor]) [self HTMLElement];
 }
 
 #pragma mark Selection

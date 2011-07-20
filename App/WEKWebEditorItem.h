@@ -44,6 +44,7 @@
 - (void)itemWillMoveToParentWebEditorItem:(WEKWebEditorItem *)newParentItem; 
 - (void)itemWillMoveToWebEditor:(WEKWebEditorView *)newWebEditor;
 - (void)itemDidMoveToParentWebEditorItem;
+- (void)itemDidMoveToWebEditor;
 
 - (NSEnumerator *)enumerator;
 
