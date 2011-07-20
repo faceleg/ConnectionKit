@@ -103,11 +103,12 @@
         if (didMigrateSuccessfully)
         {
             // Close the migration UI
-            NSArray *migrationWindowControllers = [self windowControllers];
+            NSArray *migrationWindowControllers = [[self windowControllers] copy];  // seem to need to copy on Lion
             for (NSWindowController *aController in migrationWindowControllers)
             {
                 [self removeWindowController:aController];
             }
+            [migrationWindowControllers release];
             
             // Show regular UI
             [self makeWindowControllers];
