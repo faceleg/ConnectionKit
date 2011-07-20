@@ -14,6 +14,7 @@
 
 #import "KSAppDelegate.h"
 #import "KSDocumentController.h"
+#import "NSInvocation+Karelia.h"
 
 #import "KSThreadProxy.h"
 #import "KSURLUtilities.h"
@@ -55,7 +56,10 @@
     // Is this a migration, so should run on background thread?
     if ([typeName isEqualToString:kSVDocumentTypeName] && ![[self fileType] isEqualToString:kSVDocumentTypeName])
     {
-        OBASSERT(!delegate);
+        _delegate = delegate;
+        _saveSelector = didSaveSelector;
+        _contextInfo = contextInfo;
+        
         
         // Time for UI
         [self makeWindowControllers];
@@ -82,6 +86,17 @@
 
 - (void)documentDidMigrate:(BOOL)didMigrateSuccessfully error:(NSError *)error;
 {
+    if (_delegate)
+    {
+        NSInvocation *invocation = [NSInvocation invocationWithSelector:_saveSelector target:_delegate];
+        [invocation setArgument:&self atIndex:2];
+        [invocation setArgument:&didMigrateSuccessfully atIndex:3];
+        [invocation setArgument:&_contextInfo atIndex:4];
+        
+        [invocation invoke];
+    }
+    
+    
     if (didMigrateSuccessfully)
     {
         didMigrateSuccessfully = [self readFromURL:[self fileURL] ofType:[self fileType] error:&error];
