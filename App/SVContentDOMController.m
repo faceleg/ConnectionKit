@@ -35,6 +35,13 @@
     }
     
     
+    // Copy across dependencies
+    for (KSObjectKeyPathPair *aDependency in [element dependencies])
+    {
+        [controller addDependency:aDependency];
+    }
+    
+    
     // Step on down to child elements
     for (SVElementInfo *anElement in [element subelements])
     {
