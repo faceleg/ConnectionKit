@@ -178,7 +178,7 @@
 
 #pragma mark Resize
 
-- (void) resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
+- (void)XresizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
 {
     return [[self enclosingGraphicDOMController] resizeToSize:size byMovingHandle:handle];
 }

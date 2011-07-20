@@ -30,9 +30,6 @@
 #pragma mark -
 
 
-static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
-
-
 @implementation SVGraphicContainerDOMController
 
 - (void)dealloc;
@@ -339,27 +336,6 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     [self stopUpdate];
 }
 
-- (void)updateSize;
-{
-    SVGraphic *graphic = [self representedObject];
-    DOMElement *element = [self graphicDOMElement];
-    
-    [self setNeedsDisplay];
-    
-    NSNumber *width = [graphic containerWidth];
-    if (width && ![graphic isExplicitlySized])
-    {
-        [[element style] setWidth:[NSString stringWithFormat:@"%@px", width]];
-    }
-    else
-    {
-        [[element style] setWidth:nil];
-    }
-    
-    [self didUpdateWithSelector:_cmd];
-    [self setNeedsDisplay];
-}
-
 - (void)updateWrap;
 {
     SVGraphic *graphic = [self representedObject];
@@ -427,54 +403,6 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 }
 
 #pragma mark Dependencies
-
-- (void)startObservingDependencies;
-{
-    if (!_observingWidth)
-    {
-        [self addObserver:self
-               forKeyPath:@"representedObject.contentWidth"
-                  options:0
-                  context:sGraphicSizeObservationContext];
-        _observingWidth = YES;
-    }
-    
-    [super startObservingDependencies];
-}
-
-- (void)stopObservingDependencies;
-{
-    if (_observingWidth)
-    {
-        [self removeObserver:self forKeyPath:@"representedObject.contentWidth"];
-        _observingWidth = NO;
-    }
-    
-    [super stopObservingDependencies];
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context
-{
-    if (context == sGraphicSizeObservationContext)
-    {
-        if ([[self webEditor] inLiveGraphicResize])
-        {
-            [self updateSize];  // needs to happen immediately
-        }
-        else
-        {
-            [self setNeedsUpdateWithSelector:@selector(updateSize)];
-        }
-    }
-    
-    else
-    {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    }
-}
 
 - (void)dependenciesTracker:(KSDependenciesTracker *)tracker didObserveChange:(NSDictionary *)change forDependency:(KSObjectKeyPathPair *)dependency;
 {
@@ -774,21 +702,6 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     DOMElement *element = [self graphicDOMElement];
     return (element ? [self resizingMaskForDOMElement:element] : 0);
 }
-
-- (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
-{
-    // Apply the change
-    SVGraphic *graphic = [self representedObject];
-    
-    NSNumber *width = (size.width > 0 ? [NSNumber numberWithInt:size.width] : nil);
-    NSNumber *height = (size.height > 0 ? [NSNumber numberWithInt:size.height] : nil);
-    [graphic setWidth:width];
-    [graphic setHeight:height];
-    
-    
-    [super resizeToSize:size byMovingHandle:handle];
-}
-
 
 - (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;
 {

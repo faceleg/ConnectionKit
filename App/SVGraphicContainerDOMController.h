@@ -15,9 +15,7 @@
 {
 @private
     DOMHTMLElement  *_bodyElement;
-    
-    BOOL    _observingWidth;
-    
+        
     SVOffscreenWebViewController    *_offscreenWebViewController;
     SVWebEditorHTMLContext          *_offscreenContext;
 }
@@ -29,7 +27,6 @@
 - (void)loadPlaceholderDOMElementInDocument:(DOMDocument *)document;
 
 - (void)update;
-- (void)updateSize;
 
 
 @end
