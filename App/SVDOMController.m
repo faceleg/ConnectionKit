@@ -198,6 +198,7 @@
     
     if ([self isEditing])
     {
+        [[element style] setProperty:@"-webkit-nbsp-mode" value:@"space" priority:@""]; // so spacing doesn't change when editing turns off. #133624
         [element removeAttribute:@"contenteditable"];
     }
     else
