@@ -36,7 +36,6 @@
 
 @interface KTDocWindowController (PublishingPrivate)
 - (BOOL)shouldPublishWithWarningIfNo;
-- (BOOL)tryToEndEditing;
 - (Class)publishingEngineClass;
 @end
 
@@ -47,6 +46,29 @@
 @implementation KTDocWindowController (Publishing)
 
 #pragma mark Publishing
+
+- (void)prepareToPublishWithDelegateSelector:(SEL)selector
+{
+    BOOL result = [[self pagesController] commitEditing];
+    if (result) result = [[[[self webContentAreaController] webEditorViewController] graphicsController] commitEditing];
+    
+	if (!result)
+    {
+        // Anything more to do?
+        return;
+    }
+    
+    if ([[self document] hasUnautosavedChanges])
+    {
+        [[self document] autosaveDocumentWithDelegate:self
+                                  didAutosaveSelector:@selector(document:didAutosave:contextInfo:)
+                                          contextInfo:selector];
+    }
+    else
+    {
+        [self performSelector:selector];
+    }
+}
 
 - (void)maybeShowRestrictedPublishingAlertAndContinueWith:(SEL)aSelector;
 {
@@ -92,11 +114,25 @@
 	}
 }
 
+- (void)document:(NSDocument *)document didAutosave:(BOOL)didAutosave contextInfo:(void *)contextInfo
+{
+    if (!didAutosave) return;
+    
+    
+    SEL selector = contextInfo;
+    if (selector != @selector(_exportSiteAgain))
+    {
+        if (![self shouldPublishWithWarningIfNo]) return;
+        [self maybeShowRestrictedPublishingAlertAndContinueWith:selector];
+        return;
+    }
+    
+    [self performSelector:selector];
+}
+
 - (IBAction)publishSiteChanges:(id)sender
 {
-	if (![self tryToEndEditing]) return;
-    if (![self shouldPublishWithWarningIfNo]) return;
-	[self maybeShowRestrictedPublishingAlertAndContinueWith:@selector(_publishSiteChanges)];
+    [self prepareToPublishWithDelegateSelector:@selector(_publishSiteChanges)];
 }
 - (void)_publishSiteChanges
 {
@@ -115,9 +151,7 @@
 
 - (IBAction)publishSiteAll:(id)sender
 {
-	if (![self tryToEndEditing]) return;
-    if (![self shouldPublishWithWarningIfNo]) return;
-	[self maybeShowRestrictedPublishingAlertAndContinueWith:@selector(_publishSiteAll)];
+	[self prepareToPublishWithDelegateSelector:@selector(_publishSiteAll)];
 }
 - (void)_publishSiteAll
 {
@@ -150,12 +184,6 @@
     }
 }
 
-- (BOOL)tryToEndEditing;
-{
-    BOOL result = [[self pagesController] commitEditing];
-    if (result) result = [[[[self webContentAreaController] webEditorViewController] graphicsController] commitEditing];
-	return result;
-}
 /*  Disallow publishing if the user hasn't been through host setup yet
  */
 - (BOOL)shouldPublishWithWarningIfNo
@@ -273,9 +301,11 @@
 
 - (IBAction)exportSiteAgain:(id)sender
 {
-    if (![self tryToEndEditing]) return;
-	
-    
+    [self prepareToPublishWithDelegateSelector:@selector(_exportSiteAgain)];
+}
+
+- (void)_exportSiteAgain;
+{
     NSString *exportDirectoryPath = [[[self document] lastExportDirectory] path];
     if (exportDirectoryPath)
     {

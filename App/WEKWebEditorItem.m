@@ -217,7 +217,15 @@
     [[self childWebEditorItems] makeObjectsPerformSelector:_cmd withObject:newWebEditor];
 }
 
-- (void)itemDidMoveToParentWebEditorItem; { }
+- (void)itemDidMoveToParentWebEditorItem;
+{
+    [self itemDidMoveToWebEditor];
+}
+
+- (void)itemDidMoveToWebEditor;
+{
+    [[self childWebEditorItems] makeObjectsPerformSelector:_cmd];
+}
 
 - (NSEnumerator *)enumerator;
 {
