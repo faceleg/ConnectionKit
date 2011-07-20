@@ -133,23 +133,6 @@
     
 - (void)addDependencyOnObject:(NSObject *)object keyPath:(NSString *)keyPath;
 {
-    // Trying to observe next/previous page's title with a compound keypath is a bad idea. #102968
-    if ([object isKindOfClass:[KTPage class]])
-    {
-        if ([keyPath hasPrefix:@"nextPage."])
-        {
-            object = [object valueForKey:@"nextPage"];
-            keyPath = [keyPath substringFromIndex:[@"nextPage." length]];
-        }
-        else if ([keyPath hasPrefix:@"previousPage."])
-        {
-            object = [object valueForKey:@"previousPage"];
-            keyPath = [keyPath substringFromIndex:[@"previousPage." length]];
-        }
-    }
-    
-    
-    
     [super addDependencyOnObject:object keyPath:keyPath];
     
     
