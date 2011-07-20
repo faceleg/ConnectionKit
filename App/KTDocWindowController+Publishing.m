@@ -47,29 +47,6 @@
 
 #pragma mark Publishing
 
-- (void)prepareToPublishWithDelegateSelector:(SEL)selector
-{
-    BOOL result = [[self pagesController] commitEditing];
-    if (result) result = [[[[self webContentAreaController] webEditorViewController] graphicsController] commitEditing];
-    
-	if (!result)
-    {
-        // Anything more to do?
-        return;
-    }
-    
-    if ([[self document] hasUnautosavedChanges])
-    {
-        [[self document] autosaveDocumentWithDelegate:self
-                                  didAutosaveSelector:@selector(document:didAutosave:contextInfo:)
-                                          contextInfo:selector];
-    }
-    else
-    {
-        [self performSelector:selector];
-    }
-}
-
 - (void)maybeShowRestrictedPublishingAlertAndContinueWith:(SEL)aSelector;
 {
 	if (nil == gRegistrationString)	// check registration
@@ -128,6 +105,30 @@
     }
     
     [self performSelector:selector];
+}
+
+- (void)prepareToPublishWithDelegateSelector:(SEL)selector
+{
+    BOOL result = [[self pagesController] commitEditing];
+    if (result) result = [[[[self webContentAreaController] webEditorViewController] graphicsController] commitEditing];
+    
+	if (!result)
+    {
+        // Anything more to do?
+        return;
+    }
+    
+    if ([[self document] hasUnautosavedChanges])
+    {
+        [[self document] autosaveDocumentWithDelegate:self
+                                  didAutosaveSelector:@selector(document:didAutosave:contextInfo:)
+                                          contextInfo:selector];
+    }
+    else
+    {
+        // Pretend we autosaved. #133614
+        [self document:[self document] didAutosave:YES contextInfo:selector];
+    }
 }
 
 - (IBAction)publishSiteChanges:(id)sender
