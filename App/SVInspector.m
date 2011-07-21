@@ -89,7 +89,6 @@
     if (!controller) controller = [[self class] noSelectionController];
     
     [_wrapInspector setInspectedObjectsController:controller];
-    //[_graphicInspector setInspectedObjectsController:controller];
     [_metricsInspector setInspectedObjectsController:controller];
     [_linkInspector setInspectedObjectsController:controller];
     [_plugInInspector setInspectedObjectsController:controller];
@@ -120,11 +119,11 @@
     [_wrapInspector setIcon:[NSImage imageNamed:@"wrap_inspector"]];
     
     
-    // Graphic
-    //_graphicInspector = [[KSInspectorViewController alloc] initWithNibName:@"GraphicInspector" bundle:nil];
-    //[_graphicInspector setIdentifier:@"com.karelia.Sandvox.GraphicInspector"];
-    //[_graphicInspector setTitle:NSLocalizedString(@"Graphic", @"Graphic Inspector")];
-    //[_graphicInspector setIcon:[NSImage imageNamed:@"graphic_inspector"]];
+    // Text
+    _textInspector = [[KSInspectorViewController alloc] initWithNibName:@"TextInspector" bundle:nil];
+    [_textInspector setIdentifier:@"com.karelia.Sandvox.TextInspector"];
+    [_textInspector setTitle:NSLocalizedString(@"Text", @"Text Inspector")];
+    [_textInspector setIcon:[NSImage imageNamed:@"text_inspector"]];
     
     
     // Metrics
@@ -150,9 +149,8 @@
     NSArray *result = [NSArray arrayWithObjects:
                        _documentInspector,
                        _pageInspector,
-                       // _collectionInspector,		NOT USING THIS ... THOUGH MIKE MAY CHANGE HIS MIND :-)
                        _wrapInspector,
-                       //_graphicInspector,         NOR THIS
+                       _textInspector,
                        _metricsInspector,
                        _linkInspector,
                        _plugInInspector,

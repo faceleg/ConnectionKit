@@ -208,9 +208,24 @@
         WEKWebEditorView *webEditor = [self webEditor];
         [webEditor willRemoveItem:self];
     }
+    
+    [self itemWillMoveToWebEditor:[newParentItem webEditor]];
 }
 
-- (void)itemDidMoveToParentWebEditorItem; { }
+- (void)itemWillMoveToWebEditor:(WEKWebEditorView *)newWebEditor;
+{
+    [[self childWebEditorItems] makeObjectsPerformSelector:_cmd withObject:newWebEditor];
+}
+
+- (void)itemDidMoveToParentWebEditorItem;
+{
+    [self itemDidMoveToWebEditor];
+}
+
+- (void)itemDidMoveToWebEditor;
+{
+    [[self childWebEditorItems] makeObjectsPerformSelector:_cmd];
+}
 
 - (NSEnumerator *)enumerator;
 {

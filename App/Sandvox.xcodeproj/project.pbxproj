@@ -189,6 +189,7 @@
 				3C5851921289ACB00084315D /* PBXTargetDependency */,
 				3C79F2F211F3BF9900B699EE /* PBXTargetDependency */,
 				3CBC728B11F0C6A600716937 /* PBXTargetDependency */,
+				3CF4877413CF93CA00FF4387 /* PBXTargetDependency */,
 				3C0049581210CB9A006BAD9C /* PBXTargetDependency */,
 				3C4CDF2F1207413A002AF966 /* PBXTargetDependency */,
 				3C9870F111F3D6020053A72C /* PBXTargetDependency */,
@@ -453,6 +454,7 @@
 		2759CC9C1039711300E2C046 /* SVWebEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2759CC9A1039711200E2C046 /* SVWebEditorViewController.m */; };
 		2759CC9F103976D800E2C046 /* SVWebContentAreaController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2759CC9D103976D800E2C046 /* SVWebContentAreaController.h */; };
 		2759CCA0103976D800E2C046 /* SVWebContentAreaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2759CC9E103976D800E2C046 /* SVWebContentAreaController.m */; };
+		275B0DDB13D8447400CC5D76 /* TextInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 275B0DDA13D8447400CC5D76 /* TextInspector.xib */; };
 		275C5F88122831CE00CD22B8 /* SVMedia.h in Headers */ = {isa = PBXBuildFile; fileRef = 275C5F86122831CE00CD22B8 /* SVMedia.h */; settings = {ATTRIBUTES = (); }; };
 		275C5F89122831CE00CD22B8 /* SVMedia.m in Sources */ = {isa = PBXBuildFile; fileRef = 275C5F87122831CE00CD22B8 /* SVMedia.m */; };
 		275D9C6D125C80DE004A3A53 /* SVSiteItemController.h in Headers */ = {isa = PBXBuildFile; fileRef = 275D9C6B125C80DE004A3A53 /* SVSiteItemController.h */; };
@@ -465,8 +467,6 @@
 		2764AA1E1188D16C00D8E1BB /* SVArticleDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2764AA1C1188D16C00D8E1BB /* SVArticleDOMController.h */; };
 		2764AA1F1188D16C00D8E1BB /* SVArticleDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2764AA1D1188D16C00D8E1BB /* SVArticleDOMController.m */; };
 		2765059A0EADF91900461A0E /* KTPage+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 276505990EADF91900461A0E /* KTPage+Internal.h */; };
-		2765061E0EAE417200461A0E /* NSDocument+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 2765061C0EAE417200461A0E /* NSDocument+KTExtensions.h */; };
-		2765061F0EAE417200461A0E /* NSDocument+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2765061D0EAE417200461A0E /* NSDocument+KTExtensions.m */; };
 		276688F60D63625F0019686C /* CIImage+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 276688F40D63625F0019686C /* CIImage+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
 		276688F70D63625F0019686C /* CIImage+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 276688F50D63625F0019686C /* CIImage+KTExtensions.m */; };
 		276A6E8F110B4312006FD9F7 /* SVMediaRecord.h in Headers */ = {isa = PBXBuildFile; fileRef = 276A6E8D110B4312006FD9F7 /* SVMediaRecord.h */; };
@@ -1831,6 +1831,20 @@
 			remoteGlobalIDString = 3CE2B2B70D7F1DD900E2711E;
 			remoteInfo = "Shared-UpdateToT";
 		};
+		3CF4877113CF93BB00FF4387 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3CF4876D13CF93BB00FF4387 /* GooglePlusOneElement.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
+			remoteInfo = GooglePlusOneElement;
+		};
+		3CF4877313CF93CA00FF4387 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3CF4876D13CF93BB00FF4387 /* GooglePlusOneElement.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
+			remoteInfo = GooglePlusOneElement;
+		};
 		3CFCF2F1123EC863003A635C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C42DE160D64CCC7004F35FD /* RSSBadgeElement.xcodeproj */;
@@ -2172,6 +2186,7 @@
 		2759CC9A1039711200E2C046 /* SVWebEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebEditorViewController.m; sourceTree = "<group>"; };
 		2759CC9D103976D800E2C046 /* SVWebContentAreaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebContentAreaController.h; sourceTree = "<group>"; };
 		2759CC9E103976D800E2C046 /* SVWebContentAreaController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebContentAreaController.m; sourceTree = "<group>"; };
+		275B0DDA13D8447400CC5D76 /* TextInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextInspector.xib; sourceTree = "<group>"; };
 		275C5F86122831CE00CD22B8 /* SVMedia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMedia.h; sourceTree = "<group>"; };
 		275C5F87122831CE00CD22B8 /* SVMedia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMedia.m; sourceTree = "<group>"; };
 		275D9C6B125C80DE004A3A53 /* SVSiteItemController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSiteItemController.h; sourceTree = "<group>"; };
@@ -2184,8 +2199,6 @@
 		2764AA1C1188D16C00D8E1BB /* SVArticleDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVArticleDOMController.h; sourceTree = "<group>"; };
 		2764AA1D1188D16C00D8E1BB /* SVArticleDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVArticleDOMController.m; sourceTree = "<group>"; };
 		276505990EADF91900461A0E /* KTPage+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTPage+Internal.h"; sourceTree = "<group>"; };
-		2765061C0EAE417200461A0E /* NSDocument+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDocument+KTExtensions.h"; sourceTree = "<group>"; };
-		2765061D0EAE417200461A0E /* NSDocument+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDocument+KTExtensions.m"; sourceTree = "<group>"; };
 		276688F40D63625F0019686C /* CIImage+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CIImage+KTExtensions.h"; sourceTree = "<group>"; };
 		276688F50D63625F0019686C /* CIImage+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CIImage+KTExtensions.m"; sourceTree = "<group>"; };
 		276A6E8D110B4312006FD9F7 /* SVMediaRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaRecord.h; sourceTree = "<group>"; };
@@ -2675,6 +2688,7 @@
 		3CE79DB80D6261B300FCEE6D /* NSOutlineView+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSOutlineView+KTExtensions.m"; sourceTree = "<group>"; };
 		3CECB4FA085EA759000A9A69 /* SandvoxDebug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = SandvoxDebug.xcconfig; sourceTree = "<group>"; };
 		3CECB524085EA76A000A9A69 /* SandvoxRelease.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = SandvoxRelease.xcconfig; sourceTree = "<group>"; };
+		3CF4876D13CF93BB00FF4387 /* GooglePlusOneElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GooglePlusOneElement.xcodeproj; path = ../PlugIns/GooglePlusOneElement/GooglePlusOneElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3CF941DA0D623E4900B1C83D /* NSImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSImagePicker.h; sourceTree = "<group>"; };
 		3CF941DC0D623E5400B1C83D /* ContactPassword.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactPassword.h; sourceTree = "<group>"; };
 		3CF941F80D623ECF00B1C83D /* KTPageTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = KTPageTemplate.html; sourceTree = "<group>"; };
@@ -3521,6 +3535,7 @@
 				27F365E6116020D4003BDA5F /* Document Inspector */,
 				27F365E5116020CE003BDA5F /* Page Inspector */,
 				27F365E4116020C3003BDA5F /* Wrap Inspector */,
+				275B0DD913D8445200CC5D76 /* Text Inspector */,
 				27F365E3116020BC003BDA5F /* Graphic Inspector */,
 				27F365E2116020B1003BDA5F /* Metrics Inspector */,
 				27F365E1116020A9003BDA5F /* Link Inspector */,
@@ -3818,6 +3833,14 @@
 				CEFD1D4612E9F85300D3A6CD /* MultipleSelectionPlaceholder.xib */,
 			);
 			name = General;
+			sourceTree = "<group>";
+		};
+		275B0DD913D8445200CC5D76 /* Text Inspector */ = {
+			isa = PBXGroup;
+			children = (
+				275B0DDA13D8447400CC5D76 /* TextInspector.xib */,
+			);
+			name = "Text Inspector";
 			sourceTree = "<group>";
 		};
 		275E067A0DDA0F1A0072567F /* Model */ = {
@@ -4591,8 +4614,6 @@
 				27B306D50D74266F00903807 /* KTDocument+Saving.m */,
 				3C89AD7008E0BE1400CA0522 /* KTDocumentController.h */,
 				3C89AD7108E0BE1400CA0522 /* KTDocumentController.m */,
-				2765061C0EAE417200461A0E /* NSDocument+KTExtensions.h */,
-				2765061D0EAE417200461A0E /* NSDocument+KTExtensions.m */,
 				27E1BF49115B8235000FF123 /* SVDocumentUndoManager.h */,
 				27E1BF4A115B8235000FF123 /* SVDocumentUndoManager.m */,
 				CEFD1D3512E9F7FC00D3A6CD /* DocumentSavePanelAccessoryView.xib */,
@@ -5150,6 +5171,7 @@
 				3C5851881289AC980084315D /* FacebookElement.xcodeproj */,
 				3CA9FF820D63C4DA00815310 /* FeedElement.xcodeproj */,
 				3C42E4F10D650429004F35FD /* FlickrElement.xcodeproj */,
+				3CF4876D13CF93BB00FF4387 /* GooglePlusOneElement.xcodeproj */,
 				3CA900670D63C76100815310 /* IFrameElement.xcodeproj */,
 				3C42E4830D64FCE3004F35FD /* IMStatusElement.xcodeproj */,
 				3CA901A20D63D45B00815310 /* LinkListElement.xcodeproj */,
@@ -5208,6 +5230,14 @@
 				CEB721BB108FCEA500511E74 /* QuickLook.framework */,
 			);
 			name = "Cocoa Frameworks";
+			sourceTree = "<group>";
+		};
+		3CF4876E13CF93BB00FF4387 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3CF4877213CF93BB00FF4387 /* GooglePlusOne.svxElement */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		3CFCF2EE123EC863003A635C /* Products */ = {
@@ -6126,7 +6156,6 @@
 				2730D66D0DE18ACA004858F5 /* SVTemplateParser.h in Headers */,
 				2799832C0DF01BE8003C84B9 /* KTDesignPlaceholder.h in Headers */,
 				2765059A0EADF91900461A0E /* KTPage+Internal.h in Headers */,
-				2765061E0EAE417200461A0E /* NSDocument+KTExtensions.h in Headers */,
 				CE01A7270EAFD63600BDF264 /* CIImage+Karelia.h in Headers */,
 				CE01A7290EAFD63600BDF264 /* KSAbstractBugReporter.h in Headers */,
 				CE01A72B0EAFD63600BDF264 /* KSAlert.h in Headers */,
@@ -6646,6 +6675,10 @@
 					ProjectRef = 3C095BE20D5D27FA00DE6F62 /* GeneralIndex.xcodeproj */;
 				},
 				{
+					ProductGroup = 3CF4876E13CF93BB00FF4387 /* Products */;
+					ProjectRef = 3CF4876D13CF93BB00FF4387 /* GooglePlusOneElement.xcodeproj */;
+				},
+				{
 					ProductGroup = 3C0049521210CB87006BAD9C /* Products */;
 					ProjectRef = 3CA900670D63C76100815310 /* IFrameElement.xcodeproj */;
 				},
@@ -6881,6 +6914,13 @@
 			fileType = wrapper.cfbundle;
 			path = Flickr.svxElement;
 			remoteRef = 3CBC728811F0C69900716937 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3CF4877213CF93BB00FF4387 /* GooglePlusOne.svxElement */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = GooglePlusOne.svxElement;
+			remoteRef = 3CF4877113CF93BB00FF4387 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3CFCF2F2123EC863003A635C /* RSSBadge.svxElement */ = {
@@ -7233,6 +7273,7 @@
 				CEAD39B11384342400161C8F /* MediaInspector.xib in Resources */,
 				27350A9A1397E9AA00F0DC63 /* TextBoxInspector.xib in Resources */,
 				27C96A1E13B36CDF00EBC76A /* object_blockquote.tiff in Resources */,
+				275B0DDB13D8447400CC5D76 /* TextInspector.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7867,7 +7908,6 @@
 				27EF1BD00DC1F9BF00976C66 /* SVSiteOutlineViewController.m in Sources */,
 				2730D66E0DE18ACA004858F5 /* SVTemplateParser.m in Sources */,
 				2799832D0DF01BE8003C84B9 /* KTDesignPlaceholder.m in Sources */,
-				2765061F0EAE417200461A0E /* NSDocument+KTExtensions.m in Sources */,
 				CE01A7280EAFD63600BDF264 /* CIImage+Karelia.m in Sources */,
 				CE01A72A0EAFD63600BDF264 /* KSAbstractBugReporter.m in Sources */,
 				CE01A72C0EAFD63600BDF264 /* KSAlert.m in Sources */,
@@ -8435,6 +8475,11 @@
 			isa = PBXTargetDependency;
 			target = 3CE2B2B70D7F1DD900E2711E /* UpdateShared */;
 			targetProxy = 3CE2B2C10D7F1E8A00E2711E /* PBXContainerItemProxy */;
+		};
+		3CF4877413CF93CA00FF4387 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GooglePlusOneElement;
+			targetProxy = 3CF4877313CF93CA00FF4387 /* PBXContainerItemProxy */;
 		};
 		3CFCF2F4123EC88F003A635C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
