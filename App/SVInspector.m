@@ -119,6 +119,13 @@
     [_wrapInspector setIcon:[NSImage imageNamed:@"wrap_inspector"]];
     
     
+    // Text
+    _textInspector = [[KSInspectorViewController alloc] initWithNibName:@"TextInspector" bundle:nil];
+    [_textInspector setIdentifier:@"com.karelia.Sandvox.TextInspector"];
+    [_textInspector setTitle:NSLocalizedString(@"Text", @"Text Inspector")];
+    [_textInspector setIcon:[NSImage imageNamed:@"text_inspector"]];
+    
+    
     // Metrics
     _metricsInspector = [[SVMetricsInspector alloc] initWithNibName:@"MetricsInspector" bundle:nil];
     [_metricsInspector setIdentifier:@"com.karelia.Sandvox.MetricsInspector"];
@@ -143,6 +150,7 @@
                        _documentInspector,
                        _pageInspector,
                        _wrapInspector,
+                       _textInspector,
                        _metricsInspector,
                        _linkInspector,
                        _plugInInspector,
