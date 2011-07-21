@@ -209,12 +209,13 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     
     // Hook up new DOM Controllers
-    [[self retain] autorelease];    // replacement is likely to deallocate us
-    [[self parentWebEditorItem] replaceChildWebEditorItem:self withItems:items];
-    for (SVDOMController *aController in items)
+    SVWebEditorViewController *viewController = [self webEditorViewController];
+    [viewController willUpdate];    // wrap the replacement like this so doesn't think update finished too early
     {
-        [aController didUpdateWithSelector:_cmd];
+        [[self retain] autorelease];    // replacement is likely to deallocate us
+        [[self parentWebEditorItem] replaceChildWebEditorItem:self withItems:items];
     }
+    [viewController didUpdate];
 }
 
 + (DOMHTMLHeadElement *)headOfDocument:(DOMDocument *)document;
