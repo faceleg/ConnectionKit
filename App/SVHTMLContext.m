@@ -1206,29 +1206,22 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     OBPRECONDITION(uploadPath);
     
     
-    if (![self isForPublishing])
+    // CSS must be handled specially
+    if ([uploadPath isEqualToString:SVDestinationMainCSS])
     {
-        // CSS must be handled specially
-        if ([uploadPath isEqualToString:SVDestinationMainCSS])
+        NSString *css = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        if (css)
         {
-            NSString *css = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            if (css)
-            {
-                [self addCSSString:css];
-                [css release];
-            }
+            [self addCSSString:css];
+            [css release];
+            
+            return [self mainCSSURL];
         }
-        
         
         return nil;
     }
     
-    
     // Handle constants to figure real upload path
-    if ([uploadPath isEqualToString:SVDestinationMainCSS])
-    {
-        return [self mainCSSURL];
-    }
     else if ([uploadPath hasPrefix:SVDestinationResourcesDirectory]) // not exhaustive check, but good first pass
     {
         NSString *resourcesPath = [[NSUserDefaults standardUserDefaults] stringForKey:@"DefaultResourcesPath"];
