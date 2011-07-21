@@ -132,14 +132,13 @@ static void * sOperationObservation = &sOperationObservation;
     {
         // Convert to data
         NSImage *image = [_operation result];
-        NSString *MIMEType = [KSWORKSPACE ks_MIMETypeForType:(NSString *)kUTTypePNG];
-        NSData *data = [image representationForMIMEType:MIMEType];
+        NSData *data = [image PNGRepresentation];
         
         
         // Generate Response
         NSURLResponse *response = [[NSURLResponse alloc]
                                    initWithURL:[[self request] URL]
-                                   MIMEType:MIMEType
+                                   MIMEType:[KSWORKSPACE ks_MIMETypeForType:(NSString *)kUTTypePNG]
                                    expectedContentLength:[data length]
                                    textEncodingName:nil];
         
