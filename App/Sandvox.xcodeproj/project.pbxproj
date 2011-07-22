@@ -51,17 +51,6 @@
 			name = UpdateKSFileUtilities;
 			productName = UpdateKSFileUtilities;
 		};
-		3C3003561313005D0022E49A /* UpdateKSPropertyListEncoder */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 3C30035D1313009D0022E49A /* Build configuration list for PBXAggregateTarget "UpdateKSPropertyListEncoder" */;
-			buildPhases = (
-				3C3003551313005D0022E49A /* ShellScript */,
-			);
-			dependencies = (
-			);
-			name = UpdateKSPropertyListEncoder;
-			productName = KSPropertyListEncoder;
-		};
 		3C30036B131300DF0022E49A /* UpdateKSSelectionBorder */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 3C300374131301510022E49A /* Build configuration list for PBXAggregateTarget "UpdateKSSelectionBorder" */;
@@ -1536,13 +1525,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 3C3003161313001B0022E49A;
 			remoteInfo = UpdateKSFileUtilities;
-		};
-		3C3003701313011A0022E49A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3C3003561313005D0022E49A;
-			remoteInfo = UpdateKSPropertyListEncoder;
 		};
 		3C3003721313011D0022E49A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -6530,7 +6512,6 @@
 				3CBC655A11EFD5E500716937 /* PBXTargetDependency */,
 				3C30036F131301160022E49A /* PBXTargetDependency */,
 				3CBC727711F0C5E000716937 /* PBXTargetDependency */,
-				3C3003711313011A0022E49A /* PBXTargetDependency */,
 				3C3003731313011D0022E49A /* PBXTargetDependency */,
 				3C3ED2A8120895C70080EB6E /* PBXTargetDependency */,
 				2743ED3F13BBAF66009EA6D3 /* PBXTargetDependency */,
@@ -6745,7 +6726,6 @@
 				3CBC651B11EFD04800716937 /* UpdateKSExtensibleManagedObject */,
 				3C3003161313001B0022E49A /* UpdateKSFileUtilities */,
 				3CBC727311F0C59E00716937 /* UpdateKSHTMLWriter */,
-				3C3003561313005D0022E49A /* UpdateKSPropertyListEncoder */,
 				3C30036B131300DF0022E49A /* UpdateKSSelectionBorder */,
 				3C3ED287120894800080EB6E /* UpdateKSThreadProxy */,
 				3C3ED29D120895580080EB6E /* UpdateYRKSpinningProgressIndicator */,
@@ -7331,20 +7311,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "#!/bin/bash\n\n###\n### PULL KSFileUtilities FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../KSFileUtilities\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\ncd ${REPOSITORY_PATH}\n${GIT_PATH} checkout ${KSFILEUTILS_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSFileUtilities from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSFILEUTILS_COMMIT}\n\techo \"... finished fetching KSFileUtilities\"\nfi\n\npopd\n\nexit 0\n\n";
-			showEnvVarsInLog = 0;
-		};
-		3C3003551313005D0022E49A /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### PULL KSPropertyListEncoder FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../KSPropertyListEncoder\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"pulling KSPropertyListEncoder from GitHub ...\"\ncd ${REPOSITORY_PATH}\n${GIT_PATH} pull\necho \"... finished pulling KSPropertyListEncoder\"\n\npopd\n\nexit 0\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C30036A131300DF0022E49A /* ShellScript */ = {
@@ -8308,11 +8274,6 @@
 			isa = PBXTargetDependency;
 			target = 3C3003161313001B0022E49A /* UpdateKSFileUtilities */;
 			targetProxy = 3C30036E131301160022E49A /* PBXContainerItemProxy */;
-		};
-		3C3003711313011A0022E49A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3C3003561313005D0022E49A /* UpdateKSPropertyListEncoder */;
-			targetProxy = 3C3003701313011A0022E49A /* PBXContainerItemProxy */;
 		};
 		3C3003731313011D0022E49A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -9482,21 +9443,6 @@
 			};
 			name = Release;
 		};
-		3C3003571313005D0022E49A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = UpdateKSPropertyListEncoder;
-			};
-			name = Debug;
-		};
-		3C3003581313005D0022E49A /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEPLOYMENT_POSTPROCESSING = YES;
-				PRODUCT_NAME = UpdateKSPropertyListEncoder;
-			};
-			name = Release;
-		};
 		3C30036C131300E00022E49A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
@@ -9925,15 +9871,6 @@
 			buildConfigurations = (
 				3C3003491313001C0022E49A /* Debug */,
 				3C30034A1313001C0022E49A /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		3C30035D1313009D0022E49A /* Build configuration list for PBXAggregateTarget "UpdateKSPropertyListEncoder" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3C3003571313005D0022E49A /* Debug */,
-				3C3003581313005D0022E49A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
