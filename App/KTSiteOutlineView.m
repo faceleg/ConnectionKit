@@ -139,12 +139,18 @@ NSString *kKTSelectedObjectsClassNameKey = @"KTSelectedObjectsClassName";
 
 - (NSRect)frameOfOutlineCellAtRow:(NSInteger)row
 {
-    // Root page doesn't want disclosure triangle
-    // Everything else needs to move to the left to match that
+    // Root page doesn't want disclosure triangle…
     if (row > 0)
     {
         NSRect result = [super frameOfOutlineCellAtRow:row];
-        result.origin.x -= [self indentationPerLevel];
+        NSRect cellFrame = [self frameOfCellAtColumn:0 row:row];
+        
+        // …everything else needs to move to the left to match that,
+        // EXCEPT that Lion does this for us, so only apply if needed
+        if (result.origin.x > cellFrame.origin.x)
+        {
+            result.origin.x -= [self indentationPerLevel];
+        }
         return result;
     }
     
