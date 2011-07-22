@@ -33,6 +33,7 @@
 
 #import "NSApplication+Karelia.h"
 #import "NSDate+Karelia.h"
+#import "NSDictionary+Karelia.h"
 #import "NSError+Karelia.h"
 #import "NSFileManager+Karelia.h"
 #import "NSImage+Karelia.h"
@@ -655,6 +656,21 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     {
         // Do the save
         if (result) result = [context save:&error];
+        
+        
+        // If at all possible, overwrite the version hashes so it looks like an original Sandvox 2.0 document
+        NSString *hashesPath = [[NSBundle mainBundle] pathForResource:@"VersionHashes2_0" ofType:@"plist"];
+        NSDictionary *hashes_2_0 = [NSDictionary dictionaryWithContentsOfFile:hashesPath];
+        if (hashes_2_0)
+        {
+            NSDictionary *metadata = [coordinator metadataForPersistentStore:store];
+            
+            metadata = [metadata ks_dictionaryBySettingObject:hashes_2_0 forKey:NSStoreModelVersionHashesKey];
+            
+            [NSPersistentStoreCoordinator setMetadata:metadata forPersistentStoreOfType:NSBinaryStoreType URL:URL error:NULL];
+        }
+        
+        
     }
     
     
@@ -913,6 +929,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         
         //  kKTMetadataAppLastSavedVersionKey (CFBundleVersion of running app)
         [metadata setObject:[NSApplication buildVersion] forKey:kKTMetadataAppLastSavedVersionKey];
+
         
         // replace the metadata in the store with our updates
         // NB: changes to metadata through this method are not pushed to disk until the document is saved

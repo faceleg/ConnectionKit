@@ -291,6 +291,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		2701222713DA083B006CEE92 /* VersionHashes2_0.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2701222613DA083B006CEE92 /* VersionHashes2_0.plist */; };
 		270172B611CFB566001512F6 /* SVProxyHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 270172B411CFB566001512F6 /* SVProxyHTMLContext.h */; };
 		270172B711CFB566001512F6 /* SVProxyHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 270172B511CFB566001512F6 /* SVProxyHTMLContext.m */; };
 		270172F311CFBEF3001512F6 /* KSStringXMLEntityEscaping.h in Headers */ = {isa = PBXBuildFile; fileRef = 270172F111CFBEF3001512F6 /* KSStringXMLEntityEscaping.h */; settings = {ATTRIBUTES = (); }; };
@@ -2004,6 +2005,7 @@
 
 /* Begin PBXFileReference section */
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		2701222613DA083B006CEE92 /* VersionHashes2_0.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = VersionHashes2_0.plist; sourceTree = "<group>"; };
 		270172B411CFB566001512F6 /* SVProxyHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProxyHTMLContext.h; sourceTree = "<group>"; };
 		270172B511CFB566001512F6 /* SVProxyHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProxyHTMLContext.m; sourceTree = "<group>"; };
 		270172F111CFBEF3001512F6 /* KSStringXMLEntityEscaping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSStringXMLEntityEscaping.h; sourceTree = "<group>"; };
@@ -3860,6 +3862,7 @@
 		2778929D10CD5F76008AA683 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				2701222613DA083B006CEE92 /* VersionHashes2_0.plist */,
 				27B48D740C3D94AA00F37B9A /* Sandvox.xcdatamodel */,
 				272F1F4F10C2CBE600BBB836 /* SVContentObject.h */,
 				272F1F5010C2CBE600BBB836 /* SVContentObject.m */,
@@ -7253,6 +7256,7 @@
 				CEAD39B11384342400161C8F /* MediaInspector.xib in Resources */,
 				27350A9A1397E9AA00F0DC63 /* TextBoxInspector.xib in Resources */,
 				27C96A1E13B36CDF00EBC76A /* object_blockquote.tiff in Resources */,
+				2701222713DA083B006CEE92 /* VersionHashes2_0.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
