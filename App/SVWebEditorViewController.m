@@ -1316,9 +1316,11 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     // Don't load remote stuff unless requested
     if (![[NSUserDefaults standardUserDefaults] boolForKey:kSVLiveDataFeedsKey])
     {
-        BOOL local = ([[request URL] isFileURL] ||
-                      [[[request URL] scheme] isEqualToString:KTImageScalingURLProtocolScheme] ||
-                      [[[request URL] scheme] isEqualToString:@"x-imstatusimage"]);
+        NSString *scheme = [[request URL] scheme];
+        BOOL local = ([scheme isEqualToString:NSURLFileScheme] ||
+                      [scheme isEqualToString:KTImageScalingURLProtocolScheme] ||
+                      [scheme isEqualToString:@"x-image-replacement"] ||
+                      [scheme isEqualToString:@"x-imstatusimage"]);
         if (!local)
         {
             NSMutableURLRequest *result = [[request mutableCopy] autorelease];
