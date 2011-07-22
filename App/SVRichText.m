@@ -84,7 +84,7 @@
         
         if (range.length)
         {
-            if (range.location >= [result length])
+            if (range.location < [result length])
             {
                 if ((range.location + range.length) > [result length])
                 {
