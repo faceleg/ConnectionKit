@@ -140,7 +140,7 @@ NSString *kKTSelectedObjectsClassNameKey = @"KTSelectedObjectsClassName";
 - (NSRect)frameOfOutlineCellAtRow:(NSInteger)row
 {
     // Root page doesn't want disclosure triangle
-    // Everything else needs to move to the lef to match that
+    // Everything else needs to move to the left to match that
     if (row > 0)
     {
         NSRect result = [super frameOfOutlineCellAtRow:row];
