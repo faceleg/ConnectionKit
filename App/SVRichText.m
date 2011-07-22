@@ -89,7 +89,7 @@
                 if ((range.location + range.length) > [result length])
                 {
                     range.length = [result length] - range.location;
-                    NSLog(@"Reigned in attachment that exceeded HTML: %@ %@", anAttachment, [anAttachment graphic]);
+                    NSLog(@"Reigned in attachment that exceeded HTML: %@ %@ %@", anAttachment, [anAttachment graphic], [result string]);
                 }
                 
                 [result addAttribute:@"SVAttachment"
@@ -98,12 +98,12 @@
             }
             else
             {
-                NSLog(@"Attachment past end of HTML: %@ %@", anAttachment, [anAttachment graphic]);
+                NSLog(@"Attachment past end of HTML: %@ %@ %@", anAttachment, [anAttachment graphic], [result string]);
             }
         }
         else
         {
-            NSLog(@"Zero length attachment: %@ %@", anAttachment, [anAttachment graphic]);
+            NSLog(@"Zero length attachment: %@ %@ %@", anAttachment, [anAttachment graphic], [result string]);
         }
         
         
