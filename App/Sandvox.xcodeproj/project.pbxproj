@@ -3238,7 +3238,7 @@
 		CEB53A810899A9AD006B0019 /* KTDesign.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDesign.m; sourceTree = "<group>"; };
 		CEB721BB108FCEA500511E74 /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = /System/Library/Frameworks/QuickLook.framework; sourceTree = "<absolute>"; };
 		CEBEB32C10AA7B07006E7D8A /* iMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iMedia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CEC0F93D10852CED002CE02E /* iMedia.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = iMedia.xcodeproj; path = ../../imedia/iMedia.xcodeproj; sourceTree = SOURCE_ROOT; };
+		CEC0F93D10852CED002CE02E /* iMedia.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = iMedia.xcodeproj; path = ../Code/iMedia/iMedia.xcodeproj; sourceTree = "<group>"; };
 		CEC4C55510CEED7E00AEE22D /* SVDesignChooserImageBrowserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDesignChooserImageBrowserView.h; sourceTree = "<group>"; };
 		CEC4C55610CEED7E00AEE22D /* SVDesignChooserImageBrowserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDesignChooserImageBrowserView.m; sourceTree = "<group>"; };
 		CEC4C56210CEEFD200AEE22D /* DumpedImageKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DumpedImageKit.h; sourceTree = "<group>"; };
