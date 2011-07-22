@@ -84,9 +84,16 @@
         
         if (range.length)
         {
-            [result addAttribute:@"SVAttachment"
-                           value:anAttachment
-                           range:range];
+            if (range.location >= [result length])
+            {
+                [result addAttribute:@"SVAttachment"
+                               value:anAttachment
+                               range:range];
+            }
+            else
+            {
+                NSLog(@"Attachment past end of HTML: %@ %@", anAttachment, [anAttachment graphic]);
+            }
         }
         else
         {
