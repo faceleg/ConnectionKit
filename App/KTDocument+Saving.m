@@ -918,13 +918,12 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 		NSLog(@"error: unable to %@ %@ exception: %@:%@", NSStringFromSelector(_cmd), [store URL], [e name], [e reason]);
 		if (outError)
 		{
-			*outError = [NSError errorWithDomain:NSCocoaErrorDomain
-											code:NSPersistentStoreOperationError
-										userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
-												  [store URL], NSURLErrorKey,
-												  [e name], @"name",
-												  [e reason], NSLocalizedDescriptionKey,
-												  nil]];
+            KSMutableError *error = [KSMutableError errorWithDomain:NSCocoaErrorDomain
+                                                               code:NSPersistentStoreOperationError
+                                                    persistentStore:store];
+            
+            [error setObject:e forUserInfoKey:@"UnderlyingException"];
+			*outError = error;
 		}
 		result = NO;
 	}
