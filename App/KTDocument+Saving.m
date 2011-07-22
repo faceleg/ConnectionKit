@@ -919,7 +919,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 		if (outError)
 		{
 			*outError = [NSError errorWithDomain:NSCocoaErrorDomain
-											code:134070 // NSPersistentStoreOperationError
+											code:NSPersistentStoreOperationError
 										userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
 												  [store URL], NSURLErrorKey,
 												  [e name], @"name",
