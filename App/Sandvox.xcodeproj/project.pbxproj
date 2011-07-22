@@ -534,6 +534,8 @@
 		2782B2DA12367C6E00C5F870 /* SVEnclosure.h in Headers */ = {isa = PBXBuildFile; fileRef = 2782B2D912367C6E00C5F870 /* SVEnclosure.h */; };
 		2782D1D91257483F00B7CF1A /* SVSummaryDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2782D1D71257483F00B7CF1A /* SVSummaryDOMController.h */; };
 		2782D1DA1257483F00B7CF1A /* SVSummaryDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2782D1D81257483F00B7CF1A /* SVSummaryDOMController.m */; };
+		2783A89313DA361900F9A702 /* SVTextInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = 2783A89113DA361900F9A702 /* SVTextInspector.h */; };
+		2783A89413DA361900F9A702 /* SVTextInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 2783A89213DA361900F9A702 /* SVTextInspector.m */; };
 		2785197F104FD34A009C8558 /* KSWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2785197D104FD34A009C8558 /* KSWebViewController.h */; };
 		27851980104FD34A009C8558 /* KSWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2785197E104FD34A009C8558 /* KSWebViewController.m */; };
 		278ACCC8116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 278ACCC6116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.h */; };
@@ -2274,6 +2276,8 @@
 		2782D1D71257483F00B7CF1A /* SVSummaryDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSummaryDOMController.h; sourceTree = "<group>"; };
 		2782D1D81257483F00B7CF1A /* SVSummaryDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSummaryDOMController.m; sourceTree = "<group>"; };
 		27836C640CAB092E0072CC52 /* Design of WebView loading.graffle */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "Design of WebView loading.graffle"; sourceTree = "<group>"; };
+		2783A89113DA361900F9A702 /* SVTextInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVTextInspector.h; sourceTree = "<group>"; };
+		2783A89213DA361900F9A702 /* SVTextInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVTextInspector.m; sourceTree = "<group>"; };
 		2785197D104FD34A009C8558 /* KSWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSWebViewController.h; sourceTree = "<group>"; };
 		2785197E104FD34A009C8558 /* KSWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSWebViewController.m; sourceTree = "<group>"; };
 		2786BEE40CAD24980086F9E0 /* KTMediaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaManager.h; sourceTree = "<group>"; };
@@ -3832,6 +3836,8 @@
 			isa = PBXGroup;
 			children = (
 				275B0DDA13D8447400CC5D76 /* TextInspector.xib */,
+				2783A89113DA361900F9A702 /* SVTextInspector.h */,
+				2783A89213DA361900F9A702 /* SVTextInspector.m */,
 			);
 			name = "Text Inspector";
 			sourceTree = "<group>";
@@ -6492,6 +6498,7 @@
 				2743F0C513BC755A009EA6D3 /* SVImageRecipe.h in Headers */,
 				27F503E813BF3E1300F0FFD7 /* KSPerformOnThreadOperation.h in Headers */,
 				276BC94713C34DDC00EB2798 /* SVWorkspaceIconProtocol.h in Headers */,
+				2783A89313DA361900F9A702 /* SVTextInspector.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8244,6 +8251,7 @@
 				2743F0C613BC755A009EA6D3 /* SVImageRecipe.m in Sources */,
 				27F503E913BF3E1300F0FFD7 /* KSPerformOnThreadOperation.m in Sources */,
 				276BC94813C34DDC00EB2798 /* SVWorkspaceIconProtocol.m in Sources */,
+				2783A89413DA361900F9A702 /* SVTextInspector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

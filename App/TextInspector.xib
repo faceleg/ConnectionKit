@@ -30,7 +30,7 @@
 		<object class="NSMutableArray" key="IBDocument.RootObjects" id="1000">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSCustomObject" id="1001">
-				<string key="NSClassName">KSInspectorViewController</string>
+				<string key="NSClassName">SVTextInspector</string>
 			</object>
 			<object class="NSCustomObject" id="1003">
 				<string key="NSClassName">FirstResponder</string>
@@ -43,13 +43,13 @@
 				<int key="NSvFlags">268</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<object class="NSSegmentedControl" id="400280539">
+					<object class="NSSegmentedControl" id="753415796">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{55, 219}, {77, 24}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
-						<object class="NSSegmentedCell" key="NSCell" id="645273302">
+						<object class="NSSegmentedCell" key="NSCell" id="928240122">
 							<int key="NSCellFlags">-2080244224</int>
 							<int key="NSCellFlags2">0</int>
 							<object class="NSFont" key="NSSupport">
@@ -57,7 +57,7 @@
 								<double key="NSSize">13</double>
 								<int key="NSfFlags">1044</int>
 							</object>
-							<reference key="NSControlView" ref="400280539"/>
+							<reference key="NSControlView" ref="753415796"/>
 							<object class="NSMutableArray" key="NSSegmentImages">
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSSegmentItem">
@@ -69,24 +69,26 @@
 								<object class="NSSegmentItem">
 									<double key="NSSegmentItemWidth">16</double>
 									<string key="NSSegmentItemLabel">C</string>
-									<int key="NSSegmentItemTag">1</int>
+									<int key="NSSegmentItemTag">2</int>
 									<int key="NSSegmentItemImageScaling">0</int>
 								</object>
 								<object class="NSSegmentItem">
 									<double key="NSSegmentItemWidth">16</double>
 									<string key="NSSegmentItemLabel">R</string>
+									<int key="NSSegmentItemTag">1</int>
 									<int key="NSSegmentItemImageScaling">0</int>
 								</object>
 								<object class="NSSegmentItem">
 									<double key="NSSegmentItemWidth">18</double>
 									<string key="NSSegmentItemLabel">J</string>
+									<int key="NSSegmentItemTag">3</int>
 									<int key="NSSegmentItemImageScaling">0</int>
 								</object>
 							</object>
 							<int key="NSSegmentStyle">1</int>
 						</object>
 					</object>
-					<object class="NSColorWell" id="550464403">
+					<object class="NSColorWell" id="605638777">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
 						<object class="NSMutableSet" key="NSDragTypes">
@@ -105,13 +107,13 @@
 							<bytes key="NSRGB">MC4wNTgxMzA0OTg5OCAwLjA1NTU0MTg5OTA2IDEAA</bytes>
 						</object>
 					</object>
-					<object class="NSTextField" id="669619245">
+					<object class="NSTextField" id="508202826">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{7, 250}, {109, 14}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
-						<object class="NSTextFieldCell" key="NSCell" id="649482858">
+						<object class="NSTextFieldCell" key="NSCell" id="671134380">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">272761856</int>
 							<string key="NSContents">Color &amp; Alignment</string>
@@ -120,7 +122,7 @@
 								<double key="NSSize">11</double>
 								<int key="NSfFlags">16</int>
 							</object>
-							<reference key="NSControlView" ref="669619245"/>
+							<reference key="NSControlView" ref="508202826"/>
 							<object class="NSColor" key="NSBackgroundColor">
 								<int key="NSColorSpace">6</int>
 								<string key="NSCatalogName">System</string>
@@ -158,6 +160,14 @@
 					</object>
 					<int key="connectionID">2</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">changeAlignment:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="753415796"/>
+					</object>
+					<int key="connectionID">8</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -191,44 +201,44 @@
 						<reference key="object" ref="1005"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="669619245"/>
-							<reference ref="550464403"/>
-							<reference ref="400280539"/>
+							<reference ref="508202826"/>
+							<reference ref="605638777"/>
+							<reference ref="753415796"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">3</int>
-						<reference key="object" ref="669619245"/>
+						<reference key="object" ref="508202826"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="649482858"/>
+							<reference ref="671134380"/>
 						</object>
 						<reference key="parent" ref="1005"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">4</int>
-						<reference key="object" ref="649482858"/>
-						<reference key="parent" ref="669619245"/>
+						<reference key="object" ref="671134380"/>
+						<reference key="parent" ref="508202826"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">5</int>
-						<reference key="object" ref="550464403"/>
+						<reference key="object" ref="605638777"/>
 						<reference key="parent" ref="1005"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">6</int>
-						<reference key="object" ref="400280539"/>
+						<reference key="object" ref="753415796"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="645273302"/>
+							<reference ref="928240122"/>
 						</object>
 						<reference key="parent" ref="1005"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">7</int>
-						<reference key="object" ref="645273302"/>
-						<reference key="parent" ref="400280539"/>
+						<reference key="object" ref="928240122"/>
+						<reference key="parent" ref="753415796"/>
 					</object>
 				</object>
 			</object>
@@ -274,7 +284,7 @@
 						<bytes key="NSTransformStruct">P4AAAL+AAABCdAAAw3EAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<integer value="3"/>
+					<integer value="1"/>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="unlocalizedProperties">
@@ -293,7 +303,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">7</int>
+			<int key="maxID">8</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -326,7 +336,7 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSCell</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="634078427">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="391794078">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">../../Shared/AppKit/NSView+Karelia.h</string>
 					</object>
@@ -516,7 +526,7 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSView</string>
-					<reference key="sourceIdentifier" ref="634078427"/>
+					<reference key="sourceIdentifier" ref="391794078"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSView</string>
@@ -568,6 +578,25 @@
 						</object>
 					</object>
 					<reference key="sourceIdentifier" ref="766092290"/>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">SVTextInspector</string>
+					<string key="superclassName">KSInspectorViewController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">changeAlignment:</string>
+						<string key="NS.object.0">NSSegmentedControl</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">changeAlignment:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">changeAlignment:</string>
+							<string key="candidateClassName">NSSegmentedControl</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">SVTextInspector.h</string>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableArray" key="referencedPartialClassDescriptionsV3.2+">
@@ -664,7 +693,7 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">NSControl</string>
 					<string key="superclassName">NSView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="788506484">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="850379323">
 						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">AppKit.framework/Headers/NSControl.h</string>
 					</object>
@@ -727,7 +756,7 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
-					<reference key="sourceIdentifier" ref="788506484"/>
+					<reference key="sourceIdentifier" ref="850379323"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
