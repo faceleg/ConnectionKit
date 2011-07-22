@@ -82,10 +82,16 @@
         }
         
         
-        
-        [result addAttribute:@"SVAttachment"
-                       value:anAttachment
-                       range:range];
+        if (range.length)
+        {
+            [result addAttribute:@"SVAttachment"
+                           value:anAttachment
+                           range:range];
+        }
+        else
+        {
+            NSLog(@"Zero length attachment: %@ %@", anAttachment, [anAttachment graphic]);
+        }
         
         
         // Imported text doesn't use NSAttachmentCharacter, so we have to sub it in
