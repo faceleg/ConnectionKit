@@ -86,6 +86,12 @@
         {
             if (range.location >= [result length])
             {
+                if ((range.location + range.length) > [result length])
+                {
+                    range.length = [result length] - range.location;
+                    NSLog(@"Reigned in attachment that exceeded HTML: %@ %@", anAttachment, [anAttachment graphic]);
+                }
+                
                 [result addAttribute:@"SVAttachment"
                                value:anAttachment
                                range:range];
