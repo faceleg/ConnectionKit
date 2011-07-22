@@ -795,74 +795,76 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     OBPRECONDITION(store);
 	//LOGMETHOD;
 	
-	BOOL result = NO;
+	BOOL result = YES;
 	NSManagedObjectContext *context = [self managedObjectContext];
 	NSPersistentStoreCoordinator *coordinator = [context persistentStoreCoordinator];
     
-	@try
+    NSMutableDictionary *metadata = [NSMutableDictionary dictionary];
+    
+    // set ALL of our metadata for this store
+    
+    //  kMDItemAuthors
+    NSString *author = [[[[self site] rootPage] master] valueForKey:@"author"];
+    if ( (nil == author) || [author isEqualToString:@""] )
     {
-        NSMutableDictionary *metadata = [NSMutableDictionary dictionary];
-        
-        // set ALL of our metadata for this store
-        
-        //  kMDItemAuthors
-        NSString *author = [[[[self site] rootPage] master] valueForKey:@"author"];
-        if ( (nil == author) || [author isEqualToString:@""] )
-        {
-            [metadata removeObjectForKey:(NSString *)kMDItemAuthors];
-        }
-        else
-        {
-            [metadata setObject:[NSArray arrayWithObject:author] forKey:(NSString *)kMDItemAuthors];
-        }
-        
-        // kMDItemLanguages
-        NSString *language = [[[[self site] rootPage] master] valueForKey:@"language"];
-        if ( (nil == language) || [language isEqualToString:@""] )
-        {
-            [metadata removeObjectForKey:(NSString *)kMDItemLanguages];
-        }
-        else
-        {
-            [metadata setObject:[NSArray arrayWithObject:language] forKey:(NSString *)kMDItemLanguages];
-        }
-        
-        // kMDItemHeadline  -- tagline/subtitle
-        NSString *subtitle = [[[[[self site] rootPage] master] siteSubtitle] text];
-        if ( (nil == subtitle) || [subtitle isEqualToString:@""] )
-        {
-            [metadata removeObjectForKey:(NSString *)kMDItemHeadline];
-        }
-        else
-        {
-            [metadata setObject:subtitle forKey:(NSString *)kMDItemHeadline];
-        }
-        
-        //  kMDItemCreator (Sandvox is the creator of this site document)
-        [metadata setObject:[NSApplication applicationName] forKey:(NSString *)kMDItemCreator];
-        
-        // kMDItemKind
-        [metadata setObject:NSLocalizedString(@"Sandvox Site", "kind of document") forKey:(NSString *)kMDItemKind];
-        
-        /// we're going to fault every page, use a local pool to release them quickly
-        NSAutoreleasePool *localPool = [[NSAutoreleasePool alloc] init];
-        
-        //  kMDItemNumberOfPages
-        NSArray *pages = [[self managedObjectContext] fetchAllObjectsForEntityForName:@"Page" error:NULL];
-        unsigned int pageCount = 0;
-        if ( nil != pages )
-        {
-            pageCount = [pages count]; // according to mmalc, this is the only way to get this kind of count
-        }
-        [metadata setObject:[NSNumber numberWithUnsignedInt:pageCount] forKey:(NSString *)kMDItemNumberOfPages];
-        
-        
-        
+        [metadata removeObjectForKey:(NSString *)kMDItemAuthors];
+    }
+    else
+    {
+        [metadata setObject:[NSArray arrayWithObject:author] forKey:(NSString *)kMDItemAuthors];
+    }
+    
+    // kMDItemLanguages
+    NSString *language = [[[[self site] rootPage] master] valueForKey:@"language"];
+    if ( (nil == language) || [language isEqualToString:@""] )
+    {
+        [metadata removeObjectForKey:(NSString *)kMDItemLanguages];
+    }
+    else
+    {
+        [metadata setObject:[NSArray arrayWithObject:language] forKey:(NSString *)kMDItemLanguages];
+    }
+    
+    // kMDItemHeadline  -- tagline/subtitle
+    NSString *subtitle = [[[[[self site] rootPage] master] siteSubtitle] text];
+    if ( (nil == subtitle) || [subtitle isEqualToString:@""] )
+    {
+        [metadata removeObjectForKey:(NSString *)kMDItemHeadline];
+    }
+    else
+    {
+        [metadata setObject:subtitle forKey:(NSString *)kMDItemHeadline];
+    }
+    
+    //  kMDItemCreator (Sandvox is the creator of this site document)
+    [metadata setObject:[NSApplication applicationName] forKey:(NSString *)kMDItemCreator];
+    
+    // kMDItemKind
+    [metadata setObject:NSLocalizedString(@"Sandvox Site", "kind of document") forKey:(NSString *)kMDItemKind];
+    
+    /// we're going to fault every page, use a local pool to release them quickly
+    NSAutoreleasePool *localPool = [[NSAutoreleasePool alloc] init];
+    
+    //  kMDItemNumberOfPages
+    NSArray *pages = [[self managedObjectContext] fetchAllObjectsForEntityForName:@"Page" error:NULL];
+    unsigned int pageCount = 0;
+    if ( nil != pages )
+    {
+        pageCount = [pages count]; // according to mmalc, this is the only way to get this kind of count
+    }
+    [metadata setObject:[NSNumber numberWithUnsignedInt:pageCount] forKey:(NSString *)kMDItemNumberOfPages];
+    
+    
+    
+    @try
+    {
         //  kMDItemTextContent (free-text account of content)
+        //  We've found this to be throwing on Lion for some people. Propogate the exception, but save rest of metadata first. #134115
         [metadata setObject:[self documentTextContent]
                      forKey:(NSString *)kMDItemTextContent];
-        
-        
+    }
+    @finally
+    {
         //  kMDItemKeywords (keywords of all pages)
         NSMutableSet *keySet = [NSMutableSet set];
         for (id loopItem in pages)
@@ -910,23 +912,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         // replace the metadata in the store with our updates
         // NB: changes to metadata through this method are not pushed to disk until the document is saved
         [coordinator setMetadata:metadata forPersistentStore:store];
-        
-        result = YES;
     }
-	@catch (NSException * e)
-	{
-		NSLog(@"error: unable to %@ %@ exception: %@:%@", NSStringFromSelector(_cmd), [store URL], [e name], [e reason]);
-		if (outError)
-		{
-            KSMutableError *error = [KSMutableError errorWithDomain:NSCocoaErrorDomain
-                                                               code:NSPersistentStoreOperationError
-                                                    persistentStore:store];
-            
-            [error setObject:e forUserInfoKey:@"UnderlyingException"];
-			*outError = error;
-		}
-		result = NO;
-	}
 	
 	return result;
 }
