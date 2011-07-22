@@ -643,14 +643,19 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     
     // Now we're sure store is available, can give it some metadata.
-    if (result && saveOp != NSAutosaveOperation)
+    // If this fails, it's not critical, so carry on, but do report exceptions after the save. #134115
+    @try
     {
-        result = [self setMetadataForPersistentStore:store error:&error];
+        if (result && saveOp != NSAutosaveOperation)
+        {
+            [self setMetadataForPersistentStore:store error:&error];
+        }
     }
-    
-    
-    // Do the save
-    if (result) result = [context save:&error];
+    @finally
+    {
+        // Do the save
+        if (result) result = [context save:&error];
+    }
     
     
     // Restore persistent store URL after Save To-type operations. Even if save failed (just to be on the safe side)
