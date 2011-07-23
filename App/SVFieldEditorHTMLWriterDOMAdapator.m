@@ -152,6 +152,11 @@
             return [self handleInvalidDOMElement:element];
         }
         
+        
+        // Build attributes earlier than superclass would so they get validated. Don't worry, won't get added twice as we check for that in -startElement:withDOMElement:
+        [self buildAttributesForDOMElement:element element:[tagName lowercaseString]];
+        
+        
         // Remove attribute-less spans since they're basically worthless
         if ([tagName isEqualToString:@"SPAN"] && [[element attributes] length] == 0)
         {
@@ -231,45 +236,6 @@
     return result;
 }
 
-- (void)buildAttributesForDOMElement:(DOMElement *)element element:(NSString *)elementName
-{
-    // Write attributes
-    if ([element hasAttributes]) // -[DOMElement attributes] is slow as it has to allocate an object. #78691
-    {
-        DOMNamedNodeMap *attributes = [element attributes];
-        NSUInteger index;
-        for (index = 0; index < [attributes length]; index++)
-        {
-            // Check each attribute should be written
-            DOMAttr *anAttribute = (DOMAttr *)[attributes item:index];
-            NSString *attributeName = [anAttribute name];
-            NSString *attributeValue = [anAttribute value];
-            
-            if (attributeValue = [self validateAttribute:attributeName value:attributeValue ofElement:elementName])
-            {
-                // Validate individual styling
-                if ([attributeName isEqualToString:@"style"])
-                {
-                    DOMCSSStyleDeclaration *style = [element style];
-                    [self removeUnsupportedCustomStyling:style fromElement:elementName];
-                    
-                    // Have to write it specially as changes don't show up in [anAttribute value] sadly
-                    [[self XMLWriter] pushAttribute:@"style" value:[style cssText]];
-                }
-                else
-                {
-                    [[self XMLWriter] pushAttribute:attributeName value:attributeValue];
-                }
-            }
-            else
-            {
-                [attributes removeNamedItem:attributeName];
-                index--;
-            }
-        }
-    }
-}
-
 // Elements used for styling are worthless if they have no content of their own. We treat them specially by buffering internally until some actual content gets written. If there is none, go ahead and delete the element instead. Shouldn't need to call this directly; -writeDOMElement: does so internally.
 - (void)startElement:(NSString *)elementName withDOMElement:(DOMElement *)element;    // open the tag and write attributes
 {
@@ -283,7 +249,11 @@
     }
     
     
-    [self buildAttributesForDOMElement:element element:elementName];
+    // If attributes haven't already been built, now is the time to do so
+    if (![[[[self XMLWriter] currentElementInfo] attributesAsDictionary] count])
+    {
+        [self buildAttributesForDOMElement:element element:elementName];
+    }
     
     
     // Open tag. Make it inline so we match DOM exactly. (i.e text nodes take care of whitespace for us)
@@ -562,7 +532,7 @@
     return result;
 }
 
-#pragma mark Attribute Whitelist
+#pragma mark Attributes
 
 - (NSString *)validateAttribute:(NSString *)attributeName
                           value:(NSString *)value
@@ -615,6 +585,45 @@
     }
     
     return value;
+}
+
+- (void)buildAttributesForDOMElement:(DOMElement *)element element:(NSString *)elementName
+{
+    // Write attributes
+    if ([element hasAttributes]) // -[DOMElement attributes] is slow as it has to allocate an object. #78691
+    {
+        DOMNamedNodeMap *attributes = [element attributes];
+        NSUInteger index;
+        for (index = 0; index < [attributes length]; index++)
+        {
+            // Check each attribute should be written
+            DOMAttr *anAttribute = (DOMAttr *)[attributes item:index];
+            NSString *attributeName = [anAttribute name];
+            NSString *attributeValue = [anAttribute value];
+            
+            if (attributeValue = [self validateAttribute:attributeName value:attributeValue ofElement:elementName])
+            {
+                // Validate individual styling
+                if ([attributeName isEqualToString:@"style"])
+                {
+                    DOMCSSStyleDeclaration *style = [element style];
+                    [self removeUnsupportedCustomStyling:style fromElement:elementName];
+                    
+                    // Have to write it specially as changes don't show up in [anAttribute value] sadly
+                    [[self XMLWriter] pushAttribute:@"style" value:[style cssText]];
+                }
+                else
+                {
+                    [[self XMLWriter] pushAttribute:attributeName value:attributeValue];
+                }
+            }
+            else
+            {
+                [attributes removeNamedItem:attributeName];
+                index--;
+            }
+        }
+    }
 }
 
 #pragma mark Styling Whitelist
