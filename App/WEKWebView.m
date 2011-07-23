@@ -81,6 +81,42 @@
     }
 }
 
+#pragma mark Lists
+
+- (IBAction)insertOrderedList:(id)sender;
+{
+    // Ask permission
+    WEKWebEditorView *webEditor = [self webEditor];
+    if (webEditor)
+    {
+        DOMRange *selection = [self selectedDOMRange];
+        if (selection && ![webEditor shouldChangeTextInDOMRange:selection])
+        {
+            NSBeep();
+            return;
+        }
+    }
+    
+    [super insertOrderedList:sender];
+}
+
+- (IBAction)insertUnorderedList:(id)sender;
+{
+    // Ask permission
+    WEKWebEditorView *webEditor = [self webEditor];
+    if (webEditor)
+    {
+        DOMRange *selection = [self selectedDOMRange];
+        if (selection && ![webEditor shouldChangeTextInDOMRange:selection])
+        {
+            NSBeep();
+            return;
+        }
+    }
+    
+    [super insertUnorderedList:sender];
+}
+
 #pragma mark Formatting
 
 - (IBAction)clearStyles:(id)sender
