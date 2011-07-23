@@ -295,12 +295,19 @@
         
         if ([self orderedList])
         {
-            NSBeep();
+            // Fallback to brute force removing each item
+            DOMRange *range = [self selectedDOMRange];
+            NSArray *listItems = [range ks_intersectingElementsWithTagName:@"LI"];
+            
+            for (DOMElement *aListItem in [listItems reverseObjectEnumerator])
+            {
+                [range selectNodeContents:aListItem];
+                [self setSelectedDOMRange:range affinity:[self selectionAffinity]];
+                if ([self unorderedList]) [document execCommand:@"InsertOrderedList"];
+            }
         }
-        else
-        {
-            [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
-        }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
     }
     else if ([self unorderedList])
     {
@@ -309,12 +316,19 @@
         
         if ([self unorderedList])
         {
-            NSBeep();
+            // Fallback to brute force removing each item
+            DOMRange *range = [self selectedDOMRange];
+            NSArray *listItems = [range ks_intersectingElementsWithTagName:@"LI"];
+            
+            for (DOMElement *aListItem in [listItems reverseObjectEnumerator])
+            {
+                [range selectNodeContents:aListItem];
+                [self setSelectedDOMRange:range affinity:[self selectionAffinity]];
+                if ([self unorderedList]) [document execCommand:@"InsertUnorderedList"];
+            }
         }
-        else
-        {
-            [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
-        }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
     }
 }
 
