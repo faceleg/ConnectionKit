@@ -13,6 +13,8 @@
 #import "NSImage+KTExtensions.h"
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
+
+#import "KSError.h"
 #import "KSURLUtilities.h"
 
 
@@ -95,11 +97,15 @@ static void * sOperationObservation = &sOperationObservation;
     
     
     // What to render with?
-    NSURL *compositionURL = [[NSURL alloc] initWithScheme:@"file"
-                                                     host:[URL host]
-                                                     path:[URL path]];
+    NSURL *compositionURL = [URL ks_URLWithScheme:@"file"];
     KTStringRenderer *renderer = [KTStringRenderer rendererWithFile:[compositionURL path]];
-    [compositionURL release];
+    if (!renderer)
+    {
+        NSError *error = [KSError errorWithDomain:NSURLErrorDomain
+                                             code:NSURLErrorResourceUnavailable
+                                              URL:compositionURL];
+        [[self client] URLProtocol:self didFailWithError:error];
+    }
     
     
     // What text etc. to render?
@@ -126,14 +132,13 @@ static void * sOperationObservation = &sOperationObservation;
     {
         // Convert to data
         NSImage *image = [_operation result];
-        NSString *MIMEType = [KSWORKSPACE ks_MIMETypeForType:(NSString *)kUTTypePNG];
-        NSData *data = [image representationForMIMEType:MIMEType];
+        NSData *data = [image PNGRepresentation];
         
         
         // Generate Response
         NSURLResponse *response = [[NSURLResponse alloc]
                                    initWithURL:[[self request] URL]
-                                   MIMEType:MIMEType
+                                   MIMEType:[KSWORKSPACE ks_MIMETypeForType:(NSString *)kUTTypePNG]
                                    expectedContentLength:[data length]
                                    textEncodingName:nil];
         

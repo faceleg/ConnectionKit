@@ -482,6 +482,26 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
                                                                         URL:URL
                                                                     options:nil
                                                                       error:outError];
+    
+    // The failure is likely to be because the model is from Sandvox 2.0, and not our ammeneded 2.1.4 format. If so, force Core Data to open it, but fail as normal otherwise
+    if (!store)
+    {
+        NSDictionary *metadata = [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:NSBinaryStoreType URL:URL error:NULL];
+        id hashes = [metadata objectForKey:NSStoreModelVersionHashesKey];
+        
+        NSString *hashesPath = [[NSBundle mainBundle] pathForResource:@"VersionHashes2_0" ofType:@"plist"];
+        NSDictionary *hashes_2_0 = [NSDictionary dictionaryWithContentsOfFile:hashesPath];
+        
+        if ([hashes_2_0 isEqual:hashes])
+        {
+            store = [storeCoordinator addPersistentStoreWithType:[self persistentStoreTypeForFileType:fileType]
+                                                   configuration:nil
+                                                             URL:URL
+                                                         options:NSDICT(NSBOOL(YES), NSIgnorePersistentStoreVersioningOption)
+                                                           error:outError];
+        }
+    }
+    
     [self setPersistentStore:store];
     
 	return (store != nil);
