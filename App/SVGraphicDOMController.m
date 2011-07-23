@@ -22,6 +22,7 @@
 #import "SVTemplate.h"
 #import "SVTextAttachment.h"
 #import "SVWebEditorHTMLContext.h"
+#import "SVWebEditorViewController.h"
 
 #import "WebEditingKit.h"
 #import "WebViewEditingHelperClasses.h"
