@@ -291,7 +291,13 @@
     if ([self orderedList])
     {
         DOMDocument *document = [[self selectedFrame] DOMDocument];
-        if ([document execCommand:@"InsertOrderedList"])
+        [document execCommand:@"InsertOrderedList"];
+        
+        if ([self orderedList])
+        {
+            NSBeep();
+        }
+        else
         {
             [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
         }
@@ -299,7 +305,13 @@
     else if ([self unorderedList])
     {
         DOMDocument *document = [[self selectedFrame] DOMDocument];
-        if ([document execCommand:@"InsertUnorderedList"])
+        [document execCommand:@"InsertUnorderedList"];
+        
+        if ([self unorderedList])
+        {
+            NSBeep();
+        }
+        else
         {
             [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
         }
