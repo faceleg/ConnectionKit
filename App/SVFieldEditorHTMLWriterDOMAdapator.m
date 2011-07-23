@@ -231,19 +231,8 @@
     return result;
 }
 
-// Elements used for styling are worthless if they have no content of their own. We treat them specially by buffering internally until some actual content gets written. If there is none, go ahead and delete the element instead. Shouldn't need to call this directly; -writeDOMElement: does so internally.
-- (void)startElement:(NSString *)elementName withDOMElement:(DOMElement *)element;    // open the tag and write attributes
+- (void)buildAttributesForDOMElement:(DOMElement *)element element:(NSString *)elementName
 {
-    BOOL isStyling = ![[self class] isElementWithTagNameContent:elementName];
-    if (isStyling)
-    {
-        // ..so push onto the stack, ready to write if requested. But only if it's not to be merged with the previous element
-        [_output cancelFlushOnNextWrite];   // as we're about to write into the buffer
-        [_pendingStartTagDOMElements addObject:element];
-        [_output beginBuffering];
-    }
-    
-    
     // Write attributes
     if ([element hasAttributes]) // -[DOMElement attributes] is slow as it has to allocate an object. #78691
     {
@@ -279,6 +268,22 @@
             }
         }
     }
+}
+
+// Elements used for styling are worthless if they have no content of their own. We treat them specially by buffering internally until some actual content gets written. If there is none, go ahead and delete the element instead. Shouldn't need to call this directly; -writeDOMElement: does so internally.
+- (void)startElement:(NSString *)elementName withDOMElement:(DOMElement *)element;    // open the tag and write attributes
+{
+    BOOL isStyling = ![[self class] isElementWithTagNameContent:elementName];
+    if (isStyling)
+    {
+        // ..so push onto the stack, ready to write if requested. But only if it's not to be merged with the previous element
+        [_output cancelFlushOnNextWrite];   // as we're about to write into the buffer
+        [_pendingStartTagDOMElements addObject:element];
+        [_output beginBuffering];
+    }
+    
+    
+    [self buildAttributesForDOMElement:element element:elementName];
     
     
     // Open tag. Make it inline so we match DOM exactly. (i.e text nodes take care of whitespace for us)
