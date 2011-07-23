@@ -33,4 +33,11 @@
     }
 }
 
+- (void)refresh
+{
+    [super refresh];
+    
+    [oAlignmentSegmentedControl setSelected:NO forSegment:[oAlignmentSegmentedControl selectedSegment]];
+}
+
 @end

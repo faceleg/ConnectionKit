@@ -9,8 +9,9 @@
 #import "KSInspectorViewController.h"
 
 
-@interface SVTextInspector : KSInspectorViewController {
-
+@interface SVTextInspector : KSInspectorViewController
+{
+    IBOutlet NSSegmentedControl *oAlignmentSegmentedControl;
 }
 
 - (IBAction)changeAlignment:(NSSegmentedControl *)sender;
