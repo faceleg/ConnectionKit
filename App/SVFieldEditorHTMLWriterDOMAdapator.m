@@ -591,11 +591,13 @@
         if ([attributeName isEqualToString:@"style"]) value = nil;
     }
     
-    // Dissallow "in" class
+    // Dissallow "in" & "Apple-style-span" classes as are unwanted
     if ([attributeName isEqualToString:@"class"])
     {
         NSMutableArray *components = [[value componentsSeparatedByWhitespace] mutableCopy];
         [components removeObject:@"in"];
+        [components removeObject:@"Apple-style-span"];
+        
         value = [components componentsJoinedByString:@" "];
         [components release];
     }
