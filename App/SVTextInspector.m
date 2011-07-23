@@ -8,6 +8,8 @@
 
 #import "SVTextInspector.h"
 
+#import "WEKWebViewEditing.h"
+
 
 @implementation SVTextInspector
 
@@ -56,7 +58,25 @@
 {
     [super refresh];
     
-    [oAlignmentSegmentedControl setSelected:NO forSegment:[oAlignmentSegmentedControl selectedSegment]];
+    
+    // Try to validate existing alignment as it's likely to remain
+    NSTextAlignment alignment = -1;
+    
+    id textEditor = [NSApp targetForAction:@selector(wek_alignment)];
+    if (textEditor)
+    {
+        [oAlignmentSegmentedControl setEnabled:YES];
+        alignment = [textEditor wek_alignment];
+    }
+    else
+    {
+        [oAlignmentSegmentedControl setEnabled:NO];
+    }
+    
+    if (![oAlignmentSegmentedControl selectSegmentWithTag:alignment])
+    {
+        [oAlignmentSegmentedControl setSelected:NO forSegment:[oAlignmentSegmentedControl selectedSegment]];
+    }
 }
 
 - (void)selectionDidChange:(NSNotification *)notification;

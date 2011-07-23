@@ -32,6 +32,11 @@
 #pragma mark Selection
 @property(nonatomic, assign, setter=wek_setSelection) WEKSelection *wek_selection;
 
+
+#pragma mark Alignment
+- (NSTextAlignment)wek_alignment;
+
+
 @end
 
 
