@@ -3222,7 +3222,7 @@
 		CEB53A810899A9AD006B0019 /* KTDesign.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDesign.m; sourceTree = "<group>"; };
 		CEB721BB108FCEA500511E74 /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = /System/Library/Frameworks/QuickLook.framework; sourceTree = "<absolute>"; };
 		CEBEB32C10AA7B07006E7D8A /* iMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iMedia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CEC0F93D10852CED002CE02E /* iMedia.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = iMedia.xcodeproj; path = ../../imedia/iMedia.xcodeproj; sourceTree = SOURCE_ROOT; };
+		CEC0F93D10852CED002CE02E /* iMedia.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = iMedia.xcodeproj; path = ../Code/iMedia/iMedia.xcodeproj; sourceTree = "<group>"; };
 		CEC4C55510CEED7E00AEE22D /* SVDesignChooserImageBrowserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDesignChooserImageBrowserView.h; sourceTree = "<group>"; };
 		CEC4C55610CEED7E00AEE22D /* SVDesignChooserImageBrowserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDesignChooserImageBrowserView.m; sourceTree = "<group>"; };
 		CEC4C56210CEEFD200AEE22D /* DumpedImageKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DumpedImageKit.h; sourceTree = "<group>"; };
@@ -7423,7 +7423,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### UPDATE IMEDIA_REVISION FOR RELEASE BUILDS\n###\n\nIMEDIA_PATH=${SRCROOT}/../../imedia\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\ncd ${IMEDIA_PATH}\n${GIT_PATH} checkout ${IMEDIA_REVISION}\nif (($? != 0))\nthen\n\techo \"fetching iMedia from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${IMEDIA_REVISION}\n\techo \"... finished fetching iMedia\"\nfi\n\npopd\n\nexit 0\n";
+			shellScript = "#!/bin/bash\n\n###\n### UPDATE IMEDIA_REVISION FOR RELEASE BUILDS\n###\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\ncd ${SRCROOT}/..\n${GIT_PATH} submodule update --init Code/iMedia\n\npopd\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
 		3C7D7D5313B3B01D00B58137 /* Generate CFBundleVersion */ = {
