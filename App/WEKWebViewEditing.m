@@ -236,6 +236,45 @@
     return result;
 }
 
+#pragma mark Lists
+
+- (IBAction)insertOrderedList:(id)sender;
+{
+    id delegate = [self editingDelegate];
+    if ([delegate respondsToSelector:@selector(webView:doCommandBySelector:)])
+    {
+        if ([delegate webView:self doCommandBySelector:_cmd]) return;
+    }
+    
+    DOMDocument *document = [[self selectedFrame] DOMDocument];
+    if ([document execCommand:@"insertOrderedList"])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
+    }
+    else
+    {
+        NSBeep();
+    }
+}
+
+- (IBAction)insertUnorderedList:(id)sender;
+{
+    id delegate = [self editingDelegate];
+    if ([delegate respondsToSelector:@selector(webView:doCommandBySelector:)])
+    {
+        if ([delegate webView:self doCommandBySelector:_cmd]) return;
+    }
+    
+    DOMDocument *document = [[self selectedFrame] DOMDocument];
+    if ([document execCommand:@"insertUnorderedList"])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
+    }
+    else
+    {
+        NSBeep();
+    }}
+
 @end
 
 
