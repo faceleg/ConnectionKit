@@ -161,6 +161,33 @@
     return result;
 }
 
+- (NSURL *)addResourceWithData:(NSData *)data
+                      MIMEType:(NSString *)mimeType
+              textEncodingName:(NSString *)encoding
+                   destination:(NSString *)uploadPath
+                       options:(NSUInteger)options;
+{
+    NSURL *result = [super addResourceWithData:data
+                                      MIMEType:mimeType
+                              textEncodingName:encoding
+                                   destination:uploadPath
+                                       options:options];
+    
+    NSURL *siteURL = [[[_publisher site] hostProperties] siteURL];
+    NSURL *uploadURL = [result ks_URLRelativeToURL:siteURL];
+    
+    // Only publish if figured a decent URL for it
+    if ([uploadURL ks_isSubpathOfURL:siteURL])
+    {
+        NSString *uploadPath = [[_publisher baseRemotePath]
+                                stringByAppendingPathComponent:[uploadURL relativeString]];
+        
+        [_publisher publishData:data toPath:uploadPath];
+    }
+    
+    return result;
+}
+
 - (void)addJavascriptResourceWithTemplateAtURL:(NSURL *)templateURL
                                         object:(id)object;
 {
