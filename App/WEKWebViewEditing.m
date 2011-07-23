@@ -17,18 +17,6 @@
 #pragma mark -
 
 
-@interface DOMDocument (AVAILABLE_WEBKIT_VERSION_3_0_AND_LATER)
-- (BOOL)execCommand:(NSString *)command userInterface:(BOOL)userInterface value:(NSString *)value;
-- (BOOL)execCommand:(NSString *)command userInterface:(BOOL)userInterface;
-- (BOOL)execCommand:(NSString *)command;
-- (BOOL)queryCommandEnabled:(NSString *)command;
-- (BOOL)queryCommandIndeterm:(NSString *)command;
-- (BOOL)queryCommandState:(NSString *)command;
-- (BOOL)queryCommandSupported:(NSString *)command;
-- (NSString *)queryCommandValue:(NSString *)command;
-@end
-
-
 @implementation WebView (WEKWebViewEditing)
 
 #pragma mark Links
