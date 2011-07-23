@@ -65,17 +65,37 @@
     id textEditor = [NSApp targetForAction:@selector(wek_alignment)];
     if (textEditor)
     {
-        [oAlignmentSegmentedControl setEnabled:YES];
         alignment = [textEditor wek_alignment];
-    }
-    else
-    {
-        [oAlignmentSegmentedControl setEnabled:NO];
     }
     
     if (![oAlignmentSegmentedControl selectSegmentWithTag:alignment])
     {
         [oAlignmentSegmentedControl setSelected:NO forSegment:[oAlignmentSegmentedControl selectedSegment]];
+    }
+    
+    
+    // Alignment
+    if ([textEditor conformsToProtocol:@protocol(NSUserInterfaceValidations)])
+    {
+        [oAlignmentSegmentedControl setEnabled:YES];
+        
+        NSMenuItem *fakeMenu = [[NSMenuItem alloc] initWithTitle:@"" action:@selector(alignLeft:) keyEquivalent:@""];
+        [oAlignmentSegmentedControl setEnabled:[textEditor validateUserInterfaceItem:fakeMenu] forSegment:0];
+        
+        [fakeMenu setAction:@selector(alignCenter:)];
+        [oAlignmentSegmentedControl setEnabled:[textEditor validateUserInterfaceItem:fakeMenu] forSegment:1];
+        
+        [fakeMenu setAction:@selector(alignRight:)];
+        [oAlignmentSegmentedControl setEnabled:[textEditor validateUserInterfaceItem:fakeMenu] forSegment:2];
+        
+        [fakeMenu setAction:@selector(alignJustified:)];
+        [oAlignmentSegmentedControl setEnabled:[textEditor validateUserInterfaceItem:fakeMenu] forSegment:3];
+        
+        [fakeMenu release];
+    }
+    else
+    {
+        [oAlignmentSegmentedControl setEnabled:NO];
     }
 }
 
