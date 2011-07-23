@@ -303,7 +303,7 @@
             {
                 [range selectNodeContents:aListItem];
                 [self setSelectedDOMRange:range affinity:[self selectionAffinity]];
-                if ([self unorderedList]) [document execCommand:@"InsertOrderedList"];
+                if ([self orderedList]) [self removeList:self];   // so change notifications go out properly
             }
         }
         
@@ -324,7 +324,7 @@
             {
                 [range selectNodeContents:aListItem];
                 [self setSelectedDOMRange:range affinity:[self selectionAffinity]];
-                if ([self unorderedList]) [document execCommand:@"InsertUnorderedList"];
+                if ([self unorderedList]) [self removeList:self];   // so change notifications go out properly
             }
         }
         
