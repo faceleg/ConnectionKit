@@ -602,6 +602,12 @@
         [components release];
     }
     
+    // Strip empty style attributes
+    if ([result length] == 0 & [attributeName isEqualToString:@"style"])
+    {
+        result = nil;
+    }
+    
     return result;
 }
 
