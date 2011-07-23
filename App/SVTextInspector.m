@@ -11,6 +11,25 @@
 
 @implementation SVTextInspector
 
+- (void)dealloc;
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:WebViewDidChangeSelectionNotification
+                                                  object:nil];
+    
+    [super dealloc];
+}
+
+- (void)viewDidLoad;
+{
+    [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(selectionDidChange:)
+                                                 name:WebViewDidChangeSelectionNotification
+                                               object:nil];
+}
+
 - (IBAction)changeAlignment:(NSSegmentedControl *)sender;
 {
     switch ([[sender cell] tagForSegment:[sender selectedSegment]])
@@ -38,6 +57,11 @@
     [super refresh];
     
     [oAlignmentSegmentedControl setSelected:NO forSegment:[oAlignmentSegmentedControl selectedSegment]];
+}
+
+- (void)selectionDidChange:(NSNotification *)notification;
+{
+    [self refresh];
 }
 
 @end
