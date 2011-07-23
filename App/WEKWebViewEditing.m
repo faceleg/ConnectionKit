@@ -247,7 +247,9 @@
     }
     
     DOMDocument *document = [[self selectedFrame] DOMDocument];
-    if ([document execCommand:@"insertOrderedList"])
+    if ([document queryCommandState:@"InsertOrderedList"]) return;  // nowt to do
+    
+    if ([document execCommand:@"InsertOrderedList"])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
     }
@@ -266,7 +268,9 @@
     }
     
     DOMDocument *document = [[self selectedFrame] DOMDocument];
-    if ([document execCommand:@"insertUnorderedList"])
+    if ([document queryCommandState:@"InsertUnorderedList"]) return;  // nowt to do
+
+    if ([document execCommand:@"InsertUnorderedList"])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
     }
