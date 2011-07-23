@@ -114,6 +114,10 @@
         // Sadly I haven't found an API yet that informs selection is part list, part paragraph
         [oListPopUp selectItemAtIndex:0];
     }
+    
+    [oListPopUp setEnabled:([listEditor validateMenuItem:[oListPopUp itemAtIndex:0]] ||
+                            [listEditor validateMenuItem:[oListPopUp itemAtIndex:1]] ||
+                            [listEditor validateMenuItem:[oListPopUp itemAtIndex:2]])];
 }
 
 - (void)selectionDidChange:(NSNotification *)notification;
