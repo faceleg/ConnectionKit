@@ -115,9 +115,14 @@
         [oListPopUp selectItemAtIndex:0];
     }
     
-    [oListPopUp setEnabled:([listEditor validateMenuItem:[oListPopUp itemAtIndex:0]] ||
-                            [listEditor validateMenuItem:[oListPopUp itemAtIndex:1]] ||
-                            [listEditor validateMenuItem:[oListPopUp itemAtIndex:2]])];
+    BOOL enable = YES;
+    if ([listEditor respondsToSelector:@selector(validateMenuItem:)])
+    {
+        enable = ([listEditor validateMenuItem:[oListPopUp itemAtIndex:0]] ||
+                  [listEditor validateMenuItem:[oListPopUp itemAtIndex:1]] ||
+                  [listEditor validateMenuItem:[oListPopUp itemAtIndex:2]]);
+    }
+    [oListPopUp setEnabled:enable];
 }
 
 - (void)selectionDidChange:(NSNotification *)notification;
