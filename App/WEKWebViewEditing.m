@@ -246,9 +246,9 @@
         if ([delegate webView:self doCommandBySelector:_cmd]) return;
     }
     
-    DOMDocument *document = [[self selectedFrame] DOMDocument];
-    if ([document queryCommandState:@"InsertOrderedList"]) return;  // nowt to do
+    if ([self orderedList]) return;  // nowt to do
     
+    DOMDocument *document = [[self selectedFrame] DOMDocument];
     if ([document execCommand:@"InsertOrderedList"])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
@@ -267,9 +267,9 @@
         if ([delegate webView:self doCommandBySelector:_cmd]) return;
     }
     
-    DOMDocument *document = [[self selectedFrame] DOMDocument];
-    if ([document queryCommandState:@"InsertUnorderedList"]) return;  // nowt to do
+    if ([self unorderedList]) return;  // nowt to do
 
+    DOMDocument *document = [[self selectedFrame] DOMDocument];
     if ([document execCommand:@"InsertUnorderedList"])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
@@ -277,7 +277,20 @@
     else
     {
         NSBeep();
-    }}
+    }
+}
+
+- (BOOL)orderedList;
+{
+    DOMDocument *document = [[self selectedFrame] DOMDocument];
+    return [document queryCommandState:@"InsertOrderedList"];
+}
+
+- (BOOL)unorderedList;
+{
+    DOMDocument *document = [[self selectedFrame] DOMDocument];
+    return [document queryCommandState:@"InsertUnorderedList"];
+}
 
 @end
 

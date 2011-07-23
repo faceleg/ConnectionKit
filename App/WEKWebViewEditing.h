@@ -38,9 +38,12 @@
 
 
 #pragma mark Lists
+
 - (IBAction)insertOrderedList:(id)sender;
 - (IBAction)insertUnorderedList:(id)sender;
 
+- (BOOL)orderedList;
+- (BOOL)unorderedList;
 
 @end
 

@@ -12,6 +12,7 @@
 @interface SVTextInspector : KSInspectorViewController
 {
     IBOutlet NSSegmentedControl *oAlignmentSegmentedControl;
+    IBOutlet NSPopUpButton      *oListPopUp;
 }
 
 - (IBAction)changeAlignment:(NSSegmentedControl *)sender;
