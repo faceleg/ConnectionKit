@@ -560,12 +560,10 @@
 #pragma mark Attribute Whitelist
 
 - (NSString *)validateAttribute:(NSString *)attributeName
-                          value:(NSString *)attributeValue
+                          value:(NSString *)value
                       ofElement:(NSString *)elementName;
 {
-    NSString *result = attributeValue;
-    
-	if ([elementName isEqualToString:@"a"])
+    if ([elementName isEqualToString:@"a"])
     {
         if ([attributeName isEqualToString:@"href"] ||
             [attributeName isEqualToString:@"target"] ||
@@ -577,38 +575,38 @@
             [attributeName isEqualToString:@"rel"] ||
             [attributeName isEqualToString:@"rev"])
         {
-            return result;
+            return value;
         }
     }
     // <FONT> tags are no longer allowed, but leave this in in case we turn support back on again
     else if ([elementName isEqualToString:@"font"])
     {
-        if ([attributeName isEqualToString:@"face"] || [attributeName isEqualToString:@"size"] || [attributeName isEqualToString:@"color"]) return result;
+        if ([attributeName isEqualToString:@"face"] || [attributeName isEqualToString:@"size"] || [attributeName isEqualToString:@"color"]) return value;
     }
     
     // Allow style on any element except <BR>.
     // Used to allow class. #94455
     if ([elementName isEqualToString:@"br"])
     {
-        if ([attributeName isEqualToString:@"style"]) result = nil;
+        if ([attributeName isEqualToString:@"style"]) value = nil;
     }
     
     // Dissallow "in" class
     if ([attributeName isEqualToString:@"class"])
     {
-        NSMutableArray *components = [[attributeValue componentsSeparatedByWhitespace] mutableCopy];
+        NSMutableArray *components = [[value componentsSeparatedByWhitespace] mutableCopy];
         [components removeObject:@"in"];
-        result = [components componentsJoinedByString:@" "];
+        value = [components componentsJoinedByString:@" "];
         [components release];
     }
     
     // Strip empty style attributes
-    if ([result length] == 0 & [attributeName isEqualToString:@"style"])
+    if ([value length] == 0 & [attributeName isEqualToString:@"style"])
     {
-        result = nil;
+        value = nil;
     }
     
-    return result;
+    return value;
 }
 
 #pragma mark Styling Whitelist
