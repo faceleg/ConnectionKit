@@ -603,7 +603,8 @@
     }
     
     // Strip empty style attributes
-    if ([value length] == 0 && [attributeName isEqualToString:@"style"])
+    if ([value length] == 0 &&
+        ([attributeName isEqualToString:@"style"] || [attributeName isEqualToString:@"class"]))
     {
         value = nil;
     }
