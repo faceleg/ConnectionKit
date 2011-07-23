@@ -280,6 +280,32 @@
     }
 }
 
+- (IBAction)removeList:(id)sender;
+{
+    id delegate = [self editingDelegate];
+    if ([delegate respondsToSelector:@selector(webView:doCommandBySelector:)])
+    {
+        if ([delegate webView:self doCommandBySelector:_cmd]) return;
+    }
+    
+    if ([self orderedList])
+    {
+        DOMDocument *document = [[self selectedFrame] DOMDocument];
+        if ([document execCommand:@"InsertOrderedList"])
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
+        }
+    }
+    else if ([self unorderedList])
+    {
+        DOMDocument *document = [[self selectedFrame] DOMDocument];
+        if ([document execCommand:@"InsertUnorderedList"])
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
+        }
+    }
+}
+
 - (BOOL)orderedList;
 {
     DOMDocument *document = [[self selectedFrame] DOMDocument];
