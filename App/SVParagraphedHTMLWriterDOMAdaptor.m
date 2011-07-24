@@ -181,7 +181,7 @@
         [tagName isEqualToString:@"H6"])
     {
         result = ([[self XMLWriter] openElementsCount] == 0 ||
-                  [[[self XMLWriter] topElement] isEqualToStringCaseInsensitive:@"LI"]);
+                  [[[self XMLWriter] topElement] isEqualToString:@"li"]);
     }
     
     // Lists must be top-level or directly inside another list
