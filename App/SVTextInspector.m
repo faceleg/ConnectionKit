@@ -76,7 +76,7 @@
         [self setListStyle:0];
     }
     
-    BOOL enable = YES;
+    BOOL enable = (listEditor != nil);
     if ([listEditor respondsToSelector:@selector(validateMenuItem:)])
     {
         enable = ([listEditor validateMenuItem:[oListPopUp itemAtIndex:0]] ||
