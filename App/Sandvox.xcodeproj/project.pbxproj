@@ -243,17 +243,6 @@
 			name = UpdateShared;
 			productName = "Shared-UpdateToT";
 		};
-		3CE4E19B0ED4A6DE008DD114 /* PackageAndDeployDesignKit */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 3CE4E1A10ED4A739008DD114 /* Build configuration list for PBXAggregateTarget "PackageAndDeployDesignKit" */;
-			buildPhases = (
-				3CE4E19A0ED4A6DE008DD114 /* ShellScript */,
-			);
-			dependencies = (
-			);
-			name = PackageAndDeployDesignKit;
-			productName = PackageAndDeployDesignKit;
-		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
@@ -6683,7 +6672,6 @@
 				3C9B65920BFA7F6F007A4871 /* Sandvox-CompleteApplication */,
 				3C88838D0BFCB49C00921FA4 /* BuildAndPackageRelease */,
 				3CA0FEE40D7614AB0093562D /* DeployRelease */,
-				3CE4E19B0ED4A6DE008DD114 /* PackageAndDeployDesignKit */,
 				3C979D9013BA506000E7CF7C /* Preflight Build */,
 				3CE2B2B70D7F1DD900E2711E /* UpdateShared */,
 				3C5A9A850D11E4DF0054058C /* UpdateiMedia */,
@@ -7629,20 +7617,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "#!/bin/bash\n\n###\n### CHECKOUT Shared\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../Shared\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\ncd ${REPOSITORY_PATH}\n${GIT_PATH} checkout ${SHARED_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching Shared from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${SHARED_COMMIT}\n\techo \"... finished fetching Shared\"\nfi\n${GIT_PATH} submodule update --init\n\npopd\n\nexit 0\n\n";
-			showEnvVarsInLog = 0;
-		};
-		3CE4E19A0ED4A6DE008DD114 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\nexport APPNAME=\"Design Kit\"\n\n${SRCROOT}/../Tools/package-designkit\n\n### this script should NOT have 'Run script only when installing' checked\n";
 			showEnvVarsInLog = 0;
 		};
 		CE9D3ED20DAAB8450025717A /* Script - Remove Unsupported Languages */ = {
@@ -9617,22 +9591,6 @@
 			};
 			name = Debug;
 		};
-		3CE4E19C0ED4A6DE008DD114 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
-			buildSettings = {
-				PRODUCT_NAME = PackageAndDeployDesignKit;
-			};
-			name = Debug;
-		};
-		3CE4E19D0ED4A6DE008DD114 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
-			buildSettings = {
-				PRODUCT_NAME = PackageAndDeployDesignKit;
-			};
-			name = Release;
-		};
 		CE16DC5B0D8711790077C779 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -9900,15 +9858,6 @@
 			buildConfigurations = (
 				3CE2B2B90D7F1DD900E2711E /* Debug */,
 				3CE2B2B80D7F1DD900E2711E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		3CE4E1A10ED4A739008DD114 /* Build configuration list for PBXAggregateTarget "PackageAndDeployDesignKit" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3CE4E19C0ED4A6DE008DD114 /* Debug */,
-				3CE4E19D0ED4A6DE008DD114 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
