@@ -198,36 +198,40 @@
         
         // Generally, can't allow nested elements.
         // e.g. <span><span>foo</span> bar</span>   is wrong and should be simplified.
-        // The exception is if outer element has font: property, and inner element overrides that using longhand. e.g. font-family
-        // Under those circumstances, WebKit doesn't give us enough API to make the merge, so keep both elements.
-        // #100362
-        DOMElement *existingElement = [self openDOMElementConflictingWithDOMElement:element
-                                                                            tagName:tagName];
-        if (existingElement)
+        // Nested lists are fine though
+        if (![tagName isEqualToString:@"OL"] && ![tagName isEqualToString:@"UL"])
         {
-            // Is it really a conflict?
-            if ([element tryToPopulateStyleWithValuesInheritedFromElement:existingElement])
+            // The other exception is if outer element has font: property, and inner element overrides that using longhand. e.g. font-family
+            // Under those circumstances, WebKit doesn't give us enough API to make the merge, so keep both elements.
+            // #100362
+            DOMElement *existingElement = [self openDOMElementConflictingWithDOMElement:element
+                                                                                tagName:tagName];
+            if (existingElement)
             {
-                // Shuffle up following nodes
-                DOMNode *parent = [element parentNode];
-                [parent flattenNodesAfterChild:element];
-                
-                
-                // Try to flatten the conflict
-                // It make take several moves up the tree till we find the conflicting element
-                while (parent != existingElement)
+                // Is it really a conflict?
+                if ([element tryToPopulateStyleWithValuesInheritedFromElement:existingElement])
                 {
-                    // Move element across to a clone of its parent
-                    DOMNode *clone = [parent cloneNode:NO];
-                    [[parent parentNode] insertBefore:clone refChild:[parent nextSibling]];
-                    [clone appendChild:element];
-                    parent = [parent parentNode];
+                    // Shuffle up following nodes
+                    DOMNode *parent = [element parentNode];
+                    [parent flattenNodesAfterChild:element];
+                    
+                    
+                    // Try to flatten the conflict
+                    // It make take several moves up the tree till we find the conflicting element
+                    while (parent != existingElement)
+                    {
+                        // Move element across to a clone of its parent
+                        DOMNode *clone = [parent cloneNode:NO];
+                        [[parent parentNode] insertBefore:clone refChild:[parent nextSibling]];
+                        [clone appendChild:element];
+                        parent = [parent parentNode];
+                    }
+                    
+                    
+                    // Pretend we wrote the element and are now finished. Recursion will take us back to the element in its new location to write it for real
+                    [self moveDOMElementToAfterParent:element];
+                    result = nil;
                 }
-                
-                
-                // Pretend we wrote the element and are now finished. Recursion will take us back to the element in its new location to write it for real
-                [self moveDOMElementToAfterParent:element];
-                result = nil;
             }
         }
     }
