@@ -54,6 +54,40 @@
     }
 }
 
+#pragma mark Lists
+
+@synthesize listStyle = _listStyle;
+
+- (void)refreshList;
+{
+    // Bullets
+    id listEditor = [NSApp targetForAction:@selector(unorderedList)];
+    if ([listEditor unorderedList])
+    {
+        [self setListStyle:1];
+    }
+    else if ([listEditor orderedList])
+    {
+        [self setListStyle:2];
+    }
+    else
+    {
+        // Sadly I haven't found an API yet that informs selection is part list, part paragraph
+        [self setListStyle:0];
+    }
+    
+    BOOL enable = YES;
+    if ([listEditor respondsToSelector:@selector(validateMenuItem:)])
+    {
+        enable = ([listEditor validateMenuItem:[oListPopUp itemAtIndex:0]] ||
+                  [listEditor validateMenuItem:[oListPopUp itemAtIndex:1]] ||
+                  [listEditor validateMenuItem:[oListPopUp itemAtIndex:2]]);
+    }
+    [oListPopUp setEnabled:enable];
+}
+
+#pragma mark General
+
 - (void)refresh
 {
     [super refresh];
@@ -99,39 +133,12 @@
     }
     
     
-    // Bullets
-    id listEditor = [NSApp targetForAction:@selector(unorderedList)];
-    if ([listEditor unorderedList])
-    {
-        [self setListStyle:1];
-    }
-    else if ([listEditor orderedList])
-    {
-        [self setListStyle:2];
-    }
-    else
-    {
-        // Sadly I haven't found an API yet that informs selection is part list, part paragraph
-        [self setListStyle:0];
-    }
-    
-    BOOL enable = YES;
-    if ([listEditor respondsToSelector:@selector(validateMenuItem:)])
-    {
-        enable = ([listEditor validateMenuItem:[oListPopUp itemAtIndex:0]] ||
-                  [listEditor validateMenuItem:[oListPopUp itemAtIndex:1]] ||
-                  [listEditor validateMenuItem:[oListPopUp itemAtIndex:2]]);
-    }
-    [oListPopUp setEnabled:enable];
+    [self refreshList];
 }
 
 - (void)selectionDidChange:(NSNotification *)notification;
 {
     [self refresh];
 }
-
-#pragma mark Lists
-
-@synthesize listStyle = _listStyle;
 
 @end
