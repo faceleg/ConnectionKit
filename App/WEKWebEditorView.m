@@ -2688,6 +2688,17 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
             [webView insertNewlineIgnoringFieldEditor:self];
             result = YES;
         }
+        
+        // Default Indent and Outdent implementations don't send -should… notifications, only -didChange…
+        else if (command == @selector(indent:) || command == @selector(outdent:))
+        {
+            result = YES;
+            
+            DOMRange *range = [self selectedDOMRange];
+            if (range) result = ![self shouldChangeTextInDOMRange:[self selectedDOMRange]];
+            
+            if (result) NSBeep();
+        }
     }
     
     return result;
