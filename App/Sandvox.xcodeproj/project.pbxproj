@@ -210,17 +210,6 @@
 			name = DeployRelease;
 			productName = DeployRelease;
 		};
-		3CA786E60DB546060014AD7E /* PackageBonusDesigns */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 3CA786E90DB546350014AD7E /* Build configuration list for PBXAggregateTarget "PackageBonusDesigns" */;
-			buildPhases = (
-				3CA786E50DB546060014AD7E /* ShellScript */,
-			);
-			dependencies = (
-			);
-			name = PackageBonusDesigns;
-			productName = PackageBonusDesigns;
-		};
 		3CBC651B11EFD04800716937 /* UpdateKSExtensibleManagedObject */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 3CBC652111EFD05A00716937 /* Build configuration list for PBXAggregateTarget "UpdateKSExtensibleManagedObject" */;
@@ -6705,7 +6694,6 @@
 				3C9B65920BFA7F6F007A4871 /* Sandvox-CompleteApplication */,
 				3C88838D0BFCB49C00921FA4 /* BuildAndPackageRelease */,
 				3CA0FEE40D7614AB0093562D /* DeployRelease */,
-				3CA786E60DB546060014AD7E /* PackageBonusDesigns */,
 				3C5A77C50EB6E0880049B898 /* PackageAndDeploySDK */,
 				3CE4E19B0ED4A6DE008DD114 /* PackageAndDeployDesignKit */,
 				3C979D9013BA506000E7CF7C /* Preflight Build */,
@@ -7596,20 +7584,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "#!/bin/bash\n\nexport APPNAME=\"Sandvox\"\n\n${SRCROOT}/../../Shared/tools/deploy_build\n\n### this script should NOT have 'Run script only when installing' checked\n";
-			showEnvVarsInLog = 0;
-		};
-		3CA786E50DB546060014AD7E /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n# we base the PackageBonusDesigns target on Sandvox.xcconfig through the Xcode UI\n# this brings in SVN_VERSION, SANDVOX_VERSION, PRODUCT_VARIANT, CK_REVISION, IMEDIA_REVISION, and SP_REVISION\n\necho \"\"\necho \"Gathering resources for packaging Bonus Designs ...\"\necho \"SVN_VERSION is ${SVN_VERSION}\"\necho \"SANDVOX_VERSION is ${SANDVOX_VERSION}\"\necho \"PRODUCT_VARIANT is ${PRODUCT_VARIANT}\"\necho \"\"\n\nDESIGNS_DIR=\"${SRCROOT}/../../Designs\"\nPBXCP=\"${SRCROOT}/../../Shared/Tools/pbxcp\"\n\n# the location of BuildSettings comes from the Update Version script\nBUILDSETTINGS_DIR=\"/private/tmp/build-sandvox\"\n\nREAD_ME=\"READ ME - Sandvox Bonus Designs\"\nREAD_ME_ZIP_FILE=\"${SRCROOT}/../Other/${READ_ME}.zip\"\nREAD_ME_FILE=\"${BUILDSETTINGS_DIR}/${READ_ME}.rtfd\"\n\n# we keep the .zip of the READ_ME in Other, then copy it to /tmp and inflate it, if needed\nif test -r \"${READ_ME_FILE}\"\nthen\n\techo \"Removing previous READ_ME file...\"\n\trm -rf \"${READ_ME_FILE}\"\nfi\n\necho \"copying ${READ_ME_ZIP_FILE} to ${READ_ME_FILE}.zip\"\ncp \"${READ_ME_ZIP_FILE}\" \"${READ_ME_FILE}.zip\"\necho \"unarchving ${READ_ME_FILE}.zip\"\nditto -x -k --rsrc \"${READ_ME_FILE}.zip\" \"${BUILDSETTINGS_DIR}\"\n\n# the dmg names that we'll use\nVOLUME_NAME=\"Designs\"\nDMG_TEMP_NAME=\"temp\"\nDMG_FINAL_NAME=\"_SandvoxBonusDesigns-${SVN_VERSION}\"\n\n# the directory that will appear on ~/Desktop after download\nBONUS_DIR_NAME=\"Sandvox Bonus Designs\"\n\n# the directory within the mounted .dmg we'll copy to\nDMG_DIR=\"/Volumes/${VOLUME_NAME}/${BONUS_DIR_NAME}\"\n\n# the directory we'll do our work in\nSCRATCH_DIR=\"/private/tmp/build-bonusdesigns-dmg\"\n\nif test -d \"${SCRATCH_DIR}\"\nthen\n\techo \"Removing old scratch directory...\"\n\trm -rf \"${SCRATCH_DIR}\"\nfi\nmkdir -p \"${SCRATCH_DIR}\"\n\necho \"Packaging Bonus Designs...\"\npushd \"${SCRATCH_DIR}\"\n\n# create an initial disk image (128 MB)\necho \"Creating initial disk image...\"\nhdiutil create -ov -scrub -size 128m -fs HFS+ -volname ${VOLUME_NAME} ${DMG_TEMP_NAME}.dmg\n    \n# mount the dmg\necho \"Mounting initial disk image...\"\nhdiutil attach ${DMG_TEMP_NAME}.dmg\n\n# create directory\necho \"DMG_DIR is ${DMG_DIR}\"\n#mkdir -pv \"${DMG_DIR}\"\npushd \"/Volumes/${VOLUME_NAME}\"\nmkdir \"${BONUS_DIR_NAME}\"\npopd\n\n# copy READ ME to dmg (we use PBXCP to copy the rtfd)\necho \"Copying ${READ_ME_FILE} to disk image...\"\n${PBXCP} \\\n\t-exclude .DS_Store \\\n\t-exclude CVS \\\n\t-exclude .svn \\\n\t-resolve-src-symlinks \\\n\t\"${READ_ME_FILE}\" \"${DMG_DIR}\"\n\n# set READ ME's extension to be hidden\necho \"Setting ${READ_ME}.rtfd extension to be hidden...\"\n/Developer/Tools/SetFile -a E \"${DMG_DIR}/${READ_ME}.rtfd\"\n\n# add .webloc file to dmg\nWEBLOC_PATH=\"${DMG_DIR}/Check for Updates.webloc\"\n\necho '<?xml version=\"1.0\" encoding=\"UTF-8\"?>' > \"$WEBLOC_PATH\"\necho '<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">' >> \"$WEBLOC_PATH\"\necho '<plist version=\"1.0\">' >> \"$WEBLOC_PATH\"\necho '<dict>' >> \"$WEBLOC_PATH\"\necho '    <key>URL</key>' >> \"$WEBLOC_PATH\"\necho \"    <string>http://launch.karelia.com/changelog.php?rn=1&amp;version=${SVN_VERSION}&amp;product=4&amp;check=1</string>\" >> \"$WEBLOC_PATH\"\necho '</dict>' >> \"$WEBLOC_PATH\"\necho '</plist>' >> \"$WEBLOC_PATH\"\n\n# copy Designs to dmg\necho \"Copying Designs marked BONUS...\"\npushd \"${DESIGNS_DIR}\"\nfor i in *\ndo\n\tif [ -e \"${i}/BONUS\" ];\n    \tthen\n        \t# copy to DMG \n        \techo \"BONUS DESIGN: PBXCp \\\"$i\\\" ${DMG_DIR}\"\n\n        \t${PBXCP} \\\n\t\t\t-exclude .DS_Store \\\n\t\t\t-exclude CVS \\\n\t\t\t-exclude .svn \\\n\t\t\t-exclude BONUS \\\n\t\t\t-resolve-src-symlinks \\\n\t\t\t\"${PWD}/${i}\" \"${DMG_DIR}\"\n\n\t\t/usr/bin/gcc -E -P -x c -Wno-trigraphs \\\n\t\t\t-D SANDVOX_VERSION=${SANDVOX_VERSION} \\\n\t\t\t-D SVN_VERSION=${SVN_VERSION} \\\n\t\t\t-C \"${PWD}/${i}/Info.plist\" \\\n\t\t\t-o \"${DMG_DIR}/${i}/Info.plist\"\n\n   \telse\n        \techo \"--------------  Not including $i\"\n    \tfi\ndone\npopd\n\n# obtain device information\necho \"Gathering device information...\"\nDEVS=$(hdiutil attach \"${DMG_TEMP_NAME}.dmg\" | cut -f 1)\nDEV=$(echo $DEVS | cut -f 1 -d ' ')\n\n# unmount the dmg\necho \"Unmounting initial disk image...\"\nhdiutil detach \"$DEV\"\n\n# compress and convert to read-only\n# NB: UDZO = zlib-compressed image, compatible back to OS X 10.1\necho \"Converting disk image to read-only...\"\nhdiutil convert \"${DMG_TEMP_NAME}.dmg\" -format UDZO -o \"${DMG_FINAL_NAME}.dmg\"\nrm \"${DMG_TEMP_NAME}.dmg\"\n    \n# mark as \"Internet-enabled\"\necho \"Marking disk image as internet-enabled...\"\nhdiutil internet-enable -yes \"${DMG_FINAL_NAME}.dmg\"\n\n# install license agreement (there isn't one for bonus designs as of 11/6/2007)\n#echo \"Installing License Agreement...\"\n#hdiutil unflatten ${DMG_FINAL_NAME}.dmg\n#/Developer/Tools/DeRez ${SLA_FILE} > sla.r\n#/Developer/Tools/Rez -a sla.r -o ${DMG_FINAL_NAME}.dmg\n#hdiutil flatten ${DMG_FINAL_NAME}.dmg\n#rm sla.r\n\npopd\necho \"Packaging Complete!\"\necho \"\"\necho \"Your Sandvox Bonus Designs are waiting for you at ${SCRATCH_DIR}/${DMG_FINAL_NAME}.dmg.\"\necho \"\"\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
 		3CBC651A11EFD04800716937 /* ShellScript */ = {
@@ -9617,22 +9591,6 @@
 			};
 			name = Debug;
 		};
-		3CA786E70DB546070014AD7E /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
-			buildSettings = {
-				PRODUCT_NAME = PackageBonusDesigns;
-			};
-			name = Release;
-		};
-		3CA786E80DB546070014AD7E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
-			buildSettings = {
-				PRODUCT_NAME = PackageBonusDesigns;
-			};
-			name = Debug;
-		};
 		3CBC651C11EFD04900716937 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
@@ -9957,15 +9915,6 @@
 			buildConfigurations = (
 				3CA0FEE60D7614AC0093562D /* Debug */,
 				3CA0FEE50D7614AC0093562D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		3CA786E90DB546350014AD7E /* Build configuration list for PBXAggregateTarget "PackageBonusDesigns" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3CA786E80DB546070014AD7E /* Debug */,
-				3CA786E70DB546070014AD7E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
