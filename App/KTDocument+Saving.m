@@ -165,16 +165,26 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
     
     
     // Normal save behaviour
-    BOOL result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation error:outError];
-    OBASSERT(result || !outError || (nil != *outError)); // make sure we didn't return NO with an empty error
+    _saveOpCount++;
+    @try
+    {
+        BOOL result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation error:outError];
+        OBASSERT(result || !outError || (nil != *outError)); // make sure we didn't return NO with an empty error
+        return result;
+    }
+    @finally
+    {
+        _saveOpCount--;
+    }
     
     
-    return result;
+    OBASSERT_NOT_REACHED("Control flow somehow escaped @try block!");
+    return YES; // keeps compiler happy
 }
 
 - (BOOL)isSaving
 {
-    return (mySaveOperationCount > 0);
+    return (_saveOpCount > 0);
 }
 
 #pragma mark Save Panel
