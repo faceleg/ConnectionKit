@@ -106,17 +106,6 @@
 			name = UpdateYRKSpinningProgressIndicator;
 			productName = KSHTMLWriter;
 		};
-		3C5A77C50EB6E0880049B898 /* PackageAndDeploySDK */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 3C5A77E20EB6E1050049B898 /* Build configuration list for PBXAggregateTarget "PackageAndDeploySDK" */;
-			buildPhases = (
-				3C5A77C40EB6E0880049B898 /* ShellScript */,
-			);
-			dependencies = (
-			);
-			name = PackageAndDeploySDK;
-			productName = PackageSDK;
-		};
 		3C5A9A850D11E4DF0054058C /* UpdateiMedia */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 3C5A9A880D11E4FD0054058C /* Build configuration list for PBXAggregateTarget "UpdateiMedia" */;
@@ -6694,7 +6683,6 @@
 				3C9B65920BFA7F6F007A4871 /* Sandvox-CompleteApplication */,
 				3C88838D0BFCB49C00921FA4 /* BuildAndPackageRelease */,
 				3CA0FEE40D7614AB0093562D /* DeployRelease */,
-				3C5A77C50EB6E0880049B898 /* PackageAndDeploySDK */,
 				3CE4E19B0ED4A6DE008DD114 /* PackageAndDeployDesignKit */,
 				3C979D9013BA506000E7CF7C /* Preflight Build */,
 				3CE2B2B70D7F1DD900E2711E /* UpdateShared */,
@@ -7376,20 +7364,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "#!/bin/bash\n\n###\n### UPDATE CFBundleShortVersionString in Info.plist of TARGET to be LATEST_V_TAG\n###\n\n# find git on local machine\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\n# if Release, fetch tags\nif [ \"${BUILD_STYLE}\" == \"Release\" ]\nthen\n\tpushd \"${SRCROOT}/..\" > /dev/null\n\t${GIT_PATH} fetch\n\tpopd > /dev/null\nfi\n\n# find latest v tag\npushd \"${SRCROOT}/..\" > /dev/null\nLATEST_V_TAG=$(${GIT_PATH} describe --tags --match v*)\npopd > /dev/null\n\nif [[ ${LATEST_V_TAG} == *-* ]]\nthen\n\t# extract everything up to -\n\tposition=`echo ${LATEST_V_TAG} | sed -n \"s/[-].*//p\" | wc -c`\n\tpositionminusone=$(($position - 1))\n\tLATEST_V_TAG=${LATEST_V_TAG:0:$positionminusone}\nfi\n\n# strip leading 'v' from LATEST_V_TAG to get GIT_TAG\nGIT_TAG=${LATEST_V_TAG:1}\n\n# check that we have something useable\nif [ \"${GIT_TAG}\" == \"\" ]\nthen\n\techo \"Could not find suitable v tag. Exiting...\"\n\texit 1\nfi\n\n# set CFBundleShortVersionString\necho \"Setting CFBundleShortVersionString to ${GIT_TAG}\"\nTARGET_PLIST_PATH=${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\n/usr/libexec/PlistBuddy -c \"Delete CFBundleShortVersionString\" ${TARGET_PLIST_PATH}\n/usr/libexec/PlistBuddy -c \"Add CFBundleShortVersionString string ${GIT_TAG}\" ${TARGET_PLIST_PATH}\n\n# read CFBundleShortVersionString\nTARGET_VERSION=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" ${TARGET_PLIST_PATH})\n\n# verify\nif [ \"${TARGET_VERSION:-0}\" == ${GIT_TAG} ]\nthen\n\techo \"Info.plist CFBundleShortVersionString verified.\"\n\texit 0\nfi\n\necho \"Could not verify CFBundleShortVersionString in Info.plist. Cannot continue.\"\n\nexit 1\n";
-			showEnvVarsInLog = 0;
-		};
-		3C5A77C40EB6E0880049B898 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\nexport APPNAME=\"Sandvox SDK\"\n\n${SRCROOT}/../Tools/package-sdk\n\n### this script should NOT have 'Run script only when installing' checked\n";
 			showEnvVarsInLog = 0;
 		};
 		3C5A9A840D11E4DF0054058C /* ShellScript */ = {
@@ -9488,22 +9462,6 @@
 			};
 			name = Release;
 		};
-		3C5A77C60EB6E0880049B898 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
-			buildSettings = {
-				PRODUCT_NAME = PluginsSDK;
-			};
-			name = Debug;
-		};
-		3C5A77C70EB6E0880049B898 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
-			buildSettings = {
-				PRODUCT_NAME = PluginsSDK;
-			};
-			name = Release;
-		};
 		3C5A9A860D11E4DF0054058C /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
@@ -9861,15 +9819,6 @@
 			buildConfigurations = (
 				3C3ED2A0120895580080EB6E /* Debug */,
 				3C3ED2A1120895580080EB6E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		3C5A77E20EB6E1050049B898 /* Build configuration list for PBXAggregateTarget "PackageAndDeploySDK" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3C5A77C60EB6E0880049B898 /* Debug */,
-				3C5A77C70EB6E0880049B898 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
