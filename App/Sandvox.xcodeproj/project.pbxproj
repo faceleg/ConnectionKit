@@ -117,15 +117,15 @@
 			name = PackageAndDeploySDK;
 			productName = PackageSDK;
 		};
-		3C5A9A850D11E4DF0054058C /* iMedia-UpdateRevision */ = {
+		3C5A9A850D11E4DF0054058C /* UpdateiMedia */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = 3C5A9A880D11E4FD0054058C /* Build configuration list for PBXAggregateTarget "iMedia-UpdateRevision" */;
+			buildConfigurationList = 3C5A9A880D11E4FD0054058C /* Build configuration list for PBXAggregateTarget "UpdateiMedia" */;
 			buildPhases = (
 				3C5A9A840D11E4DF0054058C /* ShellScript */,
 			);
 			dependencies = (
 			);
-			name = "iMedia-UpdateRevision";
+			name = UpdateiMedia;
 			productName = "iMedia - Use Specific Revision";
 		};
 		3C88838D0BFCB49C00921FA4 /* BuildAndPackageRelease */ = {
@@ -135,7 +135,6 @@
 				3C88838C0BFCB49C00921FA4 /* Build Disk Image */,
 			);
 			dependencies = (
-				3C5A9A9C0D11E74B0054058C /* PBXTargetDependency */,
 				3C3E76450F1C6B7A002E3A9A /* PBXTargetDependency */,
 				3C88838F0BFCB4A400921FA4 /* PBXTargetDependency */,
 			);
@@ -1609,13 +1608,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = FacebookElement;
-		};
-		3C5A9A9B0D11E74B0054058C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3C5A9A850D11E4DF0054058C;
-			remoteInfo = "iMedia - Use Specific Revision";
 		};
 		3C732B3B1378EA3100D5F738 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -6711,26 +6703,26 @@
 			targets = (
 				8D15AC270486D014006FF6A4 /* Sandvox-ExecutableOnly */,
 				3C9B65920BFA7F6F007A4871 /* Sandvox-CompleteApplication */,
-				3C979D9013BA506000E7CF7C /* Preflight Build */,
 				3C88838D0BFCB49C00921FA4 /* BuildAndPackageRelease */,
 				3CA0FEE40D7614AB0093562D /* DeployRelease */,
 				3CA786E60DB546060014AD7E /* PackageBonusDesigns */,
 				3C5A77C50EB6E0880049B898 /* PackageAndDeploySDK */,
 				3CE4E19B0ED4A6DE008DD114 /* PackageAndDeployDesignKit */,
-				3C3E75FA0F1C5F42002E3A9A /* UpdateInvalidLicenses */,
-				3C15B85E0DC790A100DE9957 /* UpdateDesigns */,
+				3C979D9013BA506000E7CF7C /* Preflight Build */,
 				3CE2B2B70D7F1DD900E2711E /* UpdateShared */,
-				3C3ED293120894F70080EB6E /* UpdateConnectionKit */,
+				3C5A9A850D11E4DF0054058C /* UpdateiMedia */,
 				3CD806DD120A62C300E0848F /* UpdateBDAlias */,
+				3C3ED293120894F70080EB6E /* UpdateConnectionKit */,
 				3C243830136CF41D009D0D85 /* UpdateKSError */,
 				3CBC651B11EFD04800716937 /* UpdateKSExtensibleManagedObject */,
 				3C3003161313001B0022E49A /* UpdateKSFileUtilities */,
 				3CBC727311F0C59E00716937 /* UpdateKSHTMLWriter */,
 				3C30036B131300DF0022E49A /* UpdateKSSelectionBorder */,
 				3C3ED287120894800080EB6E /* UpdateKSThreadProxy */,
-				3C3ED29D120895580080EB6E /* UpdateYRKSpinningProgressIndicator */,
-				3C5A9A850D11E4DF0054058C /* iMedia-UpdateRevision */,
 				2743ED2613BBAE7E009EA6D3 /* UpdateJSONKit */,
+				3C3ED29D120895580080EB6E /* UpdateYRKSpinningProgressIndicator */,
+				3C3E75FA0F1C5F42002E3A9A /* UpdateInvalidLicenses */,
+				3C15B85E0DC790A100DE9957 /* UpdateDesigns */,
 				CEF9D0AE0D862B5100BD9895 /* ImageWebKitPlugin */,
 				CE16DC580D8711790077C779 /* MovieWebKitPlugin */,
 				3C1F510911D575510036B375 /* xibLocalizationPostprocessor */,
@@ -8307,7 +8299,7 @@
 		};
 		3C3ED2AE120895E60080EB6E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 3C5A9A850D11E4DF0054058C /* iMedia-UpdateRevision */;
+			target = 3C5A9A850D11E4DF0054058C /* UpdateiMedia */;
 			targetProxy = 3C3ED2AD120895E60080EB6E /* PBXContainerItemProxy */;
 		};
 		3C4CDF2F1207413A002AF966 /* PBXTargetDependency */ = {
@@ -8324,11 +8316,6 @@
 			isa = PBXTargetDependency;
 			name = FacebookElement;
 			targetProxy = 3C5851911289ACB00084315D /* PBXContainerItemProxy */;
-		};
-		3C5A9A9C0D11E74B0054058C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3C5A9A850D11E4DF0054058C /* iMedia-UpdateRevision */;
-			targetProxy = 3C5A9A9B0D11E74B0054058C /* PBXContainerItemProxy */;
 		};
 		3C732B3C1378EA3100D5F738 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -9929,7 +9916,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3C5A9A880D11E4FD0054058C /* Build configuration list for PBXAggregateTarget "iMedia-UpdateRevision" */ = {
+		3C5A9A880D11E4FD0054058C /* Build configuration list for PBXAggregateTarget "UpdateiMedia" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3C5A9A870D11E4DF0054058C /* Debug */,
