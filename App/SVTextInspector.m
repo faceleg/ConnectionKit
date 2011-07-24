@@ -103,16 +103,16 @@
     id listEditor = [NSApp targetForAction:@selector(unorderedList)];
     if ([listEditor unorderedList])
     {
-        [oListPopUp selectItemAtIndex:1];
+        [self setListStyle:1];
     }
     else if ([listEditor orderedList])
     {
-        [oListPopUp selectItemAtIndex:2];
+        [self setListStyle:2];
     }
     else
     {
         // Sadly I haven't found an API yet that informs selection is part list, part paragraph
-        [oListPopUp selectItemAtIndex:0];
+        [self setListStyle:0];
     }
     
     BOOL enable = YES;
@@ -129,5 +129,9 @@
 {
     [self refresh];
 }
+
+#pragma mark Lists
+
+@synthesize listStyle = _listStyle;
 
 @end
