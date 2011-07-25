@@ -2281,7 +2281,7 @@
 		3C2DA6E7104C7AAE0037D270 /* MGScopeBarDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGScopeBarDelegateProtocol.h; sourceTree = "<group>"; };
 		3C30161A103DE0580036A9D0 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/KTDocument.xib; sourceTree = "<group>"; };
 		3C30F7DC1312EC070022E49A /* MapElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapElement.xcodeproj; path = ../PlugIns/MapElement/MapElement.xcodeproj; sourceTree = SOURCE_ROOT; };
-		3C382D600E98170600113137 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = ../../Shared/Security/dsa_pub.pem; sourceTree = SOURCE_ROOT; };
+		3C382D600E98170600113137 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = ../Code/Shared/Security/dsa_pub.pem; sourceTree = SOURCE_ROOT; };
 		3C39822A0D2C3EC800432A0C /* SVPagesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPagesController.h; sourceTree = "<group>"; };
 		3C39822B0D2C3EC800432A0C /* SVPagesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPagesController.m; sourceTree = "<group>"; };
 		3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */ = {isa = PBXFileReference; explicitFileType = "wrapper.pb-project"; name = Connection.xcodeproj; path = ../../connection/Connection.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -7230,7 +7230,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "\n# as of July 2008, we are only localized for\n# da, de, en, fr, it, ja, sv, zh_CN, and zh_TW\n\n# this script copies Sparkle into the app, but excludes those\n# those localizations not specified above\n\nPBXCP=${PROJECT_DIR}/../../Shared/Tools/pbxcp\nSPARKLE=${SRCROOT}/../../Shared/ThirdParty/Sparkle/Sparkle.framework\n\necho \"Copying Sparkle from ${SPARKLE} to ${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH} ...\"\n\n\"${PBXCP}\" \\\n\t-exclude .DS_Store -exclude CVS -exclude .svn -exclude PrivateHeaders -exclude Headers \\\n\t-resolve-src-symlinks -v \\\n\t\"${SPARKLE}\" \\\n\t\"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}\"\n";
+			shellScript = "\n# as of July 2008, we are only localized for\n# da, de, en, fr, it, ja, sv, zh_CN, and zh_TW\n\n# this script copies Sparkle into the app, but excludes those\n# those localizations not specified above\n\nPBXCP=${PROJECT_DIR}/../Code/Shared/Tools/pbxcp\nSPARKLE=${SRCROOT}/../Code/Shared/ThirdParty/Sparkle/Sparkle.framework\n\necho \"Copying Sparkle from ${SPARKLE} to ${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH} ...\"\n\n\"${PBXCP}\" \\\n\t-exclude .DS_Store -exclude CVS -exclude .svn -exclude PrivateHeaders -exclude Headers \\\n\t-resolve-src-symlinks -v \\\n\t\"${SPARKLE}\" \\\n\t\"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CEF64406134B69A60011AC68 /* Script - Remove other resources */ = {
