@@ -165,16 +165,50 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
     
     
     // Normal save behaviour
-    BOOL result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation error:outError];
-    OBASSERT(result || !outError || (nil != *outError)); // make sure we didn't return NO with an empty error
+    _saveOpCount++;
+    @try
+    {
+        BOOL result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation error:outError];
+        OBASSERT(result || !outError || (nil != *outError)); // make sure we didn't return NO with an empty error
+        return result;
+    }
+    @finally
+    {
+        _saveOpCount--;
+    }
     
     
-    return result;
+    OBASSERT_NOT_REACHED("Control flow somehow escaped @try block!");
+    return YES; // keeps compiler happy
 }
 
 - (BOOL)isSaving
 {
-    return (mySaveOperationCount > 0);
+    return (_saveOpCount > 0);
+}
+
+- (void)autosaveDocumentWithDelegate:(id)delegate didAutosaveSelector:(SEL)didAutosaveSelector contextInfo:(void *)contextInfo;
+{
+    // As Sven saw, if autosave kicks in mid-another save, Lion deadlocks. It doesn't make sense to autosave at this point anyway, because a regular save is shortly to cancel it out.
+    // Have to override this particular method because the lock occurs before any other public methods.
+    // Alternatively, a smarter system could maybe wait until the save finishes, and then call super, but that would only be of value during a Save To operation.
+    if ([self isSaving])
+    {
+        if (delegate)
+        {
+            BOOL result = NO;
+            NSInvocation *callback = [NSInvocation invocationWithSelector:didAutosaveSelector target:delegate];
+            [callback setArgument:&self atIndex:2];
+            [callback setArgument:&result atIndex:3];
+            [callback setArgument:&contextInfo atIndex:4];
+            
+            [callback invoke];
+        }
+    }
+    else
+    {
+        [super autosaveDocumentWithDelegate:delegate didAutosaveSelector:didAutosaveSelector contextInfo:contextInfo];
+    }
 }
 
 #pragma mark Save Panel
