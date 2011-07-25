@@ -692,19 +692,20 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         if (result) result = [context save:&error];
         
         
-        // If at all possible, overwrite the version hashes so it looks like an original Sandvox 2.0 document
-        NSString *hashesPath = [[NSBundle mainBundle] pathForResource:@"VersionHashes2_0" ofType:@"plist"];
-        NSDictionary *hashes_2_0 = [NSDictionary dictionaryWithContentsOfFile:hashesPath];
-        if (hashes_2_0)
+        // For regular docs, overwrite the version hashes so it looks like an original Sandvox 2.0 document
+        if (saveOp != NSAutosaveOperation)
         {
-            NSDictionary *metadata = [coordinator metadataForPersistentStore:store];
-            
-            metadata = [metadata ks_dictionaryBySettingObject:hashes_2_0 forKey:NSStoreModelVersionHashesKey];
-            
-            [NSPersistentStoreCoordinator setMetadata:metadata forPersistentStoreOfType:NSBinaryStoreType URL:URL error:NULL];
+            NSString *hashesPath = [[NSBundle mainBundle] pathForResource:@"VersionHashes2_0" ofType:@"plist"];
+            NSDictionary *hashes_2_0 = [NSDictionary dictionaryWithContentsOfFile:hashesPath];
+            if (hashes_2_0)
+            {
+                NSDictionary *metadata = [coordinator metadataForPersistentStore:store];
+                
+                metadata = [metadata ks_dictionaryBySettingObject:hashes_2_0 forKey:NSStoreModelVersionHashesKey];
+                
+                [NSPersistentStoreCoordinator setMetadata:metadata forPersistentStoreOfType:NSBinaryStoreType URL:URL error:NULL];
+            }
         }
-        
-        
     }
     
     
