@@ -109,12 +109,15 @@
 
 - (void)buildAttributesForResizableElement:(NSString *)elementName object:(NSObject *)object DOMControllerClass:(Class)controllerClass sizeDelta:(NSSize)sizeDelta options:(SVResizingOptions)options;
 {
-    id <SVComponent> container = ([object isKindOfClass:[SVPlugIn class]] ?
-                                         [object valueForKey:@"container"] :
-                                         object);
-    
-    OBPRECONDITION(!_earlyElement);
-    _earlyElement = [[SVElementInfo alloc] initWithGraphicContainer:container];
+    // There may be a DOM Controller in place already, but most likely need to make a dedicated one
+    if (!_earlyElement)
+    {
+        id <SVComponent> container = ([object isKindOfClass:[SVPlugIn class]] ?
+                                             [object valueForKey:@"container"] :
+                                             object);
+        
+        _earlyElement = [[SVElementInfo alloc] initWithGraphicContainer:container];
+    }
     
     [super buildAttributesForResizableElement:elementName object:object DOMControllerClass:controllerClass sizeDelta:sizeDelta options:options];
     
