@@ -53,13 +53,15 @@
 {
     return [self width];
 }
-
-- (void) setContentWidth:(NSNumber *)width;
+- (void)setContentWidth:(NSNumber *)width;
 {
     [self setWidth:width];
 }
 
-- (NSNumber *) containerWidth; { return [self width]; }
+- (NSNumber *)contentHeight; { return NSNotApplicableMarker; }
+- (void)setContentHeight:(NSNumber *)height; { }
+
+- (NSNumber *)containerWidth; { return [self width]; }
 
 - (BOOL)isExplicitlySized; { return NO; }
 - (BOOL)isExplicitlySized:(SVHTMLContext *)context; { return NO; }

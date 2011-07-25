@@ -161,6 +161,30 @@
     [super willWriteSummaryOfPage:page];
 }
 
+#pragma mark Resources
+
+- (NSURL *)addResourceWithData:(NSData *)data
+                      MIMEType:(NSString *)mimeType
+              textEncodingName:(NSString *)encoding
+                   destination:(NSString *)uploadPath
+                       options:(NSUInteger)options;
+{
+    NSURL *result = [super addResourceWithData:data
+                                      MIMEType:mimeType
+                              textEncodingName:encoding
+                                   destination:uploadPath
+                                       options:options];
+    
+    // Make sure URL isn't relative
+    result = [NSURL URLWithString:[result absoluteString]
+                    relativeToURL:[NSURL URLWithString:@"http://example.com"]];
+    result = [result absoluteURL];
+    
+    // Add to web resources
+    SVMedia *media = [[SVMedia alloc] initWithData:data URL:result];
+    return [self addMedia:media];
+}
+
 #pragma mark Dependencies
 
 - (void)addDependency:(KSObjectKeyPathPair *)dependency;

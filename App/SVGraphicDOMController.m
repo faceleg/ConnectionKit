@@ -13,7 +13,6 @@
 #import "SVPlugInDOMController.h"
 #import "SVSidebarDOMController.h"
 #import "SVWebEditorHTMLContext.h"
-
 #import "WebEditingKit.h"
 
 #import "DOMElement+Karelia.h"
