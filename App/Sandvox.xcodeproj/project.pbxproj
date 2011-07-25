@@ -2214,8 +2214,8 @@
 		27FA98951194BF06003B8308 /* SidebarTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SidebarTemplate.html; sourceTree = "<group>"; };
 		27FAD5511146AEF80040FA44 /* SVTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVTabViewController.h; sourceTree = "<group>"; };
 		27FAD5521146AEF80040FA44 /* SVTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVTabViewController.m; sourceTree = "<group>"; };
-		27FC47ED1030CE7500A4A5E2 /* NSSet+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSSet+Karelia.h"; path = "../../Shared/Foundation/NSSet+Karelia.h"; sourceTree = "<group>"; };
-		27FC47EE1030CE7500A4A5E2 /* NSSet+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSSet+Karelia.m"; path = "../../Shared/Foundation/NSSet+Karelia.m"; sourceTree = "<group>"; };
+		27FC47ED1030CE7500A4A5E2 /* NSSet+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSSet+Karelia.h"; sourceTree = "<group>"; };
+		27FC47EE1030CE7500A4A5E2 /* NSSet+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSSet+Karelia.m"; sourceTree = "<group>"; };
 		27FDA7061238F4C3006E1A0D /* KSURLUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSURLUtilities.h; sourceTree = "<group>"; };
 		27FDA7071238F4C3006E1A0D /* KSURLUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSURLUtilities.m; sourceTree = "<group>"; };
 		27FDA71F1238F66F006E1A0D /* KSPathUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSPathUtilities.h; sourceTree = "<group>"; };
@@ -4541,8 +4541,6 @@
 		3C5A72FE0BF7AF0500776464 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
-				27FC47ED1030CE7500A4A5E2 /* NSSet+Karelia.h */,
-				27FC47EE1030CE7500A4A5E2 /* NSSet+Karelia.m */,
 				3C682BAA0D62345000B4D485 /* NSBundle+KTExtensions.h */,
 				3C682BAC0D62345B00B4D485 /* NSBundle+KTExtensions.m */,
 				3C682BAE0D62347100B4D485 /* NSObject+KTExtensions.h */,
@@ -5126,6 +5124,8 @@
 		CE01A6B50EAFD63600BDF264 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
+				27FC47ED1030CE7500A4A5E2 /* NSSet+Karelia.h */,
+				27FC47EE1030CE7500A4A5E2 /* NSSet+Karelia.m */,
 				CE01A6A40EAFD63600BDF264 /* NSSortDescriptor+Karelia.h */,
 				CE01A6A50EAFD63600BDF264 /* NSSortDescriptor+Karelia.m */,
 				CE01A6A00EAFD63600BDF264 /* NSHTTPCookieStorage+Karelia.h */,
