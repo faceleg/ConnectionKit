@@ -265,7 +265,16 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     BOOL importedContent = NO;
     for (int i = 0; i < [children length]; i++)
     {
-        DOMNode *imported = [document importNode:[children item:i] deep:YES];
+        DOMNode *node = [children item:i];
+        
+        // Try adopting the node, then fallback to import, as described in http://www.w3.org/TR/DOM-Level-3-Core/core.html#Document3-adoptNode
+        DOMNode *imported = [document adoptNode:node];
+        if (!imported)
+        {
+            // TODO:
+            // As noted at http://www.w3.org/TR/DOM-Level-3-Core/core.html#Core-Document-importNode this could raise an exception, which we should probably catch and handle in some fashion
+            imported = [document importNode:node deep:YES];
+        }
         
         // Is this supposed to be inserted at top of doc?
         if (importedContent)

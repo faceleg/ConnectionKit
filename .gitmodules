@@ -4,3 +4,6 @@
 [submodule "Code/iMedia"]
 	path = Code/iMedia
 	url = git@github.com:karelia/iMedia.git
+[submodule "Code/Shared"]
+	path = Code/Shared
+	url = git@github.com:karelia/Shared.git

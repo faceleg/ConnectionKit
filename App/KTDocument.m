@@ -867,7 +867,8 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     if (result)
     {
         // Turns out deriving the path from -fileURL is a bit of a bottleneck, so go old school. #125521
-        NSString *path = [[self fileName] stringByAppendingPathComponent:filename];
+        // Build warning with 10.6 SDK, so cheat
+        NSString *path = [[self performSelector:@selector(fileName)] stringByAppendingPathComponent:filename];
         result = ![[NSFileManager defaultManager] fileExistsAtPath:path];
     }
     
