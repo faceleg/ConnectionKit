@@ -8701,7 +8701,7 @@
 					"$(inherited)",
 					"\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"",
 					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/../../Shared/ThirdParty/JSTalk\"",
+					"\"$(SRCROOT)/../Code/Shared\"/**",
 				);
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = Sandvox;
@@ -8727,7 +8727,7 @@
 					"$(inherited)",
 					"\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"",
 					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/../../Shared/ThirdParty/JSTalk\"",
+					"\"$(SRCROOT)/../Code/Shared\"/**",
 				);
 				INFOPLIST_FILE = Info.plist;
 				MOMC_NO_WARNINGS = YES;
