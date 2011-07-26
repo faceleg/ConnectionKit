@@ -135,16 +135,11 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     SVWebEditorHTMLContext *context = [[[SVWebEditorHTMLContext class] alloc]
                                        initWithOutputWriter:htmlString inheritFromContext:[self HTMLContext]];
     
-    [[context rootDOMController] setWebEditorViewController:[self webEditorViewController]];
     [self writeUpdateHTML:context];
     
     
     // Copy top-level dependencies across to parent. #79396
     [context flush];    // you never know!
-    for (KSObjectKeyPathPair *aDependency in [[context rootDOMController] dependencies])
-    {
-        [(SVDOMController *)[self parentWebEditorItem] addDependency:aDependency];
-    }
     
     
     // Turn observation back on. #92124
@@ -155,36 +150,50 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     [context writeEndBodyString];
     
     
-    [self updateWithHTMLString:htmlString
-                         items:[[context rootDOMController] childWebEditorItems]];
+    [context close];
+    [self updateWithHTMLString:htmlString context:context];
     
     
     // Tidy
-    [context close];
     [htmlString release];
     [context release];
 }
 
-- (void)updateWithHTMLString:(NSString *)html items:(NSArray *)items;
+- (void)updateWithHTMLString:(NSString *)html context:(SVWebEditorHTMLContext *)context
 {
+    //[[context rootDOMController] setWebEditorViewController:[self webEditorViewController]];
+        
+    
     // Update DOM
     DOMElement *oldElement = [self HTMLElement];
+    DOMDocument *doc = [oldElement ownerDocument];
     WEKWebEditorItem *parent = [self parentWebEditorItem];
     [[self HTMLElement] setOuterHTML:html];
     
     while ([parent HTMLElement] == oldElement)  // ancestors may be referencing the same node
     {
         // Reset element, ready to reload
+        [parent setElementIdName:[[[[[context rootElement] subelements] lastObject] attributesAsDictionary] objectForKey:@"id"]];
         [parent setHTMLElement:nil];
-        [(SVDOMController *)parent setElementIdName:[[items lastObject] elementIdName]
-                              includeWhenPublishing:YES];
         
         parent = [parent parentWebEditorItem];
     }
     
-        
+    
+    // Create controllers
+    SVContentDOMController *contentController = [[SVContentDOMController alloc] initWithWebEditorHTMLContext:context
+                                                                                                        node:doc];
+    
+    
+    // Copy across extra dependencies, but I'm not sure why. Mike
+    for (KSObjectKeyPathPair *aDependency in [contentController dependencies])
+    {
+        [(SVDOMController *)[self parentWebEditorItem] addDependency:aDependency];
+    }
+    
+    
     // Re-use any existing graphic controllers when possible
-    for (WEKWebEditorItem *aController in items)
+    for (WEKWebEditorItem *aController in [contentController childWebEditorItems])
     {
         for (WEKWebEditorItem *newChildController in [aController childWebEditorItems])
         {
@@ -193,14 +202,18 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     }
     
     
+    
     // Hook up new DOM Controllers
     [self stopObservingDependencies];
-    [[self parentWebEditorItem] replaceChildWebEditorItem:self withItems:items];
+    [[self retain] autorelease];    // since the replacement could easily dealloc us otherwise!
+    [[self parentWebEditorItem] replaceChildWebEditorItem:self withItems:[contentController childWebEditorItems]];
     
-    for (SVDOMController *aController in items)
+    for (SVDOMController *aController in [contentController childWebEditorItems])
     {
         [aController didUpdateWithSelector:_cmd];
     }
+    
+    [contentController release];
 }
 
 - (void)willUpdateWithNewChildController:(WEKWebEditorItem *)newChildController;
@@ -210,8 +223,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     //  B) runs scripts for the new controller
     
     
-    DOMDocument *doc = [[self HTMLElement] ownerDocument];
-    [newChildController loadHTMLElementFromDocument:doc];
+    [newChildController HTMLElement];   // make sure it's loaded, but I'm not sure it's still needed!
     
     NSObject *object = [newChildController representedObject];
     

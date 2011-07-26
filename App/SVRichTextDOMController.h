@@ -10,7 +10,7 @@
 #import "SVRichText.h"
 
 
-@class SVRichText, SVGraphic, SVWebEditorHTMLContext, SVParagraphedHTMLWriterDOMAdaptor;
+@class SVRichText, SVGraphic, SVWebEditorHTMLContext, SVParagraphedHTMLWriterDOMAdaptor, SVElementInfo;
 
 
 @interface SVRichTextDOMController : SVTextDOMController 
@@ -43,7 +43,7 @@
 - (Class)attachmentsControllerClass;    // default is NSArrayController
 
 - (void)writeUpdateHTML:(SVHTMLContext *)context;
-- (void)updateWithHTMLString:(NSString *)html items:(NSArray *)items;
+- (void)updateWithHTMLString:(NSString *)html context:(SVWebEditorHTMLContext *)context;
 - (void)willUpdateWithNewChildController:(WEKWebEditorItem *)newChildController;
 
 
