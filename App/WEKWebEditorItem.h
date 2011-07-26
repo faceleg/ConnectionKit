@@ -110,6 +110,12 @@
 @property(nonatomic, copy) NSNumber *width;
 @property(nonatomic, copy) NSNumber *height;
 
+- (void)updateWidth;    // updates DOM to match .width property. Override if want alternative update system
+- (void)updateHeight;   // same, but for height
+
+
+#pragma mark Resizing
+
 @property(nonatomic, getter=isHorizontallyResizable) BOOL horizontallyResizable;
 @property(nonatomic, getter=isVerticallyResizable) BOOL verticallyResizable;
 

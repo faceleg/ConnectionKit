@@ -385,6 +385,23 @@
 
 #pragma mark Resizing
 
+- (void)updateSize;
+{
+    // Workaround for #94381. Make sure any selectable parent redraws
+    [[[self selectableAncestors] lastObject] setNeedsDisplay];
+    
+    // Call super so we don't get in a loop of marking for update
+    [super updateWidth];
+    [super updateHeight];
+    
+    
+    // Finish
+    [self didUpdateWithSelector:_cmd];
+}
+
+- (void)updateWidth; { [self setNeedsUpdateWithSelector:@selector(updateSize)]; }
+- (void)updateHeight; { [self setNeedsUpdateWithSelector:@selector(updateSize)]; }
+
 - (unsigned int)resizingMask
 {
     unsigned int result = [super resizingMask];

@@ -72,24 +72,6 @@
 
 #pragma mark Accessors
 
-@synthesize width = _width;
-- (void)setWidth:(NSNumber *)width;
-{
-    width = [width copy];
-    [_width release]; _width = width;
-    
-    [self setNeedsUpdateWithSelector:@selector(updateSize)];
-}
-
-@synthesize height = _height;
-- (void)setHeight:(NSNumber *)height;
-{
-    height = [height copy];
-    [_height release]; _height = height;
-    
-    [self setNeedsUpdateWithSelector:@selector(updateSize)];
-}
-
 - (WEKWebEditorView *)webEditor
 {
     return [[self parentWebEditorItem] webEditor];
@@ -553,6 +535,52 @@
     return result;
 }
 
+#pragma mark Metrics
+
+@synthesize width = _width;
+- (void)setWidth:(NSNumber *)width;
+{
+    width = [width copy];
+    [_width release]; _width = width;
+    
+    [self updateWidth];
+}
+
+@synthesize height = _height;
+- (void)setHeight:(NSNumber *)height;
+{
+    height = [height copy];
+    [_height release]; _height = height;
+    
+    [self updateHeight];
+}
+
+- (void)updateWidth;
+{
+    DOMHTMLElement *element = [self HTMLElement];
+    if ([element respondsToSelector:@selector(setWidth:)])
+    {
+        [element setAttribute:@"width" value:[[self width] description]];
+    }
+    else
+    {
+        [[element style] setWidth:[[[self width] description] stringByAppendingString:@"px"]];
+    }
+}
+
+- (void)updateHeight;
+{
+    DOMHTMLElement *element = [self HTMLElement];
+    if ([element respondsToSelector:@selector(setHeight:)])
+    {
+        [element setAttribute:@"height" value:[[self height] description]];
+    }
+    else
+    {
+        [[element style] setHeight:[[[self height] description] stringByAppendingString:@"px"]];
+    }
+}
+
 #pragma mark Resizing
 
 @synthesize horizontallyResizable = _horizontallyResizable;
@@ -583,38 +611,6 @@
     
     
     return result;
-}
-
-- (void)updateSize;
-{
-    // Workaround for #94381. Make sure any selectable parent redraws
-    [[[self selectableAncestors] lastObject] setNeedsDisplay];
-    
-    
-    
-    DOMHTMLElement *element = [self HTMLElement];
-    
-    if ([element respondsToSelector:@selector(setWidth:)])
-    {
-        [element setAttribute:@"width" value:[[self width] description]];
-    }
-    else
-    {
-        [[element style] setWidth:[[[self width] description] stringByAppendingString:@"px"]];
-    }
-    
-    if ([element respondsToSelector:@selector(setHeight:)])
-    {
-        [element setAttribute:@"height" value:[[self height] description]];
-    }
-    else
-    {
-        [[element style] setHeight:[[[self height] description] stringByAppendingString:@"px"]];
-    }
-    
-    
-    // Finish
-    [self didUpdateWithSelector:_cmd];
 }
 
 - (unsigned int)resizingMaskForDOMElement:(DOMElement *)element;
