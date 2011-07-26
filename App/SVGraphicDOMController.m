@@ -47,11 +47,13 @@
             switch ([children count])
             {
                 case 1:
-                    OBASSERT([[[children objectAtIndex:0] childWebEditorItems] count] <= 1);
-                    DOMHTMLElement *child = [[children objectAtIndex:0] HTMLElement];
-                    if (![[child tagName] isEqualToString:@"IMG"])  // images already have their own placeholder
+                    for (WEKWebEditorItem *anItem in children)
                     {
-                        [child setInnerHTML:parsedPlaceholderHTML];
+                    	DOMHTMLElement *child = [anItem HTMLElement];
+	                    if (![[child tagName] isEqualToString:@"IMG"])  // images already have their own placeholder
+	                    {
+	                        [child setInnerHTML:parsedPlaceholderHTML];
+                        }
                     }
                     break;
                     
