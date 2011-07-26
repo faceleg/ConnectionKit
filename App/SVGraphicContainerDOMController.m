@@ -92,7 +92,7 @@
     [super loadHTMLElementFromDocument:document];
     
     // Locate body element too
-    SVGraphic *graphic = [self representedObject];
+    SVGraphic *graphic = [[self representedObject] graphic];
     if ([self isHTMLElementLoaded])
     {
         if ([graphic isPagelet])
@@ -552,7 +552,7 @@
 
 - (void)paste:(id)sender;
 {
-    SVGraphic *graphic = [self representedObject];
+    SVGraphic *graphic = [[self representedObject] graphic];
     
     if (![graphic awakeFromPasteboardItems:[[NSPasteboard generalPasteboard] sv_pasteboardItems]])
     {
@@ -583,7 +583,7 @@
 
 - (BOOL)writeAttributedHTML:(SVFieldEditorHTMLWriterDOMAdapator *)adaptor;
 {
-    SVGraphic *graphic = [self representedObject];
+    SVGraphic *graphic = [[self representedObject] graphic];
     SVTextAttachment *attachment = [graphic textAttachment];
     
     
@@ -721,7 +721,7 @@
     
     
     // If constrained proportions, apply that
-    SVGraphic *graphic = [self representedObject];
+    SVGraphic *graphic = [[self representedObject] graphic];
     NSNumber *ratio = [graphic constrainedProportionsRatio];
     
     if (ratio)
@@ -787,7 +787,7 @@
 - (CGFloat)maxWidth;
 {
     // Base limit on design rather than the DOM
-    SVGraphic *graphic = [self representedObject];
+    SVGraphic *graphic = [[self representedObject] graphic];
     OBASSERT(graphic);
     
     KTPage *page = [[self HTMLContext] page];
