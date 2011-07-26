@@ -939,8 +939,10 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
             switch ([children count])
             {
                 case 1:
-                    OBASSERT([[[children objectAtIndex:0] childWebEditorItems] count] <= 1);
-                    [[[children objectAtIndex:0] HTMLElement] setInnerHTML:parsedPlaceholderHTML];
+                    for (WEKWebEditorItem *anItem in children)
+                    {
+                        [[anItem HTMLElement] setInnerHTML:parsedPlaceholderHTML];
+                    }
                     break;
                     
                 default:
