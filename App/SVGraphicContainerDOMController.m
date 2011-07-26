@@ -349,7 +349,7 @@
 
 - (void)updateWrap;
 {
-    SVGraphic *graphic = [self representedObject];
+    SVGraphic *graphic = [[self representedObject] graphic];
     
     
     // Some wrap changes actually need a full update. #94915
