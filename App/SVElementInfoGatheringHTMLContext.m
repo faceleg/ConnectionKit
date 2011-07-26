@@ -90,8 +90,7 @@
 {
     if (container)
     {
-        //OBPRECONDITION(!_earlyElement);
-        _earlyElement = [[SVElementInfo alloc] initWithGraphicContainer:container];
+        [_earlyElement release]; _earlyElement = [[SVElementInfo alloc] initWithGraphicContainer:container];
     }
     
     [super beginGraphicContainer:container];
