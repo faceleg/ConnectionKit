@@ -16,20 +16,6 @@
 
 @implementation SVMediaContainerDOMController
 
-#pragma mark Update
-
-- (void)updateSize;
-{
-    if ([[self selectableTopLevelDescendants] count] > 1)	// #93182
-    {
-        [super updateSize];
-    }
-    else
-    {
-        [self didUpdateWithSelector:_cmd];   // fake it
-    }
-}
-
 #pragma mark Resizing
 
 - (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;
