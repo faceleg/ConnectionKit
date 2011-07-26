@@ -29,7 +29,7 @@
 - (id)initWithGraphicContainer:(id <SVComponent>)container;
 @property(nonatomic, retain, readonly) id <SVComponent> graphicContainer;
 
-@property(nonatomic, copy) NSDictionary *attributes;
+@property(nonatomic, copy) NSDictionary *attributesAsDictionary;
 
 @property(nonatomic, copy, readonly) NSArray *subelements;
 - (void)addSubelement:(SVElementInfo *)element;

@@ -71,7 +71,7 @@
             info = [[SVElementInfo alloc] init];
         }
         
-        [info setAttributes:[[self currentAttributes] attributesAsDictionary]];
+        [info setAttributesAsDictionary:[[self currentAttributes] attributesAsDictionary]];
                 
         [[self currentElement] addSubelement:info];
         [_openElementInfos addObject:info];
@@ -182,7 +182,7 @@
     [super dealloc];
 }
 
-@synthesize attributes = _attributes;
+@synthesize attributesAsDictionary = _attributes;
 
 - (NSArray *)subelements; { return [[_subelements copy] autorelease]; }
 

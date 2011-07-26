@@ -89,7 +89,7 @@
     id <SVComponent> container = [self graphicContainer];
     if (container)
     {
-        NSString *elementID = [[self attributes] objectForKey:@"id"];
+        NSString *elementID = [[self attributesAsDictionary] objectForKey:@"id"];
         if (elementID)
         {
             if ([self isHorizontallyResizable] || [self isVerticallyResizable])
