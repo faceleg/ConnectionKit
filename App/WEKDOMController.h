@@ -45,7 +45,7 @@
 - (void)loadHTMLElement;
 - (BOOL)isHTMLElementLoaded;
 
-@property(nonatomic, copy, readonly) NSString *elementIdName;
+@property(nonatomic, copy) NSString *elementIdName;
 @property(nonatomic, retain, readonly) DOMNode *node;
 @property(nonatomic, retain, readonly) DOMHTMLDocument *HTMLDocument;
 
