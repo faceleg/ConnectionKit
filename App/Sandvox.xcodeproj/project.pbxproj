@@ -71,6 +71,7 @@
 			);
 			dependencies = (
 				3C9B65940BFA7F7F007A4871 /* PBXTargetDependency */,
+				27B4129513DF7DED004173E8 /* PBXTargetDependency */,
 				27275736124146B20043C223 /* PBXTargetDependency */,
 				3CBC719E11F02FAD00716937 /* PBXTargetDependency */,
 				27CFC649123E79C300BF018C /* PBXTargetDependency */,
@@ -1253,6 +1254,13 @@
 			containerPortal = 3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = AmazonSupport;
+		};
+		27B4129413DF7DED004173E8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216 /* AmazonSupport */;
 			remoteInfo = AmazonSupport;
 		};
 		27BDA74310C5E410008C8199 /* PBXContainerItemProxy */ = {
@@ -7728,6 +7736,11 @@
 			name = MetaSandvox;
 			targetProxy = 274E827F0D627180004F89C2 /* PBXContainerItemProxy */;
 		};
+		27B4129513DF7DED004173E8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AmazonSupport;
+			targetProxy = 27B4129413DF7DED004173E8 /* PBXContainerItemProxy */;
+		};
 		27CFC649123E79C300BF018C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = ContactElement;
@@ -8701,7 +8714,6 @@
 					"$(inherited)",
 					"\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"",
 					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/../Code/Shared\"/**",
 				);
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = Sandvox;
@@ -8727,7 +8739,6 @@
 					"$(inherited)",
 					"\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"",
 					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/../Code/Shared\"/**",
 				);
 				INFOPLIST_FILE = Info.plist;
 				MOMC_NO_WARNINGS = YES;
