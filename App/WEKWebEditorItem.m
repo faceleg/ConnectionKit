@@ -818,10 +818,6 @@
             [self setHeight:height];
         }
     }
-    
-    
-    // Push into view immediately
-    [self updateIfNeeded];
 }
 
 - (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;

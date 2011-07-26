@@ -392,6 +392,14 @@
     return result;
 }
 
+- (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
+{
+    [super resizeToSize:size byMovingHandle:handle];
+    
+    // Force immediate update
+    [self updateIfNeeded];
+}
+
 #pragma mark Moving
 
 /*  Probably don't really want to move this item, but the graphic as a whole
