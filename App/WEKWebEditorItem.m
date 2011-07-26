@@ -789,7 +789,7 @@
 {
     // Apply the change
     NSNumber *width = (size.width > 0 ? [NSNumber numberWithInt:size.width] : nil);
-    NSNumber *height = (size.height > 0 ? [NSNumber numberWithInt:size.height] : nil);
+    
     
     NSDictionary *info = [self infoForBinding:NSWidthBinding];
     if (info)
@@ -802,15 +802,21 @@
         [self setWidth:width];
     }
     
-    info = [self infoForBinding:@"height"];
-    if (info)
+    
+    // Check height should be adjusted, otherwise auto height can get accidentally locked in
+    if (handle != kSVGraphicMiddleLeftHandle && handle != kSVGraphicMiddleRightHandle)
     {
-        [[info objectForKey:NSObservedObjectKey] setValue:height
-                                               forKeyPath:[info objectForKey:NSObservedKeyPathKey]];
-    }
-    else
-    {
-        [self setHeight:height];
+        NSNumber *height = (size.height > 0 ? [NSNumber numberWithInt:size.height] : nil);
+        info = [self infoForBinding:@"height"];
+        if (info)
+        {
+            [[info objectForKey:NSObservedObjectKey] setValue:height
+                                                   forKeyPath:[info objectForKey:NSObservedKeyPathKey]];
+        }
+        else
+        {
+            [self setHeight:height];
+        }
     }
     
     
