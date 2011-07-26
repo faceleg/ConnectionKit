@@ -71,7 +71,6 @@
 			);
 			dependencies = (
 				3C9B65940BFA7F7F007A4871 /* PBXTargetDependency */,
-				27B4129513DF7DED004173E8 /* PBXTargetDependency */,
 				27275736124146B20043C223 /* PBXTargetDependency */,
 				3CBC719E11F02FAD00716937 /* PBXTargetDependency */,
 				27CFC649123E79C300BF018C /* PBXTargetDependency */,
@@ -1256,7 +1255,7 @@
 			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
 			remoteInfo = AmazonSupport;
 		};
-		27B4129413DF7DED004173E8 /* PBXContainerItemProxy */ = {
+		27B4129913DF7F7F004173E8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */;
 			proxyType = 1;
@@ -6250,6 +6249,7 @@
 				3C535FFC13BC247F004222D5 /* PBXTargetDependency */,
 				CED864B110AA41DC002DF34F /* PBXTargetDependency */,
 				CE559B621085296D008870B5 /* PBXTargetDependency */,
+				27B4129A13DF7F7F004173E8 /* PBXTargetDependency */,
 				3C1F512711D576D00036B375 /* PBXTargetDependency */,
 			);
 			name = "Sandvox-ExecutableOnly";
@@ -7736,10 +7736,10 @@
 			name = MetaSandvox;
 			targetProxy = 274E827F0D627180004F89C2 /* PBXContainerItemProxy */;
 		};
-		27B4129513DF7DED004173E8 /* PBXTargetDependency */ = {
+		27B4129A13DF7F7F004173E8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = AmazonSupport;
-			targetProxy = 27B4129413DF7DED004173E8 /* PBXContainerItemProxy */;
+			targetProxy = 27B4129913DF7F7F004173E8 /* PBXContainerItemProxy */;
 		};
 		27CFC649123E79C300BF018C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
