@@ -100,6 +100,7 @@ extern NSString *kKTDocumentWillSaveNotification;
 
 @property(nonatomic, copy, readonly) NSDictionary *documentFileWrappers;    // case-sensitive dictionary
 - (BOOL)isFilenameAvailable:(NSString *)filename;
+- (BOOL)isFilenameAvailable:(NSString *)filename checkPackageContents:(BOOL)includeFiles;
 - (NSString *)keyForDocumentFileWrapper:(id <SVDocumentFileWrapper>)wrapper;
 
 - (NSString *)addDocumentFileWrapper:(id <SVDocumentFileWrapper>)wrapper; // returns the filename reserved
