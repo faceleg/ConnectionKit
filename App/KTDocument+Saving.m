@@ -1318,6 +1318,14 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                                     files:unusedFiles
                                       tag:NULL];
     }
+    else
+    {
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert setMessageText:NSLocalizedString(@"No way to reduce this document's file size was found.", "alert message")];
+        [alert beginSheetModalForWindow:[self windowForSheet] modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
+        [alert release];
+    }
+    
     [unusedFiles release];
     
     
