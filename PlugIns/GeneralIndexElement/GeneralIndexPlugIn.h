@@ -65,6 +65,7 @@ typedef enum {
     NSUInteger _timestampType;
 	IndexLayoutType _indexLayoutType;
     BOOL _hyperlinkTitles;
+    BOOL _richTextTitles;
     BOOL _showPermaLinks;
     BOOL _showEntries;			// transient only, for bindings
     BOOL _showTitles;			// transient only, for bindings
@@ -73,6 +74,7 @@ typedef enum {
 }
 
 @property (nonatomic) BOOL hyperlinkTitles;
+@property (nonatomic) BOOL richTextTitles;
 @property (nonatomic) BOOL showPermaLinks;
 @property (nonatomic) BOOL showEntries;
 @property (nonatomic) BOOL showTitles;

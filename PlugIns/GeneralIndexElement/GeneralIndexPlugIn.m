@@ -73,6 +73,7 @@
 { 
     NSArray *plugInKeys = [NSArray arrayWithObjects:
 						   @"hyperlinkTitles",
+						   @"richTextTitles",
 						   @"indexLayoutType",
 						   @"showPermaLinks",
                            @"showComments",
@@ -103,6 +104,7 @@
 {
 	// add dependencies
 	[context addDependencyForKeyPath:@"hyperlinkTitles"		ofObject:self];
+	[context addDependencyForKeyPath:@"richTextTitles"		ofObject:self];
 	[context addDependencyForKeyPath:@"indexLayoutType"		ofObject:self];
 	[context addDependencyForKeyPath:@"showPermaLinks"		ofObject:self];
 	[context addDependencyForKeyPath:@"showComments"		ofObject:self];
@@ -374,7 +376,7 @@
 		
 		[context writeElement:@"span"
 			  withTitleOfPage:iteratedPage
-				  asPlainText:YES	// used to be allowing for rich text in articles, but this allows hyperlinks to go through, which means nested hyperlinks in the index.
+				  asPlainText:!self.richTextTitles	// used to be allowing for rich text in articles, but this allows hyperlinks to go through, which means nested hyperlinks in the index.
 				   attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
 		
 		if ( self.hyperlinkTitles ) { [context endElement]; } // </a> 
@@ -443,6 +445,7 @@
 #pragma mark Properties
 
 @synthesize hyperlinkTitles = _hyperlinkTitles;
+@synthesize richTextTitles = _richTextTitles;
 @synthesize indexLayoutType = _indexLayoutType;
 @synthesize showPermaLinks	= _showPermaLinks;
 @synthesize showEntries = _showEntries;
