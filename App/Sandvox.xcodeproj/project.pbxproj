@@ -1259,7 +1259,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216 /* AmazonSupport */;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
 			remoteInfo = AmazonSupport;
 		};
 		27BDA74310C5E410008C8199 /* PBXContainerItemProxy */ = {
