@@ -2,9 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:../connection/Connection.xcodeproj">
+      location = "group:App/Sandvox.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:App/Sandvox.xcodeproj">
+      location = "group:../connection/Connection.xcodeproj">
    </FileRef>
 </Workspace>
