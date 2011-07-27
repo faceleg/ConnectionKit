@@ -147,14 +147,12 @@
     
     NSURL *result = [super addResourceAtURL:fileURL destination:uploadPath options:options];
     NSURL *siteURL = [[[_publisher site] hostProperties] siteURL];
-    NSURL *uploadURL = [result ks_URLRelativeToURL:siteURL];
+    uploadPath = [result ks_stringRelativeToURL:siteURL];
     
-    // Only publish if figured a decent URL for it
-    if ([uploadURL ks_isSubpathOfURL:siteURL])
+    // Only publish if figured a decent URL for it. Can't test with -ks_isSubpath… etc. because that won't handle if the site URL happens to be an index.html file. (Charlie had this)
+    if (![uploadPath hasPrefix:@"../"])
     {
-        NSString *uploadPath = [[_publisher baseRemotePath]
-                                stringByAppendingPathComponent:[uploadURL relativeString]];
-        
+        uploadPath = [[_publisher baseRemotePath] stringByAppendingPathComponent:uploadPath];
         [_publisher publishContentsOfURL:fileURL toPath:uploadPath];
     }
     
