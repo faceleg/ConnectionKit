@@ -160,6 +160,7 @@ extern NSString *kKTDocumentWillSaveNotification;
 
 - (BOOL)isSaving;
 
+- (IBAction)reduceFileSize:(id)sender;
 
 @end
 

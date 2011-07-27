@@ -1281,6 +1281,13 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     [wrapper release];
 }
 
+#pragma mark Reduce File Size
+
+- (IBAction)reduceFileSize:(id)sender;
+{
+    
+}
+
 @end
 
 
