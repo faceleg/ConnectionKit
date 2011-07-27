@@ -113,7 +113,7 @@
         [self addDependency:aDependency];
     }
     
-    NSString *style = [[[context currentElementInfo] attributesAsDictionary] objectForKey:@"style"];
+    NSString *style = [[[context currentAttributes] attributesAsDictionary] objectForKey:@"style"];
     [[[self textHTMLElement] style] setCssText:style];
     [self setAlignment:[self alignment]];   // repair alignemnt #113613
     

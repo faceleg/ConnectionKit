@@ -256,7 +256,7 @@
     // TODO: Not sure this branch is even needed any more, look into ditching!
     if (![controller hasElementIdName])
     {
-        KSElementInfo *info = [self currentElementInfo];
+        KSXMLAttributes *info = [self currentAttributes];
         NSString *ID = [[info attributesAsDictionary] objectForKey:@"id"];
         if (ID)
         {

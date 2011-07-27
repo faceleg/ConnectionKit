@@ -158,8 +158,8 @@
 		2713C0691078177A000864C2 /* SVLayoutView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2713C0671078177A000864C2 /* SVLayoutView.h */; };
 		2713C06A1078177A000864C2 /* SVLayoutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2713C0681078177A000864C2 /* SVLayoutView.m */; };
 		271575CE0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 271575CC0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.m */; };
-		271884431296A28000139C89 /* KSElementInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 271884411296A28000139C89 /* KSElementInfo.h */; };
-		271884441296A28000139C89 /* KSElementInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 271884421296A28000139C89 /* KSElementInfo.m */; };
+		271884431296A28000139C89 /* KSXMLAttributes.h in Headers */ = {isa = PBXBuildFile; fileRef = 271884411296A28000139C89 /* KSXMLAttributes.h */; };
+		271884441296A28000139C89 /* KSXMLAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 271884421296A28000139C89 /* KSXMLAttributes.m */; };
 		27196F631090A9D40096B612 /* SVInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = 27196F611090A9D40096B612 /* SVInspector.h */; settings = {ATTRIBUTES = (); }; };
 		27196F641090A9D40096B612 /* SVInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 27196F621090A9D40096B612 /* SVInspector.m */; };
 		27196F801090AEDC0096B612 /* KSDocumentController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27196F7E1090AEDC0096B612 /* KSDocumentController.h */; };
@@ -1781,8 +1781,8 @@
 		27168E610DAA45D200BBC2C6 /* KTMediaManager+MediaFiles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTMediaManager+MediaFiles.m"; sourceTree = "<group>"; };
 		2716F2D20CE61A8000DE635E /* KTMissingMediaArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMissingMediaArrayController.h; sourceTree = "<group>"; };
 		2716F2D30CE61A8000DE635E /* KTMissingMediaArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMissingMediaArrayController.m; sourceTree = "<group>"; };
-		271884411296A28000139C89 /* KSElementInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSElementInfo.h; sourceTree = "<group>"; };
-		271884421296A28000139C89 /* KSElementInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSElementInfo.m; sourceTree = "<group>"; };
+		271884411296A28000139C89 /* KSXMLAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSXMLAttributes.h; sourceTree = "<group>"; };
+		271884421296A28000139C89 /* KSXMLAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSXMLAttributes.m; sourceTree = "<group>"; };
 		27196F611090A9D40096B612 /* SVInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVInspector.h; sourceTree = "<group>"; };
 		27196F621090A9D40096B612 /* SVInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVInspector.m; sourceTree = "<group>"; };
 		27196F7E1090AEDC0096B612 /* KSDocumentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSDocumentController.h; sourceTree = "<group>"; };
@@ -3947,8 +3947,8 @@
 				270172F211CFBEF3001512F6 /* KSStringXMLEntityEscaping.m */,
 				27F2777F11F9A33E00B7F8FA /* KSCSSWriter.h */,
 				27F2778011F9A33E00B7F8FA /* KSCSSWriter.m */,
-				271884411296A28000139C89 /* KSElementInfo.h */,
-				271884421296A28000139C89 /* KSElementInfo.m */,
+				271884411296A28000139C89 /* KSXMLAttributes.h */,
+				271884421296A28000139C89 /* KSXMLAttributes.m */,
 			);
 			name = KSHTMLWriter;
 			path = ../KSHTMLWriter;
@@ -6168,7 +6168,7 @@
 				3CACE246127FB82300983DF2 /* SVCommentsWindowController.h in Headers */,
 				3CACE29F127FB99400983DF2 /* SVGoogleWindowController.h in Headers */,
 				27711D541282BBCA00AE27CC /* SVImageItem.h in Headers */,
-				271884431296A28000139C89 /* KSElementInfo.h in Headers */,
+				271884431296A28000139C89 /* KSXMLAttributes.h in Headers */,
 				276C004E129BE40500568A73 /* SVGraphicContainerDOMController.h in Headers */,
 				276C010C129C00F800568A73 /* DOMTreeWalker+Karelia.h in Headers */,
 				277586CB129E846B0027C7FF /* NSBundle+Sandvox.h in Headers */,
@@ -7664,7 +7664,7 @@
 				3CACE247127FB82300983DF2 /* SVCommentsWindowController.m in Sources */,
 				3CACE2A0127FB99400983DF2 /* SVGoogleWindowController.m in Sources */,
 				27711D551282BBCA00AE27CC /* SVImageItem.m in Sources */,
-				271884441296A28000139C89 /* KSElementInfo.m in Sources */,
+				271884441296A28000139C89 /* KSXMLAttributes.m in Sources */,
 				276C004F129BE40500568A73 /* SVGraphicContainerDOMController.m in Sources */,
 				276C010D129C00F800568A73 /* DOMTreeWalker+Karelia.m in Sources */,
 				277586F3129E87F80027C7FF /* SVLabel.m in Sources */,
