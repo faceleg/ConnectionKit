@@ -67,7 +67,7 @@
 #import "NSManagedObjectContext+KTExtensions.h"
 
 #import "KSAbstractBugReporter.h"
-#import "KSCaseInsensitiveDictionary.h"
+#import "KSStringKeyedDictionary.h"
 #import "KSSilencingConfirmSheet.h"
 
 #import "NSArray+Karelia.h"
@@ -229,7 +229,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         
         
         // Other ivars
-        _filenameReservations = [[KSCaseInsensitiveDictionary alloc] init];
+        _filenameReservations = [[KSStringKeyedDictionary alloc] initWithComparisonOptions:NSCaseInsensitiveSearch];
         
         
         // Init UI accessors
@@ -834,6 +834,11 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (BOOL)isFilenameAvailable:(NSString *)filename;
 {
+    return [self isFilenameAvailable:filename checkPackageContents:YES];
+}
+
+- (BOOL)isFilenameAvailable:(NSString *)filename checkPackageContents:(BOOL)includeFiles;
+{
     OBPRECONDITION(filename);
     
     
@@ -864,7 +869,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     
     
     // Finally, see if there's already an item on disk (such as .svn directory)
-    if (result)
+    if (result && includeFiles)
     {
         // Turns out deriving the path from -fileURL is a bit of a bottleneck, so go old school. #125521
         // Build warning with 10.6 SDK, so cheat

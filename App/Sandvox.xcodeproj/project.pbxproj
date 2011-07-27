@@ -324,8 +324,8 @@
 		277586F3129E87F80027C7FF /* SVLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 277586F1129E87F80027C7FF /* SVLabel.m */; };
 		27758712129E8A740027C7FF /* SVFieldFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 27758710129E8A740027C7FF /* SVFieldFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27758713129E8A740027C7FF /* SVFieldFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 27758711129E8A740027C7FF /* SVFieldFormatter.m */; };
-		2775DB6C11B30B05005D6C92 /* KSCaseInsensitiveDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 2775DB6A11B30B05005D6C92 /* KSCaseInsensitiveDictionary.h */; };
-		2775DB6D11B30B05005D6C92 /* KSCaseInsensitiveDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 2775DB6B11B30B05005D6C92 /* KSCaseInsensitiveDictionary.m */; };
+		2775DB6C11B30B05005D6C92 /* KSStringKeyedDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 2775DB6A11B30B05005D6C92 /* KSStringKeyedDictionary.h */; };
+		2775DB6D11B30B05005D6C92 /* KSStringKeyedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 2775DB6B11B30B05005D6C92 /* KSStringKeyedDictionary.m */; };
 		277892A010CD5FA3008AA683 /* SVTitleBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 2778929E10CD5FA3008AA683 /* SVTitleBox.h */; };
 		277892A110CD5FA3008AA683 /* SVTitleBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 2778929F10CD5FA3008AA683 /* SVTitleBox.m */; };
 		277AF78812DB15F6009CD192 /* SVPagesTreeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 277AF77B12DB1526009CD192 /* SVPagesTreeController.m */; };
@@ -1960,8 +1960,8 @@
 		277586F1129E87F80027C7FF /* SVLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVLabel.m; sourceTree = "<group>"; };
 		27758710129E8A740027C7FF /* SVFieldFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVFieldFormatter.h; sourceTree = "<group>"; };
 		27758711129E8A740027C7FF /* SVFieldFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVFieldFormatter.m; sourceTree = "<group>"; };
-		2775DB6A11B30B05005D6C92 /* KSCaseInsensitiveDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSCaseInsensitiveDictionary.h; sourceTree = "<group>"; };
-		2775DB6B11B30B05005D6C92 /* KSCaseInsensitiveDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSCaseInsensitiveDictionary.m; sourceTree = "<group>"; };
+		2775DB6A11B30B05005D6C92 /* KSStringKeyedDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSStringKeyedDictionary.h; sourceTree = "<group>"; };
+		2775DB6B11B30B05005D6C92 /* KSStringKeyedDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSStringKeyedDictionary.m; sourceTree = "<group>"; };
 		2778929E10CD5FA3008AA683 /* SVTitleBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVTitleBox.h; sourceTree = "<group>"; };
 		2778929F10CD5FA3008AA683 /* SVTitleBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVTitleBox.m; sourceTree = "<group>"; };
 		277AF77A12DB1526009CD192 /* SVPagesTreeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPagesTreeController.h; sourceTree = "<group>"; };
@@ -5235,8 +5235,8 @@
 				CE01A7040EAFD63600BDF264 /* TrimTransformer.m */,
 				27D353B611A9CC7200BC4DB8 /* KSComparisonValueTransformer.h */,
 				27D353B711A9CC7200BC4DB8 /* KSComparisonValueTransformer.m */,
-				2775DB6A11B30B05005D6C92 /* KSCaseInsensitiveDictionary.h */,
-				2775DB6B11B30B05005D6C92 /* KSCaseInsensitiveDictionary.m */,
+				2775DB6A11B30B05005D6C92 /* KSStringKeyedDictionary.h */,
+				2775DB6B11B30B05005D6C92 /* KSStringKeyedDictionary.m */,
 				277FDD5F11CE21650083F1BF /* KSMegaBufferedWriter.h */,
 				277FDD6011CE21650083F1BF /* KSMegaBufferedWriter.m */,
 				2726D9CB11E5D3230000257D /* KSSortedMutableArray.h */,
@@ -6132,7 +6132,7 @@
 				27D353B811A9CC7200BC4DB8 /* KSComparisonValueTransformer.h in Headers */,
 				27CD0A2B11AD684A0069E5AB /* WEKWebKitPrivate.h in Headers */,
 				27B5921411AE85C100E10A1E /* WEKWebViewEditing.h in Headers */,
-				2775DB6C11B30B05005D6C92 /* KSCaseInsensitiveDictionary.h in Headers */,
+				2775DB6C11B30B05005D6C92 /* KSStringKeyedDictionary.h in Headers */,
 				CE1D6D4311B5BA840087AC1B /* NSMenuItem+Karelia.h in Headers */,
 				277FDC3911CD3F810083F1BF /* SVPublishDataWriter.h in Headers */,
 				277FDD6111CE21650083F1BF /* KSMegaBufferedWriter.h in Headers */,
@@ -7627,7 +7627,7 @@
 				27EF99C311A4205600FC8424 /* KSXMLWriter.m in Sources */,
 				27D353B911A9CC7200BC4DB8 /* KSComparisonValueTransformer.m in Sources */,
 				27B5921511AE85C100E10A1E /* WEKWebViewEditing.m in Sources */,
-				2775DB6D11B30B05005D6C92 /* KSCaseInsensitiveDictionary.m in Sources */,
+				2775DB6D11B30B05005D6C92 /* KSStringKeyedDictionary.m in Sources */,
 				CE1D6D4411B5BA840087AC1B /* NSMenuItem+Karelia.m in Sources */,
 				277FDC3A11CD3F810083F1BF /* SVPublishDataWriter.m in Sources */,
 				277FDD6211CE21650083F1BF /* KSMegaBufferedWriter.m in Sources */,
