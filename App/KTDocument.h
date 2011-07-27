@@ -58,7 +58,7 @@ extern NSString *kKTDocumentWillSaveNotification;
     
     
     // Saving
-    unsigned                                    mySaveOperationCount;
+    unsigned                                    _saveOpCount;
     SVDocumentSavePanelAccessoryViewController  *_accessoryViewController;
     
     NSMutableDictionary *_filenameReservations;
@@ -160,6 +160,7 @@ extern NSString *kKTDocumentWillSaveNotification;
 
 - (BOOL)isSaving;
 
+- (IBAction)reduceFileSize:(id)sender;
 
 @end
 

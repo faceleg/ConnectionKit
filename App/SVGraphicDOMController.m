@@ -22,6 +22,7 @@
 #import "SVTemplate.h"
 #import "SVTextAttachment.h"
 #import "SVWebEditorHTMLContext.h"
+#import "SVWebEditorViewController.h"
 
 #import "WebEditingKit.h"
 #import "WebViewEditingHelperClasses.h"
@@ -209,12 +210,13 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     
     // Hook up new DOM Controllers
-    [[self retain] autorelease];    // replacement is likely to deallocate us
-    [[self parentWebEditorItem] replaceChildWebEditorItem:self withItems:items];
-    for (SVDOMController *aController in items)
+    SVWebEditorViewController *viewController = [self webEditorViewController];
+    [viewController willUpdate];    // wrap the replacement like this so doesn't think update finished too early
     {
-        [aController didUpdateWithSelector:_cmd];
+        [[self retain] autorelease];    // replacement is likely to deallocate us
+        [[self parentWebEditorItem] replaceChildWebEditorItem:self withItems:items];
     }
+    [viewController didUpdate];
 }
 
 + (DOMHTMLHeadElement *)headOfDocument:(DOMDocument *)document;
@@ -263,7 +265,16 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     BOOL importedContent = NO;
     for (int i = 0; i < [children length]; i++)
     {
-        DOMNode *imported = [document importNode:[children item:i] deep:YES];
+        DOMNode *node = [children item:i];
+        
+        // Try adopting the node, then fallback to import, as described in http://www.w3.org/TR/DOM-Level-3-Core/core.html#Document3-adoptNode
+        DOMNode *imported = [document adoptNode:node];
+        if (!imported)
+        {
+            // TODO:
+            // As noted at http://www.w3.org/TR/DOM-Level-3-Core/core.html#Core-Document-importNode this could raise an exception, which we should probably catch and handle in some fashion
+            imported = [document importNode:node deep:YES];
+        }
         
         // Is this supposed to be inserted at top of doc?
         if (importedContent)
@@ -928,8 +939,10 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
             switch ([children count])
             {
                 case 1:
-                    OBASSERT([[[children objectAtIndex:0] childWebEditorItems] count] <= 1);
-                    [[[children objectAtIndex:0] HTMLElement] setInnerHTML:parsedPlaceholderHTML];
+                    for (WEKWebEditorItem *anItem in children)
+                    {
+                        [[anItem HTMLElement] setInnerHTML:parsedPlaceholderHTML];
+                    }
                     break;
                     
                 default:

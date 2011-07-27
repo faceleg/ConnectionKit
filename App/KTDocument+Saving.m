@@ -33,6 +33,7 @@
 
 #import "NSApplication+Karelia.h"
 #import "NSDate+Karelia.h"
+#import "NSDictionary+Karelia.h"
 #import "NSError+Karelia.h"
 #import "NSFileManager+Karelia.h"
 #import "NSImage+Karelia.h"
@@ -164,16 +165,50 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
     
     
     // Normal save behaviour
-    BOOL result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation error:outError];
-    OBASSERT(result || !outError || (nil != *outError)); // make sure we didn't return NO with an empty error
+    _saveOpCount++;
+    @try
+    {
+        BOOL result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation error:outError];
+        OBASSERT(result || !outError || (nil != *outError)); // make sure we didn't return NO with an empty error
+        return result;
+    }
+    @finally
+    {
+        _saveOpCount--;
+    }
     
     
-    return result;
+    OBASSERT_NOT_REACHED("Control flow somehow escaped @try block!");
+    return YES; // keeps compiler happy
 }
 
 - (BOOL)isSaving
 {
-    return (mySaveOperationCount > 0);
+    return (_saveOpCount > 0);
+}
+
+- (void)autosaveDocumentWithDelegate:(id)delegate didAutosaveSelector:(SEL)didAutosaveSelector contextInfo:(void *)contextInfo;
+{
+    // As Sven saw, if autosave kicks in mid-another save, Lion deadlocks. It doesn't make sense to autosave at this point anyway, because a regular save is shortly to cancel it out.
+    // Have to override this particular method because the lock occurs before any other public methods.
+    // Alternatively, a smarter system could maybe wait until the save finishes, and then call super, but that would only be of value during a Save To operation.
+    if ([self isSaving])
+    {
+        if (delegate)
+        {
+            BOOL result = NO;
+            NSInvocation *callback = [NSInvocation invocationWithSelector:didAutosaveSelector target:delegate];
+            [callback setArgument:&self atIndex:2];
+            [callback setArgument:&result atIndex:3];
+            [callback setArgument:&contextInfo atIndex:4];
+            
+            [callback invoke];
+        }
+    }
+    else
+    {
+        [super autosaveDocumentWithDelegate:delegate didAutosaveSelector:didAutosaveSelector contextInfo:contextInfo];
+    }
 }
 
 #pragma mark Save Panel
@@ -643,14 +678,35 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     
     // Now we're sure store is available, can give it some metadata.
-    if (result && saveOp != NSAutosaveOperation)
+    // If this fails, it's not critical, so carry on, but do report exceptions after the save. #134115
+    @try
     {
-        result = [self setMetadataForPersistentStore:store error:&error];
+        if (result && saveOp != NSAutosaveOperation)
+        {
+            [self setMetadataForPersistentStore:store error:&error];
+        }
     }
-    
-    
-    // Do the save
-    if (result) result = [context save:&error];
+    @finally
+    {
+        // Do the save
+        if (result) result = [context save:&error];
+        
+        
+        // For regular docs, overwrite the version hashes so it looks like an original Sandvox 2.0 document
+        if (saveOp != NSAutosaveOperation)
+        {
+            NSString *hashesPath = [[NSBundle mainBundle] pathForResource:@"VersionHashes2_0" ofType:@"plist"];
+            NSDictionary *hashes_2_0 = [NSDictionary dictionaryWithContentsOfFile:hashesPath];
+            if (hashes_2_0)
+            {
+                NSDictionary *metadata = [coordinator metadataForPersistentStore:store];
+                
+                metadata = [metadata ks_dictionaryBySettingObject:hashes_2_0 forKey:NSStoreModelVersionHashesKey];
+                
+                [NSPersistentStoreCoordinator setMetadata:metadata forPersistentStoreOfType:NSBinaryStoreType URL:URL error:NULL];
+            }
+        }
+    }
     
     
     // Restore persistent store URL after Save To-type operations. Even if save failed (just to be on the safe side)
@@ -795,74 +851,76 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     OBPRECONDITION(store);
 	//LOGMETHOD;
 	
-	BOOL result = NO;
+	BOOL result = YES;
 	NSManagedObjectContext *context = [self managedObjectContext];
 	NSPersistentStoreCoordinator *coordinator = [context persistentStoreCoordinator];
     
-	@try
+    NSMutableDictionary *metadata = [NSMutableDictionary dictionary];
+    
+    // set ALL of our metadata for this store
+    
+    //  kMDItemAuthors
+    NSString *author = [[[[self site] rootPage] master] valueForKey:@"author"];
+    if ( (nil == author) || [author isEqualToString:@""] )
     {
-        NSMutableDictionary *metadata = [NSMutableDictionary dictionary];
-        
-        // set ALL of our metadata for this store
-        
-        //  kMDItemAuthors
-        NSString *author = [[[[self site] rootPage] master] valueForKey:@"author"];
-        if ( (nil == author) || [author isEqualToString:@""] )
-        {
-            [metadata removeObjectForKey:(NSString *)kMDItemAuthors];
-        }
-        else
-        {
-            [metadata setObject:[NSArray arrayWithObject:author] forKey:(NSString *)kMDItemAuthors];
-        }
-        
-        // kMDItemLanguages
-        NSString *language = [[[[self site] rootPage] master] valueForKey:@"language"];
-        if ( (nil == language) || [language isEqualToString:@""] )
-        {
-            [metadata removeObjectForKey:(NSString *)kMDItemLanguages];
-        }
-        else
-        {
-            [metadata setObject:[NSArray arrayWithObject:language] forKey:(NSString *)kMDItemLanguages];
-        }
-        
-        // kMDItemHeadline  -- tagline/subtitle
-        NSString *subtitle = [[[[[self site] rootPage] master] siteSubtitle] text];
-        if ( (nil == subtitle) || [subtitle isEqualToString:@""] )
-        {
-            [metadata removeObjectForKey:(NSString *)kMDItemHeadline];
-        }
-        else
-        {
-            [metadata setObject:subtitle forKey:(NSString *)kMDItemHeadline];
-        }
-        
-        //  kMDItemCreator (Sandvox is the creator of this site document)
-        [metadata setObject:[NSApplication applicationName] forKey:(NSString *)kMDItemCreator];
-        
-        // kMDItemKind
-        [metadata setObject:NSLocalizedString(@"Sandvox Site", "kind of document") forKey:(NSString *)kMDItemKind];
-        
-        /// we're going to fault every page, use a local pool to release them quickly
-        NSAutoreleasePool *localPool = [[NSAutoreleasePool alloc] init];
-        
-        //  kMDItemNumberOfPages
-        NSArray *pages = [[self managedObjectContext] fetchAllObjectsForEntityForName:@"Page" error:NULL];
-        unsigned int pageCount = 0;
-        if ( nil != pages )
-        {
-            pageCount = [pages count]; // according to mmalc, this is the only way to get this kind of count
-        }
-        [metadata setObject:[NSNumber numberWithUnsignedInt:pageCount] forKey:(NSString *)kMDItemNumberOfPages];
-        
-        
-        
+        [metadata removeObjectForKey:(NSString *)kMDItemAuthors];
+    }
+    else
+    {
+        [metadata setObject:[NSArray arrayWithObject:author] forKey:(NSString *)kMDItemAuthors];
+    }
+    
+    // kMDItemLanguages
+    NSString *language = [[[[self site] rootPage] master] valueForKey:@"language"];
+    if ( (nil == language) || [language isEqualToString:@""] )
+    {
+        [metadata removeObjectForKey:(NSString *)kMDItemLanguages];
+    }
+    else
+    {
+        [metadata setObject:[NSArray arrayWithObject:language] forKey:(NSString *)kMDItemLanguages];
+    }
+    
+    // kMDItemHeadline  -- tagline/subtitle
+    NSString *subtitle = [[[[[self site] rootPage] master] siteSubtitle] text];
+    if ( (nil == subtitle) || [subtitle isEqualToString:@""] )
+    {
+        [metadata removeObjectForKey:(NSString *)kMDItemHeadline];
+    }
+    else
+    {
+        [metadata setObject:subtitle forKey:(NSString *)kMDItemHeadline];
+    }
+    
+    //  kMDItemCreator (Sandvox is the creator of this site document)
+    [metadata setObject:[NSApplication applicationName] forKey:(NSString *)kMDItemCreator];
+    
+    // kMDItemKind
+    [metadata setObject:NSLocalizedString(@"Sandvox Site", "kind of document") forKey:(NSString *)kMDItemKind];
+    
+    /// we're going to fault every page, use a local pool to release them quickly
+    NSAutoreleasePool *localPool = [[NSAutoreleasePool alloc] init];
+    
+    //  kMDItemNumberOfPages
+    NSArray *pages = [[self managedObjectContext] fetchAllObjectsForEntityForName:@"Page" error:NULL];
+    unsigned int pageCount = 0;
+    if ( nil != pages )
+    {
+        pageCount = [pages count]; // according to mmalc, this is the only way to get this kind of count
+    }
+    [metadata setObject:[NSNumber numberWithUnsignedInt:pageCount] forKey:(NSString *)kMDItemNumberOfPages];
+    
+    
+    
+    @try
+    {
         //  kMDItemTextContent (free-text account of content)
+        //  We've found this to be throwing on Lion for some people. Propogate the exception, but save rest of metadata first. #134115
         [metadata setObject:[self documentTextContent]
                      forKey:(NSString *)kMDItemTextContent];
-        
-        
+    }
+    @finally
+    {
         //  kMDItemKeywords (keywords of all pages)
         NSMutableSet *keySet = [NSMutableSet set];
         for (id loopItem in pages)
@@ -906,28 +964,12 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         
         //  kKTMetadataAppLastSavedVersionKey (CFBundleVersion of running app)
         [metadata setObject:[NSApplication buildVersion] forKey:kKTMetadataAppLastSavedVersionKey];
+
         
         // replace the metadata in the store with our updates
         // NB: changes to metadata through this method are not pushed to disk until the document is saved
         [coordinator setMetadata:metadata forPersistentStore:store];
-        
-        result = YES;
     }
-	@catch (NSException * e)
-	{
-		NSLog(@"error: unable to %@ %@ exception: %@:%@", NSStringFromSelector(_cmd), [store URL], [e name], [e reason]);
-		if (outError)
-		{
-			*outError = [NSError errorWithDomain:NSCocoaErrorDomain
-											code:134070 // NSPersistentStoreOperationError
-										userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
-												  [store URL], NSURLErrorKey,
-												  [e name], @"name",
-												  [e reason], NSLocalizedDescriptionKey,
-												  nil]];
-		}
-		result = NO;
-	}
 	
 	return result;
 }
@@ -1237,6 +1279,13 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                                     subdirectory:[path stringByDeletingLastPathComponent]];
     
     [wrapper release];
+}
+
+#pragma mark Reduce File Size
+
+- (IBAction)reduceFileSize:(id)sender;
+{
+    
 }
 
 @end

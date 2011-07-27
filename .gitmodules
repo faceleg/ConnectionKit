@@ -1,3 +1,6 @@
 [submodule "Code/JSONKit"]
 	path = Code/JSONKit
 	url = git://github.com/johnezang/JSONKit.git
+[submodule "Code/iMedia"]
+	path = Code/iMedia
+	url = git@github.com:karelia/iMedia.git
