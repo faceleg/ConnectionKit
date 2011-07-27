@@ -53,6 +53,7 @@ typedef NSUInteger SVPageImageRepresentationOptions2;
 {
   @private
     KSStringWriter  *_output;
+    id <KSWriter>   _finalOutput;
     NSUInteger      _charactersWritten;
     
     NSURL   *_baseURL;
@@ -84,9 +85,8 @@ typedef NSUInteger SVPageImageRepresentationOptions2;
 #pragma mark Init
 
 // Like -initWithOutputWriter: but gives the context more info about the output. In practice this means that if a page component changes the doctype, the output will be wiped and the page rewritten with the new doctype.
+// Designated initializer
 - (id)initWithOutputStringWriter:(KSStringWriter *)output;
-
-- (id)init; // calls through to -initWithMutableString:
 
 // For if you need a fresh context based off an existing one
 - (id)initWithOutputWriter:(id <KSWriter>)output inheritFromContext:(SVHTMLContext *)context;

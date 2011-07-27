@@ -89,38 +89,34 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 - (id)initWithOutputWriter:(id <KSWriter>)output; // designated initializer
 {
-    [super initWithOutputWriter:output];
+    KSStringWriter *stringWriter = [[KSStringWriter alloc] init];
+    if (self = [self initWithOutputStringWriter:stringWriter]);
+    {
+        _finalOutput = [output retain];
+    }
     
-    
-    _includeStyling = YES;
-    
-    _liveDataFeeds = YES;
-        
-    _headerLevel = 1;
-    
-    _headerMarkup = [[NSMutableString alloc] init];
-    _endBodyMarkup = [[NSMutableString alloc] init];
-    _iteratorsStack = [[NSMutableArray alloc] init];
-    _graphicContainers = [[NSMutableArray alloc] init];
-    
+    [stringWriter release];
     return self;
 }
 
 - (id)initWithOutputStringWriter:(KSStringWriter *)output;
 {
-    if (self = [self initWithOutputWriter:output])
+    if (self = [super initWithOutputWriter:output])
     {
         _output = [output retain];
+        
+        _includeStyling = YES;
+        
+        _liveDataFeeds = YES;
+        
+        _headerLevel = 1;
+        
+        _headerMarkup = [[NSMutableString alloc] init];
+        _endBodyMarkup = [[NSMutableString alloc] init];
+        _iteratorsStack = [[NSMutableArray alloc] init];
+        _graphicContainers = [[NSMutableArray alloc] init];
     }
     
-    return self;
-}
-
-- (id)init;
-{
-    KSStringWriter *output = [[KSStringWriter alloc] init];
-    self = [self initWithOutputStringWriter:output];
-    [output release];
     return self;
 }
 
@@ -1665,9 +1661,15 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 - (void)close;
 {
+    if (_finalOutput)
+    {
+        [_finalOutput writeString:[[self outputStringWriter] string]];
+    }
+    
     [super close];
     
     [_output release]; _output = nil;
+    [_finalOutput release]; _finalOutput = nil;
 }
 
 #pragma mark Legacy
