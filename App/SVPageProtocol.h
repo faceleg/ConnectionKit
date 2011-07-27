@@ -40,6 +40,8 @@ typedef NSUInteger SVPageWritingOptions;
 
 - (NSString *)language;             // KVO-compliant
 
+@property(nonatomic, copy, readonly) NSString *fileNameExtension AVAILABLE_SANDVOX_VERSION_2_2_AND_LATER;
+
 // Want to know the URL of a page? Ask SVPlugInContext
 
 
