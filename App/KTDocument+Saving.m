@@ -1285,7 +1285,39 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 
 - (IBAction)reduceFileSize:(id)sender;
 {
+    NSError *error;
+    NSArray *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[[self fileURL] path]
+                                                                         error:&error];
     
+    if (!files)
+    {
+        return [self presentError:error
+                   modalForWindow:[self windowForSheet]
+                         delegate:nil
+               didPresentSelector:NULL
+                      contextInfo:NULL];
+    }
+    
+    NSMutableArray *unusedFiles = [[NSMutableArray alloc] init];
+    
+    for (NSString *aFilename in files)
+    {
+        // Delete files that are in the package, but not marked for use
+        if ([self isFilenameAvailable:aFilename checkPackageContents:NO])
+        {
+            [unusedFiles addObject:aFilename];
+        }
+    }
+    
+    if ([unusedFiles count])
+    {
+        [KSWORKSPACE performFileOperation:NSWorkspaceRecycleOperation
+                                   source:[[self fileURL] path]
+                              destination:nil
+                                    files:unusedFiles
+                                      tag:NULL];
+    }
+    [unusedFiles release];
 }
 
 @end
