@@ -197,7 +197,8 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     
     
     // First Code Injection.  Can't use a convenience method since we need this context.  Make sure this matches the convenience methods though!
-	[page write:self codeInjectionSection:@"beforeHTML" masterFirst:YES];
+	[self writePreHTMLMarkup];
+    [page write:self codeInjectionSection:@"beforeHTML" masterFirst:YES];
     
     
     // Start the document
@@ -1401,6 +1402,28 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 #pragma mark Extra markup
 
+- (void)writePreHTMLMarkup;
+{
+    OBASSERT(!_writingPreHTMLMarkup);
+    
+    // Time to start buffering in case a plug-in wants to inject code here
+    KSStringWriter *stringWriter = [self outputStringWriter];
+    OBASSERT(stringWriter);
+    
+    [stringWriter beginBuffering];
+    _writingPreHTMLMarkup = YES;
+}
+
+- (void)addMarkupBeforeHTML:(NSString *)markup;
+{
+    [[self outputStringWriter] writeString:markup bypassBuffer:YES];
+}
+
+- (NSMutableString *)extraHeaderMarkup; // can append to, query, as you like while parsing
+{
+    return _headerMarkup;
+}
+
 - (void)addMarkupToHead:(NSString *)markup;
 {
     if ([[self extraHeaderMarkup] rangeOfString:markup].location == NSNotFound)
@@ -1409,28 +1432,27 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     }
 }
 
+- (void)writeExtraHeaders;  // writes any code plug-ins etc. have requested should inside the <head> element
+{
+    // Record where to make the insert
+    _headerMarkupIndex = [[self outputStringWriter] length];
+    
+    
+    // TEST
+    [self addMarkupBeforeHTML:@"TESTY TEST TESTING TEST"];
+}
+
+- (NSMutableString *)endBodyMarkup; // can append to, query, as you like while parsing
+{
+    return _endBodyMarkup;
+}
+
 - (void)addMarkupToEndOfBody:(NSString *)markup;
 {
     if ([[self endBodyMarkup] rangeOfString:markup].location == NSNotFound)
     {
         [[self endBodyMarkup] appendString:markup];
     }
-}
-
-- (NSMutableString *)extraHeaderMarkup; // can append to, query, as you like while parsing
-{
-    return _headerMarkup;
-}
-
-- (void)writeExtraHeaders;  // writes any code plug-ins etc. have requested should inside the <head> element
-{
-    // Record where to make the insert
-    _headerMarkupIndex = [[self outputStringWriter] length];
-}
-
-- (NSMutableString *)endBodyMarkup; // can append to, query, as you like while parsing
-{
-    return _endBodyMarkup;
 }
 
 - (void)writeEndBodyString; // writes any code plug-ins etc. have requested should go at the end of the page, before </body>
@@ -1442,6 +1464,14 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 - (void)flush;
 {
     [super flush];
+    
+    // Finish buffering pre-HTML markup
+    if (_writingPreHTMLMarkup)
+    {
+        // FIXME: Probably want an API to flush just the first buffer
+        [[self outputStringWriter] flush];
+        _writingPreHTMLMarkup = NO;
+    }
     
     // Finish buffering extra header
     if (_headerMarkupIndex < NSNotFound && _headerMarkup)

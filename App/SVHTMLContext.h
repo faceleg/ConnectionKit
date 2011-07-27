@@ -69,9 +69,10 @@ typedef NSUInteger SVPageImageRepresentationOptions2;
     
     NSUInteger      _headerLevel;
 	
-    NSMutableString         *_headerMarkup;
-    NSMutableString         *_endBodyMarkup;
-    NSUInteger              _headerMarkupIndex;
+    NSMutableString *_headerMarkup;
+    NSMutableString *_endBodyMarkup;
+    BOOL            _writingPreHTMLMarkup;
+    NSUInteger      _headerMarkupIndex;
     
     NSMutableArray  *_iteratorsStack;
     BOOL            _writingPagelet;
@@ -250,6 +251,7 @@ typedef NSUInteger SVPageImageRepresentationOptions2;
 
 #pragma mark Extra markup
 
+- (void)writePreHTMLMarkup;
 - (void)writeExtraHeaders;  // writes any code plug-ins etc. have requested should be inside the <head> element
 
 - (void)writeEndBodyString; // writes any code plug-ins etc. have requested should go at the end of the page, before </body>
