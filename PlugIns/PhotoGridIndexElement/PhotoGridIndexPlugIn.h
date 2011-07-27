@@ -39,7 +39,11 @@
 
 
 @interface PhotoGridIndexPlugIn : SVColorBoxIndexPlugIn
-{
+{	
+	BOOL		_hideTitles;		// Negate "Show Titles" so that legacy sites have hiding turned off.
+
 }
+
+@property (nonatomic) BOOL hideTitles;
 
 @end

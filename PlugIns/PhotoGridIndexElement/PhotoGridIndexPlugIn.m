@@ -42,6 +42,7 @@
 
 @implementation PhotoGridIndexPlugIn
 
+@synthesize hideTitles = _hideTitles;
 
 
 
@@ -51,9 +52,18 @@
 {
     [super awakeFromNew];
 	self.useColorBox = NO;		// Initially don't turn this on
+	self.hideTitles = NO;
 
     self.enableMaxItems = NO;
     self.maxItems = 10;
+}
+
++ (NSArray *)plugInKeys
+{ 
+    NSArray *plugInKeys = [NSArray arrayWithObjects:
+						   @"hideTitles",
+                           nil];    
+    return [[super plugInKeys] arrayByAddingObjectsFromArray:plugInKeys];
 }
 
 
@@ -61,6 +71,8 @@
 
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
+	[context addDependencyForKeyPath:@"hideTitles"				ofObject:self];
+
     // Extra CSS to handle caption functionality new to 2.0
     [context addCSSString:@".photogrid-index-bottom { clear:left; }"];
     
@@ -194,19 +206,22 @@ height="[[mediainfo info:height media:aPage.thumbnail sizeToFit:thumbnailImageSi
 
 - (void)writeTitleOfIteratedPage
 {
-    id<SVPlugInContext> context = [self currentContext]; 
-    id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
-	
-	if ([iteratedPage showsTitle])		// Do not show title if it is hidden!
+	if (!self.hideTitles)
 	{
-        [context startElement:@"h3"];
-        [context startAnchorElementWithPage:iteratedPage];
-		[context writeElement:@"span"
-			  withTitleOfPage:iteratedPage
-				  asPlainText:YES 
-				   attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
-        [context endElement]; // </a>
-        [context endElement]; // </h3>
+		id<SVPlugInContext> context = [self currentContext]; 
+		id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
+		
+		if ([iteratedPage showsTitle])		// Do not show title if it is hidden!
+		{
+			[context startElement:@"h3"];
+			[context startAnchorElementWithPage:iteratedPage];
+			[context writeElement:@"span"
+				  withTitleOfPage:iteratedPage
+					  asPlainText:YES 
+					   attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
+			[context endElement]; // </a>
+			[context endElement]; // </h3>
+		}
 	}
 }
 
