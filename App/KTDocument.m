@@ -67,7 +67,7 @@
 #import "NSManagedObjectContext+KTExtensions.h"
 
 #import "KSAbstractBugReporter.h"
-#import "KSCaseInsensitiveDictionary.h"
+#import "KSStringKeyedDictionary.h"
 #import "KSSilencingConfirmSheet.h"
 
 #import "NSArray+Karelia.h"
@@ -229,7 +229,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         
         
         // Other ivars
-        _filenameReservations = [[KSCaseInsensitiveDictionary alloc] init];
+        _filenameReservations = [[KSStringKeyedDictionary alloc] initWithComparisonOptions:NSCaseInsensitiveSearch];
         
         
         // Init UI accessors
@@ -867,7 +867,8 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     if (result)
     {
         // Turns out deriving the path from -fileURL is a bit of a bottleneck, so go old school. #125521
-        NSString *path = [[self fileName] stringByAppendingPathComponent:filename];
+        // Build warning with 10.6 SDK, so cheat
+        NSString *path = [[self performSelector:@selector(fileName)] stringByAppendingPathComponent:filename];
         result = ![[NSFileManager defaultManager] fileExistsAtPath:path];
     }
     
