@@ -67,7 +67,7 @@
 #import "NSManagedObjectContext+KTExtensions.h"
 
 #import "KSAbstractBugReporter.h"
-#import "KSCaseInsensitiveDictionary.h"
+#import "KSStringKeyedDictionary.h"
 #import "KSSilencingConfirmSheet.h"
 
 #import "NSArray+Karelia.h"
@@ -229,7 +229,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         
         
         // Other ivars
-        _filenameReservations = [[KSCaseInsensitiveDictionary alloc] init];
+        _filenameReservations = [[KSStringKeyedDictionary alloc] initWithComparisonOptions:NSCaseInsensitiveSearch];
         
         
         // Init UI accessors
