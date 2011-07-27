@@ -1285,9 +1285,10 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 
 - (IBAction)reduceFileSize:(id)sender;
 {
+    NSString *docPath = [[self fileURL] path];
+    
     NSError *error;
-    NSArray *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[[self fileURL] path]
-                                                                         error:&error];
+    NSArray *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:docPath error:&error];
     
     if (!files)
     {
@@ -1312,12 +1313,20 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     if ([unusedFiles count])
     {
         [KSWORKSPACE performFileOperation:NSWorkspaceRecycleOperation
-                                   source:[[self fileURL] path]
+                                   source:docPath
                               destination:nil
                                     files:unusedFiles
                                       tag:NULL];
     }
     [unusedFiles release];
+    
+    
+    // Update doc modification date so doesn't complain on next save
+    NSDate *date = [[[NSFileManager defaultManager] attributesOfItemAtPath:docPath error:NULL] fileModificationDate];
+    if (date)
+    {
+        [self setFileModificationDate:date];
+    }
 }
 
 @end
