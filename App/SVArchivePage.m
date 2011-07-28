@@ -56,7 +56,6 @@
     if (!sDateFormatter)
     {
         sDateFormatter = [[NSDateFormatter alloc] init];
-        [sDateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
         [sDateFormatter setDateFormat:@"MMMM yyyy"]; // unicode pattern for @"%B %Y"
     }
     
