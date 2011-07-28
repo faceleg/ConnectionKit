@@ -1413,6 +1413,11 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 {
     NSUInteger buffer = (_preHTMLBuffer - 1);   // want to write just before the buffer
     [[self outputStringWriter] writeString:markup toBufferAtIndex:buffer];
+    
+    if (![markup hasSuffix:@"\n"])
+    {
+        [[self outputStringWriter] writeString:@"\n" toBufferAtIndex:buffer];
+    }
 }
 
 - (void)writePreHTMLMarkup;
@@ -1454,6 +1459,11 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 {
     NSUInteger buffer = (_extraHeadBuffer - 1);   // want to write just before the buffer
     [[self outputStringWriter] writeString:markup toBufferAtIndex:buffer];
+    
+    if (![markup hasSuffix:@"\n"])
+    {
+        [[self outputStringWriter] writeString:@"\n" toBufferAtIndex:buffer];
+    }
 }
 
 - (void)writeExtraHeaders;  // writes any code plug-ins etc. have requested should inside the <head> element
