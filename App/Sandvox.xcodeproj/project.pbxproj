@@ -7193,7 +7193,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\nexport APPNAME=\"Sandvox\"\n\n${SRCROOT}/../../Shared/tools/deploy_build\n\n### this script should NOT have 'Run script only when installing' checked\n";
+			shellScript = "#!/bin/bash\n\nexport APPNAME=\"Sandvox\"\n\n${SRCROOT}/../Code/Shared/tools/deploy_build\n\n### this script should NOT have 'Run script only when installing' checked\n";
 			showEnvVarsInLog = 0;
 		};
 		3CC092BA134BC490007E2390 /* Script - Code Sign .app */ = {
