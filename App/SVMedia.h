@@ -50,6 +50,7 @@
 
 
 #pragma mark Serialization
+- (id)initWithSerializedProperties:(id)properties;
 - (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
 
 
