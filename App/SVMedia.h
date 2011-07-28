@@ -49,4 +49,8 @@
 - (NSData *)SHA1Digest;
 
 
+#pragma mark Serialization
+- (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
+
+
 @end

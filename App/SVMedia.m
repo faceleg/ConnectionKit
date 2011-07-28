@@ -300,6 +300,27 @@
     }
 }
 
+#pragma mark Serialization
+
+- (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
+{
+    NSFileWrapper *wrapper;
+    if ([self mediaData])
+    {
+        wrapper = [[NSFileWrapper alloc] initRegularFileWithContents:[self mediaData]];
+    }
+    else
+    {
+        wrapper = [[NSFileWrapper alloc] initWithPath:[[self mediaURL] path]];
+    }
+    [wrapper setPreferredFilename:[self preferredFilename]];
+    
+    [propertyList setObject:[[self mediaURL] absoluteString] forKey:@"mediaURL"];
+    [propertyList setValue:[wrapper serializedRepresentation] forKey:@"fileWrapper"];
+    
+    [wrapper release];
+}
+
 #pragma mark Deprecated
 
 - (NSString *)typeOfFile

@@ -436,25 +436,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 
 - (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
 {
-    NSFileWrapper *wrapper = nil;
-    SVMedia *media = [self media];
-    
-    if (media)
-    {
-        if ([media mediaData])
-        {
-            wrapper = [[NSFileWrapper alloc] initRegularFileWithContents:[media mediaData]];
-        }
-        else
-        {
-            wrapper = [[NSFileWrapper alloc] initWithPath:[[media mediaURL] path]];
-        }
-        
-        [propertyList setObject:[media mediaURL] forKey:@"mediaURL"];
-    }
-    
-    [propertyList setValue:[wrapper serializedRepresentation] forKey:@"fileWrapper"];
-    [wrapper release];
+    [[self media] populateSerializedProperties:propertyList];
 }
 
 #pragma mark SVDocumentFileWrapper
