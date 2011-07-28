@@ -1,6 +1,6 @@
 //
 //  main.m
-//  Marvel
+//  Sandvox
 //
 //  Copyright 2004-2011 Karelia Software. All rights reserved.
 //
