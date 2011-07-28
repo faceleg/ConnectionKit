@@ -1468,8 +1468,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     // Finish buffering pre-HTML markup
     if (_writingPreHTMLMarkup)
     {
-        // FIXME: Probably want an API to flush just the first buffer
-        [[self outputStringWriter] flush];
+        [[self outputStringWriter] flushFirstBuffer];
         _writingPreHTMLMarkup = NO;
     }
     
