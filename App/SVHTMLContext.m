@@ -390,7 +390,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     }
     else
     {
-        if (_writingExtraHeadMarkup)
+        if (_extraHeadBuffer > 0)
         {
             NSMutableString *html = [[NSMutableString alloc] init];
             KSHTMLWriter *writer = [[KSHTMLWriter alloc] initWithOutputWriter:html];
@@ -1063,7 +1063,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 - (void)linkToCSSAtURL:(NSURL *)fileURL
 {
-    if (_writingExtraHeadMarkup)
+    if (_extraHeadBuffer > 0)
     {
         NSMutableString *html = [[NSMutableString alloc] init];
         KSHTMLWriter *writer = [[KSHTMLWriter alloc] initWithOutputWriter:html];
@@ -1407,31 +1407,34 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 - (void)writePreHTMLMarkup;
 {
-    OBASSERT(!_writingPreHTMLMarkup);
+    OBASSERT(_preHTMLBuffer == 0);
     
     // Time to start buffering in case a plug-in wants to inject code here
     KSStringWriter *stringWriter = [self outputStringWriter];
     OBASSERT(stringWriter);
     
     [stringWriter beginBuffering];
-    _writingPreHTMLMarkup = YES;
+    _preHTMLBuffer = [stringWriter numberOfBuffers];
+    OBASSERT(_preHTMLBuffer > 0);
 }
 
 - (void)addMarkupBeforeHTML:(NSString *)markup;
 {
-    [[self outputStringWriter] writeString:markup bypassBuffer:YES];
+    NSUInteger buffer = (_preHTMLBuffer - 1);   // want to write just before the buffer
+    [[self outputStringWriter] writeString:markup toBufferAtIndex:buffer];
 }
 
 - (void)writeExtraHeaders;  // writes any code plug-ins etc. have requested should inside the <head> element
 {
-    OBASSERT(!_writingExtraHeadMarkup);
+    OBASSERT(_extraHeadBuffer == 0);
     
     // Time to start buffering in case a plug-in wants to inject code here
     KSStringWriter *stringWriter = [self outputStringWriter];
     OBASSERT(stringWriter);
     
     [stringWriter beginBuffering];
-    _writingExtraHeadMarkup = YES;
+    _extraHeadBuffer = [stringWriter numberOfBuffers];
+    OBASSERT(_extraHeadBuffer > 0);
     
     
     // TEST
@@ -1440,7 +1443,8 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 - (void)addMarkupToHead:(NSString *)markup;
 {
-    [[self outputStringWriter] writeString:markup bypassBuffer:YES];
+    NSUInteger buffer = (_extraHeadBuffer - 1);   // want to write just before the buffer
+    [[self outputStringWriter] writeString:markup toBufferAtIndex:buffer];
 }
 
 - (NSMutableString *)endBodyMarkup; // can append to, query, as you like while parsing
@@ -1467,17 +1471,17 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     [super flush];
     
     // Finish buffering pre-HTML markup
-    if (_writingPreHTMLMarkup)
+    if (_preHTMLBuffer)
     {
         [[self outputStringWriter] flushFirstBuffer];
-        _writingPreHTMLMarkup = NO;
+        _preHTMLBuffer = 0;
     }
     
     // Finish buffering extra header
-    if (_writingExtraHeadMarkup)
+    if (_extraHeadBuffer)
     {
         [[self outputStringWriter] flushFirstBuffer];
-        _writingExtraHeadMarkup = NO;
+        _extraHeadBuffer = 0;
     }
 }
 
