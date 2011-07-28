@@ -1409,6 +1409,12 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 #pragma mark Extra markup
 
+- (void)_writePreHTMLMarkup:(NSString *)markup;
+{
+    NSUInteger buffer = (_preHTMLBuffer - 1);   // want to write just before the buffer
+    [[self outputStringWriter] writeString:markup toBufferAtIndex:buffer];
+}
+
 - (void)writePreHTMLMarkup;
 {
     OBASSERT(_preHTMLBuffer == 0);
@@ -1425,8 +1431,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     // Write any pending markup
     for (NSString *aString in _preHTMLMarkup)
     {
-        NSUInteger buffer = (_preHTMLBuffer - 1);   // want to write just before the buffer
-        [[self outputStringWriter] writeString:aString toBufferAtIndex:buffer];
+        [self _writePreHTMLMarkup:aString];
     }
     
     
@@ -1441,9 +1446,14 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     
     if (_preHTMLBuffer > 0)
     {
-        NSUInteger buffer = (_preHTMLBuffer - 1);   // want to write just before the buffer
-        [[self outputStringWriter] writeString:markup toBufferAtIndex:buffer];
+        [self _writePreHTMLMarkup:markup];
     }
+}
+
+- (void)_writeExtraHeader:(NSString *)markup;
+{
+    NSUInteger buffer = (_extraHeadBuffer - 1);   // want to write just before the buffer
+    [[self outputStringWriter] writeString:markup toBufferAtIndex:buffer];
 }
 
 - (void)writeExtraHeaders;  // writes any code plug-ins etc. have requested should inside the <head> element
@@ -1462,8 +1472,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     // Write any pending markup
     for (NSString *aString in _extraHeadMarkup)
     {
-        NSUInteger buffer = (_extraHeadBuffer - 1);   // want to write just before the buffer
-        [[self outputStringWriter] writeString:aString toBufferAtIndex:buffer];
+        [self _writeExtraHeader:aString];
     }
     
     
@@ -1478,8 +1487,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     
     if (_extraHeadBuffer > 0)
     {
-        NSUInteger buffer = (_extraHeadBuffer - 1);   // want to write just before the buffer
-        [[self outputStringWriter] writeString:markup toBufferAtIndex:buffer];
+        [self _writeExtraHeader:markup];
     }
 }
 
