@@ -74,7 +74,6 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 - (void)startPlaceholder;
 - (void)endPlaceholder;
 
-- (NSMutableString *)extraHeaderMarkup;
 - (NSMutableString *)endBodyMarkup; // can append to, query, as you like while parsing
 
 @end
@@ -111,7 +110,6 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
         
         _headerLevel = 1;
         
-        _headerMarkup = [[NSMutableString alloc] init];
         _endBodyMarkup = [[NSMutableString alloc] init];
         _iteratorsStack = [[NSMutableArray alloc] init];
         _graphicContainers = [[NSMutableArray alloc] init];
@@ -150,7 +148,6 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     
     [_mainCSSURL release];
         
-    [_headerMarkup release]; _headerMarkup = nil;   // accessed in -flush
     [_endBodyMarkup release];
     [_iteratorsStack release];
     [_graphicContainers release];
@@ -393,13 +390,16 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     }
     else
     {
-        if (_headerMarkupIndex != NSNotFound)
+        if (_writingExtraHeadMarkup)
         {
-            KSHTMLWriter *writer = [[KSHTMLWriter alloc] initWithOutputWriter:[self extraHeaderMarkup]];
+            NSMutableString *html = [[NSMutableString alloc] init];
+            KSHTMLWriter *writer = [[KSHTMLWriter alloc] initWithOutputWriter:html];
             
             [writer writeStyleElementWithCSSString:css];
             [writer writeString:@"\n"];
             
+            [self addMarkupToHead:html];
+            [html release];
             [writer release];
         }
         else
@@ -1063,15 +1063,18 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 - (void)linkToCSSAtURL:(NSURL *)fileURL
 {
-    if (_headerMarkupIndex != NSNotFound)
+    if (_writingExtraHeadMarkup)
     {
-        KSHTMLWriter *writer = [[KSHTMLWriter alloc] initWithOutputWriter:[self extraHeaderMarkup]];
+        NSMutableString *html = [[NSMutableString alloc] init];
+        KSHTMLWriter *writer = [[KSHTMLWriter alloc] initWithOutputWriter:html];
         
         [writer writeLinkToStylesheet:[self relativeStringFromURL:fileURL]
                                 title:nil
                                 media:nil];
         
         [writer writeString:@"\n"];
+        [self addMarkupToHead:html];
+        [html release];
         [writer release];
     }
     else
@@ -1419,27 +1422,25 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     [[self outputStringWriter] writeString:markup bypassBuffer:YES];
 }
 
-- (NSMutableString *)extraHeaderMarkup; // can append to, query, as you like while parsing
-{
-    return _headerMarkup;
-}
-
-- (void)addMarkupToHead:(NSString *)markup;
-{
-    if ([[self extraHeaderMarkup] rangeOfString:markup].location == NSNotFound)
-    {
-        [[self extraHeaderMarkup] appendString:markup];
-    }
-}
-
 - (void)writeExtraHeaders;  // writes any code plug-ins etc. have requested should inside the <head> element
 {
-    // Record where to make the insert
-    _headerMarkupIndex = [[self outputStringWriter] length];
+    OBASSERT(!_writingExtraHeadMarkup);
+    
+    // Time to start buffering in case a plug-in wants to inject code here
+    KSStringWriter *stringWriter = [self outputStringWriter];
+    OBASSERT(stringWriter);
+    
+    [stringWriter beginBuffering];
+    _writingExtraHeadMarkup = YES;
     
     
     // TEST
     [self addMarkupBeforeHTML:@"TESTY TEST TESTING TEST"];
+}
+
+- (void)addMarkupToHead:(NSString *)markup;
+{
+    [[self outputStringWriter] writeString:markup bypassBuffer:YES];
 }
 
 - (NSMutableString *)endBodyMarkup; // can append to, query, as you like while parsing
@@ -1473,13 +1474,10 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     }
     
     // Finish buffering extra header
-    if (_headerMarkupIndex < NSNotFound && _headerMarkup)
+    if (_writingExtraHeadMarkup)
     {
-        [[self outputStringWriter] insertString:[self extraHeaderMarkup]
-                                        atIndex:_headerMarkupIndex];
-        
-        [_headerMarkup deleteCharactersInRange:NSMakeRange(0, [_headerMarkup length])];
-        _headerMarkupIndex = NSNotFound; // so nothing gets mistakenly written afterwards
+        [[self outputStringWriter] flushFirstBuffer];
+        _writingExtraHeadMarkup = NO;
     }
 }
 
