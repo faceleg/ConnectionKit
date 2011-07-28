@@ -16,13 +16,6 @@
 #include <errno.h>
 #include "Debug.h"
 
-#ifdef DEBUG
-	#ifdef OOM
-		#import <OmniObjectMeterFramework/OOMPublic.h>
-	#endif
-#endif
-
-
 
 // courtesy of http://www.macedition.com/bolts/bolts_20030210.php
 void enableCoreDumps ()
@@ -48,14 +41,7 @@ void enableCoreDumps ()
 
 
 int main(int argc, char *argv[])
-{
-// pull in OmniObjectMeter iff DEBUG and OOM are set in Application Debug.xcconfig
-#ifdef DEBUG
-	#ifdef OOM
-		__OOMInit();
-	#endif
-#endif
-	
+{	
     UInt32 modifierKeys = GetCurrentEventKeyModifiers();
     if ((modifierKeys & controlKey) || (modifierKeys & shiftKey))
 	{
