@@ -109,7 +109,9 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
         _liveDataFeeds = YES;
         
         _headerLevel = 1;
-        
+
+        _preHTMLMarkup = [[NSMutableArray alloc] init];
+        _extraHeadMarkup = [[NSMutableArray alloc] init];
         _endBodyMarkup = [[NSMutableString alloc] init];
         _iteratorsStack = [[NSMutableArray alloc] init];
         _graphicContainers = [[NSMutableArray alloc] init];
@@ -147,7 +149,9 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     [_article release];
     
     [_mainCSSURL release];
-        
+    
+    [_preHTMLMarkup release];
+    [_extraHeadMarkup release];
     [_endBodyMarkup release];
     [_iteratorsStack release];
     [_graphicContainers release];
@@ -1416,12 +1420,30 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     [stringWriter beginBuffering];
     _preHTMLBuffer = [stringWriter numberOfBuffers];
     OBASSERT(_preHTMLBuffer > 0);
+    
+    
+    // Write any pending markup
+    for (NSString *aString in _preHTMLMarkup)
+    {
+        NSUInteger buffer = (_preHTMLBuffer - 1);   // want to write just before the buffer
+        [[self outputStringWriter] writeString:aString toBufferAtIndex:buffer];
+    }
+    
+    
+    // TEST
+    [self addMarkupToHead:@"HEAD TEST"];
 }
 
 - (void)addMarkupBeforeHTML:(NSString *)markup;
 {
-    NSUInteger buffer = (_preHTMLBuffer - 1);   // want to write just before the buffer
-    [[self outputStringWriter] writeString:markup toBufferAtIndex:buffer];
+    if ([_preHTMLMarkup containsObject:markup]) return; // ignore dupes
+    [_preHTMLMarkup addObject:markup];
+    
+    if (_preHTMLBuffer > 0)
+    {
+        NSUInteger buffer = (_preHTMLBuffer - 1);   // want to write just before the buffer
+        [[self outputStringWriter] writeString:markup toBufferAtIndex:buffer];
+    }
 }
 
 - (void)writeExtraHeaders;  // writes any code plug-ins etc. have requested should inside the <head> element
@@ -1437,14 +1459,28 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     OBASSERT(_extraHeadBuffer > 0);
     
     
+    // Write any pending markup
+    for (NSString *aString in _extraHeadMarkup)
+    {
+        NSUInteger buffer = (_extraHeadBuffer - 1);   // want to write just before the buffer
+        [[self outputStringWriter] writeString:aString toBufferAtIndex:buffer];
+    }
+    
+    
     // TEST
     [self addMarkupBeforeHTML:@"TESTY TEST TESTING TEST"];
 }
 
 - (void)addMarkupToHead:(NSString *)markup;
 {
-    NSUInteger buffer = (_extraHeadBuffer - 1);   // want to write just before the buffer
-    [[self outputStringWriter] writeString:markup toBufferAtIndex:buffer];
+    if ([_extraHeadMarkup containsObject:markup]) return; // ignore dupes
+    [_extraHeadMarkup addObject:markup];
+    
+    if (_extraHeadBuffer > 0)
+    {
+        NSUInteger buffer = (_extraHeadBuffer - 1);   // want to write just before the buffer
+        [[self outputStringWriter] writeString:markup toBufferAtIndex:buffer];
+    }
 }
 
 - (NSMutableString *)endBodyMarkup; // can append to, query, as you like while parsing

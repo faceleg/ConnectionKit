@@ -71,7 +71,9 @@ typedef NSUInteger SVPageImageRepresentationOptions2;
 	
     NSMutableString *_endBodyMarkup;
     NSUInteger      _preHTMLBuffer;
+    NSMutableArray  *_preHTMLMarkup;
     NSUInteger      _extraHeadBuffer;
+    NSMutableArray  *_extraHeadMarkup;
     
     NSMutableArray  *_iteratorsStack;
     BOOL            _writingPagelet;
