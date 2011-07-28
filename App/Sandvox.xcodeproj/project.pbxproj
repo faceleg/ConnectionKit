@@ -651,6 +651,8 @@
 		3C89AD7308E0BE1400CA0522 /* KTDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C89AD7108E0BE1400CA0522 /* KTDocumentController.m */; };
 		3C96FCAE07E7FF5100B418ED /* KTStringRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C96FCAC07E7FF5100B418ED /* KTStringRenderer.m */; };
 		3C96FD6707E7FFFF00B418ED /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C96FD6607E7FFFF00B418ED /* Quartz.framework */; };
+		3C9A37BB13E1304D0010A469 /* ethernet.c in Sources */ = {isa = PBXBuildFile; fileRef = 3C9A37B913E1304D0010A469 /* ethernet.c */; };
+		3C9A37BC13E1304D0010A469 /* ethernet.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C9A37BA13E1304D0010A469 /* ethernet.h */; };
 		3C9BC1E2103DF7FD00D2CF47 /* MissingMedia.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC1E0103DF7FD00D2CF47 /* MissingMedia.xib */; };
 		3C9BC1E6103DF81700D2CF47 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC1E4103DF81700D2CF47 /* MainMenu.xib */; };
 		3C9BC1EE103DF8BA00D2CF47 /* CodeInjection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC1EC103DF8BA00D2CF47 /* CodeInjection.xib */; };
@@ -2373,6 +2375,8 @@
 		3C96FCAB07E7FF5100B418ED /* KTStringRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTStringRenderer.h; sourceTree = "<group>"; };
 		3C96FCAC07E7FF5100B418ED /* KTStringRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTStringRenderer.m; sourceTree = "<group>"; };
 		3C96FD6607E7FFFF00B418ED /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = /System/Library/Frameworks/Quartz.framework; sourceTree = "<absolute>"; };
+		3C9A37B913E1304D0010A469 /* ethernet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ethernet.c; sourceTree = "<group>"; };
+		3C9A37BA13E1304D0010A469 /* ethernet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ethernet.h; sourceTree = "<group>"; };
 		3C9B66250BFA818B007A4871 /* ContactElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ContactElement.xcodeproj; path = ../PlugIns/ContactElement/ContactElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C9BC1E1103DF7FD00D2CF47 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MissingMedia.xib; sourceTree = "<group>"; };
 		3C9BC1E5103DF81700D2CF47 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -4161,6 +4165,7 @@
 		2A37F4AAFDCFA73011CA2CEA /* Marvel */ = {
 			isa = PBXGroup;
 			children = (
+				3C9A37BF13E130590010A469 /* Receipt Validation */,
 				3C202D1707DFC06B00DE4994 /* Application */,
 				3C202D3207DFC0BF00DE4994 /* Document */,
 				275E067A0DDA0F1A0072567F /* Model */,
@@ -4827,6 +4832,15 @@
 				3C9870EF11F3D5F60053A72C /* LinkList.svxElement */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		3C9A37BF13E130590010A469 /* Receipt Validation */ = {
+			isa = PBXGroup;
+			children = (
+				3C9A37BA13E1304D0010A469 /* ethernet.h */,
+				3C9A37B913E1304D0010A469 /* ethernet.c */,
+			);
+			name = "Receipt Validation";
 			sourceTree = "<group>";
 		};
 		3C9CF9A712120196005CFDD4 /* Products */ = {
@@ -6202,6 +6216,7 @@
 				2743F0C513BC755A009EA6D3 /* SVImageRecipe.h in Headers */,
 				27F503E813BF3E1300F0FFD7 /* KSPerformOnThreadOperation.h in Headers */,
 				276BC94713C34DDC00EB2798 /* SVWorkspaceIconProtocol.h in Headers */,
+				3C9A37BC13E1304D0010A469 /* ethernet.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7684,6 +7699,7 @@
 				2743F0C613BC755A009EA6D3 /* SVImageRecipe.m in Sources */,
 				27F503E913BF3E1300F0FFD7 /* KSPerformOnThreadOperation.m in Sources */,
 				276BC94813C34DDC00EB2798 /* SVWorkspaceIconProtocol.m in Sources */,
+				3C9A37BB13E1304D0010A469 /* ethernet.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
