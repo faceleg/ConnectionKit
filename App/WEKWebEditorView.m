@@ -256,8 +256,16 @@ typedef enum {  // this copied from WebPreferences+Private.h
 - (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)URL;
 {
     _isStartingLoad = YES;
-    [[[self webView] mainFrame] loadHTMLString:string baseURL:URL];
-    _isStartingLoad = NO;
+    @try
+    {
+        // Text can't be focused after the webview loads, so tell it so, hopefully resolving #134847
+        [self setFocusedText:nil notification:nil];
+        [[[self webView] mainFrame] loadHTMLString:string baseURL:URL];
+    }
+    @finally
+    {
+        _isStartingLoad = NO;
+    }
 }
 
 @synthesize startingLoad = _isStartingLoad;
