@@ -1067,6 +1067,10 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	{
 		return YES;
 	}
+    else if ([menuItem action] == @selector(reduceFileSize:))
+    {
+        return ([[self fileURL] isFileURL]);    // only supported for regular files
+    }
 	
 	return [super validateMenuItem:menuItem]; 
 }
