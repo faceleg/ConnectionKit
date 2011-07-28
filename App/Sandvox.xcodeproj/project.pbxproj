@@ -7164,7 +7164,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "\nPBXCP=${SRCROOT}/../../Shared/Tools/pbxcp\n\nEXECUTABLE=${PROJECT_DIR}/../Code/png2ico/png2ico\nEXECUTABLES_DIR=${TARGET_BUILD_DIR}/Sandvox.app/Contents/MacOS\n\necho \"png2ico: PBXCp ${EXECUTABLE} ${EXECUTABLES_DIR}\"\n\n\"${PBXCP}\" \"${EXECUTABLE}\" \"${EXECUTABLES_DIR}\"\n\n";
+			shellScript = "\nPBXCP=${SRCROOT}/../Code/Shared/Tools/pbxcp\n\nEXECUTABLE=${PROJECT_DIR}/../Code/png2ico/png2ico\nEXECUTABLES_DIR=${TARGET_BUILD_DIR}/Sandvox.app/Contents/MacOS\n\necho \"png2ico: PBXCp ${EXECUTABLE} ${EXECUTABLES_DIR}\"\n\n\"${PBXCP}\" \"${EXECUTABLE}\" \"${EXECUTABLES_DIR}\"\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66E80BFA95DD007A4871 /* Script - Add Spotlight Importer */ = {
@@ -7179,7 +7179,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "\nPBXCP=${SRCROOT}/../../Shared/Tools/pbxcp\n\nIMPORTER=${TARGET_BUILD_DIR}/MetaSandvox.mdimporter\nSPOTLIGHT_DIR=${TARGET_BUILD_DIR}/Sandvox.app/Contents/Library/Spotlight\n\necho \"Spotlight Importer: PBXCp ${IMPORTER} ${SPOTLIGHT_DIR}\"\n\nmkdir -p \"${SPOTLIGHT_DIR}\"\n\n\"${PBXCP}\" \\\n  -exclude .DS_Store -exclude CVS -exclude .svn -resolve-src-symlinks \\\n  \"${IMPORTER}\" \"${SPOTLIGHT_DIR}\"\n\n\n";
+			shellScript = "\nPBXCP=${SRCROOT}/../Code/Shared/Tools/pbxcp\n\nIMPORTER=${TARGET_BUILD_DIR}/MetaSandvox.mdimporter\nSPOTLIGHT_DIR=${TARGET_BUILD_DIR}/Sandvox.app/Contents/Library/Spotlight\n\necho \"Spotlight Importer: PBXCp ${IMPORTER} ${SPOTLIGHT_DIR}\"\n\nmkdir -p \"${SPOTLIGHT_DIR}\"\n\n\"${PBXCP}\" \\\n  -exclude .DS_Store -exclude CVS -exclude .svn -resolve-src-symlinks \\\n  \"${IMPORTER}\" \"${SPOTLIGHT_DIR}\"\n\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3CA0FEE30D7614AB0093562D /* ShellScript */ = {
