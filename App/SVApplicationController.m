@@ -27,7 +27,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "SVApplicationController.h"
 
 #import "BDAlias.h"
-#import "KSAbstractBugReporter.h"
+#import "KSExceptionReporter.h"
 #import "KSEmailAddressComboBox.h"
 #import "KSNetworkNotifier.h"
 #import "KSPluginInstallerController.h"
@@ -1055,7 +1055,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
     }	
 #endif
 
-	[center addObserver:self selector:@selector(exceptionReporterFinished:) name:kKSBugReporterReporterFinishedNotification object:nil];
+	[center addObserver:self selector:@selector(exceptionReporterFinished:) name:kKSExceptionReporterFinishedNotification object:nil];
 	
 	// Copy font collection into user's font directory if it's not there
 	// Check default first -- that will allow user to change name without it being rewritten
