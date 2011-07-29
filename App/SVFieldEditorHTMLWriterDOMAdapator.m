@@ -24,7 +24,10 @@
 
 - (DOMElement *)replaceDOMElement:(DOMElement *)element withElementWithTagName:(NSString *)tagName;
 - (void)moveDOMElementToAfterParent:(DOMElement *)element;
+
 - (DOMNode *)replaceDOMElementWithChildNodes:(DOMElement *)element;
+- (void)replaceDOMElement:(DOMElement *)element withElement:(DOMElement *)newElement;
+
 - (void)populateSpanElementAttributes:(DOMElement *)span
                       fromFontElement:(DOMHTMLFontElement *)fontElement;
 
@@ -343,10 +346,12 @@
     // Convert a <FONT> tag to <SPAN> with appropriate styling
     else if ([tagName isEqualToString:@"FONT"])
     {
-        result = [self replaceDOMElement:element withElementWithTagName:@"SPAN"];
+        result = [[element ownerDocument] createElement:@"SPAN"];
         
         [self populateSpanElementAttributes:(DOMHTMLElement *)result
-                  fromFontElement:(DOMHTMLFontElement *)element];
+                            fromFontElement:(DOMHTMLFontElement *)element];
+        
+        [self replaceDOMElement:element withElement:(DOMElement *)result];
     }
     else
     {
@@ -374,6 +379,13 @@
 
 - (DOMElement *)replaceDOMElement:(DOMElement *)element withElementWithTagName:(NSString *)tagName;
 {
+    DOMElement *result = [[element ownerDocument] createElement:tagName];
+    [self replaceDOMElement:element withElement:result];
+    return result;
+}
+
+- (void)replaceDOMElement:(DOMElement *)element withElement:(DOMElement *)newElement;
+{
     // When editing the DOM, WebKit has a nasty habbit of losing track of the selection. Since we're swapping one node for another, can correct by deducing new selection from index paths.
     // We probably don't actually need to do this for all changes, only those inside the selection, but then, maybe that's where all changes should be happening anyway?
     DOMDocument *doc = [element ownerDocument];
@@ -384,9 +396,9 @@
     NSIndexPath *endPath = [selection ks_endIndexPathFromNode:doc];
     
     // Make replacement
-    DOMElement *result = [[element parentNode] replaceChildNode:element
-                                      withElementWithTagName:tagName
-                                                moveChildren:YES];
+    [[element parentNode] ks_replaceChildNode:element
+                                     withNode:newElement
+                                 moveChildren:YES];
     
     
     // Try to correct selection
@@ -394,9 +406,6 @@
     if (endPath) [selection ks_setEndWithIndexPath:endPath fromNode:doc];
     
     [webView setSelectedDOMRange:selection affinity:[webView selectionAffinity]];
-    
-    
-    return result;
 }
 
 - (void)moveDOMElementToAfterParent:(DOMElement *)element;
@@ -447,9 +456,16 @@
 - (void)populateSpanElementAttributes:(DOMElement *)span
                       fromFontElement:(DOMHTMLFontElement *)fontElement;
 {
+    if ([fontElement hasAttribute:@"size"]) // must interpret now, before replacement
+    {
+        DOMDocument *doc = [fontElement ownerDocument];
+        DOMCSSStyleDeclaration *style = [doc getComputedStyle:fontElement pseudoElement:nil];
+        
+        [[span style] setFontSize:[style fontSize]];
+    }
+    
     [[span style] setProperty:@"font-family" value:[fontElement face] priority:@""];
     [[span style] setProperty:@"color" value:[fontElement color] priority:@""];
-    // Ignoring size for now, but may have to revisit
 }
 
 #pragma mark High-level Writing
