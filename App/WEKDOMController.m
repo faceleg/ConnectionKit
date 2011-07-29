@@ -109,20 +109,29 @@
 - (BOOL)isHTMLElementLoaded { return (_DOMElement != nil); }
 
 @synthesize elementIdName = _elementID;
-@synthesize ancestorNode = _ancestor;
-
-- (DOMHTMLDocument *)HTMLDocument;
-{
-    id result = [self ancestorNode];
-    if (![result isKindOfClass:[DOMHTMLDocument class]]) result = nil;
-    return result;
-}
 
 - (DOMRange *)DOMRange; // returns -HTMLElement as a range
 {
     DOMElement *element = [self HTMLElement];
     DOMRange *result = [[element ownerDocument] createRange];
     [result selectNode:element];
+    return result;
+}
+
+#pragma mark Ancestor
+
+@synthesize ancestorNode = _ancestor;
+- (void)setAncestorNode:(DOMNode *)node;
+{
+    OBPRECONDITION(node);
+    [node retain];
+    [_ancestor release]; _ancestor = node;
+}
+
+- (DOMHTMLDocument *)HTMLDocument;
+{
+    id result = [self ancestorNode];
+    if (![result isKindOfClass:[DOMHTMLDocument class]]) result = nil;
     return result;
 }
 
