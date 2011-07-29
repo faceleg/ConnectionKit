@@ -33,7 +33,7 @@
     if (self = [self init])
     {
         _elementID = [elementID copy];
-        _node = [node retain];
+        _ancestor = [node retain];
     }
     
     return self;
@@ -51,7 +51,7 @@
     [_eventListener setEventsTarget:nil];
     
     [_elementID release];
-    [_node release];
+    [_ancestor release];
     [_DOMElement release];
     [_eventListener release];
     [_representedObject release];
@@ -78,7 +78,7 @@
     if (idName)
     {
         DOMHTMLElement *element = nil;
-        DOMNode *node = [self node];
+        DOMNode *node = [self ancestorNode];
         
         if ([node respondsToSelector:@selector(getElementById:)])
         {
@@ -109,11 +109,11 @@
 - (BOOL)isHTMLElementLoaded { return (_DOMElement != nil); }
 
 @synthesize elementIdName = _elementID;
-@synthesize node = _node;
+@synthesize ancestorNode = _ancestor;
 
 - (DOMHTMLDocument *)HTMLDocument;
 {
-    id result = [self node];
+    id result = [self ancestorNode];
     if (![result isKindOfClass:[DOMHTMLDocument class]]) result = nil;
     return result;
 }

@@ -25,7 +25,7 @@
     
     // Loading by creation
     NSString    *_elementID;
-    DOMNode     *_node;
+    DOMNode     *_ancestor;
 }
 
 #pragma mark Init
@@ -46,7 +46,7 @@
 - (BOOL)isHTMLElementLoaded;
 
 @property(nonatomic, copy) NSString *elementIdName;
-@property(nonatomic, retain, readonly) DOMNode *node;
+@property(nonatomic, retain, readonly) DOMNode *ancestorNode;
 @property(nonatomic, retain, readonly) DOMHTMLDocument *HTMLDocument;
 
 - (DOMRange *)DOMRange; // returns -HTMLElement as a range
