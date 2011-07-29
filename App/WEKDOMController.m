@@ -33,7 +33,7 @@
     if (self = [self init])
     {
         _elementID = [elementID copy];
-        _ancestor = [node retain];
+        [self setAncestorNode:node];
     }
     
     return self;

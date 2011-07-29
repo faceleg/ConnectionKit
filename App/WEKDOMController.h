@@ -46,7 +46,7 @@
 - (BOOL)isHTMLElementLoaded;
 
 @property(nonatomic, copy) NSString *elementIdName;
-@property(nonatomic, retain, readonly) DOMNode *ancestorNode;
+@property(nonatomic, retain) DOMNode *ancestorNode;
 @property(nonatomic, retain, readonly) DOMHTMLDocument *HTMLDocument;
 
 - (DOMRange *)DOMRange; // returns -HTMLElement as a range
