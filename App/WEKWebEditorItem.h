@@ -34,6 +34,11 @@
     NSSize      _delta;
 }
 
+#pragma mark DOM
+- (void)setAncestorNode:(DOMNode *)node recursive:(BOOL)recurse;
+
+
+#pragma mark Web Editor
 @property(nonatomic, assign, readonly) WEKWebEditorView *webEditor;  // NOT KVO-compliant
 
 

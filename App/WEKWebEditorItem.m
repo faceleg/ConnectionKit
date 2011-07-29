@@ -70,6 +70,19 @@
     [_height release]; _height = [height copy];
 }
 
+- (void)setAncestorNode:(DOMNode *)node recursive:(BOOL)recurse;
+{
+    [self setAncestorNode:node];
+    
+    if (recurse)
+    {
+        for (WEKWebEditorItem *anItem in [self childWebEditorItems])
+        {
+            [anItem setAncestorNode:node recursive:recurse];
+        }
+    }
+}
+
 #pragma mark Accessors
 
 - (WEKWebEditorView *)webEditor
