@@ -779,6 +779,25 @@
 
 #pragma mark Serialization
 
+- (void)awakeFromPropertyList:(id)propertyList;
+{
+    [super awakeFromPropertyList:propertyList];
+    
+    id thumbnail = [propertyList objectForKey:@"customThumbnail"];
+    if (thumbnail)
+    {
+        SVMedia *media = [[SVMedia alloc] initWithSerializedProperties:thumbnail];
+        if (media)
+        {
+            SVMediaRecord *record = [SVMediaRecord mediaRecordWithMedia:media
+                                                             entityName:@"Thumbnail"
+                                         insertIntoManagedObjectContext:[self managedObjectContext]];
+            
+            [self setCustomThumbnail:record];
+        }
+    }
+}
+
 - (void)awakeFromPropertyList:(id)propertyList parentItem:(SVSiteItem *)parent;
 {
     [self awakeFromPropertyList:propertyList];
@@ -810,6 +829,9 @@
     [super populateSerializedProperties:propertyList];
     
     [propertyList setObject:[[self entity] name] forKey:@"entity"];
+    
+    // Custom Thumbnail
+    [propertyList setValue:[[self customThumbnail] serializedProperties] forKey:@"customThumbnail"];
 }
 
 @end
