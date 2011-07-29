@@ -254,7 +254,7 @@
     
     
     // If attributes haven't already been built, now is the time to do so
-    if (![[self XMLWriter] currentElementHasAttributes])
+    if (![[self XMLWriter] hasCurrentAttributes])
     {
         [self buildAttributesForDOMElement:element element:elementName];
     }
