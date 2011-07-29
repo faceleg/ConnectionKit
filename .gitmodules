@@ -7,3 +7,6 @@
 [submodule "Code/Shared"]
 	path = Code/Shared
 	url = git@github.com:karelia/Shared.git
+[submodule "Code/KSHTMLWriter"]
+	path = Code/KSHTMLWriter
+	url = git@github.com:karelia/KSHTMLWriter.git
