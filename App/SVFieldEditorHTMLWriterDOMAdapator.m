@@ -623,7 +623,7 @@
 
 #pragma mark Styling Whitelist
 
-- (BOOL)validateStyleProperty:(NSString *)propertyName ofElementWithTagName:(NSString *)tagName;
+- (BOOL)validateStyleProperty:(NSString *)propertyName ofElement:(NSString *)element;
 {
     BOOL result = ([propertyName isEqualToString:@"font"] ||
                    [propertyName hasPrefix:@"font-"] ||
@@ -636,13 +636,13 @@
 }
 
 - (void)removeUnsupportedCustomStyling:(DOMCSSStyleDeclaration *)style
-                fromElement:(NSString *)tagName;
+                           fromElement:(NSString *)element;
 {
     for (int i = [style length]; i > 0;)
     {
         i--;
         NSString *name = [style item:i];
-        if (![self validateStyleProperty:name ofElementWithTagName:tagName]) [style removeProperty:name];
+        if (![self validateStyleProperty:name ofElement:element]) [style removeProperty:name];
     }
 }
 

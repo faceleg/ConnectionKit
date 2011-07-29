@@ -48,7 +48,7 @@
 }
 
 - (NSDictionary *)dictionaryWithCSSStyle:(DOMCSSStyleDeclaration *)style
-                                 tagName:(NSString *)tagName;
+                                 element:(NSString *)element;
 {
     int length = [style length];
     NSMutableDictionary *result = [NSMutableDictionary dictionaryWithCapacity:length];
@@ -56,7 +56,7 @@
     for (int i = 0; i < length; i++)
     {
         NSString *property = [style item:i];
-        if ([self validateStyleProperty:property ofElementWithTagName:tagName])
+        if ([self validateStyleProperty:property ofElement:element])
         {
             [result setObject:[style getPropertyValue:property] forKey:property];
         }
@@ -71,7 +71,7 @@
     
     
     // Swap the element for a <P>, trying to retain as much style as possible. #92641
-    NSDictionary *oldStyle = [self dictionaryWithCSSStyle:style tagName:@"P"];
+    NSDictionary *oldStyle = [self dictionaryWithCSSStyle:style element:@"p"];
     DOMElement *result = [self replaceDOMElement:element withElementWithTagName:@"P"];
     
     DOMCSSStyleDeclaration *paragraphStyle = [[element ownerDocument] getComputedStyle:result
@@ -217,13 +217,13 @@
     return result;
 }
 
-- (BOOL)validateStyleProperty:(NSString *)propertyName ofElementWithTagName:(NSString *)tagName;
+- (BOOL)validateStyleProperty:(NSString *)propertyName ofElement:(NSString *)element;
 {
-    BOOL result = [super validateStyleProperty:propertyName ofElementWithTagName:tagName];
+    BOOL result = [super validateStyleProperty:propertyName ofElement:element];
     
     if (!result)
     {
-        if ([propertyName isEqualToString:@"text-align"] && [tagName isEqualToString:@"p"])
+        if ([propertyName isEqualToString:@"text-align"] && [element isEqualToString:@"p"])
         {
             result = YES;
         }
