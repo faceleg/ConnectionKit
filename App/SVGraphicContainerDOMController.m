@@ -116,6 +116,24 @@
 
 #pragma mark Updating
 
+- (void)updateWithDOMNode:(DOMNode *)node items:(NSArray *)items;
+{
+    // Swap in updated node. Then get the Web Editor to hook new descendant controllers up to the new nodes
+    [[[self HTMLElement] parentNode] replaceChild:node oldChild:[self HTMLElement]];
+    //[self setHTMLElement:nil];  // so Web Editor will endeavour to hook us up again
+    
+    
+    // Hook up new DOM Controllers
+    SVWebEditorViewController *viewController = [self webEditorViewController];
+    [viewController willUpdate];    // wrap the replacement like this so doesn't think update finished too early
+    {
+        [self didUpdateWithSelector:@selector(update)];
+        [[self retain] autorelease];    // replacement is likely to deallocate us
+        [[self parentWebEditorItem] replaceChildWebEditorItem:self withItems:items];
+    }
+    [viewController didUpdate];
+}
+
 - (void)update;
 {
     // Tear down dependencies etc.
@@ -174,6 +192,40 @@
     [context release];
     
     
+    DOMHTMLDocument *doc = (DOMHTMLDocument *)[[self HTMLElement] ownerDocument];
+    DOMDocumentFragment *fragment = [doc createDocumentFragmentWithMarkupString:[html string] baseURL:nil];
+    
+    if (fragment)
+    {
+        SVContentDOMController *rootController = [[SVContentDOMController alloc]
+                                                  initWithWebEditorHTMLContext:_offscreenContext
+                                                  node:fragment];
+        DOMElement *anElement = [fragment firstChildOfClass:[DOMElement class]];
+        while (anElement)
+        {
+            if ([[anElement getElementsByTagName:@"SCRIPT"] length]) break; // deliberately ignoring top-level scripts
+            
+            NSString *ID = [[[rootController childWebEditorItems] objectAtIndex:0] elementIdName];
+            if ([ID isEqualToString:[anElement getAttribute:@"id"]])
+            {
+                // Search for any following scripts
+                if ([anElement nextSiblingOfClass:[DOMHTMLScriptElement class]]) break;
+                
+                // No scripts, so can update directly
+                [self updateWithDOMNode:anElement items:[rootController childWebEditorItems]];
+                
+                [rootController release];
+                [_offscreenContext release]; _offscreenContext = nil;
+                return;
+            }
+            
+            anElement = [anElement nextSiblingOfClass:[DOMElement class]];
+        }
+        
+        [rootController release];
+    }
+    
+    
     // Start loading DOM objects from HTML
     if (_offscreenWebViewController)
     {
@@ -188,23 +240,6 @@
     
     [_offscreenWebViewController loadHTMLFragment:[html string]];
     [html release];
-}
-
-- (void)updateWithDOMNode:(DOMNode *)node items:(NSArray *)items;
-{
-    // Swap in updated node. Then get the Web Editor to hook new descendant controllers up to the new nodes
-    [[[self HTMLElement] parentNode] replaceChild:node oldChild:[self HTMLElement]];
-    //[self setHTMLElement:nil];  // so Web Editor will endeavour to hook us up again
-    
-    
-    // Hook up new DOM Controllers
-    SVWebEditorViewController *viewController = [self webEditorViewController];
-    [viewController willUpdate];    // wrap the replacement like this so doesn't think update finished too early
-    {
-        [[self retain] autorelease];    // replacement is likely to deallocate us
-        [[self parentWebEditorItem] replaceChildWebEditorItem:self withItems:items];
-    }
-    [viewController didUpdate];
 }
 
 + (DOMHTMLHeadElement *)headOfDocument:(DOMDocument *)document;
