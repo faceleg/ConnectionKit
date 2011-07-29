@@ -124,6 +124,13 @@
     
     
     // Hook up new DOM Controllers
+    for (WEKWebEditorItem *anItem in items)
+    {
+        [anItem setAncestorNode:[self ancestorNode] recursive:YES];
+    }
+    
+    
+    
     SVWebEditorViewController *viewController = [self webEditorViewController];
     [viewController willUpdate];    // wrap the replacement like this so doesn't think update finished too early
     {
