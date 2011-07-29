@@ -1438,10 +1438,6 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     {
         [self _writePreHTMLMarkup:aString];
     }
-    
-    
-    // TEST
-    [self addMarkupToHead:@"HEAD TEST"];
 }
 
 - (void)addMarkupBeforeHTML:(NSString *)markup;
@@ -1484,10 +1480,6 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     {
         [self _writeExtraHeader:aString];
     }
-    
-    
-    // TEST
-    [self addMarkupBeforeHTML:@"TESTY TEST TESTING TEST"];
 }
 
 - (void)addMarkupToHead:(NSString *)markup;
