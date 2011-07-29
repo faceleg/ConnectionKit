@@ -24,7 +24,10 @@
 
 - (DOMElement *)replaceDOMElement:(DOMElement *)element withElementWithTagName:(NSString *)tagName;
 - (void)moveDOMElementToAfterParent:(DOMElement *)element;
+
 - (DOMNode *)replaceDOMElementWithChildNodes:(DOMElement *)element;
+- (void)replaceDOMElement:(DOMElement *)element withElement:(DOMElement *)newElement;
+
 - (void)populateSpanElementAttributes:(DOMElement *)span
                       fromFontElement:(DOMHTMLFontElement *)fontElement;
 
@@ -395,6 +398,13 @@
 
 - (DOMElement *)replaceDOMElement:(DOMElement *)element withElementWithTagName:(NSString *)tagName;
 {
+    DOMElement *result = [[element ownerDocument] createElement:tagName];
+    [self replaceDOMElement:element withElement:result];
+    return result;
+}
+
+- (void)replaceDOMElement:(DOMElement *)element withElement:(DOMElement *)newElement;
+{
     // When editing the DOM, WebKit has a nasty habbit of losing track of the selection. Since we're swapping one node for another, can correct by deducing new selection from index paths.
     // We probably don't actually need to do this for all changes, only those inside the selection, but then, maybe that's where all changes should be happening anyway?
     DOMDocument *doc = [element ownerDocument];
@@ -405,9 +415,9 @@
     NSIndexPath *endPath = [selection ks_endIndexPathFromNode:doc];
     
     // Make replacement
-    DOMElement *result = [[element parentNode] replaceChildNode:element
-                                      withElementWithTagName:tagName
-                                                moveChildren:YES];
+    [[element parentNode] ks_replaceChildNode:element
+                                     withNode:newElement
+                                 moveChildren:YES];
     
     
     // Try to correct selection
@@ -415,9 +425,6 @@
     if (endPath) [selection ks_setEndWithIndexPath:endPath fromNode:doc];
     
     [webView setSelectedDOMRange:selection affinity:[webView selectionAffinity]];
-    
-    
-    return result;
 }
 
 - (void)moveDOMElementToAfterParent:(DOMElement *)element;
