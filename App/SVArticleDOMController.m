@@ -1356,7 +1356,7 @@
 
 - (SVTextDOMController *)newTextDOMControllerWithElementIdName:(NSString *)elementID node:(DOMNode *)node;
 {
-    SVArticleDOMController *result = [[SVArticleDOMController alloc] initWithElementIdName:elementID node:node];
+    SVArticleDOMController *result = [[SVArticleDOMController alloc] initWithElementIdName:elementID ancestorNode:node];
     [result setRepresentedObject:self];
     [result setRichText:YES];
     [result setImportsGraphics:YES];

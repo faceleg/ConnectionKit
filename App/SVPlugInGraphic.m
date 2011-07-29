@@ -542,7 +542,7 @@ static void *sPlugInMinWidthObservationContext = &sPlugInMinWidthObservationCont
     if ([[self plugIn] isKindOfClass:[SVIndexPlugIn class]])
     {
         SVDOMController *result = [[SVIndexDOMController alloc] initWithElementIdName:elementID
-                                                                             node:node];
+                                                                             ancestorNode:node];
         [result setRepresentedObject:self];
         
         if ([self textAttachment])

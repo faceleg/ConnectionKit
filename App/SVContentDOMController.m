@@ -94,7 +94,7 @@
         {
             if ([self isHorizontallyResizable] || [self isVerticallyResizable])
             {
-                SVPlugInDOMController *result = [[SVPlugInDOMController alloc] initWithElementIdName:elementID node:node];
+                SVPlugInDOMController *result = [[SVPlugInDOMController alloc] initWithElementIdName:elementID ancestorNode:node];
                 [result setRepresentedObject:container];
                 
                 [result setHorizontallyResizable:[self isHorizontallyResizable]];

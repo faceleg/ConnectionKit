@@ -46,7 +46,7 @@
 - (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID node:(DOMNode *)node;
 {
     SVDOMController *result = [[SVCalloutDOMController alloc] initWithElementIdName:elementID
-                                                                           node:node];
+                                                                           ancestorNode:node];
     
     [result setRepresentedObject:self];
     return result;

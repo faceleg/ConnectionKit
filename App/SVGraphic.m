@@ -900,7 +900,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 - (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID node:(DOMNode *)node;
 {
     SVDOMController *result = [[SVGraphicDOMController alloc] initWithElementIdName:elementID
-                                                                               node:node];
+                                                                               ancestorNode:node];
     [result setRepresentedObject:self];
     
     if ([self textAttachment])

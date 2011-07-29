@@ -438,7 +438,7 @@
 
 - (SVTextDOMController *)newTextDOMControllerWithElementIdName:(NSString *)elementID node:(DOMNode *)node;
 {
-    SVTextFieldDOMController *result = [[SVTextFieldDOMController alloc] initWithElementIdName:elementID node:node];
+    SVTextFieldDOMController *result = [[SVTextFieldDOMController alloc] initWithElementIdName:elementID ancestorNode:node];
     [result setRepresentedObject:self];
     [result setRichText:YES];
     [result setFieldEditor:YES];

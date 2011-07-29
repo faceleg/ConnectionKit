@@ -1176,7 +1176,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 
 - (SVTextDOMController *)newTextDOMControllerWithElementIdName:(NSString *)elementID node:(DOMNode *)node;
 {
-    SVTextDOMController *result = [[SVRichTextDOMController alloc] initWithElementIdName:elementID node:node];
+    SVTextDOMController *result = [[SVRichTextDOMController alloc] initWithElementIdName:elementID ancestorNode:node];
     [result setRepresentedObject:self];
     [result setRichText:YES];
     

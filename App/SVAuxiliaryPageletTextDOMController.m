@@ -87,7 +87,7 @@
 
 - (SVTextDOMController *)newTextDOMControllerWithElementIdName:(NSString *)elementID node:(DOMNode *)node;
 {
-    SVTextDOMController *result = [[SVAuxiliaryPageletTextDOMController alloc] initWithElementIdName:elementID node:node];
+    SVTextDOMController *result = [[SVAuxiliaryPageletTextDOMController alloc] initWithElementIdName:elementID ancestorNode:node];
     [result setRepresentedObject:self];
     [result setRichText:YES];
     
