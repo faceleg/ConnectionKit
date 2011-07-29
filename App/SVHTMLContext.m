@@ -74,7 +74,6 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 - (void)startPlaceholder;
 - (void)endPlaceholder;
 
-- (NSMutableString *)extraHeaderMarkup;
 - (NSMutableString *)endBodyMarkup; // can append to, query, as you like while parsing
 
 @end
@@ -89,38 +88,35 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 - (id)initWithOutputWriter:(id <KSWriter>)output; // designated initializer
 {
-    [super initWithOutputWriter:output];
+    KSStringWriter *stringWriter = [[KSStringWriter alloc] init];
+    if (self = [self initWithOutputStringWriter:stringWriter]);
+    {
+        _finalOutput = [output retain];
+    }
     
-    
-    _includeStyling = YES;
-    
-    _liveDataFeeds = YES;
-        
-    _headerLevel = 1;
-    
-    _headerMarkup = [[NSMutableString alloc] init];
-    _endBodyMarkup = [[NSMutableString alloc] init];
-    _iteratorsStack = [[NSMutableArray alloc] init];
-    _graphicContainers = [[NSMutableArray alloc] init];
-    
+    [stringWriter release];
     return self;
 }
 
 - (id)initWithOutputStringWriter:(KSStringWriter *)output;
 {
-    if (self = [self initWithOutputWriter:output])
+    if (self = [super initWithOutputWriter:output])
     {
         _output = [output retain];
+        
+        _includeStyling = YES;
+        
+        _liveDataFeeds = YES;
+        
+        _headerLevel = 1;
+
+        _preHTMLMarkup = [[NSMutableArray alloc] init];
+        _extraHeadMarkup = [[NSMutableArray alloc] init];
+        _endBodyMarkup = [[NSMutableString alloc] init];
+        _iteratorsStack = [[NSMutableArray alloc] init];
+        _graphicContainers = [[NSMutableArray alloc] init];
     }
     
-    return self;
-}
-
-- (id)init;
-{
-    KSStringWriter *output = [[KSStringWriter alloc] init];
-    self = [self initWithOutputStringWriter:output];
-    [output release];
     return self;
 }
 
@@ -153,8 +149,9 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     [_article release];
     
     [_mainCSSURL release];
-        
-    [_headerMarkup release]; _headerMarkup = nil;   // accessed in -flush
+    
+    [_preHTMLMarkup release];
+    [_extraHeadMarkup release];
     [_endBodyMarkup release];
     [_iteratorsStack release];
     [_graphicContainers release];
@@ -201,7 +198,8 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     
     
     // First Code Injection.  Can't use a convenience method since we need this context.  Make sure this matches the convenience methods though!
-	[page write:self codeInjectionSection:@"beforeHTML" masterFirst:YES];
+	[self writePreHTMLMarkup];
+    [page write:self codeInjectionSection:@"beforeHTML" masterFirst:YES];
     
     
     // Start the document
@@ -396,13 +394,16 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     }
     else
     {
-        if (_headerMarkupIndex != NSNotFound)
+        if (_extraHeadBuffer > 0)
         {
-            KSHTMLWriter *writer = [[KSHTMLWriter alloc] initWithOutputWriter:[self extraHeaderMarkup]];
+            NSMutableString *html = [[NSMutableString alloc] init];
+            KSHTMLWriter *writer = [[KSHTMLWriter alloc] initWithOutputWriter:html];
             
             [writer writeStyleElementWithCSSString:css];
             [writer writeString:@"\n"];
             
+            [self addMarkupToHead:html];
+            [html release];
             [writer release];
         }
         else
@@ -1066,15 +1067,18 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 - (void)linkToCSSAtURL:(NSURL *)fileURL
 {
-    if (_headerMarkupIndex != NSNotFound)
+    if (_extraHeadBuffer > 0)
     {
-        KSHTMLWriter *writer = [[KSHTMLWriter alloc] initWithOutputWriter:[self extraHeaderMarkup]];
+        NSMutableString *html = [[NSMutableString alloc] init];
+        KSHTMLWriter *writer = [[KSHTMLWriter alloc] initWithOutputWriter:html];
         
         [writer writeLinkToStylesheet:[self relativeStringFromURL:fileURL]
                                 title:nil
                                 media:nil];
         
         [writer writeString:@"\n"];
+        [self addMarkupToHead:html];
+        [html release];
         [writer release];
     }
     else
@@ -1405,12 +1409,101 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 #pragma mark Extra markup
 
+- (void)_writePreHTMLMarkup:(NSString *)markup;
+{
+    NSUInteger buffer = (_preHTMLBuffer - 1);   // want to write just before the buffer
+    [[self outputStringWriter] writeString:markup toBufferAtIndex:buffer];
+    
+    if (![markup hasSuffix:@"\n"])
+    {
+        [[self outputStringWriter] writeString:@"\n" toBufferAtIndex:buffer];
+    }
+}
+
+- (void)writePreHTMLMarkup;
+{
+    OBASSERT(_preHTMLBuffer == 0);
+    
+    // Time to start buffering in case a plug-in wants to inject code here
+    KSStringWriter *stringWriter = [self outputStringWriter];
+    OBASSERT(stringWriter);
+    
+    [stringWriter beginBuffering];
+    _preHTMLBuffer = [stringWriter numberOfBuffers];
+    OBASSERT(_preHTMLBuffer > 0);
+    
+    
+    // Write any pending markup
+    for (NSString *aString in _preHTMLMarkup)
+    {
+        [self _writePreHTMLMarkup:aString];
+    }
+    
+    
+    // TEST
+    [self addMarkupToHead:@"HEAD TEST"];
+}
+
+- (void)addMarkupBeforeHTML:(NSString *)markup;
+{
+    if ([_preHTMLMarkup containsObject:markup]) return; // ignore dupes
+    [_preHTMLMarkup addObject:markup];
+    
+    if (_preHTMLBuffer > 0)
+    {
+        [self _writePreHTMLMarkup:markup];
+    }
+}
+
+- (void)_writeExtraHeader:(NSString *)markup;
+{
+    NSUInteger buffer = (_extraHeadBuffer - 1);   // want to write just before the buffer
+    [[self outputStringWriter] writeString:markup toBufferAtIndex:buffer];
+    
+    if (![markup hasSuffix:@"\n"])
+    {
+        [[self outputStringWriter] writeString:@"\n" toBufferAtIndex:buffer];
+    }
+}
+
+- (void)writeExtraHeaders;  // writes any code plug-ins etc. have requested should inside the <head> element
+{
+    OBASSERT(_extraHeadBuffer == 0);
+    
+    // Time to start buffering in case a plug-in wants to inject code here
+    KSStringWriter *stringWriter = [self outputStringWriter];
+    OBASSERT(stringWriter);
+    
+    [stringWriter beginBuffering];
+    _extraHeadBuffer = [stringWriter numberOfBuffers];
+    OBASSERT(_extraHeadBuffer > 0);
+    
+    
+    // Write any pending markup
+    for (NSString *aString in _extraHeadMarkup)
+    {
+        [self _writeExtraHeader:aString];
+    }
+    
+    
+    // TEST
+    [self addMarkupBeforeHTML:@"TESTY TEST TESTING TEST"];
+}
+
 - (void)addMarkupToHead:(NSString *)markup;
 {
-    if ([[self extraHeaderMarkup] rangeOfString:markup].location == NSNotFound)
+    if ([_extraHeadMarkup containsObject:markup]) return; // ignore dupes
+    [_extraHeadMarkup addObject:markup];
+    
+    if (_extraHeadBuffer > 0)
     {
-        [[self extraHeaderMarkup] appendString:markup];
+        [self _writeExtraHeader:markup];
     }
+}
+
+- (NSMutableString *)endBodyMarkup; // can append to, query, as you like while parsing
+{
+    return _endBodyMarkup;
 }
 
 - (void)addMarkupToEndOfBody:(NSString *)markup;
@@ -1419,22 +1512,6 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     {
         [[self endBodyMarkup] appendString:markup];
     }
-}
-
-- (NSMutableString *)extraHeaderMarkup; // can append to, query, as you like while parsing
-{
-    return _headerMarkup;
-}
-
-- (void)writeExtraHeaders;  // writes any code plug-ins etc. have requested should inside the <head> element
-{
-    // Record where to make the insert
-    _headerMarkupIndex = [[self outputStringWriter] length];
-}
-
-- (NSMutableString *)endBodyMarkup; // can append to, query, as you like while parsing
-{
-    return _endBodyMarkup;
 }
 
 - (void)writeEndBodyString; // writes any code plug-ins etc. have requested should go at the end of the page, before </body>
@@ -1447,14 +1524,18 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 {
     [super flush];
     
-    // Finish buffering extra header
-    if (_headerMarkupIndex < NSNotFound && _headerMarkup)
+    // Finish buffering pre-HTML markup
+    if (_preHTMLBuffer)
     {
-        [[self outputStringWriter] insertString:[self extraHeaderMarkup]
-                                        atIndex:_headerMarkupIndex];
-        
-        [_headerMarkup deleteCharactersInRange:NSMakeRange(0, [_headerMarkup length])];
-        _headerMarkupIndex = NSNotFound; // so nothing gets mistakenly written afterwards
+        [[self outputStringWriter] flushFirstBuffer];
+        _preHTMLBuffer = 0;
+    }
+    
+    // Finish buffering extra header
+    if (_extraHeadBuffer)
+    {
+        [[self outputStringWriter] flushFirstBuffer];
+        _extraHeadBuffer = 0;
     }
 }
 
@@ -1665,9 +1746,15 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 - (void)close;
 {
+    if (_finalOutput)
+    {
+        [_finalOutput writeString:[[self outputStringWriter] string]];
+    }
+    
     [super close];
     
     [_output release]; _output = nil;
+    [_finalOutput release]; _finalOutput = nil;
 }
 
 #pragma mark Legacy

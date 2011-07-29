@@ -198,6 +198,9 @@ typedef NSUInteger SVPageImageRepresentationOptions;
 
 #pragma mark Extra markup
 
+// Adds the markup before the <HTML> tag, after any Code Injection
+- (void)addMarkupBeforeHTML:(NSString *)markup AVAILABLE_SANDVOX_VERSION_2_2_AND_LATER;
+
 // Adds the markup inside the <HEAD> tag. If same code has already been added, goes ignored
 - (void)addMarkupToHead:(NSString *)markup AVAILABLE_SANDVOX_VERSION_2_1_AND_LATER;
 

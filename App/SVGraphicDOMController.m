@@ -265,7 +265,16 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     BOOL importedContent = NO;
     for (int i = 0; i < [children length]; i++)
     {
-        DOMNode *imported = [document importNode:[children item:i] deep:YES];
+        DOMNode *node = [children item:i];
+        
+        // Try adopting the node, then fallback to import, as described in http://www.w3.org/TR/DOM-Level-3-Core/core.html#Document3-adoptNode
+        DOMNode *imported = [document adoptNode:node];
+        if (!imported)
+        {
+            // TODO:
+            // As noted at http://www.w3.org/TR/DOM-Level-3-Core/core.html#Core-Document-importNode this could raise an exception, which we should probably catch and handle in some fashion
+            imported = [document importNode:node deep:YES];
+        }
         
         // Is this supposed to be inserted at top of doc?
         if (importedContent)
@@ -390,7 +399,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     SVHTMLContext *context = [[SVHTMLContext alloc] initWithOutputWriter:nil];
     [graphic buildClassName:context includeWrap:YES];
     
-    NSString *className = [[[context currentElementInfo] attributesAsDictionary] objectForKey:@"class"];
+    NSString *className = [[[context currentAttributes] attributesAsDictionary] objectForKey:@"class"];
     DOMHTMLElement *element = [self HTMLElement];
     [element setClassName:className];
     
@@ -930,8 +939,10 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
             switch ([children count])
             {
                 case 1:
-                    OBASSERT([[[children objectAtIndex:0] childWebEditorItems] count] <= 1);
-                    [[[children objectAtIndex:0] HTMLElement] setInnerHTML:parsedPlaceholderHTML];
+                    for (WEKWebEditorItem *anItem in children)
+                    {
+                        [[anItem HTMLElement] setInnerHTML:parsedPlaceholderHTML];
+                    }
                     break;
                     
                 default:

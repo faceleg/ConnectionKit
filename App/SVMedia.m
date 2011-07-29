@@ -300,6 +300,62 @@
     }
 }
 
+#pragma mark Serialization
+
+- (id)initWithSerializedProperties:(id)properties;
+{
+    NSString *urlString = [properties objectForKey:@"mediaURL"];
+    if (!urlString)
+    {
+        [self release]; return nil;
+    }
+    
+    NSURL *URL = [NSURL URLWithString:urlString];
+    if (!URL)
+    {
+        [self release]; return nil;
+    }
+    
+    NSData *wrapperData = [properties objectForKey:@"fileWrapper"];
+    if (!wrapperData)
+    {
+        [self release]; return nil;
+    }
+    
+    NSFileWrapper *wrapper = [[NSFileWrapper alloc] initWithSerializedRepresentation:wrapperData];
+    if (!wrapper)
+    {
+        [self release]; return nil;
+    }
+
+    NSData *data = [wrapper regularFileContents];
+    if (!data)
+    {
+        [self release]; return nil;
+    }
+    
+    return [self initWithData:data URL:URL];
+}
+
+- (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
+{
+    NSFileWrapper *wrapper;
+    if ([self mediaData])
+    {
+        wrapper = [[NSFileWrapper alloc] initRegularFileWithContents:[self mediaData]];
+    }
+    else
+    {
+        wrapper = [[NSFileWrapper alloc] initWithPath:[[self mediaURL] path]];
+    }
+    [wrapper setPreferredFilename:[self preferredFilename]];
+    
+    [propertyList setObject:[[self mediaURL] absoluteString] forKey:@"mediaURL"];
+    [propertyList setValue:[wrapper serializedRepresentation] forKey:@"fileWrapper"];
+    
+    [wrapper release];
+}
+
 #pragma mark Deprecated
 
 - (NSString *)typeOfFile

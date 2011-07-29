@@ -181,7 +181,8 @@ static SVLinkManager *sSharedLinkManager;
     if (!result)
     {
         // Is there something suitable on the pasteboard?
-        NSURL *URL = [WebView URLFromPasteboard:[NSPasteboard generalPasteboard]];
+        // Turned off for now. #135014
+        NSURL *URL = nil;//[WebView URLFromPasteboard:[NSPasteboard generalPasteboard]];
         if (!URL)
         {
             // Try to populate from frontmost Safari URL

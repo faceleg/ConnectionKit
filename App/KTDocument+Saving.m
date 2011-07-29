@@ -165,16 +165,50 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
     
     
     // Normal save behaviour
-    BOOL result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation error:outError];
-    OBASSERT(result || !outError || (nil != *outError)); // make sure we didn't return NO with an empty error
+    _saveOpCount++;
+    @try
+    {
+        BOOL result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation error:outError];
+        OBASSERT(result || !outError || (nil != *outError)); // make sure we didn't return NO with an empty error
+        return result;
+    }
+    @finally
+    {
+        _saveOpCount--;
+    }
     
     
-    return result;
+    OBASSERT_NOT_REACHED("Control flow somehow escaped @try block!");
+    return YES; // keeps compiler happy
 }
 
 - (BOOL)isSaving
 {
-    return (mySaveOperationCount > 0);
+    return (_saveOpCount > 0);
+}
+
+- (void)autosaveDocumentWithDelegate:(id)delegate didAutosaveSelector:(SEL)didAutosaveSelector contextInfo:(void *)contextInfo;
+{
+    // As Sven saw, if autosave kicks in mid-another save, Lion deadlocks. It doesn't make sense to autosave at this point anyway, because a regular save is shortly to cancel it out.
+    // Have to override this particular method because the lock occurs before any other public methods.
+    // Alternatively, a smarter system could maybe wait until the save finishes, and then call super, but that would only be of value during a Save To operation.
+    if ([self isSaving])
+    {
+        if (delegate)
+        {
+            BOOL result = NO;
+            NSInvocation *callback = [NSInvocation invocationWithSelector:didAutosaveSelector target:delegate];
+            [callback setArgument:&self atIndex:2];
+            [callback setArgument:&result atIndex:3];
+            [callback setArgument:&contextInfo atIndex:4];
+            
+            [callback invoke];
+        }
+    }
+    else
+    {
+        [super autosaveDocumentWithDelegate:delegate didAutosaveSelector:didAutosaveSelector contextInfo:contextInfo];
+    }
 }
 
 #pragma mark Save Panel
@@ -658,19 +692,20 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         if (result) result = [context save:&error];
         
         
-        // If at all possible, overwrite the version hashes so it looks like an original Sandvox 2.0 document
-        NSString *hashesPath = [[NSBundle mainBundle] pathForResource:@"VersionHashes2_0" ofType:@"plist"];
-        NSDictionary *hashes_2_0 = [NSDictionary dictionaryWithContentsOfFile:hashesPath];
-        if (hashes_2_0)
+        // For regular docs, overwrite the version hashes so it looks like an original Sandvox 2.0 document
+        if (saveOp != NSAutosaveOperation)
         {
-            NSDictionary *metadata = [coordinator metadataForPersistentStore:store];
-            
-            metadata = [metadata ks_dictionaryBySettingObject:hashes_2_0 forKey:NSStoreModelVersionHashesKey];
-            
-            [NSPersistentStoreCoordinator setMetadata:metadata forPersistentStoreOfType:NSBinaryStoreType URL:URL error:NULL];
+            NSString *hashesPath = [[NSBundle mainBundle] pathForResource:@"VersionHashes2_0" ofType:@"plist"];
+            NSDictionary *hashes_2_0 = [NSDictionary dictionaryWithContentsOfFile:hashesPath];
+            if (hashes_2_0)
+            {
+                NSDictionary *metadata = [coordinator metadataForPersistentStore:store];
+                
+                metadata = [metadata ks_dictionaryBySettingObject:hashes_2_0 forKey:NSStoreModelVersionHashesKey];
+                
+                [NSPersistentStoreCoordinator setMetadata:metadata forPersistentStoreOfType:NSBinaryStoreType URL:URL error:NULL];
+            }
         }
-        
-        
     }
     
     
@@ -1244,6 +1279,105 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                                     subdirectory:[path stringByDeletingLastPathComponent]];
     
     [wrapper release];
+}
+
+#pragma mark Reduce File Size
+
+- (IBAction)reduceFileSize:(id)sender;
+{
+    // Can only do if actually have a file URL. Validation should catch by here!
+    if (![[self fileURL] isFileURL]) 
+    {
+        NSBeep();
+        return;
+    }
+    
+    
+    NSString *docPath = [[self fileURL] path];
+    
+    NSError *error;
+    NSArray *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:docPath error:&error];
+    
+    if (!files)
+    {
+        return [self presentError:error
+                   modalForWindow:[self windowForSheet]
+                         delegate:nil
+               didPresentSelector:NULL
+                      contextInfo:NULL];
+    }
+    
+    NSMutableArray *unusedFiles = [[NSMutableArray alloc] init];
+    
+    for (NSString *aFilename in files)
+    {
+        // Delete files that are in the package, but not marked for use
+        if ([self isFilenameAvailable:aFilename checkPackageContents:NO])
+        {
+            [unusedFiles addObject:aFilename];
+        }
+    }
+    
+    if ([unusedFiles count])
+    {
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert setMessageText:NSLocalizedString(@"This document's file size will be reduced by moving unused media to the Trash.", "alert message")];
+        
+        if ([unusedFiles count] == 1)
+        {
+            [alert setInformativeText:NSLocalizedString(@"1 file was found to remove.", @"alert message")];
+        }
+        else
+        {
+            [alert setInformativeText:[NSString stringWithFormat:NSLocalizedString(@"%u files were found to remove.", @"alert message"), [unusedFiles count]]];
+        }
+        
+        [alert addButtonWithTitle:NSLocalizedString(@"Reduce", "button")];
+        [alert addButtonWithTitle:NSLocalizedString(@"Cancel", "button")];
+        
+        [alert beginSheetModalForWindow:[self windowForSheet]
+                          modalDelegate:self
+                         didEndSelector:@selector(reduceFileSizeAlertDidEnd:returnCode:contextInfo:)
+                            contextInfo:unusedFiles];
+        
+        [alert release];
+    }
+    else
+    {
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert setMessageText:NSLocalizedString(@"No way to reduce this document's file size was found.", "alert message")];
+        
+        [alert beginSheetModalForWindow:[self windowForSheet] modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
+        
+        [alert release];
+        [unusedFiles release];
+    }
+}
+
+- (void)reduceFileSizeAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+{
+    NSArray *unusedFiles = contextInfo;
+    
+    if (returnCode == NSAlertFirstButtonReturn)
+    {
+        NSString *docPath = [[self fileURL] path];
+        
+        [KSWORKSPACE performFileOperation:NSWorkspaceRecycleOperation
+                                   source:docPath
+                              destination:nil
+                                    files:unusedFiles
+                                      tag:NULL];
+        
+        
+        // Update doc modification date so doesn't complain on next save
+        NSDate *date = [[[NSFileManager defaultManager] attributesOfItemAtPath:docPath error:NULL] fileModificationDate];
+        if (date)
+        {
+            [self setFileModificationDate:date];
+        }
+    }
+    
+    [unusedFiles release];
 }
 
 @end
