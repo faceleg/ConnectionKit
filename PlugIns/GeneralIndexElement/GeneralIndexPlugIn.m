@@ -77,6 +77,7 @@
 						   @"indexLayoutType",
 						   @"showPermaLinks",
                            @"showComments",
+						   @"showArticleInTables",
 						   @"showTimestamps",
                            @"timestampType",
 						   @"maxItemLength",
@@ -108,6 +109,7 @@
 	[context addDependencyForKeyPath:@"indexLayoutType"		ofObject:self];
 	[context addDependencyForKeyPath:@"showPermaLinks"		ofObject:self];
 	[context addDependencyForKeyPath:@"showComments"		ofObject:self];
+	[context addDependencyForKeyPath:@"showArticleInTables"	ofObject:self];
 	[context addDependencyForKeyPath:@"showTimestamps"		ofObject:self];
     [context addDependencyForKeyPath:@"timestampType"       ofObject:self];
 	[context addDependencyForKeyPath:@"maxItemLength"		ofObject:self];
@@ -186,7 +188,7 @@
 			[context endElement];
 		}
 		
-		if (self.indexLayoutType & kArticleMask)
+		if (self.indexLayoutType & kArticleMask& self.showArticleInTables)
 		{
 			[context startElement:@"td" className:@"dli3"];
 			truncated = [self writeSummaryOfIteratedPage];
@@ -450,7 +452,9 @@
 @synthesize showPermaLinks	= _showPermaLinks;
 @synthesize showEntries = _showEntries;
 @synthesize showTitles = _showTitles;
+@synthesize isTable = _isTable;
 @synthesize showComments	= _showComments;
+@synthesize showArticleInTables	= _showArticleInTables;
 @synthesize showTimestamps	= _showTimestamps;
 @synthesize timestampType = _timestampType;
 @synthesize maxItemLength	= _maxItemLength;
@@ -460,6 +464,7 @@
 	_indexLayoutType = aType;
 	self.showTitles = 0 != (aType & kTitleMask);
 	self.showEntries = 0 != (aType & kArticleMask);
+	self.isTable = 0 != (aType & kTableMask);
 }
 
 #pragma mark -

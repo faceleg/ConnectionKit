@@ -69,7 +69,9 @@ typedef enum {
     BOOL _showPermaLinks;
     BOOL _showEntries;			// transient only, for bindings
     BOOL _showTitles;			// transient only, for bindings
+    BOOL _isTable;				// transient only, for bindings
     BOOL _showComments;
+    BOOL _showArticleInTables;
     NSUInteger _maxItemLength;
 }
 
@@ -78,7 +80,9 @@ typedef enum {
 @property (nonatomic) BOOL showPermaLinks;
 @property (nonatomic) BOOL showEntries;
 @property (nonatomic) BOOL showTitles;
+@property (nonatomic) BOOL isTable;
 @property (nonatomic) BOOL showTimestamps;
+@property (nonatomic) BOOL showArticleInTables;
 @property (nonatomic) NSUInteger timestampType;
 @property (nonatomic) BOOL showComments;
 @property (nonatomic) IndexLayoutType indexLayoutType;
