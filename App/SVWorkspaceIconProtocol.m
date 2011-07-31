@@ -51,7 +51,7 @@
     
     if (type)
     {
-        NSImage *icon = [KSWORKSPACETHREADPROXY iconForFileType:type];
+        NSImage *icon = [KSWORKSPACE iconForFileType:type];
         NSImageRep *bestRep = [icon ks_largestRepresentation];
         if (bestRep) [icon setSize:[bestRep size]];
         
