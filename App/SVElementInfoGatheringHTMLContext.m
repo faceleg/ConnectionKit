@@ -100,7 +100,7 @@
 {
     [super endGraphicContainer];
     
-    // If early is still around, that means it never go written
+    // If early is still around, that means it never got written
     [_earlyElement release]; _earlyElement = nil;
 }
 
