@@ -1285,6 +1285,14 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 
 - (IBAction)reduceFileSize:(id)sender;
 {
+    // Can only do if actually have a file URL. Validation should catch by here!
+    if (![[self fileURL] isFileURL]) 
+    {
+        NSBeep();
+        return;
+    }
+    
+    
     NSString *docPath = [[self fileURL] path];
     
     NSError *error;
