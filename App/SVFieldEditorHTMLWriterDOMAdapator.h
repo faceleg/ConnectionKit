@@ -67,9 +67,8 @@
 - (void)buildAttributesForDOMElement:(DOMElement *)element element:(NSString *)elementName;
 
 #pragma mark Styling Whitelist
-- (BOOL)validateStyleProperty:(NSString *)propertyName ofElementWithTagName:(NSString *)tagName;
-- (void)removeUnsupportedCustomStyling:(DOMCSSStyleDeclaration *)style
-                fromElement:(NSString *)tagName;
+- (BOOL)validateStyleProperty:(NSString *)propertyName ofElement:(NSString *)element;
+- (void)removeUnsupportedCustomStyling:(DOMCSSStyleDeclaration *)style fromElement:(NSString *)element;
 
 
 @end

@@ -20,6 +20,7 @@
 #import "SVMediaGraphic.h"
 #import "SVMediaRequest.h"
 #import "KTPage.h"
+#import "SVPagesController.h"
 #import "SVSidebarDOMController.h"
 #import "KTSite.h"
 #import "SVTemplate.h"
@@ -1749,9 +1750,46 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     [_finalOutput release]; _finalOutput = nil;
 }
 
-#pragma mark Legacy
+#pragma mark Pages
 
 @synthesize page = _currentPage;
+
+- (NSArray *)childrenOfPage:(id <SVPage>)page;
+{
+    NSArrayController *controller = [SVPagesController
+                                     controllerWithPagesInCollection:page
+                                     bind:[self isForEditing]];
+    
+    [self addDependencyOnObject:controller keyPath:@"arrangedObjects"];
+    
+    return [controller arrangedObjects];
+}
+
+- (NSArray *)indexChildrenOfPage:(id <SVPage>)page;
+{
+    NSArrayController *controller = [SVPagesController
+                                     controllerWithPagesInCollection:page
+                                     bind:[self isForEditing]];
+    
+    [controller setFilterPredicate:[NSPredicate predicateWithFormat:@"shouldIncludeInIndexes == YES"]];
+    
+    [self addDependencyOnObject:controller keyPath:@"arrangedObjects"];
+    
+    return [controller arrangedObjects];
+}
+
+- (NSArray *)sitemapChildrenOfPage:(id <SVPage>)page;
+{
+    NSArrayController *controller = [SVPagesController
+                                     controllerWithPagesInCollection:page
+                                     bind:[self isForEditing]];
+    
+    [controller setFilterPredicate:[NSPredicate predicateWithFormat:@"shouldIncludeInSiteMaps == YES"]];
+    
+    [self addDependencyOnObject:controller keyPath:@"arrangedObjects"];
+    
+    return [controller arrangedObjects];
+}
 
 #pragma mark RSS
 

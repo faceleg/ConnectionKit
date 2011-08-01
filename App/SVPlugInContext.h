@@ -44,7 +44,6 @@ typedef NSUInteger SVPageImageRepresentationOptions;
 
 #pragma mark Properties
 @property(nonatomic, copy, readonly) NSURL *baseURL;    // where the HTML is destined for. -relativeStringFromURL: figures its result by comparing a URL to -baseURL.
-- (id <SVPage>)page;    // the page whose HTML is being built
 
 
 #pragma mark Purpose
@@ -212,6 +211,16 @@ typedef NSUInteger SVPageImageRepresentationOptions;
 // When generating HTML using a template, Sandvox automatically registers each keypath it encounters in the template as a dependency. If you need to register any additonal paths — perhaps because you are not using a template or it doesn't appear in the template — do so with this method.
 // When a change of the path is detected, Sandvox will take care of reloading the needed bit of the webview.
 - (void)addDependencyForKeyPath:(NSString *)keyPath ofObject:(NSObject *)object;
+
+
+#pragma mark Pages
+
+- (id <SVPage>)page;    // the page whose HTML is being built
+
+// These methods fetch the children of a page, registering required dependencies for you, and applying filter as requested
+- (NSArray *)childrenOfPage:(id <SVPage>)page AVAILABLE_SANDVOX_VERSION_2_2_AND_LATER;  
+- (NSArray *)indexChildrenOfPage:(id <SVPage>)page AVAILABLE_SANDVOX_VERSION_2_2_AND_LATER;
+- (NSArray *)sitemapChildrenOfPage:(id <SVPage>)page AVAILABLE_SANDVOX_VERSION_2_2_AND_LATER;
 
 
 @end

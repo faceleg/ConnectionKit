@@ -58,13 +58,16 @@ typedef NSUInteger SVPageWritingOptions;
 - (id <SVPage>)parentPage;
 - (id <SVPage>)rootPage;
 
+// Looking for child pages? See SVPlugInContext
+
 - (NSArray *)archivePages;
 
 
 #pragma mark Navigation
+// All KVO-compliant
 - (BOOL)shouldIncludeInIndexes;
 - (BOOL)shouldIncludeInSiteMaps;
-@property(nonatomic, readonly) BOOL hasFeed;    // KVO-compliant
+@property(nonatomic, readonly) BOOL hasFeed;
 
 
 @end
