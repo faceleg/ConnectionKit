@@ -89,11 +89,10 @@
     return result;
 }*/
 
-- (DOMElement *)selectableDOMElement;
+// TODO: This logic is the same as aux text
+- (BOOL)isSelectable;
 {
-    return ([self representedObject] && [self enclosingGraphicDOMController] ?
-            [self HTMLElement] :
-            nil);
+    return ([self representedObject] && [self enclosingGraphicDOMController]);
 }
 
 #pragma mark Updating
@@ -352,6 +351,29 @@
             while (nextNode = [result nextSibling])
             {
                 [result appendChild:nextNode];
+            }
+            
+            // Move styling down to children. #133908
+            if ([result hasAttribute:@"style"])
+            {
+                DOMElement *aChild = [result firstElementChild];
+                do
+                {
+                    NSString *style = [aChild getAttribute:@"style"];
+                    if ([style length] > 0)
+                    {
+                        style = [style stringByAppendingFormat:@" %@", [result getAttribute:@"style"]];
+                    }
+                    else
+                    {
+                        style = [result getAttribute:@"style"];
+                    }
+                    
+                    [aChild setAttribute:@"style" value:style];
+                    
+                } while (aChild = [aChild nextElementSibling]);
+                
+                [result removeAttribute:@"style"];
             }
         }
         else
