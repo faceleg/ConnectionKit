@@ -1612,13 +1612,6 @@
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = TwitterElement;
 		};
-		CE2556D20D3432AF003A5B5E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CE2556CB0D3432AF003A5B5E /* SandvoxQuickLook.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D576316048677EA00EA77CD;
-			remoteInfo = SandvoxQuickLook;
-		};
 		CE44B84913020DAA00015A24 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C095BF40D5D281000DE6F62 /* PhotoGridIndex.xcodeproj */;
@@ -2732,7 +2725,6 @@
 		CE23D96A11E6E65900E43369 /* KSPlainClipTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSPlainClipTextView.h; sourceTree = "<group>"; };
 		CE23D96B11E6E65900E43369 /* KSPlainClipTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSPlainClipTextView.m; sourceTree = "<group>"; };
 		CE250ADB08204B120061BE9B /* imageReplacementHeader.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = imageReplacementHeader.txt; sourceTree = "<group>"; };
-		CE2556CB0D3432AF003A5B5E /* SandvoxQuickLook.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SandvoxQuickLook.xcodeproj; path = ../Code/QuickLook/SandvoxQuickLook.xcodeproj; sourceTree = SOURCE_ROOT; };
 		CE26237E0A360332009467ED /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		CE26FA1308C4D9C500C9604B /* design-time.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "design-time.css"; sourceTree = "<group>"; };
 		CE27F6600D6193B200D211EA /* NSImage+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+KTExtensions.h"; sourceTree = "<group>"; };
@@ -4404,7 +4396,6 @@
 				3CA9FD350D63A08000815310 /* Elements */,
 				3CA9FD410D63A0B400815310 /* Frameworks */,
 				3C3F147C09D521AE00C01EED /* MetaMarvel.xcodeproj */,
-				CE2556CB0D3432AF003A5B5E /* SandvoxQuickLook.xcodeproj */,
 			);
 			name = "Product Dependencies";
 			sourceTree = "<group>";
@@ -5560,14 +5551,6 @@
 			path = Interfaces;
 			sourceTree = "<group>";
 		};
-		CE2556CC0D3432AF003A5B5E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				CE2556D30D3432AF003A5B5E /* SandvoxQuickLook.qlgenerator */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		CE2D42E41188BD910051E238 /* LIFlipEffect */ = {
 			isa = PBXGroup;
 			children = (
@@ -6414,10 +6397,6 @@
 					ProjectRef = 3C42DE160D64CCC7004F35FD /* RSSBadgeElement.xcodeproj */;
 				},
 				{
-					ProductGroup = CE2556CC0D3432AF003A5B5E /* Products */;
-					ProjectRef = CE2556CB0D3432AF003A5B5E /* SandvoxQuickLook.xcodeproj */;
-				},
-				{
 					ProductGroup = 3C98709E11F3D3A00053A72C /* Products */;
 					ProjectRef = 3C42DDA60D64C8B3004F35FD /* SiteMapElement.xcodeproj */;
 				},
@@ -6621,13 +6600,6 @@
 			fileType = wrapper.cfbundle;
 			path = Twitter.svxElement;
 			remoteRef = 3CFEF23C122C326C005A08FC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CE2556D30D3432AF003A5B5E /* SandvoxQuickLook.qlgenerator */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = SandvoxQuickLook.qlgenerator;
-			remoteRef = CE2556D20D3432AF003A5B5E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CE44B84A13020DAA00015A24 /* PhotoGridIndex.svxElement */ = {
@@ -6998,7 +6970,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### UPDATE SandvoxInvalidLicenses.h FOR RELEASE BUILDS ... Notice we are asking only for license of version 2 (or higher)\n###\n\ncurl --proxy-anyauth --insecure --user \"xcode:home.cooking.32\" \"https://secure.karelia.com/private/invalidLicenses.h.php?app=1&v=2\" -o \"${SRCROOT}/../../Shared/Licensing/SandvoxInvalidLicenses.h\"\n\nexit 0\n";
+			shellScript = "#!/bin/bash\n\n###\n### UPDATE SandvoxInvalidLicenses.h FOR RELEASE BUILDS ... Notice we are asking only for license of version 2 (or higher)\n###\n\ncurl --proxy-anyauth --insecure --user \"xcode:home.cooking.32\" \"https://secure.karelia.com/private/invalidLicenses.h.php?app=1&v=2\" -o \"${SRCROOT}/../Code/Shared/Licensing/SandvoxInvalidLicenses.h\"\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
 		3C536FA713BC3058004222D5 /* Generate CFBundleShortVersionString */ = {

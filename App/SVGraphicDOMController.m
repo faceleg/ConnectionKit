@@ -128,6 +128,24 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 #pragma mark Updating
 
+- (void)updateWithDOMNode:(DOMNode *)node items:(NSArray *)items;
+{
+    // Swap in updated node. Then get the Web Editor to hook new descendant controllers up to the new nodes
+    [[[self HTMLElement] parentNode] replaceChild:node oldChild:[self HTMLElement]];
+    //[self setHTMLElement:nil];  // so Web Editor will endeavour to hook us up again
+    
+    
+    // Hook up new DOM Controllers
+    SVWebEditorViewController *viewController = [self webEditorViewController];
+    [viewController willUpdate];    // wrap the replacement like this so doesn't think update finished too early
+    {
+        [self didUpdateWithSelector:@selector(update)];
+        [[self retain] autorelease];    // replacement is likely to deallocate us
+        [[self parentWebEditorItem] replaceChildWebEditorItem:self withItems:items];
+    }
+    [viewController didUpdate];
+}
+
 - (void)update;
 {
     // Tear down dependencies etc.
@@ -186,6 +204,33 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     [context release];
     
     
+    DOMHTMLDocument *doc = (DOMHTMLDocument *)[[self HTMLElement] ownerDocument];
+    DOMDocumentFragment *fragment = [doc createDocumentFragmentWithMarkupString:[html string] baseURL:nil];
+    
+    if (fragment)
+    {
+        DOMElement *anElement = [fragment firstChildOfClass:[DOMElement class]];
+        while (anElement)
+        {
+            if ([[anElement getElementsByTagName:@"SCRIPT"] length]) break; // deliberately ignoring top-level scripts
+            
+            NSString *ID = [anElement getAttribute:@"id"];
+            if ([ID isEqualToString:[[_offscreenDOMControllers objectAtIndex:0] elementIdName]])
+            {
+                // Search for any following scripts
+                if ([anElement nextSiblingOfClass:[DOMHTMLScriptElement class]]) break;
+                
+                // No scripts, so can update directly
+                [self updateWithDOMNode:anElement items:_offscreenDOMControllers];
+                [_offscreenDOMControllers release]; _offscreenDOMControllers = nil;
+                return;
+            }
+            
+            anElement = [anElement nextSiblingOfClass:[DOMElement class]];
+        }
+    }
+    
+    
     // Start loading DOM objects from HTML
     if (_offscreenWebViewController)
     {
@@ -200,23 +245,6 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     [_offscreenWebViewController loadHTMLFragment:[html string]];
     [html release];
-}
-
-- (void)updateWithDOMNode:(DOMNode *)node items:(NSArray *)items;
-{
-    // Swap in updated node. Then get the Web Editor to hook new descendant controllers up to the new nodes
-    [[[self HTMLElement] parentNode] replaceChild:node oldChild:[self HTMLElement]];
-    //[self setHTMLElement:nil];  // so Web Editor will endeavour to hook us up again
-    
-    
-    // Hook up new DOM Controllers
-    SVWebEditorViewController *viewController = [self webEditorViewController];
-    [viewController willUpdate];    // wrap the replacement like this so doesn't think update finished too early
-    {
-        [[self retain] autorelease];    // replacement is likely to deallocate us
-        [[self parentWebEditorItem] replaceChildWebEditorItem:self withItems:items];
-    }
-    [viewController didUpdate];
 }
 
 + (DOMHTMLHeadElement *)headOfDocument:(DOMDocument *)document;
@@ -929,8 +957,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
         DOMNodeList *contents = [element getElementsByClassName:@"figure-content"];
         if ([contents length]) element = (DOMHTMLElement *)[contents item:0];
         
-        NSRect box = [element boundingBox];
-        if (box.size.width <= 0.0f || box.size.height <= 0.0f)
+        if (![element ks_isVisible])
         {
             // Replace with placeholder
             NSString *parsedPlaceholderHTML = [[self representedObject] parsedPlaceholderHTMLFromContext:self.HTMLContext];
