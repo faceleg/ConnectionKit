@@ -229,10 +229,11 @@
 		}
 		
 		// Clean up so we don't leave recovered files.  Ignore errors.
-		NSFileManager *fm = [NSFileManager defaultManager];
+		NSFileManager *fm = [[NSFileManager alloc] init];
 		[fm removeItemAtPath:outputPath error:nil];
 		[fm removeItemAtPath:path16 error:nil];
 		[fm removeItemAtPath:path32 error:nil];
+        [fm release];
 	}
 	return result;
 }

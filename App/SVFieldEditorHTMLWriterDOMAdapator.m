@@ -477,16 +477,25 @@
 - (void)populateSpanElementAttributes:(DOMElement *)span
                       fromFontElement:(DOMHTMLFontElement *)fontElement;
 {
-    if ([fontElement hasAttribute:@"size"]) // must interpret now, before replacement
+    DOMCSSStyleDeclaration *spanStyle = [span style];
+    
+    // Integrate existing style attribute
+    if ([fontElement hasAttribute:@"style"])
+    {
+        [spanStyle setCssText:[fontElement getAttribute:@"style"]];
+    }
+    
+    // Sizes must be calculated from computed style
+    if ([fontElement hasAttribute:@"size"])
     {
         DOMDocument *doc = [fontElement ownerDocument];
         DOMCSSStyleDeclaration *style = [doc getComputedStyle:fontElement pseudoElement:nil];
         
-        [[span style] setFontSize:[style fontSize]];
+        [spanStyle setFontSize:[style fontSize]];
     }
     
-    [[span style] setProperty:@"font-family" value:[fontElement face] priority:@""];
-    [[span style] setProperty:@"color" value:[fontElement color] priority:@""];
+    [spanStyle setProperty:@"font-family" value:[fontElement face] priority:@""];
+    [spanStyle setProperty:@"color" value:[fontElement color] priority:@""];
 }
 
 #pragma mark High-level Writing
