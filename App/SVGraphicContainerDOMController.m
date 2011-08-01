@@ -124,9 +124,12 @@
     
     
     // Hook up new DOM Controllers
+    DOMNode *ancestor = [self ancestorNode];
+    if (!ancestor) ancestor = [[self HTMLElement] ownerDocument];
+    
     for (WEKWebEditorItem *anItem in items)
     {
-        [anItem setAncestorNode:[self ancestorNode] recursive:YES];
+        [anItem setAncestorNode:ancestor recursive:YES];
     }
     
     
