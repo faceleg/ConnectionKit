@@ -117,23 +117,6 @@
 #pragma mark -
 
 
-@protocol SVDOMControllerRepresentedObject <NSObject>
-
-//  A subclass of SVDOMController that the WebEditor will create and maintain in order to edit the object. The default is a vanilla SVDOMController.
-//  I appreciate this slightly crosses the MVC divide, but the important thing is that the receiver never knows about any _specific_ controller, just the class involved.
-- (SVDOMController *)newDOMController;
-
-@end
-
-
-// And provide a base implementation of the protocol:
-@interface SVContentObject (SVDOMController) <SVDOMControllerRepresentedObject>
-@end
-
-
-#pragma mark -
-
-
 /*  We want all Web Editor items to be able to handle updating in some form, just not necessarily the full complexity of it.
 */
 
