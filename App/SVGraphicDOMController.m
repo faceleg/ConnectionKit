@@ -957,8 +957,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
         DOMNodeList *contents = [element getElementsByClassName:@"figure-content"];
         if ([contents length]) element = (DOMHTMLElement *)[contents item:0];
         
-        NSRect box = [element boundingBox];
-        if (box.size.width <= 0.0f || box.size.height <= 0.0f)
+        if (![element ks_isVisible])
         {
             // Replace with placeholder
             NSString *parsedPlaceholderHTML = [[self representedObject] parsedPlaceholderHTMLFromContext:self.HTMLContext];
