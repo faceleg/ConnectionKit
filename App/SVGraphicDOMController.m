@@ -73,23 +73,23 @@
 
 #pragma mark Selection
 
-- (DOMElement *)selectableDOMElement;
+- (BOOL)isSelectable;
 {
     // Normally selectable, unless there's a selectable child. #96670
-    BOOL selectable = YES;
+    BOOL result = YES;
     for (WEKWebEditorItem *anItem in [self childWebEditorItems])
     {
-        if ([anItem isSelectable]) selectable = NO;
+        if ([anItem isSelectable]) result = NO;
     }
     
-    return (selectable ? [self HTMLElement] : nil);
+    return result;
 }
 
 - (DOMRange *)selectableDOMRange;
 {
     if ([self shouldTrySelectingInline])
     {
-        DOMElement *element = [self selectableDOMElement];
+        DOMElement *element = [self HTMLElement];
         DOMRange *result = [[element ownerDocument] createRange];
         [result selectNode:element];
         return result;
@@ -207,13 +207,16 @@
 - (NSRect)dropTargetRect;
 {
     // Figure best element to draw
-    DOMElement *element = [self selectableDOMElement];
-    if (!element)
+    DOMElement *element = nil;
+    if (![self isSelectable])
     {
         for (WEKWebEditorItem *anItem in [self childWebEditorItems])
         {
-            element = [anItem selectableDOMElement];
-            if (element) break;
+            if ([anItem isSelectable])
+            {
+                element = [anItem HTMLElement];
+                break;
+            }
         }
     }
     if (!element) element = [self HTMLElement];

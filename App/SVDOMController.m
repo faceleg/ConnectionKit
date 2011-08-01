@@ -639,7 +639,7 @@
     KSSelectionBorder *result = [super newSelectionBorder];
     
     // Hide border on <OBJECT> tags etc.
-    DOMElement *selectionElement = [self selectableDOMElement];
+    DOMElement *selectionElement = [self HTMLElement];
     NSString *tagName = [selectionElement tagName];
     
     if ([tagName isEqualToString:@"IMG"] ||

@@ -512,38 +512,6 @@
     return result;
 }
 
-- (DOMElement *)selectableDOMElement;
-{
-    return nil;
-    
-    
-    DOMElement *result = [self graphicDOMElement];
-    if (!result) result = (id)[[[self HTMLElement] getElementsByClassName:@"pagelet-body"] item:0];
-    ;
-    
-    
-    // Seek out a better matching child which has no siblings. #93557
-    DOMTreeWalker *walker = [[result ownerDocument] createTreeWalker:result
-                                                          whatToShow:DOM_SHOW_ELEMENT
-                                                              filter:nil
-                                              expandEntityReferences:NO];
-    
-    DOMNode *aNode = [walker currentNode];
-    while (aNode && ![walker nextSibling])
-    {
-        WEKWebEditorItem *controller = [super hitTestDOMNode:aNode];
-        if (controller != self && [controller isSelectable])
-        {
-            result = nil;
-            break;
-        }
-        
-        aNode = [walker nextNode];
-    }
-    
-    return result;
-}
-
 - (void)setEditing:(BOOL)editing;
 {
     [super setEditing:editing];
@@ -564,12 +532,7 @@
 
 - (NSRect)selectionFrame;
 {
-    DOMElement *element = [self selectableDOMElement];
-    if (element)
-    {
-        return [element boundingBox];
-    }
-    else
+    if (![self isSelectable])
     {
         // Union together children, but only vertically once the firsy has been found
         NSRect result = NSZeroRect;
@@ -588,9 +551,7 @@
         return result;
     }
     
-    //DOMElement *element = [self graphicDOMElement];
-    if (!element) element = [self HTMLElement];
-    return [element boundingBox];
+    return [[self HTMLElement] boundingBox];
 }
 
 #pragma mark Paste

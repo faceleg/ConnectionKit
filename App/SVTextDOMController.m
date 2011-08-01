@@ -86,7 +86,7 @@
 
 - (DOMHTMLElement *)innerTextHTMLElement; { return [self textHTMLElement]; }
 
-- (DOMElement *)selectableDOMElement; { return [self HTMLElement]; }
+- (BOOL)isSelectable; { return YES; }
 
 #pragma mark Hierarchy
 

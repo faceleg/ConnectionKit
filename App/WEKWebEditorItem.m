@@ -313,20 +313,13 @@
 
 #pragma mark Selection
 
-- (BOOL)isSelectable; { return [self selectableDOMElement] != nil; }
-
-- (DOMElement *)selectableDOMElement;
-{
-    return (([self isHorizontallyResizable] || [self isVerticallyResizable]) ?
-            [self HTMLElement] :
-            nil);
-}
+- (BOOL)isSelectable; { return ([self isHorizontallyResizable] || [self isVerticallyResizable]); }
 
 - (DOMRange *)selectableDOMRange;
 {
     if ([self shouldTrySelectingInline])
     {
-        DOMElement *element = [self selectableDOMElement];
+        DOMElement *element = [self HTMLElement];
         DOMRange *result = [[element ownerDocument] createRange];
         [result selectNode:element];
         return result;
@@ -341,11 +334,16 @@
 {
     // Whether selecting the element should be inline (set the WebView's selection) or not (no WebView selection)
     
-    DOMHTMLElement *element = (id)[self selectableDOMElement];
+    BOOL result = NO;
     
-    BOOL result = ([[element tagName] isEqualToString:@"IMG"] &&
-                   ![[[element className] componentsSeparatedByWhitespace] containsObject:@"graphic"] &&
-                   [element isContentEditable]);
+    if ([self isSelectable])
+    {
+        DOMHTMLElement *element = [self HTMLElement];
+        
+        result = ([[element tagName] isEqualToString:@"IMG"] &&
+                  ![[[element className] componentsSeparatedByWhitespace] containsObject:@"graphic"] &&
+                  [element isContentEditable]);
+    }
     
     return result;
 }
@@ -681,7 +679,7 @@
     unsigned int result = 0;
     if ([self isHorizontallyResizable])
     {
-        result = [self resizingMaskForDOMElement:[self selectableDOMElement]];
+        result = [self resizingMaskForDOMElement:[self HTMLElement]];
     }
     if ([self isVerticallyResizable])
     {
@@ -869,9 +867,9 @@
 {
     NSRect result = NSZeroRect;
     
-    DOMElement *element = [self selectableDOMElement];
-    if (element)
+    if ([self isSelectable])
     {
+        DOMHTMLElement *element = [self HTMLElement];
         result = [element boundingBox];
         
         // Take into account padding and border
@@ -909,7 +907,7 @@
     
     if ([self isEditing])
     {
-        NSRect outline = NSInsetRect([[self selectableDOMElement] boundingBox], -4.0f, -4.0f);
+        NSRect outline = NSInsetRect([[self HTMLElement] boundingBox], -4.0f, -4.0f);
         result = NSUnionRect(result, outline);
     }
     else if ([self isSelected])
@@ -948,7 +946,6 @@
         KSSelectionBorder *border = [self newSelectionBorder];
         
         // Don't need stroke if graphic provides its own
-        //DOMElement *element = [self selectableDOMElement];
         DOMCSSStyleDeclaration *style = [[element ownerDocument] getComputedStyle:element pseudoElement:nil];
         if ([[style borderTopWidth] floatValue] > 0.0f &&
             [[style borderLeftWidth] floatValue] > 0.0f &&
