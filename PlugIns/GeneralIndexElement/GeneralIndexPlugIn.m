@@ -73,9 +73,11 @@
 { 
     NSArray *plugInKeys = [NSArray arrayWithObjects:
 						   @"hyperlinkTitles",
+						   @"richTextTitles",
 						   @"indexLayoutType",
 						   @"showPermaLinks",
                            @"showComments",
+						   @"showArticleInTables",
 						   @"showTimestamps",
                            @"timestampType",
 						   @"maxItemLength",
@@ -103,9 +105,11 @@
 {
 	// add dependencies
 	[context addDependencyForKeyPath:@"hyperlinkTitles"		ofObject:self];
+	[context addDependencyForKeyPath:@"richTextTitles"		ofObject:self];
 	[context addDependencyForKeyPath:@"indexLayoutType"		ofObject:self];
 	[context addDependencyForKeyPath:@"showPermaLinks"		ofObject:self];
 	[context addDependencyForKeyPath:@"showComments"		ofObject:self];
+	[context addDependencyForKeyPath:@"showArticleInTables"	ofObject:self];
 	[context addDependencyForKeyPath:@"showTimestamps"		ofObject:self];
     [context addDependencyForKeyPath:@"timestampType"       ofObject:self];
 	[context addDependencyForKeyPath:@"maxItemLength"		ofObject:self];
@@ -184,7 +188,7 @@
 			[context endElement];
 		}
 		
-		if (self.indexLayoutType & kArticleMask)
+		if (self.indexLayoutType & kArticleMask& self.showArticleInTables)
 		{
 			[context startElement:@"td" className:@"dli3"];
 			truncated = [self writeSummaryOfIteratedPage];
@@ -374,7 +378,7 @@
 		
 		[context writeElement:@"span"
 			  withTitleOfPage:iteratedPage
-				  asPlainText:YES	// used to be allowing for rich text in articles, but this allows hyperlinks to go through, which means nested hyperlinks in the index.
+				  asPlainText:!self.richTextTitles	// used to be allowing for rich text in articles, but this allows hyperlinks to go through, which means nested hyperlinks in the index.
 				   attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
 		
 		if ( self.hyperlinkTitles ) { [context endElement]; } // </a> 
@@ -443,11 +447,14 @@
 #pragma mark Properties
 
 @synthesize hyperlinkTitles = _hyperlinkTitles;
+@synthesize richTextTitles = _richTextTitles;
 @synthesize indexLayoutType = _indexLayoutType;
 @synthesize showPermaLinks	= _showPermaLinks;
 @synthesize showEntries = _showEntries;
 @synthesize showTitles = _showTitles;
+@synthesize isTable = _isTable;
 @synthesize showComments	= _showComments;
+@synthesize showArticleInTables	= _showArticleInTables;
 @synthesize showTimestamps	= _showTimestamps;
 @synthesize timestampType = _timestampType;
 @synthesize maxItemLength	= _maxItemLength;
@@ -457,6 +464,7 @@
 	_indexLayoutType = aType;
 	self.showTitles = 0 != (aType & kTitleMask);
 	self.showEntries = 0 != (aType & kArticleMask);
+	self.isTable = 0 != (aType & kTableMask);
 }
 
 #pragma mark -
