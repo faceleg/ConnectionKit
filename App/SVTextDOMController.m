@@ -86,6 +86,8 @@
 
 - (DOMHTMLElement *)innerTextHTMLElement; { return [self textHTMLElement]; }
 
+- (DOMElement *)selectableDOMElement; { return [self HTMLElement]; }
+
 #pragma mark Hierarchy
 
 - (SVTextDOMController *)textDOMController; { return self; }
