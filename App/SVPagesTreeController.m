@@ -275,6 +275,10 @@
 
 - (void)willInsertOrMoveObjectToTopLevel:(id)object;
 {
+    // No point including downloads by default. #132861
+    if ([object isKindOfClass:[SVDownloadSiteItem class]]) return;
+    
+    
     // Include in site menu if appropriate. #104544
     KTPage *home = [[[[self arrangedObjects] childNodes] objectAtIndex:0] representedObject];
     NSArray *menuItems = [home createSiteMenuForestIsHierarchical:NULL];
