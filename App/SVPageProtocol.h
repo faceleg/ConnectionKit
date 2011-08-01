@@ -62,9 +62,10 @@ typedef NSUInteger SVPageWritingOptions;
 
 
 #pragma mark Navigation
+// All KVO-compliant
 - (BOOL)shouldIncludeInIndexes;
 - (BOOL)shouldIncludeInSiteMaps;
-@property(nonatomic, readonly) BOOL hasFeed;    // KVO-compliant
+@property(nonatomic, readonly) BOOL hasFeed;
 
 
 @end

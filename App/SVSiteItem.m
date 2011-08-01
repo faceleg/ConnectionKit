@@ -756,6 +756,10 @@
                    ([self datePublished] || ![self isDraftOrHasDraftAncestor]));
     return result;
 }
++ (NSSet *)keyPathsForValuesAffectingShouldIncludeInSiteMaps;
+{
+    return [NSSet setWithObjects:@"includeInSiteMap", @"datePublished", @"isDraft", nil];
+}
 
 - (NSString *)language { return nil; }
 
