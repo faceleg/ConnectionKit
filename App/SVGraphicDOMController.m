@@ -571,10 +571,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     return result;
 }
 
-- (DOMElement *)selectableDOMElement;
-{
-    return nil;
-}
+- (BOOL)isSelectable { return NO; }
 
 - (void)setEditing:(BOOL)editing;
 {
@@ -596,14 +593,9 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 - (NSRect)selectionFrame;
 {
-    DOMElement *element = [self selectableDOMElement];
-    if (element)
+    if (![self isSelectable])
     {
-        return [element boundingBox];
-    }
-    else
-    {
-        // Union together children, but only vertically once the firsy has been found
+        // Union together children, but only vertically once the first has been found
         NSRect result = NSZeroRect;
         for (WEKWebEditorItem *anItem in [self selectableTopLevelDescendants])
         {
@@ -620,9 +612,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
         return result;
     }
     
-    //DOMElement *element = [self graphicDOMElement];
-    if (!element) element = [self HTMLElement];
-    return [element boundingBox];
+    return [[self HTMLElement] boundingBox];
 }
 
 #pragma mark Paste
@@ -962,23 +952,23 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 #pragma mark Selection
 
-- (DOMElement *)selectableDOMElement;
+- (BOOL)isSelectable;
 {
     // Normally selectable, unless there's a selectable child. #96670
-    BOOL selectable = YES;
+    BOOL result = YES;
     for (WEKWebEditorItem *anItem in [self childWebEditorItems])
     {
-        if ([anItem isSelectable]) selectable = NO;
+        if ([anItem isSelectable]) result = NO;
     }
     
-    return (selectable ? [self HTMLElement] : nil);
+    return result;
 }
 
 - (DOMRange *)selectableDOMRange;
 {
     if ([self shouldTrySelectingInline])
     {
-        DOMElement *element = [self selectableDOMElement];
+        DOMElement *element = [self HTMLElement];
         DOMRange *result = [[element ownerDocument] createRange];
         [result selectNode:element];
         return result;
