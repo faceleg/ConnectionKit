@@ -58,6 +58,8 @@ typedef NSUInteger SVPageWritingOptions;
 - (id <SVPage>)parentPage;
 - (id <SVPage>)rootPage;
 
+// Looking for child pages? See SVPlugInContext
+
 - (NSArray *)archivePages;
 
 
