@@ -15,11 +15,11 @@
 
 
 // And provide a base implementation of the protocol:
-@interface SVGraphic (SVDOMController) <SVDOMControllerRepresentedObject>
+@interface SVGraphic (SVDOMController)
 - (BOOL)requiresPageLoad;
 @end
 
-@interface SVAuxiliaryPageletText (SVDOMController) <SVDOMControllerRepresentedObject>
+@interface SVAuxiliaryPageletText (SVDOMController)
 @end
 
 

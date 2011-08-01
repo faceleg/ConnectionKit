@@ -20,7 +20,6 @@
 
 
 @class SVWebEditorHTMLContext, KSObjectKeyPathPair, SVWebEditorViewController, SVGraphic, SVPlugInDOMController;
-@protocol SVDOMControllerRepresentedObject;
 
 
 @interface SVDOMController : WEKWebEditorItem <KSDependenciesTrackerDelegate>

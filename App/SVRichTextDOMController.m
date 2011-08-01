@@ -61,7 +61,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 
 #pragma mark Init & Dealloc
 
-- (id)initWithRepresentedObject:(id <SVDOMControllerRepresentedObject>)content;
+- (id)initWithRepresentedObject:(SVRichText *)content;
 {
     // Create early, as super calls through to routine that begins observation
     _graphicsController = [[[self attachmentsControllerClass] alloc] init];

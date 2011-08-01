@@ -940,7 +940,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 @implementation SVExplicitlySizedTestHTMLContext
 
-- (void)writeGraphic:(id <SVGraphic,SVDOMControllerRepresentedObject>)graphic;
+- (void)writeGraphic:(id <SVGraphic>)graphic;
 {
     // Ignore since other graphics are irrelevant to determining if explicitly sized. Indeed, they can even mistakenly push the result to YES. #117012
 }
