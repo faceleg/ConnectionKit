@@ -9,8 +9,9 @@
 #import "Sandvox.h"
 
 #import "SVPageProtocol.h"
-#import "SVPagesController.h"
 #import "SVHTMLContext.h"
+#import "SVHTMLTemplateParser.h"
+#import "SVPagesController.h"
 
 
 @interface SVIndexPlugIn ()
@@ -65,8 +66,13 @@
     
     if ( self.indexedCollection )
     {
-        NSArrayController *controller = [SVPagesController controllerWithPagesToIndexInCollection:self.indexedCollection bind:NO];
-        NSArray *arrangedObjects = [controller arrangedObjects];
+        NSArray *arrangedObjects = [[[SVHTMLTemplateParser currentTemplateParser] HTMLContext] indexChildrenOfPage:[self indexedCollection]];
+        
+        if (!arrangedObjects)
+        {
+            NSArrayController *controller = [SVPagesController controllerWithPagesToIndexInCollection:self.indexedCollection bind:NO];
+            arrangedObjects = [controller arrangedObjects];
+        }
         
         if ( self.enableMaxItems && self.maxItems > 0 )
         {
@@ -120,10 +126,7 @@
 {
     if ( self.indexedCollection )
     {
-        NSArrayController *controller = [SVPagesController controllerWithPagesToIndexInCollection:self.indexedCollection bind:YES];
-        [context addDependencyForKeyPath:@"arrangedObjects" ofObject:controller];
-        
-        if ([[controller arrangedObjects] count])
+        if ([[context indexChildrenOfPage:[self indexedCollection]] count])
         {
             [super writeHTML:context];
         }
