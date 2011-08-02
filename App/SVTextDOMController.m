@@ -86,8 +86,6 @@
 
 - (DOMHTMLElement *)innerTextHTMLElement; { return [self textHTMLElement]; }
 
-- (BOOL)isSelectable; { return YES; }
-
 #pragma mark Hierarchy
 
 - (SVTextDOMController *)textDOMController; { return self; }

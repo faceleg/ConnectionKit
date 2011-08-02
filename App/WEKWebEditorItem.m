@@ -40,6 +40,15 @@
     [self exposeBinding:@"height"];
 }
 
+- (id)init
+{
+    if (self = [super init])
+    {
+        _selectable = YES;
+    }
+    return self;
+}
+
 - (void)dealloc
 {
     [self unbind:NSWidthBinding];
@@ -313,7 +322,7 @@
 
 #pragma mark Selection
 
-- (BOOL)isSelectable; { return ([self isHorizontallyResizable] || [self isVerticallyResizable]); }
+@synthesize selectable = _selectable;
 
 - (DOMRange *)selectableDOMRange;
 {

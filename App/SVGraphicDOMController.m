@@ -76,10 +76,13 @@
 - (BOOL)isSelectable;
 {
     // Normally selectable, unless there's a selectable child. #96670
-    BOOL result = YES;
-    for (WEKWebEditorItem *anItem in [self childWebEditorItems])
+    BOOL result = [super isSelectable];
+    if (result)
     {
-        if ([anItem isSelectable]) result = NO;
+        for (WEKWebEditorItem *anItem in [self childWebEditorItems])
+        {
+            if ([anItem isSelectable]) result = NO;
+        }
     }
     
     return result;

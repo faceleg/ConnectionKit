@@ -24,6 +24,7 @@
     NSArray             *_childControllers;
     WEKWebEditorItem    *_parentController; // weak ref
     
+    BOOL    _selectable;
     BOOL    _selected;
     BOOL    _editing;
     
@@ -70,7 +71,7 @@
 
 #pragma mark Selection
 
-- (BOOL)isSelectable;                   // default is NO
+@property(nonatomic, getter=isSelectable) BOOL selectable; // default is YES
 - (DOMRange *)selectableDOMRange;
 - (BOOL)shouldTrySelectingInline;
 - (unsigned int)resizingMask;
