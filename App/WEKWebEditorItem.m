@@ -606,9 +606,14 @@
 
 - (CGFloat)maxWidth;
 {
+    return [[self parentWebEditorItem] maxWidthForChild:self];
+}
+
+- (CGFloat)maxWidthForChild:(WEKWebEditorItem *)aChild;
+{
     // Whew, what a lot of questions! Now, should this drag be disallowed on account of making the DOM element bigger than its container? #84958
-    DOMNode *parent = [[self HTMLElement] parentNode];
-    DOMCSSStyleDeclaration *style = [[[self HTMLElement] ownerDocument] 
+    DOMNode *parent = [[aChild HTMLElement] parentNode];
+    DOMCSSStyleDeclaration *style = [[[aChild HTMLElement] ownerDocument] 
                                      getComputedStyle:(DOMElement *)parent
                                      pseudoElement:@""];
     
@@ -616,9 +621,9 @@
     
     
     // Bring back down to take into account margin/border/padding. #94079
-    DOMElement *graphic = [self HTMLElement];
+    DOMElement *graphic = [aChild HTMLElement];
     
-    style = [[[self HTMLElement] ownerDocument] getComputedStyle:graphic
+    style = [[[aChild HTMLElement] ownerDocument] getComputedStyle:graphic
                                                    pseudoElement:@""];
     
     result -= ([[style borderLeftWidth] integerValue] + [[style paddingLeft] integerValue] +
@@ -911,8 +916,8 @@
         {
             // Keep within max width
             // Switch over to auto-sized for simple graphics
-            //size.width = ([graphic isExplicitlySized] ? maxWidth : 0.0f);
-            //if (ratio) size.height = maxWidth / [ratio floatValue];
+            size.width = maxWidth;//([graphic isExplicitlySized] ? maxWidth : 0.0f);
+            if (ratio.width > 0 && ratio.height > 0) size.height = maxWidth / (ratio.width / ratio.height);
         }
     }
     

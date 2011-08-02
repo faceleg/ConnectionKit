@@ -76,8 +76,6 @@
     return result;
 }
 
-- (CGFloat)maxWidth; { return [[self enclosingGraphicDOMController] maxWidth]; }
-
 - (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;
 {
     /*  This logic is almost identical to SVGraphicDOMController, although the code there can probably be pared down to deal only with width

@@ -8,6 +8,8 @@
 
 #import "SVCalloutDOMController.h"
 
+#import "SVHTMLContext.h"
+#import "KTPage.h"
 #import "SVRichTextDOMController.h"
 
 #import "DOMNode+Karelia.h"
@@ -125,6 +127,18 @@
     }
     
     return result;
+}
+
+#pragma mark Resizing
+
+- (CGFloat)maxWidthForChild:(WEKWebEditorItem *)aChild;
+{
+    // Base limit on design rather than the DOM
+    SVGraphic *graphic = [aChild representedObject];
+    OBASSERT(graphic);
+    
+    KTPage *page = [[self HTMLContext] page];
+    return [graphic maxWidthOnPage:page];
 }
 
 #pragma mark Moving

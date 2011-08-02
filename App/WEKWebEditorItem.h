@@ -128,7 +128,9 @@
 @property(nonatomic) NSSize aspectRatio;
 @property(nonatomic) NSSize sizeDelta;
 - (NSSize)minSize;
-- (CGFloat)maxWidth;
+
+- (CGFloat)maxWidth;    // calls -maxWidthForChild: on parent
+- (CGFloat)maxWidthForChild:(WEKWebEditorItem *)aChild; // can override to tweak behaviour
 
 - (unsigned int)resizingMask;   // default is 0
 - (unsigned int)resizingMaskForDOMElement:(DOMElement *)element;    // support

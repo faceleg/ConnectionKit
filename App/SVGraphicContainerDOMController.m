@@ -665,14 +665,10 @@
     return (element ? [self resizingMaskForDOMElement:element] : 0);
 }
 
-- (CGFloat)maxWidth;
+- (CGFloat)maxWidthForChild:(WEKWebEditorItem *)aChild
 {
-    // Base limit on design rather than the DOM
-    SVGraphic *graphic = [[self representedObject] graphic];
-    OBASSERT(graphic);
-    
-    KTPage *page = [[self HTMLContext] page];
-    return [graphic maxWidthOnPage:page];
+    // Pass on up to parent
+    return [[self parentWebEditorItem] maxWidthForChild:aChild];
 }
 
 @end

@@ -265,6 +265,18 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 
 @synthesize pageletsController = _pageletsController;
 
+#pragma mark Resizing
+
+- (CGFloat)maxWidthForChild:(WEKWebEditorItem *)aChild;
+{
+    // Base limit on design rather than the DOM
+    SVGraphic *graphic = [aChild representedObject];
+    OBASSERT(graphic);
+    
+    KTPage *page = [[self HTMLContext] page];
+    return [graphic maxWidthOnPage:page];
+}
+
 #pragma mark Placement Actions
 
 - (void)placeSelection:(SVGraphicPlacement)placement;
