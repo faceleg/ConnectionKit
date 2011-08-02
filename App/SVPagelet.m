@@ -33,7 +33,7 @@
 
 - (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID ancestorNode:(DOMNode *)node;
 {
-    SVDOMController *result = [[SVGraphicContainerDOMController alloc] initWithElementIdName:elementID ancestorNode:node];
+    SVDOMController *result = [[SVGraphicContainerDOMController alloc] initWithIdName:elementID ancestorNode:node];
     [result setRepresentedObject:self];
     return result;
 }

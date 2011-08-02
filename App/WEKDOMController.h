@@ -32,7 +32,7 @@
 
 // For subclasses that know how to load HTML element from within an existing node
 // Pass in a DOMDocument or subclass to improve speed of searching the DOM for your element
-- (id)initWithElementIdName:(NSString *)elementID ancestorNode:(DOMNode *)node;
+- (id)initWithIdName:(NSString *)elementID ancestorNode:(DOMNode *)node;
 
 // Convenience method:
 - (id)initWithHTMLElement:(DOMHTMLElement *)element;

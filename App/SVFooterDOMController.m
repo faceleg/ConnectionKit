@@ -46,7 +46,7 @@
 
 - (SVTextDOMController *)newTextDOMControllerWithElementIdName:(NSString *)elementID node:(DOMNode *)node;
 {
-    SVTextDOMController *result = [[SVFooterDOMController alloc] initWithElementIdName:elementID ancestorNode:node];
+    SVTextDOMController *result = [[SVFooterDOMController alloc] initWithIdName:elementID ancestorNode:node];
     [result setRepresentedObject:self];
     [result setRichText:YES];
     [result setFieldEditor:YES];

@@ -430,7 +430,7 @@
 
 - (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID ancestorNode:(DOMNode *)node;
 {
-    SVDOMController *result = [[SVDOMController alloc] initWithElementIdName:elementID ancestorNode:node];
+    SVDOMController *result = [[SVDOMController alloc] initWithIdName:elementID ancestorNode:node];
     [result setRepresentedObject:self];
     return result;
 }

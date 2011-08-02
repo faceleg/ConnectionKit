@@ -28,7 +28,7 @@
 
 #pragma mark Init & Dealloc
 
-- (id)initWithElementIdName:(NSString *)elementID ancestorNode:(DOMNode *)node;
+- (id)initWithIdName:(NSString *)elementID ancestorNode:(DOMNode *)node;
 {
     if (self = [self init])
     {

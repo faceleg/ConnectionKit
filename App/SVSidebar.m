@@ -90,7 +90,7 @@
 
 - (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID ancestorNode:(DOMNode *)node;
 {
-    SVDOMController *result = [[SVSidebarDOMController alloc] initWithElementIdName:elementID ancestorNode:node];
+    SVDOMController *result = [[SVSidebarDOMController alloc] initWithIdName:elementID ancestorNode:node];
     [result setRepresentedObject:self];
     return result;
 }

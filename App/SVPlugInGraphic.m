@@ -541,7 +541,7 @@ static void *sPlugInMinWidthObservationContext = &sPlugInMinWidthObservationCont
 {
     if ([[self plugIn] isKindOfClass:[SVIndexPlugIn class]])
     {
-        SVDOMController *result = [[SVIndexDOMController alloc] initWithElementIdName:elementID
+        SVDOMController *result = [[SVIndexDOMController alloc] initWithIdName:elementID
                                                                              ancestorNode:node];
         [result setRepresentedObject:self];
         
