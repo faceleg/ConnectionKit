@@ -61,15 +61,16 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 
 #pragma mark Init & Dealloc
 
-- (id)initWithRepresentedObject:(SVRichText *)content;
+- (id)init;
 {
-    // Create early, as super calls through to routine that begins observation
-    _graphicsController = [[[self attachmentsControllerClass] alloc] init];
-    [_graphicsController setSortDescriptors:[SVRichText attachmentSortDescriptors]];
-    [_graphicsController setAutomaticallyRearrangesObjects:YES];
-    
-    
-    return [super initWithRepresentedObject:content];
+    if (self = [super init])
+    {
+        // Create early, as super calls through to routine that begins observation
+        _graphicsController = [[[self attachmentsControllerClass] alloc] init];
+        [_graphicsController setSortDescriptors:[SVRichText attachmentSortDescriptors]];
+        [_graphicsController setAutomaticallyRearrangesObjects:YES];
+    }
+    return self;
 }
 
 - (void)dealloc
