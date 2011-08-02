@@ -88,9 +88,13 @@
 
 - (void)beginGraphicContainer:(id <SVComponent>)container;
 {
-    if (container)
+    if (container != [_earlyElement graphicContainer])
     {
-        [_earlyElement release]; _earlyElement = [[SVElementInfo alloc] initWithGraphicContainer:container];
+        if (_earlyElement)
+        {
+            [_earlyElement release];
+        }
+        _earlyElement = [[SVElementInfo alloc] initWithGraphicContainer:container];
     }
     
     [super beginGraphicContainer:container];
