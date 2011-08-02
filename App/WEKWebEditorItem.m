@@ -40,15 +40,6 @@
     [self exposeBinding:@"height"];
 }
 
-- (id)init
-{
-    if (self = [super init])
-    {
-        _selectable = YES;
-    }
-    return self;
-}
-
 - (void)dealloc
 {
     [self unbind:NSWidthBinding];

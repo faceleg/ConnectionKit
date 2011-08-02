@@ -71,7 +71,7 @@
 
 #pragma mark Selection
 
-@property(nonatomic, getter=isSelectable) BOOL selectable; // default is YES
+@property(nonatomic, getter=isSelectable) BOOL selectable; // default is NO
 - (DOMRange *)selectableDOMRange;
 - (BOOL)shouldTrySelectingInline;
 - (unsigned int)resizingMask;

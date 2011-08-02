@@ -33,6 +33,8 @@
 
 @implementation SVGraphicContainerDOMController
 
+#pragma mark Lifecycle
+
 - (void)dealloc;
 {
     [self setBodyHTMLElement:nil];

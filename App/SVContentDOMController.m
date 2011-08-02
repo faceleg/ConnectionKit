@@ -96,6 +96,7 @@
             {
                 SVPlugInDOMController *result = [[SVPlugInDOMController alloc] initWithElementIdName:elementID ancestorNode:node];
                 [result setRepresentedObject:container];
+                [result setSelectable:YES];
                 
                 [result setHorizontallyResizable:[self isHorizontallyResizable]];
                 [result setVerticallyResizable:[self isVerticallyResizable]];
