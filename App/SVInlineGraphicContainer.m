@@ -45,7 +45,7 @@
     [context endGraphicContainer];
 }
 
-- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID node:(DOMNode *)node;
+- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID ancestorNode:(DOMNode *)node;
 {
     SVDOMController *result = [[SVGraphicContainerDOMController alloc] initWithElementIdName:elementID ancestorNode:node];
     [result setRepresentedObject:self];

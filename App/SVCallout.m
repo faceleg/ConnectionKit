@@ -43,7 +43,7 @@
     [SVGraphic write:context pagelet:graphic];
 }
 
-- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID node:(DOMNode *)node;
+- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID ancestorNode:(DOMNode *)node;
 {
     SVDOMController *result = [[SVCalloutDOMController alloc] initWithElementIdName:elementID
                                                                            ancestorNode:node];

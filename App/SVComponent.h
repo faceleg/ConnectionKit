@@ -16,7 +16,7 @@
 
 @protocol SVComponent <NSObject>
 
-- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID node:(DOMNode *)document;
+- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID ancestorNode:(DOMNode *)document;
 
 @optional
 // Override to call -beginGraphicContainer etc. if you're not happy with default behaviour

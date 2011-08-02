@@ -537,7 +537,7 @@ static void *sPlugInMinWidthObservationContext = &sPlugInMinWidthObservationCont
 #pragma mark DOM
 
 - (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID
-                                                  node:(DOMNode *)node;
+                                                  ancestorNode:(DOMNode *)node;
 {
     if ([[self plugIn] isKindOfClass:[SVIndexPlugIn class]])
     {
@@ -554,7 +554,7 @@ static void *sPlugInMinWidthObservationContext = &sPlugInMinWidthObservationCont
         return result;
     }
     
-    return [super newDOMControllerWithElementIdName:elementID node:node];
+    return [super newDOMControllerWithElementIdName:elementID ancestorNode:node];
 }
 
 - (BOOL)requiresPageLoad;

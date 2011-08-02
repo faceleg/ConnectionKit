@@ -122,7 +122,7 @@
     
     // Create controller for graphic and hook up to imported node
     SVInlineGraphicContainer *container = [[SVInlineGraphicContainer alloc] initWithGraphic:graphic];
-    SVDOMController *controller = [container newDOMControllerWithElementIdName:nil node:nil];
+    SVDOMController *controller = [container newDOMControllerWithElementIdName:nil ancestorNode:nil];
     [container release];
     
     [controller setHTMLElement:(DOMHTMLElement *)element];

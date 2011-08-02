@@ -422,7 +422,7 @@
     [HTML_VALUE write:context graphic:graphic];
 }
 
-- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID node:(DOMNode *)node;
+- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID ancestorNode:(DOMNode *)node;
 {
     // Use the right sort of text area
     id value = HTML_VALUE;
