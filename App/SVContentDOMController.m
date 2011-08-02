@@ -92,25 +92,18 @@
         NSString *elementID = [[self attributesAsDictionary] objectForKey:@"id"];
         if (elementID)
         {
+            SVDOMController *result = [container newDOMControllerWithElementIdName:elementID ancestorNode:node];
+            if (![result isSelectable]) [result setSelectable:[container conformsToProtocol:@protocol(SVGraphic)]];
+            
             if ([self isHorizontallyResizable] || [self isVerticallyResizable])
             {
-                SVPlugInDOMController *result = [[SVPlugInDOMController alloc] initWithIdName:elementID ancestorNode:node];
-                [result setRepresentedObject:container];
-                [result setSelectable:YES];
-                
                 [result setHorizontallyResizable:[self isHorizontallyResizable]];
                 [result setVerticallyResizable:[self isVerticallyResizable]];
                 [result bind:NSWidthBinding toObject:container withKeyPath:@"width" options:nil];
                 [result bind:@"height" toObject:container withKeyPath:@"height" options:nil];
-                
-                return result;
             }
-            else
-            {
-                SVDOMController *result = [container newDOMControllerWithElementIdName:elementID ancestorNode:node];
-                if (![result isSelectable]) [result setSelectable:[container conformsToProtocol:@protocol(SVGraphic)]];
-                return result;
-            }
+            
+            return result;
         }
     }
     
