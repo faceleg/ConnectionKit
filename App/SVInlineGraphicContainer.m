@@ -31,7 +31,7 @@
 
 @synthesize graphic = _graphic;
 
-- (void)write:(SVHTMLContext *)context graphic:(id <SVGraphic>)graphic;
+- (BOOL)HTMLContext:(SVHTMLContext *)context writeGraphic:(id <SVGraphic>)graphic;
 {
     // Graphic body
     OBASSERT(![_graphic isPagelet]);
@@ -43,6 +43,8 @@
     }
     [context endElement];
     [context endGraphicContainer];
+    
+    return YES;
 }
 
 - (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID ancestorNode:(DOMNode *)node;

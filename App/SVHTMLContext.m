@@ -506,16 +506,17 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 {
     // Update number of graphics
     _numberOfGraphics++;
+    BOOL written = NO;
     
     id <SVComponent> container = [self currentGraphicContainer];
-    if ([container respondsToSelector:@selector(write:graphic:)])
+    if ([container respondsToSelector:@selector(HTMLContext:writeGraphic:)])
     {
         if ([graphic isPagelet])
         {
             _writingPagelet = YES;
             @try
             {
-                [container write:self graphic:graphic];
+                written = [container HTMLContext:self writeGraphic:graphic];
             }
             @finally
             {
@@ -524,10 +525,11 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
         }
         else
         {
-            [container write:self graphic:graphic];
+            written = [container HTMLContext:self writeGraphic:graphic];
         }
     }
-    else
+    
+    if (!written)
     {
         [self beginGraphicContainer:graphic];
         [graphic writeHTML:self];

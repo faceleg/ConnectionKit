@@ -38,9 +38,10 @@
     [context endGraphicContainer];
 }
 
-- (void)write:(SVHTMLContext *)context graphic:(SVGraphic *)graphic;
+- (BOOL)HTMLContext:(SVHTMLContext *)context writeGraphic:(SVGraphic *)graphic;
 {
     [SVGraphic write:context pagelet:graphic];
+    return YES;
 }
 
 - (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID ancestorNode:(DOMNode *)node;

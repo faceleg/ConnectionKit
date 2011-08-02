@@ -417,9 +417,9 @@
 
 #pragma mark Graphic Container
 
-- (void)write:(SVHTMLContext *)context graphic:(id <SVGraphic>)graphic;
+- (BOOL)HTMLContext:(SVHTMLContext *)context writeGraphic:(id <SVGraphic>)graphic;
 {
-    [HTML_VALUE write:context graphic:graphic];
+    return [HTML_VALUE HTMLContext:context writeGraphic:graphic];
 }
 
 - (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID ancestorNode:(DOMNode *)node;

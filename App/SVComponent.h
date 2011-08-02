@@ -19,8 +19,9 @@
 - (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID ancestorNode:(DOMNode *)document;
 
 @optional
-// Override to call -beginGraphicContainer etc. if you're not happy with default behaviour
-- (void)write:(SVHTMLContext *)context graphic:(id <SVGraphic>)graphic;
+// Much like -webView:doCommandBySelector:
+// Return yes if you want do custom overriting, making sure to call -beginGraphicContainer etc. in your custom implementation
+- (BOOL)HTMLContext:(SVHTMLContext *)context writeGraphic:(id <SVGraphic>)graphic;
 
 @end
 

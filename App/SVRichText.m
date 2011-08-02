@@ -290,20 +290,20 @@
 
 - (void)writeText; { [self writeText:[[SVHTMLTemplateParser currentTemplateParser] HTMLContext]]; }
 
-- (void)write:(SVHTMLContext *)context graphic:(id <SVGraphic>)graphic;
+- (BOOL)HTMLContext:(SVHTMLContext *)context writeGraphic:(id <SVGraphic>)graphic;
 {
+    if ([graphic shouldWriteHTMLInline])
+    {
+        return NO;
+    }
+    
+    
     SVInlineGraphicContainer *container = [[SVInlineGraphicContainer alloc] initWithGraphic:graphic]; // yes, fake it!
     [context beginGraphicContainer:container];
     [container release];
     
     @try
     {
-        if ([graphic shouldWriteHTMLInline])
-        {
-            return [context writeGraphic:graphic];
-        }
-        
-        
         // Indexes want <H3>s
         NSUInteger level = [context currentHeaderLevel];
         [context setCurrentHeaderLevel:2];
@@ -357,6 +357,8 @@
     {
         [context endGraphicContainer];
     }
+    
+    return YES;
 }
 
 #pragma mark Validation
