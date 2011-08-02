@@ -14,9 +14,17 @@
 #import "SVOffscreenWebViewController.h"
 
 
+@class SVFieldEditorHTMLWriterDOMAdapator;
+
+
 // And provide a base implementation of the protocol:
 @interface SVGraphic (SVDOMController)
+
 - (BOOL)requiresPageLoad;
+
+- (BOOL)writeAttributedHTML:(SVFieldEditorHTMLWriterDOMAdapator *)adaptor
+              webEditorItem:(WEKWebEditorItem *)item;
+
 @end
 
 @interface SVAuxiliaryPageletText (SVDOMController)

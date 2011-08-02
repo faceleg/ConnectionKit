@@ -432,7 +432,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
         }
     }
         
-    // Graphics is OK where it is; write. Callouts write their contents
+    // Graphic is OK where it is; write. Callouts write their contents
     if (![controller writeAttributedHTML:adaptor])
     {
         result = element;

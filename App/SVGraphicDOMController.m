@@ -140,6 +140,13 @@
     return result;
 }
 
+#pragma mark Text Editing
+
+- (BOOL)writeAttributedHTML:(SVFieldEditorHTMLWriterDOMAdapator *)writer
+{
+    return [[self representedObject] writeAttributedHTML:writer webEditorItem:self];
+}
+
 #pragma mark Drag & Drop
 
 - (void)setRepresentedObject:(id)object;
@@ -270,11 +277,74 @@
 #pragma mark -
 
 
+#import "SVCalloutDOMController.h"
+#import "SVRichTextDOMController.h"
+#import "SVTextAttachment.h"
+
+
 @implementation SVGraphic (SVDOMController)
 
-- (SVDOMController *)newDOMController;
+- (BOOL)writeAttributedHTML:(SVFieldEditorHTMLWriterDOMAdapator *)adaptor
+              webEditorItem:(WEKWebEditorItem *)item;
 {
-    return [[SVGraphicDOMController alloc] initWithRepresentedObject:self];
+    SVTextAttachment *attachment = [self textAttachment];
+    
+    
+    // Is it allowed?
+    if ([self isPagelet])
+    {
+        if ([adaptor importsGraphics] && [(id)adaptor allowsPagelets])
+        {
+            if ([[adaptor XMLWriter] openElementsCount] > 0)
+            {
+                return NO;
+            }
+        }
+        else
+        {
+            NSLog(@"This text block does not support block graphics");
+            return NO;
+        }
+    }
+    
+    
+    
+    
+    // Go ahead and write    
+    
+    // Newly inserted graphics tend not to have a corresponding text attachment yet. If so, create one
+    if (!attachment)
+    {
+        attachment = [SVTextAttachment textAttachmentWithGraphic:self];
+        
+        // Guess placement from controller hierarchy
+        SVGraphicPlacement placement = ([item calloutDOMController] ?
+                                        SVGraphicPlacementCallout :
+                                        SVGraphicPlacementInline);
+        [attachment setPlacement:[NSNumber numberWithInteger:placement]];
+        
+        //[attachment setWrap:[NSNumber numberWithInteger:SVGraphicWrapRightSplit]];
+        [attachment setBody:[(SVRichTextDOMController *)[item textDOMController] richTextStorage]];
+    }
+    
+    
+    // Set attachment location
+    [adaptor writeTextAttachment:attachment];
+    
+    [[adaptor XMLWriter] flush];
+    KSStringWriter *stringWriter = [adaptor valueForKeyPath:@"_output"];     // HACK!
+    NSRange range = NSMakeRange([(NSString *)stringWriter length] - 1, 1);  // HACK!
+    
+    if (!NSEqualRanges([attachment range], range))
+    {
+        [attachment setRange:range];
+    }
+    
+    
+    
+    
+    
+    return YES;
 }
 
 - (BOOL)requiresPageLoad; { return NO; }

@@ -592,64 +592,7 @@
 - (BOOL)writeAttributedHTML:(SVFieldEditorHTMLWriterDOMAdapator *)adaptor;
 {
     SVGraphic *graphic = [[self representedObject] graphic];
-    SVTextAttachment *attachment = [graphic textAttachment];
-    
-    
-    // Is it allowed?
-    if ([graphic isPagelet])
-    {
-        if ([adaptor importsGraphics] && [(id)adaptor allowsPagelets])
-        {
-            if ([[adaptor XMLWriter] openElementsCount] > 0)
-            {
-                return NO;
-            }
-        }
-        else
-        {
-            NSLog(@"This text block does not support block graphics");
-            return NO;
-        }
-    }
-    
-    
-    
-    
-    // Go ahead and write    
-    
-    // Newly inserted graphics tend not to have a corresponding text attachment yet. If so, create one
-    if (!attachment)
-    {
-        attachment = [SVTextAttachment textAttachmentWithGraphic:graphic];
-        
-        // Guess placement from controller hierarchy
-        SVGraphicPlacement placement = ([self calloutDOMController] ?
-                                        SVGraphicPlacementCallout :
-                                        SVGraphicPlacementInline);
-        [attachment setPlacement:[NSNumber numberWithInteger:placement]];
-        
-        //[attachment setWrap:[NSNumber numberWithInteger:SVGraphicWrapRightSplit]];
-        [attachment setBody:[[self textDOMController] representedObject]];
-    }
-    
-    
-    // Set attachment location
-    [adaptor writeTextAttachment:attachment];
-    
-    [[adaptor XMLWriter] flush];
-    KSStringWriter *stringWriter = [adaptor valueForKeyPath:@"_output"];     // HACK!
-    NSRange range = NSMakeRange([(NSString *)stringWriter length] - 1, 1);  // HACK!
-    
-    if (!NSEqualRanges([attachment range], range))
-    {
-        [attachment setRange:range];
-    }
-    
-    
-    
-    
-    
-    return YES;
+    return [graphic writeAttributedHTML:adaptor webEditorItem:self];
 }
 
 #pragma mark Moving
