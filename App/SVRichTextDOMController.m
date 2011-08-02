@@ -302,16 +302,14 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
         
         
         // Try to de-archive custom HTML
-        id object = [self representedObject];
-        
         NSAttributedString *attributedHTML = [NSAttributedString
                                               attributedHTMLStringFromPasteboard:pasteboard
-                                              insertAttachmentsIntoManagedObjectContext:[object managedObjectContext]];
+                                              insertAttachmentsIntoManagedObjectContext:[self managedObjectContext]];
         
         if (attributedHTML)
         {
             // Generate HTML for the DOM
-            [context beginGraphicContainer:object];
+            [context beginGraphicContainer:[self representedObject]];
             [context writeAttributedHTMLString:attributedHTML];
             [context endGraphicContainer];
         }
@@ -469,8 +467,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     
     
     // Make an image object
-    SVRichText *text = [self richTextStorage];
-    NSManagedObjectContext *context = [text managedObjectContext];
+    NSManagedObjectContext *context = [self managedObjectContext];
     
     SVMedia *media = nil;
     NSURL *URL = [imageElement absoluteImageURL];
@@ -508,7 +505,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     // Make corresponding text attachment
     SVTextAttachment *textAttachment = [SVTextAttachment textAttachmentWithGraphic:image];
     
-    [textAttachment setBody:text];
+    [textAttachment setBody:[self richTextStorage]];
     [textAttachment setPlacement:[NSNumber numberWithInteger:SVGraphicPlacementInline]];
     
     
@@ -663,7 +660,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
         if ([linkURLString hasPrefix:kKTPageIDDesignator])
         {
             SVSiteItem *target = [KTPage siteItemForPreviewPath:linkURLString
-                                 inManagedObjectContext:[[self representedObject] managedObjectContext]];
+                                 inManagedObjectContext:[self managedObjectContext]];
             
             if (target)
             {
@@ -850,10 +847,8 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     
     
     
-    NSManagedObjectContext *context = [[self representedObject] managedObjectContext];
-    
     SVGraphic *graphic = [SVGraphicFactory graphicWithActionSender:sender
-                                    insertIntoManagedObjectContext:context];
+                                    insertIntoManagedObjectContext:[self managedObjectContext]];
     
     [graphic awakeFromNew];
     
@@ -885,9 +880,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     if (!media) return;
     
     
-    NSManagedObjectContext *context = [[self representedObject] managedObjectContext];
-    
-    SVMediaGraphic *graphic = [SVMediaGraphic insertNewGraphicInManagedObjectContext:context];
+    SVMediaGraphic *graphic = [SVMediaGraphic insertNewGraphicInManagedObjectContext:[self managedObjectContext]];
     [graphic setSourceWithMedia:media];
     [graphic setShowsTitle:NO];
     [graphic setShowsCaption:NO];
