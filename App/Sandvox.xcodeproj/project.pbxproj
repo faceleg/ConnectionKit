@@ -7106,7 +7106,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/bash;
-			shellScript = "\nPBXCP=${SRCROOT}/../Code/Shared/Tools/pbxcp\n\nBUILDSETTINGS_DIR=/tmp/build-sandvox\nBUILDSETTINGS_PATH=${BUILDSETTINGS_DIR}/BuildSettings.h\n\nPLUGINS_FOLDER_PATH=${TARGET_BUILD_DIR}/Sandvox.app/Contents/PlugIns\nmkdir -p \"${PLUGINS_FOLDER_PATH}\"\n\npushd \"${TARGET_BUILD_DIR}\"\n\nfor i in *.svxElement\ndo\n\n\tif [ -e \"${PWD}/${i}/Contents/Resources/BUNDLED\" ];\n\tthen\n\n\t\techo \"BUNDLED: PBXCp \\\"$i\\\" ${PLUGINS_FOLDER_PATH}\"\n\n\t\t'${PBXCP}\" \\\n\t\t\t-exclude .DS_Store -exclude CVS -exclude .svn -exclude BUNDLED -resolve-src-symlinks \\\n\t\t\t\"${PWD}/${i}\" \"${PLUGINS_FOLDER_PATH}\"\n\telse\n\t\techo \"-------------- Not including $i\"\n\tfi\n\ndone\n\npopd\n\n";
+			shellScript = "\nPBXCP=${SRCROOT}/../Code/Shared/Tools/pbxcp\n\nBUILDSETTINGS_DIR=/tmp/build-sandvox\nBUILDSETTINGS_PATH=${BUILDSETTINGS_DIR}/BuildSettings.h\n\nPLUGINS_FOLDER_PATH=${TARGET_BUILD_DIR}/Sandvox.app/Contents/PlugIns\nmkdir -p \"${PLUGINS_FOLDER_PATH}\"\n\npushd \"${TARGET_BUILD_DIR}\"\n\nfor i in *.svxElement\ndo\n\n\tif [ -e \"${PWD}/${i}/Contents/Resources/BUNDLED\" ];\n\tthen\n\n\t\techo \"BUNDLED: PBXCp \\\"$i\\\" ${PLUGINS_FOLDER_PATH}\"\n\n\t\t\"${PBXCP}\" \\\n\t\t\t-exclude .DS_Store -exclude CVS -exclude .svn -exclude BUNDLED -resolve-src-symlinks \\\n\t\t\t\"${PWD}/${i}\" \"${PLUGINS_FOLDER_PATH}\"\n\telse\n\t\techo \"-------------- Not including $i\"\n\tfi\n\ndone\n\npopd\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66CC0BFA94BA007A4871 /* Script - Add Designs */ = {
