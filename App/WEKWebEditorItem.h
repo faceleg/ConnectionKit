@@ -32,6 +32,7 @@
     NSNumber    *_height;
     BOOL        _horizontallyResizable;
     BOOL        _verticallyResizable;
+    NSSize      _aspectRatio;
     NSSize      _delta;
 }
 
@@ -124,6 +125,7 @@
 @property(nonatomic, getter=isHorizontallyResizable) BOOL horizontallyResizable;
 @property(nonatomic, getter=isVerticallyResizable) BOOL verticallyResizable;
 
+@property(nonatomic) NSSize aspectRatio;
 @property(nonatomic) NSSize sizeDelta;
 - (NSSize)minSize;
 - (CGFloat)maxWidth;

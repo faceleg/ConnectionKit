@@ -596,6 +596,8 @@
 
 @synthesize horizontallyResizable = _horizontallyResizable;
 @synthesize verticallyResizable = _verticallyResizable;
+
+@synthesize aspectRatio = _aspectRatio;
 @synthesize sizeDelta = _delta;
 
 - (NSSize)minSize; { return NSMakeSize(200.0f, 16.0f); }
@@ -829,7 +831,7 @@
 
 - (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;
 {
-    if (snapToFit)
+    /*if (snapToFit)
     {
         // Whew, what a lot of questions! Now, should this drag be disallowed on account of making the DOM element bigger than its container? #84958
         DOMNode *parent = [[self HTMLElement] parentNode];
@@ -840,6 +842,77 @@
         CGFloat maxWidth = [[style width] floatValue];
         if (size.width > maxWidth) size.width = maxWidth;
     }
+    
+    return size;*/
+    
+    
+    
+    
+    
+    /*  This logic is almost identical to SVPlugInDOMController, although the code here can probably be pared down to deal only with width
+     */
+    
+    
+    // If constrained proportions, apply that
+    NSSize ratio = [self aspectRatio];
+    
+    if (ratio.width > 0 && ratio.height > 0)
+    {
+        BOOL resizingWidth = (handle == kSVGraphicUpperLeftHandle ||
+                              handle == kSVGraphicMiddleLeftHandle ||
+                              handle == kSVGraphicLowerLeftHandle ||
+                              handle == kSVGraphicUpperRightHandle ||
+                              handle == kSVGraphicMiddleRightHandle ||
+                              handle == kSVGraphicLowerRightHandle);
+        
+        BOOL resizingHeight = (handle == kSVGraphicUpperLeftHandle ||
+                               handle == kSVGraphicUpperMiddleHandle ||
+                               handle == kSVGraphicUpperRightHandle ||
+                               handle == kSVGraphicLowerLeftHandle ||
+                               handle == kSVGraphicLowerMiddleHandle ||
+                               handle == kSVGraphicLowerRightHandle);
+        
+        CGFloat ratioValue = (ratio.width / ratio.height);
+        
+        if (resizingWidth)
+        {
+            if (resizingHeight)
+            {
+                // Go for the biggest size of the two possibilities
+                if ((size.width / size.height) < ratioValue)
+                {
+                    size.width = size.height * ratioValue;
+                }
+                else
+                {
+                    size.height = size.width / ratioValue;
+                }
+            }
+            else
+            {
+                size.height = size.width / ratioValue;
+            }
+        }
+        else if (resizingHeight)
+        {
+            size.width = size.height * ratioValue;
+        }
+    }
+    
+    
+    
+    if (snapToFit)
+    {
+        CGFloat maxWidth = [self maxWidth];
+        if (size.width > maxWidth)
+        {
+            // Keep within max width
+            // Switch over to auto-sized for simple graphics
+            //size.width = ([graphic isExplicitlySized] ? maxWidth : 0.0f);
+            //if (ratio) size.height = maxWidth / [ratio floatValue];
+        }
+    }
+    
     
     return size;
 }
