@@ -669,14 +669,11 @@
     
     
     // Should any of these nodes get added to the site menu?
-    if ([startingIndexPath length] <= 2)
+    for (NSTreeNode *aNode in nodes)
     {
-        for (NSTreeNode *aNode in nodes)
+        if ([startingIndexPath length] != [[aNode indexPath] length])
         {
-            if ([[aNode indexPath] length] > 2)
-            {
-                [self willInsertOrMoveObject:[aNode representedObject] intoCollectionAtArrangedObjectIndexPath:startingIndexPath];
-            }
+            [self willInsertOrMoveObject:[aNode representedObject] intoCollectionAtArrangedObjectIndexPath:parentPath];
         }
     }
     
