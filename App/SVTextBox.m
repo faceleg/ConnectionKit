@@ -11,6 +11,7 @@
 #import "SVGraphicFactory.h"
 #import "SVRichText.h"
 #import "SVHTMLTemplateParser.h"
+#import "SVHTMLTextBlock.h"
 #import "SVInspectorViewController.h"
 #import "SVTemplate.h"
 
@@ -129,3 +130,19 @@
 }
 
 @end
+
+
+#pragma mark -
+
+
+@implementation SVTextBoxBody
+
+- (SVTextDOMController *)newTextDOMControllerWithElementIdName:(NSString *)elementID node:(DOMNode *)node
+{
+    SVTextDOMController *result = [super newTextDOMControllerWithElementIdName:elementID node:node];
+    [result setRepresentedObject:[self valueForKey:@"pagelet"]];
+    return result;
+}
+
+@end
+
