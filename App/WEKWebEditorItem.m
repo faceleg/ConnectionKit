@@ -38,12 +38,14 @@
 {
     [self exposeBinding:NSWidthBinding];
     [self exposeBinding:@"height"];
+    [self exposeBinding:@"aspectRatio"];
 }
 
 - (void)dealloc
 {
     [self unbind:NSWidthBinding];
     [self unbind:@"height"];
+    [self unbind:@"aspectRatio"];
         
     [self setChildWebEditorItems:nil];
     
