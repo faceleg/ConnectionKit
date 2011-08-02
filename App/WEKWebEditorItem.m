@@ -267,9 +267,7 @@
 
 #pragma mark Selection
 
-- (BOOL)isSelectable; { return [self selectableDOMElement] != nil; }
-
-- (DOMElement *)selectableDOMElement; { return nil; }
+- (BOOL)isSelectable; { return NO; }
 
 - (DOMRange *)selectableDOMRange; { return nil; }
 
@@ -277,11 +275,16 @@
 {
     // Whether selecting the element should be inline (set the WebView's selection) or not (no WebView selection)
     
-    DOMHTMLElement *element = (id)[self selectableDOMElement];
+    BOOL result = NO;
     
-    BOOL result = ([[element tagName] isEqualToString:@"IMG"] &&
-                   ![[[element className] componentsSeparatedByWhitespace] containsObject:@"graphic"] &&
-                   [element isContentEditable]);
+    if ([self isSelectable])
+    {
+        DOMHTMLElement *element = [self HTMLElement];
+        
+        result = ([[element tagName] isEqualToString:@"IMG"] &&
+                  ![[[element className] componentsSeparatedByWhitespace] containsObject:@"graphic"] &&
+                  [element isContentEditable]);
+    }
     
     return result;
 }
@@ -518,10 +521,9 @@
 {
     NSRect result = NSZeroRect;
     
-    DOMElement *element = [self selectableDOMElement];
-    if (element)
+    if ([self isSelectable])
     {
-        result = [element boundingBox];
+        result = [[self HTMLElement] boundingBox];
     }
     
     return result;
@@ -538,7 +540,7 @@
     
     if ([self isEditing])
     {
-        NSRect outline = NSInsetRect([[self selectableDOMElement] boundingBox], -4.0f, -4.0f);
+        NSRect outline = NSInsetRect([[self HTMLElement] boundingBox], -4.0f, -4.0f);
         result = NSUnionRect(result, outline);
     }
     else if ([self isSelected])
@@ -577,7 +579,6 @@
         KSSelectionBorder *border = [self newSelectionBorder];
         
         // Don't need stroke if graphic provides its own
-        //DOMElement *element = [self selectableDOMElement];
         DOMCSSStyleDeclaration *style = [[element ownerDocument] getComputedStyle:element pseudoElement:nil];
         if ([[style borderTopWidth] floatValue] > 0.0f &&
             [[style borderLeftWidth] floatValue] > 0.0f &&

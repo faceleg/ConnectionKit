@@ -432,6 +432,13 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     [_nextObject release]; _nextObject = object;
 }
 
+#pragma mark Serialization
+
+- (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
+{
+    [[self media] populateSerializedProperties:propertyList];
+}
+
 #pragma mark SVDocumentFileWrapper
 
 - (void)forceUpdateFromURL:(NSURL *)URL;

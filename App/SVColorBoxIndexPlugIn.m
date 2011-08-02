@@ -190,18 +190,14 @@
 	//
 	// PARTIAL WORK-AROUND: Add the style to this PAGE, not the global CSS. FLAW: Can only add one colorbox's color.
 	//
-	NSRange cboxOverlayInHeader = [[context extraHeaderMarkup] rangeOfString:@"#cboxOverlay"];
-	if (NSNotFound == cboxOverlayInHeader.location)
-	{
-		CGFloat red, green, blue = 0.0;
-		NSColor *backgroundAsRGB = [self.backgroundColor colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
-		[backgroundAsRGB getRed:&red green:&green blue:&blue alpha:nil];
-		NSColor *alphaLessColor = [NSColor colorWithCalibratedRed:red green:green blue:blue alpha:1.0];
-		NSString *colorString = [alphaLessColor htmlString];
-		NSString *colorCSS = [NSString stringWithFormat:@"#cboxOverlay{background:%@;}", colorString];
-		
-		[context addMarkupToHead:[NSString stringWithFormat:@"\n<style type='text/css'>%@</style>", colorCSS]];
-	}
+	CGFloat red, green, blue = 0.0;
+	NSColor *backgroundAsRGB = [self.backgroundColor colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+	[backgroundAsRGB getRed:&red green:&green blue:&blue alpha:nil];
+	NSColor *alphaLessColor = [NSColor colorWithCalibratedRed:red green:green blue:blue alpha:1.0];
+	NSString *colorString = [alphaLessColor htmlString];
+	NSString *colorCSS = [NSString stringWithFormat:@"#cboxOverlay{background:%@;}", colorString];
+	
+	[context addMarkupToHead:[NSString stringWithFormat:@"\n<style type='text/css'>%@</style>", colorCSS]];
 }
 
 - (void)writeHTML:(SVHTMLContext *)context;

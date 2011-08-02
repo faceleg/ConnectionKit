@@ -128,6 +128,24 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 #pragma mark Updating
 
+- (void)updateWithDOMNode:(DOMNode *)node items:(NSArray *)items;
+{
+    // Swap in updated node. Then get the Web Editor to hook new descendant controllers up to the new nodes
+    [[[self HTMLElement] parentNode] replaceChild:node oldChild:[self HTMLElement]];
+    //[self setHTMLElement:nil];  // so Web Editor will endeavour to hook us up again
+    
+    
+    // Hook up new DOM Controllers
+    SVWebEditorViewController *viewController = [self webEditorViewController];
+    [viewController willUpdate];    // wrap the replacement like this so doesn't think update finished too early
+    {
+        [self didUpdateWithSelector:@selector(update)];
+        [[self retain] autorelease];    // replacement is likely to deallocate us
+        [[self parentWebEditorItem] replaceChildWebEditorItem:self withItems:items];
+    }
+    [viewController didUpdate];
+}
+
 - (void)update;
 {
     // Tear down dependencies etc.
@@ -186,6 +204,33 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     [context release];
     
     
+    DOMHTMLDocument *doc = (DOMHTMLDocument *)[[self HTMLElement] ownerDocument];
+    DOMDocumentFragment *fragment = [doc createDocumentFragmentWithMarkupString:[html string] baseURL:nil];
+    
+    if (fragment)
+    {
+        DOMElement *anElement = [fragment firstChildOfClass:[DOMElement class]];
+        while (anElement)
+        {
+            if ([[anElement getElementsByTagName:@"SCRIPT"] length]) break; // deliberately ignoring top-level scripts
+            
+            NSString *ID = [anElement getAttribute:@"id"];
+            if ([ID isEqualToString:[[_offscreenDOMControllers objectAtIndex:0] elementIdName]])
+            {
+                // Search for any following scripts
+                if ([anElement nextSiblingOfClass:[DOMHTMLScriptElement class]]) break;
+                
+                // No scripts, so can update directly
+                [self updateWithDOMNode:anElement items:_offscreenDOMControllers];
+                [_offscreenDOMControllers release]; _offscreenDOMControllers = nil;
+                return;
+            }
+            
+            anElement = [anElement nextSiblingOfClass:[DOMElement class]];
+        }
+    }
+    
+    
     // Start loading DOM objects from HTML
     if (_offscreenWebViewController)
     {
@@ -200,23 +245,6 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     [_offscreenWebViewController loadHTMLFragment:[html string]];
     [html release];
-}
-
-- (void)updateWithDOMNode:(DOMNode *)node items:(NSArray *)items;
-{
-    // Swap in updated node. Then get the Web Editor to hook new descendant controllers up to the new nodes
-    [[[self HTMLElement] parentNode] replaceChild:node oldChild:[self HTMLElement]];
-    //[self setHTMLElement:nil];  // so Web Editor will endeavour to hook us up again
-    
-    
-    // Hook up new DOM Controllers
-    SVWebEditorViewController *viewController = [self webEditorViewController];
-    [viewController willUpdate];    // wrap the replacement like this so doesn't think update finished too early
-    {
-        [[self retain] autorelease];    // replacement is likely to deallocate us
-        [[self parentWebEditorItem] replaceChildWebEditorItem:self withItems:items];
-    }
-    [viewController didUpdate];
 }
 
 + (DOMHTMLHeadElement *)headOfDocument:(DOMDocument *)document;
@@ -543,37 +571,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     return result;
 }
 
-- (DOMElement *)selectableDOMElement;
-{
-    return nil;
-    
-    
-    DOMElement *result = [self graphicDOMElement];
-    if (!result) result = (id)[[[self HTMLElement] getElementsByClassName:@"pagelet-body"] item:0];
-    ;
-    
-    
-    // Seek out a better matching child which has no siblings. #93557
-    DOMTreeWalker *walker = [[result ownerDocument] createTreeWalker:result
-                                                          whatToShow:DOM_SHOW_ELEMENT
-                                                              filter:nil
-                                              expandEntityReferences:NO];
-    
-    DOMNode *aNode = [walker currentNode];
-    while (aNode && ![walker nextSibling])
-    {
-        WEKWebEditorItem *controller = [super hitTestDOMNode:aNode];
-        if (controller != self && [controller isSelectable])
-        {
-            result = nil;
-            break;
-        }
-        
-        aNode = [walker nextNode];
-    }
-    
-    return result;
-}
+- (BOOL)isSelectable { return NO; }
 
 - (void)setEditing:(BOOL)editing;
 {
@@ -595,14 +593,9 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 - (NSRect)selectionFrame;
 {
-    DOMElement *element = [self selectableDOMElement];
-    if (element)
+    if (![self isSelectable])
     {
-        return [element boundingBox];
-    }
-    else
-    {
-        // Union together children, but only vertically once the firsy has been found
+        // Union together children, but only vertically once the first has been found
         NSRect result = NSZeroRect;
         for (WEKWebEditorItem *anItem in [self selectableTopLevelDescendants])
         {
@@ -619,9 +612,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
         return result;
     }
     
-    //DOMElement *element = [self graphicDOMElement];
-    if (!element) element = [self HTMLElement];
-    return [element boundingBox];
+    return [[self HTMLElement] boundingBox];
 }
 
 #pragma mark Paste
@@ -929,8 +920,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
         DOMNodeList *contents = [element getElementsByClassName:@"figure-content"];
         if ([contents length]) element = (DOMHTMLElement *)[contents item:0];
         
-        NSRect box = [element boundingBox];
-        if (box.size.width <= 0.0f || box.size.height <= 0.0f)
+        if (![element ks_isVisible])
         {
             // Replace with placeholder
             NSString *parsedPlaceholderHTML = [[self representedObject] parsedPlaceholderHTMLFromContext:self.HTMLContext];
@@ -939,8 +929,10 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
             switch ([children count])
             {
                 case 1:
-                    OBASSERT([[[children objectAtIndex:0] childWebEditorItems] count] <= 1);
-                    [[[children objectAtIndex:0] HTMLElement] setInnerHTML:parsedPlaceholderHTML];
+                    for (WEKWebEditorItem *anItem in children)
+                    {
+                        [[anItem HTMLElement] setInnerHTML:parsedPlaceholderHTML];
+                    }
                     break;
                     
                 default:
@@ -960,23 +952,23 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 #pragma mark Selection
 
-- (DOMElement *)selectableDOMElement;
+- (BOOL)isSelectable;
 {
     // Normally selectable, unless there's a selectable child. #96670
-    BOOL selectable = YES;
+    BOOL result = YES;
     for (WEKWebEditorItem *anItem in [self childWebEditorItems])
     {
-        if ([anItem isSelectable]) selectable = NO;
+        if ([anItem isSelectable]) result = NO;
     }
     
-    return (selectable ? [self HTMLElement] : nil);
+    return result;
 }
 
 - (DOMRange *)selectableDOMRange;
 {
     if ([self shouldTrySelectingInline])
     {
-        DOMElement *element = [self selectableDOMElement];
+        DOMElement *element = [self HTMLElement];
         DOMRange *result = [[element ownerDocument] createRange];
         [result selectNode:element];
         return result;
