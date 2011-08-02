@@ -67,22 +67,3 @@
 }
 
 @end
-
-
-@implementation SVAuxiliaryPageletText (SVAuxiliaryPageletTextDOMController)
-
-- (SVDOMController *)newDOMController;
-{
-    return [[SVGraphicContainerDOMController alloc] initWithRepresentedObject:self];
-}
-
-- (SVTextDOMController *)newTextDOMControllerWithElementIdName:(NSString *)elementID node:(DOMNode *)node;
-{
-    SVTextDOMController *result = [[SVAuxiliaryPageletTextDOMController alloc] initWithElementIdName:elementID ancestorNode:node];
-    [result setRepresentedObject:self];
-    [result setRichText:YES];
-    
-    return result;
-}
-
-@end

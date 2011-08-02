@@ -1178,6 +1178,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 {
     SVTextDOMController *result = [[SVRichTextDOMController alloc] initWithElementIdName:elementID ancestorNode:node];
     [result setRepresentedObject:self];
+    [result setSelectable:YES];
     [result setRichText:YES];
     
     return result;

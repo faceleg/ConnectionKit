@@ -108,7 +108,7 @@
             else
             {
                 SVDOMController *result = [container newDOMControllerWithElementIdName:elementID ancestorNode:node];
-                [result setSelectable:[container conformsToProtocol:@protocol(SVGraphic)]];
+                if (![result isSelectable]) [result setSelectable:[container conformsToProtocol:@protocol(SVGraphic)]];
                 return result;
             }
         }
