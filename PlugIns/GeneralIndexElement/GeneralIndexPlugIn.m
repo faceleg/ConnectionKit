@@ -70,7 +70,7 @@
 #pragma mark SVIndexPlugIn
 
 + (NSArray *)plugInKeys
-{ 
+{
     NSArray *plugInKeys = [NSArray arrayWithObjects:
 						   @"hyperlinkTitles",
 						   @"richTextTitles",
@@ -78,6 +78,7 @@
 						   @"showPermaLinks",
                            @"showComments",
 						   @"showArticleInTables",
+						   @"showContinueReadingLink",
 						   @"showTimestamps",
                            @"timestampType",
 						   @"maxItemLength",
@@ -85,12 +86,23 @@
     return [[super plugInKeys] arrayByAddingObjectsFromArray:plugInKeys];
 }
 
+- (void)setSerializedValue:(id)serializedValue forKey:(NSString *)key
+{
+	if ([key isEqualToString:@"showContinueReadingLink"] && nil == serializedValue)
+	{
+		serializedValue = [NSNumber numberWithBool:YES];
+	}
+	[super setSerializedValue:serializedValue forKey:key];
+}
+
+
 - (void)awakeFromNew;
 {
 	[super awakeFromNew];
     
     self.enableMaxItems = YES;
     self.maxItems = 10;
+	self.showContinueReadingLink = YES;
 	
 	NSNumber *isPagelet = [self valueForKeyPath:@"container.isPagelet"];	// Private. If creating in sidebar, make it more minimal
 	if (isPagelet && [isPagelet boolValue])
@@ -110,6 +122,7 @@
 	[context addDependencyForKeyPath:@"showPermaLinks"		ofObject:self];
 	[context addDependencyForKeyPath:@"showComments"		ofObject:self];
 	[context addDependencyForKeyPath:@"showArticleInTables"	ofObject:self];
+	[context addDependencyForKeyPath:@"showContinueReadingLink" ofObject:self];
 	[context addDependencyForKeyPath:@"showTimestamps"		ofObject:self];
     [context addDependencyForKeyPath:@"timestampType"       ofObject:self];
 	[context addDependencyForKeyPath:@"maxItemLength"		ofObject:self];
@@ -193,7 +206,7 @@
 			[context startElement:@"td" className:@"dli3"];
 			truncated = [self writeSummaryOfIteratedPage];
 			
-			if (truncated)	// put the continue reading link directly below the text
+			if (truncated && self.showContinueReadingLink)	// put the continue reading link directly below the text
 			{
 				[self writeContinueReadingLink];
 			}
@@ -205,7 +218,7 @@
 		if ((self.indexLayoutType & kArticleMask) && [self hasArticleInfo])
 		{
 			[context startElement:@"td" className:@"dli4"];
-			[self writeArticleInfoWithContinueReadingLink:NO];
+			[self writeArticleInfoWithContinueReadingLink:self.showContinueReadingLink];
 			[context endElement];
 		}
 	}
@@ -232,7 +245,7 @@
 		if (self.indexLayoutType & kArticleMask)
 		{
 			truncated = [self writeSummaryOfIteratedPage];
-			[self writeArticleInfoWithContinueReadingLink:truncated];
+			[self writeArticleInfoWithContinueReadingLink:(truncated && self.showContinueReadingLink)];
 		}
 	}
 	
@@ -455,6 +468,7 @@
 @synthesize isTable = _isTable;
 @synthesize showComments	= _showComments;
 @synthesize showArticleInTables	= _showArticleInTables;
+@synthesize showContinueReadingLink	= _showContinueReadingLink;
 @synthesize showTimestamps	= _showTimestamps;
 @synthesize timestampType = _timestampType;
 @synthesize maxItemLength	= _maxItemLength;
