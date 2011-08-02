@@ -1612,13 +1612,6 @@
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = TwitterElement;
 		};
-		CE2556D20D3432AF003A5B5E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CE2556CB0D3432AF003A5B5E /* SandvoxQuickLook.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D576316048677EA00EA77CD;
-			remoteInfo = SandvoxQuickLook;
-		};
 		CE44B84913020DAA00015A24 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C095BF40D5D281000DE6F62 /* PhotoGridIndex.xcodeproj */;
@@ -2732,7 +2725,6 @@
 		CE23D96A11E6E65900E43369 /* KSPlainClipTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSPlainClipTextView.h; sourceTree = "<group>"; };
 		CE23D96B11E6E65900E43369 /* KSPlainClipTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSPlainClipTextView.m; sourceTree = "<group>"; };
 		CE250ADB08204B120061BE9B /* imageReplacementHeader.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = imageReplacementHeader.txt; sourceTree = "<group>"; };
-		CE2556CB0D3432AF003A5B5E /* SandvoxQuickLook.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SandvoxQuickLook.xcodeproj; path = ../Code/QuickLook/SandvoxQuickLook.xcodeproj; sourceTree = SOURCE_ROOT; };
 		CE26237E0A360332009467ED /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		CE26FA1308C4D9C500C9604B /* design-time.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "design-time.css"; sourceTree = "<group>"; };
 		CE27F6600D6193B200D211EA /* NSImage+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+KTExtensions.h"; sourceTree = "<group>"; };
@@ -4404,7 +4396,6 @@
 				3CA9FD350D63A08000815310 /* Elements */,
 				3CA9FD410D63A0B400815310 /* Frameworks */,
 				3C3F147C09D521AE00C01EED /* MetaMarvel.xcodeproj */,
-				CE2556CB0D3432AF003A5B5E /* SandvoxQuickLook.xcodeproj */,
 			);
 			name = "Product Dependencies";
 			sourceTree = "<group>";
@@ -5560,14 +5551,6 @@
 			path = Interfaces;
 			sourceTree = "<group>";
 		};
-		CE2556CC0D3432AF003A5B5E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				CE2556D30D3432AF003A5B5E /* SandvoxQuickLook.qlgenerator */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		CE2D42E41188BD910051E238 /* LIFlipEffect */ = {
 			isa = PBXGroup;
 			children = (
@@ -6414,10 +6397,6 @@
 					ProjectRef = 3C42DE160D64CCC7004F35FD /* RSSBadgeElement.xcodeproj */;
 				},
 				{
-					ProductGroup = CE2556CC0D3432AF003A5B5E /* Products */;
-					ProjectRef = CE2556CB0D3432AF003A5B5E /* SandvoxQuickLook.xcodeproj */;
-				},
-				{
 					ProductGroup = 3C98709E11F3D3A00053A72C /* Products */;
 					ProjectRef = 3C42DDA60D64C8B3004F35FD /* SiteMapElement.xcodeproj */;
 				},
@@ -6621,13 +6600,6 @@
 			fileType = wrapper.cfbundle;
 			path = Twitter.svxElement;
 			remoteRef = 3CFEF23C122C326C005A08FC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CE2556D30D3432AF003A5B5E /* SandvoxQuickLook.qlgenerator */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = SandvoxQuickLook.qlgenerator;
-			remoteRef = CE2556D20D3432AF003A5B5E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CE44B84A13020DAA00015A24 /* PhotoGridIndex.svxElement */ = {
@@ -6984,7 +6956,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### UPDATE Designs ToT FOR RELEASE BUILDS\n###\n\nDESIGNS_PATH=${SRCROOT}/../../Designs\n\n# for some reason using which to find svn works on Leopard, not on Tiger\n# SVN_PATH=`which svn`\n\n# so we do this instead and hope for the best\nif [ -e /usr/local/bin/svn ]\nthen\n\tSVN_PATH=/usr/local/bin/svn\nelif [ -e /usr/bin/svn ]\nthen\n\tSVN_PATH=/usr/bin/svn\nelif [ -e /opt/local/bin/svn ]\nthen\n\tSVN_PATH=/opt/local/bin/svn\nelse\n\techo \"ERROR - CANT FIND SVN\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"syncing Designs with ToT ...\"\ncd ${DESIGNS_PATH}\n${SVN_PATH} update\necho \"... finished syncing Designs\"\n\npopd\n\nexit 0\n";
+			shellScript = "#!/bin/bash\n\n###\n### UPDATE Designs ToT FOR RELEASE BUILDS\n###\n\nDESIGNS_PATH=${SRCROOT}/../../Designs\n\n# for some reason using which to find svn works on Leopard, not on Tiger\n# SVN_PATH=`which svn`\n\n# so we do this instead and hope for the best\nif [ -e /usr/local/bin/svn ]\nthen\n\tSVN_PATH=/usr/local/bin/svn\nelif [ -e /usr/bin/svn ]\nthen\n\tSVN_PATH=/usr/bin/svn\nelif [ -e /opt/local/bin/svn ]\nthen\n\tSVN_PATH=/opt/local/bin/svn\nelse\n\techo \"ERROR - CANT FIND SVN\"\n\texit 1\nfi\n\npushd \"${SRCROOT}\"\n\necho \"syncing Designs with ToT ...\"\ncd \"${DESIGNS_PATH}\"\n${SVN_PATH} update\necho \"... finished syncing Designs\"\n\npopd\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
 		3C3E75F90F1C5F42002E3A9A /* ShellScript */ = {
@@ -6998,7 +6970,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### UPDATE SandvoxInvalidLicenses.h FOR RELEASE BUILDS ... Notice we are asking only for license of version 2 (or higher)\n###\n\ncurl --proxy-anyauth --insecure --user \"xcode:home.cooking.32\" \"https://secure.karelia.com/private/invalidLicenses.h.php?app=1&v=2\" -o \"${SRCROOT}/../../Shared/Licensing/SandvoxInvalidLicenses.h\"\n\nexit 0\n";
+			shellScript = "#!/bin/bash\n\n###\n### UPDATE SandvoxInvalidLicenses.h FOR RELEASE BUILDS ... Notice we are asking only for license of version 2 (or higher)\n###\n\ncurl --proxy-anyauth --insecure --user \"xcode:home.cooking.32\" \"https://secure.karelia.com/private/invalidLicenses.h.php?app=1&v=2\" -o \"${SRCROOT}/../Code/Shared/Licensing/SandvoxInvalidLicenses.h\"\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
 		3C536FA713BC3058004222D5 /* Generate CFBundleShortVersionString */ = {
@@ -7013,7 +6985,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### UPDATE CFBundleShortVersionString in Info.plist of TARGET to be LATEST_V_TAG\n###\n\n# find git on local machine\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\n# if Release, fetch tags\nif [ \"${BUILD_STYLE}\" == \"Release\" ]\nthen\n\tpushd \"${SRCROOT}/..\" > /dev/null\n\t${GIT_PATH} fetch\n\tpopd > /dev/null\nfi\n\n# find latest v tag\npushd \"${SRCROOT}/..\" > /dev/null\nLATEST_V_TAG=$(${GIT_PATH} describe --tags --match v*)\npopd > /dev/null\n\nif [[ ${LATEST_V_TAG} == *-* ]]\nthen\n\t# extract everything up to -\n\tposition=`echo ${LATEST_V_TAG} | sed -n \"s/[-].*//p\" | wc -c`\n\tpositionminusone=$(($position - 1))\n\tLATEST_V_TAG=${LATEST_V_TAG:0:$positionminusone}\nfi\n\n# strip leading 'v' from LATEST_V_TAG to get GIT_TAG\nGIT_TAG=${LATEST_V_TAG:1}\n\n# check that we have something useable\nif [ \"${GIT_TAG}\" == \"\" ]\nthen\n\techo \"Could not find suitable v tag. Exiting...\"\n\texit 1\nfi\n\n# set CFBundleShortVersionString\necho \"Setting CFBundleShortVersionString to ${GIT_TAG}\"\nTARGET_PLIST_PATH=${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\n/usr/libexec/PlistBuddy -c \"Delete CFBundleShortVersionString\" ${TARGET_PLIST_PATH}\n/usr/libexec/PlistBuddy -c \"Add CFBundleShortVersionString string ${GIT_TAG}\" ${TARGET_PLIST_PATH}\n\n# read CFBundleShortVersionString\nTARGET_VERSION=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" ${TARGET_PLIST_PATH})\n\n# verify\nif [ \"${TARGET_VERSION:-0}\" == ${GIT_TAG} ]\nthen\n\techo \"Info.plist CFBundleShortVersionString verified.\"\n\texit 0\nfi\n\necho \"Could not verify CFBundleShortVersionString in Info.plist. Cannot continue.\"\n\nexit 1\n";
+			shellScript = "#!/bin/bash\n\n###\n### UPDATE CFBundleShortVersionString in Info.plist of TARGET to be LATEST_V_TAG\n###\n\n# find git on local machine\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\n# if Release, fetch tags\nif [ \"${BUILD_STYLE}\" == \"Release\" ]\nthen\n\tpushd \"${SRCROOT}/..\" > /dev/null\n\t${GIT_PATH} fetch\n\tpopd > /dev/null\nfi\n\n# find latest v tag\npushd \"${SRCROOT}/..\" > /dev/null\nLATEST_V_TAG=$(${GIT_PATH} describe --tags --match v*)\npopd > /dev/null\n\nif [[ ${LATEST_V_TAG} == *-* ]]\nthen\n\t# extract everything up to -\n\tposition=`echo ${LATEST_V_TAG} | sed -n \"s/[-].*//p\" | wc -c`\n\tpositionminusone=$(($position - 1))\n\tLATEST_V_TAG=${LATEST_V_TAG:0:$positionminusone}\nfi\n\n# strip leading 'v' from LATEST_V_TAG to get GIT_TAG\nGIT_TAG=${LATEST_V_TAG:1}\n\n# check that we have something useable\nif [ \"${GIT_TAG}\" == \"\" ]\nthen\n\techo \"Could not find suitable v tag. Exiting...\"\n\texit 1\nfi\n\n# set CFBundleShortVersionString\necho \"Setting CFBundleShortVersionString to ${GIT_TAG}\"\nTARGET_PLIST_PATH=${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\n/usr/libexec/PlistBuddy -c \"Delete CFBundleShortVersionString\" \"${TARGET_PLIST_PATH}\"\n/usr/libexec/PlistBuddy -c \"Add CFBundleShortVersionString string ${GIT_TAG}\" \"${TARGET_PLIST_PATH}\"\n\n# read CFBundleShortVersionString\nTARGET_VERSION=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"${TARGET_PLIST_PATH}\")\n\n# verify\nif [ \"${TARGET_VERSION:-0}\" == ${GIT_TAG} ]\nthen\n\techo \"Info.plist CFBundleShortVersionString verified.\"\n\texit 0\nfi\n\necho \"Could not verify CFBundleShortVersionString in Info.plist. Cannot continue.\"\n\nexit 1\n";
 			showEnvVarsInLog = 0;
 		};
 		3C7D7D5313B3B01D00B58137 /* Generate CFBundleVersion */ = {
@@ -7028,7 +7000,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "#!/bin/bash\n\n###\n### UPDATE CFBundleVersion in Info.plist of TARGET to be LATEST_B_TAG\n### (computing and tagging as LATEST_B_TAG, if necessary)\n###\n\n# find git on local machine\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\n# if Release, fetch tags\nif [ \"${BUILD_STYLE}\" == \"Release\" ]\nthen\n\tpushd \"${SRCROOT}/..\" > /dev/null\n\t${GIT_PATH} fetch\n\tpopd > /dev/null\nfi\n\n# find latest b tag\nLATEST_B_TAG=$(${GIT_PATH} describe --tags --match b*)\n\nif [[ ${LATEST_B_TAG} == *-* ]]\nthen\n\t# compute new tag\n\t# extract 5 character tag number starting at position 1\n\tTAG_NUM=${LATEST_B_TAG:1:5}\n\t\n\t# if Release, add 1\n\tif [ \"${BUILD_STYLE}\" == \"Release\" ]\n\tthen\n\t\tTAG_NUM=$(($TAG_NUM + 1))\n\tfi\n\n\t# create new LATEST_B_TAG\n\tLATEST_B_TAG=\"b${TAG_NUM}\"\n\t\n\t# if Release, tag SRCROOT with new LATEST_B_TAG\n\tif [ \"${BUILD_STYLE}\" == \"Release\" ]\n\tthen\n\t\tpushd \"${SRCROOT}/..\" > /dev/null\n\t\t${GIT_PATH} tag ${LATEST_B_TAG}\n\t\t${GIT_PATH} push --tags\n\t\tpopd > /dev/null\n\tfi\nfi\n\n# strip leading 'b' from LATEST_B_TAG to get GET_TAG\nGIT_TAG=${LATEST_B_TAG:1}\n\n# set CFBundleVersion\necho \"Setting CFBundleVersion to ${GIT_TAG}\"\nTARGET_PLIST_PATH=${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\n/usr/libexec/PlistBuddy -c \"Delete CFBundleVersion\" ${TARGET_PLIST_PATH}\n/usr/libexec/PlistBuddy -c \"Add CFBundleVersion string ${GIT_TAG}\" ${TARGET_PLIST_PATH}\n\n# read CFBundleVerison\nTARGET_BUILD_NUMBER=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" ${TARGET_PLIST_PATH})\n\n# verify\nif [ \"${TARGET_BUILD_NUMBER:-0}\" -eq ${GIT_TAG} ]\nthen\n\techo \"Info.plist CFBundleVersion verified.\"\n\texit 0\nfi\n\necho \"Could not verify CFBundleVersion in Info.plist. Cannot continue.\"\n\nexit 1\n";
+			shellScript = "#!/bin/bash\n\n###\n### UPDATE CFBundleVersion in Info.plist of TARGET to be LATEST_B_TAG\n### (computing and tagging as LATEST_B_TAG, if necessary)\n###\n\n# find git on local machine\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\n# if Release, fetch tags\nif [ \"${BUILD_STYLE}\" == \"Release\" ]\nthen\n\tpushd \"${SRCROOT}/..\" > /dev/null\n\t${GIT_PATH} fetch\n\tpopd > /dev/null\nfi\n\n# find latest b tag\nLATEST_B_TAG=$(${GIT_PATH} describe --tags --match b*)\n\nif [[ ${LATEST_B_TAG} == *-* ]]\nthen\n\t# compute new tag\n\t# extract 5 character tag number starting at position 1\n\tTAG_NUM=${LATEST_B_TAG:1:5}\n\t\n\t# if Release, add 1\n\tif [ \"${BUILD_STYLE}\" == \"Release\" ]\n\tthen\n\t\tTAG_NUM=$(($TAG_NUM + 1))\n\tfi\n\n\t# create new LATEST_B_TAG\n\tLATEST_B_TAG=\"b${TAG_NUM}\"\n\t\n\t# if Release, tag SRCROOT with new LATEST_B_TAG\n\tif [ \"${BUILD_STYLE}\" == \"Release\" ]\n\tthen\n\t\tpushd \"${SRCROOT}/..\" > /dev/null\n\t\t${GIT_PATH} tag ${LATEST_B_TAG}\n\t\t${GIT_PATH} push --tags\n\t\tpopd > /dev/null\n\tfi\nfi\n\n# strip leading 'b' from LATEST_B_TAG to get GET_TAG\nGIT_TAG=${LATEST_B_TAG:1}\n\n# set CFBundleVersion\necho \"Setting CFBundleVersion to ${GIT_TAG}\"\nTARGET_PLIST_PATH=${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\n/usr/libexec/PlistBuddy -c \"Delete CFBundleVersion\" \"${TARGET_PLIST_PATH}\"\n/usr/libexec/PlistBuddy -c \"Add CFBundleVersion string ${GIT_TAG}\" \"${TARGET_PLIST_PATH}\"\n\n# read CFBundleVerison\nTARGET_BUILD_NUMBER=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${TARGET_PLIST_PATH}\")\n\n# verify\nif [ \"${TARGET_BUILD_NUMBER:-0}\" -eq ${GIT_TAG} ]\nthen\n\techo \"Info.plist CFBundleVersion verified.\"\n\texit 0\nfi\n\necho \"Could not verify CFBundleVersion in Info.plist. Cannot continue.\"\n\nexit 1\n";
 			showEnvVarsInLog = 0;
 		};
 		3C7D7D5713B3B04300B58137 /* Script - Copy CFBundleVersion to PlugIns */ = {
@@ -7043,7 +7015,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "\n# read CFBundleVersion\nSANDVOX_PLIST_PATH=${TARGET_BUILD_DIR}/Sandvox.app/Contents/Info.plist\nSANDVOX_BUILD_NUMBER=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" ${SANDVOX_PLIST_PATH})\nSANDVOX_VERSION=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" ${SANDVOX_PLIST_PATH})\n\n# update each plug-in's CFBundleVersion and CFBundleShortVersionString\npushd ${TARGET_BUILD_DIR}\nfor i in *.svxElement\ndo\n\tPLUGIN_PLIST_PATH=${PWD}/${i}/Contents/Info.plist\n\n\t/usr/libexec/PlistBuddy -c \"Delete CFBundleVersion\" ${PLUGIN_PLIST_PATH}\n\t/usr/libexec/PlistBuddy -c \"Add CFBundleVersion string ${SANDVOX_BUILD_NUMBER}\" ${PLUGIN_PLIST_PATH}\n\n\t/usr/libexec/PlistBuddy -c \"Delete CFBundleShortVersionString\" ${PLUGIN_PLIST_PATH}\n\t/usr/libexec/PlistBuddy -c \"Add CFBundleShortVersionString string ${SANDVOX_VERSION}\" ${PLUGIN_PLIST_PATH}\ndone\npopd\n\n";
+			shellScript = "\n# read CFBundleVersion\nSANDVOX_PLIST_PATH=${TARGET_BUILD_DIR}/Sandvox.app/Contents/Info.plist\nSANDVOX_BUILD_NUMBER=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${SANDVOX_PLIST_PATH}\")\nSANDVOX_VERSION=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"${SANDVOX_PLIST_PATH}\")\n\n# update each plug-in's CFBundleVersion and CFBundleShortVersionString\npushd \"${TARGET_BUILD_DIR}\"\nfor i in *.svxElement\ndo\n\tPLUGIN_PLIST_PATH=${PWD}/${i}/Contents/Info.plist\n\n\t/usr/libexec/PlistBuddy -c \"Delete CFBundleVersion\" \"${PLUGIN_PLIST_PATH}\"\n\t/usr/libexec/PlistBuddy -c \"Add CFBundleVersion string ${SANDVOX_BUILD_NUMBER}\" \"${PLUGIN_PLIST_PATH}\"\n\n\t/usr/libexec/PlistBuddy -c \"Delete CFBundleShortVersionString\" \"${PLUGIN_PLIST_PATH}\"\n\t/usr/libexec/PlistBuddy -c \"Add CFBundleShortVersionString string ${SANDVOX_VERSION}\" \"${PLUGIN_PLIST_PATH}\"\ndone\npopd\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C88838C0BFCB49C00921FA4 /* Build Disk Image */ = {
@@ -7058,7 +7030,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "#!/bin/bash\n\nexport APPNAME=\"Sandvox\"\n\n${SRCROOT}/../Code/Shared/tools/build_package\n\n### this script should NOT have 'Run script only when installing' checked\n";
+			shellScript = "#!/bin/bash\n\nexport APPNAME=\"Sandvox\"\n\n\"${SRCROOT}/../Code/Shared/tools/build_package\"\n\n### this script should NOT have 'Run script only when installing' checked\n";
 			showEnvVarsInLog = 0;
 		};
 		3C979D8F13BA506000E7CF7C /* ShellScript */ = {
@@ -7087,8 +7059,8 @@
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "echo \"Generating Localizable.strings ...\"\ncd ${SRCROOT}\n\n# KTAppDelegate.h contains NSLocalizedString calls\n# so we need to include .h files in genstring's purview\n# The weird code on the end searches the Shared repo\n\ngenstrings -littleEndian -q -u -o en.lproj *.[hm]\n\ngenstrings -littleEndian -q -u -o ../Code/Shared/en.lproj -s SVSharedLocalizedString \\\n\t${SRCROOT}/../Code/Shared/AppKit/*.[hm]\t\t\\\n\t${SRCROOT}/../Code/Shared/Core\\ Data/*.[hm]\t\\\n\t${SRCROOT}/../Code/Shared/Core\\ Image/*.[hm]\\\n\t${SRCROOT}/../Code/Shared/Foundation/*.[hm]\t\\\n\t${SRCROOT}/../Code/Shared/Imported/*.[hm]\t\\\n\t${SRCROOT}/../Code/Shared/QTKit/*.[hm]\t\t\\\n\t${SRCROOT}/../Code/Shared/WebKit/*.[hm]\n\nmv ../Code/Shared/en.lproj/Localizable.strings ../Code/Shared/en.lproj/Shared.strings\n\n";
+			shellPath = /bin/bash;
+			shellScript = "echo \"Generating Localizable.strings ...\"\npushd \"${SRCROOT}\"\n\n# KTAppDelegate.h contains NSLocalizedString calls\n# so we need to include .h files in genstring's purview\n# The weird code on the end searches the Shared repo\n\ngenstrings -littleEndian -q -u -o en.lproj *.[hm]\n\ngenstrings -littleEndian -q -u -o ../Code/Shared/en.lproj -s SVSharedLocalizedString \\\n\t\"${SRCROOT}\"/../Code/Shared/AppKit/*.[hm]\t\t\\\n\t\"${SRCROOT}\"/../Code/Shared/Core\\ Data/*.[hm]\t\\\n\t\"${SRCROOT}\"/../Code/Shared/Core\\ Image/*.[hm]\t\\\n\t\"${SRCROOT}\"/../Code/Shared/Foundation/*.[hm]\t\\\n\t\"${SRCROOT}\"/../Code/Shared/Imported/*.[hm]\t\\\n\t\"${SRCROOT}\"/../Code/Shared/QTKit/*.[hm]\t\t\\\n\t\"${SRCROOT}\"/../Code/Shared/WebKit/*.[hm]\n\nmv ../Code/Shared/en.lproj/Localizable.strings ../Code/Shared/en.lproj/Shared.strings\n\npopd\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66B00BFA83D6007A4871 /* Script - Remove Framework Headers */ = {
@@ -7102,8 +7074,8 @@
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "\necho \"Removing Private Headers from frameworks ...\"\n\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/Versions/A/PrivateHeaders\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/Versions/A/PrivateHeaders\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/Versions/A/PrivateHeaders\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/Versions/A/PrivateHeaders\n\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/PrivateHeaders\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/PrivateHeaders\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/PrivateHeaders\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/PrivateHeaders\n\n\necho \"Removing Headers from frameworks ...\"\n\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/Versions/A/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/BWToolkitFramework.framework/Versions/A/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Versions/A/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/Versions/A/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/Versions/A/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/Versions/A/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Growl.framework/Versions/A/Headers\n\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/BWToolkitFramework.framework/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/Headers\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Growl.framework/Headers\n\n\necho TARGET_BUILD_DIR ${TARGET_BUILD_DIR}\n";
+			shellPath = /bin/bash;
+			shellScript = "\necho \"Removing Private Headers from frameworks ...\"\n\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/Versions/A/PrivateHeaders\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/Versions/A/PrivateHeaders\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/Versions/A/PrivateHeaders\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/Versions/A/PrivateHeaders\"\n\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/PrivateHeaders\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/PrivateHeaders\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/PrivateHeaders\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/PrivateHeaders\"\n\n\necho \"Removing Headers from frameworks ...\"\n\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/Versions/A/Headers\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/BWToolkitFramework.framework/Versions/A/Headers\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Versions/A/Headers\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/Versions/A/Headers\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/Versions/A/Headers\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/Versions/A/Headers\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Growl.framework/Versions/A/Headers\"\n\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/Headers\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/BWToolkitFramework.framework/Headers\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Headers\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/Headers\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/Headers\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/Headers\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Growl.framework/Headers\"\n\n\necho TARGET_BUILD_DIR ${TARGET_BUILD_DIR}\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66B20BFA8423007A4871 /* Script - Remove PrivateHeaders */ = {
@@ -7117,8 +7089,8 @@
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "\necho \"###\"\necho \"Removing PrivateHeaders from ${TARGET_BUILD_DIR}/Sandvox.app/Contents/PrivateHeaders/ ...\"\n\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/PrivateHeaders\n\necho \"Removing ContactPassword.h ...\"\necho \"###\"\n\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Headers/ContactPassword.h\n\n";
+			shellPath = /bin/bash;
+			shellScript = "\necho \"###\"\necho \"Removing PrivateHeaders from ${TARGET_BUILD_DIR}/Sandvox.app/Contents/PrivateHeaders/ ...\"\n\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/PrivateHeaders\"\n\necho \"Removing ContactPassword.h ...\"\necho \"###\"\n\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Headers/ContactPassword.h\"\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66C60BFA940C007A4871 /* Script - Add PlugIns */ = {
@@ -7133,8 +7105,8 @@
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "\nPBXCP=\"${SRCROOT}/../Code/Shared/Tools/pbxcp\"\n\nBUILDSETTINGS_DIR=/tmp/build-sandvox\nBUILDSETTINGS_PATH=${BUILDSETTINGS_DIR}/BuildSettings.h\n\nPLUGINS_FOLDER_PATH=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/PlugIns\"\nmkdir -p ${PLUGINS_FOLDER_PATH}\n\npushd ${TARGET_BUILD_DIR}\n\nfor i in *.svxElement\ndo\n\n\tif [ -e \"${PWD}/${i}/Contents/Resources/BUNDLED\" ];\n\tthen\n\n\t\techo \"BUNDLED: PBXCp \\\"$i\\\" ${PLUGINS_FOLDER_PATH}\"\n\n\t\t${PBXCP} \\\n\t\t\t-exclude .DS_Store -exclude CVS -exclude .svn -exclude BUNDLED -resolve-src-symlinks \\\n\t\t\t\"${PWD}/${i}\" \"${PLUGINS_FOLDER_PATH}\"\n\telse\n\t\techo \"-------------- Not including $i\"\n\tfi\n\ndone\n\npopd\n\n";
+			shellPath = /bin/bash;
+			shellScript = "\nPBXCP=${SRCROOT}/../Code/Shared/Tools/pbxcp\n\nBUILDSETTINGS_DIR=/tmp/build-sandvox\nBUILDSETTINGS_PATH=${BUILDSETTINGS_DIR}/BuildSettings.h\n\nPLUGINS_FOLDER_PATH=${TARGET_BUILD_DIR}/Sandvox.app/Contents/PlugIns\nmkdir -p \"${PLUGINS_FOLDER_PATH}\"\n\npushd \"${TARGET_BUILD_DIR}\"\n\nfor i in *.svxElement\ndo\n\n\tif [ -e \"${PWD}/${i}/Contents/Resources/BUNDLED\" ];\n\tthen\n\n\t\techo \"BUNDLED: PBXCp \\\"$i\\\" ${PLUGINS_FOLDER_PATH}\"\n\n\t\t\"${PBXCP}\" \\\n\t\t\t-exclude .DS_Store -exclude CVS -exclude .svn -exclude BUNDLED -resolve-src-symlinks \\\n\t\t\t\"${PWD}/${i}\" \"${PLUGINS_FOLDER_PATH}\"\n\telse\n\t\techo \"-------------- Not including $i\"\n\tfi\n\ndone\n\npopd\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66CC0BFA94BA007A4871 /* Script - Add Designs */ = {
@@ -7148,8 +7120,8 @@
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "\nPBXCP=\"${SRCROOT}/../Code/Shared/Tools/pbxcp\"\n\nDESIGNS_FOLDER_PATH=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Designs\"\nmkdir -p ${DESIGNS_FOLDER_PATH}\n\npushd ../../Designs\n\nfor i in *\ndo\n    if [ -e \"${i}/BUNDLED\" ];    # BUNDLE EVERYTHING IN THE APP\n    then\n        # put into application\n        echo \"BUNDLED DESIGN: PBXCp \\\"$i\\\" ${DESIGNS_FOLDER_PATH}\"\n\n        ${PBXCP} \\\n            -exclude .localized -exclude Sources -exclude sources -exclude Testing_Files -exclude .DS_Store -exclude CVS -exclude .svn -exclude BUNDLED -exclude HIDDEN -exclude BONUS -exclude .psd -exclude sources -resolve-src-symlinks \\\n            \"${PWD}/${i}\" \"${DESIGNS_FOLDER_PATH}\"\n\n      # TODO: put correct SANDVOX_VERSION and CFBundleVersion into Info.plist for each copied design\n\n    else\n        echo \"--------------  Not including $i\"\n    fi\ndone\n\npopd\n";
+			shellPath = /bin/bash;
+			shellScript = "\nPBXCP=${SRCROOT}/../Code/Shared/Tools/pbxcp\n\nDESIGNS_FOLDER_PATH=${TARGET_BUILD_DIR}/Sandvox.app/Contents/Designs\nmkdir -p \"${DESIGNS_FOLDER_PATH}\"\n\npushd ../../Designs\n\nfor i in *\ndo\n    if [ -e \"${i}/BUNDLED\" ];    # BUNDLE EVERYTHING IN THE APP\n    then\n        # put into application\n        echo \"BUNDLED DESIGN: PBXCp \\\"$i\\\" ${DESIGNS_FOLDER_PATH}\"\n\n        \"${PBXCP}\" \\\n            -exclude .localized -exclude Sources -exclude sources -exclude Testing_Files -exclude .DS_Store -exclude CVS -exclude .svn -exclude BUNDLED -exclude HIDDEN -exclude BONUS -exclude .psd -exclude sources -resolve-src-symlinks \\\n            \"${PWD}/${i}\" \"${DESIGNS_FOLDER_PATH}\"\n\n      # TODO: put correct SANDVOX_VERSION and CFBundleVersion into Info.plist for each copied design\n\n    else\n        echo \"--------------  Not including $i\"\n    fi\ndone\n\npopd\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66E60BFA95B9007A4871 /* Script - Add png2ico */ = {
@@ -7192,8 +7164,8 @@
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\nexport APPNAME=\"Sandvox\"\n\n${SRCROOT}/../Code/Shared/tools/deploy_build\n\n### this script should NOT have 'Run script only when installing' checked\n";
+			shellPath = /bin/bash;
+			shellScript = "#!/bin/bash\n\nexport APPNAME=\"Sandvox\"\n\n\"${SRCROOT}/../Code/Shared/tools/deploy_build\"\n\n### this script should NOT have 'Run script only when installing' checked\n";
 			showEnvVarsInLog = 0;
 		};
 		3CC092BA134BC490007E2390 /* Script - Code Sign .app */ = {
@@ -7207,8 +7179,8 @@
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\n### sign complete build\n\nPATHTOSIGN=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/\"\n\n# -s <identity> signs path\n# -f means force to re-sign even if already signed\n# -vv means verbose\n\n# sign .app\ncodesign -s \"3rd Party Mac Developer Application: Karelia Software\" -fvv \"${PATHTOSIGN}\"\n\n# display info about app\ncodesign -d \"${PATHTOSIGN}\"\n\n";
+			shellPath = /bin/bash;
+			shellScript = "\n### sign complete build\n\nPATHTOSIGN=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/\n\n# -s <identity> signs path\n# -f means force to re-sign even if already signed\n# -vv means verbose\n\n# sign .app\ncodesign -s \"3rd Party Mac Developer Application: Karelia Software\" -fvv \"${PATHTOSIGN}\"\n\n# display info about app\ncodesign -d \"${PATHTOSIGN}\"\n\n";
 			showEnvVarsInLog = 0;
 		};
 		CE9D3ED20DAAB8450025717A /* Script - Remove Unsupported Languages */ = {
@@ -7222,8 +7194,8 @@
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "echo \"###\"\necho \"Removing Unsupported languages from ${TARGET_BUILD_DIR}/Sandvox.app/...\"\n\n\n# COMMENT ONE OF THESE OUT DEPENDING ON WHAT KIND OF BUILD THIS IS....  USUALLY WE MAKE SPECIAL BUILDS FOR THE LOCALIZERS.\n\n\n# Localization builds only -- Let the languages we are working on localizing through.\n\n#find ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.|/fr\\.|/de\\.|/es\\.|/pt_BR\\.' | xargs rm -rf\n\n\n\n# Release builds -- listed here are the languages we are allowed to keep.\n\nfind ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.lproj' | grep -vE '/en\\.|/fr\\.|/de\\.|/pt_BR\\.' | xargs rm -rf\n";
+			shellPath = /bin/bash;
+			shellScript = "echo \"###\"\necho \"Removing Unsupported languages from ${TARGET_BUILD_DIR}/Sandvox.app/...\"\n\n\n# COMMENT ONE OF THESE OUT DEPENDING ON WHAT KIND OF BUILD THIS IS....  USUALLY WE MAKE SPECIAL BUILDS FOR THE LOCALIZERS.\n\n\n# Localization builds only -- Let the languages we are working on localizing through.\n\n#find \"${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH}\" -name '*.lproj' | grep -vE '/en\\.|/fr\\.|/de\\.|/es\\.|/pt_BR\\.' | xargs rm -rf\n\n\n\n# Release builds -- listed here are the languages we are allowed to keep.\n\nfind \"${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH}\" -name '*.lproj' | grep -vE '/en\\.|/fr\\.|/de\\.|/pt_BR\\.' | xargs rm -rf\n";
 			showEnvVarsInLog = 0;
 		};
 		CEC65E5D0E1AFD170065C3D0 /* Copy Sparkle - Strip Localizations */ = {
@@ -7252,8 +7224,8 @@
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\necho \"### Removing dumb resources\"\n\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Versions/A/Resources/en.lproj/DropletLauncher.nib\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Versions/A/Resources/DropletIcon.icns\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Versions/A/Resources/DropletLauncher\nrm -rf ${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Versions/A/Resources/fr.lproj/DropletLauncher.nib\n\necho TARGET_BUILD_DIR ${TARGET_BUILD_DIR}\n";
+			shellPath = /bin/bash;
+			shellScript = "\necho \"### Removing dumb resources\"\n\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Versions/A/Resources/en.lproj/DropletLauncher.nib\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Versions/A/Resources/DropletIcon.icns\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Versions/A/Resources/DropletLauncher\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Versions/A/Resources/fr.lproj/DropletLauncher.nib\"\n\necho TARGET_BUILD_DIR ${TARGET_BUILD_DIR}\n";
 		};
 		CEFD3EFC12E9FA0100D3A6CD /* Script - Internationalize XIBs */ = {
 			isa = PBXShellScriptBuildPhase;

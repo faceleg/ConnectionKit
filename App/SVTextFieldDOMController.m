@@ -89,11 +89,10 @@
     return result;
 }*/
 
-- (DOMElement *)selectableDOMElement;
+// TODO: This logic is the same as aux text
+- (BOOL)isSelectable;
 {
-    return ([self representedObject] && [self enclosingGraphicDOMController] ?
-            [self HTMLElement] :
-            nil);
+    return ([self representedObject] && [self enclosingGraphicDOMController]);
 }
 
 #pragma mark Updating

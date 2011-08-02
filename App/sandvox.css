@@ -26,11 +26,11 @@ div.text-navigation div { display:inline; margin:0px 0.5em; }
 
 .narrow.left {   /* Some designs won't respect without !important */
     float:left!important;
-    clear:left;
+    clear:left!important;
 }
 .narrow.right {
     float:right!important;
-    clear:right;
+    clear:right!important;
 }
 
 .wide.left .graphic, img.wide.left { margin-left:0px; margin-right:auto; }
