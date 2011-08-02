@@ -86,15 +86,14 @@
     return [[super plugInKeys] arrayByAddingObjectsFromArray:plugInKeys];
 }
 
-- (NSString *)initialContinueReadingLinkFormat;
+- (NSString *)continueReadingLinkFromPage:(id <SVPage>)page;
 {
-    id<SVPlugInContext> context = [self currentContext]; 
-	id<SVPage,PagePrivate> iteratedPage = [context objectForCurrentTemplateIteration];
+	// attempt to set container's title to localized string
 	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-	NSString *language = [iteratedPage language];
+	NSString *language = [page language];
 	NSString *result = [bundle localizedStringForString:@"Continue reading @@" language:language fallback:
-					   SVLocalizedString(@"Continue reading @@", "Link to read a full article. @@ is replaced with the page title")];
-
+						SVLocalizedString(@"Continue reading @@", "Link to read a full article. @@ is replaced with the page title")];
+	
 	return result;
 }
 
@@ -108,12 +107,23 @@
 	}
 	if ([key isEqualToString:@"continueReadingLinkFormat"] && nil == serializedValue)
 	{
-		serializedValue = [self initialContinueReadingLinkFormat];
+		serializedValue = [self continueReadingLinkFromPage:self.indexedCollection];
 	}
 	
 	[super setSerializedValue:serializedValue forKey:key];
 }
 
+- (void)pageDidChange:(id <SVPage>)page
+{
+    BOOL isNew = (nil == self.indexedCollection);
+    
+    [super pageDidChange:page]; // sets indexedCollection
+    
+    if ( isNew && self.indexedCollection )
+    {
+        self.continueReadingLinkFormat = [self continueReadingLinkFromPage:page];
+    }
+}
 
 - (void)awakeFromNew;
 {
@@ -122,7 +132,6 @@
     self.enableMaxItems = YES;
     self.maxItems = 10;
 	self.showContinueReadingLink = YES;
-	self.continueReadingLinkFormat = [self initialContinueReadingLinkFormat];
 	
 	NSNumber *isPagelet = [self valueForKeyPath:@"container.isPagelet"];	// Private. If creating in sidebar, make it more minimal
 	if (isPagelet && [isPagelet boolValue])
