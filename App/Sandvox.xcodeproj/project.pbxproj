@@ -7059,8 +7059,8 @@
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "echo \"Generating Localizable.strings ...\"\ncd \"${SRCROOT}\"\n\n# KTAppDelegate.h contains NSLocalizedString calls\n# so we need to include .h files in genstring's purview\n# The weird code on the end searches the Shared repo\n\ngenstrings -littleEndian -q -u -o en.lproj *.[hm]\n\ngenstrings -littleEndian -q -u -o ../Code/Shared/en.lproj -s SVSharedLocalizedString \\\n\t\"${SRCROOT}/../Code/Shared/AppKit/*.[hm]\"\t\t\\\n\t\"${SRCROOT}/../Code/Shared/Core\\ Data/*.[hm]\"\t\\\n\t\"${SRCROOT}/../Code/Shared/Core\\ Image/*.[hm]\"\t\\\n\t\"${SRCROOT}/../Code/Shared/Foundation/*.[hm]\"\t\\\n\t\"${SRCROOT}/../Code/Shared/Imported/*.[hm]\"\t\\\n\t\"${SRCROOT}/../Code/Shared/QTKit/*.[hm]\"\t\t\\\n\t\"${SRCROOT}/../Code/Shared/WebKit/*.[hm]\"\n\nmv ../Code/Shared/en.lproj/Localizable.strings ../Code/Shared/en.lproj/Shared.strings\n\n";
+			shellPath = /bin/bash;
+			shellScript = "echo \"Generating Localizable.strings ...\"\npushd \"${SRCROOT}\"\n\n# KTAppDelegate.h contains NSLocalizedString calls\n# so we need to include .h files in genstring's purview\n# The weird code on the end searches the Shared repo\n\ngenstrings -littleEndian -q -u -o en.lproj *.[hm]\n\ngenstrings -littleEndian -q -u -o ../Code/Shared/en.lproj -s SVSharedLocalizedString \\\n\t\"${SRCROOT}\"/../Code/Shared/AppKit/*.[hm]\t\t\\\n\t\"${SRCROOT}\"/../Code/Shared/Core\\ Data/*.[hm]\t\\\n\t\"${SRCROOT}\"/../Code/Shared/Core\\ Image/*.[hm]\t\\\n\t\"${SRCROOT}\"/../Code/Shared/Foundation/*.[hm]\t\\\n\t\"${SRCROOT}\"/../Code/Shared/Imported/*.[hm]\t\\\n\t\"${SRCROOT}\"/../Code/Shared/QTKit/*.[hm]\t\t\\\n\t\"${SRCROOT}\"/../Code/Shared/WebKit/*.[hm]\n\nmv ../Code/Shared/en.lproj/Localizable.strings ../Code/Shared/en.lproj/Shared.strings\n\npopd\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66B00BFA83D6007A4871 /* Script - Remove Framework Headers */ = {
