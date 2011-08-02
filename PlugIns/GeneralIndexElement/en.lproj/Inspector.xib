@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="8"/>
+			<integer value="320"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -117,7 +117,7 @@
 						<object class="NSTextFieldCell" key="NSCell" id="403202785">
 							<int key="NSCellFlags">343014977</int>
 							<int key="NSCellFlags2">272761856</int>
-							<string key="NSContents">Continue reading @@</string>
+							<string key="NSContents"/>
 							<reference key="NSSupport" ref="26"/>
 							<reference key="NSControlView" ref="781873680"/>
 							<bool key="NSDrawsBackground">YES</bool>
@@ -1516,6 +1516,22 @@
 					</object>
 					<int key="connectionID">331</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.continueReadingLinkFormat</string>
+						<reference key="source" ref="781873680"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="781873680"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.continueReadingLinkFormat</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.continueReadingLinkFormat</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">333</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -2257,7 +2273,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">331</int>
+			<int key="maxID">333</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">

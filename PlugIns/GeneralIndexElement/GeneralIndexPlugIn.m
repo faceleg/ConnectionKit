@@ -89,6 +89,8 @@
 
 - (NSString *)initialContinueReadingLinkFormat;
 {
+    id<SVPlugInContext> context = [self currentContext]; 
+	id<SVPage,PagePrivate> iteratedPage = [context objectForCurrentTemplateIteration];
 	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
 	NSString *language = [iteratedPage language];
 	NSString *result = [bundle localizedStringForString:@"Continue reading @@" language:language fallback:
@@ -103,7 +105,7 @@
 	{
 		serializedValue = [NSNumber numberWithBool:YES];
 	}
-	if ([key isEqualToString:@"continueReadingLinkFormat"] && (nil == serializedValue || [serializedValue isEqualToString:@""]))
+	if ([key isEqualToString:@"continueReadingLinkFormat"] && nil == serializedValue)
 	{
 		serializedValue = [self initialContinueReadingLinkFormat];
 	}
@@ -487,6 +489,7 @@
 @synthesize showComments	= _showComments;
 @synthesize showArticleInTables	= _showArticleInTables;
 @synthesize showContinueReadingLink	= _showContinueReadingLink;
+@synthesize continueReadingLinkFormat	= _continueReadingLinkFormat;
 @synthesize showTimestamps	= _showTimestamps;
 @synthesize timestampType = _timestampType;
 @synthesize maxItemLength	= _maxItemLength;
