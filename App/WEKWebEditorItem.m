@@ -815,7 +815,8 @@
     
     
     // Check height should be adjusted, otherwise auto height can get accidentally locked in
-    if (handle != kSVGraphicMiddleLeftHandle && handle != kSVGraphicMiddleRightHandle)
+    if ((handle != kSVGraphicMiddleLeftHandle && handle != kSVGraphicMiddleRightHandle) ||
+        ([self aspectRatio].width > 0 && [self aspectRatio].height > 0))
     {
         NSNumber *height = (size.height > 0 ? [NSNumber numberWithInt:size.height] : nil);
         info = [self infoForBinding:@"height"];
