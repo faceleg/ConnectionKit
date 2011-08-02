@@ -1281,6 +1281,105 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     [wrapper release];
 }
 
+#pragma mark Reduce File Size
+
+- (IBAction)reduceFileSize:(id)sender;
+{
+    // Can only do if actually have a file URL. Validation should catch by here!
+    if (![[self fileURL] isFileURL]) 
+    {
+        NSBeep();
+        return;
+    }
+    
+    
+    NSString *docPath = [[self fileURL] path];
+    
+    NSError *error;
+    NSArray *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:docPath error:&error];
+    
+    if (!files)
+    {
+        return [self presentError:error
+                   modalForWindow:[self windowForSheet]
+                         delegate:nil
+               didPresentSelector:NULL
+                      contextInfo:NULL];
+    }
+    
+    NSMutableArray *unusedFiles = [[NSMutableArray alloc] init];
+    
+    for (NSString *aFilename in files)
+    {
+        // Delete files that are in the package, but not marked for use
+        if ([self isFilenameAvailable:aFilename checkPackageContents:NO])
+        {
+            [unusedFiles addObject:aFilename];
+        }
+    }
+    
+    if ([unusedFiles count])
+    {
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert setMessageText:NSLocalizedString(@"This document's file size will be reduced by moving unused media to the Trash.", "alert message")];
+        
+        if ([unusedFiles count] == 1)
+        {
+            [alert setInformativeText:NSLocalizedString(@"1 file was found to remove.", @"alert message")];
+        }
+        else
+        {
+            [alert setInformativeText:[NSString stringWithFormat:NSLocalizedString(@"%u files were found to remove.", @"alert message"), [unusedFiles count]]];
+        }
+        
+        [alert addButtonWithTitle:NSLocalizedString(@"Reduce", "button")];
+        [alert addButtonWithTitle:NSLocalizedString(@"Cancel", "button")];
+        
+        [alert beginSheetModalForWindow:[self windowForSheet]
+                          modalDelegate:self
+                         didEndSelector:@selector(reduceFileSizeAlertDidEnd:returnCode:contextInfo:)
+                            contextInfo:unusedFiles];
+        
+        [alert release];
+    }
+    else
+    {
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert setMessageText:NSLocalizedString(@"No way to reduce this document's file size was found.", "alert message")];
+        
+        [alert beginSheetModalForWindow:[self windowForSheet] modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
+        
+        [alert release];
+        [unusedFiles release];
+    }
+}
+
+- (void)reduceFileSizeAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+{
+    NSArray *unusedFiles = contextInfo;
+    
+    if (returnCode == NSAlertFirstButtonReturn)
+    {
+        NSString *docPath = [[self fileURL] path];
+        
+        [KSWORKSPACE performFileOperation:NSWorkspaceRecycleOperation
+                                   source:docPath
+                              destination:nil
+                                    files:unusedFiles
+                                      tag:NULL];
+        
+        
+        // Update doc modification date so doesn't complain on next save
+        NSDate *date = [[[NSFileManager defaultManager] attributesOfItemAtPath:docPath error:NULL] fileModificationDate];
+        if (date)
+        {
+            [self setFileModificationDate:date];
+        }
+    }
+    
+    [unusedFiles release];
+}
+
 @end
 
 

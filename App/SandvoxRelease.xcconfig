@@ -19,7 +19,7 @@ DEBUG_INFORMATION_FORMAT = dwarf-with-dsym
 GCC_GENERATE_DEBUGGING_SYMBOLS = YES
 ZERO_LINK = NO
 
-FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../Shared/ThirdParty/BWToolkit" "$(SRCROOT)/../../Shared/ThirdParty/Sparkle" "$(SRCROOT)/../../Shared/ThirdParty/JSTalk" "$(SRCROOT)/../../Shared/ThirdParty/Growl" "$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks"
+FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../Code/Shared/ThirdParty/BWToolkit" "$(SRCROOT)/../Code/Shared/ThirdParty/Sparkle" "$(SRCROOT)/../Code/Shared/ThirdParty/JSTalk" "$(SRCROOT)/../Code/Shared/ThirdParty/Growl" "$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks"
 
 // we strip the installed product
 STRIP_INSTALLED_PRODUCT = YES
