@@ -187,8 +187,11 @@
 
 - (void)delete;
 {
-    SVTitleBox *text = [self representedObject];
-    [text setHidden:NSBOOL(YES)];
+    id object = [self representedObject];
+    if ([object respondsToSelector:@selector(setHidden:)])
+    {
+        [object setValue:NSBOOL(YES) forKey:@"hidden"];
+    }
 }
 
 - (KSSelectionBorder *)newSelectionBorder;
