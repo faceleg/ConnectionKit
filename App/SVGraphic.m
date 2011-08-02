@@ -366,6 +366,17 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (NSNumber *)constrainedProportionsRatio; { return nil; }
 
+- (NSSize)aspectRatio;
+{
+    NSNumber *proportions = [self constrainedProportionsRatio];
+    if (proportions)
+    {
+        return NSMakeSize([[self constrainedProportionsRatio] floatValue], 1.0f);
+    }
+    return NSZeroSize;
+}
++ (NSSet *)keyPathsForValuesAffectingAspectRatio; { return [NSSet setWithObject:@"constrainedProportionsRatio"]; }
+
 - (void)makeOriginalSize;
 {
     [self setWidth:[NSNumber numberWithInt:200]];

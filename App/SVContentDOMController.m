@@ -86,21 +86,26 @@
 
 - (SVDOMController *)newDOMControllerWithNode:(DOMNode *)node;
 {
-    id <SVComponent> container = [self component];
-    if (container)
+    id <SVComponent> component = [self component];
+    if (component)
     {
         NSString *elementID = [[self attributesAsDictionary] objectForKey:@"id"];
         if (elementID)
         {
-            SVDOMController *result = [container newDOMControllerWithElementIdName:elementID ancestorNode:node];
-            if (![result isSelectable]) [result setSelectable:[container conformsToProtocol:@protocol(SVGraphic)]];
+            SVDOMController *result = [component newDOMControllerWithElementIdName:elementID ancestorNode:node];
+            if (![result isSelectable]) [result setSelectable:[component conformsToProtocol:@protocol(SVGraphic)]];
             
             if ([self isHorizontallyResizable] || [self isVerticallyResizable])
             {
                 [result setHorizontallyResizable:[self isHorizontallyResizable]];
                 [result setVerticallyResizable:[self isVerticallyResizable]];
-                [result bind:NSWidthBinding toObject:container withKeyPath:@"width" options:nil];
-                [result bind:@"height" toObject:container withKeyPath:@"height" options:nil];
+                [result bind:NSWidthBinding toObject:component withKeyPath:@"width" options:nil];
+                [result bind:@"height" toObject:component withKeyPath:@"height" options:nil];
+                
+                if ([component respondsToSelector:@selector(aspectRatio)])
+                {
+                    [result bind:@"aspectRatio" toObject:component withKeyPath:@"aspectRatio" options:nil];
+                }
             }
             
             return result;

@@ -194,14 +194,6 @@
     return [[self enclosingGraphicDOMController] resizeToSize:size byMovingHandle:handle];
 }
 
-- (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;
-{
-    // Body lives inside a graphic DOM controller, so use the size limit from that instead
-    return [(SVDOMController *)[self parentWebEditorItem] constrainSize:size
-                                                                 handle:handle
-                                                              snapToFit:snapToFit];
-}
-
 - (NSSize)minSize;
 {
     NSSize result = [super minSize];
