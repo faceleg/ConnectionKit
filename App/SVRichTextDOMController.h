@@ -16,6 +16,8 @@
 @interface SVRichTextDOMController : SVTextDOMController 
 {
   @private
+    SVRichText  *_storage;
+    
     BOOL    _importsGraphics;
     
     BOOL    _isUpdating;
@@ -25,6 +27,14 @@
     DOMHTMLAnchorElement    *_selectedLink;
 }
 
+
+#pragma mark Lifecycle
+// The text is set as .representedObject but you can change after
+- (id)initWithIdName:(NSString *)elementID ancestorNode:(DOMNode *)node textStorage:(SVRichText *)text;
+
+
+#pragma mark Properties
+@property(nonatomic, retain, readonly) SVRichText *richTextStorage;
 @property(nonatomic) BOOL importsGraphics;
 
 

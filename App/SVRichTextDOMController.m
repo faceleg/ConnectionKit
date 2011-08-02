@@ -61,6 +61,17 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 
 #pragma mark Init & Dealloc
 
+- (id)initWithIdName:(NSString *)elementID ancestorNode:(DOMNode *)node textStorage:(SVRichText *)text;
+{
+    if (self = [self initWithIdName:elementID ancestorNode:node])
+    {
+        _storage = [text retain];
+        [self setRepresentedObject:text];
+    }
+    
+    return self;
+}
+
 - (id)init;
 {
     if (self = [super init])
@@ -78,6 +89,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     // Release ivars
     [self stopObservingDependencies];                           // otherwise super will crash trying..
     [_graphicsController release]; _graphicsController = nil;   // ... to access _graphicsController
+    [_storage release];
     
     [super dealloc];
 }
@@ -99,7 +111,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
         // See if there's an imported embedded image that wants hooking up
         NSString *graphicID = [[imageElement absoluteImageURL] ks_lastPathComponent];
         
-        SVTextAttachment *attachment = [[[[self representedObject] attachments] filteredSetUsingPredicate:
+        SVTextAttachment *attachment = [[[[self richTextStorage] attachments] filteredSetUsingPredicate:
                                          [NSPredicate predicateWithFormat:
                                           @"length == 32767 && graphic.identifier == %@",
                                           graphicID]] anyObject];
@@ -290,16 +302,16 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
         
         
         // Try to de-archive custom HTML
-        SVRichText *text = [self representedObject];
+        id object = [self representedObject];
         
         NSAttributedString *attributedHTML = [NSAttributedString
                                               attributedHTMLStringFromPasteboard:pasteboard
-                                              insertAttachmentsIntoManagedObjectContext:[text managedObjectContext]];
+                                              insertAttachmentsIntoManagedObjectContext:[object managedObjectContext]];
         
         if (attributedHTML)
         {
             // Generate HTML for the DOM
-            [context beginGraphicContainer:text];
+            [context beginGraphicContainer:object];
             [context writeAttributedHTMLString:attributedHTML];
             [context endGraphicContainer];
         }
@@ -371,7 +383,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 
 - (void)setHTMLString:(NSString *)html attachments:(NSSet *)attachments;
 {
-    SVRichText *textObject = [self representedObject];
+    SVRichText *textObject = [self richTextStorage];
     
     
     [textObject setString:html attachments:attachments];
@@ -457,7 +469,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     
     
     // Make an image object
-    SVRichText *text = [self representedObject];
+    SVRichText *text = [self richTextStorage];
     NSManagedObjectContext *context = [text managedObjectContext];
     
     SVMedia *media = nil;
@@ -626,6 +638,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 
 #pragma mark Properties
 
+@synthesize richTextStorage = _storage;
 @synthesize importsGraphics = _importsGraphics;
 
 #pragma mark Links
@@ -770,7 +783,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     [textAttachment setPlacement:[NSNumber numberWithInteger:SVGraphicPlacementInline]];
     
     [textAttachment setCausesWrap:[NSNumber numberWithBool:!placeInline]];
-    [textAttachment setBody:[self representedObject]];
+    [textAttachment setBody:[self richTextStorage]];
     
     
     // Insert, selecting it
@@ -1094,7 +1107,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 - (void)beginAttachmentsObservation;
 {
     [_graphicsController bind:NSContentSetBinding
-                     toObject:[self representedObject]
+                     toObject:[self richTextStorage]
                   withKeyPath:@"attachments"
                       options:nil];
     
@@ -1108,30 +1121,13 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     [_graphicsController setContent:nil];
 }
 
-- (void)setRepresentedObject:(id)object;
-{
-    [super setRepresentedObject:object];
-    
-    if (_isObservingText)
-    {
-        if (object)
-        {
-            [self beginAttachmentsObservation];
-        }
-        else
-        {
-            [self endAttachmentsObservation];
-        }
-    }
-}
-
 - (void)startObservingDependencies;
 {
     if (!_isObservingText)
     {
         // Keep an eye on model
-        [self addObserver:self forKeyPath:@"representedObject.string" options:0 context:sBodyTextObservationContext];
-        if ([self representedObject]) [self beginAttachmentsObservation];
+        [self addObserver:self forKeyPath:@"richTextStorage.string" options:0 context:sBodyTextObservationContext];
+        if ([self richTextStorage]) [self beginAttachmentsObservation];
         _isObservingText = YES;
     }
     
@@ -1143,8 +1139,8 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 {
     if (_isObservingText)    // should be able to test isObservingDependencies but that's lying for reasons I cannot figure
     {
-        [self removeObserver:self forKeyPath:@"representedObject.string"];
-        if ([self representedObject]) [self endAttachmentsObservation];
+        [self removeObserver:self forKeyPath:@"richTextStorage.string"];
+        if ([self richTextStorage]) [self endAttachmentsObservation];
         _isObservingText = NO;
     }
     
@@ -1175,10 +1171,12 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 
 @implementation SVRichText (SVDOMController)
 
-- (SVTextDOMController *)newTextDOMControllerWithElementIdName:(NSString *)elementID node:(DOMNode *)node;
+- (SVTextDOMController *)newTextDOMControllerWithElementIdName:(NSString *)elementID node:(DOMNode *)node
 {
-    SVTextDOMController *result = [[SVRichTextDOMController alloc] initWithIdName:elementID ancestorNode:node];
-    [result setRepresentedObject:self];
+    SVTextDOMController *result = [[SVRichTextDOMController alloc] initWithIdName:elementID
+                                                                     ancestorNode:node
+                                                                         textStorage:self];
+    
     [result setSelectable:YES];
     [result setRichText:YES];
     
