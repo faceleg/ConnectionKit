@@ -916,7 +916,7 @@
         {
             // Keep within max width
             // Switch over to auto-sized for simple graphics
-            size.width = maxWidth;//([graphic isExplicitlySized] ? maxWidth : 0.0f);
+            size.width = [self constrainToMaxWidth:maxWidth];
             if (ratio.width > 0 && ratio.height > 0) size.height = maxWidth / (ratio.width / ratio.height);
         }
     }
@@ -924,6 +924,8 @@
     
     return size;
 }
+
+- (CGFloat)constrainToMaxWidth:(CGFloat)maxWidth; { return maxWidth; }
 
 - (BOOL)shouldResizeInline; // Default is NO. If YES, cursor will be locked to match the resize
 {

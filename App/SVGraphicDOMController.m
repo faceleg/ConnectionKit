@@ -194,6 +194,11 @@
     return [[self enclosingGraphicDOMController] resizeToSize:size byMovingHandle:handle];
 }
 
+- (CGFloat)constrainToMaxWidth:(CGFloat)maxWidth;
+{
+    return ([[self representedObject] isExplicitlySized] ? [super constrainToMaxWidth:maxWidth] : 0.0f);
+}
+
 - (NSSize)minSize;
 {
     NSSize result = [super minSize];

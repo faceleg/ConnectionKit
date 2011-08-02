@@ -140,6 +140,7 @@
 - (SVGraphicHandle)resizeUsingHandle:(SVGraphicHandle)handle event:(NSEvent *)event;
 - (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
 - (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;
+- (CGFloat)constrainToMaxWidth:(CGFloat)maxWidth;   // default is return maxWidth, but you can go for 0 instead
 
 
 
