@@ -90,11 +90,19 @@
 {
     if (container != [_earlyElement graphicContainer])
     {
+        SVElementInfo *earlyElement = [[SVElementInfo alloc] initWithGraphicContainer:container];
+        
+        // Copy across any dependencies
         if (_earlyElement)
         {
+            for (KSObjectKeyPathPair *aDependency in [_earlyElement dependencies])
+            {
+                [earlyElement addDependency:aDependency];
+            }
+                 
             [_earlyElement release];
         }
-        _earlyElement = [[SVElementInfo alloc] initWithGraphicContainer:container];
+        _earlyElement = earlyElement;
     }
     
     [super beginGraphicContainer:container];
