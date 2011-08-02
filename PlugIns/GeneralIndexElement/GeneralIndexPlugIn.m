@@ -77,7 +77,6 @@
 						   @"indexLayoutType",
 						   @"showPermaLinks",
                            @"showComments",
-						   @"showArticleInTables",
 						   @"showContinueReadingLink",
 						   @"continueReadingLinkFormat",
 						   @"showTimestamps",
@@ -98,6 +97,8 @@
 
 	return result;
 }
+
+// Set some initial values if they are nil, e.g. from an earlier version document.
 
 - (void)setSerializedValue:(id)serializedValue forKey:(NSString *)key
 {
@@ -140,7 +141,6 @@
 	[context addDependencyForKeyPath:@"indexLayoutType"		ofObject:self];
 	[context addDependencyForKeyPath:@"showPermaLinks"		ofObject:self];
 	[context addDependencyForKeyPath:@"showComments"		ofObject:self];
-	[context addDependencyForKeyPath:@"showArticleInTables"	ofObject:self];
 	[context addDependencyForKeyPath:@"showContinueReadingLink" ofObject:self];
 	[context addDependencyForKeyPath:@"continueReadingLinkFormat" ofObject:self];
 	[context addDependencyForKeyPath:@"showTimestamps"		ofObject:self];
@@ -221,7 +221,9 @@
 			[context endElement];
 		}
 		
-		if (self.indexLayoutType & kArticleMask& self.showArticleInTables)
+		extern const NSUInteger kTruncationMin;
+		BOOL showArticleInTables = (self.maxItemLength > kTruncationMin);		// only show article if above minimum truncation
+		if (self.indexLayoutType & kArticleMask& showArticleInTables)
 		{
 			[context startElement:@"td" className:@"dli3"];
 			truncated = [self writeSummaryOfIteratedPage];
@@ -230,6 +232,7 @@
 			{
 				[self writeContinueReadingLink];
 			}
+			
 			[context endElement];
 		}
 		
@@ -238,7 +241,7 @@
 		if ((self.indexLayoutType & kArticleMask) && [self hasArticleInfo])
 		{
 			[context startElement:@"td" className:@"dli4"];
-			[self writeArticleInfoWithContinueReadingLink:self.showContinueReadingLink];
+			[self writeArticleInfoWithContinueReadingLink:NO];		// continue reading link is in previous column
 			[context endElement];
 		}
 	}
@@ -487,7 +490,6 @@
 @synthesize showTitles = _showTitles;
 @synthesize isTable = _isTable;
 @synthesize showComments	= _showComments;
-@synthesize showArticleInTables	= _showArticleInTables;
 @synthesize showContinueReadingLink	= _showContinueReadingLink;
 @synthesize continueReadingLinkFormat	= _continueReadingLinkFormat;
 @synthesize showTimestamps	= _showTimestamps;
