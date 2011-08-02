@@ -194,6 +194,12 @@
     return [[self enclosingGraphicDOMController] resizeToSize:size byMovingHandle:handle];
 }
 
+- (CGFloat)maxWidthForChild:(WEKWebEditorItem *)aChild;
+{
+    // Carry on up
+    return [[self parentWebEditorItem] maxWidthForChild:aChild];
+}
+
 - (CGFloat)constrainToMaxWidth:(CGFloat)maxWidth;
 {
     return ([[self representedObject] isExplicitlySized] ? [super constrainToMaxWidth:maxWidth] : 0.0f);

@@ -8,8 +8,8 @@
 
 #import "SVPageletTitleBox.h"
 
-#import "SVGraphic.h"
 #import "SVTextAttachment.h"
+#import "SVTextDOMController.h"
 
 
 @implementation SVPageletTitleBox
@@ -31,6 +31,13 @@
 {
     BOOL result = [super validateForUpdate:error];
     if (result && [[self pagelet] textAttachment]) result = [[[self pagelet] textAttachment] validateWrapping:error];
+    return result;
+}
+
+- (SVTextDOMController *)newTextDOMControllerWithElementIdName:(NSString *)elementID node:(DOMNode *)node;
+{
+    SVTextDOMController *result = [super newTextDOMControllerWithElementIdName:elementID node:node];
+    [result setSelectable:YES];
     return result;
 }
 
