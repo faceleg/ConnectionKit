@@ -26,8 +26,8 @@
     BOOL                    _verticallyResizable;
 }
 
-- (id)initWithGraphicContainer:(id <SVComponent>)container;
-@property(nonatomic, retain, readonly) id <SVComponent> graphicContainer;
+- (id)initWithGraphicComponent:(id <SVComponent>)component;
+@property(nonatomic, retain, readonly) id <SVComponent> component;
 
 @property(nonatomic, copy) NSDictionary *attributesAsDictionary;
 

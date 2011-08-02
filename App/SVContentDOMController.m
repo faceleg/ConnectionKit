@@ -86,7 +86,7 @@
 
 - (SVDOMController *)newDOMControllerWithNode:(DOMNode *)node;
 {
-    id <SVComponent> container = [self graphicContainer];
+    id <SVComponent> container = [self component];
     if (container)
     {
         NSString *elementID = [[self attributesAsDictionary] objectForKey:@"id"];

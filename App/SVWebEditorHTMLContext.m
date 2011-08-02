@@ -298,7 +298,7 @@
     // First add an id attribute if it's needed
     // DOM Controllers need an ID so they can locate their element in the DOM. If the HTML doesn't normally contain an ID, insert it ourselves
     SVElementInfo *elementInfo = [self currentElement];
-    if ([elementInfo graphicContainer])
+    if ([elementInfo component])
     {
         if (![[[self currentAttributes] attributesAsDictionary] objectForKey:@"id"])
         {

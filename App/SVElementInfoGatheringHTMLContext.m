@@ -88,9 +88,9 @@
 
 - (void)beginGraphicContainer:(id <SVComponent>)container;
 {
-    if (container != [_earlyElement graphicContainer])
+    if (container != [_earlyElement component])
     {
-        SVElementInfo *earlyElement = [[SVElementInfo alloc] initWithGraphicContainer:container];
+        SVElementInfo *earlyElement = [[SVElementInfo alloc] initWithGraphicComponent:container];
         
         // Copy across any dependencies
         if (_earlyElement)
@@ -127,7 +127,7 @@
                                              [object valueForKey:@"container"] :
                                              object);
         
-        _earlyElement = [[SVElementInfo alloc] initWithGraphicContainer:container];
+        _earlyElement = [[SVElementInfo alloc] initWithGraphicComponent:container];
     }
     
     [super buildAttributesForResizableElement:elementName object:object DOMControllerClass:controllerClass sizeDelta:sizeDelta options:options];
@@ -175,7 +175,7 @@
     return self;
 }
 
-- (id)initWithGraphicContainer:(id <SVComponent>)container;
+- (id)initWithGraphicComponent:(id <SVComponent>)container;
 {
     if (self = [self init])
     {
@@ -205,7 +205,7 @@
 
 #pragma mark Sandvox Properties
 
-@synthesize graphicContainer = _graphicContainer;
+@synthesize component = _graphicContainer;
 @synthesize elementIdNameWasInvented = _elementIdNameWasInvented;
 
 - (NSSet *)dependencies; { return [[_dependencies copy] autorelease]; }
