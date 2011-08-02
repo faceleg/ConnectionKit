@@ -40,14 +40,14 @@ pushd "$2" > /dev/null
 
 echo "Frameworks..."
 
-mkdir -p$VERBOSE $WD/Subversion/imedia
-cp -R$VERBOSE ./Contents/Frameworks/iMedia.framework/Versions/A/Resources/$1.lproj $WD/Subversion/imedia
+mkdir -p$VERBOSE $WD/Subversion/Sandvox/Code/iMedia
+cp -R$VERBOSE ./Contents/Frameworks/iMedia.framework/Versions/A/Resources/$1.lproj $WD/Subversion/Sandvox/Code/iMedia
 
 mkdir -p$VERBOSE $WD/Subversion/connection
 cp -R$VERBOSE ./Contents/Frameworks/Connection.framework/Versions/A/Resources/$1.lproj $WD/Subversion/connection
 
-mkdir -p$VERBOSE $WD/Subversion/Shared/Code/AmazonSupport
-cp -R$VERBOSE ./Contents/Frameworks/AmazonSupport.framework/Versions/A/Resources/$1.lproj $WD/Subversion/Shared/Code/AmazonSupport
+mkdir -p$VERBOSE $WD/Subversion/Sandvox/Code/Shared/Code/AmazonSupport
+cp -R$VERBOSE ./Contents/Frameworks/AmazonSupport.framework/Versions/A/Resources/$1.lproj $WD/Subversion/Sandvox/Code/Shared/Code/AmazonSupport
 
 # App & Spotlight
 
@@ -72,19 +72,19 @@ rm -rf$VERBOSE $WD/Subversion/Sandvox$CURRENTBRANCH/App/$1.lproj/Shared.strings
 
 echo "Shared strings...."
 
-mkdir -p$VERBOSE $WD/Subversion/Shared/$1.lproj
-cp -R$VERBOSE ./Contents/Resources/$1.lproj/Shared.strings $WD/Subversion/Shared/$1.lproj/
+mkdir -p$VERBOSE $WD/Subversion/Sandvox/Code/Shared/$1.lproj
+cp -R$VERBOSE ./Contents/Resources/$1.lproj/Shared.strings $WD/Subversion/Sandvox/Code/Shared/$1.lproj/
 
 
 
 
 echo "Shared KS Files...."
 
-mkdir -p$VERBOSE $WD/Subversion/Shared/Interfaces
-mkdir -p$VERBOSE $WD/Subversion/Shared/Interfaces/$1.lproj
+mkdir -p$VERBOSE $WD/Subversion/Sandvox/Code/Shared/Interfaces
+mkdir -p$VERBOSE $WD/Subversion/Sandvox/Code/Shared/Interfaces/$1.lproj
 # echo ./Contents/Resources/$1.lproj/KS*
-# echo $WD/Subversion/Shared/Interfaces/$1.lproj/
-cp -R$VERBOSE ./Contents/Resources/$1.lproj/KS* $WD/Subversion/Shared/Interfaces/$1.lproj/
+# echo $WD/Subversion/Sandvox/Code/Shared/Interfaces/$1.lproj/
+cp -R$VERBOSE ./Contents/Resources/$1.lproj/KS* $WD/Subversion/Sandvox/Code/Shared/Interfaces/$1.lproj/
 
 echo "PlugIns..."
 
