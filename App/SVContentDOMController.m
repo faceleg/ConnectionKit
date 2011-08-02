@@ -106,7 +106,9 @@
             }
             else
             {
-                return [container newDOMControllerWithElementIdName:elementID node:node];
+                SVDOMController *result = [container newDOMControllerWithElementIdName:elementID node:node];
+                [result setSelectable:[container conformsToProtocol:@protocol(SVGraphic)]];
+                return result;
             }
         }
     }
