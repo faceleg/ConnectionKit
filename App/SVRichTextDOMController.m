@@ -564,7 +564,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     
     
     // Create controller for graphic and hook up to imported node
-    SVDOMController *result = [image newDOMController];
+    SVDOMController *result = [image newDOMControllerWithElementIdName:nil ancestorNode:nil];
     [result awakeFromHTMLContext:[self HTMLContext]];
     [result setHTMLElement:imageElement];
     
