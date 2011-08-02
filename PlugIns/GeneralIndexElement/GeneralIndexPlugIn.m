@@ -79,11 +79,22 @@
                            @"showComments",
 						   @"showArticleInTables",
 						   @"showContinueReadingLink",
+						   @"continueReadingLinkFormat",
 						   @"showTimestamps",
                            @"timestampType",
 						   @"maxItemLength",
                            nil];    
     return [[super plugInKeys] arrayByAddingObjectsFromArray:plugInKeys];
+}
+
+- (NSString *)initialContinueReadingLinkFormat;
+{
+	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+	NSString *language = [iteratedPage language];
+	NSString *result = [bundle localizedStringForString:@"Continue reading @@" language:language fallback:
+					   SVLocalizedString(@"Continue reading @@", "Link to read a full article. @@ is replaced with the page title")];
+
+	return result;
 }
 
 - (void)setSerializedValue:(id)serializedValue forKey:(NSString *)key
@@ -92,6 +103,11 @@
 	{
 		serializedValue = [NSNumber numberWithBool:YES];
 	}
+	if ([key isEqualToString:@"continueReadingLinkFormat"] && (nil == serializedValue || [serializedValue isEqualToString:@""]))
+	{
+		serializedValue = [self initialContinueReadingLinkFormat];
+	}
+	
 	[super setSerializedValue:serializedValue forKey:key];
 }
 
@@ -103,6 +119,7 @@
     self.enableMaxItems = YES;
     self.maxItems = 10;
 	self.showContinueReadingLink = YES;
+	self.continueReadingLinkFormat = [self initialContinueReadingLinkFormat];
 	
 	NSNumber *isPagelet = [self valueForKeyPath:@"container.isPagelet"];	// Private. If creating in sidebar, make it more minimal
 	if (isPagelet && [isPagelet boolValue])
@@ -123,6 +140,7 @@
 	[context addDependencyForKeyPath:@"showComments"		ofObject:self];
 	[context addDependencyForKeyPath:@"showArticleInTables"	ofObject:self];
 	[context addDependencyForKeyPath:@"showContinueReadingLink" ofObject:self];
+	[context addDependencyForKeyPath:@"continueReadingLinkFormat" ofObject:self];
 	[context addDependencyForKeyPath:@"showTimestamps"		ofObject:self];
     [context addDependencyForKeyPath:@"timestampType"       ofObject:self];
 	[context addDependencyForKeyPath:@"maxItemLength"		ofObject:self];
@@ -298,7 +316,7 @@
 	[context startElement:@"div" className:@"continue-reading-link"];
 	[context startAnchorElementWithPage:iteratedPage];
 	
-	NSString *format = [[iteratedPage master] valueForKey:@"continueReadingLinkFormat"];
+	NSString *format = self.continueReadingLinkFormat;
 	NSString *title = [iteratedPage title];
 	if (nil == title)
 	{

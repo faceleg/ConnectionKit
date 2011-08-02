@@ -73,6 +73,7 @@ typedef enum {
     BOOL _showComments;
     BOOL _showArticleInTables;
     BOOL _showContinueReadingLink;
+	NSString *_continueReadingLinkFormat;
     NSUInteger _maxItemLength;
 }
 
@@ -89,6 +90,7 @@ typedef enum {
 @property (nonatomic) BOOL showComments;
 @property (nonatomic) IndexLayoutType indexLayoutType;
 @property (nonatomic) NSUInteger maxItemLength;
+@property (nonatomic, copy) NSString *continueReadingLinkFormat;
 
 
 
