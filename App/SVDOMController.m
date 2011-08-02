@@ -27,7 +27,7 @@
     _dependenciesTracker = [[KSDependenciesTracker alloc] initWithObservingOptions:NSKeyValueObservingOptionPrior];
     [_dependenciesTracker stopObservingDependencies];   // little dance so that subclasses start...
     [_dependenciesTracker setDelegate:self];
-    [self startObservingDependencies];                  // ...observing extra dependencies
+    //[self startObservingDependencies];                  // ...observing extra dependencies
     
     return self;
 }
