@@ -8680,6 +8680,7 @@
 					"\"$(SRCROOT)\"",
 				);
 				INFOPLIST_FILE = Info.plist;
+				OTHER_LDFLAGS = "-lsasl2";
 				PRODUCT_NAME = Sandvox;
 				WRAPPER_EXTENSION = app;
 			};
@@ -8706,6 +8707,7 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				MOMC_NO_WARNINGS = YES;
+				OTHER_LDFLAGS = "-lsasl2";
 				PRODUCT_NAME = Sandvox;
 				WRAPPER_EXTENSION = app;
 			};
