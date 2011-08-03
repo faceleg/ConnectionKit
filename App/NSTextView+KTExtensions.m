@@ -579,7 +579,7 @@ Makes the view so wide that text won't wrap anymore.
 			while( ![vScanner isAtEnd] )
 			{
 				// Scan up to the next occurence of the terminating sequence:
-				(BOOL) [vScanner scanUpToRealString: endCh intoString:nil];
+				[vScanner scanUpToRealString: endCh intoString:nil];
 				
 				// Now, if the mode of the end marker is not the mode we were told to ignore,
 				//  we're finished now and we can exit the inner loop:
