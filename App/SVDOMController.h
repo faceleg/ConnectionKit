@@ -56,8 +56,11 @@
 
 
 #pragma mark Updating
+
 - (void)update;
 - (void)writeUpdateHTML:(SVHTMLContext *)context;
+- (void)willUpdateWithNewChildController:(WEKWebEditorItem *)newChildController;
+
 - (BOOL)canUpdate;  // default is [self respondsToSelector:@selector(update)]
 - (void)didUpdateWithSelector:(SEL)selector;    // you MUST call this after updating
 

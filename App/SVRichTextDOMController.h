@@ -52,10 +52,6 @@
 
 - (Class)attachmentsControllerClass;    // default is NSArrayController
 
-- (void)writeUpdateHTML:(SVHTMLContext *)context;
-- (void)updateWithHTMLString:(NSString *)html context:(SVWebEditorHTMLContext *)context;
-- (void)willUpdateWithNewChildController:(WEKWebEditorItem *)newChildController;
-
 
 #pragma mark Responding to Changes
 - (DOMNode *)write:(SVParagraphedHTMLWriterDOMAdaptor *)writer
