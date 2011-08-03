@@ -869,6 +869,7 @@
 @"* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code",
 @"***********************************************/"];
 			
+            [context pushAttribute:@"id" value:@"ddsmoothmenu"];  // for KulerSolutions
 			[context startJavascriptElementWithSrc:srcPath];
 			[context stopWritingInline];
 			[context writeString:prelude];

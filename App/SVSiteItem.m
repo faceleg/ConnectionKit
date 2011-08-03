@@ -16,6 +16,7 @@
 #import "KTMaster.h"
 #import "SVMediaRecord.h"
 #import "KTPage.h"
+#import "KTPublishingEngine.h"
 #import "KTSite.h"
 #import "SVWebEditingURL.h"
 
@@ -26,7 +27,7 @@
 
 #import "KSError.h"
 #import "KSPathUtilities.h"
-#import "KTPublishingEngine.h"
+#import "KSURLUtilities.h"
 
 #import "KSStringXMLEntityEscaping.h"
 
@@ -297,6 +298,7 @@
 	return result;
 }
 
+- (NSString *)fileNameExtension; { return [[self URL] ks_pathExtension]; }
 - (BOOL)canPreview { return NO; }
 
 - (NSString *)previewPath
@@ -753,6 +755,10 @@
     BOOL result = ([[self includeInSiteMap] boolValue] && 
                    ([self datePublished] || ![self isDraftOrHasDraftAncestor]));
     return result;
+}
++ (NSSet *)keyPathsForValuesAffectingShouldIncludeInSiteMaps;
+{
+    return [NSSet setWithObjects:@"includeInSiteMap", @"datePublished", @"isDraft", nil];
 }
 
 - (NSString *)language { return nil; }

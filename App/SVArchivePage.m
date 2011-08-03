@@ -121,6 +121,8 @@
     return result;
 }
 
+- (NSString *)fileNameExtension; { return [[self filename] pathExtension]; }
+
 - (SVLink *)link;
 {
     return [SVLink linkWithURLString:[[self URL] absoluteString]
