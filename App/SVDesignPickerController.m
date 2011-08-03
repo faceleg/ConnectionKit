@@ -113,7 +113,7 @@
 @synthesize designsController = _designsController;
 - (NSArrayController *)designsController;
 {
-    [self window];    // make sure it's loaded
+    [self view];    // make sure it's loaded
     return _designsController;
 }
 
