@@ -10,11 +10,14 @@
 #import "SVGraphic.h"
 
 #import "SVCalloutDOMController.h"
+#import "SVContentDOMController.h"
+#import "SVMediaRecord.h"
 #import "SVParagraphedHTMLWriterDOMAdaptor.h"
 #import "SVPlugInDOMController.h"
 #import "SVSidebarDOMController.h"
 #import "SVWebEditorHTMLContext.h"
 #import "WebEditingKit.h"
+#import "SVWebEditorViewController.h"
 #import "WebViewEditingHelperClasses.h"
 
 #import "DOMElement+Karelia.h"
