@@ -29,17 +29,13 @@
 
 #pragma mark Selection
 
-- (DOMElement *) selectableDOMElement;
-{
-    // Media is always selectable. #102520
-    return [self HTMLElement];
-}
+- (BOOL)isSelectable; { return YES; }
 
 - (DOMRange *)selectableDOMRange;
 {
     if ([self shouldTrySelectingInline])
     {
-        DOMElement *element = [self selectableDOMElement];
+        DOMElement *element = [self HTMLElement];
         DOMRange *result = [[element ownerDocument] createRange];
         [result selectNode:element];
         return result;

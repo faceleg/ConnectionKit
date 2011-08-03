@@ -273,21 +273,48 @@
     [paths release];
 }
 
-- (void)willInsertOrMoveObjectToTopLevel:(id)object;
+- (void)willInsertOrMoveObject:(id)object intoCollectionAtArrangedObjectIndexPath:(NSIndexPath *)path;
 {
-    // Include in site menu if appropriate. #104544
-    KTPage *home = [[[[self arrangedObjects] childNodes] objectAtIndex:0] representedObject];
-    NSArray *menuItems = [home createSiteMenuForestIsHierarchical:NULL];
+    // No point including downloads by default. #132861
+    if ([object isKindOfClass:[SVDownloadSiteItem class]]) return;
     
+    
+    // Include in site menu if appropriate. #104544
+    NSTreeNode *collectionNode = [[self arrangedObjects] descendantNodeAtIndexPath:path];
+    for (NSTreeNode *aNode in [collectionNode childNodes])
+    {
+        SVSiteItem *page = [aNode representedObject];
+        if (![[page includeInSiteMenu] boolValue]) return;  // If a sibling is not in the menu, turn off auto behaviour
+    }
+    
+    
+    // OK, want to add to the menu if there's space
+    KTPage *home = [[[[self arrangedObjects] childNodes] objectAtIndex:0] representedObject];
+    
+    BOOL hierarchical;
+    NSArray *menuItems = [home createSiteMenuForestIsHierarchical:&hierarchical];
+    
+    if (hierarchical)
+    {
+        // If has a parent in the menu, then there's definitely room, and is probably intended to be added. #132580
+        KTPage *aCollection = [collectionNode representedObject];
+        while (![aCollection isRootPage])
+        {
+            if ([[aCollection includeInSiteMenu] boolValue])
+            {
+                [object setIncludeInSiteMenu:NSBOOL(YES)];
+                return;
+            }
+            
+            aCollection = [aCollection parentPage];
+        }
+    }
+    
+    
+    // It's going to appear at the top, if anywhere, so is there still room?
     if ([menuItems count] < 6)
     {
-        NSSet *include = [[home childItems] valueForKey:@"includeInSiteMenu"];
-        
-        if ([include count] == 0 ||
-            ([include count] == 1 && [[include anyObject] isEqual:NSBOOL(YES)]))
-        {
-            [object setIncludeInSiteMenu:[NSNumber numberWithBool:YES]];
-        }
+        [object setIncludeInSiteMenu:[NSNumber numberWithBool:YES]];
     }
 }
 
@@ -311,7 +338,7 @@
     
     
     // Include in site menu if appropriate
-    if ([collection isRootPage]) [self willInsertOrMoveObjectToTopLevel:object];
+    [self willInsertOrMoveObject:object intoCollectionAtArrangedObjectIndexPath:[indexPath indexPathByRemovingLastIndex]];
     
     
     // Actually insert proxy for the page
@@ -642,14 +669,11 @@
     
     
     // Should any of these nodes get added to the site menu?
-    if ([startingIndexPath length] <= 2)
+    for (NSTreeNode *aNode in nodes)
     {
-        for (NSTreeNode *aNode in nodes)
+        if ([startingIndexPath length] != [[aNode indexPath] length])
         {
-            if ([[aNode indexPath] length] > 2)
-            {
-                [self willInsertOrMoveObjectToTopLevel:[aNode representedObject]];
-            }
+            [self willInsertOrMoveObject:[aNode representedObject] intoCollectionAtArrangedObjectIndexPath:parentPath];
         }
     }
     
