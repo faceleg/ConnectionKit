@@ -8,6 +8,7 @@
 
 #import "SVDOMController.h"
 
+#import "SVContentDOMController.h"
 #import "SVSidebarDOMController.h"
 #import "SVPlugInDOMController.h"
 #import "SVTextDOMController.h"
@@ -170,9 +171,136 @@
 
 #pragma mark Updating
 
+- (void)willUpdateWithNewChildController:(WEKWebEditorItem *)newChildController;
+{
+    // Helper method that:
+    //  A) swaps the new controller out for an existing one if possible
+    //  B) runs scripts for the new controller
+    
+    
+    [newChildController HTMLElement];   // make sure it's loaded, but I'm not sure it's still needed!
+    
+    NSObject *object = [newChildController representedObject];
+    
+    for (WEKWebEditorItem *anOldController in [self childWebEditorItems])
+    {
+        if ([anOldController representedObject] == object)
+        {
+            DOMNode *oldElement = [anOldController HTMLElement];
+            if (oldElement)
+            {
+                // Bring back the old element!
+                DOMElement *element = [newChildController HTMLElement];
+                [[element parentNode] replaceChild:oldElement oldChild:element];
+                
+                // Bring back the old controller!
+                [[newChildController parentWebEditorItem] replaceChildWebEditorItem:newChildController
+                                                                               with:anOldController];
+                return;
+            }
+        }
+    }
+    
+    
+    // Force update the controller to run scripts etc. #99997
+    [newChildController setNeedsUpdate]; [newChildController updateIfNeeded];
+}
+
+- (void)updateWithHTMLString:(NSString *)html context:(SVWebEditorHTMLContext *)context
+{
+    //[[context rootDOMController] setWebEditorViewController:[self webEditorViewController]];
+    
+    
+    // Update DOM
+    DOMElement *oldElement = [self HTMLElement];
+    DOMDocument *doc = [oldElement ownerDocument];
+    WEKWebEditorItem *parent = [self parentWebEditorItem];
+    [[self HTMLElement] setOuterHTML:html];
+    
+    while ([parent HTMLElement] == oldElement)  // ancestors may be referencing the same node
+    {
+        // Reset element, ready to reload
+        [parent setElementIdName:[[[[[context rootElement] subelements] lastObject] attributesAsDictionary] objectForKey:@"id"]];
+        [parent setHTMLElement:nil];
+        
+        parent = [parent parentWebEditorItem];
+    }
+    
+    
+    // Create controllers
+    SVContentDOMController *contentController = [[SVContentDOMController alloc] initWithWebEditorHTMLContext:context
+                                                                                                        node:doc];
+    
+    
+    // Copy across extra dependencies, but I'm not sure why. Mike
+    [[self mutableSetValueForKeyPath:@"parentWebEditorItem.dependencies"] unionSet:[contentController dependencies]];
+    
+    
+    // Re-use any existing graphic controllers when possible
+    for (WEKWebEditorItem *aController in [contentController childWebEditorItems])
+    {
+        for (WEKWebEditorItem *newChildController in [aController childWebEditorItems])
+        {
+            [self willUpdateWithNewChildController:newChildController];
+        }
+    }
+    
+    
+    
+    // Hook up new DOM Controllers
+    [self stopObservingDependencies];
+    [self didUpdateWithSelector:@selector(update)]; // must inform now, before are removed from the tree
+    
+    [[self retain] autorelease];    // since the replacement could easily dealloc us otherwise!
+    [[self parentWebEditorItem] replaceChildWebEditorItem:self withItems:[contentController childWebEditorItems]];
+    
+    [contentController release];
+}
+
+- (void)update;
+{
+    // Tear down dependencies etc.
+    [self removeAllDependencies];
+    
+    
+    // Write HTML
+    NSMutableString *htmlString = [[NSMutableString alloc] init];
+    
+    SVWebEditorHTMLContext *context = [[[SVWebEditorHTMLContext class] alloc]
+                                       initWithOutputWriter:htmlString inheritFromContext:[self HTMLContext]];
+    
+    [self writeUpdateHTML:context];
+    
+    
+    // Copy top-level dependencies across to parent. #79396
+    [context flush];    // you never know!
+    
+    
+    // Turn observation back on. #92124
+    //[self startObservingDependencies];
+    
+    
+    // Bring end body code into the html
+    [context writeEndBodyString];
+    
+    
+    [context close];
+    [self updateWithHTMLString:htmlString context:context];
+    
+    
+    // Tidy
+    [htmlString release];
+    [context release];
+}
+
+- (void)writeUpdateHTML:(SVHTMLContext *)context;
+{
+    [[self representedObject] writeHTML:context];
+}
+
 - (BOOL)canUpdate;
 {
-    return [self respondsToSelector:@selector(update)];
+    return [[self representedObject] conformsToProtocol:@protocol(SVComponent)];
 }
 
 - (void)didUpdateWithSelector:(SEL)selector;

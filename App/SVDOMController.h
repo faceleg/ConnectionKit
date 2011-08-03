@@ -56,6 +56,8 @@
 
 
 #pragma mark Updating
+- (void)update;
+- (void)writeUpdateHTML:(SVHTMLContext *)context;
 - (BOOL)canUpdate;  // default is [self respondsToSelector:@selector(update)]
 - (void)didUpdateWithSelector:(SEL)selector;    // you MUST call this after updating
 
