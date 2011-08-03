@@ -89,10 +89,8 @@
     
     
     // Copy across dependencies. #117522
-    for (KSObjectKeyPathPair *aDependency in [[context rootElement] dependencies])
-    {
-        [self addDependency:aDependency];
-    }
+    [[self mutableSetValueForKey:@"dependencies"] unionSet:[[context rootElement] dependencies]];
+
     
     NSString *style = [[[context currentAttributes] attributesAsDictionary] objectForKey:@"style"];
     [[[self textHTMLElement] style] setCssText:style];

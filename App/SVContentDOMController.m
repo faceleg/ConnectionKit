@@ -36,10 +36,7 @@
     
     
     // Copy across dependencies
-    for (KSObjectKeyPathPair *aDependency in [element dependencies])
-    {
-        [controller addDependency:aDependency];
-    }
+    [[controller mutableSetValueForKey:@"dependencies"] unionSet:[element dependencies]];
     
     
     // Step on down to child elements

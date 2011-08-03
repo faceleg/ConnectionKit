@@ -95,10 +95,7 @@
         // Copy across any dependencies
         if (_earlyElement)
         {
-            for (KSObjectKeyPathPair *aDependency in [_earlyElement dependencies])
-            {
-                [earlyElement addDependency:aDependency];
-            }
+            [[earlyElement mutableSetValueForKey:@"dependencies"] unionSet:[_earlyElement dependencies]];
                  
             [_earlyElement release];
         }

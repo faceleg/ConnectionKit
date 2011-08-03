@@ -199,10 +199,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     
     
     // Copy across extra dependencies, but I'm not sure why. Mike
-    for (KSObjectKeyPathPair *aDependency in [contentController dependencies])
-    {
-        [(SVDOMController *)[self parentWebEditorItem] addDependency:aDependency];
-    }
+    [[self mutableSetValueForKeyPath:@"parentWebEditorItem.dependencies"] unionSet:[contentController dependencies]];
     
     
     // Re-use any existing graphic controllers when possible

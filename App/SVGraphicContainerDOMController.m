@@ -181,10 +181,7 @@
     
     // Copy top-level dependencies across to parent. #79396
     [context flush];    // you never know!
-    for (KSObjectKeyPathPair *aDependency in [[context rootElement] dependencies])
-    {
-        [(SVDOMController *)[self parentWebEditorItem] addDependency:aDependency];
-    }
+    [[self mutableSetValueForKeyPath:@"parentWebEditorItem.dependencies"] unionSet:[[context rootElement] dependencies]];
     
     
     // Copy across data resources
