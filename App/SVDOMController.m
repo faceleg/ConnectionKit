@@ -289,8 +289,8 @@
     {
         SVWebEditorViewController *controller = [self webEditorViewController];
         //OBASSERT(controller); // actually, may well be nil due to an update elsewhere in the hierarchy. #97474
-        [controller performSelector:@selector(willUpdate)];
         
+        [controller willUpdate];
         [self performSelector:NSSelectorFromString(aSelectorString)];
     }
     [selectorStrings release];
