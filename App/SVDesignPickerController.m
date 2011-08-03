@@ -111,11 +111,6 @@
 }
 
 @synthesize designsController = _designsController;
-- (NSArrayController *)designsController;
-{
-    if (!_designsController) [self view];    // make sure it's loaded
-    return _designsController;
-}
 
 // IF I CHANGE THIS ORDER, CHANGE THE ORDER IN THE METHOD "matchString"
 enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to have the genre *first* but it's one that works best when collapsed, and MGScopeBar prefers collapsing items on the right.  It would be a huge rewrite to change that....
