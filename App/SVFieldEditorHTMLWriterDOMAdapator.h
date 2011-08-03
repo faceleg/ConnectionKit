@@ -14,7 +14,7 @@
 
 
 #import "KSXMLWriterDOMAdaptor.h"
-#import "KSStringWriter.h";
+#import "KSStringWriter.h"
 
 
 @class SVTextAttachment;
