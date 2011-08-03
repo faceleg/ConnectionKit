@@ -11,9 +11,9 @@
 #import "SVGraphicDOMController.h"
 
 
-@interface SVGraphicContainerDOMController : SVDOMController <SVOffscreenWebViewControllerDelegate>
+@interface SVGraphicContainerDOMController : SVDOMController
 {
-@private
+  @private
     DOMHTMLElement  *_bodyElement;
         
     SVOffscreenWebViewController    *_offscreenWebViewController;
@@ -25,8 +25,6 @@
 @property(nonatomic, retain) DOMHTMLElement *bodyHTMLElement;
 - (DOMElement *)graphicDOMElement;
 - (void)loadPlaceholderDOMElementInDocument:(DOMDocument *)document;
-
-- (void)update;
 
 
 @end
