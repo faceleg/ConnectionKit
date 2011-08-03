@@ -306,7 +306,10 @@
 
 - (NSSet *)dependencies { return [_dependenciesTracker dependencies]; }
 
-- (void)addDependency:(KSObjectKeyPathPair *)pair; { [_dependenciesTracker addDependency:pair]; }
+- (void)addDependenciesObject:(KSObjectKeyPathPair *)pair; { [_dependenciesTracker addDependency:pair]; }
+- (void)addDependency:(KSObjectKeyPathPair *)pair; { [self addDependenciesObject:pair]; }
+
+- (void)removeDependenciesObject:(KSObjectKeyPathPair *)pair { OBASSERT_NOT_REACHED("shouldn't remove"); }
 
 - (void)removeAllDependencies; { [_dependenciesTracker removeAllDependencies]; }
 
