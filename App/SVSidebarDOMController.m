@@ -152,7 +152,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     
     // Load HTML into DOM, hooking up to controllers
     DOMDocument *doc = [[self HTMLElement] ownerDocument];
-    DOMDocumentFragment *fragment = [doc
+    DOMDocumentFragment *fragment = [(DOMHTMLDocument *)doc
                                      createDocumentFragmentWithMarkupString:html
                                      baseURL:nil];
     [html release];
