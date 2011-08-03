@@ -113,7 +113,7 @@
 @synthesize designsController = _designsController;
 - (NSArrayController *)designsController;
 {
-    [self window];    // make sure it's loaded
+    if (!_designsController) [self view];    // make sure it's loaded
     return _designsController;
 }
 
@@ -132,7 +132,6 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 }
 + (NSSet *)keyPathsForValuesAffectingMatchColor
 {
-    // As far as I can see, this should make .inspectedObjects KVO-compliant, but it seems something about NSArrayController stops it from working
     return [NSSet setWithObjects:@"genre", @"color", @"width", @"designsController.arrangedObjects", nil];
 }
 
@@ -180,7 +179,6 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 }
 + (NSSet *)keyPathsForValuesAffectingMatchString
 {
-    // As far as I can see, this should make .inspectedObjects KVO-compliant, but it seems something about NSArrayController stops it from working
     return [NSSet setWithObjects:@"genre", @"color", @"width", @"designsController.arrangedObjects", nil];
 }
 
