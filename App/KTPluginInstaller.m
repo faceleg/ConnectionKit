@@ -113,13 +113,14 @@ static KTPluginInstaller *sSharedPluginInstaller = nil;
 			NSFileManager *fm = [NSFileManager defaultManager];
 			if ([fm fileExistsAtPath:destPath] && ![sourcePath isEqualToString:destPath])
 			{
-				(void) [fm removeFileAtPath:destPath handler:nil];
+				
+				(void) [fm removeItemAtPath:destPath error:nil];
 			}
 			
 			// Move if we can delete the source file, and if the source path is not within the application path
 			BOOL shouldMove = [fm isDeletableFileAtPath:sourcePath] && ![sourcePath hasPrefix:appPath];
 
-			BOOL copiedOrMoved = shouldMove ? [fm movePath:sourcePath toPath:destPath handler:nil] : [fm copyPath:sourcePath toPath:destPath handler:nil];
+			BOOL copiedOrMoved = shouldMove ? [fm moveItemAtPath:sourcePath toPath:destPath error:nil] : [fm copyItemAtPath:sourcePath toPath:destPath error:nil];
 			if (copiedOrMoved)
 			{
 				[successURLs addObject:[NSURL fileURLWithPath:destPath]];
