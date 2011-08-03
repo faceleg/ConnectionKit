@@ -216,7 +216,15 @@
 
 - (BOOL)shouldTrySelectingInline;
 {
-    return [[self representedObject] displayInline];
+    BOOL result = NO;
+    
+    id object = [self representedObject];
+    if ([object respondsToSelector:@selector(displayInline)])
+    {
+        result = [object displayInline];
+    }
+    
+    return result;
 }
 
 #pragma mark Updating
