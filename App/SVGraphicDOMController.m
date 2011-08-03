@@ -9,11 +9,13 @@
 #import "SVGraphicDOMController.h"
 #import "SVGraphic.h"
 
+#import "SVCalloutDOMController.h"
 #import "SVParagraphedHTMLWriterDOMAdaptor.h"
 #import "SVPlugInDOMController.h"
 #import "SVSidebarDOMController.h"
 #import "SVWebEditorHTMLContext.h"
 #import "WebEditingKit.h"
+#import "WebViewEditingHelperClasses.h"
 
 #import "DOMElement+Karelia.h"
 #import "DOMNode+Karelia.h"
@@ -185,6 +187,280 @@
     _drawAsDropTarget = NO;
     
     return YES;
+}
+
+#pragma mark Updating
+
+- (void)updateWithDOMNode:(DOMNode *)node items:(NSArray *)items;
+{
+    // Swap in updated node. Then get the Web Editor to hook new descendant controllers up to the new nodes
+    [[[self HTMLElement] parentNode] replaceChild:node oldChild:[self HTMLElement]];
+    //[self setHTMLElement:nil];  // so Web Editor will endeavour to hook us up again
+    
+    
+    // Hook up new DOM Controllers
+    DOMNode *ancestor = [self ancestorNode];
+    if (!ancestor) ancestor = [[self HTMLElement] ownerDocument];
+    
+    for (WEKWebEditorItem *anItem in items)
+    {
+        [anItem setAncestorNode:ancestor recursive:YES];
+    }
+    
+    
+    
+    SVWebEditorViewController *viewController = [self webEditorViewController];
+    [viewController willUpdate];    // wrap the replacement like this so doesn't think update finished too early
+    {
+        [self didUpdateWithSelector:@selector(update)];
+        [[self retain] autorelease];    // replacement is likely to deallocate us
+        [[self parentWebEditorItem] replaceChildWebEditorItem:self withItems:items];
+    }
+    [viewController didUpdate];
+}
+
+- (void)update;
+{
+    // Tear down dependencies etc.
+    [self stopObservingDependencies];
+    //[self setChildWebEditorItems:nil];
+    
+    
+    // Setup the context
+    KSStringWriter *html = [[KSStringWriter alloc] init];
+    
+    SVWebEditorHTMLContext *context = [[[SVWebEditorHTMLContext class] alloc]
+                                       initWithOutputWriter:html inheritFromContext:[self HTMLContext]];
+    
+    [context writeJQueryImport];    // for any plug-ins that might depend on it
+    [context writeExtraHeaders];
+    
+    //[[context rootDOMController] setWebEditorViewController:[self webEditorViewController]];
+    
+    
+    // Write HTML
+    id <SVComponent> container = [[self parentWebEditorItem] representedObject];   // rarely nil, but sometimes is. #116816
+    
+    if (container) [context beginGraphicContainer:container];
+    [context writeGraphic:[self representedObject]];
+    if (container) [context endGraphicContainer];
+    
+    
+    // Copy out controllers
+    [_offscreenContext release];
+    _offscreenContext = [context retain];
+    
+    
+    // Copy top-level dependencies across to parent. #79396
+    [context flush];    // you never know!
+    [[self mutableSetValueForKeyPath:@"parentWebEditorItem.dependencies"] unionSet:[[context rootElement] dependencies]];
+    
+    
+    // Copy across data resources
+    WebDataSource *dataSource = [[[[self webEditor] webView] mainFrame] dataSource];
+    for (SVMedia *media in [context media])
+    {
+        if ([media webResource])
+        {
+            [dataSource addSubresource:[media webResource]];
+        }
+    }
+    
+    
+    // Bring end body code into the html
+    [context writeEndBodyString];
+    [context close];
+    [context release];
+    
+    
+    DOMHTMLDocument *doc = (DOMHTMLDocument *)[[self HTMLElement] ownerDocument];
+    DOMDocumentFragment *fragment = [doc createDocumentFragmentWithMarkupString:[html string] baseURL:nil];
+    
+    if (fragment)
+    {
+        SVContentDOMController *rootController = [[SVContentDOMController alloc]
+                                                  initWithWebEditorHTMLContext:_offscreenContext
+                                                  node:fragment];
+        DOMElement *anElement = [fragment firstChildOfClass:[DOMElement class]];
+        while (anElement)
+        {
+            if ([[anElement getElementsByTagName:@"SCRIPT"] length]) break; // deliberately ignoring top-level scripts
+            
+            NSString *ID = [[[rootController childWebEditorItems] objectAtIndex:0] elementIdName];
+            if ([ID isEqualToString:[anElement getAttribute:@"id"]])
+            {
+                // Search for any following scripts
+                if ([anElement nextSiblingOfClass:[DOMHTMLScriptElement class]]) break;
+                
+                // No scripts, so can update directly
+                [self updateWithDOMNode:anElement items:[rootController childWebEditorItems]];
+                
+                [rootController release];
+                [_offscreenContext release]; _offscreenContext = nil;
+                return;
+            }
+            
+            anElement = [anElement nextSiblingOfClass:[DOMElement class]];
+        }
+        
+        [rootController release];
+    }
+    
+    
+    // Start loading DOM objects from HTML
+    if (_offscreenWebViewController)
+    {
+        // Need to restart loading. Do so by pretending we already finished
+        [self didUpdateWithSelector:_cmd];
+    }
+    else
+    {
+        _offscreenWebViewController = [[SVOffscreenWebViewController alloc] init];
+        [_offscreenWebViewController setDelegate:self];
+    }
+    
+    [_offscreenWebViewController loadHTMLFragment:[html string]];
+    [html release];
+}
+
++ (DOMHTMLHeadElement *)headOfDocument:(DOMDocument *)document;
+{
+    if ([document respondsToSelector:@selector(head)])
+    {
+        return [document performSelector:@selector(head)];
+    }
+    else
+    {
+        DOMNodeList *nodes = [document getElementsByTagName:@"HEAD"];
+        return (DOMHTMLHeadElement *)[nodes item:0];
+    }
+}
+
+- (void)disableScriptsInNode:(DOMNode *)fragment;
+{
+    // I have to turn off the script nodes from actually executing
+	DOMNodeIterator *it = [[fragment ownerDocument] createNodeIterator:fragment whatToShow:DOM_SHOW_ELEMENT filter:[ScriptNodeFilter sharedFilter] expandEntityReferences:NO];
+	DOMHTMLScriptElement *subNode;
+    
+	while ((subNode = (DOMHTMLScriptElement *)[it nextNode]))
+	{
+		[subNode setText:@""];		/// HACKS -- clear out the <script> tags so that scripts are not executed AGAIN
+		[subNode setSrc:@""];
+		[subNode setType:@""];
+	}
+}
+
+- (void)stopUpdate;
+{
+    [_offscreenWebViewController setDelegate:nil];
+    [_offscreenWebViewController release]; _offscreenWebViewController = nil;
+    [_offscreenContext release]; _offscreenContext = nil;
+}
+
+- (void)offscreenWebViewController:(SVOffscreenWebViewController *)controller
+                       didLoadBody:(DOMHTMLElement *)loadedBody;
+{
+    // Pull the nodes across to the Web Editor
+    DOMDocument *document = [[self HTMLElement] ownerDocument];
+    DOMDocumentFragment *fragment = [document createDocumentFragment];
+    DOMDocumentFragment *bodyFragment = [document createDocumentFragment];
+    DOMNodeList *children = [loadedBody childNodes];
+    
+    BOOL importedContent = NO;
+    for (int i = 0; i < [children length]; i++)
+    {
+        DOMNode *node = [children item:i];
+        
+        // Try adopting the node, then fallback to import, as described in http://www.w3.org/TR/DOM-Level-3-Core/core.html#Document3-adoptNode
+        DOMNode *imported = [document adoptNode:node];
+        if (!imported)
+        {
+            // TODO:
+            // As noted at http://www.w3.org/TR/DOM-Level-3-Core/core.html#Core-Document-importNode this could raise an exception, which we should probably catch and handle in some fashion
+            imported = [document importNode:node deep:YES];
+        }
+        
+        // Is this supposed to be inserted at top of doc?
+        if (importedContent)
+        {
+            [fragment appendChild:imported];
+        }
+        else
+        {
+            if ([imported isKindOfClass:[DOMElement class]])
+            {
+                DOMHTMLElement *element = (DOMHTMLElement *)imported;
+                NSString *ID = [element idName];
+                if (ID)
+                {
+                    [fragment appendChild:imported];
+                    importedContent = YES;
+                    continue;
+                }
+            }
+            
+            [bodyFragment appendChild:imported];
+        }
+    }
+    
+    
+    
+    // I have to turn off the script nodes from actually executing
+	[self disableScriptsInNode:fragment];
+    [self disableScriptsInNode:bodyFragment];
+    
+    
+    // Import headers too
+    DOMDocument *offscreenDoc = [loadedBody ownerDocument];
+    DOMNodeList *headNodes = [[[self class] headOfDocument:offscreenDoc] childNodes];
+    DOMHTMLElement *head = [[self class] headOfDocument:document];
+    
+    for (int i = 0; i < [headNodes length]; i++)
+    {
+        DOMNode *aNode = [headNodes item:i];
+        aNode = [document importNode:aNode deep:YES];
+        [head appendChild:aNode];
+    }
+    
+    
+    // Are we missing a callout?
+    SVGraphic *graphic = [self representedObject];
+    if ([graphic isCallout] && ![self calloutDOMController])
+    {
+        // Create a callout stack where we are know
+        SVCalloutDOMController *calloutController = [[SVCalloutDOMController alloc] initWithHTMLDocument:(DOMHTMLDocument *)document];
+        [calloutController loadHTMLElement];
+        
+        [[[self HTMLElement] parentNode] replaceChild:[calloutController HTMLElement]
+                                             oldChild:[self HTMLElement]];
+        
+        // Then move ourself into the callout
+        [[calloutController calloutContentElement] appendChild:[self HTMLElement]];
+        
+        [self retain];
+        [[self parentWebEditorItem] replaceChildWebEditorItem:self with:calloutController];
+        [calloutController addChildWebEditorItem:self];
+        [calloutController release];
+        [self release];
+    }
+    
+    
+    // Update
+    SVContentDOMController *rootController = [[SVContentDOMController alloc]
+                                              initWithWebEditorHTMLContext:_offscreenContext
+                                              node:fragment];
+    
+    [self updateWithDOMNode:fragment items:[rootController childWebEditorItems]];
+    [rootController release];
+    
+    
+    DOMNode *body = [(DOMHTMLDocument *)document body];
+    [body insertBefore:bodyFragment refChild:[body firstChild]];
+    
+    
+    
+    // Teardown
+    [self stopUpdate];
 }
 
 #pragma mark Resize

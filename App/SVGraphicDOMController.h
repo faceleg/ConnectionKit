@@ -34,10 +34,13 @@
 #pragma mark -
 
 
-@interface SVGraphicDOMController : SVDOMController
+@interface SVGraphicDOMController : SVDOMController <SVOffscreenWebViewControllerDelegate>
 {
   @private
     BOOL    _drawAsDropTarget;
+    
+    SVOffscreenWebViewController    *_offscreenWebViewController;
+    SVWebEditorHTMLContext          *_offscreenContext;
 }
 
 @end
