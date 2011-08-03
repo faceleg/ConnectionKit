@@ -218,13 +218,10 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     
     // Hook up new DOM Controllers
     [self stopObservingDependencies];
+    [self didUpdateWithSelector:@selector(update)]; // must inform now, before are removed from the tree
+    
     [[self retain] autorelease];    // since the replacement could easily dealloc us otherwise!
     [[self parentWebEditorItem] replaceChildWebEditorItem:self withItems:[contentController childWebEditorItems]];
-    
-    for (SVDOMController *aController in [contentController childWebEditorItems])
-    {
-        [aController didUpdateWithSelector:_cmd];
-    }
     
     [contentController release];
 }
