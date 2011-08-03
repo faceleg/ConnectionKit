@@ -233,7 +233,7 @@
         // Once we're marked for update, no point continuing to observe
         if ([self needsUpdate])
         {
-            // Articles update by re-using their child controllers where possible (this strategy may well be extended to other controllers one day). Thus we want children to continue observing dependencies while they're still in the tree.
+            // Rich Text updates by re-using their child controllers where possible (this strategy may well be extended to other controllers one day). Thus we want children to continue observing dependencies while they're still in the tree.
             // For example this meant that article would stop child items from detecting a change in caption. #98794
             [self removeAllDependencies];//[self stopObservingDependencies];
         }
