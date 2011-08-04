@@ -318,7 +318,7 @@
         }
         else
         {
-            if ([elementName isEqualToStringCaseInsensitive:@"P"])
+            if ([elementName isEqualToString:@"p"])
             {
                 result = [super endElementWithDOMElement:element];
             }
