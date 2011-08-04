@@ -112,9 +112,7 @@
 
 - (void)writeUpdateHTML:(SVHTMLContext *)context;
 {
-    [context beginGraphicContainer:[[self parentWebEditorItem] representedObject]];
     [context writeGraphic:[[self representedObject] graphic]];
-    [context endGraphicContainer];
 }
 
 - (void)updateWrap;

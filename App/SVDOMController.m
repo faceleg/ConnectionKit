@@ -269,7 +269,25 @@
     SVWebEditorHTMLContext *context = [[[SVWebEditorHTMLContext class] alloc]
                                        initWithOutputWriter:htmlString inheritFromContext:[self HTMLContext]];
     
-    [self writeUpdateHTML:context];
+    
+    WEKWebEditorItem *parent = [self parentWebEditorItem];
+    id <SVComponent> parentComponent = [parent representedObject];
+    while (parent && !parentComponent)
+    {
+        parent = [parent parentWebEditorItem];
+        parentComponent = [parent representedObject];
+    }
+    
+    if (parentComponent)
+    {
+        [context beginGraphicContainer:parentComponent];
+        [self writeUpdateHTML:context];
+        [context endGraphicContainer];
+    }
+    else
+    {
+        [self writeUpdateHTML:context];
+    }
     
     
     // Copy top-level dependencies across to parent. #79396
