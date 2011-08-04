@@ -355,11 +355,7 @@
 			baseConfigurationReference = 3C42E5C70D650935004F35FD /* Debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = (
-					"-lz",
-					"-seg1addr",
-					0x50280000,
-				);
+				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = YouTube;
 				WRAPPER_EXTENSION = svxElement;
 			};
@@ -370,11 +366,7 @@
 			baseConfigurationReference = 3C42E5C80D650935004F35FD /* Release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = (
-					"-lz",
-					"-seg1addr",
-					0x50280000,
-				);
+				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = YouTube;
 				WRAPPER_EXTENSION = svxElement;
 			};
