@@ -4,9 +4,9 @@
     Example markup:
     
     <div class="gmap_marker">
-        <p class="locationlabel">Location:</p>
-        <p class="location">Pasadena, CA</p>
-        <p class="directions">Get directions:<p>
+        <span class="locationlabel">Location:</span><br />
+        <span class="location">Pasadena, CA</span><br />
+        <span class="directions">Get directions:<span>
     </div>
     
 */
@@ -19,12 +19,12 @@
 p.locationlabel {
 	margin: 0px;
 	font-weight: bold;
-	font-size: medium;
+	font-size: smaller;
 }
 
 p.location {
 	margin: 0px;
-	font-size: small;
+	font-size: smaller;
 }
 
 p.directions {

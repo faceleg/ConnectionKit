@@ -358,10 +358,6 @@
 			baseConfigurationReference = 3C9701280D5CFAB40070D4A1 /* Debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = (
-					"-seg1addr",
-					0x502e0000,
-				);
 				PRODUCT_NAME = GeneralIndex;
 				WRAPPER_EXTENSION = svxElement;
 			};
@@ -372,10 +368,6 @@
 			baseConfigurationReference = 3C9701290D5CFAB40070D4A1 /* Release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = (
-					"-seg1addr",
-					0x502e0000,
-				);
 				PRODUCT_NAME = GeneralIndex;
 				WRAPPER_EXTENSION = svxElement;
 			};

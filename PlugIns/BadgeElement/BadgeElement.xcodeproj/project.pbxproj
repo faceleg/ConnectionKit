@@ -489,10 +489,6 @@
 			baseConfigurationReference = 3CA9FF090D63C0A800815310 /* Debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = (
-					"-seg1addr",
-					0x503e0000,
-				);
 				PRODUCT_NAME = Badge;
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = svxElement;
@@ -504,10 +500,6 @@
 			baseConfigurationReference = 3CA9FF0A0D63C0A800815310 /* Release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = (
-					"-seg1addr",
-					0x503e0000,
-				);
 				PRODUCT_NAME = Badge;
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = svxElement;

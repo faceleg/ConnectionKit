@@ -489,10 +489,6 @@
 			baseConfigurationReference = 3C4A16880D5E7135009476BF /* Debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = (
-					"-seg1addr",
-					0x504c0000,
-				);
 				PRODUCT_NAME = Amazon;
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = svxElement;
@@ -504,10 +500,6 @@
 			baseConfigurationReference = 3C4A16890D5E7135009476BF /* Release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = (
-					"-seg1addr",
-					0x504c0000,
-				);
 				PRODUCT_NAME = Amazon;
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = svxElement;
