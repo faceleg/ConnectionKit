@@ -17,6 +17,8 @@
 {
   @private
     BOOL    _allowsBlockGraphics;
+    
+    DOMElement  *_potentiallyPointlessLineBreak;
 }
 
 @property(nonatomic) BOOL allowsPagelets;

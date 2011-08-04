@@ -275,8 +275,8 @@
 {
     DOMNode *result = nil;
     
-    NSString *tagName = [[self XMLWriter] topElement];
-    if ([[self class] isElementWithTagNameContent:tagName])
+    NSString *elementName = [[self XMLWriter] topElement];
+    if ([[self class] isElementWithTagNameContent:elementName])
     {
         result = [super endElementWithDOMElement:element];
     }
@@ -297,7 +297,7 @@
         }
         else
         {
-            if ([tagName isEqualToStringCaseInsensitive:@"P"])
+            if ([elementName isEqualToString:@"p"])
             {
                 result = [super endElementWithDOMElement:element];
             }
