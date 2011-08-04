@@ -627,6 +627,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
         // Create controller for graphic
         SVGraphicDOMController *controller = [[SVGraphicDOMController alloc] initWithIdName:nil ancestorNode:[self HTMLElement]];
         [controller loadPlaceholderDOMElement];
+        [controller setRepresentedObject:graphic];
         [controller setHTMLContext:context];
         
         
