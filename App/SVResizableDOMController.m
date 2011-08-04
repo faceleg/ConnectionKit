@@ -60,11 +60,11 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 
 #pragma mark Selection
 
-- (DOMElement *)selectableDOMElement;
+- (BOOL)isSelectable
 {
     // Can be selected if graphic is explictly sized
     SVPlugInGraphic *graphic = [self representedObject];
-    return ([graphic isExplicitlySized] ? [self HTMLElement] : nil);
+    return [graphic isExplicitlySized];
 }
 
 - (void)delete;
@@ -105,7 +105,7 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 							 sizeDelta:[self sizeDelta]
                                options:[self resizeOptions]];			// Need something dynamic here?
     
-    NSDictionary *attributes = [[context currentElementInfo] attributesAsDictionary];
+    NSDictionary *attributes = [[context currentAttributes] attributesAsDictionary];
     [element setAttribute:@"width" value:[attributes objectForKey:@"width"]];
     [element setAttribute:@"height" value:[attributes objectForKey:@"height"]];
     [element setAttribute:@"style" value:[attributes objectForKey:@"style"]];
@@ -323,9 +323,9 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 {
     NSRect result = NSZeroRect;
     
-    DOMElement *element = [self selectableDOMElement];
-    if (element)
+    if ([self isSelectable])
     {
+        DOMElement *element = [self HTMLElement];
         result = [element boundingBox];
         
         // Take into account padding and border

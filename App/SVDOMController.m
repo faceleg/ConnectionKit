@@ -216,7 +216,15 @@
 
 - (BOOL)shouldTrySelectingInline;
 {
-    return [[self representedObject] displayInline];
+    BOOL result = NO;
+    
+    id object = [self representedObject];
+    if ([object respondsToSelector:@selector(displayInline)])
+    {
+        result = [object displayInline];
+    }
+    
+    return result;
 }
 
 #pragma mark Updating
@@ -490,7 +498,7 @@
     
     
     // Is the aligned/floated left/center/right?
-    if ([[style cssFloat] isEqualToString:@"right"] ||
+    if ([[style getPropertyValue:@"float"] isEqualToString:@"right"] ||  // -cssFloat returns empty string for some reason
         [[style textAlign] isEqualToString:@"right"])
     {
         result = kCALayerLeftEdge;
@@ -872,7 +880,7 @@
     KSSelectionBorder *result = [super newSelectionBorder];
     
     // Hide border on <OBJECT> tags etc.
-    DOMElement *selectionElement = [self selectableDOMElement];
+    DOMElement *selectionElement = [self HTMLElement];
     NSString *tagName = [selectionElement tagName];
     
     if ([tagName isEqualToString:@"IMG"] ||

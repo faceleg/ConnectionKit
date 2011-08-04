@@ -74,6 +74,9 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 - (void)setNeedsUpdate;
 - (void)updateIfNeeded; // only updates what's needed, so could just be a handful of DOM controllers
 
+- (void)willUpdate;
+- (void)didUpdate;
+
 
 #pragma mark Loading
 - (void)loadPage:(KTPage *)page;

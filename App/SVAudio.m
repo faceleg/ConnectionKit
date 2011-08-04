@@ -275,44 +275,47 @@
 
 - (void)writePostAudioScript:(SVHTMLContext *)context referringToID:(NSString *)audioID
 {
-	OBPRECONDITION(context);
-	OBPRECONDITION(audioID);
-	// Now write the post-audio-tag surgery since onerror doesn't really work
-	// This is hackish browser-sniffing!  Maybe later we can do away with this (especially if we can get > 1 audio source)
-	
-	[context startJavascriptElementWithSrc:nil];
-	[context stopWritingInline];
-	[context writeString:[NSString stringWithFormat:@"var audio = document.getElementById('%@');\n", audioID]];
-	[context writeString:[NSString stringWithFormat:@"if (audio.canPlayType && audio.canPlayType('%@')) {\n",
-						  [KSWORKSPACE ks_MIMETypeForType:[self codecType]]]];
-	[context writeString:@"\t// canPlayType is overoptimistic, so we have browser sniff.\n"];
-	
-	// See: http://www.findmebyip.com/litmus#html5-audio-codecs
-	// We have mp3, so no ogg, so force a fallback if NOT webkit-based.
-	if ([[self codecType] conformsToUTI:(NSString *)kUTTypeMP3])
+	if (![context isForEditing])	// Don't do script if editing, so we can just put the DOM element directly in.
 	{
-		[context writeString:@"\tif (navigator.userAgent.indexOf('WebKit/') <= -1) {\n\t\t// Only webkit-browsers can currently play mp3 natively\n\t\tfallback(audio);\n\t}\n"];
+		OBPRECONDITION(context);
+		OBPRECONDITION(audioID);
+		// Now write the post-audio-tag surgery since onerror doesn't really work
+		// This is hackish browser-sniffing!  Maybe later we can do away with this (especially if we can get > 1 audio source)
+		
+		[context startJavascriptElementWithSrc:nil];
+		[context stopWritingInline];
+		[context writeString:[NSString stringWithFormat:@"var audio = document.getElementById('%@');\n", audioID]];
+		[context writeString:[NSString stringWithFormat:@"if (audio.canPlayType && audio.canPlayType('%@')) {\n",
+							  [KSWORKSPACE ks_MIMETypeForType:[self codecType]]]];
+		[context writeString:@"\t// canPlayType is overoptimistic, so we have browser sniff.\n"];
+		
+		// See: http://www.findmebyip.com/litmus#html5-audio-codecs
+		// We have mp3, so no ogg, so force a fallback if NOT webkit-based.
+		if ([[self codecType] conformsToUTI:(NSString *)kUTTypeMP3])
+		{
+			[context writeString:@"\tif (navigator.userAgent.indexOf('WebKit/') <= -1) {\n\t\t// Only webkit-browsers can currently play mp3 natively\n\t\tfallback(audio);\n\t}\n"];
+		}
+		// We have a .ogg, which won't play on Safari
+		else if ([[self codecType] conformsToUTI:@"public.ogg-vorbis"])
+		{
+			[context writeString:@"\tif (navigator.userAgent.indexOf(' "];
+			[context writeString:([context isForEditing] ? @"Sandvox" : @"Safari")];	// Treat Sandvox like it's Safari
+			[context writeString:@"') > -1) {\n"];
+	//		[context writeString:@"\tdocument.writeln('User agent Sandvox -- ' + navigator.userAgent);\n"];
+			[context writeString:@"\t\t// Safari can't play this natively\n\t\tfallback(audio);\n\t}\n"];
+		}
+		// We have a .wav, which will play on all platforms with <audio> except Chrome, so force a fallback to Windows media object
+		else if ([[self codecType] conformsToUTI:@"com.microsoft.waveform-audio"])
+		{
+			[context writeString:@"\tif (navigator.userAgent.indexOf(' Chrome/') > -1) {\n\t\t// Chrome can't play mp3 natively\n\t\tfallback(audio);\n\t}\n"];
+		}
+		// Note: For other audio types, we're not going to try to fallback.  They are on their own if they use another format!
+		
+		[context writeString:@"} else {\n"];
+	//	[context writeString:@"\tdocument.writeln('falling back -- ' + navigator.userAgent);\n"];
+		[context writeString:@"\tfallback(audio);\n}\n"];
+		[context endElement];
 	}
-	// We have a .ogg, which won't play on Safari
-	else if ([[self codecType] conformsToUTI:@"public.ogg-vorbis"])
-	{
-		[context writeString:@"\tif (navigator.userAgent.indexOf(' "];
-		[context writeString:([context isForEditing] ? @"Sandvox" : @"Safari")];	// Treat Sandvox like it's Safari
-		[context writeString:@"') > -1) {\n"];
-//		[context writeString:@"\tdocument.writeln('User agent Sandvox -- ' + navigator.userAgent);\n"];
-		[context writeString:@"\t\t// Safari can't play this natively\n\t\tfallback(audio);\n\t}\n"];
-	}
-	// We have a .wav, which will play on all platforms with <audio> except Chrome, so force a fallback to Windows media object
-	else if ([[self codecType] conformsToUTI:@"com.microsoft.waveform-audio"])
-	{
-		[context writeString:@"\tif (navigator.userAgent.indexOf(' Chrome/') > -1) {\n\t\t// Chrome can't play mp3 natively\n\t\tfallback(audio);\n\t}\n"];
-	}
-	// Note: For other audio types, we're not going to try to fallback.  They are on their own if they use another format!
-	
-	[context writeString:@"} else {\n"];
-//	[context writeString:@"\tdocument.writeln('falling back -- ' + navigator.userAgent);\n"];
-	[context writeString:@"\tfallback(audio);\n}\n"];
-	[context endElement];	
 }
 
 - (NSString *)startFlash:(SVHTMLContext *)context

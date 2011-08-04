@@ -77,12 +77,12 @@
 #pragma mark -
 #pragma mark HTML Generation
 
-- (BOOL)canCompactChildren:(NSArray *)children
+- (BOOL)canCompactChildren:(NSArray *)children context:(id<SVPlugInContext>)context
 {
     // if any children have children, return NO
     for ( id<SVPage> page in children )
     {
-        if ( [[page performSelector:@selector(childPages)] count] )
+        if ( [[context sitemapChildrenOfPage:page] count] )
         {
             return NO;
         }
@@ -90,7 +90,6 @@
     
     return YES;
 }
-
 
 - (void)writeLinkOfPage:(id<SVPage>)aPage
               toContext:(id<SVPlugInContext>)context
@@ -123,12 +122,6 @@
             [context addDependencyForKeyPath:keyPath ofObject:aPage];
         }
         
-        // figure out what children, if any, should be included        
-		NSMutableArray *children = [NSMutableArray array];
-        for ( id<SVPage> childPage in [aPage performSelector:@selector(childPages)] )
-        {
-            if ( [childPage shouldIncludeInSiteMaps] ) [children addObject:childPage];
-        }
         
         // if asSection emit <h3>/<h4>, else emit <li>
         (asSection) ? [context startHeadingWithAttributes:nil] : [context startElement:@"li" attributes:nil];
@@ -138,11 +131,14 @@
         
         // close h3 (or h4)
 		if ( asSection ) [context endElement];
+        
+        // figure out what children, if any, should be included        
+		NSArray *children = [context sitemapChildrenOfPage:aPage];
 		
         // process children
 		if ( [children count] )
 		{
-            if ( wantsCompact && [self canCompactChildren:children] )
+            if ( wantsCompact && [self canCompactChildren:children context:context] )
             {
                 // show children inline , no recursion
                 [context startElement:@"ul" attributes:nil];
@@ -214,7 +210,7 @@
         }
         
         // recursively map each top-level page        
-        NSArray *topLevelPages = [rootPage performSelector:@selector(childPages)];
+        NSArray *topLevelPages = [context sitemapChildrenOfPage:rootPage];
         if ( topLevelPages.count > 0 )
         {
             if ( !self.sections ) [context startElement:@"ul" attributes:nil];

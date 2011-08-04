@@ -215,19 +215,18 @@ disabledPreviewObjectsCount:(NSUInteger)disabledPreviewObjectsCount
 			
 			if (explanation)
 			{
-				// DEPRECATED
-				NSRunInformationalAlertPanelRelativeToWindow(
+				NSBeginInformationalAlertSheet(
 					 NSLocalizedString(@"Congratulations! The HTML is valid.",@"Title of results alert"),
+											   nil, nil, nil, aWindow, nil, nil, nil, nil,
 					 NSLocalizedString(@"The validator returned the following status message:\n\n%@%@",@""),
-					 nil,nil,nil, aWindow, explanation, disabledPreviewWarningWithNewlines);				
+					 explanation, disabledPreviewWarningWithNewlines);				
 			}
 			else	// no explanation to show ... just show any disabled warning below.
 			{
-				// DEPRECATED
-				NSRunInformationalAlertPanelRelativeToWindow(
+				NSBeginInformationalAlertSheet(
 					 NSLocalizedString(@"Congratulations! The HTML is valid.",@"Title of results alert"),
-						disabledPreviewWarningWithNewlines,
-					 nil,nil,nil, aWindow );
+						nil, nil, nil, aWindow, nil, nil, nil, nil,
+						@"%@", disabledPreviewWarningWithNewlines);
 			}
 		}
 		else

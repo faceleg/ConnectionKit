@@ -253,7 +253,7 @@
 	//NSString *path = [[design bundle] bundlePath];
 	BOOL canBeRevealed = YES; // ... MAYBE ONLY EXTERNAL DESIGNS? ... ![path ks_isSubpathOfPath:[[NSBundle mainBundle] bundlePath]];
 	
-	[menu addItemWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Reveal in Finder", @"")] action:@selector(revealDesign) keyEquivalent:@""];
+	[menu addItemWithTitle:NSLocalizedString(@"Reveal in Finder", @"") action:@selector(revealDesign) keyEquivalent:@""];
 	
 	[[menu itemAtIndex:0] setTarget:self];
 	[[menu itemAtIndex:0] setEnabled:canBeRevealed];
@@ -262,7 +262,7 @@
 	
 	if ([design URL])
 	{
-		[menu addItemWithTitle:[NSString stringWithFormat:NSLocalizedString(@"View Website for Design", @"")] action:@selector(openDesignURL) keyEquivalent:@""];
+		[menu addItemWithTitle:NSLocalizedString(@"View Website for Design", @"") action:@selector(openDesignURL) keyEquivalent:@""];
 		[[menu itemAtIndex:1] setTarget:self];
 	}
 	

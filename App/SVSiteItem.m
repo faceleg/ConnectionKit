@@ -16,6 +16,7 @@
 #import "KTMaster.h"
 #import "SVMediaRecord.h"
 #import "KTPage.h"
+#import "KTPublishingEngine.h"
 #import "KTSite.h"
 #import "SVWebEditingURL.h"
 
@@ -26,7 +27,7 @@
 
 #import "KSError.h"
 #import "KSPathUtilities.h"
-#import "KTPublishingEngine.h"
+#import "KSURLUtilities.h"
 
 #import "KSStringXMLEntityEscaping.h"
 
@@ -297,6 +298,7 @@
 	return result;
 }
 
+- (NSString *)fileNameExtension; { return [[self URL] ks_pathExtension]; }
 - (BOOL)canPreview { return NO; }
 
 - (NSString *)previewPath
@@ -754,6 +756,10 @@
                    ([self datePublished] || ![self isDraftOrHasDraftAncestor]));
     return result;
 }
++ (NSSet *)keyPathsForValuesAffectingShouldIncludeInSiteMaps;
+{
+    return [NSSet setWithObjects:@"includeInSiteMap", @"datePublished", @"isDraft", nil];
+}
 
 - (NSString *)language { return nil; }
 
@@ -778,6 +784,25 @@
 }
 
 #pragma mark Serialization
+
+- (void)awakeFromPropertyList:(id)propertyList;
+{
+    [super awakeFromPropertyList:propertyList];
+    
+    id thumbnail = [propertyList objectForKey:@"customThumbnail"];
+    if (thumbnail)
+    {
+        SVMedia *media = [[SVMedia alloc] initWithSerializedProperties:thumbnail];
+        if (media)
+        {
+            SVMediaRecord *record = [SVMediaRecord mediaRecordWithMedia:media
+                                                             entityName:@"Thumbnail"
+                                         insertIntoManagedObjectContext:[self managedObjectContext]];
+            
+            [self setCustomThumbnail:record];
+        }
+    }
+}
 
 - (void)awakeFromPropertyList:(id)propertyList parentItem:(SVSiteItem *)parent;
 {
@@ -810,6 +835,9 @@
     [super populateSerializedProperties:propertyList];
     
     [propertyList setObject:[[self entity] name] forKey:@"entity"];
+    
+    // Custom Thumbnail
+    [propertyList setValue:[[self customThumbnail] serializedProperties] forKey:@"customThumbnail"];
 }
 
 @end
