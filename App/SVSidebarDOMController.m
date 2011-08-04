@@ -148,6 +148,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     [context beginGraphicContainer:[self representedObject]];
     [context writeGraphics:pagelets];
     [context endGraphicContainer];
+    [context close];
     
     
     // Load HTML into DOM, hooking up to controllers
