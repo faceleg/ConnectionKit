@@ -142,6 +142,61 @@
     }
 }
 
+#pragma mark Elements
+
+/*  Paragraphs and list items sometimes end with a linebreak which is wasted (only has a value if a placemarker in an otherwise empty paragraph). Remove such breaks using the buffer
+ */
+
+- (void)startElement:(NSString *)elementName withDOMElement:(DOMElement *)element;    // open the tag and write attributes
+{
+    if ([elementName isEqualToString:@"br"] && [element previousSibling])
+    {
+        [_output cancelFlushOnNextWrite];   // as we're about to write into the buffer
+                                            //[_pendingStartTagDOMElements addObject:element];
+        [_output beginBuffering];
+        
+        OBASSERT(!_potentiallyPointlessLineBreak);
+        _potentiallyPointlessLineBreak = [element retain];
+        
+        // Don't need to flush on next write since linebreaks are always empty elements. We'll set up flushing once element ends
+        
+        return [super startElement:elementName withDOMElement:element];
+    }
+    
+    [super startElement:elementName withDOMElement:element];
+}
+
+- (DOMNode *)endElementWithDOMElement:(DOMElement *)element;
+{
+    if (_potentiallyPointlessLineBreak)
+    {
+        NSString *elementName = [[self XMLWriter] topElement];
+        if ([elementName isEqualToString:@"br"])
+        {
+            DOMNode *result = [super endElementWithDOMElement:element];
+            [_output flushOnNextWrite];
+            
+            return result;
+        }
+        else
+        {
+            // The linebreak was never flushed, so time to delete it!
+            [[_potentiallyPointlessLineBreak parentNode] removeChild:_potentiallyPointlessLineBreak];
+            [_output discardBuffer];
+            [_potentiallyPointlessLineBreak release]; _potentiallyPointlessLineBreak = nil;
+        }
+    }
+    
+    return [super endElementWithDOMElement:element];
+}
+
+- (void)outputWillFlush:(NSNotification *)notification;
+{
+    [super outputWillFlush:notification];
+    
+    [_potentiallyPointlessLineBreak release]; _potentiallyPointlessLineBreak = nil;
+}
+
 #pragma mark Characters
 
 - (DOMNode *)willWriteDOMText:(DOMText *)textNode;
