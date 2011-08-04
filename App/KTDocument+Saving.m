@@ -802,10 +802,18 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
             }
             else
             {
-                // Don't try to access -[dupe filename] as it may be a deleted object, and therefore unable to fulfil the fault
+                // Generally, don't try to access -[dupe filename] as it may be a deleted object, and therefore unable to fulfil the fault
                 NSURL *fileURL = [dupe fileURL];
-                [aMediaRecord readFromURL:fileURL options:0 error:NULL];
-                [aMediaRecord setFilename:[fileURL ks_lastPathComponent]];
+                if (fileURL)
+                {
+                    [aMediaRecord readFromURL:fileURL options:0 error:NULL];
+                    [aMediaRecord setFilename:[fileURL ks_lastPathComponent]];
+                }
+                else
+                {
+                    // mid-save, duplicate, in-memory media doesn't know its URL, so record filename, chain together and wait for document to update URLs
+                    [aMediaRecord setFilename:[dupe filename]];
+                }
                 
                 NSString *key = [self keyForDocumentFileWrapper:dupe];
                 OBASSERT(key);
