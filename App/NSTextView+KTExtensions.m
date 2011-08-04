@@ -451,8 +451,7 @@ Makes the view so wide that text won't wrap anymore.
 				NS_VOIDRETURN;
 
 			// Look for associated line break:
-			if( ![vScanner skipUpToCharactersFromSet:[NSCharacterSet characterSetWithCharactersInString: @"\n\r"]] )
-				;
+			(void) [vScanner skipUpToCharactersFromSet:[NSCharacterSet characterSetWithCharactersInString: @"\n\r"]];
 			
 			vEndOffs = [vScanner scanLocation];
 			
