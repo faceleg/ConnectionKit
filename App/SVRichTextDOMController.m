@@ -314,13 +314,13 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 }
 
 - (DOMNode *)convertImageElementToGraphic:(DOMHTMLImageElement *)imageElement
-                               HTMLWriter:(SVParagraphedHTMLWriterDOMAdaptor *)writer;
+                               HTMLWriter:(SVParagraphedHTMLWriterDOMAdaptor *)adaptor;
 {
     // Is there an orphaned item we should reconnect to?
     WEKWebEditorItem *orphanedItem = [self hitTestDOMNode:imageElement];
     if ([orphanedItem representedObject])
     {
-        [orphanedItem writeAttributedHTML:writer];
+        [orphanedItem writeAttributedHTML:adaptor];
         DOMNode *result = [[orphanedItem HTMLElement] nextSibling];
         
         // Fake a change of text selection so the new item gets noticed and selected if needed. #92313
@@ -383,6 +383,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     
     // Import size & wrap & controller
     SVDOMController *controller = [self convertImageElement:imageElement toGraphic:image];
+    DOMNode *result = [[controller HTMLElement] nextSibling];   // do now, as might change while updating
     
     
     // Apply size limit
@@ -401,10 +402,10 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     
     
     // Write the replacement
-    [controller writeAttributedHTML:writer];
+    [controller writeAttributedHTML:adaptor];
     
     
-    return [[controller HTMLElement] nextSibling];
+    return result;
 }
 
 - (SVDOMController *)convertImageElement:(DOMHTMLImageElement *)imageElement toGraphic:(SVMediaGraphic *)image;
