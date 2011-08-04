@@ -364,11 +364,7 @@
 			baseConfigurationReference = 3C4C69D60D640E8A00398BDA /* Debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = (
-					"-seg1addr",
-					0x500e0000,
-					"-lz",
-				);
+				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = Contact;
 				WRAPPER_EXTENSION = svxElement;
 			};
@@ -379,11 +375,7 @@
 			baseConfigurationReference = 3C4C69D70D640E8A00398BDA /* Release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = (
-					"-seg1addr",
-					0x500e0000,
-					"-lz",
-				);
+				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = Contact;
 				WRAPPER_EXTENSION = svxElement;
 			};
