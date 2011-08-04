@@ -52,6 +52,8 @@
 
 @property(nonatomic) BOOL shouldIncludeElementIdNameWhenPublishing;
 
+- (void)loadPlaceholderDOMElement;
+
 @property(nonatomic, retain, readwrite) SVWebEditorHTMLContext *HTMLContext;
 
 

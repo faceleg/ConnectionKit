@@ -101,13 +101,6 @@
     }
 }
 
-- (void)loadPlaceholderDOMElementInDocument:(DOMDocument *)document;
-{
-    DOMElement *element = [document createElement:@"DIV"];
-    [[element style] setDisplay:@"none"];
-    [self setHTMLElement:(DOMHTMLElement *)element];
-}
-
 #pragma mark Updating
 
 - (void)writeUpdateHTML:(SVHTMLContext *)context;
@@ -441,7 +434,7 @@
 
 - (void)loadHTMLElementFromDocument:(DOMHTMLDocument *)document;
 {
-    [self loadPlaceholderDOMElementInDocument:document];
+    [self loadPlaceholderDOMElement];
 }
 
 @end

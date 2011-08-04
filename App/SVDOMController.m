@@ -142,6 +142,13 @@
     [context release];
 }
 
+- (void)loadPlaceholderDOMElement;
+{
+    DOMElement *element = [[[self ancestorNode] ownerDocument] createElement:@"DIV"];
+    [[element style] setDisplay:@"none"];
+    [self setHTMLElement:(DOMHTMLElement *)element];
+}
+
 - (DOMHTMLDocument *)HTMLDocument;
 {
     DOMHTMLDocument *result = [super HTMLDocument];

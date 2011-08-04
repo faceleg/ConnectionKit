@@ -190,7 +190,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         else
         {            
             controller = [controllers objectAtIndex:i];
-            [controller loadPlaceholderDOMElementInDocument:[contentElement ownerDocument]];
+            [controller loadPlaceholderDOMElement];
             [self addChildWebEditorItem:controller];
             [controller setHTMLContext:[self HTMLContext]];
             
