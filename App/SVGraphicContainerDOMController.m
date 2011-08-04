@@ -16,13 +16,6 @@
 #import "DOMNode+Karelia.h"
 
 
-@interface SVGraphicPlaceholderDOMController : SVGraphicContainerDOMController
-@end
-
-
-#pragma mark -
-
-
 @implementation SVGraphicContainerDOMController
 
 #pragma mark Lifecycle
@@ -39,14 +32,6 @@
     [self setRepresentedObject:nil];
     
     [super dealloc];
-}
-
-#pragma mark Factory
-
-+ (SVGraphicContainerDOMController *)graphicPlaceholderDOMController;
-{
-    SVGraphicContainerDOMController *result = [[[SVGraphicPlaceholderDOMController alloc] init] autorelease];
-    return result;
 }
 
 #pragma mark Content
@@ -422,19 +407,6 @@
     }
     
     return result;
-}
-
-@end
-
-
-#pragma mark -
-
-
-@implementation SVGraphicPlaceholderDOMController
-
-- (void)loadHTMLElementFromDocument:(DOMHTMLDocument *)document;
-{
-    [self loadPlaceholderDOMElement];
 }
 
 @end

@@ -20,8 +20,6 @@
     SVWebEditorHTMLContext          *_offscreenContext;
 }
 
-+ (SVGraphicContainerDOMController *)graphicPlaceholderDOMController;
-
 @property(nonatomic, retain) DOMHTMLElement *bodyHTMLElement;
 - (DOMElement *)graphicDOMElement;
 
