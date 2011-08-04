@@ -230,10 +230,8 @@
     
     
     // Setup the context
-    KSStringWriter *html = [[KSStringWriter alloc] init];
-    
     SVWebEditorHTMLContext *context = [[[SVWebEditorHTMLContext class] alloc]
-                                       initWithOutputWriter:html inheritFromContext:[self HTMLContext]];
+                                       initWithOutputWriter:nil inheritFromContext:[self HTMLContext]];
     
     [context writeJQueryImport];    // for any plug-ins that might depend on it
     [context writeExtraHeaders];
@@ -272,12 +270,16 @@
     
     // Bring end body code into the html
     [context writeEndBodyString];
+    KSStringWriter *stringWriter = [[context outputStringWriter] retain];
     [context close];
-    [context release];
     
+    NSString *html = [stringWriter string];
+    [stringWriter release];
     
     DOMHTMLDocument *doc = (DOMHTMLDocument *)[[self HTMLElement] ownerDocument];
-    DOMDocumentFragment *fragment = [doc createDocumentFragmentWithMarkupString:[html string] baseURL:nil];
+    DOMDocumentFragment *fragment = [doc createDocumentFragmentWithMarkupString:html baseURL:nil];
+    [context release];
+    
     
     if (fragment)
     {
@@ -322,8 +324,7 @@
         [_offscreenWebViewController setDelegate:self];
     }
     
-    [_offscreenWebViewController loadHTMLFragment:[html string]];
-    [html release];
+    [_offscreenWebViewController loadHTMLFragment:html];
 }
 
 + (DOMHTMLHeadElement *)headOfDocument:(DOMDocument *)document;
