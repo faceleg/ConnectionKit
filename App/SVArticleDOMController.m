@@ -617,7 +617,7 @@
 {
     if ([self shouldMigrateRawHTMLOnNextEdit])
     {
-        SVMigrationHTMLWriterDOMAdaptor *result = [[SVMigrationHTMLWriterDOMAdaptor alloc] initWithOutputStringWriter:stringWriter];
+        SVMigrationHTMLWriterDOMAdaptor *result = [[SVMigrationHTMLWriterDOMAdaptor alloc] initWithOutputMultiBufferingWriter:stringWriter];
         
         [result setTextDOMController:self];
         

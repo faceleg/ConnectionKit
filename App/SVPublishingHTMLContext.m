@@ -35,7 +35,7 @@
                publisher:(id <SVPublisher>)publisher;
 {    
     // If there's no destination, don't bother storing the HTML!
-    self = (path ? [self init] : [self initWithOutputStringWriter:nil]);
+    self = (path ? [self init] : [self initWithOutputMultiBufferingWriter:nil]);
     
     _path = [path copy];
     _publisher = [publisher retain];

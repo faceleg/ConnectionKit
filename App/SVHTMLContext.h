@@ -42,7 +42,6 @@ typedef NSUInteger SVPageImageRepresentationOptions2;
 #pragma mark -
 
 
-@class KSStringWriter;
 @class KTPage, SVSiteItem, SVArchivePage, SVGraphic, SVHTMLTextBlock, SVLink, SVMedia, SVMediaRequest, SVSidebarPageletsController;
 @class SVTemplate;
 @protocol SVGraphic, SVMedia, SVEnclosure;
@@ -51,9 +50,8 @@ typedef NSUInteger SVPageImageRepresentationOptions2;
 @interface SVHTMLContext : KSHTMLWriter <SVPlugInContext>
 {
   @private
-    KSStringWriter  *_output;
-    id <KSWriter>   _finalOutput;
-    NSUInteger      _charactersWritten;
+    id <KSMultiBufferingWriter> _output;
+    NSUInteger                  _charactersWritten;
     
     NSURL   *_baseURL;
     
@@ -87,7 +85,7 @@ typedef NSUInteger SVPageImageRepresentationOptions2;
 
 // Like -initWithOutputWriter: but gives the context more info about the output. In practice this means that if a page component changes the doctype, the output will be wiped and the page rewritten with the new doctype.
 // Designated initializer
-- (id)initWithOutputStringWriter:(KSStringWriter *)output;
+- (id)initWithOutputMultiBufferingWriter:(id <KSMultiBufferingWriter>)output;
 
 // For if you need a fresh context based off an existing one
 - (id)initWithOutputWriter:(id <KSWriter>)output inheritFromContext:(SVHTMLContext *)context;
@@ -103,7 +101,7 @@ typedef NSUInteger SVPageImageRepresentationOptions2;
 #pragma mark Properties
 
 // Not 100% sure I want to expose this!
-@property(nonatomic, retain, readonly) KSStringWriter *outputStringWriter;
+@property(nonatomic, retain, readonly) id <KSMultiBufferingWriter> outputStringWriter;
 @property(nonatomic, readonly) NSUInteger totalCharactersWritten;
 
 @property(nonatomic, retain, readonly) KTPage *page;    // does NOT affect .baseURL

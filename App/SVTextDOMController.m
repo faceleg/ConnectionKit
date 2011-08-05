@@ -263,12 +263,12 @@
     if ([self isFieldEditor])
     {
         return [[SVFieldEditorHTMLWriterDOMAdapator alloc]
-                initWithOutputStringWriter:stringWriter];
+                initWithOutputMultiBufferingWriter:stringWriter];
     }
     else
     {
         return [[SVParagraphedHTMLWriterDOMAdaptor alloc]
-                initWithOutputStringWriter:stringWriter];
+                initWithOutputMultiBufferingWriter:stringWriter];
     }
 }
 

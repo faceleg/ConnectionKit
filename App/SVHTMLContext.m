@@ -39,7 +39,7 @@
 
 #import "KSPathUtilities.h"
 #import "KSSHA1Stream.h"
-#import "KSStringWriter.h"
+#import "KSBufferedWriter.h"
 
 #import "Registration.h"
 
@@ -87,19 +87,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 #pragma mark Init & Dealloc
 
-- (id)initWithOutputWriter:(id <KSWriter>)output; // designated initializer
-{
-    KSStringWriter *stringWriter = [[KSStringWriter alloc] init];
-    if (self = [self initWithOutputStringWriter:stringWriter]);
-    {
-        _finalOutput = [output retain];
-    }
-    
-    [stringWriter release];
-    return self;
-}
-
-- (id)initWithOutputStringWriter:(KSStringWriter *)output;
+- (id)initWithOutputMultiBufferingWriter:(id <KSMultiBufferingWriter>)output;
 {
     if (self = [super initWithOutputWriter:output])
     {
@@ -121,6 +109,22 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     return self;
 }
 
+- (id)initWithOutputWriter:(id)output; // designated initializer
+{
+    if (!output || [output conformsToProtocol:@protocol(KSMultiBufferingWriter)])
+    {
+        self = [self initWithOutputMultiBufferingWriter:output];
+    }
+    else
+    {
+        KSStringWriter *stringWriter = [[KSBufferedWriter alloc] initWithOutputWriter:output];
+        self = [self initWithOutputWriter:stringWriter];
+        [stringWriter release];
+    }
+    
+    return self;
+}
+
 - (id)initWithOutputWriter:(id <KSWriter>)output inheritFromContext:(SVHTMLContext *)context;
 {
 	OBPRECONDITION(context);
@@ -128,8 +132,6 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     
     if (self = [self initWithOutputWriter:output docType:[context docType] encoding:encoding])
     {
-        if ([output isKindOfClass:[KSStringWriter class]]) _output = [output retain];
-        
         // Copy across properties
         [self setIndentationLevel:[context indentationLevel]];
         _currentPage = [[context page] retain];
@@ -139,6 +141,14 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
         _sidebarPageletsController = [context->_sidebarPageletsController retain];
     }
     
+    return self;
+}
+
+- init
+{
+    KSStringWriter *output = [[KSStringWriter alloc] init];
+    self = [self initWithOutputMultiBufferingWriter:output];
+    [output release];
     return self;
 }
 
@@ -1734,15 +1744,11 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 - (void)close;
 {
-    if (_finalOutput)
-    {
-        [_finalOutput writeString:[[self outputStringWriter] string]];
-    }
+    [_output flush];
     
     [super close];
     
     [_output release]; _output = nil;
-    [_finalOutput release]; _finalOutput = nil;
 }
 
 #pragma mark Pages
