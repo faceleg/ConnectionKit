@@ -23,6 +23,7 @@
 #import "NSString+Karelia.h"
 
 #import "KSOutputStreamWriter.h"
+#import "KSStringWriter.h"
 #import "KSURLUtilities.h"
 #import "KSPathUtilities.h"
 
@@ -35,7 +36,8 @@
                publisher:(id <SVPublisher>)publisher;
 {    
     // If there's no destination, don't bother storing the HTML!
-    self = (path ? [self init] : [self initWithOutputStringWriter:nil]);
+    if (path) _stringWriter = [[KSStringWriter alloc] init];
+    self = [self initWithOutputWriter:_stringWriter];
     
     _path = [path copy];
     _publisher = [publisher retain];
@@ -49,7 +51,7 @@
     if (![self didAddMediaWithoutPath] ||
         [(KTPublishingEngine *)_publisher status] >= KTPublishingEngineStatusParsing)
     {
-        NSString *html = [[self outputStringWriter] string];
+        NSString *html = [_stringWriter string];
         if (html)
         {
             NSStringEncoding encoding = [self encoding];
@@ -85,6 +87,7 @@
     // Tidy up
     [super close];
     
+    [_stringWriter release]; _stringWriter = nil;
     //[_publishingEngine release]; _publishingEngine = nil;     Messes up media gathering
     [_contentHashDataOutput release]; _contentHashDataOutput = nil;
     [_contentHashStream release]; _contentHashStream = nil;

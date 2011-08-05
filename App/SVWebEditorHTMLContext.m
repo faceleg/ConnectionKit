@@ -66,9 +66,6 @@
 
 - (void)reset;
 {
-    [super reset];
-    
-    
     [_rootController release];
     _currentDOMController = _rootController = [[SVContentDOMController alloc] init];
     

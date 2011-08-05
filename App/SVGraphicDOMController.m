@@ -21,7 +21,7 @@
 #import "SVSidebarDOMController.h"
 #import "SVTemplate.h"
 #import "SVTextAttachment.h"
-#import "SVWebEditorHTMLContext.h"
+#import "SVWebEditorUpdatesHTMLContext.h"
 #import "SVWebEditorViewController.h"
 
 #import "WebEditingKit.h"
@@ -155,9 +155,12 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     // Setup the context
     KSStringWriter *html = [[KSStringWriter alloc] init];
+    DOMHTMLDocument *doc = (DOMHTMLDocument *)[[self HTMLElement] ownerDocument];
     
-    SVWebEditorHTMLContext *context = [[[SVWebEditorHTMLContext class] alloc]
-                                       initWithOutputWriter:html inheritFromContext:[self HTMLContext]];
+    SVWebEditorHTMLContext *context = [[[SVWebEditorUpdatesHTMLContext class] alloc]
+                                       initWithDOMDocument:doc
+                                       outputWriter:html
+                                       inheritFromContext:[self HTMLContext]];
     
     [context writeJQueryImport];    // for any plug-ins that might depend on it
     [context writeExtraHeaders];
@@ -204,7 +207,6 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     [context release];
     
     
-    DOMHTMLDocument *doc = (DOMHTMLDocument *)[[self HTMLElement] ownerDocument];
     DOMDocumentFragment *fragment = [doc createDocumentFragmentWithMarkupString:[html string] baseURL:nil];
     
     if (fragment)
