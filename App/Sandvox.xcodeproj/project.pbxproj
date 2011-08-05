@@ -124,6 +124,8 @@
 		270229E512A5DC3D00873AF4 /* InvalidHTMLPlaceholder.html in Resources */ = {isa = PBXBuildFile; fileRef = 270229E412A5DC3D00873AF4 /* InvalidHTMLPlaceholder.html */; };
 		2704228112142F710077298A /* SVResizableDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2704227F12142F710077298A /* SVResizableDOMController.h */; };
 		2704228212142F710077298A /* SVResizableDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2704228012142F710077298A /* SVResizableDOMController.m */; };
+		2705B1B013EC0514004C678D /* SVWebEditorUpdatesHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 2705B1AE13EC0514004C678D /* SVWebEditorUpdatesHTMLContext.h */; };
+		2705B1B113EC0514004C678D /* SVWebEditorUpdatesHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 2705B1AF13EC0514004C678D /* SVWebEditorUpdatesHTMLContext.m */; };
 		27080FBE113DD9C900E66F92 /* SVLogoImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 27080FBC113DD9C900E66F92 /* SVLogoImage.h */; };
 		27080FBF113DD9C900E66F92 /* SVLogoImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 27080FBD113DD9C900E66F92 /* SVLogoImage.m */; };
 		27092E0D13168D69002F3C08 /* SVMigrationHTMLWriterDOMAdaptor.h in Headers */ = {isa = PBXBuildFile; fileRef = 27092E0B13168D69002F3C08 /* SVMigrationHTMLWriterDOMAdaptor.h */; };
@@ -1733,6 +1735,8 @@
 		270229E412A5DC3D00873AF4 /* InvalidHTMLPlaceholder.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = InvalidHTMLPlaceholder.html; sourceTree = "<group>"; };
 		2704227F12142F710077298A /* SVResizableDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVResizableDOMController.h; sourceTree = "<group>"; };
 		2704228012142F710077298A /* SVResizableDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVResizableDOMController.m; sourceTree = "<group>"; };
+		2705B1AE13EC0514004C678D /* SVWebEditorUpdatesHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorUpdatesHTMLContext.h; sourceTree = "<group>"; };
+		2705B1AF13EC0514004C678D /* SVWebEditorUpdatesHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebEditorUpdatesHTMLContext.m; sourceTree = "<group>"; };
 		27080FBC113DD9C900E66F92 /* SVLogoImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVLogoImage.h; sourceTree = "<group>"; };
 		27080FBD113DD9C900E66F92 /* SVLogoImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVLogoImage.m; sourceTree = "<group>"; };
 		27092E0B13168D69002F3C08 /* SVMigrationHTMLWriterDOMAdaptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMigrationHTMLWriterDOMAdaptor.h; sourceTree = "<group>"; };
@@ -3627,6 +3631,8 @@
 				2762985813153EE5001EC943 /* SVGraphicContainer.h */,
 				27629965131553BE001EC943 /* SVCallout.h */,
 				27629966131553BE001EC943 /* SVCallout.m */,
+				2705B1AE13EC0514004C678D /* SVWebEditorUpdatesHTMLContext.h */,
+				2705B1AF13EC0514004C678D /* SVWebEditorUpdatesHTMLContext.m */,
 			);
 			name = "HTML Context";
 			sourceTree = "<group>";
@@ -6189,6 +6195,7 @@
 				2743F0C513BC755A009EA6D3 /* SVImageRecipe.h in Headers */,
 				27F503E813BF3E1300F0FFD7 /* KSPerformOnThreadOperation.h in Headers */,
 				276BC94713C34DDC00EB2798 /* SVWorkspaceIconProtocol.h in Headers */,
+				2705B1B013EC0514004C678D /* SVWebEditorUpdatesHTMLContext.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7676,6 +7683,7 @@
 				2743F0C613BC755A009EA6D3 /* SVImageRecipe.m in Sources */,
 				27F503E913BF3E1300F0FFD7 /* KSPerformOnThreadOperation.m in Sources */,
 				276BC94813C34DDC00EB2798 /* SVWorkspaceIconProtocol.m in Sources */,
+				2705B1B113EC0514004C678D /* SVWebEditorUpdatesHTMLContext.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
