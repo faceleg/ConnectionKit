@@ -164,11 +164,6 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 #pragma mark Status
 
-- (void)reset;
-{
-    [[self outputStringWriter] removeAllCharacters];
-}
-
 - (BOOL)isWritingPagelet; { return _writingPagelet; }
 
 #pragma mark Document

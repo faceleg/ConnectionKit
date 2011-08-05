@@ -93,11 +93,6 @@ typedef NSUInteger SVPageImageRepresentationOptions2;
 - (id)initWithOutputWriter:(id <KSWriter>)output inheritFromContext:(SVHTMLContext *)context;
 
 
-#pragma mark Status
-// Throws away any data that can be, ready for more to write. Mainly used to retry writing after a doctype change
-- (void)reset;
-
-
 #pragma mark Document
 // Sets various context properties to match the page too
 - (void)writeDocumentWithPage:(KTPage *)page;
