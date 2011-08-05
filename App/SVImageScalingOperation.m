@@ -39,10 +39,7 @@
 {
     [self init];
  
-	NSString *host = [URL host];
-    if (!host) host = @"";
-
-    _sourceMedia = [[SVMedia alloc] initByReferencingURL:[NSURL fileURLWithPath:[URL path]
+	_sourceMedia = [[SVMedia alloc] initByReferencingURL:[NSURL fileURLWithPath:[URL path]
                                                                     isDirectory:NO]];
     
     _parameters = [[URL ks_queryParameters] copy];

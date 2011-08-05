@@ -444,11 +444,16 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	if (!result)
 	{
 		// grab only Sandvox.mom (ignoring "previous moms" in KTComponents/Resources)
-		NSBundle *componentsBundle = [NSBundle mainBundle];
-        OBASSERT(componentsBundle);
+		NSBundle *bundle = [NSBundle mainBundle];
+        OBASSERT(bundle);
 		
-        NSString *modelPath = [componentsBundle pathForResource:@"Sandvox" ofType:@"mom"];
-        OBASSERTSTRING(modelPath, [componentsBundle description]);
+        NSString *modelPath = [bundle pathForResource:@"Sandvox" ofType:@"mom"];
+        if (!modelPath) // WHAT?!? HOW? might as well try again. #136556
+        {
+            NSLog(@"MOM not found, but going to try again for the heck of it");
+            modelPath = [bundle pathForResource:@"Sandvox" ofType:@"mom"];
+        }
+        OBASSERTSTRING(modelPath, [bundle description]);
         
 		NSURL *modelURL = [NSURL fileURLWithPath:modelPath];
 		OBASSERT(modelURL);

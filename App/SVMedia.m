@@ -243,7 +243,7 @@
         // If it failed because the file already exists, we want to overrite it
         while (!result && [[error domain] isEqualToString:NSPOSIXErrorDomain] && [error code] == EEXIST)
         {
-            if (result = [[NSFileManager defaultManager] removeItemAtPath:[URL path] error:&error])
+            if ((result = [[NSFileManager defaultManager] removeItemAtPath:[URL path] error:&error]))
             {
                 result = [[NSFileManager defaultManager] copyItemAtPath:[[self fileURL] path]
                                                                  toPath:[URL path]
@@ -322,7 +322,7 @@
         [self release]; return nil;
     }
     
-    NSFileWrapper *wrapper = [[NSFileWrapper alloc] initWithSerializedRepresentation:wrapperData];
+    NSFileWrapper *wrapper = [[[NSFileWrapper alloc] initWithSerializedRepresentation:wrapperData] autorelease];
     if (!wrapper)
     {
         [self release]; return nil;
