@@ -928,16 +928,22 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		NSTextView *fieldEditor = (NSTextView *)[self.activeTextField currentEditor];
 		if (fieldEditor)
 		{
-			OBASSERT([fieldEditor isKindOfClass:[NSTextView class]]);
-			NSTextStorage *ts = [fieldEditor textStorage];
-			NSString *newFileName = [ts string];
-
-			NSString *type = [KSWORKSPACE ks_typeForFilenameExtension:[newFileName pathExtension]];
-			BOOL isEditableTextUTI = ([type conformsToUTI:(NSString *)kUTTypePlainText] ||
-									  [type conformsToUTI:(NSString *)kUTTypeHTML] ||
-									  [type conformsToUTI:(NSString *)kUTTypeXML]);
-			
-			[oEditTextButton setHidden:!isEditableTextUTI];
+			if ([fieldEditor isKindOfClass:[NSTextView class]])
+			{
+				NSTextStorage *ts = [fieldEditor textStorage];
+				NSString *newFileName = [ts string];
+				
+				NSString *type = [KSWORKSPACE ks_typeForFilenameExtension:[newFileName pathExtension]];
+				BOOL isEditableTextUTI = ([type conformsToUTI:(NSString *)kUTTypePlainText] ||
+										  [type conformsToUTI:(NSString *)kUTTypeHTML] ||
+										  [type conformsToUTI:(NSString *)kUTTypeXML]);
+				
+				[oEditTextButton setHidden:!isEditableTextUTI];
+			}
+			else
+			{
+				NSLog(@"WARNING: layoutPageURLComponents; fieldEditor is not NSTextView; it is %@", [fieldEditor class]);
+			}
 		}
 	}
 

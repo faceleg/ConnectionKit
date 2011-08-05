@@ -630,7 +630,8 @@
             NSString *attributeName = [anAttribute name];
             NSString *attributeValue = [anAttribute value];
             
-            if (attributeValue = [self validateAttribute:attributeName value:attributeValue ofElement:elementName])
+			attributeValue = [self validateAttribute:attributeName value:attributeValue ofElement:elementName];
+            if (attributeValue)
             {
                 // Validate individual styling
                 if ([attributeName isEqualToString:@"style"])
