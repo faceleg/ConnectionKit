@@ -322,7 +322,7 @@
         [self release]; return nil;
     }
     
-    NSFileWrapper *wrapper = [[NSFileWrapper alloc] initWithSerializedRepresentation:wrapperData];
+    NSFileWrapper *wrapper = [[[NSFileWrapper alloc] initWithSerializedRepresentation:wrapperData] autorelease];
     if (!wrapper)
     {
         [self release]; return nil;
