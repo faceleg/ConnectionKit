@@ -54,7 +54,7 @@ void enableCoreDumps ()
 // TODO: additional checking and obfuscation of names, etc.
 
 static NSString* hardcoded_bidStr = @"com.karelia.Sandvox";
-static NSString* hardcoded_dvStr = @"2.1.5";
+static NSString* hardcoded_dvStr = @"2.1.7b1";
 
 
 typedef int (*startup_call_t)(int, const char **);
@@ -351,6 +351,33 @@ int main(int argc, char *argv[])
 	}
 	
 	LOG((@"required = %d, allowed = %d", MAC_OS_X_VERSION_MIN_REQUIRED, MAC_OS_X_VERSION_MAX_ALLOWED));
+    
+    ///////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////
+    
+    if ( [hardcoded_bidStr isEqualToString: [[NSBundle mainBundle] bundleIdentifier]] == NO ){
+		//info.plist integrity check failed
+	}	
+	if ( [hardcoded_dvStr isEqualToString: [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleShortVersionString"]] == NO ){
+		//info.plist integrity check failed
+	}	
 	
-    return NSApplicationMain(argc, (const char **) argv);
+    startup_call_t theCall = &NSApplicationMain;
+    id obj_arg = nil;
+    argc = firstCheck(argc, &theCall, &obj_arg);
+    argc = secondCheck(argc, &theCall, &obj_arg);
+    argc = thirdCheck(argc, &theCall, &obj_arg);
+    argc = fourthCheck(argc, &theCall, &obj_arg);
+    
+    // if this is the exit() function, it shouldn't ever return
+    int rc = theCall(argc, (const char **) argv);
+    if ( argc > 50 )
+        return ( argc );
+    
+    return ( rc );
+    
+    
+	
+    //return NSApplicationMain(argc, (const char **) argv);
 }
