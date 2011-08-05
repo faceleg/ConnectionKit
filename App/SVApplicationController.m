@@ -1062,7 +1062,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	[JSTalk listen];
 	
 #ifndef VARIANT_RELEASE
-	NSLog(@"BETA: Host order = %d which means %@",
+	NSLog(@"BETA: Host order = %ld which means %@",
 		  NSHostByteOrder() , 
 		  (NSHostByteOrder() == NS_LittleEndian) ? @"i386" : @"ppc"
 		  );

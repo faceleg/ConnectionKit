@@ -366,10 +366,6 @@
 			baseConfigurationReference = 3C42E4560D64FBE4004F35FD /* Debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = (
-					"-seg1addr",
-					0x50520000,
-				);
 				PRODUCT_NAME = IMStatus;
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = svxElement;
@@ -381,10 +377,6 @@
 			baseConfigurationReference = 3C42E4570D64FBE4004F35FD /* Release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = (
-					"-seg1addr",
-					0x50520000,
-				);
 				PRODUCT_NAME = IMStatus;
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = svxElement;
