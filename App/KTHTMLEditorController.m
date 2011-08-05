@@ -560,10 +560,11 @@ initial syntax coloring.
 	NSRange						currRange = range;
     
 	// Perform the syntax coloring:
-	if( _autoSyntaxColoring && range.length > 0 )
+	if( _autoSyntaxColoring && range.length > 0
+	   && currRange.location < [textStorage length])	// make sure in bounds, case #136124
 	{
-		NSRange			effectiveRange;
-		NSString*		rangeMode;
+		NSRange			effectiveRange = NSMakeRange(0,0);
+		NSString*		rangeMode = nil;
 		
 		
 		rangeMode = [textStorage attribute: TD_SYNTAX_COLORING_MODE_ATTR

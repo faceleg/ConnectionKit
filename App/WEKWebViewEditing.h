@@ -30,7 +30,7 @@
 
 
 #pragma mark Selection
-@property(nonatomic, assign, setter=wek_setSelection) WEKSelection *wek_selection;
+@property(nonatomic, assign, setter=wek_setSelection:) WEKSelection *wek_selection;
 
 @end
 
