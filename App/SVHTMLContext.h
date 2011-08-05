@@ -50,7 +50,7 @@ typedef NSUInteger SVPageImageRepresentationOptions2;
 @interface SVHTMLContext : KSHTMLWriter <SVPlugInContext>
 {
   @private
-    id <KSMultiBufferingWriter> _output;
+    id <KSMultiBufferingWriter> _buffer;
     NSUInteger                  _charactersWritten;
     
     NSURL   *_baseURL;
@@ -82,10 +82,6 @@ typedef NSUInteger SVPageImageRepresentationOptions2;
 }
 
 #pragma mark Init
-
-// Like -initWithOutputWriter: but gives the context more info about the output. In practice this means that if a page component changes the doctype, the output will be wiped and the page rewritten with the new doctype.
-// Designated initializer
-- (id)initWithOutputMultiBufferingWriter:(id <KSMultiBufferingWriter>)output;
 
 // For if you need a fresh context based off an existing one
 - (id)initWithOutputWriter:(id <KSWriter>)output inheritFromContext:(SVHTMLContext *)context;

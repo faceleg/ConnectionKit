@@ -87,33 +87,26 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 #pragma mark Init & Dealloc
 
-- (id)initWithOutputMultiBufferingWriter:(id <KSMultiBufferingWriter>)output;
-{
-    if (self = [super initWithOutputWriter:output])
-    {
-        _output = [output retain];
-        
-        _includeStyling = YES;
-        
-        _liveDataFeeds = YES;
-        
-        _headerLevel = 1;
-
-        _preHTMLMarkup = [[NSMutableArray alloc] init];
-        _extraHeadMarkup = [[NSMutableArray alloc] init];
-        _endBodyMarkup = [[NSMutableString alloc] init];
-        _iteratorsStack = [[NSMutableArray alloc] init];
-        _graphicContainers = [[NSMutableArray alloc] init];
-    }
-    
-    return self;
-}
-
 - (id)initWithOutputWriter:(id)output; // designated initializer
 {
     if (!output || [output conformsToProtocol:@protocol(KSMultiBufferingWriter)])
     {
-        self = [self initWithOutputMultiBufferingWriter:output];
+        if (self = [super initWithOutputWriter:output])
+        {
+            _buffer = [output retain];
+            
+            _includeStyling = YES;
+            
+            _liveDataFeeds = YES;
+            
+            _headerLevel = 1;
+            
+            _preHTMLMarkup = [[NSMutableArray alloc] init];
+            _extraHeadMarkup = [[NSMutableArray alloc] init];
+            _endBodyMarkup = [[NSMutableString alloc] init];
+            _iteratorsStack = [[NSMutableArray alloc] init];
+            _graphicContainers = [[NSMutableArray alloc] init];
+        }
     }
     else
     {
@@ -141,14 +134,6 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
         _sidebarPageletsController = [context->_sidebarPageletsController retain];
     }
     
-    return self;
-}
-
-- init
-{
-    KSStringWriter *output = [[KSStringWriter alloc] init];
-    self = [self initWithOutputMultiBufferingWriter:output];
-    [output release];
     return self;
 }
 
@@ -309,7 +294,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 #pragma mark Properties
 
-@synthesize outputStringWriter = _output;
+@synthesize outputStringWriter = _buffer;
 @synthesize totalCharactersWritten = _charactersWritten;
 
 @synthesize baseURL = _baseURL;
@@ -1744,11 +1729,11 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 - (void)close;
 {
-    [_output flush];
+    [_buffer flush];
     
     [super close];
     
-    [_output release]; _output = nil;
+    [_buffer release]; _buffer = nil;
 }
 
 #pragma mark Pages
