@@ -328,7 +328,7 @@
             
             // Make sure there's no later content outside the <SPAN> #92432
             DOMNode *nextNode;
-            while (nextNode = [result nextSibling])
+            while ((nextNode = [result nextSibling]))
             {
                 [result appendChild:nextNode];
             }
@@ -351,7 +351,7 @@
                     
                     [aChild setAttribute:@"style" value:style];
                     
-                } while (aChild = [aChild nextElementSibling]);
+                } while ((aChild = [aChild nextElementSibling]));
                 
                 [result removeAttribute:@"style"];
             }

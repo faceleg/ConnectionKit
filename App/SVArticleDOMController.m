@@ -273,7 +273,7 @@
     DOMNodeIterator *iterator = [[node ownerDocument] createNodeIterator:node whatToShow:DOM_SHOW_ELEMENT filter:nil expandEntityReferences:NO];
     
     DOMElement *aNode;
-    while (aNode = (DOMElement *)[iterator nextNode])
+    while ((aNode = (DOMElement *)[iterator nextNode]))
     {
         if ([[aNode getAttribute:@"class"] isEqualToString:@"Apple-interchange-newline"])
         {
@@ -1235,7 +1235,7 @@
         DOMNode *node = [self childForDraggingInfo:dragInfo];
         //[self moveDragCaretToBeforeDOMNode:node draggingInfo:dragInfo];
         
-        if (result = [self insertGraphics:pagelets beforeDOMNode:node])
+        if ((result = [self insertGraphics:pagelets beforeDOMNode:node]))
         {
             // Remove source too?
             NSDragOperation mask = [dragInfo draggingSourceOperationMask];

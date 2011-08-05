@@ -290,7 +290,7 @@
 
 - (void)writeText; { [self writeText:[[SVHTMLTemplateParser currentTemplateParser] HTMLContext]]; }
 
-- (BOOL)HTMLContext:(SVHTMLContext *)context writeGraphic:(id <SVGraphic>)graphic;
+- (BOOL)HTMLContext:(SVHTMLContext *)context writeGraphic:(NSObject <SVGraphic> *)graphic;
 {
     if ([graphic shouldWriteHTMLInline])
     {
