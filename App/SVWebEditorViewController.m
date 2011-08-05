@@ -269,7 +269,8 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     
     
     // Construct HTML Context
-	SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] init];
+    KSStringWriter *writer = [[KSStringWriter alloc] init];
+	SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithOutputWriter:writer];
     
     [context setLiveDataFeeds:[[NSUserDefaults standardUserDefaults] boolForKey:kSVLiveDataFeedsKey]];
     [context setSidebarPageletsController:[_graphicsController sidebarPageletsController]];
@@ -305,10 +306,9 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     
     
     // Load the HTML into the webview
-    NSString *pageHTML = [[context outputStringWriter] string];
     if (pageURL) [WebView registerURLSchemeAsLocal:[pageURL scheme]];
-    [webEditor loadHTMLString:pageHTML baseURL:pageURL];
-    
+    [webEditor loadHTMLString:[writer string] baseURL:pageURL];
+    [writer release];
     
     // Tidy up. Web Editor HTML Contexts create a retain cycle until -close is called. Yes, I should fix this at some point, but it's part of the design for now. We call -close once the webview has loaded, but sometimes that point is never reached! As far as I can tell it's not a problem to close the context after starting a load. Researched into this prompted by #
     [context close];

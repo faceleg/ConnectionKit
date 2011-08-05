@@ -57,8 +57,6 @@
 
 - (void)reset;
 {
-    [super reset];
-    
     [_media removeAllObjects];
     [_mediaByData removeAllObjects];
 }

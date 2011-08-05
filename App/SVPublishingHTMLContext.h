@@ -9,7 +9,7 @@
 #import "SVHTMLContext.h"
 
 
-@class SVMediaRequest, KSSHA1Stream, KSOutputStreamWriter;
+@class SVMediaRequest, KSSHA1Stream, KSOutputStreamWriter, KSStringWriter;
 @protocol SVPublisher;
 
 
@@ -17,6 +17,7 @@
 {
   @private
     id <SVPublisher>    _publisher;
+    KSStringWriter      *_stringWriter;
     NSString            *_path;
     
     // Change tracking

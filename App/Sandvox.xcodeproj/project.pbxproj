@@ -124,6 +124,8 @@
 		270229E512A5DC3D00873AF4 /* InvalidHTMLPlaceholder.html in Resources */ = {isa = PBXBuildFile; fileRef = 270229E412A5DC3D00873AF4 /* InvalidHTMLPlaceholder.html */; };
 		2704228112142F710077298A /* SVPlugInDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2704227F12142F710077298A /* SVPlugInDOMController.h */; };
 		2704228212142F710077298A /* SVPlugInDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2704228012142F710077298A /* SVPlugInDOMController.m */; };
+		2705B1B013EC0514004C678D /* SVWebEditorUpdatesHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 2705B1AE13EC0514004C678D /* SVWebEditorUpdatesHTMLContext.h */; };
+		2705B1B113EC0514004C678D /* SVWebEditorUpdatesHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 2705B1AF13EC0514004C678D /* SVWebEditorUpdatesHTMLContext.m */; };
 		27080FBE113DD9C900E66F92 /* SVLogoImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 27080FBC113DD9C900E66F92 /* SVLogoImage.h */; };
 		27080FBF113DD9C900E66F92 /* SVLogoImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 27080FBD113DD9C900E66F92 /* SVLogoImage.m */; };
 		27092E0D13168D69002F3C08 /* SVMigrationHTMLWriterDOMAdaptor.h in Headers */ = {isa = PBXBuildFile; fileRef = 27092E0B13168D69002F3C08 /* SVMigrationHTMLWriterDOMAdaptor.h */; };
@@ -429,6 +431,8 @@
 		27A8223E12EF532D00152934 /* KSDependenciesTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A8223C12EF532D00152934 /* KSDependenciesTracker.m */; };
 		27AA10290CDA065A001D6B9B /* KTMissingMediaController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27AA10270CDA065A001D6B9B /* KTMissingMediaController.h */; settings = {ATTRIBUTES = (); }; };
 		27AA102A0CDA065A001D6B9B /* KTMissingMediaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AA10280CDA065A001D6B9B /* KTMissingMediaController.m */; };
+		27AA465213EC1802008470C7 /* KSBufferedWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 27AA465013EC1802008470C7 /* KSBufferedWriter.h */; };
+		27AA465313EC1802008470C7 /* KSBufferedWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AA465113EC1802008470C7 /* KSBufferedWriter.m */; };
 		27ACACB60D588F64004732D0 /* KTPlaceholderBindingTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 27ACACB40D588F64004732D0 /* KTPlaceholderBindingTextField.h */; settings = {ATTRIBUTES = (); }; };
 		27ACACB70D588F64004732D0 /* KTPlaceholderBindingTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 27ACACB50D588F64004732D0 /* KTPlaceholderBindingTextField.m */; };
 		27ACC6EF126317CE00EA521E /* SVFillController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27ACC6ED126317CE00EA521E /* SVFillController.h */; };
@@ -1739,6 +1743,8 @@
 		270229E412A5DC3D00873AF4 /* InvalidHTMLPlaceholder.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = InvalidHTMLPlaceholder.html; sourceTree = "<group>"; };
 		2704227F12142F710077298A /* SVPlugInDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPlugInDOMController.h; sourceTree = "<group>"; };
 		2704228012142F710077298A /* SVPlugInDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPlugInDOMController.m; sourceTree = "<group>"; };
+		2705B1AE13EC0514004C678D /* SVWebEditorUpdatesHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorUpdatesHTMLContext.h; sourceTree = "<group>"; };
+		2705B1AF13EC0514004C678D /* SVWebEditorUpdatesHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebEditorUpdatesHTMLContext.m; sourceTree = "<group>"; };
 		27080FBC113DD9C900E66F92 /* SVLogoImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVLogoImage.h; sourceTree = "<group>"; };
 		27080FBD113DD9C900E66F92 /* SVLogoImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVLogoImage.m; sourceTree = "<group>"; };
 		27092E0B13168D69002F3C08 /* SVMigrationHTMLWriterDOMAdaptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMigrationHTMLWriterDOMAdaptor.h; sourceTree = "<group>"; };
@@ -2076,6 +2082,8 @@
 		27A8223C12EF532D00152934 /* KSDependenciesTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSDependenciesTracker.m; sourceTree = "<group>"; };
 		27AA10270CDA065A001D6B9B /* KTMissingMediaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMissingMediaController.h; sourceTree = "<group>"; };
 		27AA10280CDA065A001D6B9B /* KTMissingMediaController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMissingMediaController.m; sourceTree = "<group>"; };
+		27AA465013EC1802008470C7 /* KSBufferedWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSBufferedWriter.h; sourceTree = "<group>"; };
+		27AA465113EC1802008470C7 /* KSBufferedWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSBufferedWriter.m; sourceTree = "<group>"; };
 		27ACA30F0D57A8E0004732D0 /* KTSummaryWebViewTextBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTSummaryWebViewTextBlock.h; sourceTree = "<group>"; };
 		27ACA3100D57A8E0004732D0 /* KTSummaryWebViewTextBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTSummaryWebViewTextBlock.m; sourceTree = "<group>"; };
 		27ACACB40D588F64004732D0 /* KTPlaceholderBindingTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPlaceholderBindingTextField.h; sourceTree = "<group>"; };
@@ -3355,6 +3363,8 @@
 				27579A30132BAAE00006C605 /* KSMutableDataWriter.m */,
 				27A6098311282AC0007C301F /* KSWriter.h */,
 				27A6098411282AC0007C301F /* KSWriter.m */,
+				27AA465013EC1802008470C7 /* KSBufferedWriter.h */,
+				27AA465113EC1802008470C7 /* KSBufferedWriter.m */,
 			);
 			path = KSWriter;
 			sourceTree = "<group>";
@@ -3645,6 +3655,8 @@
 				27D68FCF13CF6D2E00D7B867 /* SVPagelet.m */,
 				27FBC9BC13D4F0A3002F720B /* SVInlineGraphicContainer.m */,
 				2720F3E113D64E79007DD23C /* SVComponent.h */,
+				2705B1AE13EC0514004C678D /* SVWebEditorUpdatesHTMLContext.h */,
+				2705B1AF13EC0514004C678D /* SVWebEditorUpdatesHTMLContext.m */,
 			);
 			name = "HTML Context";
 			sourceTree = "<group>";
@@ -6210,6 +6222,8 @@
 				278645B713C62D1C0098C34F /* SVElementInfoGatheringHTMLContext.h in Headers */,
 				27D68FD013CF6D2E00D7B867 /* SVPagelet.h in Headers */,
 				2720F3E213D64E79007DD23C /* SVComponent.h in Headers */,
+				27AA465213EC1802008470C7 /* KSBufferedWriter.h in Headers */,
+				2705B1B013EC0514004C678D /* SVWebEditorUpdatesHTMLContext.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7700,6 +7714,8 @@
 				278645B813C62D1C0098C34F /* SVElementInfoGatheringHTMLContext.m in Sources */,
 				27D68FD113CF6D2E00D7B867 /* SVPagelet.m in Sources */,
 				27FBC9BD13D4F0A3002F720B /* SVInlineGraphicContainer.m in Sources */,
+				27AA465313EC1802008470C7 /* KSBufferedWriter.m in Sources */,
+				2705B1B113EC0514004C678D /* SVWebEditorUpdatesHTMLContext.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

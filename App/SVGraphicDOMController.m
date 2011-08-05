@@ -15,7 +15,7 @@
 #import "SVParagraphedHTMLWriterDOMAdaptor.h"
 #import "SVPlugInDOMController.h"
 #import "SVSidebarDOMController.h"
-#import "SVWebEditorHTMLContext.h"
+#import "SVWebEditorUpdatesHTMLContext.h"
 #import "WebEditingKit.h"
 #import "SVWebEditorViewController.h"
 #import "WebViewEditingHelperClasses.h"
@@ -230,8 +230,13 @@
     
     
     // Setup the context
-    SVWebEditorHTMLContext *context = [[[SVWebEditorHTMLContext class] alloc]
-                                       initWithOutputWriter:nil inheritFromContext:[self HTMLContext]];
+    KSStringWriter *html = [[[KSStringWriter alloc] init] autorelease];
+    DOMHTMLDocument *doc = (DOMHTMLDocument *)[[self HTMLElement] ownerDocument];
+    
+    SVWebEditorHTMLContext *context = [[[SVWebEditorUpdatesHTMLContext class] alloc]
+                                       initWithDOMDocument:doc
+                                       outputWriter:html
+                                       inheritFromContext:[self HTMLContext]];
     
     [context writeJQueryImport];    // for any plug-ins that might depend on it
     [context writeExtraHeaders];
@@ -270,14 +275,10 @@
     
     // Bring end body code into the html
     [context writeEndBodyString];
-    KSStringWriter *stringWriter = [[context outputStringWriter] retain];
     [context close];
     
-    NSString *html = [stringWriter string];
-    [stringWriter release];
     
-    DOMHTMLDocument *doc = (DOMHTMLDocument *)[[self HTMLElement] ownerDocument];
-    DOMDocumentFragment *fragment = [doc createDocumentFragmentWithMarkupString:html baseURL:nil];
+	DOMDocumentFragment *fragment = [doc createDocumentFragmentWithMarkupString:[html string] baseURL:nil];
     [context release];
     
     
@@ -324,7 +325,7 @@
         [_offscreenWebViewController setDelegate:self];
     }
     
-    [_offscreenWebViewController loadHTMLFragment:html];
+    [_offscreenWebViewController loadHTMLFragment:[html string]];
 }
 
 + (DOMHTMLHeadElement *)headOfDocument:(DOMDocument *)document;
