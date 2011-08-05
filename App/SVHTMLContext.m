@@ -1417,7 +1417,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     
     // Time to start buffering in case a plug-in wants to inject code here
     KSStringWriter *stringWriter = [self outputStringWriter];
-    OBASSERT(stringWriter);
+    if (!stringWriter) return;  // nowt to do
     
     [stringWriter beginBuffering];
     _preHTMLBuffer = [stringWriter numberOfBuffers];
@@ -1459,7 +1459,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     
     // Time to start buffering in case a plug-in wants to inject code here
     KSStringWriter *stringWriter = [self outputStringWriter];
-    OBASSERT(stringWriter);
+    if (!stringWriter) return;  // nowt to do
     
     [stringWriter beginBuffering];
     _extraHeadBuffer = [stringWriter numberOfBuffers];
