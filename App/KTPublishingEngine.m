@@ -929,42 +929,44 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (BOOL)threaded_mediaRequestIsNative:(SVMediaRequest *)request
 {
-    BOOL result = [request isNativeRepresentation];
-    if (!result)
+    if ([request isNativeRepresentation]) return YES;
+    
+    // Time to look closer to see if conversion/scaling is required
+    CGImageSourceRef imageSource = IMB_CGImageSourceCreateWithImageItem((id)[request media], NULL);
+    if (!imageSource) return NO;
+    
+    BOOL result = NO;
+    
+    NSString *type = [request type];
+    if (!type || [type isEqualToString:(NSString *)CGImageSourceGetType(imageSource)])
     {
-        // Time to look closer to see if conversion/scaling is required
-        CGImageSourceRef imageSource = IMB_CGImageSourceCreateWithImageItem((id)[request media], NULL);
-        if (imageSource)
+        NSNumber *width = [request width];
+        NSNumber *height = [request height];
+        NSSet *colorModels = [request allowedColorSpaceModels];
+        
+        if (width || height || [colorModels count])
         {
-            if ([[request type] isEqualToString:(NSString *)CGImageSourceGetType(imageSource)])
+            // TODO: Should we better take into account a source with multiple images?
+            CFDictionaryRef properties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, NULL);
+            if (properties)
             {
-                if ([request width] || [request height])
-                {
-                    // TODO: Should we better take into account a source with multiple images?
-                    CFDictionaryRef properties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, NULL);
-                    if (properties)
-                    {
-                        CFNumberRef width = CFDictionaryGetValue(properties, kCGImagePropertyPixelWidth);
-                        CFNumberRef height = CFDictionaryGetValue(properties, kCGImagePropertyPixelHeight);
-                        
-                        if ([[request width] isEqualToNumber:(NSNumber *)width] &&
-                            [[request height] isEqualToNumber:(NSNumber *)height])
-                        {
-                            result = YES;
-                        }
-                        
-                        CFRelease(properties);
-                    }
-                }
-                else
+                CFNumberRef imageWidth = CFDictionaryGetValue(properties, kCGImagePropertyPixelWidth);
+                CFNumberRef imageHeight = CFDictionaryGetValue(properties, kCGImagePropertyPixelHeight);
+                CFNumberRef colorModel = CFDictionaryGetValue(properties, kCGImagePropertyColorModel);
+                
+                if ((!width || [width isEqualToNumber:(NSNumber *)imageWidth]) &&
+                    (!height || [height isEqualToNumber:(NSNumber *)imageHeight]) &&
+                    (![colorModels count] || [colorModels containsObject:(id)colorModel]))
                 {
                     result = YES;
                 }
+                
+                CFRelease(properties);
             }
-            
-            CFRelease(imageSource);
         }
     }
+        
+    CFRelease(imageSource);
     
     return result;
 }
