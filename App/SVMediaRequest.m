@@ -65,7 +65,9 @@ preferredUploadPath:(NSString *)path
     {
         _colorSpaceModels = [[NSSet alloc] initWithObjects:
                              [NSNumber numberWithInt:kCGColorSpaceModelRGB],
+                             kCGImagePropertyColorModelRGB,
                              [NSNumber numberWithInt:kCGColorSpaceModelMonochrome],
+                             kCGImagePropertyColorModelGray,
                              nil];
     }
     
