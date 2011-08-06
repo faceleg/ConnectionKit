@@ -131,8 +131,15 @@
     // Create CIIContext to match
     if (!coreImageContext)
     {
+        CGColorSpaceRef colorSpace = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
+        
         coreImageContext = [CIContext contextWithCGContext:nil
-                                                   options:[NSDictionary dictionaryWithObject:NSBOOL(YES) forKey:kCIContextUseSoftwareRenderer]];
+                                                   options:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                            NSBOOL(YES), kCIContextUseSoftwareRenderer,
+                                                            colorSpace, kCIContextOutputColorSpace,
+                                                            nil]];
+        
+        CFRelease(colorSpace);
         
         [[[NSThread currentThread] threadDictionary]
          setObject:coreImageContext forKey:@"SVImageScalingOperationCIContext"];
