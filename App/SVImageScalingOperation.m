@@ -182,6 +182,27 @@
         finalImage = [coreImageContext createCGImage:image fromRect:neededContextRect];
     }
     
+    
+    // If given a CMYK image that didn't need scaling, the result may not be in the desired colorspace. Try to force it to be
+    CGColorSpaceModel model = CGColorSpaceGetModel(CGImageGetColorSpace(finalImage));
+    if (model != kCGColorSpaceModelRGB && model != kCGColorSpaceModelMonochrome)
+    {
+        CGColorSpaceRef colorSpace = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
+        
+        CGImageRef rgbImage = [coreImageContext createCGImage:image
+                                                     fromRect:neededContextRect
+                                                       format:kCIFormatARGB8
+                                                   colorSpace:colorSpace];
+        
+        CFRelease(colorSpace);
+        
+        if (rgbImage)
+        {
+            CFRelease(finalImage); finalImage = rgbImage;
+        }
+    }
+    
+    
     OBASSERT(finalImage);
     
     
