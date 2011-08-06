@@ -151,10 +151,15 @@
     CGImageRef finalImage = NULL;
     if (colorSpace)
     {
-        finalImage = [coreImageContext createCGImage:scaledImage
-                                            fromRect:neededContextRect
-                                              format:kCIFormatARGB8
-                                          colorSpace:colorSpace];
+        // Web browsers only support RGB and monochrome color spaces
+        CGColorSpaceModel model = CGColorSpaceGetModel(colorSpace);
+        if (model == kCGColorSpaceModelRGB || model == kCGColorSpaceModelMonochrome)
+        {
+            finalImage = [coreImageContext createCGImage:scaledImage
+                                                fromRect:neededContextRect
+                                                  format:kCIFormatARGB8
+                                              colorSpace:colorSpace];
+        }
     }
     
     if (!finalImage)
