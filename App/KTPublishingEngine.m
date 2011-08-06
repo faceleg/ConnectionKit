@@ -927,15 +927,10 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     return result;
 }
 
-- (NSData *)threaded_publishMedia:(SVMediaRequest *)request cachedSHA1Digest:(NSData *)digest;
+- (BOOL)threaded_mediaRequestIsNative:(SVMediaRequest *)request
 {
-    /*  It is presumed that the call to this method will have been scheduled on an appropriate queue.
-     */
-    OBPRECONDITION(request);
-    
-    
-    BOOL isNative = [request isNativeRepresentation];
-    if (!isNative)
+    BOOL result = [request isNativeRepresentation];
+    if (!result)
     {
         // Time to look closer to see if conversion/scaling is required
         CGImageSourceRef imageSource = IMB_CGImageSourceCreateWithImageItem((id)[request media], NULL);
@@ -955,7 +950,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                         if ([[request width] isEqualToNumber:(NSNumber *)width] &&
                             [[request height] isEqualToNumber:(NSNumber *)height])
                         {
-                            isNative = YES;
+                            result = YES;
                         }
                         
                         CFRelease(properties);
@@ -963,13 +958,26 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                 }
                 else
                 {
-                    isNative = YES;
+                    result = YES;
                 }
             }
             
             CFRelease(imageSource);
         }
     }
+    
+    return result;
+}
+
+- (NSData *)threaded_publishMedia:(SVMediaRequest *)request cachedSHA1Digest:(NSData *)digest;
+{
+    /*  It is presumed that the call to this method will have been scheduled on an appropriate queue.
+     */
+    OBPRECONDITION(request);
+    
+    
+    BOOL isNative = [self threaded_mediaRequestIsNative:request];
+
     
     
     
