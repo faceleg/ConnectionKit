@@ -39,10 +39,7 @@
 {
     [self init];
  
-	NSString *host = [URL host];
-    if (!host) host = @"";
-
-    _sourceMedia = [[SVMedia alloc] initByReferencingURL:[NSURL fileURLWithPath:[URL path]
+	_sourceMedia = [[SVMedia alloc] initByReferencingURL:[NSURL fileURLWithPath:[URL path]
                                                                     isDirectory:NO]];
     
     _parameters = [[URL ks_queryParameters] copy];
@@ -154,10 +151,15 @@
     CGImageRef finalImage = NULL;
     if (colorSpace)
     {
-        finalImage = [coreImageContext createCGImage:scaledImage
-                                            fromRect:neededContextRect
-                                              format:kCIFormatARGB8
-                                          colorSpace:colorSpace];
+        // Web browsers only support RGB and monochrome color spaces
+        CGColorSpaceModel model = CGColorSpaceGetModel(colorSpace);
+        if (model == kCGColorSpaceModelRGB || model == kCGColorSpaceModelMonochrome)
+        {
+            finalImage = [coreImageContext createCGImage:scaledImage
+                                                fromRect:neededContextRect
+                                                  format:kCIFormatARGB8
+                                              colorSpace:colorSpace];
+        }
     }
     
     if (!finalImage)

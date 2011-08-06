@@ -155,8 +155,7 @@
                                             //[_pendingStartTagDOMElements addObject:element];
         [_output beginBuffering];
         
-        OBASSERT(!_potentiallyPointlessLineBreak);
-        _potentiallyPointlessLineBreak = [element retain];
+        [_potentiallyPointlessLineBreak release]; _potentiallyPointlessLineBreak = [element retain];
         
         // Don't need to flush on next write since linebreaks are always empty elements. We'll set up flushing once element ends
         
