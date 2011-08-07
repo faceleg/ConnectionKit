@@ -258,6 +258,7 @@
         [alert setMessageText:@"Are you sure?"];
         [alert addButtonWithTitle:@"OK Computer"];
         [alert runModal];
+        [alert release];
     }
     
 	[self setAmazonItem:item];

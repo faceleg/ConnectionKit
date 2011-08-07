@@ -9,7 +9,6 @@
 #import "SVMediaRequest.h"
 #import "SVMedia.h"
 
-#import "SVImageScalingOperation.h"
 #import "KTImageScalingURLProtocol.h"
 
 #import "NSData+Karelia.h"
@@ -62,6 +61,16 @@ preferredUploadPath:(NSString *)path
     _scalingOrConversionPathSuffix = [suffix copy];
     _options = options;
     
+    if (width || height || type)
+    {
+        _colorSpaceModels = [[NSSet alloc] initWithObjects:
+                             [NSNumber numberWithInt:kCGColorSpaceModelRGB],
+                             kCGImagePropertyColorModelRGB,
+                             [NSNumber numberWithInt:kCGColorSpaceModelMonochrome],
+                             kCGImagePropertyColorModelGray,
+                             nil];
+    }
+    
     return self;
 }
 
@@ -82,6 +91,7 @@ preferredUploadPath:(NSString *)path
     [_width release];
     [_height release];
     [_type release];
+    [_colorSpaceModels release];
     [_uploadPath release];
     
     [super dealloc];
@@ -101,6 +111,7 @@ preferredUploadPath:(NSString *)path
 @synthesize width = _width;
 @synthesize height = _height;
 @synthesize type = _type;
+@synthesize allowedColorSpaceModels = _colorSpaceModels;
 @synthesize options = _options;
 @synthesize scalingPathSuffix = _scalingOrConversionPathSuffix;
 
