@@ -800,6 +800,7 @@
                                          insertIntoManagedObjectContext:[self managedObjectContext]];
             
             [self setCustomThumbnail:record];
+            [media release];
         }
     }
 }

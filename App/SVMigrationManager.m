@@ -245,6 +245,7 @@
     @try
     {
         // Try to read metadata to be sure this is a suitable doc
+        OBPRECONDITION(sourceDocURL);
         NSURL *sStoreURL = [KTDocument datastoreURLForDocumentURL:sourceDocURL type:kSVDocumentTypeName_1_5];
         
         if (![NSPersistentStoreCoordinator metadataForPersistentStoreOfType:NSSQLiteStoreType

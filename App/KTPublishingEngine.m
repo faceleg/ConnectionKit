@@ -927,6 +927,50 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     return result;
 }
 
+- (BOOL)threaded_mediaRequestIsNative:(SVMediaRequest *)request
+{
+    if ([request isNativeRepresentation]) return YES;
+    
+    // Time to look closer to see if conversion/scaling is required
+    CGImageSourceRef imageSource = IMB_CGImageSourceCreateWithImageItem((id)[request media], NULL);
+    if (!imageSource) return NO;
+    
+    BOOL result = NO;
+    
+    NSString *type = [request type];
+    if (!type || [type isEqualToString:(NSString *)CGImageSourceGetType(imageSource)])
+    {
+        NSNumber *width = [request width];
+        NSNumber *height = [request height];
+        NSSet *colorModels = [request allowedColorSpaceModels];
+        
+        if (width || height || [colorModels count])
+        {
+            // TODO: Should we better take into account a source with multiple images?
+            CFDictionaryRef properties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, NULL);
+            if (properties)
+            {
+                CFNumberRef imageWidth = CFDictionaryGetValue(properties, kCGImagePropertyPixelWidth);
+                CFNumberRef imageHeight = CFDictionaryGetValue(properties, kCGImagePropertyPixelHeight);
+                CFNumberRef colorModel = CFDictionaryGetValue(properties, kCGImagePropertyColorModel);
+                
+                if ((!width || [width isEqualToNumber:(NSNumber *)imageWidth]) &&
+                    (!height || [height isEqualToNumber:(NSNumber *)imageHeight]) &&
+                    (![colorModels count] || [colorModels containsObject:(id)colorModel]))
+                {
+                    result = YES;
+                }
+                
+                CFRelease(properties);
+            }
+        }
+    }
+        
+    CFRelease(imageSource);
+    
+    return result;
+}
+
 - (NSData *)threaded_publishMedia:(SVMediaRequest *)request cachedSHA1Digest:(NSData *)digest;
 {
     /*  It is presumed that the call to this method will have been scheduled on an appropriate queue.
@@ -934,42 +978,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     OBPRECONDITION(request);
     
     
-    BOOL isNative = [request isNativeRepresentation];
-    if (!isNative)
-    {
-        // Time to look closer to see if conversion/scaling is required
-        CGImageSourceRef imageSource = IMB_CGImageSourceCreateWithImageItem((id)[request media], NULL);
-        if (imageSource)
-        {
-            if ([[request type] isEqualToString:(NSString *)CGImageSourceGetType(imageSource)])
-            {
-                if ([request width] || [request height])
-                {
-                    // TODO: Should we better take into account a source with multiple images?
-                    CFDictionaryRef properties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, NULL);
-                    if (properties)
-                    {
-                        CFNumberRef width = CFDictionaryGetValue(properties, kCGImagePropertyPixelWidth);
-                        CFNumberRef height = CFDictionaryGetValue(properties, kCGImagePropertyPixelHeight);
-                        
-                        if ([[request width] isEqualToNumber:(NSNumber *)width] &&
-                            [[request height] isEqualToNumber:(NSNumber *)height])
-                        {
-                            isNative = YES;
-                        }
-                        
-                        CFRelease(properties);
-                    }
-                }
-                else
-                {
-                    isNative = YES;
-                }
-            }
-            
-            CFRelease(imageSource);
-        }
-    }
+    BOOL isNative = [self threaded_mediaRequestIsNative:request];
+
     
     
     

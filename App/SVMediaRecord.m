@@ -164,6 +164,16 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 
 - (BOOL)readFromURL:(NSURL *)URL options:(NSUInteger)options error:(NSError **)error;
 {
+    // Warn if file doesn't exist
+    if ([URL isFileURL])
+    {
+        if (![[NSFileManager defaultManager] fileExistsAtPath:[URL path]])
+        {
+            NSLog(@"Media not located");
+        }
+    }
+    
+    
     SVMedia *media = [[SVMedia alloc] initByReferencingURL:URL];
     [self setMedia:media];
     [media release];
