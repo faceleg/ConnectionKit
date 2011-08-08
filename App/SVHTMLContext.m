@@ -1460,25 +1460,6 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     [self writeString:[self endBodyMarkup]];
 }
 
-- (void)flush;
-{
-    [super flush];
-    
-    // Finish buffering pre-HTML markup
-    if (_preHTMLBuffer)
-    {
-        [[self outputStringWriter] flushFirstBuffer];
-        _preHTMLBuffer = 0;
-    }
-    
-    // Finish buffering extra header
-    if (_extraHeadBuffer)
-    {
-        [[self outputStringWriter] flushFirstBuffer];
-        _extraHeadBuffer = 0;
-    }
-}
-
 #pragma mark Content
 
 // Two methods do the same thing. Need to ditch -addDependencyOnObject:keyPath: at some point

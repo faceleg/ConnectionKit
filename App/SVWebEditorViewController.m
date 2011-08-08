@@ -282,8 +282,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
         //[context setBaseURL:[page URL]];
         [context writeDocumentWithPage:page];
     }
-    [context flush];
-        
+    
     
     //  Start loading. Some parts of WebKit need to be attached to a window to work properly, so we need to provide one while it's loading in the
     //  background. It will be removed again after has finished since the webview will be properly part of the view hierarchy.
@@ -307,6 +306,8 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     
     // Load the HTML into the webview
     if (pageURL) [WebView registerURLSchemeAsLocal:[pageURL scheme]];
+    
+    [writer flush]; // bit of a HACK as it assumes context uses only writer for buffering
     [webEditor loadHTMLString:[writer string] baseURL:pageURL];
     [writer release];
     
