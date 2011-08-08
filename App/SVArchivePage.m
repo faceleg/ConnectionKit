@@ -220,7 +220,11 @@
 		{
 			id sourceValue = [foundIndexPlugIn valueForKey:aKey];
 			// DJW((@"Key: %@ Value: %@ [%@]", aKey, sourceValue, [sourceValue class]));
-			[plugIn setSerializedValue:sourceValue forKey:aKey];
+			if (![aKey isEqualToString:@"maxItems"] && ![aKey isEqualToString:@"enableMaxItems"])
+			{
+				// Do NOT carry over the max items.  Archive pages should show ALL entries for that month.
+				[plugIn setSerializedValue:sourceValue forKey:aKey];
+			}
 		}
 	}
 	else	// don't have a source index; make our own settings
