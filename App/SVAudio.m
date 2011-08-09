@@ -70,7 +70,6 @@
 #import "SVMediaRecord.h"
 #import "SVMediaGraphicInspector.h"
 
-#import "SVHTMLContext.h"
 #import "NSString+Karelia.h"
 #import "NSBundle+Karelia.h"
 #import "NSImage+Karelia.h"
@@ -199,7 +198,7 @@
 	[context pushAttribute:@"classid" value:@"clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"];	// Proper value?
 	[context pushAttribute:@"codebase" value:@"http://www.apple.com/qtactivex/qtplugin.cab"];
 	
-	[context buildAttributesForResizableElement:@"object" object:self DOMControllerClass:nil  sizeDelta:NSMakeSize(0,barHeight) options:0];
+	[context buildAttributesForResizableElement:@"object" object:self DOMControllerClass:nil  sizeDelta:NSMakeSize(0,barHeight) options:SVResizingDisableVertically];
 	
 	// ID on <object> apparently required for IE8
 	NSString *elementID = [context pushPreferredIdName:@"quicktime"];
@@ -228,6 +227,8 @@
 	[context pushAttribute:@"height" value:[NSNumber numberWithInteger:heightWithBar]];
 	[context pushAttribute:@"classid" value:@"CLSID:6BF52A52-394A-11D3-B153-00C04F79FAA6"];
 
+	[context buildAttributesForResizableElement:@"object" object:self DOMControllerClass:nil sizeDelta:NSMakeSize(0,heightWithBar) options:SVResizingDisableVertically];
+
 	// ID on <object> apparently required for IE8
 	NSString *elementID = [context startElement:@"object" preferredIdName:@"wmplayer" className:nil attributes:nil];	// class, attributes already pushed
 
@@ -250,7 +251,7 @@
 	// Actually write the audio
 	if ([[self container] shouldWriteHTMLInline]) [self.container buildClassName:context includeWrap:YES];
 	
-	[context buildAttributesForResizableElement:@"audio" object:self DOMControllerClass:nil sizeDelta:NSZeroSize options:0];
+	[context buildAttributesForResizableElement:@"audio" object:self DOMControllerClass:nil sizeDelta:NSZeroSize options:SVResizingDisableVertically];
 	
 	if (self.controller)	[context pushAttribute:@"controls" value:@"controls"];		// boolean attribute
 	if (self.autoplay)	[context pushAttribute:@"autoplay" value:@"autoplay"];
@@ -331,7 +332,7 @@
 	else
 	{
 		if (audioSourceURL)  audioSourcePath  = [context relativeStringFromURL:audioSourceURL];
-		}
+	}
 	
 	NSString *audioFlashPlayer	= [defaults objectForKey:@"audioFlashPlayer"];	// to override player type
 	// Known types: flashmp3player dewplayer wpaudioplayer ....  Otherwise must specify audioFlashFormat.
@@ -431,6 +432,8 @@
 	NSUInteger heightWithBar = barHeight;
 	[context pushAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
 	
+	[context buildAttributesForResizableElement:@"object" object:self DOMControllerClass:nil  sizeDelta:NSMakeSize(0,barHeight) options:SVResizingDisableVertically];
+
 	// ID on <object> apparently required for IE8
 	NSString *elementID = [context startElement:@"object" preferredIdName:audioFlashPlayer className:nil attributes:nil];	// class, attributes already pushed
 	
@@ -464,7 +467,7 @@
 										 [NSBundle mainBundle],
 										 @"This browser cannot play the embedded audio file.", @"Warning to show when an audio cannot be played")];
 	
-	[context buildAttributesForResizableElement:@"div" object:self DOMControllerClass:nil sizeDelta:NSZeroSize options:0];
+	[context buildAttributesForResizableElement:@"div" object:self DOMControllerClass:nil sizeDelta:NSZeroSize options:SVResizingDisableVertically];
 	 NSString *elementID = [context startElement:@"div" preferredIdName:@"unrecognized" className:nil attributes:nil];	// class, attributes already pushed
 	[context writeElement:@"p" text:cannotPlayTitle];
 	// don't end the div....
