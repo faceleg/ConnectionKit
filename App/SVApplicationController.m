@@ -111,7 +111,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 // TODO: visit every instance of NSLog or LOG(()) to see if it should be an NSAlert/NSError to the user
 
 
-NSString *kSVOpenDocumentsKey = @"KSOpenDocuments";
+NSString *kSVOpenDocumentsKey = @"SVOpenDocuments";
 
 NSString *kSVLiveDataFeedsKey = @"LiveDataFeeds";
 NSString *kSVSetDateFromSourceMaterialKey = @"SetDateFromSourceMaterial";
