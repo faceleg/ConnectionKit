@@ -267,7 +267,10 @@
 	{
 		[context pushAttribute:@"type" value:[KSWORKSPACE ks_MIMETypeForType:[self codecType]]];
 	}
-	[context pushAttribute:@"onerror" value:@"fallback(this.parentNode)"];
+	if (![context isForEditing])	// don't do error fallback from Sandvox web editor; confuses Sandvox!
+	{
+		[context pushAttribute:@"onerror" value:@"fallback(this.parentNode)"];
+	}
 	[context startElement:@"source"];
 	[context endElement];
 	
