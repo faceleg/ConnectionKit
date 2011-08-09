@@ -1061,24 +1061,24 @@ typedef enum {  // this copied from WebPreferences+Private.h
     return result;
 }
 
-- (WEKWebEditorItem *)selectableItemForDOMNode:(DOMNode *)nextNode;
+- (WEKWebEditorItem *)selectableItemForDOMNode:(DOMNode *)node;
 {
-    OBPRECONDITION(nextNode);
+    OBPRECONDITION(node);
     WEKWebEditorItem *result = nil;
     
     
     // Node in question might be in a different frame. #84559
-    DOMHTMLElement *frameElement = [[[nextNode ownerDocument] webFrame] frameElement];
+    DOMHTMLElement *frameElement = [[[node ownerDocument] webFrame] frameElement];
     while (frameElement)
     {
-        nextNode = frameElement;
-        frameElement = [[[nextNode ownerDocument] webFrame] frameElement];
+        node = frameElement;
+        frameElement = [[[node ownerDocument] webFrame] frameElement];
     }
     
     
     // Look for children at the deepest possible level (normally top-level). Keep backing out until we find something of use
     
-    result = [[self contentItem] hitTestDOMNode:nextNode];
+    result = [[self contentItem] hitTestDOMNode:node];
     while (result && ![result isSelectable])
     {
         result = [result parentWebEditorItem];
