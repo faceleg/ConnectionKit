@@ -23,6 +23,7 @@
 extern BOOL gWantToCatchSystemExceptions;
 
 
+extern NSString *kSVOpenDocumentsKey;
 extern NSString *kSVLiveDataFeedsKey;
 extern NSString *kSVSetDateFromSourceMaterialKey;
 extern NSString *kLiveEditableAndSelectableLinksDefaultsKey;

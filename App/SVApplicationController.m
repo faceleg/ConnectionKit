@@ -111,6 +111,8 @@ IMPLEMENTATION NOTES & CAUTIONS:
 // TODO: visit every instance of NSLog or LOG(()) to see if it should be an NSAlert/NSError to the user
 
 
+NSString *kSVOpenDocumentsKey = @"KSOpenDocuments";
+
 NSString *kSVLiveDataFeedsKey = @"LiveDataFeeds";
 NSString *kSVSetDateFromSourceMaterialKey = @"SetDateFromSourceMaterial";
 NSString *kLiveEditableAndSelectableLinksDefaultsKey = @"LiveEditableAndSelectableLinks";
@@ -313,7 +315,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		[NSNumber numberWithBool:YES],			@"EscapeNBSP",		// no longer used apparently
 		[NSNumber numberWithBool:YES],			@"GetURLsFromSafari",
 		[NSNumber numberWithBool:YES],			@"AutoOpenLastOpenedOnLaunch",
-		[NSArray array],						@"KSOpenDocuments",
+		[NSArray array],						kSVOpenDocumentsKey,
 		[NSNumber numberWithBool:YES],			@"OpenUntitledFileWhenIconClicked",
 						
 		[NSNumber numberWithBool:NO],			@"DisplayInfo",
