@@ -198,7 +198,7 @@
 	[context pushAttribute:@"classid" value:@"clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"];	// Proper value?
 	[context pushAttribute:@"codebase" value:@"http://www.apple.com/qtactivex/qtplugin.cab"];
 	
-	[context buildAttributesForResizableElement:@"object" object:self DOMControllerClass:nil  sizeDelta:NSMakeSize(0,barHeight) options:0];
+	[context buildAttributesForResizableElement:@"object" object:self DOMControllerClass:nil  sizeDelta:NSMakeSize(0,barHeight) options:SVResizingDisableVertically];
 	
 	// ID on <object> apparently required for IE8
 	NSString *elementID = [context pushPreferredIdName:@"quicktime"];
@@ -226,6 +226,8 @@
 	[context pushAttribute:@"width" value:self.width];
 	[context pushAttribute:@"height" value:[NSNumber numberWithInteger:heightWithBar]];
 	[context pushAttribute:@"classid" value:@"CLSID:6BF52A52-394A-11D3-B153-00C04F79FAA6"];
+
+	[context buildAttributesForResizableElement:@"object" object:self DOMControllerClass:nil sizeDelta:NSMakeSize(0,heightWithBar) options:SVResizingDisableVertically];
 
 	// ID on <object> apparently required for IE8
 	NSString *elementID = [context startElement:@"object" preferredIdName:@"wmplayer" className:nil attributes:nil];	// class, attributes already pushed
@@ -330,7 +332,7 @@
 	else
 	{
 		if (audioSourceURL)  audioSourcePath  = [context relativeStringFromURL:audioSourceURL];
-		}
+	}
 	
 	NSString *audioFlashPlayer	= [defaults objectForKey:@"audioFlashPlayer"];	// to override player type
 	// Known types: flashmp3player dewplayer wpaudioplayer ....  Otherwise must specify audioFlashFormat.
@@ -430,6 +432,8 @@
 	NSUInteger heightWithBar = barHeight;
 	[context pushAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
 	
+	[context buildAttributesForResizableElement:@"object" object:self DOMControllerClass:nil  sizeDelta:NSMakeSize(0,barHeight) options:SVResizingDisableVertically];
+
 	// ID on <object> apparently required for IE8
 	NSString *elementID = [context startElement:@"object" preferredIdName:audioFlashPlayer className:nil attributes:nil];	// class, attributes already pushed
 	
