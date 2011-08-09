@@ -70,7 +70,6 @@
 #import "SVMediaRecord.h"
 #import "SVMediaGraphicInspector.h"
 
-#import "SVHTMLContext.h"
 #import "NSString+Karelia.h"
 #import "NSBundle+Karelia.h"
 #import "NSImage+Karelia.h"
@@ -250,7 +249,7 @@
 	// Actually write the audio
 	if ([[self container] shouldWriteHTMLInline]) [self.container buildClassName:context includeWrap:YES];
 	
-	[context buildAttributesForResizableElement:@"audio" object:self DOMControllerClass:nil sizeDelta:NSZeroSize options:0];
+	[context buildAttributesForResizableElement:@"audio" object:self DOMControllerClass:nil sizeDelta:NSZeroSize options:SVResizingDisableVertically];
 	
 	if (self.controller)	[context pushAttribute:@"controls" value:@"controls"];		// boolean attribute
 	if (self.autoplay)	[context pushAttribute:@"autoplay" value:@"autoplay"];
@@ -464,7 +463,7 @@
 										 [NSBundle mainBundle],
 										 @"This browser cannot play the embedded audio file.", @"Warning to show when an audio cannot be played")];
 	
-	[context buildAttributesForResizableElement:@"div" object:self DOMControllerClass:nil sizeDelta:NSZeroSize options:0];
+	[context buildAttributesForResizableElement:@"div" object:self DOMControllerClass:nil sizeDelta:NSZeroSize options:SVResizingDisableVertically];
 	 NSString *elementID = [context startElement:@"div" preferredIdName:@"unrecognized" className:nil attributes:nil];	// class, attributes already pushed
 	[context writeElement:@"p" text:cannotPlayTitle];
 	// don't end the div....
