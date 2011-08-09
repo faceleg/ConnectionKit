@@ -315,7 +315,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		[NSNumber numberWithBool:YES],			@"EscapeNBSP",		// no longer used apparently
 		[NSNumber numberWithBool:YES],			@"GetURLsFromSafari",
 		[NSNumber numberWithBool:YES],			@"AutoOpenLastOpenedOnLaunch",
-		[NSArray array],						kSVOpenDocumentsKey,
 		[NSNumber numberWithBool:YES],			@"OpenUntitledFileWhenIconClicked",
 						
 		[NSNumber numberWithBool:NO],			@"DisplayInfo",
