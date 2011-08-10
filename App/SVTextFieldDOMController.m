@@ -168,6 +168,13 @@
     [super webEditorTextDidEndEditing:notification];
     
     
+    // Was the intent likely to delete the box?
+    NSString *text = [self string];
+    if (![text length] || [text isEqualToString:@"\n"])
+    {
+        [self delete];
+    }
+    
     // Restore graphical text
     [self updateStyle];
 }
@@ -461,7 +468,6 @@
 - (SVTextDOMController *)newTextDOMController;
 {
     SVTextFieldDOMController *result = [[SVTextFieldDOMController alloc] initWithRepresentedObject:self];
-    [result setPlaceholderHTMLString:NSLocalizedString(@"Title", "placeholder")];
     [result setRichText:YES];
     [result setFieldEditor:YES];
     
