@@ -168,6 +168,13 @@
     [super webEditorTextDidEndEditing:notification];
     
     
+    // Was the intent likely to delete the box?
+    NSString *text = [self string];
+    if (![text length] || [text isEqualToString:@"\n"])
+    {
+        [self delete];
+    }
+    
     // Restore graphical text
     [self updateStyle];
 }
