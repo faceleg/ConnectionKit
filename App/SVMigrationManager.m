@@ -382,7 +382,12 @@
                 
                 
                 
-                result = [dDoc saveToURL:[dDoc fileURL] ofType:[dDoc fileType] forSaveOperation:NSSaveOperation error:outError];
+                result = [dDoc writeToURL:[dDoc fileURL]
+                                   ofType:[dDoc fileType]
+                         forSaveOperation:NSSaveOperation
+                      originalContentsURL:[dDoc fileURL]
+                                    error:outError];
+                
                 _destinationContextOverride = nil;
                 [dDoc close];
                 [dDoc release];
