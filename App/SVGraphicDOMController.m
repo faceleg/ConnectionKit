@@ -111,7 +111,16 @@
 
 - (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node;
 {
-    WEKWebEditorItem *result = [super hitTestDOMNode:node];
+    // Plug-ins might run scripts that remove elements from the DOM tree, temporarily or permanently. Thus, be more thorough and check out all descendants. Not a significant performance hit, since there's a containing DOM controller to get past first.
+    
+    WEKWebEditorItem *result = nil;
+    for (WEKWebEditorItem *anItem in [self childWebEditorItems])
+    {
+        result = [anItem hitTestDOMNode:node];
+        if (result) break;
+    }
+    
+    if (!result && [node ks_isDescendantOfElement:[self HTMLElement]]) result = self;
     
     
     // Pretend we're not here if only child element is selectable

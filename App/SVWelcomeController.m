@@ -121,7 +121,7 @@
 	BOOL openLastOpened = ([defaults boolForKey:@"AutoOpenLastOpenedOnLaunch"] &&
 						   !(GetCurrentEventKeyModifiers() & optionKey));   // Case 39352
 	
-	NSArray *lastOpenedPaths = [defaults arrayForKey:@"KSOpenDocuments"];
+	NSArray *lastOpenedPaths = [defaults arrayForKey:kSVOpenDocumentsKey];
 	
 	NSMutableArray *filesFound = [NSMutableArray array];
 	NSMutableArray *filesNotFound = [NSMutableArray array];
