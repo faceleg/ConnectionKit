@@ -132,8 +132,8 @@
         }
         OBASSERT(scaledImage);
         
-        [image release];
-        image = [scaledImage retain];
+        [scaledImage retain];
+        [image release]; image = scaledImage;
     }
     
     
@@ -312,7 +312,9 @@
         NSString *UTI = [_parameters objectForKey:@"filetype"];
         OBASSERT(UTI);
         
-        NSData *imageData = nil;    NSError *error = nil;
+        NSData *imageData = nil;
+        NSError *error = nil;
+        
         if ([UTI isEqualToString:(NSString *)kUTTypeICO])
         {
             // This is a little bit of a hack as it ignores size info, and purely creates a favicon

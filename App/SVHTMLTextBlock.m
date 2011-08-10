@@ -316,12 +316,12 @@
     else if ([result isKindOfClass:[SVTitleBox class]])
     {
         NSString *text = [(SVTitleBox *)result textHTMLString];
-        if (text)
-        {
-            NSAttributedString *html = [[NSAttributedString alloc] initWithString:text];
-            [context writeAttributedHTMLString:html];
-            [html release];
-        }
+        if (![text length]) text = [self placeholderString];
+        if (!text) text = NSLocalizedString(@"Title", "placeholder");   // I really ought to use -placeholderString!
+        
+        NSAttributedString *html = [[NSAttributedString alloc] initWithString:text];
+        [context writeAttributedHTMLString:html];
+        [html release];
     }
     else
     {
