@@ -61,7 +61,7 @@
     {
         if ([[(DOMHTMLElement *)element idName] length] == 0)
         {
-            // MS Office brings along its own classname which is highly undersireable. I'm trying ot build a bit of a whitelist of what it might chuck in. #121069
+            // MS Office brings along its own classname which is highly undesirable. I'm trying to build a bit of a whitelist of what it might chuck in. #121069
             NSString *class = [element className];
             if ([class length] == 0 ||
                 [class isEqualToString:@"MsoNormal"] ||
@@ -87,8 +87,9 @@
     }
     
     
-    // Ignore empty elements! #119910
+    // Ignore most empty elements! #119910
     if (![tagName isEqualToString:@"SCRIPT"] &&
+        ![tagName isEqualToString:@"IFRAME"] &&
         [[(DOMHTMLElement *)element innerText] isWhitespace])
     {
         return [super handleInvalidDOMElement:element];
