@@ -5,9 +5,8 @@
 // We use the macro with the secret key so that sparkle can match with key on the server end.
 PRODUCT_VARIANT = BETA
 
-
 // expiry for beta
-EXPIRY_TIMESTAMP = '@\"2011-08-10 11:59:59 -0800\"'
+EXPIRY_TIMESTAMP = '@\"2011-08-30 11:59:59 -0800\"'
 
 // pull specific tags from dependent repositories
 
