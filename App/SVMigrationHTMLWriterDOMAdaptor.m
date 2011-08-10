@@ -57,12 +57,13 @@
     }
     
     
-    // <DIV>s tend to be there by accident, unless they have a class, id, or styling
+    // <DIV>s tend to be there by accident, unless they have an ID
     if ([tagName isEqualToString:@"DIV"])
     {
-        if ([[(DOMHTMLElement *)element idName] length] == 0)
+        NSString *divID = [(DOMHTMLElement *)element idName];
+        if ([divID length] == 0)
         {
-            // MS Office brings along its own classname which is highly undersireable. I'm trying ot build a bit of a whitelist of what it might chuck in. #121069
+            // MS Office brings along its own classname which is highly undesirable. I'm trying to build a bit of a whitelist of what it might chuck in. #121069
             NSString *class = [element className];
             if ([class length] == 0 ||
                 [class isEqualToString:@"MsoNormal"] ||
@@ -70,6 +71,11 @@
             {
                 return [super handleInvalidDOMElement:element];
             }
+        }
+        else if ([[element ownerDocument] getElementById:divID] != element)
+        {
+            // Some people have somehow copied Sandvox markup inside the main text, making IDs conflict. Convert those to regular text. #137745
+            return [super handleInvalidDOMElement:element];
         }
     }
     
@@ -88,8 +94,9 @@
     }
     
     
-    // Ignore empty elements! #119910
+    // Ignore most empty elements! #119910
     if (![tagName isEqualToString:@"SCRIPT"] &&
+        ![tagName isEqualToString:@"IFRAME"] &&
         [[(DOMHTMLElement *)element innerText] isWhitespace])
     {
         return [super handleInvalidDOMElement:element];
