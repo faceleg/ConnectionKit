@@ -83,6 +83,15 @@
 
 - (void)writeBody:(SVHTMLContext *)context;
 {
+    // Make sure we have a body! #124620
+    if (![self body])
+    {
+        SVRichText *body = [SVRichText insertPageletBodyIntoManagedObjectContext:[self managedObjectContext]];
+        [body setString:@"<p><br /></p>"];
+        [self setBody:body];
+    }
+    
+    
     static SVTemplate *sBodyTemplate;
     if (!sBodyTemplate)
     {
