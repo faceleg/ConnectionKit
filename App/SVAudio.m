@@ -70,7 +70,6 @@
 #import "SVMediaRecord.h"
 #import "SVMediaGraphicInspector.h"
 
-#import "SVHTMLContext.h"
 #import "NSString+Karelia.h"
 #import "NSBundle+Karelia.h"
 #import "NSImage+Karelia.h"
@@ -199,7 +198,7 @@
 	[context pushAttribute:@"classid" value:@"clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"];	// Proper value?
 	[context pushAttribute:@"codebase" value:@"http://www.apple.com/qtactivex/qtplugin.cab"];
 	
-	[context buildAttributesForResizableElement:@"object" object:self DOMControllerClass:nil  sizeDelta:NSMakeSize(0,barHeight) options:0];
+	[context buildAttributesForResizableElement:@"object" object:self DOMControllerClass:nil  sizeDelta:NSMakeSize(0,barHeight) options:SVResizingDisableVertically];
 	
 	// ID on <object> apparently required for IE8
 	NSString *elementID = [context pushPreferredIdName:@"quicktime"];
@@ -228,6 +227,8 @@
 	[context pushAttribute:@"height" value:[NSNumber numberWithInteger:heightWithBar]];
 	[context pushAttribute:@"classid" value:@"CLSID:6BF52A52-394A-11D3-B153-00C04F79FAA6"];
 
+	[context buildAttributesForResizableElement:@"object" object:self DOMControllerClass:nil sizeDelta:NSMakeSize(0,heightWithBar) options:SVResizingDisableVertically];
+
 	// ID on <object> apparently required for IE8
 	NSString *elementID = [context startElement:@"object" preferredIdName:@"wmplayer" className:nil attributes:nil];	// class, attributes already pushed
 
@@ -250,7 +251,7 @@
 	// Actually write the audio
 	if ([[self container] shouldWriteHTMLInline]) [self.container buildClassName:context includeWrap:YES];
 	
-	[context buildAttributesForResizableElement:@"audio" object:self DOMControllerClass:nil sizeDelta:NSZeroSize options:0];
+	[context buildAttributesForResizableElement:@"audio" object:self DOMControllerClass:nil sizeDelta:NSZeroSize options:SVResizingDisableVertically];
 	
 	if (self.controller)	[context pushAttribute:@"controls" value:@"controls"];		// boolean attribute
 	if (self.autoplay)	[context pushAttribute:@"autoplay" value:@"autoplay"];
@@ -266,7 +267,10 @@
 	{
 		[context pushAttribute:@"type" value:[KSWORKSPACE ks_MIMETypeForType:[self codecType]]];
 	}
-	[context pushAttribute:@"onerror" value:@"fallback(this.parentNode)"];
+	if (![context isForEditing])	// don't do error fallback from Sandvox web editor; confuses Sandvox!
+	{
+		[context pushAttribute:@"onerror" value:@"fallback(this.parentNode)"];
+	}
 	[context startElement:@"source"];
 	[context endElement];
 	
@@ -275,44 +279,47 @@
 
 - (void)writePostAudioScript:(SVHTMLContext *)context referringToID:(NSString *)audioID
 {
-	OBPRECONDITION(context);
-	OBPRECONDITION(audioID);
-	// Now write the post-audio-tag surgery since onerror doesn't really work
-	// This is hackish browser-sniffing!  Maybe later we can do away with this (especially if we can get > 1 audio source)
-	
-	[context startJavascriptElementWithSrc:nil];
-	[context stopWritingInline];
-	[context writeString:[NSString stringWithFormat:@"var audio = document.getElementById('%@');\n", audioID]];
-	[context writeString:[NSString stringWithFormat:@"if (audio.canPlayType && audio.canPlayType('%@')) {\n",
-						  [KSWORKSPACE ks_MIMETypeForType:[self codecType]]]];
-	[context writeString:@"\t// canPlayType is overoptimistic, so we have browser sniff.\n"];
-	
-	// See: http://www.findmebyip.com/litmus#html5-audio-codecs
-	// We have mp3, so no ogg, so force a fallback if NOT webkit-based.
-	if ([[self codecType] conformsToUTI:(NSString *)kUTTypeMP3])
+	if (![context isForEditing])	// Don't do script if editing, so we can just put the DOM element directly in.
 	{
-		[context writeString:@"\tif (navigator.userAgent.indexOf('WebKit/') <= -1) {\n\t\t// Only webkit-browsers can currently play mp3 natively\n\t\tfallback(audio);\n\t}\n"];
+		OBPRECONDITION(context);
+		OBPRECONDITION(audioID);
+		// Now write the post-audio-tag surgery since onerror doesn't really work
+		// This is hackish browser-sniffing!  Maybe later we can do away with this (especially if we can get > 1 audio source)
+		
+		[context startJavascriptElementWithSrc:nil];
+		[context stopWritingInline];
+		[context writeString:[NSString stringWithFormat:@"var audio = document.getElementById('%@');\n", audioID]];
+		[context writeString:[NSString stringWithFormat:@"if (audio.canPlayType && audio.canPlayType('%@')) {\n",
+							  [KSWORKSPACE ks_MIMETypeForType:[self codecType]]]];
+		[context writeString:@"\t// canPlayType is overoptimistic, so we have browser sniff.\n"];
+		
+		// See: http://www.findmebyip.com/litmus#html5-audio-codecs
+		// We have mp3, so no ogg, so force a fallback if NOT webkit-based.
+		if ([[self codecType] conformsToUTI:(NSString *)kUTTypeMP3])
+		{
+			[context writeString:@"\tif (navigator.userAgent.indexOf('WebKit/') <= -1) {\n\t\t// Only webkit-browsers can currently play mp3 natively\n\t\tfallback(audio);\n\t}\n"];
+		}
+		// We have a .ogg, which won't play on Safari
+		else if ([[self codecType] conformsToUTI:@"public.ogg-vorbis"])
+		{
+			[context writeString:@"\tif (navigator.userAgent.indexOf(' "];
+			[context writeString:([context isForEditing] ? @"Sandvox" : @"Safari")];	// Treat Sandvox like it's Safari
+			[context writeString:@"') > -1) {\n"];
+	//		[context writeString:@"\tdocument.writeln('User agent Sandvox -- ' + navigator.userAgent);\n"];
+			[context writeString:@"\t\t// Safari can't play this natively\n\t\tfallback(audio);\n\t}\n"];
+		}
+		// We have a .wav, which will play on all platforms with <audio> except Chrome, so force a fallback to Windows media object
+		else if ([[self codecType] conformsToUTI:@"com.microsoft.waveform-audio"])
+		{
+			[context writeString:@"\tif (navigator.userAgent.indexOf(' Chrome/') > -1) {\n\t\t// Chrome can't play mp3 natively\n\t\tfallback(audio);\n\t}\n"];
+		}
+		// Note: For other audio types, we're not going to try to fallback.  They are on their own if they use another format!
+		
+		[context writeString:@"} else {\n"];
+	//	[context writeString:@"\tdocument.writeln('falling back -- ' + navigator.userAgent);\n"];
+		[context writeString:@"\tfallback(audio);\n}\n"];
+		[context endElement];
 	}
-	// We have a .ogg, which won't play on Safari
-	else if ([[self codecType] conformsToUTI:@"public.ogg-vorbis"])
-	{
-		[context writeString:@"\tif (navigator.userAgent.indexOf(' "];
-		[context writeString:([context isForEditing] ? @"Sandvox" : @"Safari")];	// Treat Sandvox like it's Safari
-		[context writeString:@"') > -1) {\n"];
-//		[context writeString:@"\tdocument.writeln('User agent Sandvox -- ' + navigator.userAgent);\n"];
-		[context writeString:@"\t\t// Safari can't play this natively\n\t\tfallback(audio);\n\t}\n"];
-	}
-	// We have a .wav, which will play on all platforms with <audio> except Chrome, so force a fallback to Windows media object
-	else if ([[self codecType] conformsToUTI:@"com.microsoft.waveform-audio"])
-	{
-		[context writeString:@"\tif (navigator.userAgent.indexOf(' Chrome/') > -1) {\n\t\t// Chrome can't play mp3 natively\n\t\tfallback(audio);\n\t}\n"];
-	}
-	// Note: For other audio types, we're not going to try to fallback.  They are on their own if they use another format!
-	
-	[context writeString:@"} else {\n"];
-//	[context writeString:@"\tdocument.writeln('falling back -- ' + navigator.userAgent);\n"];
-	[context writeString:@"\tfallback(audio);\n}\n"];
-	[context endElement];	
 }
 
 - (NSString *)startFlash:(SVHTMLContext *)context
@@ -328,7 +335,7 @@
 	else
 	{
 		if (audioSourceURL)  audioSourcePath  = [context relativeStringFromURL:audioSourceURL];
-		}
+	}
 	
 	NSString *audioFlashPlayer	= [defaults objectForKey:@"audioFlashPlayer"];	// to override player type
 	// Known types: flashmp3player dewplayer wpaudioplayer ....  Otherwise must specify audioFlashFormat.
@@ -428,6 +435,8 @@
 	NSUInteger heightWithBar = barHeight;
 	[context pushAttribute:@"height" value:[[NSNumber numberWithInteger:heightWithBar] stringValue]];
 	
+	[context buildAttributesForResizableElement:@"object" object:self DOMControllerClass:nil  sizeDelta:NSMakeSize(0,barHeight) options:SVResizingDisableVertically];
+
 	// ID on <object> apparently required for IE8
 	NSString *elementID = [context startElement:@"object" preferredIdName:audioFlashPlayer className:nil attributes:nil];	// class, attributes already pushed
 	
@@ -461,7 +470,7 @@
 										 [NSBundle mainBundle],
 										 @"This browser cannot play the embedded audio file.", @"Warning to show when an audio cannot be played")];
 	
-	[context buildAttributesForResizableElement:@"div" object:self DOMControllerClass:nil sizeDelta:NSZeroSize options:0];
+	[context buildAttributesForResizableElement:@"div" object:self DOMControllerClass:nil sizeDelta:NSZeroSize options:SVResizingDisableVertically];
 	 NSString *elementID = [context startElement:@"div" preferredIdName:@"unrecognized" className:nil attributes:nil];	// class, attributes already pushed
 	[context writeElement:@"p" text:cannotPlayTitle];
 	// don't end the div....

@@ -12,6 +12,7 @@
 #import "SVTextAttachment.h"
 
 #import "NSColor+Karelia.h"
+#import "DOMNode+Karelia.h"
 
 
 @implementation SVMediaDOMController
@@ -27,19 +28,33 @@
     return result;
 }
 
+#pragma mark Hit-testing
+
+- (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node;
+{
+    // Plug-ins might run scripts that remove elements from the DOM tree, temporarily or permanently. Thus, be more thorough and check out all descendants. Not a significant performance hit, since there's a containing DOM controller to get past first.
+    
+    WEKWebEditorItem *result = nil;
+    for (WEKWebEditorItem *anItem in [self childWebEditorItems])
+    {
+        result = [anItem hitTestDOMNode:node];
+        if (result) break;
+    }
+    
+    if (!result && [node ks_isDescendantOfElement:[self HTMLElement]]) result = self;
+    
+    return result;
+}
+
 #pragma mark Selection
 
-- (DOMElement *) selectableDOMElement;
-{
-    // Media is always selectable. #102520
-    return [self HTMLElement];
-}
+- (BOOL)isSelectable; { return YES; }
 
 - (DOMRange *)selectableDOMRange;
 {
     if ([self shouldTrySelectingInline])
     {
-        DOMElement *element = [self selectableDOMElement];
+        DOMElement *element = [self HTMLElement];
         DOMRange *result = [[element ownerDocument] createRange];
         [result selectNode:element];
         return result;

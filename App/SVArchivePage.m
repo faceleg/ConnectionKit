@@ -56,12 +56,13 @@
     if (!sDateFormatter)
     {
         sDateFormatter = [[NSDateFormatter alloc] init];
-        [sDateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
         [sDateFormatter setDateFormat:@"MMMM yyyy"]; // unicode pattern for @"%B %Y"
     }
     
 	// find our locale from the site itself
 	NSString *language = [self language];
+    [[[SVHTMLTemplateParser currentTemplateParser] HTMLContext] addDependencyOnObject:self keyPath:@"language"];
+    
     if (![language isEqualToString:[[sDateFormatter locale] localeIdentifier]])
     {
         NSLocale *locale = [[[NSLocale alloc] initWithLocaleIdentifier:language] autorelease];
@@ -85,6 +86,7 @@
 { return NO; }
 
 - (NSString *)language; { return [[self collection] language]; }
++ (NSSet *)keyPathsForValuesAffectingLanguage; { return [NSSet setWithObject:@"collection.language"]; }
 
 - (BOOL)isCollection; { return NO; }
 - (NSArray *)childPages; { return _childPages; }
@@ -218,7 +220,11 @@
 		{
 			id sourceValue = [foundIndexPlugIn valueForKey:aKey];
 			// DJW((@"Key: %@ Value: %@ [%@]", aKey, sourceValue, [sourceValue class]));
-			[plugIn setSerializedValue:sourceValue forKey:aKey];
+			if (![aKey isEqualToString:@"maxItems"] && ![aKey isEqualToString:@"enableMaxItems"])
+			{
+				// Do NOT carry over the max items.  Archive pages should show ALL entries for that month.
+				[plugIn setSerializedValue:sourceValue forKey:aKey];
+			}
 		}
 	}
 	else	// don't have a source index; make our own settings

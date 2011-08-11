@@ -82,10 +82,29 @@
         }
         
         
-        
-        [result addAttribute:@"SVAttachment"
-                       value:anAttachment
-                       range:range];
+        if (range.length)
+        {
+            if (range.location < [result length])
+            {
+                if ((range.location + range.length) > [result length])
+                {
+                    range.length = [result length] - range.location;
+                    NSLog(@"Reigned in attachment that exceeded HTML: %@ %@ %@", anAttachment, [anAttachment graphic], [result string]);
+                }
+                
+                [result addAttribute:@"SVAttachment"
+                               value:anAttachment
+                               range:range];
+            }
+            else
+            {
+                NSLog(@"Attachment past end of HTML: %@ %@ %@", anAttachment, [anAttachment graphic], [result string]);
+            }
+        }
+        else
+        {
+            NSLog(@"Zero length attachment: %@ %@ %@", anAttachment, [anAttachment graphic], [result string]);
+        }
         
         
         // Imported text doesn't use NSAttachmentCharacter, so we have to sub it in
@@ -274,7 +293,7 @@
 
 - (void)writeText; { [self writeText:[[SVHTMLTemplateParser currentTemplateParser] HTMLContext]]; }
 
-- (void)write:(SVHTMLContext *)context graphic:(id <SVGraphic>)graphic;
+- (void)write:(SVHTMLContext *)context graphic:(NSObject <SVGraphic> *)graphic;
 {
     if ([graphic shouldWriteHTMLInline])
     {

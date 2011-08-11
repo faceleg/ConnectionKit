@@ -14,6 +14,7 @@
 
 #import "KSAppDelegate.h"
 #import "KSDocumentController.h"
+#import "NSInvocation+Karelia.h"
 
 #import "KSThreadProxy.h"
 #import "KSURLUtilities.h"
@@ -55,7 +56,10 @@
     // Is this a migration, so should run on background thread?
     if ([typeName isEqualToString:kSVDocumentTypeName] && ![[self fileType] isEqualToString:kSVDocumentTypeName])
     {
-        OBASSERT(!delegate);
+        _delegate = delegate;
+        _saveSelector = didSaveSelector;
+        _contextInfo = contextInfo;
+        
         
         // Time for UI
         [self makeWindowControllers];
@@ -82,17 +86,29 @@
 
 - (void)documentDidMigrate:(BOOL)didMigrateSuccessfully error:(NSError *)error;
 {
+    if (_delegate)
+    {
+        NSInvocation *invocation = [NSInvocation invocationWithSelector:_saveSelector target:_delegate];
+        [invocation setArgument:&self atIndex:2];
+        [invocation setArgument:&didMigrateSuccessfully atIndex:3];
+        [invocation setArgument:&_contextInfo atIndex:4];
+        
+        [invocation invoke];
+    }
+    
+    
     if (didMigrateSuccessfully)
     {
         didMigrateSuccessfully = [self readFromURL:[self fileURL] ofType:[self fileType] error:&error];
         if (didMigrateSuccessfully)
         {
             // Close the migration UI
-            NSArray *migrationWindowControllers = [self windowControllers];
+            NSArray *migrationWindowControllers = [[self windowControllers] copy];  // seem to need to copy on Lion
             for (NSWindowController *aController in migrationWindowControllers)
             {
                 [self removeWindowController:aController];
             }
+            [migrationWindowControllers release];
             
             // Show regular UI
             [self makeWindowControllers];
@@ -143,6 +159,11 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     {
         return [super writeToURL:inURL ofType:inType forSaveOperation:saveOperation originalContentsURL:inOriginalContentsURL error:outError];
     }
+    
+    
+    // For some docs on Lion, the system seems to forget where the doc has come from  (according to Apple this is because the doc is new, or was deleted, neither of which are true in our testing!), so passes in nil URL for original contents. We'll force it back on track.
+    if (!inOriginalContentsURL) inOriginalContentsURL = [self fileURL];
+    OBASSERT(inOriginalContentsURL);
     
     
     // Create directory to act as new document

@@ -557,7 +557,7 @@
 	NSString *elementID = [context pushPreferredIdName:@"video"];
     [context startElement:@"video"];
 	
-	if (posterSourceURL)
+	if (posterSourceURL && ![context isForEditing])		// don't put the script in if we are editing
 	{
 		// Remove poster on iOS < 4; prevents video from working
 		[context startJavascriptElementWithSrc:nil];
@@ -572,7 +572,11 @@
 	// source
 	[context pushAttribute:@"src" value:movieSourcePath];
 	[context pushAttribute:@"type" value:[KSWORKSPACE ks_MIMETypeForType:self.codecType]];
-	[context pushAttribute:@"onerror" value:@"fallback(this.parentNode)"];
+	
+	if (![context isForEditing])	// don't do error fallback from Sandvox web editor; confuses Sandvox!
+	{
+		[context pushAttribute:@"onerror" value:@"fallback(this.parentNode)"];
+	}
 	[context startElement:@"source"];
 	[context endElement];
 
@@ -581,31 +585,34 @@
 
 - (void)writePostVideoScript:(SVHTMLContext *)context referringToID:(NSString *)videoID;
 {
-	// Now write the post-video-tag surgery since onerror doesn't really work
-	// This is hackish browser-sniffing!  Maybe later we can do away with this (especially if we can get > 1 video source)
-	
-	[context startJavascriptElementWithSrc:nil];
-	[context stopWritingInline];
-	[context writeString:[NSString stringWithFormat:@"var video = document.getElementById('%@');\n", videoID]];
-	[context writeString:[NSString stringWithFormat:@"if (video.canPlayType && video.canPlayType('%@')) {\n",
-						  [KSWORKSPACE ks_MIMETypeForType:self.codecType]]];
-	[context writeString:@"\t// canPlayType is overoptimistic, so we have browser sniff.\n"];
-	
-	// we have mp4, so no ogv/webm, so force a fallback if NOT webkit-based.
-	if ([self.codecType conformsToUTI:@"public.mpeg-4"]
-		|| [self.codecType conformsToUTI:@"public.3gpp"]
-		|| [self.codecType conformsToUTI:@"com.apple.protected-mpeg-4-video"])
+	if (![context isForEditing])
 	{
-		[context writeString:@"\tif (navigator.userAgent.indexOf('WebKit/') <= -1) {\n\t\t// Only webkit-browsers can currently play this natively\n\t\tfallback(video);\n\t}\n"];
+		// Now write the post-video-tag surgery since onerror doesn't really work
+		// This is hackish browser-sniffing!  Maybe later we can do away with this (especially if we can get > 1 video source)
+		
+		[context startJavascriptElementWithSrc:nil];
+		[context stopWritingInline];
+		[context writeString:[NSString stringWithFormat:@"var video = document.getElementById('%@');\n", videoID]];
+		[context writeString:[NSString stringWithFormat:@"if (video.canPlayType && video.canPlayType('%@')) {\n",
+							  [KSWORKSPACE ks_MIMETypeForType:self.codecType]]];
+		[context writeString:@"\t// canPlayType is overoptimistic, so we have browser sniff.\n"];
+		
+		// we have mp4, so no ogv/webm, so force a fallback if NOT webkit-based.
+		if ([self.codecType conformsToUTI:@"public.mpeg-4"]
+			|| [self.codecType conformsToUTI:@"public.3gpp"]
+			|| [self.codecType conformsToUTI:@"com.apple.protected-mpeg-4-video"])
+		{
+			[context writeString:@"\tif (navigator.userAgent.indexOf('WebKit/') <= -1) {\n\t\t// Only webkit-browsers can currently play this natively\n\t\tfallback(video);\n\t}\n"];
+		}
+		else	// we have an ogv or webm (or something else?) so fallback if it's Safari, which won't handle it
+		{
+			[context writeString:@"\tif (navigator.userAgent.indexOf(' "];
+			[context writeString:([context isForEditing] ? @"Sandvox" : @"Safari")];	// Treat Sandvox like it's Safari
+			[context writeString:@"') > -1) {\n\t\t// Safari can't play this natively\n\t\tfallback(video);\n\t}\n"];
+		}
+		[context writeString:@"} else {\n\tfallback(video);\n}\n"];
+		[context endElement];
 	}
-	else	// we have an ogv or webm (or something else?) so fallback if it's Safari, which won't handle it
-	{
-		[context writeString:@"\tif (navigator.userAgent.indexOf(' "];
-		[context writeString:([context isForEditing] ? @"Sandvox" : @"Safari")];	// Treat Sandvox like it's Safari
-		[context writeString:@"') > -1) {\n\t\t// Safari can't play this natively\n\t\tfallback(video);\n\t}\n"];
-	}
-	[context writeString:@"} else {\n\tfallback(video);\n}\n"];
-	[context endElement];	
 }
 
 
@@ -624,6 +631,7 @@
 	
 	BOOL videoFlashRequiresFullURL = [defaults boolForKey:@"videoFlashRequiresFullURL"];	// usually not, but YES for flowplayer
 	if ([videoFlashPlayer isEqualToString:@"flowplayer"]) videoFlashRequiresFullURL = YES;
+	if ([videoFlashPlayer isEqualToString:@"flvplayer"]) videoFlashRequiresFullURL = YES;
 	
 	NSString *movieSourcePath = @"";
 	NSString *posterSourcePath = @"";

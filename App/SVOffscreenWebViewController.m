@@ -30,7 +30,7 @@ static BOOL sDoneLoading;
 	}
 	OBASSERT(sOffscreenController);
 	
-	[sOffscreenController setDelegate:self];
+	[sOffscreenController setDelegate:(id <SVOffscreenWebViewControllerDelegate>)self];
     WebFrame *frame = [[sOffscreenController webView] mainFrame];
 	[frame loadHTMLString:inHTML baseURL:aURL];
 	

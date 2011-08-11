@@ -216,7 +216,15 @@
 
 - (BOOL)shouldTrySelectingInline;
 {
-    return [[self representedObject] displayInline];
+    BOOL result = NO;
+    
+    id object = [self representedObject];
+    if ([object respondsToSelector:@selector(displayInline)])
+    {
+        result = [object displayInline];
+    }
+    
+    return result;
 }
 
 #pragma mark Updating
@@ -257,6 +265,7 @@
     
     if ([self isEditing])
     {
+        [[element style] setProperty:@"-webkit-nbsp-mode" value:@"space" priority:@""]; // so spacing doesn't change when editing turns off. #133624
         [element removeAttribute:@"contenteditable"];
     }
     else
@@ -489,7 +498,7 @@
     
     
     // Is the aligned/floated left/center/right?
-    if ([[style cssFloat] isEqualToString:@"right"] ||
+    if ([[style getPropertyValue:@"float"] isEqualToString:@"right"] ||  // -cssFloat returns empty string for some reason
         [[style textAlign] isEqualToString:@"right"])
     {
         result = kCALayerLeftEdge;
@@ -871,7 +880,7 @@
     KSSelectionBorder *result = [super newSelectionBorder];
     
     // Hide border on <OBJECT> tags etc.
-    DOMElement *selectionElement = [self selectableDOMElement];
+    DOMElement *selectionElement = [self HTMLElement];
     NSString *tagName = [selectionElement tagName];
     
     if ([tagName isEqualToString:@"IMG"] ||
@@ -939,7 +948,10 @@
 - (void)updateIfNeeded; // recurses down the tree
 {
     // The update may well have meant no children need updating any more. If so, no biggie as this recursion should do nothing
-    [[self childWebEditorItems] makeObjectsPerformSelector:_cmd];
+    // Update might change the .childWebEditorItems property, so retain during. #137521
+    NSArray *children = [[self childWebEditorItems] retain];
+    [children makeObjectsPerformSelector:_cmd];
+    [children release];
 }
 
 - (SVWebEditorHTMLContext *)HTMLContext { return nil; }

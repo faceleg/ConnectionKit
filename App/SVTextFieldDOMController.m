@@ -89,11 +89,10 @@
     return result;
 }*/
 
-- (DOMElement *)selectableDOMElement;
+// TODO: This logic is the same as aux text
+- (BOOL)isSelectable;
 {
-    return ([self representedObject] && [self enclosingGraphicDOMController] ?
-            [self HTMLElement] :
-            nil);
+    return ([self representedObject] && [self enclosingGraphicDOMController]);
 }
 
 #pragma mark Updating
@@ -168,6 +167,13 @@
 {
     [super webEditorTextDidEndEditing:notification];
     
+    
+    // Was the intent likely to delete the box?
+    NSString *text = [self string];
+    if (![text length] || [text isEqualToString:@"\n"])
+    {
+        [self delete];
+    }
     
     // Restore graphical text
     [self updateStyle];
@@ -349,9 +355,32 @@
             
             // Make sure there's no later content outside the <SPAN> #92432
             DOMNode *nextNode;
-            while (nextNode = [result nextSibling])
+            while ((nextNode = [result nextSibling]))
             {
                 [result appendChild:nextNode];
+            }
+            
+            // Move styling down to children. #133908
+            if ([result hasAttribute:@"style"])
+            {
+                DOMElement *aChild = [result firstElementChild];
+                do
+                {
+                    NSString *style = [aChild getAttribute:@"style"];
+                    if ([style length] > 0)
+                    {
+                        style = [style stringByAppendingFormat:@" %@", [result getAttribute:@"style"]];
+                    }
+                    else
+                    {
+                        style = [result getAttribute:@"style"];
+                    }
+                    
+                    [aChild setAttribute:@"style" value:style];
+                    
+                } while ((aChild = [aChild nextElementSibling]));
+                
+                [result removeAttribute:@"style"];
             }
         }
         else
@@ -439,7 +468,6 @@
 - (SVTextDOMController *)newTextDOMController;
 {
     SVTextFieldDOMController *result = [[SVTextFieldDOMController alloc] initWithRepresentedObject:self];
-    [result setPlaceholderHTMLString:NSLocalizedString(@"Title", "placeholder")];
     [result setRichText:YES];
     [result setFieldEditor:YES];
     

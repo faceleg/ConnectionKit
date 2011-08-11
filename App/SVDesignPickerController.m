@@ -111,11 +111,14 @@
 }
 
 @synthesize designsController = _designsController;
+// We've been seeing problems with the Lion SDK where this gets called while the view is still loading, leading to an infinite loop
+#if (!defined MAC_OS_X_VERSION_10_7 || MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_7)
 - (NSArrayController *)designsController;
 {
-    [self window];    // make sure it's loaded
+    if (!_designsController) [self view];    // make sure it's loaded
     return _designsController;
 }
+#endif
 
 // IF I CHANGE THIS ORDER, CHANGE THE ORDER IN THE METHOD "matchString"
 enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to have the genre *first* but it's one that works best when collapsed, and MGScopeBar prefers collapsing items on the right.  It would be a huge rewrite to change that....
@@ -132,7 +135,6 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 }
 + (NSSet *)keyPathsForValuesAffectingMatchColor
 {
-    // As far as I can see, this should make .inspectedObjects KVO-compliant, but it seems something about NSArrayController stops it from working
     return [NSSet setWithObjects:@"genre", @"color", @"width", @"designsController.arrangedObjects", nil];
 }
 
@@ -180,7 +182,6 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 }
 + (NSSet *)keyPathsForValuesAffectingMatchString
 {
-    // As far as I can see, this should make .inspectedObjects KVO-compliant, but it seems something about NSArrayController stops it from working
     return [NSSet setWithObjects:@"genre", @"color", @"width", @"designsController.arrangedObjects", nil];
 }
 
@@ -244,8 +245,20 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 {
     _selectorWhenChosen = aSelector;
 	_targetWhenChosen = aTarget;    // weak ref
-    
+
+	[self.browserViewController initializeExpandedState];
+
 	[[self window] makeKeyAndOrderFront:self];
+	
+	[oScopeBar setDelegate:self];
+    [oScopeBar reloadData];
+
+	// restore from prevous run
+	[oScopeBar setSelected:YES forItem:self.genre inGroup:kGenreGroup];
+	[oScopeBar setSelected:YES forItem:self.color inGroup:kColorGroup];
+	[oScopeBar setSelected:YES forItem:self.width inGroup:kWidthGroup];
+	[oScopeBar setSelected:(!self.genre && !self.color && !self.width) forItem:@"all" inGroup:kAllGroup];
+	
 }
 
 - (IBAction)chooseDesign:(id)sender		// Design was chosen.  Now call back to notify of change.

@@ -68,11 +68,10 @@
 
 #pragma mark Selection
 
-- (DOMElement *)selectableDOMElement;
+// TODO: This logic is the same as text field
+- (BOOL)isSelectable;
 {
-    return ([self representedObject] && [self enclosingGraphicDOMController] ?
-            [self HTMLElement] :
-            nil);
+    return ([self representedObject] && [self enclosingGraphicDOMController]);
 }
 
 @end

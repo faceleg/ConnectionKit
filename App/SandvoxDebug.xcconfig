@@ -4,7 +4,7 @@
 
 COPY_PHASE_STRIP = NO
 DEBUG_INFORMATION_FORMAT = dwarf
-FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../Shared/ThirdParty/BWToolkit" "$(SRCROOT)/../../Shared/ThirdParty/Sparkle" "$(SRCROOT)/../../Shared/ThirdParty/JSTalk" "$(SRCROOT)/../../Shared/ThirdParty/Growl" "$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks"
+FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../Code/Shared/ThirdParty/BWToolkit" "$(SRCROOT)/../Code/Shared/ThirdParty/Sparkle" "$(SRCROOT)/../Code/Shared/ThirdParty/JSTalk" "$(SRCROOT)/../Code/Shared/ThirdParty/Growl" "$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks"
 GCC_DYNAMIC_NO_PIC = NO
 GCC_ENABLE_FIX_AND_CONTINUE = YES
 GCC_ENABLE_OBJC_EXCEPTIONS = YES
@@ -54,7 +54,7 @@ GCC_SYMBOLS_PRIVATE_EXTERN=NO
 
 // SUPPRESS_IMEDIA_PPC
 GCC_PREPROCESSOR_DEFINITIONS = USES_IMEDIA VARIANT_$(PRODUCT_VARIANT) $(OMNI_DEBUG_CURRENT_SETTING) DEBUG EXPIRY_TIMESTAMP=$(EXPIRY_TIMESTAMP)
-OTHER_LDFLAGS = -lsasl2 -seg1addr 0x70000000
+OTHER_LDFLAGS = -lsasl2
 
 // Debugging -- should be OMNI_FORCE_ASSERTIONS for beta, DONT_FORCE_ASSERTIONS (an ad-hoc replacement) for release
 

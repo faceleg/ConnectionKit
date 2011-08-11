@@ -1,6 +1,15 @@
 [submodule "Code/JSONKit"]
 	path = Code/JSONKit
 	url = git://github.com/johnezang/JSONKit.git
+[submodule "Code/iMedia"]
+	path = Code/iMedia
+	url = git@github.com:karelia/iMedia.git
+[submodule "Code/Shared"]
+	path = Code/Shared
+	url = git@github.com:karelia/Shared.git
+[submodule "Code/KSHTMLWriter"]
+	path = Code/KSHTMLWriter
+	url = git@github.com:karelia/KSHTMLWriter.git
 [submodule "Code/SFTP"]
 	path = Code/SFTP
 	url = git@github.com:karelia/libssh2_sftp-Cocoa-wrapper.git

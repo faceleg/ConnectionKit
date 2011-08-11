@@ -67,7 +67,7 @@
 #import "NSManagedObjectContext+KTExtensions.h"
 
 #import "KSAbstractBugReporter.h"
-#import "KSCaseInsensitiveDictionary.h"
+#import "KSStringKeyedDictionary.h"
 #import "KSSilencingConfirmSheet.h"
 
 #import "NSArray+Karelia.h"
@@ -229,7 +229,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         
         
         // Other ivars
-        _filenameReservations = [[KSCaseInsensitiveDictionary alloc] init];
+        _filenameReservations = [[KSStringKeyedDictionary alloc] initWithComparisonOptions:NSCaseInsensitiveSearch];
         
         
         // Init UI accessors
@@ -444,11 +444,16 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	if (!result)
 	{
 		// grab only Sandvox.mom (ignoring "previous moms" in KTComponents/Resources)
-		NSBundle *componentsBundle = [NSBundle mainBundle];
-        OBASSERT(componentsBundle);
+		NSBundle *bundle = [NSBundle mainBundle];
+        OBASSERT(bundle);
 		
-        NSString *modelPath = [componentsBundle pathForResource:@"Sandvox" ofType:@"mom"];
-        OBASSERTSTRING(modelPath, [componentsBundle description]);
+        NSString *modelPath = [bundle pathForResource:@"Sandvox" ofType:@"mom"];
+        if (!modelPath) // WHAT?!? HOW? might as well try again. #136556
+        {
+            NSLog(@"MOM not found, but going to try again for the heck of it");
+            modelPath = [bundle pathForResource:@"Sandvox" ofType:@"mom"];
+        }
+        OBASSERTSTRING(modelPath, [bundle description]);
         
 		NSURL *modelURL = [NSURL fileURLWithPath:modelPath];
 		OBASSERT(modelURL);
@@ -482,6 +487,26 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
                                                                         URL:URL
                                                                     options:nil
                                                                       error:outError];
+    
+    // The failure is likely to be because the model is from Sandvox 2.0, and not our ammeneded 2.1.4 format. If so, force Core Data to open it, but fail as normal otherwise
+    if (!store)
+    {
+        NSDictionary *metadata = [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:NSBinaryStoreType URL:URL error:NULL];
+        id hashes = [metadata objectForKey:NSStoreModelVersionHashesKey];
+        
+        NSString *hashesPath = [[NSBundle mainBundle] pathForResource:@"VersionHashes2_0" ofType:@"plist"];
+        NSDictionary *hashes_2_0 = [NSDictionary dictionaryWithContentsOfFile:hashesPath];
+        
+        if ([hashes_2_0 isEqual:hashes])
+        {
+            store = [storeCoordinator addPersistentStoreWithType:[self persistentStoreTypeForFileType:fileType]
+                                                   configuration:nil
+                                                             URL:URL
+                                                         options:NSDICT(NSBOOL(YES), NSIgnorePersistentStoreVersioningOption)
+                                                           error:outError];
+        }
+    }
+    
     [self setPersistentStore:store];
     
 	return (store != nil);
@@ -814,6 +839,11 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (BOOL)isFilenameAvailable:(NSString *)filename;
 {
+    return [self isFilenameAvailable:filename checkPackageContents:YES];
+}
+
+- (BOOL)isFilenameAvailable:(NSString *)filename checkPackageContents:(BOOL)includeFiles;
+{
     OBPRECONDITION(filename);
     
     
@@ -844,10 +874,11 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     
     
     // Finally, see if there's already an item on disk (such as .svn directory)
-    if (result)
+    if (result && includeFiles)
     {
         // Turns out deriving the path from -fileURL is a bit of a bottleneck, so go old school. #125521
-        NSString *path = [[self fileName] stringByAppendingPathComponent:filename];
+        // Build warning with 10.6 SDK, so cheat
+        NSString *path = [[self performSelector:@selector(fileName)] stringByAppendingPathComponent:filename];
         result = ![[NSFileManager defaultManager] fileExistsAtPath:path];
     }
     
@@ -1041,6 +1072,10 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	{
 		return YES;
 	}
+    else if ([menuItem action] == @selector(reduceFileSize:))
+    {
+        return ([[self fileURL] isFileURL]);    // only supported for regular files
+    }
 	
 	return [super validateMenuItem:menuItem]; 
 }

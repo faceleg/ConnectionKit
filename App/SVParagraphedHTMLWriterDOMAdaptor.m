@@ -48,7 +48,7 @@
 }
 
 - (NSDictionary *)dictionaryWithCSSStyle:(DOMCSSStyleDeclaration *)style
-                                 tagName:(NSString *)tagName;
+                                 element:(NSString *)element;
 {
     int length = [style length];
     NSMutableDictionary *result = [NSMutableDictionary dictionaryWithCapacity:length];
@@ -56,7 +56,7 @@
     for (int i = 0; i < length; i++)
     {
         NSString *property = [style item:i];
-        if ([self validateStyleProperty:property ofElementWithTagName:tagName])
+        if ([self validateStyleProperty:property ofElement:element])
         {
             [result setObject:[style getPropertyValue:property] forKey:property];
         }
@@ -71,7 +71,7 @@
     
     
     // Swap the element for a <P>, trying to retain as much style as possible. #92641
-    NSDictionary *oldStyle = [self dictionaryWithCSSStyle:style tagName:@"P"];
+    NSDictionary *oldStyle = [self dictionaryWithCSSStyle:style element:@"p"];
     DOMElement *result = [self replaceDOMElement:element withElementWithTagName:@"P"];
     
     DOMCSSStyleDeclaration *paragraphStyle = [[element ownerDocument] getComputedStyle:result
@@ -142,6 +142,66 @@
     }
 }
 
+#pragma mark Elements
+
+/*  Paragraphs and list items sometimes end with a linebreak which is wasted (only has a value if a placemarker in an otherwise empty paragraph). Remove such breaks using the buffer
+ */
+
+- (void)startElement:(NSString *)elementName withDOMElement:(DOMElement *)element;    // open the tag and write attributes
+{
+    // A paragraph of nothing but a line break is a placeholder to be kept
+    // The same goes for two+ line breaks in a row at the end of a paragraph
+    if ([elementName isEqualToString:@"br"] && _potentiallyPointlessLineBreak == nil)
+    {
+        DOMNode *prior = [element previousSibling];
+        if (prior &&
+            !([prior nodeType] == DOM_ELEMENT_NODE && [[(DOMElement *)prior tagName] isEqualToString:@"BR"]))
+        {
+            [_output cancelFlushOnNextWrite];   // as we're about to write into the buffer
+                                                //[_pendingStartTagDOMElements addObject:element];
+            [_output beginBuffering];
+            
+            _potentiallyPointlessLineBreak = [element retain];  // made sure was nil above
+            
+            // Don't need to flush on next write since linebreaks are always empty elements. We'll set up flushing once element ends
+        }
+    }
+    
+    
+    [super startElement:elementName withDOMElement:element];
+}
+
+- (DOMNode *)endElementWithDOMElement:(DOMElement *)element;
+{
+    if (_potentiallyPointlessLineBreak)
+    {
+        NSString *elementName = [[self XMLWriter] topElement];
+        if ([elementName isEqualToString:@"br"])
+        {
+            DOMNode *result = [super endElementWithDOMElement:element];
+            [_output flushOnNextWrite];
+            
+            return result;
+        }
+        else
+        {
+            // The linebreak was never flushed, so time to delete it!
+            [[_potentiallyPointlessLineBreak parentNode] removeChild:_potentiallyPointlessLineBreak];
+            [_output discardBuffer];
+            [_potentiallyPointlessLineBreak release]; _potentiallyPointlessLineBreak = nil;
+        }
+    }
+    
+    return [super endElementWithDOMElement:element];
+}
+
+- (void)outputWillFlush:(NSNotification *)notification;
+{
+    [super outputWillFlush:notification];
+    
+    [_potentiallyPointlessLineBreak release]; _potentiallyPointlessLineBreak = nil;
+}
+
 #pragma mark Characters
 
 - (DOMNode *)willWriteDOMText:(DOMText *)textNode;
@@ -183,7 +243,7 @@
         [tagName isEqualToString:@"H6"])
     {
         result = ([[self XMLWriter] openElementsCount] == 0 ||
-                  [[[self XMLWriter] topElement] isEqualToStringCaseInsensitive:@"LI"]);
+                  [[[self XMLWriter] topElement] isEqualToString:@"li"]);
     }
     else
     {
@@ -217,13 +277,13 @@
     return result;
 }
 
-- (BOOL)validateStyleProperty:(NSString *)propertyName ofElementWithTagName:(NSString *)tagName;
+- (BOOL)validateStyleProperty:(NSString *)propertyName ofElement:(NSString *)element;
 {
-    BOOL result = [super validateStyleProperty:propertyName ofElementWithTagName:tagName];
+    BOOL result = [super validateStyleProperty:propertyName ofElement:element];
     
     if (!result)
     {
-        if ([propertyName isEqualToString:@"text-align"] && [tagName isEqualToString:@"p"])
+        if ([propertyName isEqualToString:@"text-align"] && [element isEqualToString:@"p"])
         {
             result = YES;
         }

@@ -18,6 +18,10 @@
         
   @private
     NSMigrationManager  *_migrationManager;
+    
+    id      _delegate;
+    SEL     _saveSelector;
+    void    *_contextInfo;
 }
 
 - (IBAction)cancelMigration:(id)sender;

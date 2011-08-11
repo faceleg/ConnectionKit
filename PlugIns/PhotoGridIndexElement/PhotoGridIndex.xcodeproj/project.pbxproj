@@ -370,10 +370,6 @@
 			baseConfigurationReference = 3C09513D0D5D0DE700DE6F62 /* Debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = (
-					"-seg1addr",
-					0x50320000,
-				);
 				PRODUCT_NAME = PhotoGridIndex;
 				WRAPPER_EXTENSION = svxElement;
 			};
@@ -384,10 +380,6 @@
 			baseConfigurationReference = 3C09513E0D5D0DE700DE6F62 /* Release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = (
-					"-seg1addr",
-					0x50320000,
-				);
 				PRODUCT_NAME = PhotoGridIndex;
 				WRAPPER_EXTENSION = svxElement;
 			};

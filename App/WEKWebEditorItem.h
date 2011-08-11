@@ -44,6 +44,7 @@
 - (void)itemWillMoveToParentWebEditorItem:(WEKWebEditorItem *)newParentItem; 
 - (void)itemWillMoveToWebEditor:(WEKWebEditorView *)newWebEditor;
 - (void)itemDidMoveToParentWebEditorItem;
+- (void)itemDidMoveToWebEditor;
 
 - (NSEnumerator *)enumerator;
 
@@ -55,8 +56,7 @@
 
 #pragma mark Selection
 
-- (BOOL)isSelectable;   // convenience for -selectableDOMElement
-- (DOMElement *)selectableDOMElement;   // default is nil. Subclass for more complexity, shouldn't worry about KVO
+- (BOOL)isSelectable;                   // default is NO
 - (DOMRange *)selectableDOMRange;
 - (BOOL)shouldTrySelectingInline;
 - (unsigned int)resizingMask;

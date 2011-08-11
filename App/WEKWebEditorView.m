@@ -256,8 +256,16 @@ typedef enum {  // this copied from WebPreferences+Private.h
 - (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)URL;
 {
     _isStartingLoad = YES;
-    [[[self webView] mainFrame] loadHTMLString:string baseURL:URL];
-    _isStartingLoad = NO;
+    @try
+    {
+        // Text can't be focused after the webview loads, so tell it so, hopefully resolving #134847
+        [self setFocusedText:nil notification:nil];
+        [[[self webView] mainFrame] loadHTMLString:string baseURL:URL];
+    }
+    @finally
+    {
+        _isStartingLoad = NO;
+    }
 }
 
 @synthesize startingLoad = _isStartingLoad;
@@ -455,8 +463,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
         BOOL canBeginEditing = NO;
         if (selectableRange)
         {
-            DOMElement *selectableElement = [item selectableDOMElement];
-            canBeginEditing = [[currentSelection commonAncestorContainer] ks_isDescendantOfElement:selectableElement];
+            canBeginEditing = [[currentSelection commonAncestorContainer]
+                               ks_isDescendantOfElement:[item HTMLElement]];
         }
         else
         {
@@ -710,7 +718,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
         // There's no selected items left, so move cursor to left of deselected item. Don't want to do this though if the item is being deselected due to removal from the Web Editor
         else if ([itemToDeselect webEditor] == self)
         {
-            DOMElement *element = [itemToDeselect selectableDOMElement];
+            DOMElement *element = [itemToDeselect HTMLElement];
             if ([element ks_isDescendantOfDOMNode:[element ownerDocument]] &&
                 [self ks_followsResponder:[[self window] firstResponder]])
             {
@@ -1053,24 +1061,24 @@ typedef enum {  // this copied from WebPreferences+Private.h
     return result;
 }
 
-- (WEKWebEditorItem *)selectableItemForDOMNode:(DOMNode *)nextNode;
+- (WEKWebEditorItem *)selectableItemForDOMNode:(DOMNode *)node;
 {
-    OBPRECONDITION(nextNode);
+    OBPRECONDITION(node);
     WEKWebEditorItem *result = nil;
     
     
     // Node in question might be in a different frame. #84559
-    DOMHTMLElement *frameElement = [[[nextNode ownerDocument] webFrame] frameElement];
+    DOMHTMLElement *frameElement = [[[node ownerDocument] webFrame] frameElement];
     while (frameElement)
     {
-        nextNode = frameElement;
-        frameElement = [[[nextNode ownerDocument] webFrame] frameElement];
+        node = frameElement;
+        frameElement = [[[node ownerDocument] webFrame] frameElement];
     }
     
     
     // Look for children at the deepest possible level (normally top-level). Keep backing out until we find something of use
     
-    result = [[self contentItem] hitTestDOMNode:nextNode];
+    result = [[self contentItem] hitTestDOMNode:node];
     while (result && ![result isSelectable])
     {
         result = [result parentWebEditorItem];

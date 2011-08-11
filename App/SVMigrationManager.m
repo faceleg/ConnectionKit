@@ -245,6 +245,7 @@
     @try
     {
         // Try to read metadata to be sure this is a suitable doc
+        OBPRECONDITION(sourceDocURL);
         NSURL *sStoreURL = [KTDocument datastoreURLForDocumentURL:sourceDocURL type:kSVDocumentTypeName_1_5];
         
         if (![NSPersistentStoreCoordinator metadataForPersistentStoreOfType:NSSQLiteStoreType
@@ -381,7 +382,12 @@
                 
                 
                 
-                result = [dDoc saveToURL:[dDoc fileURL] ofType:[dDoc fileType] forSaveOperation:NSSaveOperation error:outError];
+                result = [dDoc writeToURL:[dDoc fileURL]
+                                   ofType:[dDoc fileType]
+                         forSaveOperation:NSSaveOperation
+                      originalContentsURL:[dDoc fileURL]
+                                    error:outError];
+                
                 _destinationContextOverride = nil;
                 [dDoc close];
                 [dDoc release];

@@ -27,7 +27,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "SVApplicationController.h"
 
 #import "BDAlias.h"
-#import "KSAbstractBugReporter.h"
+#import "KSExceptionReporter.h"
 #import "KSEmailAddressComboBox.h"
 #import "KSNetworkNotifier.h"
 #import "KSPluginInstallerController.h"
@@ -54,6 +54,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "KTToolbars.h"
 #import "KTTranscriptController.h"
 #import "SVWelcomeController.h"
+#import "KSExceptionReporter.h"
 
 #import "NSString+KTExtensions.h"
 
@@ -109,6 +110,8 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 // TODO: visit every instance of NSLog or LOG(()) to see if it should be an NSAlert/NSError to the user
 
+
+NSString *kSVOpenDocumentsKey = @"SVOpenDocuments";
 
 NSString *kSVLiveDataFeedsKey = @"LiveDataFeeds";
 NSString *kSVSetDateFromSourceMaterialKey = @"SetDateFromSourceMaterial";
@@ -312,7 +315,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		[NSNumber numberWithBool:YES],			@"EscapeNBSP",		// no longer used apparently
 		[NSNumber numberWithBool:YES],			@"GetURLsFromSafari",
 		[NSNumber numberWithBool:YES],			@"AutoOpenLastOpenedOnLaunch",
-		[NSArray array],						@"KSOpenDocuments",
 		[NSNumber numberWithBool:YES],			@"OpenUntitledFileWhenIconClicked",
 						
 		[NSNumber numberWithBool:NO],			@"DisplayInfo",
@@ -904,7 +906,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		NSLog(@"BETA: Running build %@", [NSApplication buildVersion]);
 #endif
 
-        
 // log SQL statements
 #ifdef DEBUG_SQL
         // via http://weblog.bignerdranch.com/?p=12
@@ -1028,10 +1029,11 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 
 	
 	// Now that progress pane is gone, we can deal with modal alert
-			
+	
+	NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+
 #ifdef OBSERVE_UNDO
 	// register for undo notifications so we can log them
-	NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
 	
     NSArray *notifications = [NSArray arrayWithObjects:
 		NSUndoManagerCheckpointNotification,
@@ -1054,6 +1056,8 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
     }	
 #endif
 
+	[center addObserver:self selector:@selector(exceptionReporterFinished:) name:kKSExceptionReporterFinishedNotification object:nil];
+	
 	// Copy font collection into user's font directory if it's not there
 	// Check default first -- that will allow user to change name without it being rewritten
 	if (![defaults boolForKey:@"Installed FontCollection 2"])	/// change default key to allow update to happen
@@ -1070,13 +1074,19 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	[JSTalk listen];
 	
 #ifndef VARIANT_RELEASE
-	NSLog(@"BETA: Host order = %d which means %@",
+	NSLog(@"BETA: Host order = %ld which means %@",
 		  NSHostByteOrder() , 
 		  (NSHostByteOrder() == NS_LittleEndian) ? @"i386" : @"ppc"
 		  );
 #endif
 	
     _applicationIsLaunching = NO; // we're done
+}
+
+- (void) exceptionReporterFinished:(NSNotification *)aNotification
+{
+	NSLog(@"Problem reported; now quitting.");
+	exit(0);
 }
 
 - (BOOL) appIsExpired;
@@ -1242,6 +1252,11 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 - (IBAction)orderFrontPreferencesPanel:(id)sender
 {
     [[KTPrefsController sharedController] showWindow:sender];
+}
+
+- (IBAction)emptyCache:(id)sender;
+{
+    [[NSURLCache sharedURLCache] removeAllCachedResponses];
 }
 
 /*!	for manual save... though we're saving it automatically.

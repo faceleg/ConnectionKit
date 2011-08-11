@@ -5,37 +5,26 @@
 // We use the macro with the secret key so that sparkle can match with key on the server end.
 PRODUCT_VARIANT = BETA
 
-
 // expiry for beta
-EXPIRY_TIMESTAMP = '@\"2011-07-20 11:59:59 -0800\"'
+EXPIRY_TIMESTAMP = '@\"2011-08-30 11:59:59 -0800\"'
 
 // pull specific tags from dependent repositories
 
 BDALIAS_COMMIT = 8ea89475440bdce1f6d880ddbdbed6f62e1e6f8d
 CK_COMMIT = sandvox2
-IMEDIA_REVISION = 0c632ff084a9ce2c3898883a0aab909fb192d7fd
-JSONKIT_CHECKOUT = v1.4
-KSERROR_COMMIT = v1.1
+KSERROR_COMMIT = ee87a9497a7daff9e0234b26b4566b7ce5e72797
 KSEXTENSIBLEMANAGEDOBJECT_COMMIT = v2.0
-KSFILEUTILS_COMMIT = v1.1.2
-KSHTMLWRITER_COMMIT = v1.2
+KSFILEUTILS_COMMIT = v1.1.3
 KSSELECTIONBORDER_COMMIT = v1.0
 KSTHREADPROXY_COMMIT = v1.2
-SHARED_COMMIT = master
 YRKSPINNINGPROGRESSINDICATOR_COMMIT = fe71a17098f56e62e65b36da0d2ba639481e4899
 
 
 // Building -- common settings across all configurations
 
 
-// GCC 4.2
-GCC_VERSION = 4.2
-
-// Clang LLVM 1.0 (Waiting for one update to Clang to accept Class<...>)
-// GCC_VERSION = com.apple.compilers.llvm.clang.1_0
-
-// LLVM GCC 4.2
-// GCC_VERSION = com.apple.compilers.llvmgcc42
+// Compiler
+GCC_VERSION = com.apple.compilers.llvmgcc42
 
 // For testing out the TOT clang installed.  Useful to get new warnings.
 //GCC_VERSION = com.apple.compilers.llvm.clang.1_0
