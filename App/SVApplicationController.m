@@ -1254,6 +1254,21 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
     [[KTPrefsController sharedController] showWindow:sender];
 }
 
+- (IBAction)emptyCache:(id)sender;
+{
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert setMessageText:NSLocalizedString(@"Are you sure you want to empty the cache?", "alert message")];
+    [alert addButtonWithTitle:NSLocalizedString(@"Empty", "button")];
+    [alert addButtonWithTitle:NSLocalizedString(@"Cancel", "button")];
+    
+    if ([alert runModal] == NSAlertFirstButtonReturn)
+    {
+        [[NSURLCache sharedURLCache] removeAllCachedResponses];
+    }
+    
+    [alert release];
+}
+
 /*!	for manual save... though we're saving it automatically.
 */
 - (IBAction)saveWindowSize:(id)sender

@@ -21,12 +21,15 @@
 
 @implementation SVMigrationHTMLWriterDOMAdaptor
 
-- (BOOL)DOMElementContainsAWebEditorItem:(DOMElement *)element;
+- (BOOL)DOMElementContainsAnInDocumentImage:(DOMElement *)element;
 {
-    NSArray *items = [[self textDOMController] childWebEditorItems];
-    for (WEKWebEditorItem *anItem in items)
+    DOMNodeList *images = [element getElementsByTagName:@"IMG"];
+    NSUInteger i, count = [images length];
+    
+    for (i = 0; i < count; i++)
     {
-        if ([[anItem HTMLElement] ks_isDescendantOfElement:element]) return YES;
+        DOMHTMLImageElement *anImage = (DOMHTMLImageElement *)[images item:i];
+        if ([[anImage absoluteImageURL] isFileURL]) return YES;
     }
     
     return NO;
@@ -64,10 +67,12 @@
         if ([divID length] == 0)
         {
             // MS Office brings along its own classname which is highly undesirable. I'm trying to build a bit of a whitelist of what it might chuck in. #121069
+            // Custom classes from PayPal have a habit of leaking into every following paragraph too. #137833
             NSString *class = [element className];
             if ([class length] == 0 ||
                 [class isEqualToString:@"MsoNormal"] ||
-                [class isEqualToString:@"paragraph Heading_2"])
+                [class isEqualToString:@"paragraph Heading_2"] ||
+                [class isEqualToString:@"product"])
             {
                 return [super handleInvalidDOMElement:element];
             }
@@ -81,12 +86,8 @@
     
     
     // Can't convert to raw HTML if contains an embedded image
-    BOOL treatAsImageContainer = [self DOMElementContainsAWebEditorItem:element];
-    if (treatAsImageContainer)
-    {
-        // google maps. #119961
-        if ([tagName isEqualToString:@"DIV"] && [[element className] hasPrefix:@"map-"]) treatAsImageContainer = NO;
-    }
+    BOOL treatAsImageContainer = [self DOMElementContainsAnInDocumentImage:element];
+    
     
     if (treatAsImageContainer)
     {
@@ -141,14 +142,16 @@
     
     
     // Generate new DOM node to match what model would normally generate
-    [controller performSelector:@selector(update)];
+    DOMNode *result = [[controller HTMLElement] nextSibling];    // get in before update, in case it's synchronous!
+    [controller setNeedsUpdate];
+    [controller updateIfNeeded];
     
     
     // Write the replacement
     OBASSERT([controller writeAttributedHTML:self]);
     
     
-    return [[controller HTMLElement] nextSibling];
+    return result;
 }
 
 @synthesize textDOMController = _articleController;

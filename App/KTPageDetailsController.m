@@ -1030,8 +1030,14 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 			NSTextView *fieldEditor = (NSTextView *)[self.activeTextField currentEditor];
 			if (fieldEditor)
 			{
-				OBASSERT([fieldEditor isKindOfClass:[NSTextView class]]);
-				extURLSize = [[fieldEditor textStorage] size];
+				if ([fieldEditor isKindOfClass:[NSTextView class]])
+				{
+					extURLSize = [[fieldEditor textStorage] size];
+				}
+				else
+				{
+					NSLog(@"WARNING: %s; fieldEditor is not NSTextView; it is %@", __FUNCTION__, [fieldEditor class]);
+				}
 			}
 		}
 		else
@@ -1150,8 +1156,16 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 				if (fld == self.activeTextField)
 				{
 					NSTextView *fieldEditor = (NSTextView *)[self.activeTextField currentEditor];
-					OBASSERT([fieldEditor isKindOfClass:[NSTextView class]]);
-					fldSize = [[fieldEditor textStorage] size];
+
+					if ([fieldEditor isKindOfClass:[NSTextView class]])
+					{
+						fldSize = [[fieldEditor textStorage] size];
+					}
+					else
+					{
+						NSLog(@"WARNING: %s; fieldEditor is not NSTextView; it is %@", __FUNCTION__, [fieldEditor class]);
+					}
+
 				}
 				else
 				{
@@ -1264,20 +1278,25 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	NSTextView *fieldEditor = (NSTextView *)[textField currentEditor];
 	if (fieldEditor)
 	{
-		OBASSERT([fieldEditor isKindOfClass:[NSTextView class]]);
-		
-		
-		NSRect textRect = [[fieldEditor layoutManager]
-						   usedRectForTextContainer:[fieldEditor textContainer]];
-		
-		NSRect fieldRect = [textField frame];
-		float textWidth = textRect.size.width;
-		float fieldWidth = fieldRect.size.width;
-		int width = ceilf(MIN(textWidth, fieldWidth));
-		width = MAX(width, 7);		// make sure it's at least 7 pixels wide
-		// NSLog(@"'%@' widths: text = %.2f, field = %.2f => %d", [textField stringValue], textWidth, fieldWidth, width);
-		fieldRect.size.width = width;
-		[view setFocusRect:fieldRect];
+		if ([fieldEditor isKindOfClass:[NSTextView class]])
+		{
+			
+			NSRect textRect = [[fieldEditor layoutManager]
+							   usedRectForTextContainer:[fieldEditor textContainer]];
+			
+			NSRect fieldRect = [textField frame];
+			float textWidth = textRect.size.width;
+			float fieldWidth = fieldRect.size.width;
+			int width = ceilf(MIN(textWidth, fieldWidth));
+			width = MAX(width, 7);		// make sure it's at least 7 pixels wide
+			// NSLog(@"'%@' widths: text = %.2f, field = %.2f => %d", [textField stringValue], textWidth, fieldWidth, width);
+			fieldRect.size.width = width;
+			[view setFocusRect:fieldRect];
+		}
+		else
+		{
+			NSLog(@"WARNING: %s; fieldEditor is not NSTextView; it is %@", __FUNCTION__, [fieldEditor class]);
+		}
 	}
 }
 
