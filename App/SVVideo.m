@@ -631,6 +631,7 @@
 	
 	BOOL videoFlashRequiresFullURL = [defaults boolForKey:@"videoFlashRequiresFullURL"];	// usually not, but YES for flowplayer
 	if ([videoFlashPlayer isEqualToString:@"flowplayer"]) videoFlashRequiresFullURL = YES;
+	if ([videoFlashPlayer isEqualToString:@"flvplayer"]) videoFlashRequiresFullURL = YES;
 	
 	NSString *movieSourcePath = @"";
 	NSString *posterSourcePath = @"";

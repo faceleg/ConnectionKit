@@ -526,7 +526,13 @@
         
         NSUInteger length = [textNode length];
         NSIndexPath *startPath = [[selection ks_startIndexPathFromNode:nodeToAppend] indexPathByAddingToLastIndex:length];
+        
         NSIndexPath *endPath = [[selection ks_endIndexPathFromNode:nodeToAppend] indexPathByAddingToLastIndex:length];
+        if (!endPath)
+        {
+            // When selection is at end of textNode, WebKit extends selection to cover all of appended text. #136170
+            endPath = [selection ks_endIndexPathFromNode:textNode];
+        }
         
         
         // Delete node by appending to ourself
