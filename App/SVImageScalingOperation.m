@@ -151,6 +151,7 @@
                                                    options:[NSDictionary dictionaryWithObjectsAndKeys:
                                                             NSBOOL(YES), kCIContextUseSoftwareRenderer,
                                                             colorSpace, kCIContextOutputColorSpace,
+                                                            colorSpace, kCIContextWorkingColorSpace,
                                                             nil]];
         
         CFRelease(colorSpace);
