@@ -1254,6 +1254,11 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
     [[KTPrefsController sharedController] showWindow:sender];
 }
 
+- (IBAction)emptyCache:(id)sender;
+{
+    [[NSURLCache sharedURLCache] removeAllCachedResponses];
+}
+
 /*!	for manual save... though we're saving it automatically.
 */
 - (IBAction)saveWindowSize:(id)sender
