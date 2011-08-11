@@ -20,12 +20,15 @@
 
 @implementation SVMigrationHTMLWriterDOMAdaptor
 
-- (BOOL)DOMElementContainsAWebEditorItem:(DOMElement *)element;
+- (BOOL)DOMElementContainsAnInDocumentImage:(DOMElement *)element;
 {
-    NSArray *items = [[self textDOMController] childWebEditorItems];
-    for (WEKWebEditorItem *anItem in items)
+    DOMNodeList *images = [element getElementsByTagName:@"IMG"];
+    NSUInteger i, count = [images length];
+    
+    for (i = 0; i < count; i++)
     {
-        if ([[anItem HTMLElement] ks_isDescendantOfElement:element]) return YES;
+        DOMHTMLImageElement *anImage = (DOMHTMLImageElement *)[images item:i];
+        if ([[anImage absoluteImageURL] isFileURL]) return YES;
     }
     
     return NO;
@@ -80,12 +83,8 @@
     
     
     // Can't convert to raw HTML if contains an embedded image
-    BOOL treatAsImageContainer = [self DOMElementContainsAWebEditorItem:element];
-    if (treatAsImageContainer)
-    {
-        // google maps. #119961
-        if ([tagName isEqualToString:@"DIV"] && [[element className] hasPrefix:@"map-"]) treatAsImageContainer = NO;
-    }
+    BOOL treatAsImageContainer = [self DOMElementContainsAnInDocumentImage:element];
+    
     
     if (treatAsImageContainer)
     {
