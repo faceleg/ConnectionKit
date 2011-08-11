@@ -1019,6 +1019,29 @@
 {
     // Root can't be collapsed
     BOOL result = ([outlineView rowForItem:item] > 0);
+    
+#if MAC_OS_X_VERSION_MIN_REQUIRED <= MAC_OS_X_VERSION_10_5
+    if (result)
+    {
+        // Before collapsing, adjust selection to be collapsed item if appropriate
+        NSTreeController *controller = [self content];
+        NSIndexPath *path = [item indexPath];
+        NSArray *selection = [controller selectionIndexPaths];
+        NSMutableArray *descendants = [[NSMutableArray alloc] initWithCapacity:[selection count]];
+        
+        for (NSIndexPath *aPath in selection)
+        {
+            if (aPath == path) continue;
+            if ([aPath ks_isDescendantOfIndexPath:path]) [descendants addObject:aPath];
+        }
+        
+        [controller removeSelectionIndexPaths:descendants];
+        [descendants release];
+        
+        if (![controller selectionIndexPath]) [controller setSelectionIndexPath:path];
+    }
+#endif
+    
     return result;
 }
 
