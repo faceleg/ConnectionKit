@@ -25,10 +25,10 @@ typedef enum { kPosterFrameTypeUndefined = 0, kPosterFrameTypeNone, kPosterFrame
 
 + (void)writeFallbackScriptOnce:(SVHTMLContext *)context;
 
-@property (retain) QTMovie *dimensionCalculationMovie;
-@property (retain) KSSimpleURLConnection *dimensionCalculationConnection;
+@property (nonatomic, retain) QTMovie *dimensionCalculationMovie;
+@property (nonatomic, retain) KSSimpleURLConnection *dimensionCalculationConnection;
 
-@property PosterFrameType posterFrameType;
+@property (nonatomic) PosterFrameType posterFrameType;
 
 #pragma mark Publishing
 

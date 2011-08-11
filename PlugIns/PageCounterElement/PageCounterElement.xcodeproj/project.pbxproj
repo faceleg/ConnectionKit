@@ -334,10 +334,6 @@
 			baseConfigurationReference = 3C42E24E0D64D127004F35FD /* Debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = (
-					"-seg1addr",
-					0x50100000,
-				);
 				PRODUCT_NAME = PageCounter;
 				WRAPPER_EXTENSION = svxElement;
 			};
@@ -348,10 +344,6 @@
 			baseConfigurationReference = 3C42E24F0D64D127004F35FD /* Release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = (
-					"-seg1addr",
-					0x50100000,
-				);
 				PRODUCT_NAME = PageCounter;
 				WRAPPER_EXTENSION = svxElement;
 			};

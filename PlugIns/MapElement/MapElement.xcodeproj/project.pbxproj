@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		27091DCD13166BF1002F3C08 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 27091DCC13166BF1002F3C08 /* InfoPlist.strings */; };
 		2743F3F213BE33E2009EA6D3 /* BUNDLED in Resources */ = {isa = PBXBuildFile; fileRef = 2743F3F113BE33E2009EA6D3 /* BUNDLED */; };
+		3C3E951F13EA67680039A0D7 /* MapInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3E951E13EA67680039A0D7 /* MapInspector.m */; };
 		3C43BBD613075096007ED67D /* MapPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C43BBD513075096007ED67D /* MapPlugIn.m */; };
 		3C43BC0513075A09007ED67D /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C43BC0413075A09007ED67D /* License.rtf */; };
 		3C43BC0813075A36007ED67D /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C43BC0613075A36007ED67D /* Inspector.xib */; };
@@ -28,6 +29,8 @@
 		27091DD213166C2E002F3C08 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Inspector.xib; sourceTree = "<group>"; };
 		2743F3F113BE33E2009EA6D3 /* BUNDLED */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = BUNDLED; path = ../Configurations/BUNDLED; sourceTree = SOURCE_ROOT; };
 		32DBCF630370AF2F00C91783 /* MapElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapElement_Prefix.pch; sourceTree = "<group>"; };
+		3C3E951D13EA67680039A0D7 /* MapInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapInspector.h; sourceTree = "<group>"; };
+		3C3E951E13EA67680039A0D7 /* MapInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapInspector.m; sourceTree = "<group>"; };
 		3C43BBAC13074EDB007ED67D /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C43BBAD13074EDB007ED67D /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C43BBD413075096007ED67D /* MapPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapPlugIn.h; sourceTree = "<group>"; };
@@ -107,6 +110,8 @@
 			children = (
 				3C43BBD413075096007ED67D /* MapPlugIn.h */,
 				3C43BBD513075096007ED67D /* MapPlugIn.m */,
+				3C3E951D13EA67680039A0D7 /* MapInspector.h */,
+				3C3E951E13EA67680039A0D7 /* MapInspector.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -246,6 +251,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C43BBD613075096007ED67D /* MapPlugIn.m in Sources */,
+				3C3E951F13EA67680039A0D7 /* MapInspector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

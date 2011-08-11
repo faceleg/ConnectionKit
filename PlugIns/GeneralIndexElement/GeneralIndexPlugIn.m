@@ -183,7 +183,13 @@
 			[context startElement:@"td" className:@"dli2"];
 			[context startHeadingWithAttributes:
 				[NSDictionary dictionaryWithObject:@"index-title" forKey:@"class"]];
-			[self writeTitleOfIteratedPage];
+			
+			id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
+			if ([iteratedPage showsTitle])
+			{
+				// In a table, only show the title if it's visible on the target page. Should be OK since we have other context.
+				[self writeTitleOfIteratedPage];
+			}
 			[context endElement];
 			[context endElement];
 		}
@@ -215,13 +221,19 @@
 		{
 			if (self.indexLayoutType & kListMask)
 			{
-				[self writeTitleOfIteratedPage];		// List: Just the title, no header
+				[self writeTitleOfIteratedPage];		// List: Just the title, no header. ALWAYS SHOW TITLE, even if not visible on page.
 			}
 			else
 			{
 				[context startHeadingWithAttributes:
 				 [NSDictionary dictionaryWithObject:@"index-title" forKey:@"class"]];
-				[self writeTitleOfIteratedPage];
+				
+				id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
+				if ([iteratedPage showsTitle] || 0 == (self.indexLayoutType & kArticleMask) )
+				{
+					// Show title either if the page's title is visible, OR FORCE IT TO BE WRITTEN if there is no article.
+					[self writeTitleOfIteratedPage];
+				}
 				[context endElement];
 			}
 		}
@@ -372,17 +384,14 @@
     id<SVPlugInContext> context = [self currentContext]; 
     id<SVPage, PagePrivate> iteratedPage = [context objectForCurrentTemplateIteration];
 	
-	if ([iteratedPage showsTitle])		// Do not show title if it is hidden!
-	{
-		if ( self.hyperlinkTitles) { [context startAnchorElementWithPage:iteratedPage]; } // <a>
-		
-		[context writeElement:@"span"
-			  withTitleOfPage:iteratedPage
-				  asPlainText:!self.richTextTitles	// used to be allowing for rich text in articles, but this allows hyperlinks to go through, which means nested hyperlinks in the index.
-				   attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
-		
-		if ( self.hyperlinkTitles ) { [context endElement]; } // </a> 
-	}
+	if ( self.hyperlinkTitles) { [context startAnchorElementWithPage:iteratedPage]; } // <a>
+	
+	[context writeElement:@"span"
+		  withTitleOfPage:iteratedPage
+			  asPlainText:YES	// used to be allowing for rich text in articles, but this allows hyperlinks to go through, which means nested hyperlinks in the index.
+			   attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
+	
+	if ( self.hyperlinkTitles ) { [context endElement]; } // </a> 
 }
 
 

@@ -14,7 +14,7 @@
 
 
 #import "KSXMLWriterDOMAdaptor.h"
-#import "KSStringWriter.h";
+#import "KSStringWriter.h"
 
 
 @class SVTextAttachment;
@@ -22,9 +22,9 @@
 
 @interface SVFieldEditorHTMLWriterDOMAdapator : KSXMLWriterDOMAdaptor
 {
-    NSMutableArray          *_pendingStartTagDOMElements;
-  @private
     KSStringWriter  *_output;
+  @private
+    NSMutableArray  *_pendingStartTagDOMElements;
     NSMutableSet    *_attachments;
     
     NSMutableArray  *_pendingEndDOMElements;
@@ -67,6 +67,10 @@
 #pragma mark Styling Whitelist
 - (BOOL)validateStyleProperty:(NSString *)propertyName ofElement:(NSString *)element;
 - (void)removeUnsupportedCustomStyling:(DOMCSSStyleDeclaration *)style fromElement:(NSString *)element;
+
+
+#pragma mark Buffering
+- (void)outputWillFlush:(NSNotification *)notification;
 
 
 @end

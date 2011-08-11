@@ -216,7 +216,15 @@
 
 - (BOOL)shouldTrySelectingInline;
 {
-    return [[self representedObject] displayInline];
+    BOOL result = NO;
+    
+    id object = [self representedObject];
+    if ([object respondsToSelector:@selector(displayInline)])
+    {
+        result = [object displayInline];
+    }
+    
+    return result;
 }
 
 #pragma mark Updating
@@ -940,7 +948,10 @@
 - (void)updateIfNeeded; // recurses down the tree
 {
     // The update may well have meant no children need updating any more. If so, no biggie as this recursion should do nothing
-    [[self childWebEditorItems] makeObjectsPerformSelector:_cmd];
+    // Update might change the .childWebEditorItems property, so retain during. #137521
+    NSArray *children = [[self childWebEditorItems] retain];
+    [children makeObjectsPerformSelector:_cmd];
+    [children release];
 }
 
 - (SVWebEditorHTMLContext *)HTMLContext { return nil; }

@@ -294,7 +294,7 @@
     DOMElement *element = [item HTMLElement];
     NSImage *image = [element performSelector:@selector(renderedImage)];
     if (!image) image = [element image];
-    if (!image);    // could fallback to snapshotting view here
+//    if (!image);    could fallback to snapshotting view here
     
     NSRect rect = [element boundingBox];
     NSSize originalSize = rect.size;

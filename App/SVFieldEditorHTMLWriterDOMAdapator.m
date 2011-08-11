@@ -259,7 +259,8 @@
             NSString *attributeName = [anAttribute name];
             NSString *attributeValue = [anAttribute value];
             
-            if (attributeValue = [self validateAttribute:attributeName value:attributeValue ofElement:elementName])
+            attributeValue = [self validateAttribute:attributeName value:attributeValue ofElement:elementName];
+            if (attributeValue)
             {
                 // Validate individual styling
                 if ([attributeName isEqualToString:@"style"])
@@ -296,8 +297,8 @@
 {
     DOMNode *result = nil;
     
-    NSString *tagName = [[self XMLWriter] topElement];
-    if ([[self class] isElementWithTagNameContent:tagName])
+    NSString *elementName = [[self XMLWriter] topElement];
+    if ([[self class] isElementWithTagNameContent:elementName])
     {
         result = [super endElementWithDOMElement:element];
     }
@@ -318,7 +319,7 @@
         }
         else
         {
-            if ([tagName isEqualToStringCaseInsensitive:@"P"])
+            if ([elementName isEqualToString:@"p"])
             {
                 result = [super endElementWithDOMElement:element];
             }
@@ -525,7 +526,13 @@
         
         NSUInteger length = [textNode length];
         NSIndexPath *startPath = [[selection ks_startIndexPathFromNode:nodeToAppend] indexPathByAddingToLastIndex:length];
+        
         NSIndexPath *endPath = [[selection ks_endIndexPathFromNode:nodeToAppend] indexPathByAddingToLastIndex:length];
+        if (!endPath)
+        {
+            // When selection is at end of textNode, WebKit extends selection to cover all of appended text. #136170
+            endPath = [selection ks_endIndexPathFromNode:textNode];
+        }
         
         
         // Delete node by appending to ourself
