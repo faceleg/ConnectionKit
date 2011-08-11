@@ -136,14 +136,16 @@
     
     
     // Generate new DOM node to match what model would normally generate
-    [controller performSelector:@selector(update)];
+    DOMNode *result = [[controller HTMLElement] nextSibling];    // get in before update, in case it's synchronous!
+    [controller setNeedsUpdate];
+    [controller updateIfNeeded];
     
     
     // Write the replacement
     OBASSERT([controller writeAttributedHTML:self]);
     
     
-    return [[controller HTMLElement] nextSibling];
+    return result;
 }
 
 @synthesize textDOMController = _articleController;
