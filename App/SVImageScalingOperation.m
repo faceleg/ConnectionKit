@@ -68,6 +68,11 @@
  */
 - (NSData *)_loadImageScaledToSize:(NSSize)size type:(NSString *)fileType error:(NSError **)error // Mode will be read from the URL
 {
+    static CGColorSpaceRef colorSpace;
+    if (!colorSpace) colorSpace = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
+    
+    
+    
 #ifdef DEBUG
     NSDate *start = [NSDate date];
 #endif
@@ -99,14 +104,6 @@
                                                 code:NSURLErrorResourceUnavailable
                                             userInfo:nil];
         return nil;
-    }
-    
-    
-    // Get hold of the color space first
-    CGColorSpaceRef colorSpace = NULL;
-    if ([image respondsToSelector:@selector(colorSpace)])
-    {
-        colorSpace = [image colorSpace];
     }
     
     
@@ -145,17 +142,13 @@
     // Create CIIContext to match
     if (!coreImageContext)
     {
-        CGColorSpaceRef colorSpace = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
-        
         coreImageContext = [CIContext contextWithCGContext:nil
                                                    options:[NSDictionary dictionaryWithObjectsAndKeys:
                                                             NSBOOL(YES), kCIContextUseSoftwareRenderer,
                                                             colorSpace, kCIContextOutputColorSpace,
                                                             colorSpace, kCIContextWorkingColorSpace,
                                                             nil]];
-        
-        CFRelease(colorSpace);
-        
+                
         [[[NSThread currentThread] threadDictionary]
          setObject:coreImageContext forKey:@"SVImageScalingOperationCIContext"];
     }
@@ -164,39 +157,17 @@
     // Render a CGImage
     CGRect neededContextRect = [image extent];    // Clang, we assert scaledImage is non-nil above
     
-    CGImageRef finalImage = NULL;
-    if (colorSpace)
-    {
-        // Web browsers only support RGB and monochrome color spaces
-        CGColorSpaceModel model = CGColorSpaceGetModel(colorSpace);
-        if (model == kCGColorSpaceModelRGB || model == kCGColorSpaceModelMonochrome)
-        {
-            finalImage = [coreImageContext createCGImage:image
-                                                fromRect:neededContextRect
-                                                  format:kCIFormatARGB8
-                                              colorSpace:colorSpace];
-        }
-    }
-    
-    if (!finalImage)
-    {
-        finalImage = [coreImageContext createCGImage:image fromRect:neededContextRect];
-    }
+    CGImageRef finalImage = [coreImageContext createCGImage:image fromRect:neededContextRect];
     
     
-    // If given a CMYK image that didn't need scaling, the result may not be in the desired colorspace. Try to force it to be
-    CGColorSpaceModel model = CGColorSpaceGetModel(CGImageGetColorSpace(finalImage));
-    if (model != kCGColorSpaceModelRGB && model != kCGColorSpaceModelMonochrome)
+    // If given an image that didn't need scaling, Core Image might take shortcuts. Try to force it to be
+    if (CGImageGetColorSpace(finalImage) != colorSpace)
     {
-        CGColorSpaceRef colorSpace = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
-        
         CGImageRef rgbImage = [coreImageContext createCGImage:image
                                                      fromRect:neededContextRect
                                                        format:kCIFormatARGB8
                                                    colorSpace:colorSpace];
-        
-        CFRelease(colorSpace);
-        
+                
         if (rgbImage)
         {
             CFRelease(finalImage); finalImage = rgbImage;
