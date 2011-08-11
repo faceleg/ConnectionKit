@@ -66,10 +66,12 @@
         if ([divID length] == 0)
         {
             // MS Office brings along its own classname which is highly undesirable. I'm trying to build a bit of a whitelist of what it might chuck in. #121069
+            // Custom classes from PayPal have a habit of leaking into every following paragraph too. #137833
             NSString *class = [element className];
             if ([class length] == 0 ||
                 [class isEqualToString:@"MsoNormal"] ||
-                [class isEqualToString:@"paragraph Heading_2"])
+                [class isEqualToString:@"paragraph Heading_2"] ||
+                [class isEqualToString:@"product"])
             {
                 return [super handleInvalidDOMElement:element];
             }
