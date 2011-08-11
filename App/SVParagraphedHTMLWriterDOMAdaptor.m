@@ -149,18 +149,19 @@
 
 - (void)startElement:(NSString *)elementName withDOMElement:(DOMElement *)element;    // open the tag and write attributes
 {
-    if ([elementName isEqualToString:@"br"] && [element previousSibling])
+    // A paragraph of nothing but a line break is a placeholder to be kept
+    // The same goes for double line breaks at the end of a paragraph
+    if ([elementName isEqualToString:@"br"] && [element previousSibling] && _potentiallyPointlessLineBreak == nil)
     {
         [_output cancelFlushOnNextWrite];   // as we're about to write into the buffer
                                             //[_pendingStartTagDOMElements addObject:element];
         [_output beginBuffering];
         
-        [_potentiallyPointlessLineBreak release]; _potentiallyPointlessLineBreak = [element retain];
+        _potentiallyPointlessLineBreak = [element retain];  // made sure was nil above
         
         // Don't need to flush on next write since linebreaks are always empty elements. We'll set up flushing once element ends
-        
-        return [super startElement:elementName withDOMElement:element];
     }
+    
     
     [super startElement:elementName withDOMElement:element];
 }
