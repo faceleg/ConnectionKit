@@ -77,28 +77,16 @@
     NSDate *start = [NSDate date];
 #endif
     
-    // Load the image from disk
-    CIImage *image;
-    if ([_sourceMedia mediaData])
-    {
-        image = [[CIImage alloc] initWithData:[_sourceMedia mediaData]];
-    }
-    else
-    {
-        image = [[CIImage alloc] initWithContentsOfURL:[_sourceMedia mediaURL]];
-        if (!image)
-        {
-            // Maybe it's a custom URL protocol
-            NSData *data = [[NSData alloc] initWithContentsOfURL:[_sourceMedia mediaURL]];
-            if (data)
-            {
-                image = [[CIImage alloc] initWithData:data];
-                [data release];
-            }
-        }
-    }
     
-    if (!image)
+    // Load the image
+    NSData *data = [[_sourceMedia mediaData] retain];
+    if (!data) data = [[NSData alloc] initWithContentsOfURL:[_sourceMedia mediaURL] options:0 error:error];
+    if (!data) return nil;  // error pointer should be set by NSData
+    
+    CGImageSourceRef source = CGImageSourceCreateWithData((CFDataRef)data, NULL);
+    [data release];
+    
+    if (!source)
     {
         if (error) *error = [NSError errorWithDomain:NSURLErrorDomain
                                                 code:NSURLErrorResourceUnavailable
@@ -111,10 +99,64 @@
     NSDictionary *URLQuery = _parameters;
     KSImageScalingMode scalingMode = [URLQuery integerForKey:@"mode"];
     
-    CGSize sourceSize = [image extent].size;
-    if (sourceSize.width != size.width && sourceSize.height != size.height)
+    
+    // Need scaling?
+    CFDictionaryRef properties = CGImageSourceCopyPropertiesAtIndex(source, 0, NULL);
+    OBASSERT(properties);
+    
+    BOOL needScaling = YES;
+    
+    if ([(NSNumber *)CFDictionaryGetValue(properties, kCGImagePropertyPixelWidth) floatValue] == size.width &&
+        [(NSNumber *)CFDictionaryGetValue(properties, kCGImagePropertyPixelHeight) floatValue] == size.height)
     {
-        // Scale the image
+        needScaling = NO;
+        
+        // Image is the right size already, but what about colorspace?
+        // Very ugly, seems we have to hardcode the standard sRGB name
+        NSString *colorSpaceName = (NSString *)CFDictionaryGetValue(properties, kCGImagePropertyProfileName);
+        if ([colorSpaceName isEqualToString:@"sRGB IEC61966-2.1"])
+        {
+            // Can just copy the image data straight across
+            NSMutableData *result = [[NSMutableData alloc] init];
+            CGImageDestinationRef destination = CGImageDestinationCreateWithData((CFMutableDataRef)result,
+                                                                                 (CFStringRef)fileType,
+                                                                                 1,
+                                                                                 NULL);
+            
+            // As far as I can tell, this avoids recompressing JPEGs
+            CGImageDestinationAddImageFromSource(destination, source, 0, NULL);
+            
+            CFRelease(destination);
+            CFRelease(properties);
+            CFRelease(source);
+            return [result autorelease];
+        }
+    }
+    
+    CFRelease(properties);
+    
+    
+    // Time to step up to some real graphics handling
+    CGImageRef cgImage = CGImageSourceCreateImageAtIndex(source, 0, NULL);
+    CFRelease(source);
+    
+    if (!cgImage)
+    {
+        if (error) *error = [NSError errorWithDomain:NSURLErrorDomain
+                                                code:NSURLErrorResourceUnavailable
+                                            userInfo:nil];
+        return nil;
+    }
+    
+    CIImage *image = [[CIImage alloc] initWithCGImage:cgImage];
+    OBASSERT(image);
+    
+    CFRelease(cgImage);
+    
+    
+    // Scale the image if needed
+    if (needScaling)
+    {
         CIImage *scaledImage = [image imageByScalingToSize:CGSizeMake(size.width, size.height)
                                                             mode:scalingMode
                                                      opaqueEdges:YES];
