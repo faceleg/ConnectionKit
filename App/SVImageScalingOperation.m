@@ -101,16 +101,6 @@
     
     
     // Need scaling?
-    CFDictionaryRef properties = CGImageSourceCopyPropertiesAtIndex(source, 0, NULL);
-    if (!properties)
-    {
-        CFRelease(source);
-        if (error) *error = [NSError errorWithDomain:NSURLErrorDomain
-                                                code:NSURLErrorResourceUnavailable
-                                            userInfo:nil];
-        return nil;
-    }
-    
     NSMutableData *result = [NSMutableData data];
     
     CGImageDestinationRef destination = CGImageDestinationCreateWithData((CFMutableDataRef)result,
@@ -119,39 +109,44 @@
                                                                          NULL);
     OBASSERT(destination);
     
+    CFDictionaryRef properties = CGImageSourceCopyPropertiesAtIndex(source, 0, NULL);
     BOOL needScaling = YES;
-    if ([(NSNumber *)CFDictionaryGetValue(properties, kCGImagePropertyPixelWidth) floatValue] == size.width &&
-        [(NSNumber *)CFDictionaryGetValue(properties, kCGImagePropertyPixelHeight) floatValue] == size.height)
-    {
-        needScaling = NO;
-        
-        // Image is the right size already, but what about colorspace?
-        // Very ugly, seems we have to hardcode the standard sRGB name
-        NSString *colorSpaceName = (NSString *)CFDictionaryGetValue(properties, kCGImagePropertyProfileName);
-        if ([colorSpaceName isEqualToString:@"sRGB IEC61966-2.1"])
-        {
-            // Can just copy the image data straight across
-            // As far as I can tell, this avoids recompressing JPEGs
-            CGImageDestinationAddImageFromSource(destination, source, 0, NULL);
-            CFRelease(properties);
-            CFRelease(source);
-            
-            if (!CGImageDestinationFinalize(destination))
-            {
-                CFRelease(destination);
-                
-                if (error) *error = [NSError errorWithDomain:NSURLErrorDomain
-                                                        code:NSURLErrorResourceUnavailable
-                                                    userInfo:nil];
-                return nil;
-            }
-            
-            CFRelease(destination);
-            return result;
-        }
-    }
     
-    CFRelease(properties);
+    if (properties)
+    {
+        if ([(NSNumber *)CFDictionaryGetValue(properties, kCGImagePropertyPixelWidth) floatValue] == size.width &&
+            [(NSNumber *)CFDictionaryGetValue(properties, kCGImagePropertyPixelHeight) floatValue] == size.height)
+        {
+            needScaling = NO;
+            
+            // Image is the right size already, but what about colorspace?
+            // Very ugly, seems we have to hardcode the standard sRGB name
+            NSString *colorSpaceName = (NSString *)CFDictionaryGetValue(properties, kCGImagePropertyProfileName);
+            if ([colorSpaceName isEqualToString:@"sRGB IEC61966-2.1"])
+            {
+                // Can just copy the image data straight across
+                // As far as I can tell, this avoids recompressing JPEGs
+                CGImageDestinationAddImageFromSource(destination, source, 0, NULL);
+                CFRelease(properties);
+                CFRelease(source);
+                
+                if (!CGImageDestinationFinalize(destination))
+                {
+                    CFRelease(destination);
+                    
+                    if (error) *error = [NSError errorWithDomain:NSURLErrorDomain
+                                                            code:NSURLErrorResourceUnavailable
+                                                        userInfo:nil];
+                    return nil;
+                }
+                
+                CFRelease(destination);
+                return result;
+            }
+        }
+        
+        CFRelease(properties);
+    }
     
     
     // Time to step up to some real graphics handling
