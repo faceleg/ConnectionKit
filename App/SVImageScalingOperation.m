@@ -104,14 +104,22 @@
     CFDictionaryRef properties = CGImageSourceCopyPropertiesAtIndex(source, 0, NULL);
     if (!properties)
     {
+        CFRelease(source);
         if (error) *error = [NSError errorWithDomain:NSURLErrorDomain
                                                 code:NSURLErrorResourceUnavailable
                                             userInfo:nil];
         return nil;
     }
     
-    BOOL needScaling = YES;
+    NSMutableData *result = [NSMutableData data];
     
+    CGImageDestinationRef destination = CGImageDestinationCreateWithData((CFMutableDataRef)result,
+                                                                         (CFStringRef)fileType,
+                                                                         1,
+                                                                         NULL);
+    OBASSERT(destination);
+    
+    BOOL needScaling = YES;
     if ([(NSNumber *)CFDictionaryGetValue(properties, kCGImagePropertyPixelWidth) floatValue] == size.width &&
         [(NSNumber *)CFDictionaryGetValue(properties, kCGImagePropertyPixelHeight) floatValue] == size.height)
     {
@@ -123,19 +131,23 @@
         if ([colorSpaceName isEqualToString:@"sRGB IEC61966-2.1"])
         {
             // Can just copy the image data straight across
-            NSMutableData *result = [[NSMutableData alloc] init];
-            CGImageDestinationRef destination = CGImageDestinationCreateWithData((CFMutableDataRef)result,
-                                                                                 (CFStringRef)fileType,
-                                                                                 1,
-                                                                                 NULL);
-            
             // As far as I can tell, this avoids recompressing JPEGs
             CGImageDestinationAddImageFromSource(destination, source, 0, NULL);
-            
-            CFRelease(destination);
             CFRelease(properties);
             CFRelease(source);
-            return [result autorelease];
+            
+            if (!CGImageDestinationFinalize(destination))
+            {
+                CFRelease(destination);
+                
+                if (error) *error = [NSError errorWithDomain:NSURLErrorDomain
+                                                        code:NSURLErrorResourceUnavailable
+                                                    userInfo:nil];
+                return nil;
+            }
+            
+            CFRelease(destination);
+            return result;
         }
     }
     
@@ -148,6 +160,7 @@
     
     if (!cgImage)
     {
+        CFRelease(destination);
         if (error) *error = [NSError errorWithDomain:NSURLErrorDomain
                                                 code:NSURLErrorResourceUnavailable
                                             userInfo:nil];
@@ -232,19 +245,13 @@
     [identifiers release];
 	
     
-    NSMutableData *result = [NSMutableData data];
-    CGImageDestinationRef imageDestination = CGImageDestinationCreateWithData((CFMutableDataRef)result,
-                                                                              (CFStringRef)fileType,
-                                                                              1,
-                                                                              NULL);
-    OBASSERT(imageDestination);
     
-    CGImageDestinationAddImage(imageDestination,
+    CGImageDestinationAddImage(destination,
                                finalImage,
                                (CFDictionaryRef)[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:0.7] forKey:(NSString *)kCGImageDestinationLossyCompressionQuality]);
     
-    if (!CGImageDestinationFinalize(imageDestination)) result = nil;
-    CFRelease(imageDestination);
+    if (!CGImageDestinationFinalize(destination)) result = nil;
+    CFRelease(destination);
     CGImageRelease(finalImage); // On Tiger the CGImage MUST be released before deallocating the CIImage!
     [image release];
     
