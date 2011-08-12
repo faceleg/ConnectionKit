@@ -144,6 +144,8 @@
 		270E4A1310FA412400EF1FA0 /* SVTextAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E4A1110FA412400EF1FA0 /* SVTextAttachment.m */; };
 		270E4B1610FA4DF500EF1FA0 /* SVLinkInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = 270E4B1410FA4DF500EF1FA0 /* SVLinkInspector.h */; };
 		270E4B1710FA4DF500EF1FA0 /* SVLinkInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E4B1510FA4DF500EF1FA0 /* SVLinkInspector.m */; };
+		270E583F13F5B0350073840F /* KSCreateCGImageForWebOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 270E583D13F5B0350073840F /* KSCreateCGImageForWebOperation.h */; };
+		270E584013F5B0350073840F /* KSCreateCGImageForWebOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E583E13F5B0350073840F /* KSCreateCGImageForWebOperation.m */; };
 		270E82E710A4484E007E7848 /* KSInspectorTabsController.h in Headers */ = {isa = PBXBuildFile; fileRef = 270E82E510A4484D007E7848 /* KSInspectorTabsController.h */; settings = {ATTRIBUTES = (); }; };
 		270E82E810A4484E007E7848 /* KSInspectorTabsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E82E610A4484E007E7848 /* KSInspectorTabsController.m */; };
 		2710C255110A110D00A7B997 /* SVMediaProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 2710C254110A110D00A7B997 /* SVMediaProtocol.h */; };
@@ -1755,6 +1757,8 @@
 		270E4A1110FA412400EF1FA0 /* SVTextAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVTextAttachment.m; sourceTree = "<group>"; };
 		270E4B1410FA4DF500EF1FA0 /* SVLinkInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVLinkInspector.h; sourceTree = "<group>"; };
 		270E4B1510FA4DF500EF1FA0 /* SVLinkInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVLinkInspector.m; sourceTree = "<group>"; };
+		270E583D13F5B0350073840F /* KSCreateCGImageForWebOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSCreateCGImageForWebOperation.h; sourceTree = "<group>"; };
+		270E583E13F5B0350073840F /* KSCreateCGImageForWebOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSCreateCGImageForWebOperation.m; sourceTree = "<group>"; };
 		270E82E510A4484D007E7848 /* KSInspectorTabsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSInspectorTabsController.h; sourceTree = "<group>"; };
 		270E82E610A4484E007E7848 /* KSInspectorTabsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSInspectorTabsController.m; sourceTree = "<group>"; };
 		2710C254110A110D00A7B997 /* SVMediaProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaProtocol.h; sourceTree = "<group>"; };
@@ -3916,6 +3920,8 @@
 				2796DFC611736375000DD6EC /* SVImageScalingOperation.m */,
 				275C5F86122831CE00CD22B8 /* SVMedia.h */,
 				275C5F87122831CE00CD22B8 /* SVMedia.m */,
+				270E583D13F5B0350073840F /* KSCreateCGImageForWebOperation.h */,
+				270E583E13F5B0350073840F /* KSCreateCGImageForWebOperation.m */,
 			);
 			name = 2.0;
 			sourceTree = "<group>";
@@ -6196,6 +6202,7 @@
 				27F503E813BF3E1300F0FFD7 /* KSPerformOnThreadOperation.h in Headers */,
 				276BC94713C34DDC00EB2798 /* SVWorkspaceIconProtocol.h in Headers */,
 				2705B1B013EC0514004C678D /* SVWebEditorUpdatesHTMLContext.h in Headers */,
+				270E583F13F5B0350073840F /* KSCreateCGImageForWebOperation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7684,6 +7691,7 @@
 				27F503E913BF3E1300F0FFD7 /* KSPerformOnThreadOperation.m in Sources */,
 				276BC94813C34DDC00EB2798 /* SVWorkspaceIconProtocol.m in Sources */,
 				2705B1B113EC0514004C678D /* SVWebEditorUpdatesHTMLContext.m in Sources */,
+				270E584013F5B0350073840F /* KSCreateCGImageForWebOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

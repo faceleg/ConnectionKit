@@ -7,6 +7,7 @@
 //
 
 #import "SVImageScalingOperation.h"
+#import "KSCreateCGImageForWebOperation.h"
 
 #import "KTImageScalingSettings.h"
 #import "KTImageScalingURLProtocol.h"
@@ -68,8 +69,7 @@
  */
 - (NSData *)_loadImageScaledToSize:(NSSize)size type:(NSString *)fileType error:(NSError **)error // Mode will be read from the URL
 {
-    static CGColorSpaceRef colorSpace;
-    if (!colorSpace) colorSpace = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
+    
     
     
     
@@ -192,46 +192,45 @@
     
     // Ensure we have a graphics context big enough to render into
     // Cache contexts per thread
-    CIContext *coreImageContext = [[[NSThread currentThread] threadDictionary]
-                                    objectForKey:@"SVImageScalingOperationCIContext"];
+    CIContext *context = [[[NSThread currentThread] threadDictionary]
+                          objectForKey:@"SVImageScalingOperationCIContext"];
     
     // Create CIIContext to match
-    if (!coreImageContext)
+    if (!context)
     {
-        coreImageContext = [CIContext contextWithCGContext:nil
-                                                   options:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                            NSBOOL(YES), kCIContextUseSoftwareRenderer,
-                                                            colorSpace, kCIContextOutputColorSpace,
-                                                            colorSpace, kCIContextWorkingColorSpace,
-                                                            nil]];
-                
+        CGColorSpaceRef colorSpace = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
+        
+        context = [CIContext contextWithCGContext:nil
+                                          options:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                   NSBOOL(YES), kCIContextUseSoftwareRenderer,
+                                                   colorSpace, kCIContextOutputColorSpace,
+                                                   colorSpace, kCIContextWorkingColorSpace,
+                                                   nil]];
+        
+        CFRelease(colorSpace);
+        
         [[[NSThread currentThread] threadDictionary]
-         setObject:coreImageContext forKey:@"SVImageScalingOperationCIContext"];
+         setObject:context forKey:@"SVImageScalingOperationCIContext"];
     }
     
     
     // Render a CGImage
-    CGRect neededContextRect = [image extent];    // Clang, we assert scaledImage is non-nil above
+    KSCreateCGImageForWebOperation *op = [[KSCreateCGImageForWebOperation alloc] initWithCIImage:image
+                                                                                         context:context];
     
-    CGImageRef finalImage = [coreImageContext createCGImage:image fromRect:neededContextRect];
+    [image release];
+    [op start]; // it's not concurrent
     
-    
-    // If given an image that didn't need scaling, Core Image might take shortcuts. Try to force it to be
-    if (CGImageGetColorSpace(finalImage) != colorSpace)
+    CGImageRef finalImage = [op CGImage];
+    if (!finalImage)
     {
-        CGImageRef rgbImage = [coreImageContext createCGImage:image
-                                                     fromRect:neededContextRect
-                                                       format:kCIFormatARGB8
-                                                   colorSpace:colorSpace];
-                
-        if (rgbImage)
-        {
-            CFRelease(finalImage); finalImage = rgbImage;
-        }
+        CFRelease(destination);
+        [op release];
+        if (error) *error = [NSError errorWithDomain:NSURLErrorDomain
+                                                code:NSURLErrorResourceUnavailable
+                                            userInfo:nil];
+        return nil;
     }
-    
-    
-    OBASSERT(finalImage);
     
     
     // Convert to data
@@ -245,10 +244,10 @@
                                finalImage,
                                (CFDictionaryRef)[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:0.7] forKey:(NSString *)kCGImageDestinationLossyCompressionQuality]);
     
+    [op release];
+    
     if (!CGImageDestinationFinalize(destination)) result = nil;
     CFRelease(destination);
-    CGImageRelease(finalImage); // On Tiger the CGImage MUST be released before deallocating the CIImage!
-    [image release];
     
     
 #ifdef DEBUG
