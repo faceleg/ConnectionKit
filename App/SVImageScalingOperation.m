@@ -102,7 +102,13 @@
     
     // Need scaling?
     CFDictionaryRef properties = CGImageSourceCopyPropertiesAtIndex(source, 0, NULL);
-    OBASSERT(properties);
+    if (!properties)
+    {
+        if (error) *error = [NSError errorWithDomain:NSURLErrorDomain
+                                                code:NSURLErrorResourceUnavailable
+                                            userInfo:nil];
+        return nil;
+    }
     
     BOOL needScaling = YES;
     
