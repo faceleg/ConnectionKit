@@ -737,9 +737,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         {
             // Read data from disk for hashing
             NSInvocation *invocation = [NSInvocation
-                                        invocationWithSelector:@selector(threaded_publishMedia:cachedSHA1Digest:)
+                                        invocationWithSelector:@selector(threaded_publishMedia:forRequest:cachedSHA1Digest:)
                                         target:self
-                                        arguments:NSARRAY(request, digest)];
+                                        arguments:NSARRAY([request media], request, digest)];
             
             NSInvocationOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
             [digestStorage setHashingOperation:op forMediaRequest:request];
@@ -770,7 +770,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         else
         {
             NSInvocation *invocation = [NSInvocation
-                                        invocationWithSelector:@selector(threaded_publishMedia:cachedSHA1Digest:)
+                                        invocationWithSelector:@selector(threaded_publishMediaWithRequest:cachedSHA1Digest:)
                                         target:self
                                         arguments:NSARRAY(request, digest)];
             
@@ -927,53 +927,61 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     return result;
 }
 
-- (NSData *)threaded_publishMedia:(SVMediaRequest *)request cachedSHA1Digest:(NSData *)digest;
+- (NSData *)threaded_publishMedia:(SVMedia *)media forRequest:(SVMediaRequest *)request cachedSHA1Digest:(NSData *)digest;
 {
     /*  It is presumed that the call to this method will have been scheduled on an appropriate queue.
      */
     OBPRECONDITION(request);
     
     
-    if ([request isNativeRepresentation])   // great! No messy scaling work to do!
+    SVMediaRequest *canonical = [[SVMediaRequest alloc] initWithMedia:media
+                                                  preferredUploadPath:[request preferredUploadPath]];
+    OBASSERT([canonical isNativeRepresentation]);
+    
+    // Calculate hash
+    // TODO: Ideally we could look up the canonical request to see if hash has already been generated (e.g. user opted to publish full-size copy of image too)
+    if (!digest)
     {
-        SVMediaRequest *canonical = [[SVMediaRequest alloc] initWithMedia:[request media]
-                                                      preferredUploadPath:[request preferredUploadPath]];
-        OBASSERT([canonical isNativeRepresentation]);
-        
-        // Calculate hash
-        // TODO: Ideally we could look up the canonical request to see if hash has already been generated (e.g. user opted to publish full-size copy of image too)
-        if (!digest)
+        NSData *data = [media mediaData];
+        if (data)
         {
-            NSData *data = [[request media] mediaData];
-            if (data)
-            {
-                digest = [data ks_SHA1Digest];
-            }
-            else
-            {
-                NSURL *url = [[request media] mediaURL];
-                digest = [KSSHA1Stream SHA1DigestOfContentsOfURL:url];
-            
-                if (!digest) NSLog(@"Unable to hash file: %@", url);
-            }
+            digest = [data ks_SHA1Digest];
         }
-        
-        if (digest)   // if couldn't be hashed, can't be published
+        else
         {
-            // Publish original image first. Ensures the publishing of real request will be to the same path
-            
-            [[self ks_proxyOnThread:nil]  // wait until done so op isn't reported as finished too early
-             publishMediaWithRequest:canonical cachedData:nil SHA1Digest:digest];
-            
-            [[self ks_proxyOnThread:nil]  // wait until done so op isn't reported as finished too early
-             publishMediaWithRequest:request cachedData:nil SHA1Digest:digest];
-        }
+            NSURL *url = [media mediaURL];
+            digest = [KSSHA1Stream SHA1DigestOfContentsOfURL:url];
         
-        [canonical release];
-        return digest;
+            if (!digest) NSLog(@"Unable to hash file: %@", url);
+        }
     }
     
+    if (digest)   // if couldn't be hashed, can't be published
+    {
+        // Publish original image first. Ensures the publishing of real request will be to the same path
+        
+        [[self ks_proxyOnThread:nil]  // wait until done so op isn't reported as finished too early
+         publishMediaWithRequest:canonical cachedData:nil SHA1Digest:digest];
+        
+        [[self ks_proxyOnThread:nil]  // wait until done so op isn't reported as finished too early
+         publishMediaWithRequest:request cachedData:nil SHA1Digest:digest];
+    }
     
+    [canonical release];
+    return digest;
+}
+
+- (NSData *)threaded_publishMediaWithRequest:(SVMediaRequest *)request cachedSHA1Digest:(NSData *)digest;
+{
+    /*  It is presumed that the call to this method will have been scheduled on an appropriate queue.
+     */
+    OBPRECONDITION(request);
+    
+    // Bail if got here by mistake
+    if ([request isNativeRepresentation])
+    {
+        return [self threaded_publishMedia:[request media] forRequest:request cachedSHA1Digest:digest];
+    }
     
     
     
