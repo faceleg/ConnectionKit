@@ -321,10 +321,6 @@
 			baseConfigurationReference = 3CA900600D63C69F00815310 /* Debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = (
-					"-seg1addr",
-					0x50440000,
-				);
 				PRODUCT_NAME = IFrame;
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = svxElement;
@@ -336,10 +332,6 @@
 			baseConfigurationReference = 3CA900610D63C69F00815310 /* Release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = (
-					"-seg1addr",
-					0x50440000,
-				);
 				PRODUCT_NAME = IFrame;
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = svxElement;

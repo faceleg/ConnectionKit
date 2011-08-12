@@ -572,7 +572,11 @@
 	// source
 	[context pushAttribute:@"src" value:movieSourcePath];
 	[context pushAttribute:@"type" value:[KSWORKSPACE ks_MIMETypeForType:self.codecType]];
-	[context pushAttribute:@"onerror" value:@"fallback(this.parentNode)"];
+	
+	if (![context isForEditing])	// don't do error fallback from Sandvox web editor; confuses Sandvox!
+	{
+		[context pushAttribute:@"onerror" value:@"fallback(this.parentNode)"];
+	}
 	[context startElement:@"source"];
 	[context endElement];
 
@@ -627,6 +631,7 @@
 	
 	BOOL videoFlashRequiresFullURL = [defaults boolForKey:@"videoFlashRequiresFullURL"];	// usually not, but YES for flowplayer
 	if ([videoFlashPlayer isEqualToString:@"flowplayer"]) videoFlashRequiresFullURL = YES;
+	if ([videoFlashPlayer isEqualToString:@"flvplayer"]) videoFlashRequiresFullURL = YES;
 	
 	NSString *movieSourcePath = @"";
 	NSString *posterSourcePath = @"";

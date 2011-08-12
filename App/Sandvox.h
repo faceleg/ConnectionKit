@@ -49,7 +49,7 @@
 // Localization
 //  requires adding a Run Script Build Phase of
 //  cd ${SRCROOT}; genstrings -littleEndian -q -u -s SVLocalizedString -o en.lproj *.m
-#ifndef SVLocalizedString(key,comment)
+#ifndef SVLocalizedString
     #define SVLocalizedString(key,comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
 #endif
 

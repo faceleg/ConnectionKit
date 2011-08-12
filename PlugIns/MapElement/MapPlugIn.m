@@ -234,9 +234,9 @@
                 
                 // construct HTML
                 NSString *htmlDescription = [NSString stringWithFormat:
-                                             @"<p class=\"locationlabel\">%@</p>"
-                                             @"<p class=\"location\">%@</p>"
-                                             @"<p class=\"directions\">%@ <a href=\"%@\">%@</a> - <a href=\"%@\">%@</a><p>",
+                                             @"<span class=\"locationlabel\">%@</span><br />"
+                                             @"<span class=\"location\">%@</span><br />"
+                                             @"<span class=\"directions\">%@ <a href=\"%@\">%@</a> - <a href=\"%@\">%@</a><span>",
                                              label1,
                                              address,
                                              label2,

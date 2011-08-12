@@ -180,14 +180,14 @@ static SVLinkManager *sSharedLinkManager;
     
     if (!result)
     {
-        // Is there something suitable on the pasteboard?
-        // Turned off for now. #135014
-        NSURL *URL = nil;//[WebView URLFromPasteboard:[NSPasteboard generalPasteboard]];
+        // Try to populate from frontmost Safari URL
+        // someday, we could populate the link title as well!
+        NSURL *URL = [[KSWORKSPACE fetchBrowserWebLocation] URL];
         if (!URL)
         {
-            // Try to populate from frontmost Safari URL
-            // someday, we could populate the link title as well!
-            URL = [[KSWORKSPACE fetchBrowserWebLocation] URL];
+            // Is there something suitable on the pasteboard?
+            // This check comes after browser because of #136882 and #135014
+            URL = [WebView URLFromPasteboard:[NSPasteboard generalPasteboard]];
         }
         NSString *scheme = [URL scheme];
         

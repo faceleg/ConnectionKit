@@ -934,47 +934,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     OBPRECONDITION(request);
     
     
-    BOOL isNative = [request isNativeRepresentation];
-    if (!isNative)
-    {
-        // Time to look closer to see if conversion/scaling is required
-        CGImageSourceRef imageSource = IMB_CGImageSourceCreateWithImageItem((id)[request media], NULL);
-        if (imageSource)
-        {
-            if ([[request type] isEqualToString:(NSString *)CGImageSourceGetType(imageSource)])
-            {
-                if ([request width] || [request height])
-                {
-                    // TODO: Should we better take into account a source with multiple images?
-                    CFDictionaryRef properties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, NULL);
-                    if (properties)
-                    {
-                        CFNumberRef width = CFDictionaryGetValue(properties, kCGImagePropertyPixelWidth);
-                        CFNumberRef height = CFDictionaryGetValue(properties, kCGImagePropertyPixelHeight);
-                        
-                        if ([[request width] isEqualToNumber:(NSNumber *)width] &&
-                            [[request height] isEqualToNumber:(NSNumber *)height])
-                        {
-                            isNative = YES;
-                        }
-                        
-                        CFRelease(properties);
-                    }
-                }
-                else
-                {
-                    isNative = YES;
-                }
-            }
-            
-            CFRelease(imageSource);
-        }
-    }
-    
-    
-    
-    // Great! No messy scaling work to do!
-    if (isNative)
+    if ([request isNativeRepresentation])   // great! No messy scaling work to do!
     {
         SVMediaRequest *canonical = [[SVMediaRequest alloc] initWithMedia:[request media]
                                                       preferredUploadPath:[request preferredUploadPath]];

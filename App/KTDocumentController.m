@@ -351,7 +351,7 @@
 		}
     }
     [[NSUserDefaults standardUserDefaults] setObject:[NSArray arrayWithArray:aliases]
-                                              forKey:@"KSOpenDocuments"];
+                                              forKey:kSVOpenDocumentsKey];
 	BOOL synchronized = [[NSUserDefaults standardUserDefaults] synchronize];
 	if (!synchronized)
 	{
