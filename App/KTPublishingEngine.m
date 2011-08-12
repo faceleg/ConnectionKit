@@ -934,12 +934,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     OBPRECONDITION(request);
     
     
-    SVMediaRequest *canonical = [[SVMediaRequest alloc] initWithMedia:media
-                                                  preferredUploadPath:[request preferredUploadPath]];
-    OBASSERT([canonical isNativeRepresentation]);
-    
     // Calculate hash
-    // TODO: Ideally we could look up the canonical request to see if hash has already been generated (e.g. user opted to publish full-size copy of image too)
     if (!digest)
     {
         NSData *data = [media mediaData];
@@ -958,16 +953,10 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     if (digest)   // if couldn't be hashed, can't be published
     {
-        // Publish original image first. Ensures the publishing of real request will be to the same path
-        
-        [[self ks_proxyOnThread:nil]  // wait until done so op isn't reported as finished too early
-         publishMediaWithRequest:canonical cachedData:nil SHA1Digest:digest];
-        
         [[self ks_proxyOnThread:nil]  // wait until done so op isn't reported as finished too early
          publishMediaWithRequest:request cachedData:nil SHA1Digest:digest];
     }
     
-    [canonical release];
     return digest;
 }
 
