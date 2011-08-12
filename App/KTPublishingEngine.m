@@ -719,6 +719,12 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     // Do the calculation on a background thread. Which one depends on the task needed
     if ([request isNativeRepresentation])
     {
+        if (digest)
+        {
+            [self publishMediaWithRequest:request cachedData:nil SHA1Digest:digest];
+            return nil;
+        }
+        
         NSData *data = [[request media] mediaData];
         if (data)
         {
@@ -737,9 +743,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         {
             // Read data from disk for hashing
             NSInvocation *invocation = [NSInvocation
-                                        invocationWithSelector:@selector(threaded_publishMedia:forRequest:cachedSHA1Digest:)
+                                        invocationWithSelector:@selector(threaded_hashMedia:forRequest:)
                                         target:self
-                                        arguments:NSARRAY([request media], request, digest)];
+                                        arguments:NSARRAY([request media], request)];
             
             NSInvocationOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
             [digestStorage setHashingOperation:op forMediaRequest:request];
@@ -927,28 +933,26 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     return result;
 }
 
-- (NSData *)threaded_publishMedia:(SVMedia *)media forRequest:(SVMediaRequest *)request cachedSHA1Digest:(NSData *)digest;
+- (NSData *)threaded_hashMedia:(SVMedia *)media forRequest:(SVMediaRequest *)request;
 {
     /*  It is presumed that the call to this method will have been scheduled on an appropriate queue.
      */
     OBPRECONDITION(request);
     
     
-    // Calculate hash
-    if (!digest)
+    NSData *data = [media mediaData];
+    
+    NSData *digest;
+    if (data)
     {
-        NSData *data = [media mediaData];
-        if (data)
-        {
-            digest = [data ks_SHA1Digest];
-        }
-        else
-        {
-            NSURL *url = [media mediaURL];
-            digest = [KSSHA1Stream SHA1DigestOfContentsOfURL:url];
-        
-            if (!digest) NSLog(@"Unable to hash file: %@", url);
-        }
+        digest = [data ks_SHA1Digest];
+    }
+    else
+    {
+        NSURL *url = [media mediaURL];
+        digest = [KSSHA1Stream SHA1DigestOfContentsOfURL:url];
+    
+        if (!digest) NSLog(@"Unable to hash file: %@", url);
     }
     
     if (digest)   // if couldn't be hashed, can't be published
@@ -969,7 +973,16 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     // Bail if got here by mistake
     if ([request isNativeRepresentation])
     {
-        return [self threaded_publishMedia:[request media] forRequest:request cachedSHA1Digest:digest];
+        if (digest)
+        {
+            [[self ks_proxyOnThread:nil]  // wait until done so op isn't reported as finished too early
+             publishMediaWithRequest:request cachedData:nil SHA1Digest:digest];
+        }
+        else
+        {
+            digest = [self threaded_hashMedia:[request media] forRequest:request];
+        }
+        return digest;
     }
     
     
