@@ -68,32 +68,25 @@
  */
 - (NSData *)_loadImageScaledToSize:(NSSize)size type:(NSString *)fileType error:(NSError **)error // Mode will be read from the URL
 {
+    static CGColorSpaceRef colorSpace;
+    if (!colorSpace) colorSpace = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
+    
+    
+    
 #ifdef DEBUG
     NSDate *start = [NSDate date];
 #endif
     
-    // Load the image from disk
-    CIImage *sourceImage;
-    if ([_sourceMedia mediaData])
-    {
-        sourceImage = [[CIImage alloc] initWithData:[_sourceMedia mediaData]];
-    }
-    else
-    {
-        sourceImage = [[CIImage alloc] initWithContentsOfURL:[_sourceMedia mediaURL]];
-        if (!sourceImage)
-        {
-            // Maybe it's a custom URL protocol
-            NSData *data = [[NSData alloc] initWithContentsOfURL:[_sourceMedia mediaURL]];
-            if (data)
-            {
-                sourceImage = [[CIImage alloc] initWithData:data];
-                [data release];
-            }
-        }
-    }
     
-    if (!sourceImage)
+    // Load the image
+    NSData *data = [[_sourceMedia mediaData] retain];
+    if (!data) data = [[NSData alloc] initWithContentsOfURL:[_sourceMedia mediaURL] options:0 error:error];
+    if (!data) return nil;  // error pointer should be set by NSData
+    
+    CGImageSourceRef source = CGImageSourceCreateWithData((CFDataRef)data, NULL);
+    [data release];
+    
+    if (!source)
     {
         if (error) *error = [NSError errorWithDomain:NSURLErrorDomain
                                                 code:NSURLErrorResourceUnavailable
@@ -107,20 +100,94 @@
     KSImageScalingMode scalingMode = [URLQuery integerForKey:@"mode"];
     
     
-    // Scale the image
-    CIImage *scaledImage = [sourceImage imageByScalingToSize:CGSizeMake(size.width, size.height)
-                                                        mode:scalingMode
-                                                 opaqueEdges:YES];
-    OBASSERT(scaledImage);
+    // Need scaling?
+    NSMutableData *result = [NSMutableData data];
     
+    CGImageDestinationRef destination = CGImageDestinationCreateWithData((CFMutableDataRef)result,
+                                                                         (CFStringRef)fileType,
+                                                                         1,
+                                                                         NULL);
+    OBASSERT(destination);
     
-    // Sharpen if needed
-    float sharpeningFactor = [URLQuery floatForKey:@"sharpen"];
-    if (sharpeningFactor)
+    CFDictionaryRef properties = CGImageSourceCopyPropertiesAtIndex(source, 0, NULL);
+    BOOL needScaling = YES;
+    
+    if (properties)
     {
-        scaledImage = [scaledImage sharpenLuminanceWithFactor:sharpeningFactor];
+        if ([(NSNumber *)CFDictionaryGetValue(properties, kCGImagePropertyPixelWidth) floatValue] == size.width &&
+            [(NSNumber *)CFDictionaryGetValue(properties, kCGImagePropertyPixelHeight) floatValue] == size.height)
+        {
+            needScaling = NO;
+            
+            // Image is the right size already, but what about colorspace?
+            // Very ugly, seems we have to hardcode the standard sRGB name
+            NSString *colorSpaceName = (NSString *)CFDictionaryGetValue(properties, kCGImagePropertyProfileName);
+            if ([colorSpaceName isEqualToString:@"sRGB IEC61966-2.1"])
+            {
+                // Can just copy the image data straight across
+                // As far as I can tell, this avoids recompressing JPEGs
+                CGImageDestinationAddImageFromSource(destination, source, 0, NULL);
+                CFRelease(properties);
+                CFRelease(source);
+                
+                if (!CGImageDestinationFinalize(destination))
+                {
+                    CFRelease(destination);
+                    
+                    if (error) *error = [NSError errorWithDomain:NSURLErrorDomain
+                                                            code:NSURLErrorResourceUnavailable
+                                                        userInfo:nil];
+                    return nil;
+                }
+                
+                CFRelease(destination);
+                return result;
+            }
+        }
+        
+        CFRelease(properties);
     }
-    OBASSERT(scaledImage);
+    
+    
+    // Time to step up to some real graphics handling
+    CGImageRef cgImage = CGImageSourceCreateImageAtIndex(source, 0, NULL);
+    CFRelease(source);
+    
+    if (!cgImage)
+    {
+        CFRelease(destination);
+        if (error) *error = [NSError errorWithDomain:NSURLErrorDomain
+                                                code:NSURLErrorResourceUnavailable
+                                            userInfo:nil];
+        return nil;
+    }
+    
+    CIImage *image = [[CIImage alloc] initWithCGImage:cgImage];
+    OBASSERT(image);
+    
+    CFRelease(cgImage);
+    
+    
+    // Scale the image if needed
+    if (needScaling)
+    {
+        CIImage *scaledImage = [image imageByScalingToSize:CGSizeMake(size.width, size.height)
+                                                            mode:scalingMode
+                                                     opaqueEdges:YES];
+        OBASSERT(scaledImage);
+        
+        
+        // Sharpen if needed
+        float sharpeningFactor = [URLQuery floatForKey:@"sharpen"];
+        if (sharpeningFactor)
+        {
+            scaledImage = [scaledImage sharpenLuminanceWithFactor:sharpeningFactor];
+        }
+        OBASSERT(scaledImage);
+        
+        [scaledImage retain];
+        [image release]; image = scaledImage;
+    }
     
     
     // Ensure we have a graphics context big enough to render into
@@ -132,40 +199,37 @@
     if (!coreImageContext)
     {
         coreImageContext = [CIContext contextWithCGContext:nil
-                                                   options:[NSDictionary dictionaryWithObject:NSBOOL(YES) forKey:kCIContextUseSoftwareRenderer]];
-        
+                                                   options:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                            NSBOOL(YES), kCIContextUseSoftwareRenderer,
+                                                            colorSpace, kCIContextOutputColorSpace,
+                                                            colorSpace, kCIContextWorkingColorSpace,
+                                                            nil]];
+                
         [[[NSThread currentThread] threadDictionary]
          setObject:coreImageContext forKey:@"SVImageScalingOperationCIContext"];
     }
     
     
     // Render a CGImage
-    CGRect neededContextRect = [scaledImage extent];    // Clang, we assert scaledImage is non-nil above
+    CGRect neededContextRect = [image extent];    // Clang, we assert scaledImage is non-nil above
     
-    CGColorSpaceRef colorSpace = NULL;
-    if ([sourceImage respondsToSelector:@selector(colorSpace)])
-    {
-        colorSpace = [sourceImage colorSpace];
-    }
+    CGImageRef finalImage = [coreImageContext createCGImage:image fromRect:neededContextRect];
     
-    CGImageRef finalImage = NULL;
-    if (colorSpace)
+    
+    // If given an image that didn't need scaling, Core Image might take shortcuts. Try to force it to be
+    if (CGImageGetColorSpace(finalImage) != colorSpace)
     {
-        // Web browsers only support RGB and monochrome color spaces
-        CGColorSpaceModel model = CGColorSpaceGetModel(colorSpace);
-        if (model == kCGColorSpaceModelRGB || model == kCGColorSpaceModelMonochrome)
+        CGImageRef rgbImage = [coreImageContext createCGImage:image
+                                                     fromRect:neededContextRect
+                                                       format:kCIFormatARGB8
+                                                   colorSpace:colorSpace];
+                
+        if (rgbImage)
         {
-            finalImage = [coreImageContext createCGImage:scaledImage
-                                                fromRect:neededContextRect
-                                                  format:kCIFormatARGB8
-                                              colorSpace:colorSpace];
+            CFRelease(finalImage); finalImage = rgbImage;
         }
     }
     
-    if (!finalImage)
-    {
-        finalImage = [coreImageContext createCGImage:scaledImage fromRect:neededContextRect];
-    }
     
     OBASSERT(finalImage);
     
@@ -176,21 +240,15 @@
     [identifiers release];
 	
     
-    NSMutableData *result = [NSMutableData data];
-    CGImageDestinationRef imageDestination = CGImageDestinationCreateWithData((CFMutableDataRef)result,
-                                                                              (CFStringRef)fileType,
-                                                                              1,
-                                                                              NULL);
-    OBASSERT(imageDestination);
     
-    CGImageDestinationAddImage(imageDestination,
+    CGImageDestinationAddImage(destination,
                                finalImage,
                                (CFDictionaryRef)[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:0.7] forKey:(NSString *)kCGImageDestinationLossyCompressionQuality]);
     
-    if (!CGImageDestinationFinalize(imageDestination)) result = nil;
-    CFRelease(imageDestination);
+    if (!CGImageDestinationFinalize(destination)) result = nil;
+    CFRelease(destination);
     CGImageRelease(finalImage); // On Tiger the CGImage MUST be released before deallocating the CIImage!
-    [sourceImage release];
+    [image release];
     
     
 #ifdef DEBUG
@@ -276,7 +334,9 @@
         NSString *UTI = [_parameters objectForKey:@"filetype"];
         OBASSERT(UTI);
         
-        NSData *imageData = nil;    NSError *error = nil;
+        NSData *imageData = nil;
+        NSError *error = nil;
+        
         if ([UTI isEqualToString:(NSString *)kUTTypeICO])
         {
             // This is a little bit of a hack as it ignores size info, and purely creates a favicon

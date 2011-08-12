@@ -161,6 +161,11 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     }
     
     
+    // For some docs on Lion, the system seems to forget where the doc has come from  (according to Apple this is because the doc is new, or was deleted, neither of which are true in our testing!), so passes in nil URL for original contents. We'll force it back on track.
+    if (!inOriginalContentsURL) inOriginalContentsURL = [self fileURL];
+    OBASSERT(inOriginalContentsURL);
+    
+    
     // Create directory to act as new document
     NSDictionary *attributes = [self fileAttributesToWriteToURL:inURL
                                                          ofType:inType

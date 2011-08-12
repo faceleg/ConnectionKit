@@ -53,8 +53,11 @@ preferredUploadPath:(NSString *)path
 @property(nonatomic, copy, readonly) NSString *scalingPathSuffix;
 
 
-#pragma mark Scaling/Conversion
+#pragma mark Conversion
+
+// The type of file you want published. nil means to keep in the original format
 @property(nonatomic, copy, readonly) NSString *type;
+
 - (BOOL)isNativeRepresentation;
 
 

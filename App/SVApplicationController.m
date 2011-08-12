@@ -110,6 +110,8 @@ IMPLEMENTATION NOTES & CAUTIONS:
 // TODO: visit every instance of NSLog or LOG(()) to see if it should be an NSAlert/NSError to the user
 
 
+NSString *kSVOpenDocumentsKey = @"SVOpenDocuments";
+
 NSString *kSVLiveDataFeedsKey = @"LiveDataFeeds";
 NSString *kSVSetDateFromSourceMaterialKey = @"SetDateFromSourceMaterial";
 NSString *kLiveEditableAndSelectableLinksDefaultsKey = @"LiveEditableAndSelectableLinks";
@@ -311,7 +313,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		[NSNumber numberWithBool:YES],			@"EscapeNBSP",		// no longer used apparently
 		[NSNumber numberWithBool:YES],			@"GetURLsFromSafari",
 		[NSNumber numberWithBool:YES],			@"AutoOpenLastOpenedOnLaunch",
-		[NSArray array],						@"KSOpenDocuments",
 		[NSNumber numberWithBool:YES],			@"OpenUntitledFileWhenIconClicked",
 						
 		[NSNumber numberWithBool:NO],			@"DisplayInfo",
@@ -1227,6 +1228,21 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 - (IBAction)orderFrontPreferencesPanel:(id)sender
 {
     [[KTPrefsController sharedController] showWindow:sender];
+}
+
+- (IBAction)emptyCache:(id)sender;
+{
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert setMessageText:NSLocalizedString(@"Are you sure you want to empty the cache?", "alert message")];
+    [alert addButtonWithTitle:NSLocalizedString(@"Empty", "button")];
+    [alert addButtonWithTitle:NSLocalizedString(@"Cancel", "button")];
+    
+    if ([alert runModal] == NSAlertFirstButtonReturn)
+    {
+        [[NSURLCache sharedURLCache] removeAllCachedResponses];
+    }
+    
+    [alert release];
 }
 
 /*!	for manual save... though we're saving it automatically.

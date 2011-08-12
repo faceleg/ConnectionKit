@@ -280,20 +280,15 @@
 	
     
 	// Now munge it to make it unique.  Keep adding a number until we find an open slot.
-	NSString *baseFilename = result;
-	NSUInteger suffixCount = 2;
 	while ([unavailableFileNames containsObject:result])
 	{
-		result = [baseFilename ks_stringWithPathSuffix:[NSString stringWithFormat:
-                                                        @"_%u",
-                                                        suffixCount++]];
+		result = [result ks_stringByIncrementingPath];
 	}
     
     [unavailableFileNames release];
     
 	
 	OBPOSTCONDITION(result);
-	
 	return result;
 }
 

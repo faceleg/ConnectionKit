@@ -9,7 +9,6 @@
 #import "SVMediaRequest.h"
 #import "SVMedia.h"
 
-#import "SVImageScalingOperation.h"
 #import "KTImageScalingURLProtocol.h"
 
 #import "NSData+Karelia.h"
