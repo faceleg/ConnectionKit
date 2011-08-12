@@ -1757,8 +1757,8 @@
 		270E4A1110FA412400EF1FA0 /* SVTextAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVTextAttachment.m; sourceTree = "<group>"; };
 		270E4B1410FA4DF500EF1FA0 /* SVLinkInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVLinkInspector.h; sourceTree = "<group>"; };
 		270E4B1510FA4DF500EF1FA0 /* SVLinkInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVLinkInspector.m; sourceTree = "<group>"; };
-		270E583D13F5B0350073840F /* KSCreateCGImageForWebOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSCreateCGImageForWebOperation.h; sourceTree = "<group>"; };
-		270E583E13F5B0350073840F /* KSCreateCGImageForWebOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSCreateCGImageForWebOperation.m; sourceTree = "<group>"; };
+		270E583D13F5B0350073840F /* KSCreateCGImageForWebOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSCreateCGImageForWebOperation.h; path = ../Code/KSSaveForWeb/KSCreateCGImageForWebOperation.h; sourceTree = "<group>"; };
+		270E583E13F5B0350073840F /* KSCreateCGImageForWebOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSCreateCGImageForWebOperation.m; path = ../Code/KSSaveForWeb/KSCreateCGImageForWebOperation.m; sourceTree = "<group>"; };
 		270E82E510A4484D007E7848 /* KSInspectorTabsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSInspectorTabsController.h; sourceTree = "<group>"; };
 		270E82E610A4484E007E7848 /* KSInspectorTabsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSInspectorTabsController.m; sourceTree = "<group>"; };
 		2710C254110A110D00A7B997 /* SVMediaProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaProtocol.h; sourceTree = "<group>"; };

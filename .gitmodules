@@ -10,3 +10,6 @@
 [submodule "Code/KSHTMLWriter"]
 	path = Code/KSHTMLWriter
 	url = git@github.com:karelia/KSHTMLWriter.git
+[submodule "Code/KSSaveForWeb"]
+	path = Code/KSSaveForWeb
+	url = git@github.com:karelia/KSSaveForWeb.git
