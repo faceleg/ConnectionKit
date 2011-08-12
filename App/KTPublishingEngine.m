@@ -958,7 +958,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     if (digest)   // if couldn't be hashed, can't be published
     {
         [[self ks_proxyOnThread:nil]  // wait until done so op isn't reported as finished too early
-         publishMediaWithRequest:request cachedData:nil SHA1Digest:digest];
+         publishMediaWithRequest:request cachedData:data SHA1Digest:digest];
     }
     
     return digest;
