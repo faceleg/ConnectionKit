@@ -55,6 +55,8 @@
     if ([self shouldTrySelectingInline])
     {
         DOMElement *element = [self HTMLElement];
+        OBASSERT(element); // does nil cause #137539?
+        
         DOMRange *result = [[element ownerDocument] createRange];
         [result selectNode:element];
         return result;
