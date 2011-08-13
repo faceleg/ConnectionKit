@@ -47,6 +47,9 @@
 
 - (void)close;
 {
+    // Tidy up
+    [super close];
+    
     // Publish HTML if complete
     if (![self didAddMediaWithoutPath] ||
         [(KTPublishingEngine *)_publisher status] >= KTPublishingEngineStatusParsing)
@@ -83,9 +86,6 @@
         }
     }
     
-    
-    // Tidy up
-    [super close];
     
     [_stringWriter release]; _stringWriter = nil;
     //[_publishingEngine release]; _publishingEngine = nil;     Messes up media gathering
