@@ -68,32 +68,25 @@
  */
 - (NSData *)_loadImageScaledToSize:(NSSize)size type:(NSString *)fileType error:(NSError **)error // Mode will be read from the URL
 {
+    static CGColorSpaceRef colorSpace;
+    if (!colorSpace) colorSpace = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
+    
+    
+    
 #ifdef DEBUG
     NSDate *start = [NSDate date];
 #endif
     
-    // Load the image from disk
-    CIImage *image;
-    if ([_sourceMedia mediaData])
-    {
-        image = [[CIImage alloc] initWithData:[_sourceMedia mediaData]];
-    }
-    else
-    {
-        image = [[CIImage alloc] initWithContentsOfURL:[_sourceMedia mediaURL]];
-        if (!image)
-        {
-            // Maybe it's a custom URL protocol
-            NSData *data = [[NSData alloc] initWithContentsOfURL:[_sourceMedia mediaURL]];
-            if (data)
-            {
-                image = [[CIImage alloc] initWithData:data];
-                [data release];
-            }
-        }
-    }
     
-    if (!image)
+    // Load the image
+    NSData *data = [[_sourceMedia mediaData] retain];
+    if (!data) data = [[NSData alloc] initWithContentsOfURL:[_sourceMedia mediaURL] options:0 error:error];
+    if (!data) return nil;  // error pointer should be set by NSData
+    
+    CGImageSourceRef source = CGImageSourceCreateWithData((CFDataRef)data, NULL);
+    [data release];
+    
+    if (!source)
     {
         if (error) *error = [NSError errorWithDomain:NSURLErrorDomain
                                                 code:NSURLErrorResourceUnavailable
@@ -102,22 +95,82 @@
     }
     
     
-    // Get hold of the color space first
-    CGColorSpaceRef colorSpace = NULL;
-    if ([image respondsToSelector:@selector(colorSpace)])
-    {
-        colorSpace = [image colorSpace];
-    }
-    
-    
     // Construct image scaling properties dictionary from the URL
     NSDictionary *URLQuery = _parameters;
     KSImageScalingMode scalingMode = [URLQuery integerForKey:@"mode"];
     
-    CGSize sourceSize = [image extent].size;
-    if (sourceSize.width != size.width && sourceSize.height != size.height)
+    
+    // Need scaling?
+    NSMutableData *result = [NSMutableData data];
+    
+    CGImageDestinationRef destination = CGImageDestinationCreateWithData((CFMutableDataRef)result,
+                                                                         (CFStringRef)fileType,
+                                                                         1,
+                                                                         NULL);
+    OBASSERT(destination);
+    
+    CFDictionaryRef properties = CGImageSourceCopyPropertiesAtIndex(source, 0, NULL);
+    BOOL needScaling = YES;
+    
+    if (properties)
     {
-        // Scale the image
+        if ([(NSNumber *)CFDictionaryGetValue(properties, kCGImagePropertyPixelWidth) floatValue] == size.width &&
+            [(NSNumber *)CFDictionaryGetValue(properties, kCGImagePropertyPixelHeight) floatValue] == size.height)
+        {
+            needScaling = NO;
+            
+            // Image is the right size already, but what about colorspace?
+            // Very ugly, seems we have to hardcode the standard sRGB name
+            NSString *colorSpaceName = (NSString *)CFDictionaryGetValue(properties, kCGImagePropertyProfileName);
+            if ([colorSpaceName isEqualToString:@"sRGB IEC61966-2.1"])
+            {
+                // Can just copy the image data straight across
+                // As far as I can tell, this avoids recompressing JPEGs
+                CGImageDestinationAddImageFromSource(destination, source, 0, NULL);
+                CFRelease(properties);
+                CFRelease(source);
+                
+                if (!CGImageDestinationFinalize(destination))
+                {
+                    CFRelease(destination);
+                    
+                    if (error) *error = [NSError errorWithDomain:NSURLErrorDomain
+                                                            code:NSURLErrorResourceUnavailable
+                                                        userInfo:nil];
+                    return nil;
+                }
+                
+                CFRelease(destination);
+                return result;
+            }
+        }
+        
+        CFRelease(properties);
+    }
+    
+    
+    // Time to step up to some real graphics handling
+    CGImageRef cgImage = CGImageSourceCreateImageAtIndex(source, 0, NULL);
+    CFRelease(source);
+    
+    if (!cgImage)
+    {
+        CFRelease(destination);
+        if (error) *error = [NSError errorWithDomain:NSURLErrorDomain
+                                                code:NSURLErrorResourceUnavailable
+                                            userInfo:nil];
+        return nil;
+    }
+    
+    CIImage *image = [[CIImage alloc] initWithCGImage:cgImage];
+    OBASSERT(image);
+    
+    CFRelease(cgImage);
+    
+    
+    // Scale the image if needed
+    if (needScaling)
+    {
         CIImage *scaledImage = [image imageByScalingToSize:CGSizeMake(size.width, size.height)
                                                             mode:scalingMode
                                                      opaqueEdges:YES];
@@ -145,16 +198,13 @@
     // Create CIIContext to match
     if (!coreImageContext)
     {
-        CGColorSpaceRef colorSpace = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
-        
         coreImageContext = [CIContext contextWithCGContext:nil
                                                    options:[NSDictionary dictionaryWithObjectsAndKeys:
                                                             NSBOOL(YES), kCIContextUseSoftwareRenderer,
                                                             colorSpace, kCIContextOutputColorSpace,
+                                                            colorSpace, kCIContextWorkingColorSpace,
                                                             nil]];
-        
-        CFRelease(colorSpace);
-        
+                
         [[[NSThread currentThread] threadDictionary]
          setObject:coreImageContext forKey:@"SVImageScalingOperationCIContext"];
     }
@@ -163,39 +213,17 @@
     // Render a CGImage
     CGRect neededContextRect = [image extent];    // Clang, we assert scaledImage is non-nil above
     
-    CGImageRef finalImage = NULL;
-    if (colorSpace)
-    {
-        // Web browsers only support RGB and monochrome color spaces
-        CGColorSpaceModel model = CGColorSpaceGetModel(colorSpace);
-        if (model == kCGColorSpaceModelRGB || model == kCGColorSpaceModelMonochrome)
-        {
-            finalImage = [coreImageContext createCGImage:image
-                                                fromRect:neededContextRect
-                                                  format:kCIFormatARGB8
-                                              colorSpace:colorSpace];
-        }
-    }
-    
-    if (!finalImage)
-    {
-        finalImage = [coreImageContext createCGImage:image fromRect:neededContextRect];
-    }
+    CGImageRef finalImage = [coreImageContext createCGImage:image fromRect:neededContextRect];
     
     
-    // If given a CMYK image that didn't need scaling, the result may not be in the desired colorspace. Try to force it to be
-    CGColorSpaceModel model = CGColorSpaceGetModel(CGImageGetColorSpace(finalImage));
-    if (model != kCGColorSpaceModelRGB && model != kCGColorSpaceModelMonochrome)
+    // If given an image that didn't need scaling, Core Image might take shortcuts. Try to force it to be
+    if (CGImageGetColorSpace(finalImage) != colorSpace)
     {
-        CGColorSpaceRef colorSpace = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
-        
         CGImageRef rgbImage = [coreImageContext createCGImage:image
                                                      fromRect:neededContextRect
                                                        format:kCIFormatARGB8
                                                    colorSpace:colorSpace];
-        
-        CFRelease(colorSpace);
-        
+                
         if (rgbImage)
         {
             CFRelease(finalImage); finalImage = rgbImage;
@@ -212,19 +240,13 @@
     [identifiers release];
 	
     
-    NSMutableData *result = [NSMutableData data];
-    CGImageDestinationRef imageDestination = CGImageDestinationCreateWithData((CFMutableDataRef)result,
-                                                                              (CFStringRef)fileType,
-                                                                              1,
-                                                                              NULL);
-    OBASSERT(imageDestination);
     
-    CGImageDestinationAddImage(imageDestination,
+    CGImageDestinationAddImage(destination,
                                finalImage,
                                (CFDictionaryRef)[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:0.7] forKey:(NSString *)kCGImageDestinationLossyCompressionQuality]);
     
-    if (!CGImageDestinationFinalize(imageDestination)) result = nil;
-    CFRelease(imageDestination);
+    if (!CGImageDestinationFinalize(destination)) result = nil;
+    CFRelease(destination);
     CGImageRelease(finalImage); // On Tiger the CGImage MUST be released before deallocating the CIImage!
     [image release];
     
