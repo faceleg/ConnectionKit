@@ -205,18 +205,14 @@
 
 - (void)updateWithDOMNode:(DOMNode *)node items:(NSArray *)items;
 {
-    // Swap in updated node. Then get the Web Editor to hook new descendant controllers up to the new nodes
-    [[[self HTMLElement] parentNode] replaceChild:node oldChild:[self HTMLElement]];
-    //[self setHTMLElement:nil];  // so Web Editor will endeavour to hook us up again
+    // Swap in updated node and correct items to point at their new ancestorNode
+    DOMNode *parentNode = [[self HTMLElement] parentNode];
     
-    
-    // Hook up new DOM Controllers
-    DOMNode *ancestor = [self ancestorNode];
-    if (!ancestor) ancestor = [[self HTMLElement] ownerDocument];
+    [parentNode replaceChild:node oldChild:[self HTMLElement]];
     
     for (WEKWebEditorItem *anItem in items)
     {
-        [anItem setAncestorNode:ancestor recursive:YES];
+        [anItem setAncestorNode:parentNode recursive:YES];
     }
     
     
