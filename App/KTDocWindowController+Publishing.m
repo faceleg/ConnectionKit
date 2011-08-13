@@ -96,15 +96,6 @@
     if (!didAutosave) return;
     
     
-    SEL selector = contextInfo;
-    if (selector != @selector(_exportSiteAgain))
-    {
-        if (![self shouldPublishWithWarningIfNo]) return;
-        [self maybeShowRestrictedPublishingAlertAndContinueWith:selector];
-        return;
-    }
-    
-    
     // Everything's set up nice, make sure we have Core Image environment
     if (!_coreImageQueue)
     {
@@ -122,6 +113,15 @@
                                                              nil]];
         [_coreImageContext retain];
         CFRelease(colorSpace);
+    }
+    
+    
+    SEL selector = contextInfo;
+    if (selector != @selector(_exportSiteAgain))
+    {
+        if (![self shouldPublishWithWarningIfNo]) return;
+        [self maybeShowRestrictedPublishingAlertAndContinueWith:selector];
+        return;
     }
     
     
