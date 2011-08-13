@@ -91,7 +91,7 @@
 	}
 }
 
-- (void)document:(NSDocument *)document didAutosave:(BOOL)didAutosave contextInfo:(void *)contextInfo
+- (void)document:(NSDocument *)document didAutosaveBeforePublishing:(BOOL)didAutosave contextInfo:(void *)contextInfo
 {
     if (!didAutosave) return;
     
@@ -121,13 +121,13 @@
     if ([[self document] hasUnautosavedChanges])
     {
         [[self document] autosaveDocumentWithDelegate:self
-                                  didAutosaveSelector:@selector(document:didAutosave:contextInfo:)
+                                  didAutosaveSelector:@selector(document:didAutosaveBeforePublishing:contextInfo:)
                                           contextInfo:selector];
     }
     else
     {
         // Pretend we autosaved. #133614
-        [self document:[self document] didAutosave:YES contextInfo:selector];
+        [self document:[self document] didAutosaveBeforePublishing:YES contextInfo:selector];
     }
 }
 
