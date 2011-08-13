@@ -104,8 +104,11 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 - (id)initWithSite:(KTSite *)site
   documentRootPath:(NSString *)docRoot
      subfolderPath:(NSString *)subfolder
+         CIContext:(CIContext *)context
+             queue:(NSOperationQueue *)coreImageQueue;
 {
 	OBPRECONDITION(site);
+    OBPRECONDITION(coreImageQueue);
     
     if (!docRoot) docRoot = @"";    // We need a string that can receive -stringByAppendingPathComponent: messages
     OBASSERT(docRoot);
@@ -129,24 +132,13 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         _defaultQueue = [[NSOperationQueue alloc] init];
         [_defaultQueue setMaxConcurrentOperationCount:4];   // the operations placed on here aren't truly CPU-limited yet, because they talk back to the main thread, so set a sane limit. #129819
         
-        _coreImageQueue = [[NSOperationQueue alloc] init];
-        [_coreImageQueue setMaxConcurrentOperationCount:1];
-        
-        CGColorSpaceRef colorSpace = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
-        _coreImageContext = [CIContext contextWithCGContext:nil
-                                                    options:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                             NSBOOL(YES), kCIContextUseSoftwareRenderer,
-                                                             colorSpace, kCIContextOutputColorSpace,
-                                                             colorSpace, kCIContextWorkingColorSpace,
-                                                             nil]];
-        [_coreImageContext retain];
-        CFRelease(colorSpace);
+        _coreImageQueue = [coreImageQueue retain];
+        _coreImageContext = [context retain];
         
         // Name them for debugging
         if ([NSOperationQueue instancesRespondToSelector:@selector(setName:)])
         {
             [_diskQueue setName:@"KTPublishingEngine: Disk Access Queue"];
-            [_coreImageQueue setName:@"KTPublishingEngine: Core Image Queue"];
             [_defaultQueue setName:@"KTPublishingEngine: Default Queue"];
         }
         

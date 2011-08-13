@@ -81,9 +81,12 @@ typedef enum {
     id<SVPublishedObject> _sitemapPinger;
 }
 
+// Can supply nil context, but that's rather inefficient
 - (id)initWithSite:(KTSite *)site
   documentRootPath:(NSString *)docRoot
-     subfolderPath:(NSString *)subfolder;
+     subfolderPath:(NSString *)subfolder
+         CIContext:(CIContext *)context
+             queue:(NSOperationQueue *)coreImageQueue;
 
 // Delegate
 - (id <KTPublishingEngineDelegate>)delegate;

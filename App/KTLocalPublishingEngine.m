@@ -61,7 +61,10 @@
 
 #pragma mark Init & Dealloc
 
-- (id)initWithSite:(KTSite *)site onlyPublishChanges:(BOOL)publishChanges;
+- (id)initWithSite:(KTSite *)site
+onlyPublishChanges:(BOOL)publishChanges
+         CIContext:(CIContext *)context
+             queue:(NSOperationQueue *)coreImageQueue;
 {
 	OBPRECONDITION(site);
     
@@ -69,7 +72,7 @@
     NSString *docRoot = [hostProperties documentRoot];
     NSString *subfolder = [hostProperties subfolder];
     
-    if (self = [super initWithSite:site documentRootPath:docRoot subfolderPath:subfolder])
+    if (self = [super initWithSite:site documentRootPath:docRoot subfolderPath:subfolder CIContext:context queue:coreImageQueue])
 	{
 		_onlyPublishChanges = publishChanges;
         

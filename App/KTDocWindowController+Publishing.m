@@ -104,6 +104,27 @@
         return;
     }
     
+    
+    // Everything's set up nice, make sure we have Core Image environment
+    if (!_coreImageQueue)
+    {
+        _coreImageQueue = [[NSOperationQueue alloc] init];
+        [_coreImageQueue setMaxConcurrentOperationCount:1];
+    }
+    if (!_coreImageContext)
+    {
+        CGColorSpaceRef colorSpace = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
+        _coreImageContext = [CIContext contextWithCGContext:nil
+                                                    options:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                             NSBOOL(YES), kCIContextUseSoftwareRenderer,
+                                                             colorSpace, kCIContextOutputColorSpace,
+                                                             colorSpace, kCIContextWorkingColorSpace,
+                                                             nil]];
+        [_coreImageContext retain];
+        CFRelease(colorSpace);
+    }
+    
+    
     [self performSelector:selector];
 }
 
@@ -140,7 +161,9 @@
     // Start publishing
 	Class publishingEngineClass = [self publishingEngineClass];
     KTPublishingEngine *publishingEngine = [[publishingEngineClass alloc] initWithSite:[[self document] site]
-																	onlyPublishChanges:YES];
+																	onlyPublishChanges:YES
+                                                                             CIContext:_coreImageContext
+                                                                                 queue:_coreImageQueue];
     
     // Bring up UI
     KTPublishingWindowController *windowController = [[KTPublishingWindowController alloc] initWithPublishingEngine:publishingEngine];
@@ -159,7 +182,9 @@
     // Start publishing
     Class publishingEngineClass = [self publishingEngineClass];
     KTPublishingEngine *publishingEngine = [[publishingEngineClass alloc] initWithSite:[[self document] site]
-																	onlyPublishChanges:NO];
+																	onlyPublishChanges:NO
+                                                                             CIContext:_coreImageContext
+                                                                                 queue:_coreImageQueue];
     
     // Bring up UI
     KTPublishingWindowController *windowController = [[KTPublishingWindowController alloc] initWithPublishingEngine:publishingEngine];
@@ -313,7 +338,9 @@
         // Start publishing
         KTPublishingEngine *publishingEngine = [[KTExportEngine alloc] initWithSite:[[self document] site]
                                                                    documentRootPath:exportDirectoryPath
-                                                                      subfolderPath:nil];
+                                                                      subfolderPath:nil
+                                                                          CIContext:_coreImageContext
+                                                                              queue:_coreImageQueue];
         
         // Bring up UI
         KTPublishingWindowController *windowController = [[KTPublishingWindowController alloc] initWithPublishingEngine:publishingEngine];

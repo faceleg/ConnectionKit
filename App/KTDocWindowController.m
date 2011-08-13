@@ -120,6 +120,8 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[myMasterCodeInjectionController release];
 	[myPageCodeInjectionController release];
 
+    [_coreImageContext release];
+    [_coreImageQueue release];
 	
     [super dealloc];
 }

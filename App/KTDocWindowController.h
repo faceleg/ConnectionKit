@@ -89,6 +89,10 @@ extern NSString *gInfoWindowAutoSaveName;
     
     // Google
     SVGoogleWindowController *_googleWindowController;
+    
+    // Core Image processing
+    CIContext           *_coreImageContext;
+    NSOperationQueue    *_coreImageQueue;
 	
 	NSMenuItem						*_rawHTMLMenuItem;		// like an outlet
 	NSMenuItem						*_HTMLTextPageMenuItem;		// like an outlet

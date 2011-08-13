@@ -19,7 +19,11 @@
     NSMutableDictionary *_publishingRecordsBySHA1Digest;
 }
 
-- (id)initWithSite:(KTSite *)aDocumentInfo onlyPublishChanges:(BOOL)publishChanges;
+- (id)initWithSite:(KTSite *)site
+onlyPublishChanges:(BOOL)publishChanges
+         CIContext:(CIContext *)context
+             queue:(NSOperationQueue *)coreImageQueue;
+
 - (BOOL)onlyPublishChanges;
 
 @end
