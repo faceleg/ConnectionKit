@@ -146,6 +146,8 @@
 		270E4B1710FA4DF500EF1FA0 /* SVLinkInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E4B1510FA4DF500EF1FA0 /* SVLinkInspector.m */; };
 		270E583F13F5B0350073840F /* KSCreateCGImageForWebOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 270E583D13F5B0350073840F /* KSCreateCGImageForWebOperation.h */; };
 		270E584013F5B0350073840F /* KSCreateCGImageForWebOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E583E13F5B0350073840F /* KSCreateCGImageForWebOperation.m */; };
+		270E589013F5F41A0073840F /* KSWriteImageDataOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 270E588E13F5F41A0073840F /* KSWriteImageDataOperation.h */; };
+		270E589113F5F41A0073840F /* KSWriteImageDataOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E588F13F5F41A0073840F /* KSWriteImageDataOperation.m */; };
 		270E82E710A4484E007E7848 /* KSInspectorTabsController.h in Headers */ = {isa = PBXBuildFile; fileRef = 270E82E510A4484D007E7848 /* KSInspectorTabsController.h */; settings = {ATTRIBUTES = (); }; };
 		270E82E810A4484E007E7848 /* KSInspectorTabsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E82E610A4484E007E7848 /* KSInspectorTabsController.m */; };
 		2710C255110A110D00A7B997 /* SVMediaProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 2710C254110A110D00A7B997 /* SVMediaProtocol.h */; };
@@ -1759,6 +1761,8 @@
 		270E4B1510FA4DF500EF1FA0 /* SVLinkInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVLinkInspector.m; sourceTree = "<group>"; };
 		270E583D13F5B0350073840F /* KSCreateCGImageForWebOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSCreateCGImageForWebOperation.h; path = ../Code/KSSaveForWeb/KSCreateCGImageForWebOperation.h; sourceTree = "<group>"; };
 		270E583E13F5B0350073840F /* KSCreateCGImageForWebOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSCreateCGImageForWebOperation.m; path = ../Code/KSSaveForWeb/KSCreateCGImageForWebOperation.m; sourceTree = "<group>"; };
+		270E588E13F5F41A0073840F /* KSWriteImageDataOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSWriteImageDataOperation.h; path = ../Code/KSSaveForWeb/KSWriteImageDataOperation.h; sourceTree = SOURCE_ROOT; };
+		270E588F13F5F41A0073840F /* KSWriteImageDataOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSWriteImageDataOperation.m; path = ../Code/KSSaveForWeb/KSWriteImageDataOperation.m; sourceTree = SOURCE_ROOT; };
 		270E82E510A4484D007E7848 /* KSInspectorTabsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSInspectorTabsController.h; sourceTree = "<group>"; };
 		270E82E610A4484E007E7848 /* KSInspectorTabsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSInspectorTabsController.m; sourceTree = "<group>"; };
 		2710C254110A110D00A7B997 /* SVMediaProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaProtocol.h; sourceTree = "<group>"; };
@@ -3922,6 +3926,8 @@
 				275C5F87122831CE00CD22B8 /* SVMedia.m */,
 				270E583D13F5B0350073840F /* KSCreateCGImageForWebOperation.h */,
 				270E583E13F5B0350073840F /* KSCreateCGImageForWebOperation.m */,
+				270E588E13F5F41A0073840F /* KSWriteImageDataOperation.h */,
+				270E588F13F5F41A0073840F /* KSWriteImageDataOperation.m */,
 			);
 			name = 2.0;
 			sourceTree = "<group>";
@@ -6203,6 +6209,7 @@
 				276BC94713C34DDC00EB2798 /* SVWorkspaceIconProtocol.h in Headers */,
 				2705B1B013EC0514004C678D /* SVWebEditorUpdatesHTMLContext.h in Headers */,
 				270E583F13F5B0350073840F /* KSCreateCGImageForWebOperation.h in Headers */,
+				270E589013F5F41A0073840F /* KSWriteImageDataOperation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7692,6 +7699,7 @@
 				276BC94813C34DDC00EB2798 /* SVWorkspaceIconProtocol.m in Sources */,
 				2705B1B113EC0514004C678D /* SVWebEditorUpdatesHTMLContext.m in Sources */,
 				270E584013F5B0350073840F /* KSCreateCGImageForWebOperation.m in Sources */,
+				270E589113F5F41A0073840F /* KSWriteImageDataOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

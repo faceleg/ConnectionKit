@@ -7,7 +7,7 @@
 //
 
 #import "SVImageScalingOperation.h"
-#import "KSCreateCGImageForWebOperation.h"
+#import "KSWriteImageDataOperation.h"
 
 #import "KTImageScalingSettings.h"
 #import "KTImageScalingURLProtocol.h"
@@ -101,14 +101,6 @@
     
     
     // Need scaling?
-    NSMutableData *result = [NSMutableData data];
-    
-    CGImageDestinationRef destination = CGImageDestinationCreateWithData((CFMutableDataRef)result,
-                                                                         (CFStringRef)fileType,
-                                                                         1,
-                                                                         NULL);
-    OBASSERT(destination);
-    
     CFDictionaryRef properties = CGImageSourceCopyPropertiesAtIndex(source, 0, NULL);
     BOOL needScaling = YES;
     
@@ -125,6 +117,14 @@
             if ([colorSpaceName isEqualToString:@"sRGB IEC61966-2.1"])
             {
                 // Can just copy the image data straight across
+                NSMutableData *result = [NSMutableData data];
+                
+                CGImageDestinationRef destination = CGImageDestinationCreateWithData((CFMutableDataRef)result,
+                                                                                     (CFStringRef)fileType,
+                                                                                     1,
+                                                                                     NULL);
+                OBASSERT(destination);
+            
                 // As far as I can tell, this avoids recompressing JPEGs
                 CGImageDestinationAddImageFromSource(destination, source, 0, NULL);
                 CFRelease(properties);
@@ -133,7 +133,6 @@
                 if (!CGImageDestinationFinalize(destination))
                 {
                     CFRelease(destination);
-                    
                     if (error) *error = [NSError errorWithDomain:NSURLErrorDomain
                                                             code:NSURLErrorResourceUnavailable
                                                         userInfo:nil];
@@ -155,7 +154,6 @@
     
     if (!cgImage)
     {
-        CFRelease(destination);
         if (error) *error = [NSError errorWithDomain:NSURLErrorDomain
                                                 code:NSURLErrorResourceUnavailable
                                             userInfo:nil];
@@ -221,33 +219,23 @@
     [image release];
     [op start]; // it's not concurrent
     
-    CGImageRef finalImage = [op CGImage];
-    if (!finalImage)
+    
+    // Convert to data
+    KSWriteImageDataOperation *dataOp = [[KSWriteImageDataOperation alloc] initWithCGImageOperation:op
+                                                                                               type:fileType];
+    [op release];
+    
+    [dataOp start]; // it's not concurrent
+    NSData *result = [[[dataOp data] retain] autorelease];
+    [dataOp release];
+    
+    if (!result)
     {
-        CFRelease(destination);
-        [op release];
         if (error) *error = [NSError errorWithDomain:NSURLErrorDomain
                                                 code:NSURLErrorResourceUnavailable
                                             userInfo:nil];
         return nil;
     }
-    
-    
-    // Convert to data
-	NSArray *identifiers = (NSArray *)CGImageDestinationCopyTypeIdentifiers();
-	OBASSERT([identifiers containsObject:fileType]);
-    [identifiers release];
-	
-    
-    
-    CGImageDestinationAddImage(destination,
-                               finalImage,
-                               (CFDictionaryRef)[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:0.7] forKey:(NSString *)kCGImageDestinationLossyCompressionQuality]);
-    
-    [op release];
-    
-    if (!CGImageDestinationFinalize(destination)) result = nil;
-    CFRelease(destination);
     
     
 #ifdef DEBUG
