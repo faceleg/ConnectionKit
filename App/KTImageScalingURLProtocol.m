@@ -154,6 +154,8 @@ static NSURLCache *_sharedCache;
 
 + (void)initialize
 {
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
 	/*  // turning the cache off for now. System one should be good enough. #103267
     if (!_sharedCache)
 	{
@@ -196,6 +198,8 @@ static NSURLCache *_sharedCache;
         [_ciContext retain];
         CFRelease(colorSpace);
     }
+    
+    [pool release];
 }
 
 + (NSOperationQueue *)coreImageQueue; { return _coreImageQueue; }
