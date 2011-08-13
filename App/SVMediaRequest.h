@@ -21,7 +21,6 @@
     NSNumber        *_width;
     NSNumber        *_height;
     NSString        *_type;
-    NSSet           *_colorSpaceModels;
     NSString        *_uploadPath;
     NSString        *_scalingOrConversionPathSuffix;
     SVPageImageRepresentationOptions    _options;
@@ -58,10 +57,6 @@ preferredUploadPath:(NSString *)path
 
 // The type of file you want published. nil means to keep in the original format
 @property(nonatomic, copy, readonly) NSString *type;
-
-// For images. Contains the CGColorSpaceModel constants AND string equivalents (e.g. kCGImagePropertyColorModelRGB) that are permitted
-// If source image's color space model falls within the list, or the list is nil/empty, any scaled/converted image will try to match it. Otherwise, is converted to RGB.
-@property(nonatomic, copy, readonly) NSSet *allowedColorSpaceModels;
 
 - (BOOL)isNativeRepresentation;
 

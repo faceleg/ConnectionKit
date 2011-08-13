@@ -86,8 +86,6 @@
     
     // Can't convert to raw HTML if contains an embedded image
     BOOL treatAsImageContainer = [self DOMElementContainsAnInDocumentImage:element];
-    
-    
     if (treatAsImageContainer)
     {
         return [super handleInvalidDOMElement:element];
@@ -97,6 +95,9 @@
     // Ignore most empty elements! #119910
     if (![tagName isEqualToString:@"SCRIPT"] &&
         ![tagName isEqualToString:@"IFRAME"] &&
+        ![tagName isEqualToString:@"VIDEO"] &&
+        ![tagName isEqualToString:@"AUDIO"] &&
+        ![tagName isEqualToString:@"OBJECT"] &&
         [[(DOMHTMLElement *)element innerText] isWhitespace])
     {
         return [super handleInvalidDOMElement:element];

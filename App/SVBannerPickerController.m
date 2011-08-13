@@ -70,10 +70,13 @@
 
 - (BOOL)setImageFromPasteboardItem:(id <SVPasteboardItem>)item;
 {
+    NSURL *URL = [item URL];
+    if (!URL) return NO;
+    
     KTMaster *master = [[oInspectorViewController inspectedObjectsController]
                         valueForKeyPath:@"selection.master"];
     
-    [master setBannerWithContentsOfURL:[item URL]];
+    [master setBannerWithContentsOfURL:URL];
     
     return YES;
 }
