@@ -7,6 +7,7 @@
 //
 
 #import "SVImageScalingOperation.h"
+#import "KSReadImageForWebOperation.h"
 #import "KSWriteImageDataOperation.h"
 
 #import "KTImageScalingSettings.h"
@@ -74,115 +75,26 @@
 #endif
     
     
-    // Load the image
+    // Load the data
     NSData *data = [[_sourceMedia mediaData] retain];
     if (!data) data = [[NSData alloc] initWithContentsOfURL:[_sourceMedia mediaURL] options:0 error:error];
     if (!data) return nil;  // error pointer should be set by NSData
     
-    CGImageSourceRef source = CGImageSourceCreateWithData((CFDataRef)data, NULL);
+    
+    // Read the image
+    KSReadImageForWebOperation *readOp = [[KSReadImageForWebOperation alloc]
+                                          initWithData:data
+                                          width:[NSNumber numberWithFloat:size.width]
+                                          height:[NSNumber numberWithFloat:size.height]];
     [data release];
     
-    if (!source)
-    {
-        if (error) *error = [NSError errorWithDomain:NSURLErrorDomain
-                                                code:NSURLErrorResourceUnavailable
-                                            userInfo:nil];
-        return nil;
-    }
+    [readOp start]; // non-concurrent
     
     
     // Construct image scaling properties dictionary from the URL
     NSDictionary *URLQuery = _parameters;
     KSImageScalingMode scalingMode = [URLQuery integerForKey:@"mode"];
-    
-    
-    // Need scaling?
-    CFDictionaryRef properties = CGImageSourceCopyPropertiesAtIndex(source, 0, NULL);
-    BOOL needScaling = YES;
-    
-    if (properties)
-    {
-        if ([(NSNumber *)CFDictionaryGetValue(properties, kCGImagePropertyPixelWidth) floatValue] == size.width &&
-            [(NSNumber *)CFDictionaryGetValue(properties, kCGImagePropertyPixelHeight) floatValue] == size.height)
-        {
-            needScaling = NO;
-            
-            // Image is the right size already, but what about colorspace?
-            // Very ugly, seems we have to hardcode the standard sRGB name
-            NSString *colorSpaceName = (NSString *)CFDictionaryGetValue(properties, kCGImagePropertyProfileName);
-            if ([colorSpaceName isEqualToString:@"sRGB IEC61966-2.1"])
-            {
-                // Can just copy the image data straight across
-                NSMutableData *result = [NSMutableData data];
-                
-                CGImageDestinationRef destination = CGImageDestinationCreateWithData((CFMutableDataRef)result,
-                                                                                     (CFStringRef)fileType,
-                                                                                     1,
-                                                                                     NULL);
-                OBASSERT(destination);
-            
-                // As far as I can tell, this avoids recompressing JPEGs
-                CGImageDestinationAddImageFromSource(destination, source, 0, NULL);
-                CFRelease(properties);
-                CFRelease(source);
-                
-                if (!CGImageDestinationFinalize(destination))
-                {
-                    CFRelease(destination);
-                    if (error) *error = [NSError errorWithDomain:NSURLErrorDomain
-                                                            code:NSURLErrorResourceUnavailable
-                                                        userInfo:nil];
-                    return nil;
-                }
-                
-                CFRelease(destination);
-                return result;
-            }
-        }
-        
-        CFRelease(properties);
-    }
-    
-    
-    // Time to step up to some real graphics handling
-    CGImageRef cgImage = CGImageSourceCreateImageAtIndex(source, 0, NULL);
-    CFRelease(source);
-    
-    if (!cgImage)
-    {
-        if (error) *error = [NSError errorWithDomain:NSURLErrorDomain
-                                                code:NSURLErrorResourceUnavailable
-                                            userInfo:nil];
-        return nil;
-    }
-    
-    CIImage *image = [[CIImage alloc] initWithCGImage:cgImage];
-    OBASSERT(image);
-    
-    CFRelease(cgImage);
-    
-    
-    // Scale the image if needed
-    if (needScaling)
-    {
-        CIImage *scaledImage = [image imageByScalingToSize:CGSizeMake(size.width, size.height)
-                                                            mode:scalingMode
-                                                     opaqueEdges:YES];
-        OBASSERT(scaledImage);
-        
-        
-        // Sharpen if needed
-        float sharpeningFactor = [URLQuery floatForKey:@"sharpen"];
-        if (sharpeningFactor)
-        {
-            scaledImage = [scaledImage sharpenLuminanceWithFactor:sharpeningFactor];
-        }
-        OBASSERT(scaledImage);
-        
-        [scaledImage retain];
-        [image release]; image = scaledImage;
-    }
-    
+    float sharpeningFactor = [URLQuery floatForKey:@"sharpen"];
     
     // Ensure we have a graphics context big enough to render into
     // Cache contexts per thread
@@ -208,30 +120,21 @@
     }
     
     
-    // Render a CGImage
-    KSCreateCGImageForWebOperation *op = [[KSCreateCGImageForWebOperation alloc] initWithCIImage:image
-                                                                                         context:context];
-    
-    [image release];
-    [op start]; // it's not concurrent
-    
-    
-    // Convert to data
-    KSWriteImageDataOperation *dataOp = [[KSWriteImageDataOperation alloc] initWithCGImageOperation:op
-                                                                                               type:fileType];
-    [op release];
-    
-    [dataOp start]; // it's not concurrent
-    NSData *result = [[[dataOp data] retain] autorelease];
-    [dataOp release];
-    
+    NSData *result = [readOp dataWithType:fileType scalingMode:scalingMode sharpening:sharpeningFactor context:context];
     if (!result)
     {
+        [readOp release];
         if (error) *error = [NSError errorWithDomain:NSURLErrorDomain
                                                 code:NSURLErrorResourceUnavailable
                                             userInfo:nil];
         return nil;
     }
+    
+    [[result retain] autorelease];
+    [readOp release];
+    return result;
+    
+    
     
     
 #ifdef DEBUG
