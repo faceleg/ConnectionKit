@@ -17,17 +17,18 @@
   @private
     id <SVMedia>    _sourceMedia;
     NSDictionary    *_parameters;
+    CIContext       *_context;
     NSData          *_result;
     NSURLResponse   *_response;
 }
 
-- (id)initWithMedia:(id <SVMedia>)media parameters:(NSDictionary *)params;
-- (id)initWithURL:(NSURL *)url;
+- (id)initWithMedia:(id <SVMedia>)media parameters:(NSDictionary *)params context:(CIContext *)context;
+- (id)initWithURL:(NSURL *)url context:(CIContext *)context;
 
 @property(nonatomic, copy, readonly) NSData *result;
 @property(nonatomic, copy, readonly) NSURLResponse *returnedResponse;
 
 // Convenience
-+ (NSData *)dataWithMediaRequest:(SVMediaRequest *)request response:(NSURLResponse **)response;
++ (NSData *)dataWithMediaRequest:(SVMediaRequest *)request context:(CIContext *)context response:(NSURLResponse **)response;
 
 @end

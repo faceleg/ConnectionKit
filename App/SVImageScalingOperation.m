@@ -27,24 +27,26 @@
 
 @implementation SVImageScalingOperation
 
-- (id)initWithMedia:(id <SVMedia>)media parameters:(NSDictionary *)params;
+- (id)initWithMedia:(id <SVMedia>)media parameters:(NSDictionary *)params context:(CIContext *)context;
 {
     [self init];
     
     _sourceMedia = [media retain];
     _parameters = [params copy];
+    _context = [context retain];
     
     return self;
 }
 
-- (id)initWithURL:(NSURL *)URL;
+- (id)initWithURL:(NSURL *)url context:(CIContext *)context;
 {
     [self init];
  
-	_sourceMedia = [[SVMedia alloc] initByReferencingURL:[NSURL fileURLWithPath:[URL path]
+	_sourceMedia = [[SVMedia alloc] initByReferencingURL:[NSURL fileURLWithPath:[url path]
                                                                     isDirectory:NO]];
     
-    _parameters = [[URL ks_queryParameters] copy];
+    _parameters = [[url ks_queryParameters] copy];
+    _context = [context retain];
     
     return self;
 }
@@ -53,6 +55,7 @@
 {
     [_sourceMedia release];
     [_parameters release];
+    [_context release];
     [_result release];
     [_response release];
     
@@ -96,31 +99,9 @@
     KSImageScalingMode scalingMode = [URLQuery integerForKey:@"mode"];
     float sharpeningFactor = [URLQuery floatForKey:@"sharpen"];
     
-    // Ensure we have a graphics context big enough to render into
-    // Cache contexts per thread
-    CIContext *context = [[[NSThread currentThread] threadDictionary]
-                          objectForKey:@"SVImageScalingOperationCIContext"];
     
-    // Create CIIContext to match
-    if (!context)
-    {
-        CGColorSpaceRef colorSpace = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
-        
-        context = [CIContext contextWithCGContext:nil
-                                          options:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                   NSBOOL(YES), kCIContextUseSoftwareRenderer,
-                                                   colorSpace, kCIContextOutputColorSpace,
-                                                   colorSpace, kCIContextWorkingColorSpace,
-                                                   nil]];
-        
-        CFRelease(colorSpace);
-        
-        [[[NSThread currentThread] threadDictionary]
-         setObject:context forKey:@"SVImageScalingOperationCIContext"];
-    }
-    
-    
-    NSData *result = [readOp dataWithType:fileType scalingMode:scalingMode sharpening:sharpeningFactor context:context];
+    // Render
+    NSData *result = [readOp dataWithType:fileType scalingMode:scalingMode sharpening:sharpeningFactor context:_context];
     if (!result)
     {
         [readOp release];
@@ -263,7 +244,7 @@
     }
 }
 
-+ (NSData *)dataWithMediaRequest:(SVMediaRequest *)request response:(NSURLResponse **)response;
++ (NSData *)dataWithMediaRequest:(SVMediaRequest *)request context:(CIContext *)context response:(NSURLResponse **)response;
 {
     if ([request isNativeRepresentation])
     {
@@ -283,7 +264,8 @@
         
         SVImageScalingOperation *op = [[SVImageScalingOperation alloc]
                                        initWithMedia:[request media]
-                                       parameters:[request imageScalingParameters]];
+                                       parameters:[request imageScalingParameters]
+                                       context:context];
         [op start];
         
         NSData *result = [[[op result] copy] autorelease];
