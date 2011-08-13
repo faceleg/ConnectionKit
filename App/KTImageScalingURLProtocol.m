@@ -149,6 +149,7 @@ NSString *KTImageScalingURLProtocolScheme = @"x-sandvox-image";
 }
 
 static NSOperationQueue *_coreImageQueue;
+static CIContext *_ciContext;
 static NSURLCache *_sharedCache;
 
 + (void)initialize
@@ -179,6 +180,21 @@ static NSURLCache *_sharedCache;
         {
             [_coreImageQueue setName:@"Core Image Queue"];
         }
+    }
+    
+    if (!_ciContext)
+    {
+        CGColorSpaceRef colorSpace = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
+        
+        _ciContext = [CIContext contextWithCGContext:NULL
+                                             options:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                      NSBOOL(YES), kCIContextUseSoftwareRenderer,
+                                                      colorSpace, kCIContextOutputColorSpace,
+                                                      colorSpace, kCIContextWorkingColorSpace,
+                                                      nil]];
+        
+        [_ciContext retain];
+        CFRelease(colorSpace);
     }
 }
 
@@ -274,7 +290,9 @@ static NSURLCache *_sharedCache;
 - (void)_startLoadingUncached
 {
     // Run the scaling op
-    _operation = [[SVImageScalingOperation alloc] initWithURL:[[self request] URL]];
+    _operation = [[SVImageScalingOperation alloc] initWithURL:[[self request] URL]
+                                                      context:_ciContext];
+    
     [_operation addObserver:self forKeyPath:@"isFinished" options:0 context:NULL];
     [[[self class] coreImageQueue] addOperation:_operation];
 }
