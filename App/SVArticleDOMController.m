@@ -512,9 +512,6 @@
     NSObject *object = [newChildController representedObject];
     if (!object || [object isKindOfClass:[SVCallout class]])
     {
-        DOMDocument *doc = [[self HTMLElement] ownerDocument];
-        [newChildController loadHTMLElementFromDocument:doc];
-    
         // Probably a callout, search for a matching one
         NSArray *objects = [newChildController valueForKeyPath:@"childWebEditorItems.representedObject"];
         for (WEKWebEditorItem *anItem in [self childWebEditorItems])

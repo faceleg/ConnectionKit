@@ -48,19 +48,19 @@
 
 @synthesize calloutContentElement = _calloutContent;
 
-- (void)loadHTMLElementFromDocument:(DOMDocument *)document;
-{
-    [super loadHTMLElementFromDocument:document];
-    
-    if ([self isHTMLElementLoaded])
-    {
-        DOMNodeList *nodes = [[self HTMLElement] getElementsByClassName:@"callout-content"];
-        [self setCalloutContentElement:(DOMElement *)[nodes item:0]];
-    }
-}
-
 - (void)loadHTMLElement;
 {
+    if ([self elementIdName])
+    {
+        [super loadHTMLElement];
+        
+        DOMNodeList *nodes = [[self HTMLElement] getElementsByClassName:@"callout-content"];
+        [self setCalloutContentElement:(DOMElement *)[nodes item:0]];
+        
+        return;
+    }
+    
+    
     DOMHTMLDocument *document = [self HTMLDocument];
     
     // This logic is very similar to SVHTMLContext. Should be a way to bring them together
