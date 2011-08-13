@@ -106,6 +106,7 @@ typedef enum {
 // Publishing won't finish until the operation runs. Threadsafe. If queue is nil, targets the main thread
 - (void)addOperation:(NSOperation *)operation queue:(NSOperationQueue *)queue;
 @property(retain, readonly) NSOperationQueue *defaultQueue; // want this to be threadsafe
+@property(retain, readonly) NSOperationQueue *coreImageQueue;
 - (NSOperationQueue *)diskOperationQueue;
 
 - (NSUInteger)incrementingCountOfPublishedItems;

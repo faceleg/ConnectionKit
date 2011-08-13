@@ -788,7 +788,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             
             NSInvocationOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
             [[self digestStorage] setHashingOperation:op forMediaRequest:request];
-            [self addOperation:op queue:_coreImageQueue];  // most of the work should be Core Image's
+            [self addOperation:op queue:[self coreImageQueue]];  // most of the work should be Core Image's
             [op release];
         }
     }
@@ -1143,6 +1143,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 #pragma mark Util
 
 @synthesize defaultQueue = _defaultQueue;
+@synthesize coreImageQueue = _coreImageQueue;
 
 @synthesize sitemapPinger = _sitemapPinger;
 
