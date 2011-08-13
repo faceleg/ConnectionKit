@@ -129,10 +129,24 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         _defaultQueue = [[NSOperationQueue alloc] init];
         [_defaultQueue setMaxConcurrentOperationCount:4];   // the operations placed on here aren't truly CPU-limited yet, because they talk back to the main thread, so set a sane limit. #129819
         
+        _coreImageQueue = [[NSOperationQueue alloc] init];
+        [_coreImageQueue setMaxConcurrentOperationCount:1];
+        
+        CGColorSpaceRef colorSpace = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
+        _coreImageContext = [CIContext contextWithCGContext:nil
+                                                    options:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                             NSBOOL(YES), kCIContextUseSoftwareRenderer,
+                                                             colorSpace, kCIContextOutputColorSpace,
+                                                             colorSpace, kCIContextWorkingColorSpace,
+                                                             nil]];
+        [_coreImageContext retain];
+        CFRelease(colorSpace);
+        
         // Name them for debugging
         if ([NSOperationQueue instancesRespondToSelector:@selector(setName:)])
         {
             [_diskQueue setName:@"KTPublishingEngine: Disk Access Queue"];
+            [_coreImageQueue setName:@"KTPublishingEngine: Core Image Queue"];
             [_defaultQueue setName:@"KTPublishingEngine: Default Queue"];
         }
         
@@ -782,7 +796,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             
             NSInvocationOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
             [[self digestStorage] setHashingOperation:op forMediaRequest:request];
-            [self addOperation:op queue:[KTImageScalingURLProtocol coreImageQueue]];  // most of the work should be Core Image's
+            [self addOperation:op queue:_coreImageQueue];  // most of the work should be Core Image's
             [op release];
         }
     }
@@ -988,7 +1002,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     
     NSURLResponse *response;
-    NSData *fileContents = [SVImageScalingOperation dataWithMediaRequest:request response:&response];
+    NSData *fileContents = [SVImageScalingOperation dataWithMediaRequest:request context:_coreImageContext response:&response];
     
     if (fileContents)
     {
