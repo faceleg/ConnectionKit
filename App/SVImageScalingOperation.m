@@ -69,10 +69,6 @@
  */
 - (NSData *)_loadImageScaledToSize:(NSSize)size type:(NSString *)fileType error:(NSError **)error // Mode will be read from the URL
 {
-    
-    
-    
-    
 #ifdef DEBUG
     NSDate *start = [NSDate date];
 #endif
