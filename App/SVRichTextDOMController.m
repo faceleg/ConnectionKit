@@ -284,13 +284,15 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     
     
     // We have a matching controller. But is it in a valid location? Make sure it really is block-level/inline
-    SVGraphic *graphic = [controller representedObject];
-    
-    DOMNode *parentNode = [element parentNode];
-    
     if ([[adaptor XMLWriter] openElementsCount])
     {
-        if ([[[graphic textAttachment] causesWrap] boolValue])
+        SVGraphic *graphic = nil;
+        id object = [controller representedObject];
+        if ([object respondsToSelector:@selector(graphic)]) graphic = [object graphic];
+        
+        DOMNode *parentNode = [element parentNode];
+        
+        if (!graphic || [[[graphic textAttachment] causesWrap] boolValue])
         {
             // Floated graphics should be moved up if enclosed by an anchor
             // All other graphics should be moved up
