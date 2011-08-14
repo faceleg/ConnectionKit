@@ -1204,6 +1204,11 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     OBPRECONDITION(webEditor == [self webEditor]);
     
     
+    // If the selection was forced to change so that we never receieved a -…should… message, our graphic controller's selection may now be out of sync with the views. In rare circumstances, this could cause the link manager to try to access an object that has been deleted
+    // Fortunately the fix is simply to sync the two up again now
+    [[self graphicsController] setSelectedObjects:[[webEditor selectedItems] valueForKey:@"representedObject"]];
+    
+    
     // This used to be done in -…shouldChange… but that often caused WebView to overrite the result moments later
     [self synchronizeLinkManagerWithSelection:[webEditor selectedDOMRange]];
     
