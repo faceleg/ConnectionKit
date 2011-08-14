@@ -461,35 +461,6 @@
         {
             [[webEditor window] makeFirstResponder:webEditor];
         }
-        
-        
-        
-        // Consider as start of drag
-        NSPoint mouseDownLocation = [theEvent locationInWindow];
-        
-        NSView *view = [[self HTMLElement] documentView];
-        if (!view) return;
-        
-        theEvent = [[view window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
-        
-        while ([theEvent type] != NSLeftMouseUp)
-        {
-            // Calculate change from event
-            [view autoscroll:theEvent];
-            
-            NSSize offset = NSMakeSize([theEvent locationInWindow].x - mouseDownLocation.x,
-                                       [theEvent locationInWindow].y - mouseDownLocation.y);
-            
-            if (offset.width > 4.0 && offset.height > 4.0)
-            {
-                if ([webEditor dragSelectionWithEvent:theEvent offset:offset slideBack:YES])
-                {
-                    return;
-                }
-            }
-            
-            theEvent = [[view window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
-        }
     }
 }
 

@@ -480,28 +480,37 @@ typedef enum {  // this copied from WebPreferences+Private.h
         if (!event || [item allowsDirectAccessToWebViewWhenSelected]) return;
         
         
-        // Should start a move/drag?
-        if ([[[item HTMLElement] documentView] _web_dragShouldBeginFromMouseDown:event withExpiration:[NSDate distantFuture]])
+        // Consider as start of drag?
+        NSPoint mouseDownLocation = [event locationInWindow];
+        
+        NSView *view = [[item HTMLElement] documentView];
+        
+        NSEvent *mouseDown = event;
+        event = [[self window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
+        
+        while ([event type] != NSLeftMouseUp)
         {
-            if (selectableRange)
+            // Calculate change from event
+            [view autoscroll:event];
+            
+            NSSize offset = NSMakeSize([event locationInWindow].x - mouseDownLocation.x,
+                                       [event locationInWindow].y - mouseDownLocation.y);
+            
+            if (offset.width > 4.0 && offset.height > 4.0)
             {
-                [self dragImageForEvent:event];
+                if ([self dragSelectionWithEvent:event offset:offset slideBack:YES])
+                {
+                    return;
+                }
             }
-            else
-            {
-                [self moveItemForEvent:event];
-            }
-            return;
+            
+            event = [[self window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
         }
 
         
-        // Run until mouse up
-        NSEvent *mouseUp = [[self window] nextEventMatchingMask:NSLeftMouseUpMask];
-        
-        
         // Start editing the item? Needs the item to be sole selection, and mouse up to be quick enough
         if (canBeginEditing &&
-            ([mouseUp timestamp] - [event timestamp] < 0.5))
+            ([event timestamp] - [mouseDown timestamp] < 0.5))
         {
             // Is the item at that location supposed to be for editing?
             // This is true if the clicked child item is either:
@@ -511,7 +520,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
             // Actually, trying out ignoring that! Mike. #84932
             
             
-            NSPoint location = [self convertPoint:[event locationInWindow] fromView:nil];
+            NSPoint location = [self convertPoint:[mouseDown locationInWindow] fromView:nil];
             NSDictionary *elementInfo = [[self webView] elementAtPoint:location];
             DOMElement *element = [elementInfo objectForKey:WebElementDOMNodeKey];
             if (!element) return;   // happens if mouse up was somehow outside doc rect
@@ -568,8 +577,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
                 
                 // Can't call -sendEvent: as that doesn't update -currentEvent.
                 // Post in reverse order since I'm placing onto the front of the queue
-                [NSApp postEvent:[mouseUp ks_eventWithClickCount:1] atStart:YES];
                 [NSApp postEvent:[event ks_eventWithClickCount:1] atStart:YES];
+                [NSApp postEvent:[mouseDown ks_eventWithClickCount:1] atStart:YES];
             }
         }
     }
