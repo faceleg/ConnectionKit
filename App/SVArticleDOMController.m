@@ -70,11 +70,9 @@
     [super dealloc];
 }
 
-- (void)loadHTMLElementFromDocument:(DOMDocument *)document;
+- (void)loadHTMLElement;
 {
-    [super loadHTMLElementFromDocument:document];
-    
-    if (![self isHTMLElementLoaded]) return;
+    [super loadHTMLElement];
     
     
     // Text element is the kBlock
