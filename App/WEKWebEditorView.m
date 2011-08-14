@@ -496,7 +496,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
             NSSize offset = NSMakeSize([event locationInWindow].x - mouseDownLocation.x,
                                        [event locationInWindow].y - mouseDownLocation.y);
             
-            if (offset.width > 4.0 && offset.height > 4.0)
+            if (offset.width > 4.0f || offset.width < -4.0f || offset.height > 4.0f || offset.height < -4.0f)
             {
                 if ([self dragSelectionWithEvent:event offset:offset slideBack:YES])
                 {
