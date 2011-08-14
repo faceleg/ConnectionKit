@@ -139,6 +139,11 @@
     [self forgetDraggedItems];
 }
 
+- (BOOL)dragSelectionWithEvent:(NSEvent *)event offset:(NSSize)mouseOffset slideBack:(BOOL)slideBack
+{
+    return NO;
+}
+
 - (NSArray *)draggedItems; { return _draggedItems; }
 
 - (void)removeDraggedItems; // removes from DOM and item tree
