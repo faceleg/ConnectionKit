@@ -808,6 +808,54 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     }
 }
 
+- (NSArray *)selectedItems;
+{
+    NSArray *result = [[self webEditor] selectedItems];
+    // FIXME: Strip out non-descendants
+    return result;
+}
+
+- (BOOL)dragSelectionWithEvent:(NSEvent *)event offset:(NSSize)mouseOffset slideBack:(BOOL)slideBack;
+{
+    NSArray *selectedItems = [self selectedItems];
+    WEKWebEditorItem *selection = [selectedItems lastObject];
+    if (!selection) return NO;
+    
+    while ([selection parentWebEditorItem] != self)
+    {
+        selection = [selection parentWebEditorItem];
+    }
+    
+    NSView *view = [[[[self webEditor] firstResponderItem] HTMLElement] documentView];
+    
+    NSPoint mouseDown = [view convertPoint:NSMakePoint([event locationInWindow].x - mouseOffset.width,
+                                                       [event locationInWindow].y - mouseOffset.height)
+                                  fromView:nil];
+    
+    do
+    {
+        // Calculate change from event
+        [view autoscroll:event];
+        
+        NSPoint target = [view convertPoint:[event locationInWindow] fromView:nil];
+        CGPoint selectionPosition = [(SVDOMController *)selection positionIgnoringRelativePosition];
+        
+        CGPoint movePosition = CGPointMake(selectionPosition.x + target.x - mouseDown.x,
+                                           selectionPosition.y + target.y - mouseDown.y);
+        
+        [self moveGraphicWithDOMController:(SVDOMController *)selection
+                                toPosition:movePosition
+                                     event:event];
+        
+        event = [[event window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
+    }
+    while ([event type] != NSLeftMouseUp);
+    
+    
+    [selectedItems makeObjectsPerformSelector:@selector(moveEnded)];
+    return YES;
+}
+
 - (void)moveObjectUp:(id)sender;
 {
     [[self pageletsController] exchangeWithPrevious:sender];

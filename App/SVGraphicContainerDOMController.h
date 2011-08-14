@@ -41,9 +41,7 @@
 @protocol SVGraphicContainerDOMController <NSObject>
 
 @optional
-- (void)moveGraphicWithDOMController:(SVDOMController *)graphicController
-                          toPosition:(CGPoint)position
-                               event:(NSEvent *)event;
+- (BOOL)dragSelectionWithEvent:(NSEvent *)event offset:(NSSize)mouseOffset slideBack:(BOOL)slideBack;
 
 - (void)addGraphic:(SVGraphic *)graphic;
 
