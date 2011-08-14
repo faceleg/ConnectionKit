@@ -216,30 +216,6 @@
     }
 }
 
-- (NSRect)selectionFrame;
-{
-    if (![self isSelectable])
-    {
-        // Union together children, but only vertically once the firsy has been found
-        NSRect result = NSZeroRect;
-        for (WEKWebEditorItem *anItem in [self selectableTopLevelDescendants])
-        {
-            if (result.size.width > 0.0f)
-            {
-                result = [KSGeometry KSVerticallyUnionRect:result :[anItem selectionFrame]];
-            }
-            else
-            {
-                result = NSUnionRect(result, [anItem selectionFrame]);
-            }
-        }
-        
-        return result;
-    }
-    
-    return [[self HTMLElement] boundingBox];
-}
-
 #pragma mark Paste
 
 - (void)paste:(id)sender;
@@ -303,6 +279,19 @@
     if ([self hasRelativePosition]) [result setEditing:YES];
     
     return result;
+}
+
+- (NSRect)frame;
+{
+    DOMElement *graphicElement = [self graphicDOMElement];
+    if (graphicElement)
+    {
+        return [graphicElement boundingBox];
+    }
+    else
+    {
+        return [super frame];
+    }
 }
 
 #pragma mark Resizing
