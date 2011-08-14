@@ -872,17 +872,17 @@
     [[self childWebEditorItems] makeObjectsPerformSelector:_cmd];
 }
 
-#pragma mark Moving in Article
+#pragma mark Moving
 
 - (void)moveItemUp:(SVDOMController *)item;
 {
-    // By default have no idea how to move, so get parent to do it
+    // By default have no idea how to move, so get parent to move us instead
     [[self parentWebEditorItem] moveItemUp:self];
 }
 
 - (void)moveItemDown:(SVDOMController *)item;
 {
-    // By default have no idea how to move, so get parent to do it
+    // By default have no idea how to move, so get parent to move us instead
     [[self parentWebEditorItem] moveItemDown:self];
 }
 
