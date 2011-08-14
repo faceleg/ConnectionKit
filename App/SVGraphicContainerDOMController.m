@@ -281,40 +281,10 @@
 
 #pragma mark Moving
 
-- (BOOL)moveToPosition:(CGPoint)position event:(NSEvent *)event;
-{
-    // See if super fancies a crack
-    if ([super moveToPosition:position event:event]) return YES;
-    
-    
-    WEKWebEditorItem <SVGraphicContainerDOMController> *dragController = [self graphicContainerDOMController];
-    if ([dragController graphicContainerDOMController]) dragController = [dragController graphicContainerDOMController];
-    
-    [dragController moveGraphicWithDOMController:self toPosition:position event:event];
-    
-    
-    // Starting a move turns off selection handles so needs display
-    if (dragController && ![self hasRelativePosition])
-    {
-        [self setNeedsDisplay];
-        //_moving = YES;
-    }
-    
-    return (dragController != nil);
-}
-
 - (void)moveEnded;
 {
     [super moveEnded];
     [self removeRelativePosition:YES];
-}
-
-/*  Have to re-implement because SVDOMController overrides
- */
-- (CGPoint)position;
-{
-    NSRect rect = [self selectionFrame];
-    return CGPointMake(NSMidX(rect), NSMidY(rect));
 }
 
 - (NSArray *)relativePositionDOMElements;

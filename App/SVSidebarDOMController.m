@@ -753,7 +753,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         if (position.y > startPosition.y) position = startPosition;
     }
     
-    [pagelet moveToRelativePosition:CGPointMake(0.0f, position.y - startPosition.y)];
+    [pagelet moveToPosition:position];
 }
 
 - (void)tryToMovePagelet:(SVDOMController *)pagelet upToPosition:(CGPoint)position;
@@ -786,34 +786,15 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         if (position.y < startPosition.y) position = startPosition;
     }    
     
-    [pagelet moveToRelativePosition:CGPointMake(0.0f, position.y - startPosition.y)];
+    [pagelet moveToPosition:position];
 }
 
-- (void)moveGraphicWithDOMController:(SVDOMController *)graphicController
-                          toPosition:(CGPoint)position
-                               event:(NSEvent *)event;
+- (BOOL)dragItem:(SVDOMController *)controller withEvent:(NSEvent *)event offset:(NSSize)mouseOffset slideBack:(BOOL)slideBack;
 {
-    OBPRECONDITION(graphicController);
-    
-    
-    // Do any of siblings fit into the available space?
-    CGFloat delta = [event deltaY];
-    if (delta < 0.0f)
+    while ([controller parentWebEditorItem] != self)
     {
-        [self tryToMovePagelet:graphicController upToPosition:position];
-    }
-    else if (delta > 0.0f)
-    {
-        [self tryToMovePagelet:graphicController downToPosition:position];
-    }
-}
-
-- (BOOL)dragItem:(WEKWebEditorItem *)item withEvent:(NSEvent *)event offset:(NSSize)mouseOffset slideBack:(BOOL)slideBack;
-{
-    while ([item parentWebEditorItem] != self)
-    {
-        item = [item parentWebEditorItem];
-        if (!item) return NO;
+        controller = (SVDOMController *)[controller parentWebEditorItem];
+        if (!controller) return NO;
     }
     
     NSView *view = [[[[self webEditor] firstResponderItem] HTMLElement] documentView];
@@ -822,27 +803,36 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
                                                        [event locationInWindow].y - mouseOffset.height)
                                   fromView:nil];
     
+    // Set the item's anchor point such that -position is where mouse down was
+    [controller setAnchorPoint:[controller anchorPointToGivePosition:NSPointToCGPoint(mouseDown)]];
+    
     do
     {
         // Calculate change from event
         [view autoscroll:event];
         
         NSPoint target = [view convertPoint:[event locationInWindow] fromView:nil];
-        CGPoint selectionPosition = [(SVDOMController *)item positionIgnoringRelativePosition];
+        target.x = mouseDown.x;
         
-        CGPoint movePosition = CGPointMake(selectionPosition.x + target.x - mouseDown.x,
-                                           selectionPosition.y + target.y - mouseDown.y);
         
-        [self moveGraphicWithDOMController:(SVDOMController *)item
-                                toPosition:movePosition
-                                     event:event];
+        
+        // Do any of siblings fit into the available space?
+        CGFloat delta = [event deltaY];
+        if (delta < 0.0f)
+        {
+            [self tryToMovePagelet:controller upToPosition:NSPointToCGPoint(target)];
+        }
+        else if (delta > 0.0f)
+        {
+            [self tryToMovePagelet:controller downToPosition:NSPointToCGPoint(target)];
+        }
         
         event = [[event window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
     }
     while ([event type] != NSLeftMouseUp);
     
     
-    [item moveEnded];
+    [controller moveEnded];
     return YES;
 }
 
