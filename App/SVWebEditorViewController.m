@@ -36,6 +36,7 @@
 #import "SVWebContentObjectsController.h"
 #import "SVWebEditorHTMLContext.h"
 #import "SVWebEditorTextRange.h"
+#import "SVWebEditorView.h"
 
 #import "NSArray+Karelia.h"
 #import "NSObject+Karelia.h"
@@ -148,7 +149,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 
 - (void)loadView
 {
-    WEKWebEditorView *editor = [[WEKWebEditorView alloc] init];
+    WEKWebEditorView *editor = [[SVWebEditorView alloc] init];
     
     [self setView:editor];
     [self setWebEditor:editor];
