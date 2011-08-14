@@ -438,6 +438,7 @@
 {
     // Non-selectable items have no interest in such events
     if (![self isSelectable]) return [super mouseDown:theEvent];
+    if ([theEvent type] != NSLeftMouseDown) return [super mouseDown:theEvent];
     
     
     WEKWebEditorView *webEditor = [self webEditor];
