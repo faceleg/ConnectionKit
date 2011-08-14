@@ -104,10 +104,12 @@
 
 #pragma mark Moving
 
-- (void)moveToRelativePosition:(CGPoint)position;
 - (void)moveToPosition:(CGPoint)position;   // takes existing relative position into account
-- (void)removeRelativePosition:(BOOL)animated;
+
 - (BOOL)hasRelativePosition;
+- (void)setRelativePosition:(CGPoint)position;
+- (void)removeRelativePosition:(BOOL)animated;
+
 - (CGPoint)positionIgnoringRelativePosition;
 - (NSRect)rectIgnoringRelativePosition;
 - (NSArray *)relativePositionDOMElements;

@@ -643,7 +643,7 @@
     return [NSArray arrayWithObject:result];
 }
 
-- (void)moveToRelativePosition:(CGPoint)position;
+- (void)setRelativePosition:(CGPoint)position;
 {
     // Display space currently occupied…
     [self setNeedsDisplay];
@@ -681,7 +681,7 @@
     CGPoint relativePosition = CGPointMake(_relativePosition.x + (position.x - currentPosition.x),
                                            _relativePosition.y + (position.y - currentPosition.y));
     
-    [self moveToRelativePosition:relativePosition];
+    [self setRelativePosition:relativePosition];
 }
 
 - (void)removeRelativePosition:(BOOL)animated;
