@@ -591,11 +591,14 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     
     
     //  Populate controller with content. For now, this is simply all the represented objects of all the DOM controllers
-    id anObject = [item representedObject];
-    if (anObject && //  second bit of this if statement: images are owned by 2 DOM controllers, DON'T insert twice!
-        ![[_graphicsController arrangedObjects] containsObjectIdenticalTo:anObject])
+    if ([item isSelectable])
     {
-        [[self graphicsController] addObject:anObject];
+        id anObject = [item representedObject];
+        if (anObject && //  second bit of this if statement: images are owned by 2 DOM controllers, DON'T insert twice!
+            ![[[self graphicsController] arrangedObjects] containsObjectIdenticalTo:anObject])
+        {
+            [[self graphicsController] addObject:anObject];
+        }
     }
     
     
