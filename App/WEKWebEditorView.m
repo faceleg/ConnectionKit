@@ -1534,63 +1534,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
 }
 
-- (void)mouseDown2:(NSEvent *)event;
-{
-    NSPoint location = [self convertPoint:[event locationInWindow] fromView:nil];
-    
-    SVGraphicHandle handle;
-    WEKWebEditorItem *item = [self itemHitTest:location handle:&handle];
-    
-    
-    
-    
-    
-    
-    
-    // What was clicked? We want to know top-level object
-    
-    if (item)
-    {
-        
-        // If mousing down on an image, pass the event through
-        if ([item allowsDirectAccessToWebViewWhenSelected])
-        {
-            // Must do before changing selection so that WebView becomes first responder
-            // Post the event as if in the past so that a drag can begin immediately. #109381
-            [self forwardMouseEvent:[event ks_eventWithTimestamp:0]
-                           selector:@selector(mouseDown:)
-                   cachedTargetView:nil];
-            
-            [self selectItem:item event:event];
-        }
-        else
-        {
-            [self selectItem:item event:event];
-            
-            // If the item is non-inline, simulate -acceptsFirstResponder by making self the first responder
-            if (![item shouldTrySelectingInline] || ![[item HTMLElement] isContentEditable])
-            {
-                [[self window] makeFirstResponder:self];
-            }
-        }
-    }
-    else
-    {
-        // If editing inside an item, the click needs to go straight through to the WebView; we were just claiming ownership of that area in order to gain control of the cursor
-        if ([[self editingItems] count] > 0)
-        {
-            [self setEditingItems:nil];
-            [NSApp sendEvent:event];    // this time round it'll go through to the WebView
-            return;
-        }
-        else
-        {
-            // Don't really expect to hit this point. Since if there is no item at the location, we should never have hit-tested positively in the first place
-            [super mouseDown:event];
-        }
-    }
-}
-
 /*  Actions we could take from this:
  *      - Deselect everything
  *      - Change selection to new item
@@ -1614,13 +1557,60 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
     
     
+    // Feed event through item if there is one
     if (item)
     {
-        [item mouseDown:event]; // calls through to -mouseDown2: if no item handles it
+        if (!_forwardedWebViewCommand)
+        {
+            _forwardedWebViewCommand = _cmd;
+            @try
+            {
+                [item mouseDown:event]; // calls back through to this method if no item traps the event
+            }
+            @finally
+            {
+                _forwardedWebViewCommand = NULL;
+            }
+        }
+        else
+        {
+            // If mousing down on an image, pass the event through
+            if ([item allowsDirectAccessToWebViewWhenSelected])
+            {
+                // Must do before changing selection so that WebView becomes first responder
+                // Post the event as if in the past so that a drag can begin immediately. #109381
+                [self forwardMouseEvent:[event ks_eventWithTimestamp:0]
+                               selector:@selector(mouseDown:)
+                       cachedTargetView:nil];
+                
+                [self selectItem:item event:event];
+            }
+            else
+            {
+                [self selectItem:item event:event];
+                
+                // If the item is non-inline, simulate -acceptsFirstResponder by making self the first responder
+                if (![item shouldTrySelectingInline] || ![[item HTMLElement] isContentEditable])
+                {
+                    [[self window] makeFirstResponder:self];
+                }
+            }
+        }
     }
     else
     {
-        [self mouseDown2:event];
+        // If editing inside an item, the click needs to go straight through to the WebView; we were just claiming ownership of that area in order to gain control of the cursor
+        if ([[self editingItems] count] > 0)
+        {
+            [self setEditingItems:nil];
+            [NSApp sendEvent:event];    // this time round it'll go through to the WebView
+            return;
+        }
+        else
+        {
+            // Don't really expect to hit this point. Since if there is no item at the location, we should never have hit-tested positively in the first place
+            [super mouseDown:event];
+        }
     }
 }
 

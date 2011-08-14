@@ -36,7 +36,7 @@
  */
 - (void)mouseDown:(NSEvent *)theEvent;
 {
-    [[self webEditor] performSelector:@selector(mouseDown2:) withObject:theEvent];
+    [[self webEditor] mouseDown:theEvent];
 }
 
 @end
