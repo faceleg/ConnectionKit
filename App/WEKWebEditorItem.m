@@ -10,6 +10,7 @@
 #import "WEKWebEditorView.h"
 
 #import "NSColor+Karelia.h"
+#import "NSEvent+Karelia.h"
 #import "NSString+Karelia.h"
 #import "DOMNode+Karelia.h"
 
@@ -431,6 +432,37 @@
     }
     
     return result;
+}
+
+- (void)mouseDown:(NSEvent *)theEvent;
+{
+    // Non-selectable items have no interest in such events
+    if (![self isSelectable]) return [super mouseDown:theEvent];
+    
+    
+    WEKWebEditorView *webEditor = [self webEditor];
+    
+    // If mousing down on an image, pass the event through
+    if ([self allowsDirectAccessToWebViewWhenSelected])
+    {
+        // Must do before changing selection so that WebView becomes first responder
+        // Post the event as if in the past so that a drag can begin immediately. #109381
+        [super mouseDown:[theEvent ks_eventWithTimestamp:0]];
+        
+        [webEditor selectItem:self event:theEvent];
+    }
+    else
+    {
+        [webEditor selectItem:self event:theEvent];
+        
+        // If the item is non-inline, simulate -acceptsFirstResponder by making self the first responder
+        if (![self shouldTrySelectingInline] || ![[self HTMLElement] isContentEditable])
+        {
+            [[webEditor window] makeFirstResponder:webEditor];
+        }
+        
+        [super mouseDown:theEvent];
+    }
 }
 
 #pragma mark Searching the Tree

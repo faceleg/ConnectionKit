@@ -1585,26 +1585,12 @@ typedef enum {  // this copied from WebPreferences+Private.h
         }
         else
         {
-            // If mousing down on an image, pass the event through
-            if ([item allowsDirectAccessToWebViewWhenSelected])
+            [self selectItem:item event:event];
+            
+            // If the item is non-inline, simulate -acceptsFirstResponder by making self the first responder
+            if (![item shouldTrySelectingInline] || ![[item HTMLElement] isContentEditable])
             {
-                // Must do before changing selection so that WebView becomes first responder
-                // Post the event as if in the past so that a drag can begin immediately. #109381
-                [self forwardMouseEvent:[event ks_eventWithTimestamp:0]
-                               selector:@selector(mouseDown:)
-                       cachedTargetView:nil];
-                
-                [self selectItem:item event:event];
-            }
-            else
-            {
-                [self selectItem:item event:event];
-                
-                // If the item is non-inline, simulate -acceptsFirstResponder by making self the first responder
-                if (![item shouldTrySelectingInline] || ![[item HTMLElement] isContentEditable])
-                {
-                    [[self window] makeFirstResponder:self];
-                }
+                [[self window] makeFirstResponder:self];
             }
         }
     }
