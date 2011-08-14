@@ -808,22 +808,12 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     }
 }
 
-- (NSArray *)selectedItems;
+- (BOOL)dragItem:(WEKWebEditorItem *)item withEvent:(NSEvent *)event offset:(NSSize)mouseOffset slideBack:(BOOL)slideBack;
 {
-    NSArray *result = [[self webEditor] selectedItems];
-    // FIXME: Strip out non-descendants
-    return result;
-}
-
-- (BOOL)dragSelectionWithEvent:(NSEvent *)event offset:(NSSize)mouseOffset slideBack:(BOOL)slideBack;
-{
-    NSArray *selectedItems = [self selectedItems];
-    WEKWebEditorItem *selection = [selectedItems lastObject];
-    if (!selection) return NO;
-    
-    while ([selection parentWebEditorItem] != self)
+    while ([item parentWebEditorItem] != self)
     {
-        selection = [selection parentWebEditorItem];
+        item = [item parentWebEditorItem];
+        if (!item) return NO;
     }
     
     NSView *view = [[[[self webEditor] firstResponderItem] HTMLElement] documentView];
@@ -838,12 +828,12 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         [view autoscroll:event];
         
         NSPoint target = [view convertPoint:[event locationInWindow] fromView:nil];
-        CGPoint selectionPosition = [(SVDOMController *)selection positionIgnoringRelativePosition];
+        CGPoint selectionPosition = [(SVDOMController *)item positionIgnoringRelativePosition];
         
         CGPoint movePosition = CGPointMake(selectionPosition.x + target.x - mouseDown.x,
                                            selectionPosition.y + target.y - mouseDown.y);
         
-        [self moveGraphicWithDOMController:(SVDOMController *)selection
+        [self moveGraphicWithDOMController:(SVDOMController *)item
                                 toPosition:movePosition
                                      event:event];
         
@@ -852,7 +842,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     while ([event type] != NSLeftMouseUp);
     
     
-    [selectedItems makeObjectsPerformSelector:@selector(moveEnded)];
+    [item moveEnded];
     return YES;
 }
 

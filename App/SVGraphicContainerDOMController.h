@@ -41,7 +41,7 @@
 @protocol SVGraphicContainerDOMController <NSObject>
 
 @optional
-- (BOOL)dragSelectionWithEvent:(NSEvent *)event offset:(NSSize)mouseOffset slideBack:(BOOL)slideBack;
+- (BOOL)dragItem:(WEKWebEditorItem *)item withEvent:(NSEvent *)event offset:(NSSize)mouseOffset slideBack:(BOOL)slideBack;
 
 - (void)addGraphic:(SVGraphic *)graphic;
 

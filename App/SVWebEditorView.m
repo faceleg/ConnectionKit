@@ -8,6 +8,7 @@
 
 #import "SVWebEditorView.h"
 
+#import "SVGraphicContainerDOMController.h"
 #import "WEKWebEditorItem.h"
 
 
@@ -16,12 +17,14 @@
 - (BOOL)dragSelectionWithEvent:(NSEvent *)event offset:(NSSize)mouseOffset slideBack:(BOOL)slideBack;
 {
     // Try to get a controller to move the selection
-    id anItem = [self firstResponderItem];
+    WEKWebEditorItem *dragged = [self firstResponderItem];
+    id anItem = dragged;
+    
     while (anItem)
     {
-        if ([anItem respondsToSelector:_cmd])
+        if ([anItem respondsToSelector:@selector(dragItem:withEvent:offset:slideBack:)])
         {
-            return [anItem dragSelectionWithEvent:event offset:mouseOffset slideBack:slideBack];
+            return [anItem dragItem:dragged withEvent:event offset:mouseOffset slideBack:slideBack];
         }
         
         anItem = [anItem parentWebEditorItem];
