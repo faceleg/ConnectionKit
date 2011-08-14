@@ -37,6 +37,7 @@
     NSManagedObjectContext  *_moc;
     
     // Moving
+    CGPoint _anchorPoint;
     BOOL    _moving;
     CGPoint _relativePosition;
     
@@ -102,6 +103,7 @@
 
 
 #pragma mark Moving
+
 - (void)moveToRelativePosition:(CGPoint)position;
 - (void)moveToPosition:(CGPoint)position;   // takes existing relative position into account
 - (void)removeRelativePosition:(BOOL)animated;
@@ -109,6 +111,9 @@
 - (CGPoint)positionIgnoringRelativePosition;
 - (NSRect)rectIgnoringRelativePosition;
 - (NSArray *)relativePositionDOMElements;
+
+@property(nonatomic) CGPoint anchorPoint;   // somewhat like Core Animation
+- (CGPoint)anchorPointToGivePosition:(CGPoint)position;
 
 
 #pragma mark Dragging

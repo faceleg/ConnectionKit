@@ -25,6 +25,8 @@
 {
     [super init];
     
+    _anchorPoint = CGPointMake(0.5, 0.5);
+    
     _dependenciesTracker = [[KSDependenciesTracker alloc] initWithObservingOptions:NSKeyValueObservingOptionPrior];
     [_dependenciesTracker stopObservingDependencies];   // little dance so that subclasses start...
     [_dependenciesTracker setDelegate:self];
@@ -588,17 +590,47 @@
 
 - (BOOL)moveToPosition:(CGPoint)position event:(NSEvent *)event;
 {
-    return [[self enclosingGraphicDOMController] moveToPosition:position event:event];
+    // See if super fancies a crack
+    if ([super moveToPosition:position event:event]) return YES;
+    
+    
+    WEKWebEditorItem <SVGraphicContainerDOMController> *dragController = [self graphicContainerDOMController];
+    if ([dragController graphicContainerDOMController]) dragController = [dragController graphicContainerDOMController];
+    
+    [dragController moveGraphicWithDOMController:self toPosition:position event:event];
+    
+    
+    // Starting a move turns off selection handles so needs display
+    if (dragController && ![self hasRelativePosition])
+    {
+        [self setNeedsDisplay];
+        //_moving = YES;
+    }
+    
+    return (dragController != nil);
 }
 
-- (void)moveEnded;
+- (CGPoint)position;
 {
-    return [[self enclosingGraphicDOMController] moveEnded];
+    NSRect bounds = [self boundingBox];
+    CGPoint anchor = [self anchorPoint];
+    
+    CGPoint result = CGPointMake(bounds.origin.x + (anchor.x * bounds.size.width),
+                                 bounds.origin.y + (anchor.y * bounds.size.height));
+                                 
+    return result;
 }
 
-- (CGPoint)position;    // center point (for moving) in doc view coordinates
+@synthesize anchorPoint = _anchorPoint;
+
+- (CGPoint)anchorPointToGivePosition:(CGPoint)position;
 {
-    return [[self enclosingGraphicDOMController] position];
+    NSRect bounds = [self boundingBox];
+    
+    CGPoint result = CGPointMake((position.x - bounds.origin.x) / bounds.size.width,
+                                 (position.y - bounds.origin.y) / bounds.size.height);
+    
+    return result;
 }
 
 #pragma mark Relative Position
@@ -644,10 +676,10 @@
 - (void)moveToPosition:(CGPoint)position;
 {
     // Take existing offset into account
-    CGPoint currentPosition = [self positionIgnoringRelativePosition];
+    CGPoint currentPosition = [self position];
     
-    CGPoint relativePosition = CGPointMake(position.x - currentPosition.x,
-                                           position.y - currentPosition.y);
+    CGPoint relativePosition = CGPointMake(_relativePosition.x + (position.x - currentPosition.x),
+                                           _relativePosition.y + (position.y - currentPosition.y));
     
     [self moveToRelativePosition:relativePosition];
 }
