@@ -1542,14 +1542,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
     WEKWebEditorItem *item = [self itemHitTest:location handle:&handle];
     
     
-    // Where's the click? Is it a selection handle? They trigger special resize event
-    if (item && handle != kSVGraphicNoHandle)
-    {
-		[self resizeItem:item usingHandle:handle withEvent:event];
-        return;
-    }
-    
-    
     
     
     
@@ -1609,7 +1601,18 @@ typedef enum {  // this copied from WebPreferences+Private.h
 {
     // Direct to target item
     NSPoint location = [self convertPoint:[event locationInWindow] fromView:nil];
-    WEKWebEditorItem *item = [self itemHitTest:location handle:NULL];
+    
+    SVGraphicHandle handle;
+    WEKWebEditorItem *item = [self itemHitTest:location handle:&handle];
+    
+    
+    // Where's the click? Is it a selection handle? They trigger special resize event
+    if (item && handle != kSVGraphicNoHandle)
+    {
+		[self resizeItem:item usingHandle:handle withEvent:event];
+        return;
+    }
+    
     
     if (item)
     {
