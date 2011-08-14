@@ -754,15 +754,21 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 
 - (NSPoint)snapController:(SVDOMController *)controller toFit:(NSPoint)result;
 {
+    CGPoint staticPosition = [controller positionIgnoringRelativePosition];
+    
     SVGraphic *graphic = [controller graphic];
-    if (!graphic) return result;
+    if (!graphic)
+    {
+        // Assume non-graphics only move vertically
+        result.x = staticPosition.x;
+        return result;
+    }
     
     
     SVTextAttachment *attachment = [graphic textAttachment];
     SVGraphicWrap wrap = [[attachment wrap] intValue];
     
     NSRect snapRect = [[self textHTMLElement] boundingBox];
-    CGPoint staticPosition = [controller positionIgnoringRelativePosition];
     
     
     // Leave be if reasonable
