@@ -18,7 +18,7 @@
 {
     // Try to get a controller to move the selection
     WEKWebEditorItem *dragged = [self firstResponderItem];
-    id anItem = dragged;
+    id anItem = [dragged parentWebEditorItem];
     
     while (anItem)
     {
