@@ -281,12 +281,6 @@
 
 #pragma mark Moving
 
-- (void)moveEnded;
-{
-    [super moveEnded];
-    [self removeRelativePosition:YES];
-}
-
 - (NSArray *)relativePositionDOMElements;
 {
     DOMElement *result = [self graphicDOMElement];

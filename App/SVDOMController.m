@@ -610,6 +610,12 @@
     return (dragController != nil);
 }
 
+- (void)moveEnded;
+{
+    [super moveEnded];
+    [self removeRelativePosition:YES];
+}
+
 - (CGPoint)position;
 {
     NSRect bounds = [self boundingBox];
