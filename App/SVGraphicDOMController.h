@@ -44,3 +44,12 @@
 }
 
 @end
+
+
+
+#pragma mark -
+
+
+@interface WEKWebEditorItem (SVGraphicDOMController)
+- (SVGraphic *)graphic;
+@end

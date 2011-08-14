@@ -161,6 +161,8 @@
     return [[self representedObject] writeAttributedHTML:writer webEditorItem:self];
 }
 
+- (SVGraphic *)graphic; { return [self representedObject]; }
+
 #pragma mark Drag & Drop
 
 - (void)setRepresentedObject:(id)object;
@@ -637,5 +639,15 @@
 }
 
 - (BOOL)requiresPageLoad; { return NO; }
+
+@end
+
+
+#pragma mark -
+
+
+@implementation WEKWebEditorItem (SVGraphicDOMController)
+
+- (SVGraphic *)graphic; { return nil; }
 
 @end
