@@ -12,7 +12,6 @@
 #import "SVHTMLTemplateParser.h"
 #import "KTPage.h"
 #import "SVSidebarDOMController.h"
-#import "SVSidebarPageletsController.h"
 #import "SVTemplate.h"
 #import "SVWebEditorHTMLContext.h"
 
