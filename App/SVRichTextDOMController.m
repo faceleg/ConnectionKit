@@ -28,6 +28,7 @@
 #import "SVWebContentObjectsController.h"
 #import "WebEditingKit.h"
 #import "SVWebEditorViewController.h"
+#import "WEKWebViewEditing.h"
 
 #import "NSDictionary+Karelia.h"
 #import "NSString+Karelia.h"
@@ -566,6 +567,144 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     
     KTPage *page = [[self HTMLContext] page];
     return [graphic maxWidthOnPage:page];
+}
+
+#pragma mark Moving
+
+- (DOMNode *)nodeToMoveItemBefore:(SVDOMController *)controller;
+{
+    DOMNode *element = [controller HTMLElement];
+    DOMElement *textElement = [self textHTMLElement];
+    
+    DOMTreeWalker *walker = [[element ownerDocument] createTreeWalker:textElement
+                                                           whatToShow:DOM_SHOW_ALL
+                                                               filter:nil
+                                               expandEntityReferences:NO];
+    [walker setCurrentNode:element];
+    
+    DOMNode *result = [walker ks_previousNodeIgnoringChildren];
+    while (result && ![result hasSize])
+    {
+        result = [walker ks_previousNodeIgnoringChildren];
+    }
+    
+    
+    // Make sure it's a move up to a paragraph
+    if (result)
+    {
+        DOMNode *parent = [result parentNode];
+        while (parent != textElement)
+        {
+            result = parent;
+            parent = [result parentNode];
+        }
+    }
+    
+    
+    return result;
+}
+
+- (DOMNode *)nodeToMoveItemAfter:(SVDOMController *)controller;
+{
+    DOMNode *element = [controller HTMLElement];
+    
+    if ([element ks_isDescendantOfElement:[self textHTMLElement]])  //  this should always be true really
+    {
+        while ([element parentNode] != [self textHTMLElement])
+        {
+            element = [element parentNode];
+        }
+    }
+    
+    
+    DOMTreeWalker *walker = [[element ownerDocument] createTreeWalker:[self textHTMLElement]
+                                                           whatToShow:DOM_SHOW_ALL
+                                                               filter:nil
+                                               expandEntityReferences:NO];
+    [walker setCurrentNode:element];
+    
+    
+    // Seek out the next element worth swapping with. It must:
+    //  1.  Be visible on screen (i.e. element or non-whitespace text)
+    //  2.  Sit below the item being dragged, to account for dragging a floated item
+    DOMNode *result = [walker ks_nextNodeIgnoringChildren];
+    while (result && ![result hasSize])
+    {
+        // Seek out next node.
+        result = [walker ks_nextNodeIgnoringChildren];
+    }
+    
+    return result;
+}
+
+/*  We'll leave it up to the individual graphics
+ */
+- (void)moveObjectUp:(id)sender;
+{
+    [[self selectedItems] makeObjectsPerformSelector:@selector(moveUp)];
+}
+- (void)moveObjectDown:(id)sender;
+{
+    [[self selectedItems] makeObjectsPerformSelector:@selector(moveDown)];
+}
+
+- (void)moveItemUp:(WEKWebEditorItem *)item;
+{
+    WEKWebEditorView *webEditor = [self webEditor];
+    WEKSelection *selection = [[webEditor webView] wek_selection];
+    DOMNode *previousNode = [item previousDOMNode];
+    DOMNode *targetNode = [self nodeToMoveItemBefore:(SVDOMController *)item];
+    
+    while (previousNode && [webEditor shouldChangeTextInDOMRange:[item DOMRange]])
+    {
+        [item exchangeWithPreviousDOMNode];
+        
+        // Have we made a noticeable move yet?
+        if (previousNode == targetNode) break;
+        
+        previousNode = [item previousDOMNode];
+    }
+    
+    
+    // The target couldn't be found? Time to move manually I guess. This should only be reached for images, so not a problem display-wise
+    if (!previousNode && [webEditor shouldChangeText:self])
+    {
+        [[targetNode parentNode] insertBefore:[item HTMLElement] refChild:targetNode];
+    }
+    
+    
+    [webEditor didChangeText];
+    [[webEditor webView] wek_setSelection:selection];
+}
+
+- (void)moveItemDown:(WEKWebEditorItem *)item;
+{
+    // Save and then restore selection for if it's inside an item that's getting exchanged
+    WEKWebEditorView *webEditor = [item webEditor];
+    WEKSelection *selection = [[webEditor webView] wek_selection];
+    DOMNode *nextNode = [item nextDOMNode];
+    DOMNode *targetNode = [self nodeToMoveItemAfter:(SVDOMController *)item];
+    
+    while (nextNode && [webEditor shouldChangeTextInDOMRange:[item DOMRange]])
+    {
+        [item exchangeWithNextDOMNode];
+        
+        // Have we made a noticeable move yet?
+        if (nextNode == targetNode) break;
+        
+        nextNode = [item nextDOMNode];
+    }
+    
+    
+    // The target couldn't be found? Time to move manually I guess. This should only be reached for images, so not a problem display-wise
+    if (!nextNode && [webEditor shouldChangeText:self])
+    {
+        [[targetNode parentNode] insertBefore:[item HTMLElement] refChild:[targetNode nextSibling]];
+    }
+    
+    
+    [webEditor didChangeText];
+    [[webEditor webView] wek_setSelection:selection];
 }
 
 #pragma mark Insertion
