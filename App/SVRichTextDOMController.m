@@ -1147,29 +1147,6 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     return result;
 }
 
-- (void)deleteObjects:(id)sender;
-{
-    WEKWebEditorView *webEditor = [self webEditor];
-    if ([webEditor shouldChangeText:self])
-    {
-        NSArray *selection = [self selectedItems];
-        for (SVGraphicContainerDOMController *anItem in selection)
-        {
-            // Only graphics can be deleted with -delete. #108128
-            if ([anItem graphicContainerDOMController] == [anItem parentWebEditorItem])
-            {
-                [anItem delete];
-            }
-            else
-            {
-                [[[self webEditorViewController] graphicsController] removeObject:[anItem representedObject]];
-            }
-        }
-        
-        [webEditor didChangeText];
-    }
-}
-
 - (void)clearStyles:(id)sender;
 {
     DOMRange *selection = [self selectedDOMRange];
@@ -1222,6 +1199,52 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
         
         [[self webEditor] didChangeText];
     }
+}
+
+#pragma mark Delete
+
+- (void)delete:(id)sender forwardingSelector:(SEL)action;
+{
+    NSArray *selection = [self selectedItems];
+    if (![selection count])
+    {
+        return [super delete:sender forwardingSelector:action];
+    }
+    
+    WEKWebEditorView *webEditor = [self webEditor];
+    if ([webEditor shouldChangeText:self])
+    {
+        for (WEKWebEditorItem *anItem in selection)
+        {
+            [webEditor deselectItem:anItem];
+            
+            while ([anItem parentWebEditorItem] != self)
+            {
+                anItem = [anItem parentWebEditorItem];
+            }
+            
+            DOMRange *range = [anItem DOMRange];
+            [range deleteContents];
+            [range detach];
+        }
+        
+        [webEditor didChangeText];
+    }
+}
+
+- (void)delete:(id)sender;
+{
+    [self delete:sender forwardingSelector:_cmd];
+}
+
+- (void)deleteForward:(id)sender;
+{
+    [self delete:sender forwardingSelector:_cmd];
+}
+
+- (void)deleteBackward:(id)sender;
+{
+    [self delete:sender forwardingSelector:_cmd];
 }
 
 #pragma mark Queries

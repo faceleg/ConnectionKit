@@ -374,6 +374,28 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
                                       atArrangedObjectIndex:index];
 }
 
+#pragma mark Delete
+
+- (void)delete:(id)sender forwardingSelector:(SEL)action;
+{
+    [[self pageletsController] remove:sender];
+}
+
+- (void)delete:(id)sender;
+{
+    [self delete:sender forwardingSelector:_cmd];
+}
+
+- (void)deleteForward:(id)sender;
+{
+    [self delete:sender forwardingSelector:_cmd];
+}
+
+- (void)deleteBackward:(id)sender;
+{
+    [self delete:sender forwardingSelector:_cmd];
+}
+
 #pragma mark Drop
 
 /*  Similar to NSTableView's concept of dropping above a given row
@@ -726,7 +748,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     NSArray *pagelets = [self pageletDOMControllers];
     OBASSERT(pagelets);
     
-    NSUInteger index = [pagelets indexOfObjectIdenticalTo:pagelet]  + 1;
+    NSUInteger index = [pagelets indexOfObjectIdenticalTo:pagelet] + 1;
     
     CGPoint startPosition = [pagelet positionIgnoringRelativePosition];
     CGFloat gapAvailable = position.y - startPosition.y;

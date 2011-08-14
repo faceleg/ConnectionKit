@@ -50,15 +50,6 @@
     return result;
 }
 
-- (void)delete;
-{
-    // Remove parent controller instead of ourself
-    SVGraphicContainerDOMController *parent = [self enclosingGraphicDOMController];
-    OBASSERT(parent);
-    
-    [parent delete];
-}
-
 - (BOOL)shouldHighlightWhileEditing; { return YES; }
 
 #pragma mark Resize

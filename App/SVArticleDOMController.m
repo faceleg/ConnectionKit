@@ -406,7 +406,7 @@
     
     
     // Remove originals. For some reason -delete: does not fire change notifications
-    [self deleteObjects:self];
+    [self deleteForward:self];
     
     
     // Update selection

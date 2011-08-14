@@ -152,7 +152,7 @@
     NSString *text = [self string];
     if (![text length] || [text isEqualToString:@"\n"])
     {
-        [self delete];
+        [self deleteForward:self];
     }
     
     // Restore graphical text

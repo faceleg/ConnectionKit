@@ -97,8 +97,12 @@
 @property(nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 
 
+#pragma mark Delete
+// Attempts to hide the corresponding object, else passes action onto next responder
+- (void)delete:(id)sender forwardingSelector:(SEL)action;
+
+
 #pragma mark Editing
-- (void)delete;
 - (BOOL)shouldHighlightWhileEditing;
 
 
