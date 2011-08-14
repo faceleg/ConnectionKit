@@ -592,6 +592,8 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     // Make sure it's a move up to a paragraph
     if (result)
     {
+        if (result == textElement) return nil;
+        
         DOMNode *parent = [result parentNode];
         while (parent != textElement)
         {
@@ -726,8 +728,6 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
         // This is the last pagelet. Disallow dragging down
         if (position.y > startPosition.y) position = startPosition;
     }
-    
-    [controller moveToPosition:position];
 }
 
 - (void)tryToMoveController:(SVDOMController *)controller upToPosition:(CGPoint)position;
@@ -749,9 +749,105 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     {
         // This is the last pagelet. Disallow dragging down
         //if (position.y < startPosition.y) position = startPosition;
-    }    
+    }
+}
+
+- (NSPoint)snapController:(SVDOMController *)controller toFit:(NSPoint)result;
+{
+    SVGraphic *graphic = [controller graphic];
+    if (!graphic) return result;
     
-    [controller moveToPosition:position];
+    
+    SVTextAttachment *attachment = [graphic textAttachment];
+    SVGraphicWrap wrap = [[attachment wrap] intValue];
+    
+    NSRect snapRect = [[self textHTMLElement] boundingBox];
+    CGPoint staticPosition = [controller positionIgnoringRelativePosition];
+    
+    
+    // Leave be if reasonable
+    if (result.x > staticPosition.x - 10.0f &&
+        result.x < staticPosition.x + 10.0f)
+    {
+        result.x = staticPosition.x;
+    }
+    else
+    {
+        // Where is the controller being asked to move to?
+        NSRect frame = [controller boundingBox];
+        CGPoint currentPosition = [controller position];
+        frame.origin.x += result.x - currentPosition.x;
+        frame.origin.y += result.y - currentPosition.y;
+        
+        
+        // Set wrap to match
+        if (NSMidX(frame) <= NSMidX(snapRect))
+        {
+            if (wrap >= SVGraphicWrapLeft || wrap <= SVGraphicWrapFloat_1_0)    // is it floated?
+            {
+                wrap = SVGraphicWrapRight;
+            }
+            else
+            {
+                if (NSMinX(frame) - NSMinX(snapRect) < NSMidX(snapRect) - NSMidX(frame)) // closer to left?
+                {
+                    wrap = SVGraphicWrapRightSplit;
+                }
+                else
+                {
+                    wrap = SVGraphicWrapCenterSplit;
+                }
+            }
+        }
+        else
+        {
+            if (wrap >= SVGraphicWrapLeft || wrap <= SVGraphicWrapFloat_1_0)    // is it floated?
+            {
+                wrap = SVGraphicWrapLeft;
+            }
+            else
+            {
+                if (NSMaxX(snapRect) - NSMaxX(frame) < NSMidX(frame) - NSMidX(snapRect)) // closer to right?
+                {
+                    wrap = SVGraphicWrapLeftSplit;
+                }
+                else
+                {
+                    wrap = SVGraphicWrapCenterSplit;
+                }
+            }
+        }
+        
+        if ([[attachment wrap] intValue] != wrap)
+        {
+            [attachment setWrap:[NSNumber numberWithInt:wrap]];
+            [controller updateIfNeeded]; // push through so position can be set accurately
+        }
+    }
+    
+    
+    // Show guide for choice of wrap
+    NSNumber *guide;
+    switch (wrap)
+    {
+        case SVGraphicWrapRightSplit:
+        case SVGraphicWrapRight:
+            guide = [NSNumber numberWithFloat:NSMinX(snapRect)];
+            break;
+        case SVGraphicWrapCenterSplit:
+            guide = [NSNumber numberWithFloat:NSMidX(snapRect)];
+            break;
+        case SVGraphicWrapLeftSplit:
+        case SVGraphicWrapLeft:
+            guide = [NSNumber numberWithFloat:NSMaxX(snapRect)];
+            break;
+        default:
+            guide = nil;
+    }
+    [[self webEditor] setXGuide:guide yGuide:nil];
+    
+    
+    return result;
 }
 
 - (BOOL)dragItem:(SVDOMController *)controller withEvent:(NSEvent *)event offset:(NSSize)mouseOffset slideBack:(BOOL)slideBack;
@@ -780,6 +876,12 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
         
         
         
+        
+        // Snap to fit current wrap. #94884
+        target = [self snapController:controller toFit:target];
+        
+        
+        
         // Do any of siblings fit into the available space?
         CGFloat delta = [event deltaY];
         if (delta < 0.0f)
@@ -789,7 +891,9 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
         else if (delta > 0.0f)
         {
             [self tryToMoveController:controller downToPosition:NSPointToCGPoint(target)];
-        }
+        }    
+        
+        [controller moveToPosition:NSPointToCGPoint(target)];
         
         event = [[event window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
     }
