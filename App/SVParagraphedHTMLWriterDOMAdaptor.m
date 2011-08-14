@@ -153,17 +153,21 @@
     // The same goes for two+ line breaks in a row at the end of a paragraph
     if ([elementName isEqualToString:@"br"] && _potentiallyPointlessLineBreak == nil)
     {
-        DOMNode *prior = [element previousSibling];
-        if (prior &&
-            !([prior nodeType] == DOM_ELEMENT_NODE && [[(DOMElement *)prior tagName] isEqualToString:@"BR"]))
+        NSString *parent = [[self XMLWriter] topElement];
+        if ([parent isEqualToString:@"p"] || [parent isEqualToString:@"li"])
         {
-            [_output cancelFlushOnNextWrite];   // as we're about to write into the buffer
-                                                //[_pendingStartTagDOMElements addObject:element];
-            [_output beginBuffering];
-            
-            _potentiallyPointlessLineBreak = [element retain];  // made sure was nil above
-            
-            // Don't need to flush on next write since linebreaks are always empty elements. We'll set up flushing once element ends
+            DOMNode *prior = [element previousSibling];
+            if (prior &&
+                !([prior nodeType] == DOM_ELEMENT_NODE && [[(DOMElement *)prior tagName] isEqualToString:@"BR"]))
+            {
+                [_output cancelFlushOnNextWrite];   // as we're about to write into the buffer
+                                                    //[_pendingStartTagDOMElements addObject:element];
+                [_output beginBuffering];
+                
+                _potentiallyPointlessLineBreak = [element retain];  // made sure was nil above
+                
+                // Don't need to flush on next write since linebreaks are always empty elements. We'll set up flushing once element ends
+            }
         }
     }
     
