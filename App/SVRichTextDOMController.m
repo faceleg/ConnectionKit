@@ -1140,7 +1140,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
                 item = parent; parent = [item parentWebEditorItem];
             }
             
-            [result addObject:item];
+            if (item != self) [result addObject:item];
         }
     }
     
