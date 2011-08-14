@@ -1562,14 +1562,25 @@ typedef enum {  // this copied from WebPreferences+Private.h
     {
         if (!_forwardedWebViewCommand)
         {
-            _forwardedWebViewCommand = _cmd;
+            // If no item chooses to handle it, want the event to fall through to appropriate bit of the webview
+            NSView *fallbackView = [[self webView] hitTest:location];
+            NSResponder *oldResponder = [_rootItem nextResponder];
+            [_rootItem setNextResponder:fallbackView];
             @try
             {
-                [item mouseDown:event]; // calls back through to this method if no item traps the event
+                _forwardedWebViewCommand = _cmd;
+                @try
+                {
+                    [item mouseDown:event]; // calls back through to this method if no item traps the event
+                }
+                @finally
+                {
+                    _forwardedWebViewCommand = NULL;
+                }
             }
             @finally
             {
-                _forwardedWebViewCommand = NULL;
+                [_rootItem setNextResponder:oldResponder];
             }
         }
         else
