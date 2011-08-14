@@ -14,6 +14,11 @@
 - (DOMHTMLElement *)HTMLElement { return nil; }
 
 @synthesize webEditor = _webEditor;
+- (void)setWebEditor:(WEKWebEditorView *)webEditor;
+{
+    _webEditor = webEditor;
+    [self setNextResponder:webEditor];
+}
 
 - (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node;
 {
@@ -30,13 +35,6 @@
     }
     
     return result;
-}
-
-/*  Route events back to the web editor since no item handled it
- */
-- (void)mouseDown:(NSEvent *)theEvent;
-{
-    [[self webEditor] mouseDown:theEvent];
 }
 
 @end
