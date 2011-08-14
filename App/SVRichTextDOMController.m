@@ -707,6 +707,99 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     [[webEditor webView] wek_setSelection:selection];
 }
 
+- (void)tryToMoveController:(SVDOMController *)controller downToPosition:(CGPoint)position;
+{
+    CGPoint startPosition = [controller positionIgnoringRelativePosition];
+    CGFloat gapAvailable = position.y - startPosition.y;
+    
+    DOMNode *nextNode = [self nodeToMoveItemAfter:controller];
+    if (nextNode)
+    {
+        if (2 * gapAvailable > [nextNode boundingBox].size.height)
+        {
+            // Move the element
+            [controller moveDown];
+        }
+    }
+    else
+    {
+        // This is the last pagelet. Disallow dragging down
+        if (position.y > startPosition.y) position = startPosition;
+    }
+    
+    [controller moveToPosition:position];
+}
+
+- (void)tryToMoveController:(SVDOMController *)controller upToPosition:(CGPoint)position;
+{
+    CGPoint startPosition = [controller positionIgnoringRelativePosition];
+    CGFloat gapAvailable = position.y - startPosition.y;
+    
+    DOMNode *previousNode = [self nodeToMoveItemBefore:controller];
+    if (previousNode)
+    {
+        NSRect previousFrame = [previousNode boundingBox];            
+        if (2*-gapAvailable > previousFrame.size.height)// || NSMinY(frame) < NSMidY(previousFrame))
+        {
+            // Move the element
+            [controller moveUp];
+        }
+    }
+    else
+    {
+        // This is the last pagelet. Disallow dragging down
+        //if (position.y < startPosition.y) position = startPosition;
+    }    
+    
+    [controller moveToPosition:position];
+}
+
+- (BOOL)dragItem:(SVDOMController *)controller withEvent:(NSEvent *)event offset:(NSSize)mouseOffset slideBack:(BOOL)slideBack;
+{
+    while ([controller parentWebEditorItem] != self)
+    {
+        controller = (SVDOMController *)[controller parentWebEditorItem];
+        if (!controller) return NO;
+    }
+    
+    NSView *view = [[[[self webEditor] firstResponderItem] HTMLElement] documentView];
+    
+    NSPoint mouseDown = [view convertPoint:NSMakePoint([event locationInWindow].x - mouseOffset.width,
+                                                       [event locationInWindow].y - mouseOffset.height)
+                                  fromView:nil];
+    
+    // Set the item's anchor point such that -position is where mouse down was
+    [controller setAnchorPoint:[controller anchorPointToGivePosition:NSPointToCGPoint(mouseDown)]];
+    
+    do
+    {
+        // Calculate change from event
+        [view autoscroll:event];
+        
+        NSPoint target = [view convertPoint:[event locationInWindow] fromView:nil];
+        
+        
+        
+        // Do any of siblings fit into the available space?
+        CGFloat delta = [event deltaY];
+        if (delta < 0.0f)
+        {
+            [self tryToMoveController:controller upToPosition:NSPointToCGPoint(target)];
+        }
+        else if (delta > 0.0f)
+        {
+            [self tryToMoveController:controller downToPosition:NSPointToCGPoint(target)];
+        }
+        
+        event = [[event window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
+    }
+    while ([event type] != NSLeftMouseUp);
+    
+    
+    [controller moveEnded];
+    return YES;
+}
+
 #pragma mark Insertion
 
 - (DOMRange *)insertionRangeForGraphic:(SVGraphic *)graphic;
