@@ -780,7 +780,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     else
     {
         // Where is the controller being asked to move to?
-        NSRect frame = [controller boundingBox];
+        NSRect frame = [controller frame];
         CGPoint currentPosition = [controller position];
         frame.origin.x += result.x - currentPosition.x;
         frame.origin.y += result.y - currentPosition.y;

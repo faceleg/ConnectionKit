@@ -618,11 +618,11 @@
 
 - (CGPoint)position;
 {
-    NSRect bounds = [self boundingBox];
+    NSRect frame = [self frame];
     CGPoint anchor = [self anchorPoint];
     
-    CGPoint result = CGPointMake(bounds.origin.x + (anchor.x * bounds.size.width),
-                                 bounds.origin.y + (anchor.y * bounds.size.height));
+    CGPoint result = CGPointMake(frame.origin.x + (anchor.x * frame.size.width),
+                                 frame.origin.y + (anchor.y * frame.size.height));
                                  
     return result;
 }
@@ -631,10 +631,10 @@
 
 - (CGPoint)anchorPointToGivePosition:(CGPoint)position;
 {
-    NSRect bounds = [self boundingBox];
+    NSRect frame = [self frame];
     
-    CGPoint result = CGPointMake((position.x - bounds.origin.x) / bounds.size.width,
-                                 (position.y - bounds.origin.y) / bounds.size.height);
+    CGPoint result = CGPointMake((position.x - frame.origin.x) / frame.size.width,
+                                 (position.y - frame.origin.y) / frame.size.height);
     
     return result;
 }

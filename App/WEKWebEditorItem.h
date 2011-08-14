@@ -146,7 +146,7 @@
 
 #pragma mark Layout
 
-- (NSRect)boundingBox;  // like -[DOMNode boundingBox] but performs union with subcontroller boxes
+- (NSRect)frame;  // like -[DOMNode boundingBox] but performs union with subcontroller boxes
 - (NSRect)selectionFrame;
 
 // Expressed in -HTMLElement's document view's coordinates. If overrding, generally call super and union your custom rect with that

@@ -965,13 +965,13 @@
 
 #pragma mark Layout
 
-- (NSRect)boundingBox;  // like -[DOMNode boundingBox] but performs union with subcontroller boxes
+- (NSRect)frame;  // like -[DOMNode boundingBox] but performs union with subcontroller boxes
 {
     NSRect result = [[self HTMLElement] boundingBox];
     
     for (WEKWebEditorItem *anItem in [self childWebEditorItems])
     {
-        result = NSUnionRect(result, [anItem boundingBox]);
+        result = NSUnionRect(result, [anItem frame]);
     }
     
     return result;

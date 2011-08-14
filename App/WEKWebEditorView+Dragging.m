@@ -62,7 +62,7 @@
         if (_dragHighlightNode)
         {
             WEKWebEditorItem *item = [[self contentItem] hitTestDOMNode:_dragHighlightNode];
-            [view setNeedsDisplayInRect:[item boundingBox]];
+            [view setNeedsDisplayInRect:[item frame]];
         //[_dragHighlightNode setDocumentViewNeedsDisplayInBoundingBoxRect];
         }
         
@@ -71,7 +71,7 @@
         if (node)
         {
             WEKWebEditorItem *item = [[self contentItem] hitTestDOMNode:node];
-            [view setNeedsDisplayInRect:(item ? [item boundingBox] : [node boundingBox])];
+            [view setNeedsDisplayInRect:(item ? [item frame] : [node boundingBox])];
         }
     }
 }
