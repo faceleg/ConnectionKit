@@ -24,7 +24,14 @@
     {
         if ([anItem respondsToSelector:@selector(dragItem:withEvent:offset:slideBack:)])
         {
-            return [anItem dragItem:dragged withEvent:event offset:mouseOffset slideBack:slideBack];
+            @try
+            {
+                return [anItem dragItem:dragged withEvent:event offset:mouseOffset slideBack:slideBack];
+            }
+            @finally
+            {
+                [self setXGuide:nil yGuide:nil];
+            }            
         }
         
         anItem = [anItem parentWebEditorItem];
