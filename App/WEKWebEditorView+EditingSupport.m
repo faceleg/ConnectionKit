@@ -134,7 +134,12 @@
     [watcher release];
     
     
-    // WebView didn't handle the delete so go ahead and give to the datasource
+    // WebView didn't handle the delete so go ahead and do it with the controllers
+    [[self firstResponderItem] doCommandBySelector:action];
+    return;
+    
+    
+    //give to the datasource
     NSArray *selection = [self selectedItems];
     if (![selection count])
     {

@@ -15,6 +15,7 @@
 #import "SVWebEditorViewController.h"
 
 #import "DOMNode+Karelia.h"
+#import "NSResponder+Karelia.h"
 
 
 @implementation SVDOMController
@@ -525,27 +526,37 @@
     return result;
 }
 
-#pragma mark Editing
+#pragma mark Delete
 
-- (void)delete;
+- (void)delete:(id)sender forwardingSelector:(SEL)action;
 {
-    BOOL result = YES;
-    
-    DOMHTMLElement *element = [self HTMLElement];
-    WEKWebEditorView *webEditor = [self webEditor];
-    
-    // Check WebEditor is OK with the change
-    DOMRange *range = [self DOMRange];
-    
-    result = [webEditor shouldChangeTextInDOMRange:range];
-    if (result)
+    id object = [self representedObject];
+    if ([object respondsToSelector:@selector(setHidden:)])
     {
-        [element ks_removeFromParentNode];
-        [self removeFromParentWebEditorItem];
+        [object setValue:NSBOOL(YES) forKey:@"hidden"];
     }
-    
-    [range detach];
+    else
+    {
+        [self makeNextResponderDoCommandBySelector:action];
+    }
 }
+
+- (void)delete:(id)sender;
+{
+    [self delete:sender forwardingSelector:_cmd];
+}
+
+- (void)deleteForward:(id)sender;
+{
+    [self delete:sender forwardingSelector:_cmd];
+}
+
+- (void)deleteBackward:(id)sender;
+{
+    [self delete:sender forwardingSelector:_cmd];
+}
+
+#pragma mark Editing
 
 - (BOOL)shouldHighlightWhileEditing; { return NO; }
 

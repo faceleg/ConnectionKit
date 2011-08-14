@@ -185,15 +185,6 @@
     return result;
 }
 
-- (void)delete;
-{
-    id object = [self representedObject];
-    if ([object respondsToSelector:@selector(setHidden:)])
-    {
-        [object setValue:NSBOOL(YES) forKey:@"hidden"];
-    }
-}
-
 - (KSSelectionBorder *)newSelectionBorder;
 {
     KSSelectionBorder *result = [super newSelectionBorder];
