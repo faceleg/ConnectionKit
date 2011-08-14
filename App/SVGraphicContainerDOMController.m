@@ -36,10 +36,7 @@
 
 #pragma mark Content
 
-- (void)setRepresentedObject:(id)object
-{
-    [super setRepresentedObject:object];
-}
+- (SVGraphic *)graphic; { return [[self representedObject] graphic]; }
 
 #pragma mark DOM
 
