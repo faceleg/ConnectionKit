@@ -2162,6 +2162,18 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         {
             return [self validateUserInterfaceItem:item];
         }
+        else if (result)
+        {
+            if (action == @selector(indent:))
+            {
+                // Can indent if entire selection is within a list already
+                DOMRange *selection = [self selectedDOMRange];
+                DOMNode *container = [selection commonAncestorContainer];
+                
+                result = ([container ks_isDescendantOfElementWithTagName:@"UL"] ||
+                          [container ks_isDescendantOfElementWithTagName:@"OL"]);
+            }
+        }
     }
     
     return result;
