@@ -242,6 +242,9 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     }
 }
 
+// Stop SVDOMController trying to do our job
+- (BOOL)canUpdate; { return NO; }
+
 #pragma mark Pagelets Controller
 
 @synthesize pageletDOMControllers = _DOMControllers;
