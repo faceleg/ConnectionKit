@@ -8,6 +8,7 @@
 
 #import "SVFieldEditorHTMLWriterDOMAdapator.h"
 
+#import "NSCharacterSet+Karelia.h"
 #import "NSIndexPath+Karelia.h"
 #import "NSString+Karelia.h"
 
@@ -336,6 +337,33 @@
     }
     
     return result;
+}
+
+- (DOMNode *)willWriteDOMText:(DOMText *)textNode;
+{
+    DOMNode *result = [super willWriteDOMText:textNode];
+    if (result != textNode) return result;
+    
+    
+    static NSCharacterSet *sWhitespace; // full whitespace/newline set minus &nbsp;
+    if (!sWhitespace)
+    {
+        sWhitespace = [[[NSCharacterSet fullWhitespaceAndNewlineCharacterSet] setByRemovingCharactersInString:@" "] copy];
+    }
+    
+    // The starting text of an element wants whitespace trimmed
+    if ([textNode previousSibling]) return textNode;
+    
+    NSString *text = [textNode data];
+    NSString *trimmedText = [text stringByTrimmingCharactersInSet:sWhitespace];
+    
+    if ([text length] > [trimmedText length])
+    {
+        text = trimmedText;
+        [textNode setData:text];
+    }
+    
+    return textNode;
 }
 
 #pragma mark Cleanup
