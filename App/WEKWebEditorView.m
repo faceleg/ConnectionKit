@@ -2164,14 +2164,24 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         }
         else if (result)
         {
-            if (action == @selector(indent:))
+            if (action == @selector(indent:) || action == @selector(outdent:))
             {
-                // Can indent if entire selection is within a list already
+                // Seek out the list containing the selection
+                static NSSet *listTagNames;
+                if (!listTagNames) listTagNames = [[NSSet alloc] initWithObjects:@"UL", @"OL", nil];
+                
                 DOMRange *selection = [self selectedDOMRange];
                 DOMNode *container = [selection commonAncestorContainer];
+                DOMElement *list = ([container ks_ancestorWithTagNameInSet:listTagNames]);
                 
-                result = ([container ks_ancestorWithTagName:@"UL"] ||
-                          [container ks_ancestorWithTagName:@"OL"]);
+                // Can indent if entire selection is within a list already
+                if (!list) return NO;
+                
+                // Outdent requires there to be another, containing list
+                if (action == @selector(outdent:))
+                {
+                    result = ([[list parentNode] ks_ancestorWithTagNameInSet:listTagNames] != nil);
+                }
             }
         }
     }
