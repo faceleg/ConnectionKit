@@ -16,22 +16,6 @@
 #import "DOMNode+Karelia.h"
 
 
-@interface SVValidatedUserInterfaceItem : NSObject <NSValidatedUserInterfaceItem>
-{
-  @private
-    SEL         _action;
-    NSInteger   _tag;
-}
-
-@property(nonatomic) SEL action;
-@property(nonatomic) NSInteger tag;
-
-@end
-
-
-#pragma mark -
-
-
 // Super-simple class that watches a WebView waiting for an edit
 @interface SVWebViewChangeWatcher : NSObject
 {
