@@ -102,6 +102,20 @@
     }
 }
 
+- (IBAction)changeIndent:(NSSegmentedControl *)sender;
+{
+    switch ([sender selectedSegment])
+    {
+        case 0:
+            [NSApp sendAction:@selector(outdent:) to:nil from:self];
+            break;
+            
+        case 1:
+            [NSApp sendAction:@selector(indent:) to:nil from:self];
+            break;
+    }
+}
+
 #pragma mark General
 
 - (void)refresh

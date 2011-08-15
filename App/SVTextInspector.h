@@ -24,5 +24,7 @@
 - (IBAction)changeAlignment:(NSSegmentedControl *)sender;
 
 @property(nonatomic) NSUInteger listStyle;
+- (IBAction)changeIndent:(NSSegmentedControl *)sender;
+
 
 @end
