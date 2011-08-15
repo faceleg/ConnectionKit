@@ -445,7 +445,7 @@
 
 @implementation SVTitleBox (SVDOMController)
 
-- (SVTextDOMController *)newTextDOMControllerWithElementIdName:(NSString *)elementID node:(DOMNode *)node;
+- (SVTextDOMController *)newTextDOMControllerWithIdName:(NSString *)elementID ancestorNode:(DOMNode *)node;
 {
     SVTextFieldDOMController *result = [[SVTextFieldDOMController alloc] initWithIdName:elementID ancestorNode:node];
     [result setRepresentedObject:self];

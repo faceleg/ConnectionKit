@@ -1035,7 +1035,7 @@
 
 @implementation SVArticle (SVArticleDOMController)
 
-- (SVTextDOMController *)newTextDOMControllerWithElementIdName:(NSString *)elementID node:(DOMNode *)node;
+- (SVTextDOMController *)newTextDOMControllerWithIdName:(NSString *)elementID ancestorNode:(DOMNode *)node;
 {
     SVArticleDOMController *result = [[SVArticleDOMController alloc] initWithIdName:elementID
                                                                        ancestorNode:node

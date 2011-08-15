@@ -427,10 +427,10 @@
     // Use the right sort of text area
     id value = HTML_VALUE;
     
-    if ([value respondsToSelector:@selector(newTextDOMControllerWithElementIdName:node:)])
+    if ([value respondsToSelector:@selector(newTextDOMControllerWithIdName:ancestorNode:)])
     {
         // Copy basic properties from text block
-        SVTextDOMController *controller = [value newTextDOMControllerWithElementIdName:elementID node:node];
+        SVTextDOMController *controller = [value newTextDOMControllerWithIdName:elementID ancestorNode:node];
         [controller setTextBlock:self];
         return controller;
     }

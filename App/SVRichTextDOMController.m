@@ -1430,7 +1430,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 
 @implementation SVRichText (SVDOMController)
 
-- (SVTextDOMController *)newTextDOMControllerWithElementIdName:(NSString *)elementID node:(DOMNode *)node
+- (SVTextDOMController *)newTextDOMControllerWithIdName:(NSString *)elementID ancestorNode:(DOMNode *)node
 {
     SVTextDOMController *result = [[SVRichTextDOMController alloc] initWithIdName:elementID
                                                                      ancestorNode:node

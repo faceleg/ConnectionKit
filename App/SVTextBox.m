@@ -146,9 +146,9 @@
 
 @implementation SVTextBoxBody
 
-- (SVTextDOMController *)newTextDOMControllerWithElementIdName:(NSString *)elementID node:(DOMNode *)node
+- (SVTextDOMController *)newTextDOMControllerWithIdName:(NSString *)elementID ancestorNode:(DOMNode *)node
 {
-    SVTextDOMController *result = [super newTextDOMControllerWithElementIdName:elementID node:node];
+    SVTextDOMController *result = [super newTextDOMControllerWithIdName:elementID ancestorNode:node];
     [result setRepresentedObject:[self valueForKey:@"pagelet"]];
     return result;
 }
