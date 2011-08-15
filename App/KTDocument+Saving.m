@@ -445,7 +445,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
             [previewContext setBaseURL:[KTDocument quickLookPreviewURLForDocumentURL:inURL]];
             
             [self writePreviewHTML:previewContext];
-            [previewContext flush];
+            [previewContext close];
         }
     }
     
@@ -1036,6 +1036,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     [context setLiveDataFeeds:NO];
     
     [context writeDocumentWithPage:[[self site] rootPage]];
+    [context close];
     [context release];
     
 	

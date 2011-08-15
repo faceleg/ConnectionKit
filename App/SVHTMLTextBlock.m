@@ -415,29 +415,33 @@
     return result;
 }
 
-#pragma mark DOM Controller
+#pragma mark Graphic Container
 
-- (SVDOMController *)newDOMController;
-{    
+- (BOOL)HTMLContext:(SVHTMLContext *)context writeGraphic:(id <SVGraphic>)graphic;
+{
+    return [HTML_VALUE HTMLContext:context writeGraphic:graphic];
+}
+
+- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID ancestorNode:(DOMNode *)node;
+{
     // Use the right sort of text area
     id value = HTML_VALUE;
     
-    if ([value respondsToSelector:@selector(newTextDOMController)])
+    if ([value respondsToSelector:@selector(newTextDOMControllerWithIdName:ancestorNode:)])
     {
         // Copy basic properties from text block
-        SVTextDOMController *controller = [value newTextDOMController];
+        SVTextDOMController *controller = [value newTextDOMControllerWithIdName:elementID ancestorNode:node];
         [controller setTextBlock:self];
         return controller;
     }
     
     
     // Copy basic properties from text block
-    SVTextFieldDOMController *result = [[SVTextFieldDOMController alloc] init];
+    SVTextFieldDOMController *result = [[SVTextFieldDOMController alloc] initWithIdName:elementID ancestorNode:node];
     [result setTextBlock:self];
     [result setEditable:[self isEditable]];
     [result setRichText:[self isRichText]];
     [result setFieldEditor:[self isFieldEditor]];
-    if (![self isFieldEditor]) [result setPlaceholderHTMLString:@"<p><br /></p>"];
     
     // Bind to model
     if ([self HTMLSourceObject] && [self HTMLSourceKeyPath])
@@ -447,6 +451,8 @@
          withKeyPath:[self HTMLSourceKeyPath]
              options:nil];
     }
+    
+    if (![self isFieldEditor]) [result setPlaceholderHTMLString:@"<p><br /></p>"]; // do after so doesn't overrite binding
     
     return result;
 }

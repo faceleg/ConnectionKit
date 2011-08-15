@@ -8,6 +8,8 @@
 
 #import "SVCalloutDOMController.h"
 
+#import "SVHTMLContext.h"
+#import "KTPage.h"
 #import "SVRichTextDOMController.h"
 
 #import "DOMNode+Karelia.h"
@@ -46,19 +48,19 @@
 
 @synthesize calloutContentElement = _calloutContent;
 
-- (void)loadHTMLElementFromDocument:(DOMDocument *)document;
+- (void)loadHTMLElement;
 {
-    [super loadHTMLElementFromDocument:document];
-    
-    if ([self isHTMLElementCreated])
+    if ([self elementIdName])
     {
+        [super loadHTMLElement];
+        
         DOMNodeList *nodes = [[self HTMLElement] getElementsByClassName:@"callout-content"];
         [self setCalloutContentElement:(DOMElement *)[nodes item:0]];
+        
+        return;
     }
-}
-
-- (void)createHTMLElement;
-{
+    
+    
     DOMHTMLDocument *document = [self HTMLDocument];
     
     // This logic is very similar to SVHTMLContext. Should be a way to bring them together
@@ -127,6 +129,18 @@
     return result;
 }
 
+#pragma mark Resizing
+
+- (CGFloat)maxWidthForChild:(WEKWebEditorItem *)aChild;
+{
+    // Base limit on design rather than the DOM
+    SVGraphic *graphic = [aChild representedObject];
+    OBASSERT(graphic);
+    
+    KTPage *page = [[self HTMLContext] page];
+    return [graphic maxWidthOnPage:page];
+}
+
 #pragma mark Moving
 
 /*  Normally it's enough to move ourself up or down instead of the item. But if we contain multiple graphics, have to get more cunning
@@ -164,7 +178,7 @@
     SVCalloutDOMController *calloutController = [[[self class] alloc] initWithHTMLDocument:
                                                  (id)[myElement ownerDocument]];
     
-    [calloutController createHTMLElement];  // hopefully -HTMLElement will call this internally one day
+    [calloutController loadHTMLElement];  // hopefully -HTMLElement will call this internally one day
     DOMElement *calloutElement = [calloutController HTMLElement];
     [[myElement parentNode] insertBefore:calloutElement refChild:myElement];
     [[self parentWebEditorItem] addChildWebEditorItem:calloutController];
@@ -209,7 +223,7 @@
     SVCalloutDOMController *calloutController = [[[self class] alloc] initWithHTMLDocument:
                                                  (id)[myElement ownerDocument]];
     
-    [calloutController createHTMLElement];  // hopefully -HTMLElement will call this internally one day
+    [calloutController loadHTMLElement];  // hopefully -HTMLElement will call this internally one day
     DOMElement *calloutElement = [calloutController HTMLElement];
     [[myElement parentNode] insertBefore:calloutElement refChild:[myElement nextSibling]];
     [[self parentWebEditorItem] addChildWebEditorItem:calloutController];

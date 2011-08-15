@@ -28,13 +28,16 @@
 
 #pragma mark Init & Dealloc
 
-- (id)initWithHTMLDocument:(DOMHTMLDocument *)document;
+- (id)initWithIdName:(NSString *)elementID ancestorNode:(DOMNode *)node;
 {
-    self = [self init];
-    _DOMDocument = [document retain];
+    if (self = [self init])
+    {
+        _elementID = [elementID copy];
+        if (node || elementID) [self setAncestorNode:node];
+    }
+    
     return self;
 }
-@synthesize HTMLDocument = _DOMDocument;
 
 - (id)initWithHTMLElement:(DOMHTMLElement *)element;
 {
@@ -47,7 +50,8 @@
 {
     [_eventListener setEventsTarget:nil];
     
-    [_DOMDocument release];
+    [_elementID release];
+    [_ancestor release];
     [_DOMElement release];
     [_eventListener release];
     [_representedObject release];
@@ -58,13 +62,53 @@
 #pragma mark DOM
 
 @synthesize HTMLElement = _DOMElement;
-
-- (void)createHTMLElement
+- (DOMElement *)HTMLElement
 {
-    // Nothing to do by default
+    if (!_DOMElement)
+    {
+        [self loadHTMLElement];
+        OBASSERT(_DOMElement);
+    }
+    return _DOMElement;
 }
 
-- (BOOL)isHTMLElementCreated { return (_DOMElement != nil); }
+- (void)loadHTMLElement
+{
+    NSString *idName = [self elementIdName];
+    if (idName)
+    {
+        DOMElement *element = nil;
+        DOMNode *node = [self ancestorNode];
+        
+        if ([node respondsToSelector:@selector(getElementById:)])
+        {
+            // Load the element
+            element = [(id)node getElementById:idName];
+        }
+        
+        if (!element)
+        {
+            // Search through all descendants of the node
+            DOMNodeIterator *iterator = [[node ownerDocument] createNodeIterator:node
+                                                                      whatToShow:DOM_SHOW_ELEMENT
+                                                                          filter:nil
+                                                          expandEntityReferences:NO];
+            
+            while (element = (DOMElement *)[iterator nextNode])
+            {
+                if ([[element getAttribute:@"id"] isEqualToString:idName]) break;
+            }
+            
+            [iterator detach];
+        }
+        
+        [self setHTMLElement:element];
+    }
+}
+
+- (BOOL)isHTMLElementLoaded { return (_DOMElement != nil); }
+
+@synthesize elementIdName = _elementID;
 
 - (DOMRange *)DOMRange; // returns -HTMLElement as a range
 {
@@ -73,6 +117,25 @@
     [result selectNode:element];
     return result;
 }
+
+#pragma mark Ancestor
+
+@synthesize ancestorNode = _ancestor;
+- (void)setAncestorNode:(DOMNode *)node;
+{
+    OBPRECONDITION(node);
+    [node retain];
+    [_ancestor release]; _ancestor = node;
+}
+
+- (DOMHTMLDocument *)HTMLDocument;
+{
+    id result = [self ancestorNode];
+    if (![result isKindOfClass:[DOMHTMLDocument class]]) result = nil;
+    return result;
+}
+
+#pragma mark Events
 
 - (id <DOMEventListener>)eventsListener;
 {

@@ -15,20 +15,20 @@
 #import "SVContentDOMController.h"
 #import "KTDocument.h"
 #import "KTPage.h"
-#import "SVGraphicDOMController.h"
+#import "SVGraphicContainerDOMController.h"
 #import "SVGraphicFactory.h"
 #import "SVHTMLContext.h"
 #import "SVImage.h"
 #import "SVLinkManager.h"
 #import "SVLink.h"
-#import "SVMedia.h"
-#import "SVMediaDOMController.h"
+#import "SVMediaGraphic.h"
 #import "SVParagraphedHTMLWriterDOMAdaptor.h"
 #import "SVTextAttachment.h"
 #import "SVTextBox.h"
 #import "SVWebContentObjectsController.h"
 #import "WebEditingKit.h"
 #import "SVWebEditorViewController.h"
+#import "WEKWebViewEditing.h"
 
 #import "NSDictionary+Karelia.h"
 #import "NSString+Karelia.h"
@@ -62,15 +62,27 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 
 #pragma mark Init & Dealloc
 
-- (id)initWithRepresentedObject:(id <SVDOMControllerRepresentedObject>)content;
+- (id)initWithIdName:(NSString *)elementID ancestorNode:(DOMNode *)node textStorage:(SVRichText *)text;
 {
-    // Create early, as super calls through to routine that begins observation
-    _graphicsController = [[[self attachmentsControllerClass] alloc] init];
-    [_graphicsController setSortDescriptors:[SVRichText attachmentSortDescriptors]];
-    [_graphicsController setAutomaticallyRearrangesObjects:YES];
+    if (self = [self initWithIdName:elementID ancestorNode:node])
+    {
+        _storage = [text retain];
+        [self setRepresentedObject:text];
+    }
     
-    
-    return [super initWithRepresentedObject:content];
+    return self;
+}
+
+- (id)init;
+{
+    if (self = [super init])
+    {
+        // Create early, as super calls through to routine that begins observation
+        _graphicsController = [[[self attachmentsControllerClass] alloc] init];
+        [_graphicsController setSortDescriptors:[SVRichText attachmentSortDescriptors]];
+        [_graphicsController setAutomaticallyRearrangesObjects:YES];
+    }
+    return self;
 }
 
 - (void)dealloc
@@ -78,6 +90,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     // Release ivars
     [self stopObservingDependencies];                           // otherwise super will crash trying..
     [_graphicsController release]; _graphicsController = nil;   // ... to access _graphicsController
+    [_storage release];
     
     [super dealloc];
 }
@@ -99,7 +112,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
         // See if there's an imported embedded image that wants hooking up
         NSString *graphicID = [[imageElement absoluteImageURL] ks_lastPathComponent];
         
-        SVTextAttachment *attachment = [[[[self representedObject] attachments] filteredSetUsingPredicate:
+        SVTextAttachment *attachment = [[[[self richTextStorage] attachments] filteredSetUsingPredicate:
                                          [NSPredicate predicateWithFormat:
                                           @"length == 32767 && graphic.identifier == %@",
                                           graphicID]] anyObject];
@@ -123,122 +136,6 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 }
 
 #pragma mark Updating
-
-- (void)update;
-{
-    // Tear down dependencies etc.
-    [self removeAllDependencies];
-    
-    
-    // Write HTML
-    NSMutableString *htmlString = [[NSMutableString alloc] init];
-    
-    SVWebEditorHTMLContext *context = [[[SVWebEditorHTMLContext class] alloc]
-                                       initWithOutputWriter:htmlString inheritFromContext:[self HTMLContext]];
-    
-    [[context rootDOMController] setWebEditorViewController:[self webEditorViewController]];
-    [self writeUpdateHTML:context];
-    
-    
-    // Copy top-level dependencies across to parent. #79396
-    [context flush];    // you never know!
-    for (KSObjectKeyPathPair *aDependency in [[context rootDOMController] dependencies])
-    {
-        [(SVDOMController *)[self parentWebEditorItem] addDependency:aDependency];
-    }
-    
-    
-    // Turn observation back on. #92124
-    //[self startObservingDependencies];
-    
-    
-    // Bring end body code into the html
-    [context writeEndBodyString];
-    
-    
-    [self updateWithHTMLString:htmlString
-                         items:[[context rootDOMController] childWebEditorItems]];
-    
-    
-    // Tidy
-    [context close];
-    [htmlString release];
-    [context release];
-}
-
-- (void)updateWithHTMLString:(NSString *)html items:(NSArray *)items;
-{
-    // Update DOM
-    DOMElement *oldElement = [self HTMLElement];
-    WEKWebEditorItem *parent = [self parentWebEditorItem];
-    [[self HTMLElement] setOuterHTML:html];
-    
-    while ([parent HTMLElement] == oldElement)  // ancestors may be referencing the same node
-    {
-        // Reset element, ready to reload
-        [parent setHTMLElement:nil];
-        [(SVDOMController *)parent setElementIdName:[[items lastObject] elementIdName]
-                              includeWhenPublishing:YES];
-        
-        parent = [parent parentWebEditorItem];
-    }
-    
-        
-    // Re-use any existing graphic controllers when possible
-    for (WEKWebEditorItem *aController in items)
-    {
-        for (WEKWebEditorItem *newChildController in [aController childWebEditorItems])
-        {
-            [self willUpdateWithNewChildController:newChildController];
-        }
-    }
-    
-    
-    // Hook up new DOM Controllers
-    [self stopObservingDependencies];
-    [[self parentWebEditorItem] replaceChildWebEditorItem:self withItems:items];
-    
-    for (SVDOMController *aController in items)
-    {
-        [aController didUpdateWithSelector:_cmd];
-    }
-}
-
-- (void)willUpdateWithNewChildController:(WEKWebEditorItem *)newChildController;
-{
-    // Helper method that:
-    //  A) swaps the new controller out for an existing one if possible
-    //  B) runs scripts for the new controller
-    
-    
-    DOMDocument *doc = [[self HTMLElement] ownerDocument];
-    [newChildController loadHTMLElementFromDocument:doc];
-    
-    NSObject *object = [newChildController representedObject];
-    
-    for (WEKWebEditorItem *anOldController in [self childWebEditorItems])
-    {
-        if ([anOldController representedObject] == object)
-        {
-            DOMNode *oldElement = [anOldController HTMLElement];
-            if (oldElement)
-            {
-                // Bring back the old element!
-                DOMElement *element = [newChildController HTMLElement];
-                [[element parentNode] replaceChild:oldElement oldChild:element];
-                
-                // Bring back the old controller!
-                [[newChildController parentWebEditorItem] replaceChildWebEditorItem:newChildController
-                                                                               with:anOldController];
-                return;
-            }
-        }
-    }
-    
-    
-    // Force update the controller to run scripts etc. #99997
-    [newChildController setNeedsUpdate]; [newChildController updateIfNeeded];
-}
 
 - (void)writeUpdateHTML:(SVHTMLContext *)context;
 {
@@ -278,16 +175,14 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
         
         
         // Try to de-archive custom HTML
-        SVRichText *text = [self representedObject];
-        
         NSAttributedString *attributedHTML = [NSAttributedString
                                               attributedHTMLStringFromPasteboard:pasteboard
-                                              insertAttachmentsIntoManagedObjectContext:[text managedObjectContext]];
+                                              insertAttachmentsIntoManagedObjectContext:[self managedObjectContext]];
         
         if (attributedHTML)
         {
             // Generate HTML for the DOM
-            [context beginGraphicContainer:text];
+            [context beginGraphicContainer:[self representedObject]];
             [context writeAttributedHTMLString:attributedHTML];
             [context endGraphicContainer];
         }
@@ -359,7 +254,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 
 - (void)setHTMLString:(NSString *)html attachments:(NSSet *)attachments;
 {
-    SVRichText *textObject = [self representedObject];
+    SVRichText *textObject = [self richTextStorage];
     
     
     [textObject setString:html attachments:attachments];
@@ -390,13 +285,15 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     
     
     // We have a matching controller. But is it in a valid location? Make sure it really is block-level/inline
-    SVGraphic *graphic = [controller representedObject];
-    
-    DOMNode *parentNode = [element parentNode];
-    
     if ([[adaptor XMLWriter] openElementsCount])
     {
-        if ([[[graphic textAttachment] causesWrap] boolValue])
+        SVGraphic *graphic = nil;
+        id object = [controller representedObject];
+        if ([object respondsToSelector:@selector(graphic)]) graphic = [object graphic];
+        
+        DOMNode *parentNode = [element parentNode];
+        
+        if (!graphic || [[[graphic textAttachment] causesWrap] boolValue])
         {
             // Floated graphics should be moved up if enclosed by an anchor
             // All other graphics should be moved up
@@ -410,7 +307,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
         }
     }
         
-    // Graphics is OK where it is; write. Callouts write their contents
+    // Graphic is OK where it is; write. Callouts write their contents
     if (![controller writeAttributedHTML:adaptor])
     {
         result = element;
@@ -445,8 +342,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     
     
     // Make an image object
-    SVRichText *text = [self representedObject];
-    NSManagedObjectContext *context = [text managedObjectContext];
+    NSManagedObjectContext *context = [self managedObjectContext];
     
     SVMedia *media = nil;
     NSURL *URL = [imageElement absoluteImageURL];
@@ -484,7 +380,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     // Make corresponding text attachment
     SVTextAttachment *textAttachment = [SVTextAttachment textAttachmentWithGraphic:image];
     
-    [textAttachment setBody:text];
+    [textAttachment setBody:[self richTextStorage]];
     [textAttachment setPlacement:[NSNumber numberWithInteger:SVGraphicPlacementInline]];
     
     
@@ -554,7 +450,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     
     
     // Create controller for graphic and hook up to imported node
-    SVMediaGraphicDOMController *result = (SVMediaGraphicDOMController *)[image newDOMController];
+    SVDOMController *result = [image newDOMControllerWithElementIdName:nil ancestorNode:nil];
     [result awakeFromHTMLContext:[self HTMLContext]];
     [result setHTMLElement:imageElement];
     
@@ -615,6 +511,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 
 #pragma mark Properties
 
+@synthesize richTextStorage = _storage;
 @synthesize importsGraphics = _importsGraphics;
 
 #pragma mark Links
@@ -639,7 +536,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
         if ([linkURLString hasPrefix:kKTPageIDDesignator])
         {
             SVSiteItem *target = [KTPage siteItemForPreviewPath:linkURLString
-                                 inManagedObjectContext:[[self representedObject] managedObjectContext]];
+                                 inManagedObjectContext:[self managedObjectContext]];
             
             if (target)
             {
@@ -658,6 +555,372 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     
     //[[SVLinkManager sharedLinkManager] setSelectedLink:link editable:(selection != nil)];
     [link release];
+}
+
+#pragma mark Resizing
+
+- (CGFloat)maxWidthForChild:(WEKWebEditorItem *)aChild;
+{
+    // Base limit on design rather than the DOM
+    SVGraphic *graphic = [aChild representedObject];
+    OBASSERT(graphic);
+    
+    KTPage *page = [[self HTMLContext] page];
+    return [graphic maxWidthOnPage:page];
+}
+
+#pragma mark Moving
+
+- (DOMNode *)nodeToMoveItemBefore:(SVDOMController *)controller;
+{
+    DOMNode *element = [controller HTMLElement];
+    DOMElement *textElement = [self textHTMLElement];
+    
+    DOMTreeWalker *walker = [[element ownerDocument] createTreeWalker:textElement
+                                                           whatToShow:DOM_SHOW_ALL
+                                                               filter:nil
+                                               expandEntityReferences:NO];
+    [walker setCurrentNode:element];
+    
+    DOMNode *result = [walker ks_previousNodeIgnoringChildren];
+    while (result && ![result hasSize])
+    {
+        result = [walker ks_previousNodeIgnoringChildren];
+    }
+    
+    
+    // Make sure it's a move up to a paragraph
+    if (result)
+    {
+        if (result == textElement) return nil;
+        
+        DOMNode *parent = [result parentNode];
+        while (parent != textElement)
+        {
+            result = parent;
+            parent = [result parentNode];
+        }
+    }
+    
+    
+    return result;
+}
+
+- (DOMNode *)nodeToMoveItemAfter:(SVDOMController *)controller;
+{
+    DOMNode *element = [controller HTMLElement];
+    
+    if ([element ks_isDescendantOfElement:[self textHTMLElement]])  //  this should always be true really
+    {
+        while ([element parentNode] != [self textHTMLElement])
+        {
+            element = [element parentNode];
+        }
+    }
+    
+    
+    DOMTreeWalker *walker = [[element ownerDocument] createTreeWalker:[self textHTMLElement]
+                                                           whatToShow:DOM_SHOW_ALL
+                                                               filter:nil
+                                               expandEntityReferences:NO];
+    [walker setCurrentNode:element];
+    
+    
+    // Seek out the next element worth swapping with. It must:
+    //  1.  Be visible on screen (i.e. element or non-whitespace text)
+    //  2.  Sit below the item being dragged, to account for dragging a floated item
+    DOMNode *result = [walker ks_nextNodeIgnoringChildren];
+    while (result && ![result hasSize])
+    {
+        // Seek out next node.
+        result = [walker ks_nextNodeIgnoringChildren];
+    }
+    
+    return result;
+}
+
+/*  We'll leave it up to the individual graphics
+ */
+- (void)moveObjectUp:(id)sender;
+{
+    [[self selectedItems] makeObjectsPerformSelector:@selector(moveUp)];
+}
+- (void)moveObjectDown:(id)sender;
+{
+    [[self selectedItems] makeObjectsPerformSelector:@selector(moveDown)];
+}
+
+- (void)moveItemUp:(WEKWebEditorItem *)item;
+{
+    WEKWebEditorView *webEditor = [self webEditor];
+    WEKSelection *selection = [[webEditor webView] wek_selection];
+    DOMNode *previousNode = [item previousDOMNode];
+    DOMNode *targetNode = [self nodeToMoveItemBefore:(SVDOMController *)item];
+    
+    while (previousNode && [webEditor shouldChangeTextInDOMRange:[item DOMRange]])
+    {
+        [item exchangeWithPreviousDOMNode];
+        
+        // Have we made a noticeable move yet?
+        if (previousNode == targetNode) break;
+        
+        previousNode = [item previousDOMNode];
+    }
+    
+    
+    // The target couldn't be found? Time to move manually I guess. This should only be reached for images, so not a problem display-wise
+    if (!previousNode && [webEditor shouldChangeText:self])
+    {
+        [[targetNode parentNode] insertBefore:[item HTMLElement] refChild:targetNode];
+    }
+    
+    
+    [webEditor didChangeText];
+    [[webEditor webView] wek_setSelection:selection];
+}
+
+- (void)moveItemDown:(WEKWebEditorItem *)item;
+{
+    // Save and then restore selection for if it's inside an item that's getting exchanged
+    WEKWebEditorView *webEditor = [item webEditor];
+    WEKSelection *selection = [[webEditor webView] wek_selection];
+    DOMNode *nextNode = [item nextDOMNode];
+    DOMNode *targetNode = [self nodeToMoveItemAfter:(SVDOMController *)item];
+    
+    while (nextNode && [webEditor shouldChangeTextInDOMRange:[item DOMRange]])
+    {
+        [item exchangeWithNextDOMNode];
+        
+        // Have we made a noticeable move yet?
+        if (nextNode == targetNode) break;
+        
+        nextNode = [item nextDOMNode];
+    }
+    
+    
+    // The target couldn't be found? Time to move manually I guess. This should only be reached for images, so not a problem display-wise
+    if (!nextNode && [webEditor shouldChangeText:self])
+    {
+        [[targetNode parentNode] insertBefore:[item HTMLElement] refChild:[targetNode nextSibling]];
+    }
+    
+    
+    [webEditor didChangeText];
+    [[webEditor webView] wek_setSelection:selection];
+}
+
+- (void)tryToMoveController:(SVDOMController *)controller downToPosition:(CGPoint)position;
+{
+    CGPoint startPosition = [controller positionIgnoringRelativePosition];
+    CGFloat gapAvailable = position.y - startPosition.y;
+    
+    DOMNode *nextNode = [self nodeToMoveItemAfter:controller];
+    if (nextNode)
+    {
+        if (2 * gapAvailable > [nextNode boundingBox].size.height)
+        {
+            // Move the element
+            [controller moveDown];
+        }
+    }
+    else
+    {
+        // This is the last pagelet. Disallow dragging down
+        if (position.y > startPosition.y) position = startPosition;
+    }
+}
+
+- (void)tryToMoveController:(SVDOMController *)controller upToPosition:(CGPoint)position;
+{
+    CGPoint startPosition = [controller positionIgnoringRelativePosition];
+    CGFloat gapAvailable = position.y - startPosition.y;
+    
+    DOMNode *previousNode = [self nodeToMoveItemBefore:controller];
+    if (previousNode)
+    {
+        NSRect previousFrame = [previousNode boundingBox];            
+        if (2*-gapAvailable > previousFrame.size.height)// || NSMinY(frame) < NSMidY(previousFrame))
+        {
+            // Move the element
+            [controller moveUp];
+        }
+    }
+    else
+    {
+        // This is the last pagelet. Disallow dragging down
+        //if (position.y < startPosition.y) position = startPosition;
+    }
+    
+    
+    // Old logic from article controller:
+    //DOMNode *previousNode = [self nodeToMoveItemBefore:graphicController];
+    //if (previousNode)
+    //{
+    //    NSRect previousFrame = [previousNode boundingBox];            
+    //    if (previousFrame.size.height <= 0.0f || NSMinY(frame) < NSMidY(previousFrame))
+    //    {
+    //        // Move the element
+    //        [graphicController moveUp];
+    //    }
+    //}
+}
+
+- (NSPoint)snapController:(SVDOMController *)controller toFit:(NSPoint)result;
+{
+    CGPoint staticPosition = [controller positionIgnoringRelativePosition];
+    
+    SVGraphic *graphic = [controller graphic];
+    if (!graphic)
+    {
+        // Assume non-graphics only move vertically
+        result.x = staticPosition.x;
+        return result;
+    }
+    
+    
+    SVTextAttachment *attachment = [graphic textAttachment];
+    SVGraphicWrap wrap = [[attachment wrap] intValue];
+    
+    NSRect snapRect = [[self textHTMLElement] boundingBox];
+    
+    
+    // Leave be if reasonable
+    if (result.x > staticPosition.x - 10.0f &&
+        result.x < staticPosition.x + 10.0f)
+    {
+        result.x = staticPosition.x;
+    }
+    else
+    {
+        // Where is the controller being asked to move to?
+        NSRect frame = [controller frame];
+        CGPoint currentPosition = [controller position];
+        frame.origin.x += result.x - currentPosition.x;
+        frame.origin.y += result.y - currentPosition.y;
+        
+        
+        // Set wrap to match
+        if (NSMidX(frame) <= NSMidX(snapRect))
+        {
+            if (wrap >= SVGraphicWrapLeft || wrap <= SVGraphicWrapFloat_1_0)    // is it floated?
+            {
+                wrap = SVGraphicWrapRight;
+            }
+            else
+            {
+                if (NSMinX(frame) - NSMinX(snapRect) < NSMidX(snapRect) - NSMidX(frame)) // closer to left?
+                {
+                    wrap = SVGraphicWrapRightSplit;
+                }
+                else
+                {
+                    wrap = SVGraphicWrapCenterSplit;
+                }
+            }
+        }
+        else
+        {
+            if (wrap >= SVGraphicWrapLeft || wrap <= SVGraphicWrapFloat_1_0)    // is it floated?
+            {
+                wrap = SVGraphicWrapLeft;
+            }
+            else
+            {
+                if (NSMaxX(snapRect) - NSMaxX(frame) < NSMidX(frame) - NSMidX(snapRect)) // closer to right?
+                {
+                    wrap = SVGraphicWrapLeftSplit;
+                }
+                else
+                {
+                    wrap = SVGraphicWrapCenterSplit;
+                }
+            }
+        }
+        
+        if ([[attachment wrap] intValue] != wrap)
+        {
+            [attachment setWrap:[NSNumber numberWithInt:wrap]];
+            [controller updateIfNeeded]; // push through so position can be set accurately
+        }
+    }
+    
+    
+    // Show guide for choice of wrap
+    NSNumber *guide;
+    switch (wrap)
+    {
+        case SVGraphicWrapRightSplit:
+        case SVGraphicWrapRight:
+            guide = [NSNumber numberWithFloat:NSMinX(snapRect)];
+            break;
+        case SVGraphicWrapCenterSplit:
+            guide = [NSNumber numberWithFloat:NSMidX(snapRect)];
+            break;
+        case SVGraphicWrapLeftSplit:
+        case SVGraphicWrapLeft:
+            guide = [NSNumber numberWithFloat:NSMaxX(snapRect)];
+            break;
+        default:
+            guide = nil;
+    }
+    [[self webEditor] setXGuide:guide yGuide:nil];
+    
+    
+    return result;
+}
+
+- (BOOL)dragItem:(SVDOMController *)controller withEvent:(NSEvent *)event offset:(NSSize)mouseOffset slideBack:(BOOL)slideBack;
+{
+    while ([controller parentWebEditorItem] != self)
+    {
+        controller = (SVDOMController *)[controller parentWebEditorItem];
+        if (!controller) return NO;
+    }
+    
+    NSView *view = [[[[self webEditor] firstResponderItem] HTMLElement] documentView];
+    
+    NSPoint mouseDown = [view convertPoint:NSMakePoint([event locationInWindow].x - mouseOffset.width,
+                                                       [event locationInWindow].y - mouseOffset.height)
+                                  fromView:nil];
+    
+    // Set the item's anchor point such that -position is where mouse down was
+    [controller setAnchorPoint:[controller anchorPointToGivePosition:NSPointToCGPoint(mouseDown)]];
+    
+    do
+    {
+        // Calculate change from event
+        [view autoscroll:event];
+        
+        NSPoint target = [view convertPoint:[event locationInWindow] fromView:nil];
+        
+        
+        
+        
+        // Snap to fit current wrap. #94884
+        target = [self snapController:controller toFit:target];
+        
+        
+        
+        // Do any of siblings fit into the available space?
+        CGFloat delta = [event deltaY];
+        if (delta < 0.0f)
+        {
+            [self tryToMoveController:controller upToPosition:NSPointToCGPoint(target)];
+        }
+        else if (delta > 0.0f)
+        {
+            [self tryToMoveController:controller downToPosition:NSPointToCGPoint(target)];
+        }    
+        
+        [controller moveToPosition:NSPointToCGPoint(target)];
+        
+        event = [[event window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
+    }
+    while ([event type] != NSLeftMouseUp);
+    
+    
+    [controller moveEnded];
+    return YES;
 }
 
 #pragma mark Insertion
@@ -720,8 +983,9 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
         
         
         // Create controller for graphic
-        SVGraphicDOMController *controller = [[graphic newDOMController] autorelease];
-        [controller loadPlaceholderDOMElementInDocument:[[self HTMLElement] ownerDocument]];
+        SVGraphicDOMController *controller = [[SVGraphicDOMController alloc] initWithIdName:nil ancestorNode:[self HTMLElement]];
+        [controller loadPlaceholderDOMElement];
+        [controller setRepresentedObject:graphic];
         [controller setHTMLContext:context];
         
         
@@ -759,7 +1023,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     [textAttachment setPlacement:[NSNumber numberWithInteger:SVGraphicPlacementInline]];
     
     [textAttachment setCausesWrap:[NSNumber numberWithBool:!placeInline]];
-    [textAttachment setBody:[self representedObject]];
+    [textAttachment setBody:[self richTextStorage]];
     
     
     // Insert, selecting it
@@ -826,10 +1090,8 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     
     
     
-    NSManagedObjectContext *context = [[self representedObject] managedObjectContext];
-    
     SVGraphic *graphic = [SVGraphicFactory graphicWithActionSender:sender
-                                    insertIntoManagedObjectContext:context];
+                                    insertIntoManagedObjectContext:[self managedObjectContext]];
     
     [graphic awakeFromNew];
     
@@ -861,9 +1123,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     if (!media) return;
     
     
-    NSManagedObjectContext *context = [[self representedObject] managedObjectContext];
-    
-    SVMediaGraphic *graphic = [SVMediaGraphic insertNewGraphicInManagedObjectContext:context];
+    SVMediaGraphic *graphic = [SVMediaGraphic insertNewGraphicInManagedObjectContext:[self managedObjectContext]];
     [graphic setSourceWithMedia:media];
     [graphic setShowsTitle:NO];
     [graphic setShowsCaption:NO];
@@ -893,34 +1153,11 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
                 item = parent; parent = [item parentWebEditorItem];
             }
             
-            [result addObject:item];
+            if (item != self) [result addObject:item];
         }
     }
     
     return result;
-}
-
-- (void)deleteObjects:(id)sender;
-{
-    WEKWebEditorView *webEditor = [self webEditor];
-    if ([webEditor shouldChangeText:self])
-    {
-        NSArray *selection = [self selectedItems];
-        for (SVGraphicDOMController *anItem in selection)
-        {
-            // Only graphics can be deleted with -delete. #108128
-            if ([anItem graphicContainerDOMController] == [anItem parentWebEditorItem])
-            {
-                [anItem delete];
-            }
-            else
-            {
-                [[[self webEditorViewController] graphicsController] removeObject:[anItem representedObject]];
-            }
-        }
-        
-        [webEditor didChangeText];
-    }
 }
 
 - (void)clearStyles:(id)sender;
@@ -975,6 +1212,52 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
         
         [[self webEditor] didChangeText];
     }
+}
+
+#pragma mark Delete
+
+- (void)delete:(id)sender forwardingSelector:(SEL)action;
+{
+    NSArray *selection = [self selectedItems];
+    if (![selection count])
+    {
+        return [super delete:sender forwardingSelector:action];
+    }
+    
+    WEKWebEditorView *webEditor = [self webEditor];
+    if ([webEditor shouldChangeText:self])
+    {
+        for (WEKWebEditorItem *anItem in selection)
+        {
+            [webEditor deselectItem:anItem];
+            
+            while ([anItem parentWebEditorItem] != self)
+            {
+                anItem = [anItem parentWebEditorItem];
+            }
+            
+            DOMRange *range = [anItem DOMRange];
+            [range deleteContents];
+            [range detach];
+        }
+        
+        [webEditor didChangeText];
+    }
+}
+
+- (void)delete:(id)sender;
+{
+    [self delete:sender forwardingSelector:_cmd];
+}
+
+- (void)deleteForward:(id)sender;
+{
+    [self delete:sender forwardingSelector:_cmd];
+}
+
+- (void)deleteBackward:(id)sender;
+{
+    [self delete:sender forwardingSelector:_cmd];
 }
 
 #pragma mark Queries
@@ -1083,7 +1366,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 - (void)beginAttachmentsObservation;
 {
     [_graphicsController bind:NSContentSetBinding
-                     toObject:[self representedObject]
+                     toObject:[self richTextStorage]
                   withKeyPath:@"attachments"
                       options:nil];
     
@@ -1097,30 +1380,13 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     [_graphicsController setContent:nil];
 }
 
-- (void)setRepresentedObject:(id)object;
-{
-    [super setRepresentedObject:object];
-    
-    if (_isObservingText)
-    {
-        if (object)
-        {
-            [self beginAttachmentsObservation];
-        }
-        else
-        {
-            [self endAttachmentsObservation];
-        }
-    }
-}
-
 - (void)startObservingDependencies;
 {
     if (!_isObservingText)
     {
         // Keep an eye on model
-        [self addObserver:self forKeyPath:@"representedObject.string" options:0 context:sBodyTextObservationContext];
-        if ([self representedObject]) [self beginAttachmentsObservation];
+        [self addObserver:self forKeyPath:@"richTextStorage.string" options:0 context:sBodyTextObservationContext];
+        if ([self richTextStorage]) [self beginAttachmentsObservation];
         _isObservingText = YES;
     }
     
@@ -1132,8 +1398,8 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 {
     if (_isObservingText)    // should be able to test isObservingDependencies but that's lying for reasons I cannot figure
     {
-        [self removeObserver:self forKeyPath:@"representedObject.string"];
-        if ([self representedObject]) [self endAttachmentsObservation];
+        [self removeObserver:self forKeyPath:@"richTextStorage.string"];
+        if ([self richTextStorage]) [self endAttachmentsObservation];
         _isObservingText = NO;
     }
     
@@ -1164,9 +1430,13 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 
 @implementation SVRichText (SVDOMController)
 
-- (SVTextDOMController *)newTextDOMController;
+- (SVTextDOMController *)newTextDOMControllerWithIdName:(NSString *)elementID ancestorNode:(DOMNode *)node
 {
-    SVTextDOMController *result = [[SVRichTextDOMController alloc] initWithRepresentedObject:self];
+    SVTextDOMController *result = [[SVRichTextDOMController alloc] initWithIdName:elementID
+                                                                     ancestorNode:node
+                                                                         textStorage:self];
+    
+    [result setSelectable:YES];
     [result setRichText:YES];
     
     return result;

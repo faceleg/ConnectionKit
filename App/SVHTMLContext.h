@@ -12,7 +12,7 @@
 
 #import "KSHTMLWriter.h"
 
-#import "SVGraphicContainer.h"
+#import "SVComponent.h"
 #import "Sandvox.h"
 #import "KT.h"
 
@@ -141,8 +141,8 @@ typedef NSUInteger SVPageImageRepresentationOptions2;
 
 #pragma mark Graphic Containers
 
-- (id <SVGraphicContainer>)currentGraphicContainer;
-- (void)beginGraphicContainer:(id <SVGraphicContainer>)container;
+- (id <SVComponent>)currentGraphicContainer;
+- (void)beginGraphicContainer:(id <SVComponent>)container;
 - (void)endGraphicContainer;
 
 - (void)writeCalloutWithGraphics:(NSArray *)pagelets;

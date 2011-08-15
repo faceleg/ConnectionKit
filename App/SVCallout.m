@@ -8,6 +8,7 @@
 
 #import "SVCallout.h"
 
+#import "SVCalloutDOMController.h"
 #import "SVGraphic.h"
 #import "SVWebEditorHTMLContext.h"
 
@@ -19,12 +20,8 @@
     [context beginGraphicContainer:self];
     
     // Write the opening tags
-    [context startElement:@"div"
-                   idName:[[context currentDOMController] elementIdName]
-                className:@"callout-container"];
-    
+    [context startElement:@"div" className:@"callout-container"];
     [context startElement:@"div" className:@"callout"];
-    
     [context startElement:@"div" className:@"callout-content"];
     
     
@@ -41,9 +38,19 @@
     [context endGraphicContainer];
 }
 
-- (void)write:(SVHTMLContext *)context graphic:(id <SVGraphic>)graphic;
+- (BOOL)HTMLContext:(SVHTMLContext *)context writeGraphic:(SVGraphic *)graphic;
 {
     [SVGraphic write:context pagelet:graphic];
+    return YES;
+}
+
+- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID ancestorNode:(DOMNode *)node;
+{
+    SVDOMController *result = [[SVCalloutDOMController alloc] initWithIdName:elementID
+                                                                           ancestorNode:node];
+    
+    [result setRepresentedObject:self];
+    return result;
 }
 
 @end

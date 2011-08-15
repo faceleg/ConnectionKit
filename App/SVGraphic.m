@@ -15,9 +15,11 @@
 #import "SVHTMLTemplateParser.h"
 #import "KTImageScalingSettings.h"
 #import "KTMaster.h"
+#import "SVGraphicContainerDOMController.h"
 #import "KTPage.h"
+#import "SVPagelet.h"
 #import "SVRichText.h"
-#import "SVResizableDOMController.h"
+#import "SVPlugInDOMController.h"
 #import "SVTemplate.h"
 #import "SVTextAttachment.h"
 #import "SVTitleBox.h"
@@ -150,30 +152,54 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     return ([self calloutWrapClassName] != nil);
 }
 
-+ (void)write:(SVHTMLContext *)context pagelet:(id <SVGraphic>)graphic;
++ (void)write:(SVHTMLContext *)context pagelet:(SVGraphic *)graphic;
 {
-    // Pagelets are expected to have <H4> titles. #67430
-    NSUInteger level = [context currentHeaderLevel];
-    [context setCurrentHeaderLevel:4];
-    @try
+    // Write as a pagelet
+    SVPagelet *pagelet = [[SVPagelet alloc] initWithGraphic:graphic];
+    [context beginGraphicContainer:pagelet];
+    
     {
-        // Pagelet
-        [context startNewline];        // needed to simulate a call to -startElement:
-        [context stopWritingInline];
-        
-        SVTemplate *template = [self template];
-        
-        SVHTMLTemplateParser *parser =
-        [[SVHTMLTemplateParser alloc] initWithTemplate:[template templateString]
-                                             component:graphic];
-        
-        [parser parseIntoHTMLContext:context];
-        [parser release];
+        // Pagelets are expected to have <H4> titles. #67430
+        NSUInteger level = [context currentHeaderLevel];
+        [context setCurrentHeaderLevel:4];
+        @try
+        {
+            // Pagelet
+            [context pushClassName:@"pagelet"];
+            
+            if ([graphic graphicClassName]) [context pushClassName:[graphic graphicClassName]];
+            if ([[graphic showBorder] boolValue]) [context pushClassName:@"bordered"];
+            [context pushClassName:([graphic showsTitle] ? @"titled" : @"untitled")];
+            
+            unsigned iteration = [context currentIteration];
+            [context pushClassName:[NSString stringWithFormat:@"i%i", iteration + 1]];
+            [context pushClassName:(0 == ((iteration + 1) % 2)) ? @"e" : @"o"];
+            if (iteration == ([context currentIterationsCount] - 1)) [context pushClassName:@"last-item"];
+            
+            [context startElement:@"div"];
+            {
+                [context startNewline];        // needed to simulate a call to -startElement:
+                [context stopWritingInline];
+                
+                SVTemplate *template = [self template];
+                
+                SVHTMLTemplateParser *parser =
+                [[SVHTMLTemplateParser alloc] initWithTemplate:[template templateString]
+                                                     component:graphic];
+                
+                [parser parseIntoHTMLContext:context];
+                [parser release];
+            }
+            [context endElement];
+        }
+        @finally
+        {
+            [context setCurrentHeaderLevel:level];
+        }
     }
-    @finally
-    {
-        [context setCurrentHeaderLevel:level];
-    }
+    
+    [context endGraphicContainer];
+    [pagelet release];
 }
 
 // For the benefit of pagelet HTML template
@@ -340,6 +366,17 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (NSNumber *)constrainedProportionsRatio; { return nil; }
 
+- (NSSize)aspectRatio;
+{
+    NSNumber *proportions = [self constrainedProportionsRatio];
+    if (proportions)
+    {
+        return NSMakeSize([[self constrainedProportionsRatio] floatValue], 1.0f);
+    }
+    return NSZeroSize;
+}
++ (NSSet *)keyPathsForValuesAffectingAspectRatio; { return [NSSet setWithObject:@"constrainedProportionsRatio"]; }
+
 - (void)makeOriginalSize;
 {
     [self setWidth:[NSNumber numberWithInt:200]];
@@ -357,6 +394,18 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 - (NSNumber *)elementWidthPadding; { return nil; }
 - (NSNumber *)elementHeightPadding; { return nil; }
 
+- (BOOL)elementOrDescendantsIsResizable:(SVElementInfo *)element;
+{
+    if ([element isHorizontallyResizable] || [element isVerticallyResizable]) return YES;
+    
+    for (SVElementInfo *anElement in [element subelements])
+    {
+        if ([self elementOrDescendantsIsResizable:anElement]) return YES;
+    }
+    
+    return NO;
+}
+
 - (BOOL)isExplicitlySized:(SVHTMLContext *)existingContext; // context may be nil
 {
     // See if our HTML includes size-binding anywhere
@@ -371,21 +420,13 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
         context = [[SVExplicitlySizedTestHTMLContext alloc] initWithOutputWriter:nil];
         [context setLiveDataFeeds:[[NSUserDefaults standardUserDefaults] boolForKey:kSVLiveDataFeedsKey]];
     }
-    [[context rootDOMController] stopObservingDependencies];
+    //[[context rootDOMController] stopObservingDependencies];
     
     
-    [self writeBody:context];
+    [self writeHTML:context];
     
     
-    BOOL result = NO;
-    for (WEKWebEditorItem *anItem in [[context rootDOMController] enumerator])
-    {
-        if ([anItem isKindOfClass:[SVResizableDOMController class]])
-        {
-            result = YES;
-            break;
-        }
-    }
+    BOOL result = [self elementOrDescendantsIsResizable:[context rootElement]];
     
     [context release];
     return result;
@@ -565,7 +606,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (NSString *)inlineGraphicClassName; { return nil; }
 
-- (void)writeBody:(SVHTMLContext *)context;
+- (void)writeHTML:(SVHTMLContext *)context;
 {
     SUBCLASSMUSTIMPLEMENT;
     [self doesNotRecognizeSelector:_cmd];
@@ -604,11 +645,6 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     SVTemplate *template = [[self class] placeholderTemplate];
 	NSString *result = [context parseTemplate:template object:self];
 	return result;
-}
-
-- (void)write:(SVHTMLContext *)context graphic:(id <SVGraphic>)graphic;
-{
-    [graphic writeBody:context];
 }
 
 #pragma mark Thumbnail
@@ -872,6 +908,21 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     [self setWidth:width];
 }
 
+- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID ancestorNode:(DOMNode *)node;
+{
+    SVDOMController *result = [[SVGraphicDOMController alloc] initWithIdName:elementID
+                                                                               ancestorNode:node];
+    [result setRepresentedObject:self];
+    
+    if ([[self placement] intValue] == SVGraphicPlacementInline) 
+    {
+        [result bind:NSWidthBinding toObject:self withKeyPath:@"width" options:nil];
+        [result setHorizontallyResizable:YES];
+    }
+    
+    return result;
+}
+
 @end
 
 
@@ -900,7 +951,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 @implementation SVExplicitlySizedTestHTMLContext
 
-- (void)writeGraphic:(id <SVGraphic,SVDOMControllerRepresentedObject>)graphic;
+- (void)writeGraphic:(id <SVGraphic>)graphic;
 {
     // Ignore since other graphics are irrelevant to determining if explicitly sized. Indeed, they can even mistakenly push the result to YES. #117012
 }

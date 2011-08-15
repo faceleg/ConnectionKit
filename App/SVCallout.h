@@ -7,9 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "SVGraphicContainer.h"
+#import "SVComponent.h"
 
 
-@interface SVCallout : NSObject <SVGraphicContainer>
+@interface SVCallout : NSObject <SVComponent>
 - (void)write:(SVHTMLContext *)context pagelets:(NSArray *)pagelets;
 @end

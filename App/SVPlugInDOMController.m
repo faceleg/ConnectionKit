@@ -1,31 +1,20 @@
 //
-//  SVResizableDOMController.m
+//  SVPlugInDOMController.m
 //  Sandvox
 //
 //  Created by Mike on 12/08/2010.
 //  Copyright 2010-2011 Karelia Software. All rights reserved.
 //
 
-#import "SVResizableDOMController.h"
+#import "SVPlugInDOMController.h"
 
-#import "SVGraphicDOMController.h"
+#import "SVGraphicContainerDOMController.h"
 #import "SVPlugInGraphic.h"
 #import "Sandvox.h"
 #import "SVWebEditorHTMLContext.h"
 
 
-static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
-
-
-@implementation SVResizableDOMController
-
-#pragma mark Dealloc
-
-- (void)dealloc
-{
-    [self setRepresentedObject:nil];
-    [super dealloc];
-}
+@implementation SVPlugInDOMController
 
 #pragma mark DOM
 
@@ -33,110 +22,37 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
 {
     [super loadHTMLElementFromDocument:document];
     
-    if ([self isHTMLElementCreated])
+    if ([self isHTMLElementLoaded])
     {
         DOMElement *element = [self HTMLElement];
         if (![element hasChildNodes] && ![[element tagName] isEqualToString:@"IMG"])
         {
             // Replace with placeholder
             NSString *parsedPlaceholderHTML = [[self representedObject] parsedPlaceholderHTMLFromContext:self.HTMLContext];
-            [[self HTMLElement] setInnerHTML:parsedPlaceholderHTML];
+            [(DOMHTMLElement *)[self HTMLElement] setInnerHTML:parsedPlaceholderHTML];
         }
     }
 }
 
-#pragma mark Content
-
-- (void)setRepresentedObject:(id)object
-{
-    [[self representedObject] removeObserver:self forKeyPath:@"width"];
-    [[self representedObject] removeObserver:self forKeyPath:@"height"];
-    
-    [super setRepresentedObject:object];
-    
-    [object addObserver:self forKeyPath:@"width" options:0 context:sObjectSizeObservationContext];
-    [object addObserver:self forKeyPath:@"height" options:0 context:sObjectSizeObservationContext];
-}
-
 #pragma mark Selection
 
-- (BOOL)isSelectable
+- (BOOL)allowsDirectAccessToWebViewWhenSelected;
 {
-    // Can be selected if graphic is explictly sized
-    SVPlugInGraphic *graphic = [self representedObject];
-    return [graphic isExplicitlySized];
-}
-
-- (void)delete;
-{
-    // Remove parent controller instead of ourself
-    SVGraphicDOMController *parent = [self enclosingGraphicDOMController];
-    OBASSERT(parent);
+    // Generally, no. EXCEPT for inline, non-wrap-causing images
+    BOOL result = NO;
     
-    [parent delete];
+    SVPlugInGraphic *image = [self representedObject];
+    if ([image displayInline])
+    {
+        result = YES;
+    }
+    
+    return result;
 }
 
 - (BOOL)shouldHighlightWhileEditing; { return YES; }
 
-#pragma mark Updating
-
-@synthesize sizeDelta = _delta;
-
-- (void)updateSize;
-{
-    // Workaround for #94381. Make sure any selectable parent redraws
-    [[[self selectableAncestors] lastObject] setNeedsDisplay];
-    
-    
-    
-    DOMHTMLElement *element = [self HTMLElement];
-    
-    NSObject *object = [self representedObject];
-    if ([object isKindOfClass:[SVPlugInGraphic class]]) object = [(SVPlugInGraphic *)object plugIn];
-    
-    
-    // Push size change into DOM
-    SVHTMLContext *context = [[SVHTMLContext alloc] initWithOutputWriter:nil
-                                                      inheritFromContext:[self HTMLContext]];
-    
-    [context buildAttributesForResizableElement:[[element tagName] lowercaseString]
-                      object:object
-                    DOMControllerClass:[self class]
-							 sizeDelta:[self sizeDelta]
-                               options:[self resizeOptions]];			// Need something dynamic here?
-    
-    NSDictionary *attributes = [[context currentAttributes] attributesAsDictionary];
-    [element setAttribute:@"width" value:[attributes objectForKey:@"width"]];
-    [element setAttribute:@"height" value:[attributes objectForKey:@"height"]];
-    [element setAttribute:@"style" value:[attributes objectForKey:@"style"]];
-    
-    [context close];
-    [context release];
-    
-    
-    
-    // Finish
-    [self didUpdateWithSelector:_cmd];
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context
-{
-    if (context == sObjectSizeObservationContext)
-    {
-        [self setNeedsUpdateWithSelector:@selector(updateSize)];
-    }
-    else
-    {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    }
-}
-
 #pragma mark Resize
-
-@synthesize resizeOptions = _resizeOptions;
 
 - (BOOL)shouldResizeInline; { return [[self representedObject] shouldWriteHTMLInline]; }
 
@@ -149,22 +65,6 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     if (result.height < MIN_GRAPHIC_LIVE_RESIZE) result.height = MIN_GRAPHIC_LIVE_RESIZE;
     
     return result;
-}
-
-- (CGFloat)maxWidth; { return [[self enclosingGraphicDOMController] maxWidth]; }
-
-- (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
-{
-    // Apply the change
-    SVPlugInGraphic *graphic = [self representedObject];
-    
-    NSNumber *width = (size.width > 0 ? [NSNumber numberWithInt:size.width] : nil);
-    NSNumber *height = (size.height > 0 ? [NSNumber numberWithInt:size.height] : nil);
-    [graphic setWidth:width];
-    [graphic setHeight:height];
-    
-    // Push into view immediately
-    [self updateIfNeeded];
 }
 
 - (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;
@@ -186,7 +86,7 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     
     
     // Disregard height if requested
-    if ([self resizeOptions] & SVResizingDisableVertically)
+    if (![self isVerticallyResizable])
     {
         size.height = [[graphic height] unsignedIntegerValue];
     }
@@ -307,47 +207,7 @@ static NSString *sObjectSizeObservationContext = @"SVImageSizeObservation";
     unsigned int result = [[self enclosingGraphicDOMController] resizingMask];  // inline
     if (!result) result = [self resizingMaskForDOMElement:[self HTMLElement]];  // sidebar & callout
     
-    SVPlugInGraphic *graphic = [self representedObject];
-    if (!([self resizeOptions] & SVResizingDisableVertically) &&
-        [graphic isExplicitlySized])
-    {
-        result = (result | kCALayerBottomEdge);
-    }
-    
-    return result;
-}
-
-#pragma mark Layout
-
-- (NSRect)selectionFrame;
-{
-    NSRect result = NSZeroRect;
-    
-    if ([self isSelectable])
-    {
-        DOMElement *element = [self HTMLElement];
-        result = [element boundingBox];
-        
-        // Take into account padding and border
-        DOMCSSStyleDeclaration *style = [[element ownerDocument] getComputedStyle:element
-                                                                    pseudoElement:nil];
-        
-        CGFloat padding = [[style paddingLeft] floatValue];
-        result.origin.x += padding;
-        result.size.width -= [[style paddingRight] floatValue] + padding;
-        
-        padding = [[style paddingTop] floatValue];
-        result.origin.y += padding;
-        result.size.height -= [[style paddingBottom] floatValue] + padding;
-        
-        padding = [[style borderLeftWidth] floatValue];
-        result.origin.x += padding;
-        result.size.width -= [[style borderRightWidth] floatValue] + padding;
-        
-        padding = [[style borderTopWidth] floatValue];
-        result.origin.y += padding;
-        result.size.height -= [[style borderBottomWidth] floatValue] + padding;
-    }
+    result = (result | [super resizingMask]);
     
     return result;
 }

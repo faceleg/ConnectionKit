@@ -70,11 +70,9 @@
     [super dealloc];
 }
 
-- (void)loadHTMLElementFromDocument:(DOMDocument *)document;
+- (void)loadHTMLElement;
 {
-    [super loadHTMLElementFromDocument:document];
-    
-    if (![self isHTMLElementCreated]) return;
+    [super loadHTMLElement];
     
     
     // Text element is the kBlock
@@ -408,7 +406,7 @@
     
     
     // Remove originals. For some reason -delete: does not fire change notifications
-    [self deleteObjects:self];
+    [self deleteForward:self];
     
     
     // Update selection
@@ -512,9 +510,6 @@
     NSObject *object = [newChildController representedObject];
     if (!object || [object isKindOfClass:[SVCallout class]])
     {
-        DOMDocument *doc = [[self HTMLElement] ownerDocument];
-        [newChildController loadHTMLElementFromDocument:doc];
-    
         // Probably a callout, search for a matching one
         NSArray *objects = [newChildController valueForKeyPath:@"childWebEditorItems.representedObject"];
         for (WEKWebEditorItem *anItem in [self childWebEditorItems])
@@ -696,320 +691,6 @@
     return result;
 }
 
-#pragma mark Moving
-
-- (DOMNode *)nodeToMoveControllerBefore:(SVDOMController *)controller;
-{
-    DOMNode *element = [controller HTMLElement];
-    DOMElement *textElement = [self textHTMLElement];
-
-    DOMTreeWalker *walker = [[element ownerDocument] createTreeWalker:textElement
-                                                           whatToShow:DOM_SHOW_ALL
-                                                               filter:nil
-                                               expandEntityReferences:NO];
-    [walker setCurrentNode:element];
-    
-    DOMNode *result = [walker ks_previousNodeIgnoringChildren];
-    while (result && ![result hasSize])
-    {
-        result = [walker ks_previousNodeIgnoringChildren];
-    }
-    
-    
-    // Make sure it's a move up to a paragraph
-    if (result)
-    {
-        DOMNode *parent = [result parentNode];
-        while (parent != textElement)
-        {
-            result = parent;
-            parent = [result parentNode];
-        }
-    }
-    
-    
-    return result;
-}
-
-- (DOMNode *)nodeToMoveControllerAfter:(SVDOMController *)controller;
-{
-    DOMNode *element = [controller HTMLElement];
-    
-    if ([element ks_isDescendantOfElement:[self textHTMLElement]])  //  this should always be true really
-    {
-        while ([element parentNode] != [self textHTMLElement])
-        {
-            element = [element parentNode];
-        }
-    }
-    
-
-    DOMTreeWalker *walker = [[element ownerDocument] createTreeWalker:[self textHTMLElement]
-                                                           whatToShow:DOM_SHOW_ALL
-                                                               filter:nil
-                                               expandEntityReferences:NO];
-    [walker setCurrentNode:element];
-    
-    
-    // Seek out the next element worth swapping with. It must:
-    //  1.  Be visible on screen (i.e. element or non-whitespace text)
-    //  2.  Sit below the item being dragged, to account for dragging a floated item
-    DOMNode *result = [walker ks_nextNodeIgnoringChildren];
-    while (result && ![result hasSize])
-    {
-        // Seek out next node.
-        result = [walker ks_nextNodeIgnoringChildren];
-    }
-    
-    return result;
-}
-
-- (void)moveGraphicWithDOMController:(SVDOMController *)graphicController
-                          toPosition:(CGPoint)position
-                               event:(NSEvent *)event;
-{
-    OBPRECONDITION(graphicController);
-    
-    SVGraphic *graphic = [graphicController representedObject];
-    if ([graphic isKindOfClass:[SVCallout class]]) graphic = nil;
-    
-   
-    // Restrict position to bounds of text
-    CGPoint currentPosition = [graphicController position];
-    NSRect frame = [graphicController selectionFrame];
-    frame.origin.x += position.x - currentPosition.x;
-    frame.origin.y += position.y - currentPosition.y;
-    
-    NSRect bounds = [[self textHTMLElement] boundingBox];
-    
-    // Expand the bottom of the box out to the end of main content
-    NSRect docBounds = [[[[self HTMLElement] ownerDocument] getElementById:@"main-content"] boundingBox];
-    bounds.size.height = docBounds.size.height - (NSMinY(bounds) - NSMinY(docBounds)) - 1.0f;
-    
-    
-    if (NSMinX(frame) < NSMinX(bounds))
-    {
-        position.x += (NSMinX(bounds) - NSMinX(frame));
-    }
-    else if (NSMaxX(frame) > NSMaxX(bounds))
-    {
-        position.x -= (NSMaxX(frame) - NSMaxX(bounds));
-    }
-    
-    if (NSMinY(frame) < NSMinY(bounds))
-    {
-        position.y += (NSMinY(bounds) - NSMinY(frame));
-    }
-    else if (NSMaxY(frame) > NSMaxY(bounds))
-    {
-        position.y -= (NSMaxY(frame) - NSMaxY(bounds));
-    }
-    
-    
-    CGPoint staticPosition = [graphicController positionIgnoringRelativePosition];
-    
-    if ([[graphic placement] intValue] == SVGraphicPlacementInline)
-    {
-        // Snap to fit current wrap. #94884
-        SVTextAttachment *attachment = [graphic textAttachment];
-        SVGraphicWrap wrap = [[attachment wrap] intValue];
-        
-        if (position.x > staticPosition.x - 10.0f &&
-            position.x < staticPosition.x + 10.0f)
-        {
-            position.x = staticPosition.x;
-        }
-        else
-        {
-            // Set wrap to match
-            if (position.x < NSMidX(bounds))
-            {
-                if (wrap >= SVGraphicWrapLeft || wrap <= SVGraphicWrapFloat_1_0)    // is it floated?
-                {
-                    wrap = SVGraphicWrapRight;
-                }
-                else
-                {
-                    CGFloat leftEdge = NSMinX(frame) + position.x - currentPosition.x;
-                    if (leftEdge - NSMinX(bounds) < NSMidX(bounds) - position.x) // closer to left
-                    {
-                        wrap = SVGraphicWrapRightSplit;
-                    }
-                    else
-                    {
-                        wrap = SVGraphicWrapCenterSplit;
-                    }
-                }
-            }
-            else
-            {
-                if (wrap >= SVGraphicWrapLeft || wrap <= SVGraphicWrapFloat_1_0)    // is it floated?
-                {
-                    wrap = SVGraphicWrapLeft;
-                }
-                else
-                {
-                    CGFloat rightEdge = NSMaxX(frame) + position.x - currentPosition.x;
-                    if (NSMaxX(bounds) - rightEdge < position.x - NSMidX(bounds)) // closer to right
-                    {
-                        wrap = SVGraphicWrapLeftSplit;
-                    }
-                    else
-                    {
-                        wrap = SVGraphicWrapCenterSplit;
-                    }
-                }
-            }
-            
-            if ([[attachment wrap] intValue] != wrap)
-            {
-                [attachment setWrap:[NSNumber numberWithInt:wrap]];
-                [graphicController updateIfNeeded]; // push through so position can be set accurately
-            }
-        }
-        
-        
-        // Show guide for choice of wrap
-        NSNumber *guide;
-        switch (wrap)
-        {
-            case SVGraphicWrapRightSplit:
-            case SVGraphicWrapRight:
-                guide = [NSNumber numberWithFloat:NSMinX(bounds)];
-                break;
-            case SVGraphicWrapCenterSplit:
-                guide = [NSNumber numberWithFloat:NSMidX(bounds)];
-                break;
-            case SVGraphicWrapLeftSplit:
-            case SVGraphicWrapLeft:
-                guide = [NSNumber numberWithFloat:NSMaxX(bounds)];
-                break;
-            default:
-                guide = nil;
-        }
-        [[self webEditor] setXGuide:guide yGuide:nil];
-    }
-    else
-    {
-        // Callouts only move vertically
-        position.x = staticPosition.x;
-    }
-    
-    
-    // Is there space to rearrange?
-    if (position.y > currentPosition.y)
-    {
-        DOMNode *nextNode = [self nodeToMoveControllerAfter:graphicController];
-        if (nextNode)
-        {
-            // Is there space to make the move?
-            CGFloat gap = position.y - staticPosition.y;
-            NSSize size = [nextNode totalBoundingBox].size;
-            
-            if (gap >= 0.5 * size.height)
-            {
-                // Move the element
-                [graphicController moveDown];
-            }
-        }
-    }
-    else if (position.y < currentPosition.y)
-    {
-        DOMNode *previousNode = [self nodeToMoveControllerBefore:graphicController];
-        if (previousNode)
-        {
-            NSRect previousFrame = [previousNode boundingBox];            
-            if (previousFrame.size.height <= 0.0f || NSMinY(frame) < NSMidY(previousFrame))
-            {
-                // Move the element
-                [graphicController moveUp];
-            }
-        }
-    }
-    
-    
-    // Move
-    [graphicController moveToPosition:position];
-    
-    
-    
-    
-    
-    
-    
-    return;
-}
-
-/*  We'll leave it up to the individual graphics
- */
-- (void)moveObjectUp:(id)sender;
-{
-    [[self selectedItems] makeObjectsPerformSelector:@selector(moveUp)];
-}
-- (void)moveObjectDown:(id)sender;
-{
-    [[self selectedItems] makeObjectsPerformSelector:@selector(moveDown)];
-}
-
-- (void)moveItemUp:(WEKWebEditorItem *)item;
-{
-    WEKWebEditorView *webEditor = [self webEditor];
-    WEKSelection *selection = [[webEditor webView] wek_selection];
-    DOMNode *previousNode = [item previousDOMNode];
-    DOMNode *targetNode = [self nodeToMoveControllerBefore:(SVDOMController *)item];
-    
-    while (previousNode && [webEditor shouldChangeTextInDOMRange:[item DOMRange]])
-    {
-        [item exchangeWithPreviousDOMNode];
-        
-        // Have we made a noticeable move yet?
-        if (previousNode == targetNode) break;
-        
-        previousNode = [item previousDOMNode];
-    }
-    
-    
-    // The target couldn't be found? Time to move manually I guess. This should only be reached for images, so not a problem display-wise
-    if (!previousNode && [webEditor shouldChangeText:self])
-    {
-        [[targetNode parentNode] insertBefore:[item HTMLElement] refChild:targetNode];
-    }
-    
-    
-    [webEditor didChangeText];
-    [[webEditor webView] wek_setSelection:selection];
-}
-
-- (void)moveItemDown:(WEKWebEditorItem *)item;
-{
-    // Save and then restore selection for if it's inside an item that's getting exchanged
-    WEKWebEditorView *webEditor = [item webEditor];
-    WEKSelection *selection = [[webEditor webView] wek_selection];
-    DOMNode *nextNode = [item nextDOMNode];
-    DOMNode *targetNode = [self nodeToMoveControllerAfter:(SVDOMController *)item];
-
-    while (nextNode && [webEditor shouldChangeTextInDOMRange:[item DOMRange]])
-    {
-        [item exchangeWithNextDOMNode];
-        
-        // Have we made a noticeable move yet?
-        if (nextNode == targetNode) break;
-        
-        nextNode = [item nextDOMNode];
-    }
-    
-    
-    // The target couldn't be found? Time to move manually I guess. This should only be reached for images, so not a problem display-wise
-    if (!nextNode && [webEditor shouldChangeText:self])
-    {
-        [[targetNode parentNode] insertBefore:[item HTMLElement] refChild:[targetNode nextSibling]];
-    }
-    
-    
-    [webEditor didChangeText];
-    [[webEditor webView] wek_setSelection:selection];
-}
-
 #pragma mark Drawing
 
 - (void)drawRect:(NSRect)dirtyRect inView:(NSView *)view;
@@ -1071,7 +752,7 @@
                             anItem = [anItem parentWebEditorItem];
                         }
                         
-                        DOMHTMLElement *anItemElement = [anItem HTMLElement];
+                        DOMElement *anItemElement = [anItem HTMLElement];
                         if (aNode == anItemElement || [treeWalker previousSibling] == anItemElement)
                         {
                             aNode = (id)[NSNull null];  // ugly, I know
@@ -1354,9 +1035,13 @@
 
 @implementation SVArticle (SVArticleDOMController)
 
-- (SVTextDOMController *)newTextDOMController;
+- (SVTextDOMController *)newTextDOMControllerWithIdName:(NSString *)elementID ancestorNode:(DOMNode *)node;
 {
-    SVArticleDOMController *result = [[SVArticleDOMController alloc] initWithRepresentedObject:self];
+    SVArticleDOMController *result = [[SVArticleDOMController alloc] initWithIdName:elementID
+                                                                       ancestorNode:node
+                                                                           textStorage:self];
+    
+    [result setRepresentedObject:self];
     [result setRichText:YES];
     [result setImportsGraphics:YES];
     

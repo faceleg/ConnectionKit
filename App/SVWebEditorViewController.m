@@ -18,7 +18,7 @@
 #import "SVLogoImage.h"
 #import "KTMaster.h"
 #import "KTPage.h"
-#import "SVGraphicDOMController.h"
+#import "SVGraphicContainerDOMController.h"
 #import "SVGraphicFactory.h"
 #import "KTImageScalingURLProtocol.h"
 #import "SVLinkManager.h"
@@ -36,6 +36,7 @@
 #import "SVWebContentObjectsController.h"
 #import "SVWebEditorHTMLContext.h"
 #import "SVWebEditorTextRange.h"
+#import "SVWebEditorView.h"
 
 #import "NSArray+Karelia.h"
 #import "NSObject+Karelia.h"
@@ -148,7 +149,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 
 - (void)loadView
 {
-    WEKWebEditorView *editor = [[WEKWebEditorView alloc] init];
+    WEKWebEditorView *editor = [[SVWebEditorView alloc] init];
     
     [self setView:editor];
     [self setWebEditor:editor];
@@ -341,7 +342,14 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     
     SVWebEditorHTMLContext *context = [self HTMLContext];
     [_loadedPage release]; _loadedPage = [[context page] retain];
-    [webEditor setContentItem:[self contentDOMController]];
+    
+    SVContentDOMController *contentController = [[SVContentDOMController alloc]
+                                                 initWithWebEditorHTMLContext:[self HTMLContext]
+                                                 node:[[self webEditor] HTMLDocument]];
+    
+    [self setContentDOMController:contentController];
+    [webEditor setContentItem:contentController];
+    [contentController release];
     
     [[self graphicsController] setSelectedObjects:selection];    // restore selection
     
@@ -571,7 +579,6 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     if (context != [self HTMLContext])
     {
         [_context release]; _context = [context retain];
-        [self setContentDOMController:[context rootDOMController]];
     }
 }
 
@@ -584,11 +591,14 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     
     
     //  Populate controller with content. For now, this is simply all the represented objects of all the DOM controllers
-    id anObject = [item representedObject];
-    if (anObject && //  second bit of this if statement: images are owned by 2 DOM controllers, DON'T insert twice!
-        ![[_graphicsController arrangedObjects] containsObjectIdenticalTo:anObject])
+    if ([item isSelectable])
     {
-        [[self graphicsController] addObject:anObject];
+        id anObject = [item representedObject];
+        if (anObject && //  second bit of this if statement: images are owned by 2 DOM controllers, DON'T insert twice!
+            ![[[self graphicsController] arrangedObjects] containsObjectIdenticalTo:anObject])
+        {
+            [[self graphicsController] addObject:anObject];
+        }
     }
     
     
@@ -1194,6 +1204,11 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     OBPRECONDITION(webEditor == [self webEditor]);
     
     
+    // If the selection was forced to change so that we never receieved a -…should… message, our graphic controller's selection may now be out of sync with the views. In rare circumstances, this could cause the link manager to try to access an object that has been deleted
+    // Fortunately the fix is simply to sync the two up again now
+    [[self graphicsController] setSelectedObjects:[[webEditor selectedItems] valueForKey:@"representedObject"]];
+    
+    
     // This used to be done in -…shouldChange… but that often caused WebView to overrite the result moments later
     [self synchronizeLinkManagerWithSelection:[webEditor selectedDOMRange]];
     
@@ -1444,11 +1459,11 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     }
     else if (action == @selector(moveUp:))
     {
-        [[self firstResponderItem] doCommandBySelector:@selector(moveObjectUp:)];
+        [[sender firstResponderItem] doCommandBySelector:@selector(moveObjectUp:)];
     }
     else if (action == @selector(moveDown:))
     {
-        [[self firstResponderItem] doCommandBySelector:@selector(moveObjectDown:)];
+        [[sender firstResponderItem] doCommandBySelector:@selector(moveObjectDown:)];
     }
     else if (action == @selector(reload:))
     {
@@ -1641,7 +1656,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     
     // Node might be in a different frame. #112424
     DOMNode *nodeToTest = node;
-    DOMHTMLElement *myElement = [self HTMLElement];
+    DOMElement *myElement = [self HTMLElement];
     if (myElement)
     {
         while ([nodeToTest ownerDocument] != [myElement ownerDocument])

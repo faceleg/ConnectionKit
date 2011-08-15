@@ -494,73 +494,21 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 #pragma mark Graphics
 
-- (void)writeBodyOfGraphic:(id <SVGraphic>)graphic;
-{
-    [self incrementHeaderLevel];
-    @try
-    {
-        // Graphic body
-        if (![graphic isPagelet] && ![graphic shouldWriteHTMLInline])
-        {
-            [self startElement:@"div"]; // <div class="graphic">
-            
-            
-            [self pushClassName:@"figure-content"];  // identifies for #84956
-        }
-        
-        if (![graphic isKindOfClass:[SVPlugInGraphic class]] || [graphic isKindOfClass:[SVMediaGraphic class]])
-        {
-            // It's almost certainly media, generate DOM controller to match
-            [graphic writeBody:self];
-        }
-        else
-        {
-            @try
-            {
-                [[self writeElement:@"div" contentsInvocationTarget:graphic]
-                 writeBody:self];
-            }
-            @catch (NSException *exception)
-            {
-                // Was probably caused by a plug-in. Log and soldier on. #88083
-                NSLog(@"Writing graphic body raised exception, probably due to incorrect use of HTML Writer");
-            }
-        }
-        
-        if (![graphic isPagelet] && ![graphic shouldWriteHTMLInline])
-        {
-            [self endElement];
-        }
-    }
-    @finally
-    {
-        [self decrementHeaderLevel];
-    }
-}
-
 - (void)writeGraphic:(id <SVGraphic>)graphic;
 {
-    // Special case. When writing a graphic nested in itself that's our cue to generate the body
-    if (graphic == [self currentGraphicContainer])
-    {
-        return [self writeBodyOfGraphic:graphic];
-    }
-    
-    
     // Update number of graphics
     _numberOfGraphics++;
+    BOOL written = NO;
     
-    id <SVGraphicContainer> container = [self currentGraphicContainer];
-    [self beginGraphicContainer:graphic];
-    
-    if (container)
+    id <SVComponent> container = [self currentGraphicContainer];
+    if ([container respondsToSelector:@selector(HTMLContext:writeGraphic:)])
     {
         if ([graphic isPagelet])
         {
             _writingPagelet = YES;
             @try
             {
-                [container write:self graphic:graphic];
+                written = [container HTMLContext:self writeGraphic:graphic];
             }
             @finally
             {
@@ -569,15 +517,16 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
         }
         else
         {
-            [container write:self graphic:graphic];
+            written = [container HTMLContext:self writeGraphic:graphic];
         }
     }
-    else 
-    {
-        [graphic writeBody:self];
-    }
     
-    [self endGraphicContainer];
+    if (!written)
+    {
+        [self beginGraphicContainer:graphic];
+        [graphic writeHTML:self];
+        [self endGraphicContainer];
+    }
 }
 
 - (void)writeGraphics:(NSArray *)graphics;  // convenience
@@ -596,12 +545,12 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 #pragma mark Graphic Containers
 
-- (id <SVGraphicContainer>)currentGraphicContainer;
+- (id <SVComponent>)currentGraphicContainer;
 {
     return [_graphicContainers lastObject];
 }
 
-- (void)beginGraphicContainer:(id <SVGraphicContainer>)container;
+- (void)beginGraphicContainer:(id <SVComponent>)container;
 {
     [_graphicContainers addObject:container];
 }
@@ -745,8 +694,16 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 #pragma mark Text Blocks
 
-- (void)willBeginWritingHTMLTextBlock:(SVHTMLTextBlock *)block; { }
-- (void)didEndWritingHTMLTextBlock; { }
+- (void)willBeginWritingHTMLTextBlock:(SVHTMLTextBlock *)block;
+{
+    [self beginGraphicContainer:block];
+}
+
+- (void)didEndWritingHTMLTextBlock;
+{
+    [self endGraphicContainer];
+}
+
 - (void)willWriteSummaryOfPage:(SVSiteItem *)page; { }
 
 #pragma mark Sidebar
