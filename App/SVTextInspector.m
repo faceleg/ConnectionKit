@@ -8,6 +8,7 @@
 
 #import "SVTextInspector.h"
 
+#import "WEKWebEditorView.h"
 #import "WEKWebViewEditing.h"
 
 
@@ -85,11 +86,20 @@
     }
     [oListPopUp setEnabled:enable];
     
+    
+    [oIndentLevelSegmentedControl setEnabled:(listEditor != nil)];
     if ([listEditor conformsToProtocol:@protocol(NSUserInterfaceValidations)])
     {
-        enable = [listEditor validateUserInterfaceItem:oIndentLevelSegmentedControl];
+        SVValidatedUserInterfaceItem *item = [[SVValidatedUserInterfaceItem alloc] init];
+        
+        [item setAction:@selector(outdent:)];
+        enable = [listEditor validateUserInterfaceItem:item];
+        [oIndentLevelSegmentedControl setEnabled:enable forSegment:0];
+        
+        [item setAction:@selector(indent:)];
+        enable = [listEditor validateUserInterfaceItem:item];
+        [oIndentLevelSegmentedControl setEnabled:enable forSegment:1];
     }
-    [oIndentLevelSegmentedControl setEnabled:enable forSegment:1];
 }
 
 #pragma mark General
