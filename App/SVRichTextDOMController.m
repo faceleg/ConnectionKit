@@ -750,6 +750,19 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
         // This is the last pagelet. Disallow dragging down
         //if (position.y < startPosition.y) position = startPosition;
     }
+    
+    
+    // Old logic from article controller:
+    //DOMNode *previousNode = [self nodeToMoveItemBefore:graphicController];
+    //if (previousNode)
+    //{
+    //    NSRect previousFrame = [previousNode boundingBox];            
+    //    if (previousFrame.size.height <= 0.0f || NSMinY(frame) < NSMidY(previousFrame))
+    //    {
+    //        // Move the element
+    //        [graphicController moveUp];
+    //    }
+    //}
 }
 
 - (NSPoint)snapController:(SVDOMController *)controller toFit:(NSPoint)result;
