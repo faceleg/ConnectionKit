@@ -2101,12 +2101,6 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
             }
         }
         
-        else if (command == @selector(createLink:))
-        {
-            [self doCommandBySelector:command];
-            result = NO;
-        }
-        
         else if (command == @selector(delete:))
         {
             // For text, generally want WebView to handle it. But if there's an empty selection, nothing for WebKit to do so see if we can take over
