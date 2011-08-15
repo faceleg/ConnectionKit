@@ -2170,8 +2170,8 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
                 DOMRange *selection = [self selectedDOMRange];
                 DOMNode *container = [selection commonAncestorContainer];
                 
-                result = ([container ks_isDescendantOfElementWithTagName:@"UL"] ||
-                          [container ks_isDescendantOfElementWithTagName:@"OL"]);
+                result = ([container ks_ancestorWithTagName:@"UL"] ||
+                          [container ks_ancestorWithTagName:@"OL"]);
             }
         }
     }
