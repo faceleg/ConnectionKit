@@ -47,24 +47,6 @@
 
 static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMControllerPageletsObservation";
 
-- (id)initWithPageletsController:(SVSidebarPageletsController *)pageletsController;
-{
-    // Get pagelets controller nicelt setup
-    OBPRECONDITION(pageletsController);
-    
-    
-    [self init];
-    [self setElementIdName:@"sidebar-container" includeWhenPublishing:YES];
-    
-    _pageletsController = [pageletsController retain];
-    [_pageletsController addObserver:self
-                          forKeyPath:@"arrangedObjects"
-                             options:0
-                             context:sSVSidebarDOMControllerPageletsObservation];
-    
-    return self;
-}
-
 - (void)awakeFromHTMLContext:(SVWebEditorHTMLContext *)context;
 {
     [super awakeFromHTMLContext:context];

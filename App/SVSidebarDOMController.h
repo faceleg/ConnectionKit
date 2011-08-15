@@ -29,8 +29,6 @@
     BOOL        _drawAsDropTarget;
 }
 
-- (id)initWithPageletsController:(SVSidebarPageletsController *)pageletsController;
-
 @property(nonatomic, retain) DOMElement *sidebarDivElement;
 @property(nonatomic, retain) DOMElement *contentDOMElement;
 

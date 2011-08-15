@@ -269,26 +269,6 @@
     return result;
 }
 
-#pragma mark Sidebar
-
-- (void)XstartSidebar:(SVSidebar *)sidebar;
-{
-    // Create controller
-    SVSidebarDOMController *controller = [[SVSidebarDOMController alloc]
-                                          initWithPageletsController:[self sidebarPageletsController]];
-    
-    [controller setRepresentedObject:sidebar];
-    
-    // Store controller
-    [self startDOMController:controller];    
-    
-    
-    [super startSidebar:sidebar];
-    
-    // Finish up
-    [controller release];
-}
-
 #pragma mark Element Primitives
 
 - (void)startElement:(NSString *)elementName writeInline:(BOOL)writeInline; // for more control
