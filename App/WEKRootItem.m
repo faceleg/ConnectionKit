@@ -8,6 +8,8 @@
 
 #import "WEKRootItem.h"
 
+#import "WEKWebEditorView.h"
+
 
 @implementation WEKRootItem
 
