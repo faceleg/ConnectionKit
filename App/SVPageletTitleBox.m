@@ -8,6 +8,7 @@
 
 #import "SVPageletTitleBox.h"
 
+#import "SVHTMLTextBlock.h"
 #import "SVTextAttachment.h"
 #import "SVTextDOMController.h"
 
