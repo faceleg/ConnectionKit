@@ -351,18 +351,25 @@
         sWhitespace = [[[NSCharacterSet fullWhitespaceAndNewlineCharacterSet] setByRemovingCharactersInString:@" "] copy];
     }
     
-    // The starting text of an element wants whitespace trimmed
+    // The starting text of an element wants leading whitespace trimmed
     if ([textNode previousSibling]) return textNode;
     
     NSString *text = [textNode data];
-    NSString *trimmedText = [text stringByTrimmingCharactersInSet:sWhitespace];
+    NSRange leadingWhitespaceRange = [text rangeOfCharacterFromSet:sWhitespace options:NSAnchoredSearch];
     
-    if ([text length] > [trimmedText length])
+    if (leadingWhitespaceRange.location == 0)
     {
-        if ([trimmedText length])
+        // If there's lots of leading whitespace, this is going to create lots of temp strings, but that's quite an edge case so I'm not worrying for now
+        do
+        {
+            text = [text substringFromIndex:leadingWhitespaceRange.length];
+            leadingWhitespaceRange = [text rangeOfCharacterFromSet:sWhitespace options:NSAnchoredSearch];
+        }
+        while (leadingWhitespaceRange.location == 0);
+        
+        if ([text length])
         {
             // Update DOM with the trimmed text
-            text = trimmedText;
             [textNode setData:text];
         }
         else
