@@ -8,8 +8,8 @@
 
 #import "SVParagraphedHTMLWriterDOMAdaptor.h"
 
-#import "NSString+Karelia.h"
 #import "DOMNode+Karelia.h"
+#import "NSString+Karelia.h"
 
 
 @implementation SVParagraphedHTMLWriterDOMAdaptor
@@ -208,23 +208,6 @@
 
 #pragma mark Characters
 
-- (DOMNode *)willWriteDOMText:(DOMText *)textNode;
-{
-   if ([[self XMLWriter] openElementsCount] > 0)
-   {
-       // Ignore whitespace
-       DOMNode *nextNode = [textNode nextSibling];
-       
-       if (!nextNode && ![textNode previousSibling] && [[textNode data] isWhitespace])
-       {
-           [[textNode parentNode] removeChild:textNode];
-           return nextNode;
-       }
-    }
-    
-    return [super willWriteDOMText:textNode];
-}
-
 - (DOMNode *)didWriteDOMText:(DOMText *)textNode nextNode:(DOMNode *)nextNode;
 {
     DOMNode *result = [super didWriteDOMText:textNode nextNode:nextNode];
@@ -237,7 +220,7 @@
 {
     BOOL result;
     
-    // Only a handul of block-level elements are supported. They can only appear at the top-level, or directly inside a list item
+    // Only a handful of block-level elements are supported. They can only appear at the top-level, or directly inside a list item
     if ([tagName isEqualToString:@"P"] ||
         [tagName isEqualToString:@"UL"] ||
         [tagName isEqualToString:@"OL"] ||

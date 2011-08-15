@@ -359,11 +359,21 @@
     
     if ([text length] > [trimmedText length])
     {
-        text = trimmedText;
-        [textNode setData:text];
+        if ([trimmedText length])
+        {
+            // Update DOM with the trimmed text
+            text = trimmedText;
+            [textNode setData:text];
+        }
+        else
+        {
+            // Element was all whitespace so chuck it
+            result = [textNode nextSibling];
+            [[textNode parentNode] removeChild:textNode];
+        }
     }
     
-    return textNode;
+    return result;
 }
 
 #pragma mark Cleanup
