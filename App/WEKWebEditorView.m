@@ -2053,10 +2053,85 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     return (WebDragSourceActionDHTML | WebDragSourceActionSelection);
 }
 
-- (BOOL)webView:(WebView *)sender shouldPerformAction:(SEL)action fromSender:(id)fromObject;
+- (BOOL)webView:(WebView *)webView shouldPerformAction:(SEL)command fromSender:(id)fromObject;
 {
-    // Give focused text a chance
-    BOOL result = ![(WEKWebEditorItem *)_focusedText tryToPerform:action with:fromObject];
+    BOOL result = YES;
+    
+    
+    // _forwardedWebViewCommand indicates that the command is already being processed by the Web Editor, so it's now up to the WebView to handle. Otherwise it's easy to get stuck in an infinite loop.
+    if (_forwardedWebViewCommand) return result;
+    
+    
+    
+    // Does the text view want to take command?
+    result = ![_focusedText webEditorTextDoCommandBySelector:command];
+    
+    // Is it a command which we handle? (our implementation may well call back through to the WebView when appropriate)
+    if (result)
+    {
+        if (command == @selector(moveUp:) || command == @selector(moveDown:))
+        {   // don't want these to go to self
+        }
+        
+        else if (command == @selector(moveLeft:) || command == @selector(moveRight:))
+        {
+            // Handle ourselves
+            [self doCommandBySelector:command];
+            result = NO;
+        }
+        
+        else if (command == @selector(cancelOperation:))
+        {
+            // End editing
+            if ([[self editingItems] count])
+            {
+                [self setEditingItems:nil];
+                //result = YES; // still let webkit do its default action too
+            }
+        }
+        
+        else if (command == @selector(clearStyles:))
+        {
+            // Get no other delegate method warning of impending change, so fake one here
+            DOMRange *range = [self selectedDOMRange];
+            if (!range || ![self shouldChangeTextInDOMRange:range])
+            {
+                result = NO;
+                NSBeep();
+            }
+        }
+        
+        else if (command == @selector(createLink:))
+        {
+            [self doCommandBySelector:command];
+            result = NO;
+        }
+        
+        else if (command == @selector(delete:))
+        {
+            // For text, generally want WebView to handle it. But if there's an empty selection, nothing for WebKit to do so see if we can take over
+            DOMRange *selection = [self selectedDOMRange];
+            if (selection && [selection collapsed])
+            {
+                [self delete:nil];
+                result = NO;
+            }
+            else
+            {
+                // WebKit BUG: -delete: doesn't ask permission of the delegate, so we must do so here
+                [self webView:webView shouldDeleteDOMRange:selection];
+            }
+        }
+        
+        // Treat Shift-Return to insert a linebreak. #102658
+        else if (command == @selector(insertNewline:) &&
+                 [[[self window] currentEvent] modifierFlags] & NSShiftKeyMask)
+        {
+            [webView insertNewlineIgnoringFieldEditor:self];
+            result = NO;
+        }
+    }
+    
     return result;
 }
 
@@ -2620,84 +2695,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 - (BOOL)webView:(WebView *)webView doCommandBySelector:(SEL)command
 {
-    BOOL result = NO;
-    
-    
-    // _forwardedWebViewCommand indicates that the command is already being processed by the Web Editor, so it's now up to the WebView to handle. Otherwise it's easy to get stuck in an infinite loop.
-    if (_forwardedWebViewCommand) return result;
-    
-    
-    
-    // Does the text view want to take command?
-    result = [_focusedText webEditorTextDoCommandBySelector:command];
-    
-    // Is it a command which we handle? (our implementation may well call back through to the WebView when appropriate)
-    if (!result)
-    {
-        if (command == @selector(moveUp:) || command == @selector(moveDown:))
-        {   // don't want these to go to self
-        }
-        
-        else if (command == @selector(moveLeft:) || command == @selector(moveRight:))
-        {
-            // Handle ourselves
-            [self doCommandBySelector:command];
-            result = YES;
-        }
-        
-        else if (command == @selector(cancelOperation:))
-        {
-            // End editing
-            if ([[self editingItems] count])
-            {
-                [self setEditingItems:nil];
-                //result = YES; // still let webkit do its default action too
-            }
-        }
-        
-        else if (command == @selector(clearStyles:))
-        {
-            // Get no other delegate method warning of impending change, so fake one here
-            DOMRange *range = [self selectedDOMRange];
-            if (!range || ![self shouldChangeTextInDOMRange:range])
-            {
-                result = YES;
-                NSBeep();
-            }
-        }
-        
-        else if (command == @selector(createLink:))
-        {
-            [self doCommandBySelector:command];
-            result = YES;
-        }
-        
-        else if (command == @selector(delete:))
-        {
-            // For text, generally want WebView to handle it. But if there's an empty selection, nothing for WebKit to do so see if we can take over
-            DOMRange *selection = [self selectedDOMRange];
-            if (selection && [selection collapsed])
-            {
-                [self delete:nil];
-                result = YES;
-            }
-            else
-            {
-                // WebKit BUG: -delete: doesn't ask permission of the delegate, so we must do so here
-                [self webView:webView shouldDeleteDOMRange:selection];
-            }
-        }
-        
-        // Treat Shift-Return to insert a linebreak. #102658
-        else if (command == @selector(insertNewline:) &&
-                 [[[self window] currentEvent] modifierFlags] & NSShiftKeyMask)
-        {
-            [webView insertNewlineIgnoringFieldEditor:self];
-            result = YES;
-        }
-    }
-    
-    return result;
+    return ![self webView:webView shouldPerformAction:command fromSender:nil];
 }
 
 #pragma mark WebEditingDelegate Private
