@@ -14,16 +14,14 @@
     IBOutlet NSSegmentedControl *oAlignmentSegmentedControl;
     
     IBOutlet NSPopUpButton      *oListPopUp;
+    IBOutlet NSView             *oListDetailsView;
     IBOutlet NSSegmentedControl *oIndentLevelSegmentedControl;
     
   @private
-    
-    NSUInteger  _listStyle;
 }
 
 - (IBAction)changeAlignment:(NSSegmentedControl *)sender;
 
-@property(nonatomic) NSUInteger listStyle;
 - (IBAction)changeIndent:(NSSegmentedControl *)sender;
 
 

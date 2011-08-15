@@ -57,25 +57,33 @@
 
 #pragma mark Lists
 
-@synthesize listStyle = _listStyle;
-
 - (void)refreshList;
 {
     // Bullets
-    id listEditor = [NSApp targetForAction:@selector(unorderedList)];
-    if ([listEditor unorderedList])
+    id listEditor = [NSApp targetForAction:@selector(selectedListTag)];
+    NSString *tag = [listEditor selectedListTag];
+    
+    if (tag == NSMultipleValuesMarker)
     {
-        [self setListStyle:1];
+        [oListPopUp selectItem:nil];
+        [oListDetailsView setHidden:YES];
     }
-    else if ([listEditor orderedList])
+    else if ([tag isEqualToString:@"UL"])
     {
-        [self setListStyle:2];
+        [oListPopUp selectItemAtIndex:1];
+        [oListDetailsView setHidden:NO];
+    }
+    else if ([tag isEqualToString:@"OL"])
+    {
+        [oListPopUp selectItemAtIndex:2];
+        [oListDetailsView setHidden:NO];
     }
     else
     {
-        // Sadly I haven't found an API yet that informs selection is part list, part paragraph
-        [self setListStyle:0];
+        [oListPopUp selectItemAtIndex:0];
+        [oListDetailsView setHidden:YES];
     }
+    
     
     BOOL enable = (listEditor != nil);
     if ([listEditor respondsToSelector:@selector(validateMenuItem:)])

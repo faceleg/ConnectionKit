@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="30"/>
+			<integer value="1"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -177,23 +177,23 @@
 							<string key="NSKeyEquivalent"/>
 							<int key="NSPeriodicDelay">400</int>
 							<int key="NSPeriodicInterval">75</int>
-							<object class="NSMenuItem" key="NSMenuItem" id="669526260">
+							<object class="NSMenuItem" key="NSMenuItem" id="338815999">
 								<reference key="NSMenu" ref="112677722"/>
-								<string key="NSTitle">Numbers</string>
+								<string key="NSTitle">Bullets</string>
 								<string key="NSKeyEquiv"/>
 								<int key="NSKeyEquivModMask">1048576</int>
 								<int key="NSMnemonicLoc">2147483647</int>
 								<int key="NSState">1</int>
-								<object class="NSCustomResource" key="NSOnImage" id="933023056">
+								<object class="NSCustomResource" key="NSOnImage" id="90989413">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">NSMenuCheckmark</string>
 								</object>
-								<object class="NSCustomResource" key="NSMixedImage" id="250795501">
+								<object class="NSCustomResource" key="NSMixedImage" id="94153612">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">NSMenuMixedState</string>
 								</object>
 								<string key="NSAction">_popUpItemAction:</string>
-								<int key="NSTag">2</int>
+								<int key="NSTag">1</int>
 								<reference key="NSTarget" ref="889381023"/>
 							</object>
 							<bool key="NSMenuItemRespectAlignment">YES</bool>
@@ -207,24 +207,24 @@
 										<string key="NSKeyEquiv"/>
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
-										<reference key="NSOnImage" ref="933023056"/>
-										<reference key="NSMixedImage" ref="250795501"/>
+										<reference key="NSOnImage" ref="90989413"/>
+										<reference key="NSMixedImage" ref="94153612"/>
 										<string key="NSAction">_popUpItemAction:</string>
 										<reference key="NSTarget" ref="889381023"/>
 									</object>
-									<object class="NSMenuItem" id="338815999">
+									<reference ref="338815999"/>
+									<object class="NSMenuItem" id="669526260">
 										<reference key="NSMenu" ref="112677722"/>
-										<string key="NSTitle">Bullets</string>
+										<string key="NSTitle">Numbers</string>
 										<string key="NSKeyEquiv"/>
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
-										<reference key="NSOnImage" ref="933023056"/>
-										<reference key="NSMixedImage" ref="250795501"/>
+										<reference key="NSOnImage" ref="90989413"/>
+										<reference key="NSMixedImage" ref="94153612"/>
 										<string key="NSAction">_popUpItemAction:</string>
-										<int key="NSTag">1</int>
+										<int key="NSTag">2</int>
 										<reference key="NSTarget" ref="889381023"/>
 									</object>
-									<reference ref="669526260"/>
 								</object>
 								<object class="NSFont" key="NSMenuFont" id="463765526">
 									<string key="NSName">LucidaGrande</string>
@@ -232,7 +232,7 @@
 									<int key="NSfFlags">1044</int>
 								</object>
 							</object>
-							<int key="NSSelectedIndex">2</int>
+							<int key="NSSelectedIndex">1</int>
 							<int key="NSPreferredEdge">1</int>
 							<bool key="NSUsesItemFromMenu">YES</bool>
 							<bool key="NSAltersState">YES</bool>
@@ -444,42 +444,6 @@
 					<int key="connectionID">22</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">selectedTag: listStyle</string>
-						<reference key="source" ref="806586559"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="806586559"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">selectedTag: listStyle</string>
-							<string key="NSBinding">selectedTag</string>
-							<string key="NSKeyPath">listStyle</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">29</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">hidden: listStyle</string>
-						<reference key="source" ref="64636502"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="64636502"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">hidden: listStyle</string>
-							<string key="NSBinding">hidden</string>
-							<string key="NSKeyPath">listStyle</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSValueTransformerName</string>
-								<string key="NS.object.0">NSNegateBoolean</string>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">32</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">oIndentLevelSegmentedControl</string>
 						<reference key="source" ref="1001"/>
@@ -494,6 +458,14 @@
 						<reference key="destination" ref="370673902"/>
 					</object>
 					<int key="connectionID">37</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oListDetailsView</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="64636502"/>
+					</object>
+					<int key="connectionID">39</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -752,7 +724,7 @@
 						<bytes key="NSTransformStruct">P4AAAL+AAABB6AAAwzAAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{1282, 768}, {216, 54}}</string>
+					<string>{{1221, 379}, {216, 54}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -808,7 +780,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">37</int>
+			<int key="maxID">39</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1151,12 +1123,14 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>oAlignmentSegmentedControl</string>
 							<string>oIndentLevelSegmentedControl</string>
+							<string>oListDetailsView</string>
 							<string>oListPopUp</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>NSSegmentedControl</string>
 							<string>NSSegmentedControl</string>
+							<string>NSView</string>
 							<string>NSPopUpButton</string>
 						</object>
 					</object>
@@ -1166,6 +1140,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>oAlignmentSegmentedControl</string>
 							<string>oIndentLevelSegmentedControl</string>
+							<string>oListDetailsView</string>
 							<string>oListPopUp</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -1177,6 +1152,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">oIndentLevelSegmentedControl</string>
 								<string key="candidateClassName">NSSegmentedControl</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">oListDetailsView</string>
+								<string key="candidateClassName">NSView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">oListPopUp</string>
