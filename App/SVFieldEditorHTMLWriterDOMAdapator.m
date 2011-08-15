@@ -351,33 +351,51 @@
         sWhitespace = [[[NSCharacterSet fullWhitespaceAndNewlineCharacterSet] setByRemovingCharactersInString:@" "] copy];
     }
     
-    // The starting text of an element wants leading whitespace trimmed
+    // The starting text of an element wants *leading* whitespace processed
     if ([textNode previousSibling]) return textNode;
     
     NSString *text = [textNode data];
-    NSRange leadingWhitespaceRange = [text rangeOfCharacterFromSet:sWhitespace options:NSAnchoredSearch];
+    NSRange whitespaceRange = [text rangeOfCharacterFromSet:sWhitespace options:NSAnchoredSearch];
     
-    if (leadingWhitespaceRange.location == 0)
+    if (whitespaceRange.location == 0)
     {
-        // If there's lots of leading whitespace, this is going to create lots of temp strings, but that's quite an edge case so I'm not worrying for now
-        do
+        // Inline elements want whitespace *condensed*. Otherwise, strip it
+        NSRange range;
+        if ([[self XMLWriter] canWriteElementInline:[[self XMLWriter] topElement]])
         {
-            text = [text substringFromIndex:leadingWhitespaceRange.length];
-            leadingWhitespaceRange = [text rangeOfCharacterFromSet:sWhitespace options:NSAnchoredSearch];
-        }
-        while (leadingWhitespaceRange.location == 0);
-        
-        if ([text length])
-        {
-            // Update DOM with the trimmed text
-            [textNode setData:text];
+            NSRange range = NSMakeRange(whitespaceRange.length, [text length] - whitespaceRange.length);
+            whitespaceRange = [text rangeOfCharacterFromSet:sWhitespace options:NSAnchoredSearch range:range];
         }
         else
         {
-            // Element was all whitespace so chuck it
-            result = [textNode nextSibling];
-            [[textNode parentNode] removeChild:textNode];
+            range = NSMakeRange(0, [text length]);
         }
+        
+        if (whitespaceRange.location == range.location)
+        {
+            // If there's lots of leading whitespace, this is going to create lots of temp strings, but that's quite an edge case so I'm not worrying for now
+            do
+            {
+                text = [text substringFromIndex:(whitespaceRange.location + whitespaceRange.length)];
+                whitespaceRange = [text rangeOfCharacterFromSet:sWhitespace options:NSAnchoredSearch];
+            }
+            while (whitespaceRange.location == 0);
+            
+            if ([text length])
+            {
+                // Update DOM with the condensed/trimmed text
+                if (range.location > 0) text = [@" " stringByAppendingString:text];
+                [textNode setData:text];
+            }
+            else
+            {
+                // Element was all whitespace so chuck it
+                result = [textNode nextSibling];
+                [[textNode parentNode] removeChild:textNode];
+            }
+        }
+        
+        // Could make sure the leading whitespace is a space character here I guess
     }
     
     return result;
