@@ -99,6 +99,8 @@
         [item setAction:@selector(indent:)];
         enable = [listEditor validateUserInterfaceItem:item];
         [oIndentLevelSegmentedControl setEnabled:enable forSegment:1];
+        
+        [item release];
     }
 }
 
