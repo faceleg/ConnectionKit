@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1603"/>
+			<integer value="81"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -432,8 +432,7 @@
 								<object class="NSMenuItem" id="373659161">
 									<reference key="NSMenu" ref="686301075"/>
 									<string key="NSTitle">Previous Design</string>
-									<string key="NSKeyEquiv">[</string>
-									<int key="NSKeyEquivModMask">1048576</int>
+									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="73959282"/>
 									<reference key="NSMixedImage" ref="49718828"/>
@@ -441,8 +440,7 @@
 								<object class="NSMenuItem" id="920519804">
 									<reference key="NSMenu" ref="686301075"/>
 									<string key="NSTitle">Next Design</string>
-									<string key="NSKeyEquiv">]</string>
-									<int key="NSKeyEquivModMask">1048576</int>
+									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="73959282"/>
 									<reference key="NSMixedImage" ref="49718828"/>
@@ -1840,7 +1838,8 @@
 											<object class="NSMenuItem" id="268419629">
 												<reference key="NSMenu" ref="479751780"/>
 												<string key="NSTitle">Increase List Indent Level</string>
-												<string key="NSKeyEquiv"/>
+												<string key="NSKeyEquiv">]</string>
+												<int key="NSKeyEquivModMask">1048576</int>
 												<int key="NSMnemonicLoc">2147483647</int>
 												<reference key="NSOnImage" ref="73959282"/>
 												<reference key="NSMixedImage" ref="49718828"/>
@@ -1848,7 +1847,8 @@
 											<object class="NSMenuItem" id="591052324">
 												<reference key="NSMenu" ref="479751780"/>
 												<string key="NSTitle">Decrease List Indent Level</string>
-												<string key="NSKeyEquiv"/>
+												<string key="NSKeyEquiv">[</string>
+												<int key="NSKeyEquivModMask">1048576</int>
 												<int key="NSMnemonicLoc">2147483647</int>
 												<reference key="NSOnImage" ref="73959282"/>
 												<reference key="NSMixedImage" ref="49718828"/>
@@ -6509,7 +6509,7 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{803, 539}, {294, 303}}</string>
+					<string>{{565, 682}, {294, 303}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
