@@ -85,43 +85,6 @@
 
 - (KTHTMLGenerationPurpose)generationPurpose; { return kSVHTMLGenerationPurposeEditing; }
 
-#pragma mark Metrics
-
-- (void)XbuildAttributesForResizableElement:(NSString *)elementName object:(NSObject *)object DOMControllerClass:(Class)controllerClass sizeDelta:(NSSize)sizeDelta options:(SVResizingOptions)options;
-{
-    // Figure out a decent controller class
-    if (!controllerClass) 
-    {
-        controllerClass = [SVPlugInDOMController class];
-    }
-    
-    
-    // 
-    SVPlugInDOMController *controller = [[controllerClass alloc] initWithRepresentedObject:
-                                              [[self currentDOMController] representedObject]];
-    [controller setSizeDelta:sizeDelta];
-    [controller setResizeOptions:options];
-    
-    
-    // Has an ID for the controller already been decided?
-    // TODO: Not sure this branch is even needed any more, look into ditching!
-    if (![controller hasElementIdName])
-    {
-        KSXMLAttributes *info = [self currentAttributes];
-        NSString *ID = [[info attributesAsDictionary] objectForKey:@"id"];
-        if (ID)
-        {
-            [controller setElementIdName:ID includeWhenPublishing:YES];
-        }
-    }
-    
-    
-    [self startDOMController:controller];
-    [controller release];
-    
-    [super buildAttributesForResizableElement:elementName object:object DOMControllerClass:controllerClass sizeDelta:sizeDelta options:options];
-}
-
 #pragma mark Text Blocks
 
 - (void)writeElement:(NSString *)elementName
