@@ -1036,6 +1036,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     [context setLiveDataFeeds:NO];
     
     [context writeDocumentWithPage:[[self site] rootPage]];
+    [context close];
     [context release];
     
 	
