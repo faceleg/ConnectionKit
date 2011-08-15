@@ -950,9 +950,17 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 - (void)didChangeText;  // posts kSVWebEditorViewDidChangeNotification
 {
-    // Unmark the DOM as changing. #80643
+    if (![_changingTextControllers count])
+    {
+        // No changes were recorded as about to happen, so assume the change was where the current selection is
+        DOMRange *selection = [self selectedDOMRange];
+        if (selection) [self shouldChangeTextInDOMRange:selection];
+    }
+    
+    
     [_changingTextControllers makeObjectsPerformSelector:@selector(webEditorTextDidChange)];
     [_changingTextControllers removeAllObjects];
+    
     
     [[NSNotificationCenter defaultCenter]
      postNotificationName:kSVWebEditorViewDidChangeNotification object:self];
