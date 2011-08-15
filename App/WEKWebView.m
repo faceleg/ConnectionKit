@@ -117,23 +117,6 @@
     [super insertUnorderedList:sender];
 }
 
-- (IBAction)removeList:(id)sender;
-{
-    // Ask permission
-    WEKWebEditorView *webEditor = [self webEditor];
-    if (webEditor)
-    {
-        DOMRange *selection = [self selectedDOMRange];
-        if (selection && ![webEditor shouldChangeTextInDOMRange:selection])
-        {
-            NSBeep();
-            return;
-        }
-    }
-    
-    [super removeList:sender];
-}
-
 #pragma mark Formatting
 
 - (IBAction)clearStyles:(id)sender
