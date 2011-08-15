@@ -62,7 +62,7 @@
 #pragma mark DOM
 
 @synthesize HTMLElement = _DOMElement;
-- (DOMHTMLElement *)HTMLElement
+- (DOMElement *)HTMLElement
 {
     if (!_DOMElement)
     {
@@ -77,7 +77,7 @@
     NSString *idName = [self elementIdName];
     if (idName)
     {
-        DOMHTMLElement *element = nil;
+        DOMElement *element = nil;
         DOMNode *node = [self ancestorNode];
         
         if ([node respondsToSelector:@selector(getElementById:)])
@@ -94,9 +94,9 @@
                                                                           filter:nil
                                                           expandEntityReferences:NO];
             
-            while (element = (DOMHTMLElement *)[iterator nextNode])
+            while (element = (DOMElement *)[iterator nextNode])
             {
-                if ([[element idName] isEqualToString:idName]) break;
+                if ([[element getAttribute:@"id"] isEqualToString:idName]) break;
             }
             
             [iterator detach];

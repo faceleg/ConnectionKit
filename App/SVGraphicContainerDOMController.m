@@ -100,8 +100,8 @@
     [graphic buildClassName:context includeWrap:YES];
     
     NSString *className = [[[context currentAttributes] attributesAsDictionary] objectForKey:@"class"];
-    DOMHTMLElement *element = [self HTMLElement];
-    [element setClassName:className];
+    DOMElement *element = [self HTMLElement];
+    [element setAttribute:@"class" value:className];
     
     [context release];
     

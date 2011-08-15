@@ -282,7 +282,7 @@
 {
     OBPRECONDITION(item);
     
-    DOMHTMLElement *selectedElement = [item HTMLElement];
+    DOMElement *selectedElement = [item HTMLElement];
     NSRect selectionRect = [selectedElement boundingBox];
     [[selectedElement documentView] scrollRectToVisible:selectionRect];
 }

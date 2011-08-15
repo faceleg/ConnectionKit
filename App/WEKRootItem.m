@@ -13,7 +13,7 @@
 
 @implementation WEKRootItem
 
-- (DOMHTMLElement *)HTMLElement { return nil; }
+- (DOMElement *)HTMLElement { return nil; }
 
 @synthesize webEditor = _webEditor;
 - (void)setWebEditor:(WEKWebEditorView *)webEditor;

@@ -341,7 +341,7 @@
     
     if ([self isSelectable])
     {
-        DOMHTMLElement *element = [self HTMLElement];
+        DOMElement *element = [self HTMLElement];
         
         result = ([[element tagName] isEqualToString:@"IMG"] &&
                   ![[[element className] componentsSeparatedByWhitespace] containsObject:@"graphic"] &&
@@ -601,7 +601,7 @@
 
 - (void)updateWidth;
 {
-    DOMHTMLElement *element = [self HTMLElement];
+    DOMElement *element = [self HTMLElement];
     if ([element respondsToSelector:@selector(setWidth:)])
     {
         [element setAttribute:@"width" value:[[self width] description]];
@@ -614,7 +614,7 @@
 
 - (void)updateHeight;
 {
-    DOMHTMLElement *element = [self HTMLElement];
+    DOMElement *element = [self HTMLElement];
     if ([element respondsToSelector:@selector(setHeight:)])
     {
         [element setAttribute:@"height" value:[[self height] description]];
@@ -983,7 +983,7 @@
     
     if ([self isSelectable])
     {
-        DOMHTMLElement *element = [self HTMLElement];
+        DOMElement *element = [self HTMLElement];
         result = [element boundingBox];
         
         // Take into account padding and border

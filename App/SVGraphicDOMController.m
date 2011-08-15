@@ -54,10 +54,10 @@
                 case 1:
                     for (WEKWebEditorItem *anItem in children)
                     {
-                    	DOMHTMLElement *child = [anItem HTMLElement];
+                    	DOMElement *child = [anItem HTMLElement];
 	                    if (![[child tagName] isEqualToString:@"IMG"])  // images already have their own placeholder
 	                    {
-	                        [child setInnerHTML:parsedPlaceholderHTML];
+	                        [(DOMHTMLElement *)child setInnerHTML:parsedPlaceholderHTML];
                         }
                     }
                     break;

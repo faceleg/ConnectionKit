@@ -29,7 +29,7 @@
         {
             // Replace with placeholder
             NSString *parsedPlaceholderHTML = [[self representedObject] parsedPlaceholderHTMLFromContext:self.HTMLContext];
-            [[self HTMLElement] setInnerHTML:parsedPlaceholderHTML];
+            [(DOMHTMLElement *)[self HTMLElement] setInnerHTML:parsedPlaceholderHTML];
         }
     }
 }

@@ -1656,7 +1656,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     
     // Node might be in a different frame. #112424
     DOMNode *nodeToTest = node;
-    DOMHTMLElement *myElement = [self HTMLElement];
+    DOMElement *myElement = [self HTMLElement];
     if (myElement)
     {
         while ([nodeToTest ownerDocument] != [myElement ownerDocument])

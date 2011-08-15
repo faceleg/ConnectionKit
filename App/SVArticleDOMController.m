@@ -752,7 +752,7 @@
                             anItem = [anItem parentWebEditorItem];
                         }
                         
-                        DOMHTMLElement *anItemElement = [anItem HTMLElement];
+                        DOMElement *anItemElement = [anItem HTMLElement];
                         if (aNode == anItemElement || [treeWalker previousSibling] == anItemElement)
                         {
                             aNode = (id)[NSNull null];  // ugly, I know

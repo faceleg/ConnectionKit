@@ -225,7 +225,7 @@
     DOMElement *oldElement = [self HTMLElement];
     DOMDocument *doc = [oldElement ownerDocument];
     WEKWebEditorItem *parent = [self parentWebEditorItem];
-    [[self HTMLElement] setOuterHTML:html];
+    [(DOMHTMLElement *)[self HTMLElement] setOuterHTML:html];
     
     while ([parent HTMLElement] == oldElement)  // ancestors may be referencing the same node
     {
