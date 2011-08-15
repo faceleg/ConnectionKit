@@ -440,8 +440,9 @@
     if ([graphic isCallout] && ![self calloutDOMController])
     {
         // Create a callout stack where we are know
-        SVCalloutDOMController *calloutController = [[SVCalloutDOMController alloc] initWithHTMLDocument:(DOMHTMLDocument *)document];
-        [calloutController loadHTMLElement];
+        SVCalloutDOMController *calloutController = [[SVCalloutDOMController alloc]
+                                                     initWithIdName:nil
+                                                     ancestorNode:[[self HTMLElement] ownerDocument]];
         
         [[[self HTMLElement] parentNode] replaceChild:[calloutController HTMLElement]
                                              oldChild:[self HTMLElement]];
