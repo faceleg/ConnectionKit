@@ -84,6 +84,12 @@
                   [listEditor validateMenuItem:[oListPopUp itemAtIndex:2]]);
     }
     [oListPopUp setEnabled:enable];
+    
+    if ([listEditor conformsToProtocol:@protocol(NSUserInterfaceValidations)])
+    {
+        enable = [listEditor validateUserInterfaceItem:oIndentLevelSegmentedControl];
+    }
+    [oIndentLevelSegmentedControl setEnabled:enable forSegment:1];
 }
 
 #pragma mark General

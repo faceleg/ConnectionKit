@@ -12,7 +12,9 @@
 @interface SVTextInspector : KSInspectorViewController
 {
     IBOutlet NSSegmentedControl *oAlignmentSegmentedControl;
+    
     IBOutlet NSPopUpButton      *oListPopUp;
+    IBOutlet NSSegmentedControl *oIndentLevelSegmentedControl;
     
   @private
     
