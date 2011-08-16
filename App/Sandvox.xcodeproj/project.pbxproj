@@ -4271,7 +4271,7 @@
 		2A37F4AAFDCFA73011CA2CEA /* Marvel */ = {
 			isa = PBXGroup;
 			children = (
-				3C9A37BF13E130590010A469 /* Receipt Validation */,
+				3CA8985F13F9EF9C0098BA5D /* MAC APP STORE */,
 				3C202D1707DFC06B00DE4994 /* Application */,
 				3C202D3207DFC0BF00DE4994 /* Document */,
 				275E067A0DDA0F1A0072567F /* Model */,
@@ -4311,8 +4311,6 @@
 				CEC11A2E0D78BE0100513E70 /* Shared */,
 				3C202DF507E00CCC00DE4994 /* Product Dependencies */,
 				19C28FB0FE9D524F11CA2CBB /* Products */,
-				3C48399013F5D5C700F961C2 /* libcrypto.dylib */,
-				3C48399213F5D5D000F961C2 /* libssl.dylib */,
 			);
 			name = Marvel;
 			sourceTree = "<group>";
@@ -4321,7 +4319,6 @@
 			isa = PBXGroup;
 			children = (
 				32DBCF750370BD2300C91783 /* Marvel_Prefix.pch */,
-				2A37F4B0FDCFA73011CA2CEA /* main.m */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -4508,7 +4505,6 @@
 		3C202DF507E00CCC00DE4994 /* Product Dependencies */ = {
 			isa = PBXGroup;
 			children = (
-				3CA9FD020D63A04A00815310 /* DataSources */,
 				3CA9FD200D63A06A00815310 /* Indexes */,
 				3CA9FD350D63A08000815310 /* Elements */,
 				3CA9FD410D63A0B400815310 /* Frameworks */,
@@ -4866,6 +4862,8 @@
 			children = (
 				3C5C0DB10BF820EA003594F8 /* libbz2.dylib */,
 				3C72D4F5094A24390061A876 /* libz.dylib */,
+				3C48399013F5D5C700F961C2 /* libcrypto.dylib */,
+				3C48399213F5D5D000F961C2 /* libssl.dylib */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -5017,11 +5015,13 @@
 			name = YRKSpinningProgressIndicator;
 			sourceTree = "<group>";
 		};
-		3CA9FD020D63A04A00815310 /* DataSources */ = {
+		3CA8985F13F9EF9C0098BA5D /* MAC APP STORE */ = {
 			isa = PBXGroup;
 			children = (
+				2A37F4B0FDCFA73011CA2CEA /* main.m */,
+				3C9A37BF13E130590010A469 /* Receipt Validation */,
 			);
-			name = DataSources;
+			name = "MAC APP STORE";
 			sourceTree = "<group>";
 		};
 		3CA9FD200D63A06A00815310 /* Indexes */ = {
