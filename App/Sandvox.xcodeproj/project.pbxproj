@@ -829,8 +829,6 @@
 		CE01A7690EAFD63600BDF264 /* KSPrefsController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6640EAFD63600BDF264 /* KSPrefsController.m */; };
 		CE01A76A0EAFD63600BDF264 /* KSProgressPanel.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6650EAFD63600BDF264 /* KSProgressPanel.h */; };
 		CE01A76B0EAFD63600BDF264 /* KSProgressPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6660EAFD63600BDF264 /* KSProgressPanel.m */; };
-		CE01A76C0EAFD63600BDF264 /* KSRegistrationController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6670EAFD63600BDF264 /* KSRegistrationController.h */; };
-		CE01A76D0EAFD63600BDF264 /* KSRegistrationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6680EAFD63600BDF264 /* KSRegistrationController.m */; };
 		CE01A76E0EAFD63600BDF264 /* KSSavedFeedbackSender.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6690EAFD63600BDF264 /* KSSavedFeedbackSender.h */; };
 		CE01A76F0EAFD63600BDF264 /* KSSavedFeedbackSender.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A66A0EAFD63600BDF264 /* KSSavedFeedbackSender.m */; };
 		CE01A7700EAFD63600BDF264 /* KSSelfRegisteringValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A66B0EAFD63600BDF264 /* KSSelfRegisteringValueTransformer.h */; };
@@ -1088,7 +1086,6 @@
 		CE44C87F130216C600015A24 /* KSJoinList.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE44C873130216C600015A24 /* KSJoinList.strings */; };
 		CE44C880130216C600015A24 /* KSKeepInTouch.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE44C875130216C600015A24 /* KSKeepInTouch.strings */; };
 		CE44C881130216C600015A24 /* KSPluginInstaller.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE44C877130216C600015A24 /* KSPluginInstaller.strings */; };
-		CE44C882130216C600015A24 /* KSRegistration.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE44C879130216C600015A24 /* KSRegistration.strings */; };
 		CE44DFBA0BD0019400479A8E /* KTHTMLEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE44DFB80BD0019400479A8E /* KTHTMLEditorController.m */; };
 		CE47140E09C0AA5200590F6E /* KTPluginInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = CE47140C09C0AA5200590F6E /* KTPluginInstaller.m */; };
 		CE487741108FE2C9008417FD /* KSYellowStickyWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = CE48773F108FE2C9008417FD /* KSYellowStickyWindow.h */; };
@@ -1132,7 +1129,6 @@
 		CE6EE01511F129F100F00AAC /* KSJoinList.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6EE00911F129F100F00AAC /* KSJoinList.xib */; };
 		CE6EE01611F129F100F00AAC /* KSKeepInTouch.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6EE00B11F129F100F00AAC /* KSKeepInTouch.xib */; };
 		CE6EE01711F129F100F00AAC /* KSPluginInstaller.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6EE00D11F129F100F00AAC /* KSPluginInstaller.xib */; };
-		CE6EE01811F129F100F00AAC /* KSRegistration.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6EE00F11F129F100F00AAC /* KSRegistration.xib */; };
 		CE6EE03911F12B7200F00AAC /* DMLocalizedNibBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6EE03811F12B7200F00AAC /* DMLocalizedNibBundle.m */; };
 		CE733A611113A6F5009582EA /* SVBlogEntryBorderView.h in Headers */ = {isa = PBXBuildFile; fileRef = CE733A5F1113A6F5009582EA /* SVBlogEntryBorderView.h */; };
 		CE733A621113A6F5009582EA /* SVBlogEntryBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE733A601113A6F5009582EA /* SVBlogEntryBorderView.m */; };
@@ -6057,7 +6053,6 @@
 				CE01A7640EAFD63600BDF264 /* KSPopUpButton.h in Headers */,
 				CE01A7680EAFD63600BDF264 /* KSPrefsController.h in Headers */,
 				CE01A76A0EAFD63600BDF264 /* KSProgressPanel.h in Headers */,
-				CE01A76C0EAFD63600BDF264 /* KSRegistrationController.h in Headers */,
 				CE01A76E0EAFD63600BDF264 /* KSSavedFeedbackSender.h in Headers */,
 				CE01A7700EAFD63600BDF264 /* KSSelfRegisteringValueTransformer.h in Headers */,
 				CE01A7720EAFD63600BDF264 /* KSSilencingConfirmSheet.h in Headers */,
@@ -7011,7 +7006,6 @@
 				CE6EE01511F129F100F00AAC /* KSJoinList.xib in Resources */,
 				CE6EE01611F129F100F00AAC /* KSKeepInTouch.xib in Resources */,
 				CE6EE01711F129F100F00AAC /* KSPluginInstaller.xib in Resources */,
-				CE6EE01811F129F100F00AAC /* KSRegistration.xib in Resources */,
 				CE89F96A11F6149600B180EB /* ddsmoothmenu.css in Resources */,
 				CEFD1D4712E9F85300D3A6CD /* MultipleSelectionPlaceholder.xib in Resources */,
 				CE01E6F71208A7F10093565F /* target_set.tiff in Resources */,
@@ -7118,7 +7112,6 @@
 				CE44C87F130216C600015A24 /* KSJoinList.strings in Resources */,
 				CE44C880130216C600015A24 /* KSKeepInTouch.strings in Resources */,
 				CE44C881130216C600015A24 /* KSPluginInstaller.strings in Resources */,
-				CE44C882130216C600015A24 /* KSRegistration.strings in Resources */,
 				CE84FB86130588900091B8F8 /* KSInspector.strings in Resources */,
 				CE54FFD2133A9FF6003F635A /* Download.html in Resources */,
 				CE54FC64133A6869003F635A /* LinkPageTemplate.html in Resources */,
@@ -7557,7 +7550,6 @@
 				CE01A7650EAFD63600BDF264 /* KSPopUpButton.m in Sources */,
 				CE01A7690EAFD63600BDF264 /* KSPrefsController.m in Sources */,
 				CE01A76B0EAFD63600BDF264 /* KSProgressPanel.m in Sources */,
-				CE01A76D0EAFD63600BDF264 /* KSRegistrationController.m in Sources */,
 				CE01A76F0EAFD63600BDF264 /* KSSavedFeedbackSender.m in Sources */,
 				CE01A7710EAFD63600BDF264 /* KSSelfRegisteringValueTransformer.m in Sources */,
 				CE01A7730EAFD63600BDF264 /* KSSilencingConfirmSheet.m in Sources */,
