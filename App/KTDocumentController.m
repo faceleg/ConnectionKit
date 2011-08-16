@@ -33,7 +33,11 @@
 
 #import "KSApplication.h"
 #import "KSProgressPanel.h"
+
+#ifndef MAC_APP_STORE
 #import "KSRegistrationController.h"
+#endif
+
 #import "SVApplicationController.h"
 
 #import "BDAlias.h"
@@ -51,15 +55,19 @@
 
 - (void)showDocumentPlaceholderWindowInitial:(BOOL)firstTimeSoReopenSavedDocuments;
 {
+#ifndef MAC_APP_STORE
     if (gLicenseViolation)		// license violation dialog should open, not the new/open
     {
         [[KSRegistrationController sharedController] showWindow:@"license"];		// string is just a tag for the source of this
     }
     else
     {
+#endif
 		// Open recent documents, maybe show welcome window.
 		[[SVWelcomeController sharedController] showWindowAndBringToFront:NO initial:firstTimeSoReopenSavedDocuments];
+#ifndef MAC_APP_STORE
     }
+#endif
 }
 
 #pragma mark -
