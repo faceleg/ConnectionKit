@@ -364,6 +364,9 @@ int main(int argc, char *argv[])
     ///////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////
     
+#ifdef MAC_APP_STORE
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
     if ( [hardcoded_bidStr isEqualToString: [[NSBundle mainBundle] bundleIdentifier]] == NO )
     {
 		//info.plist integrity check failed
@@ -379,10 +382,11 @@ int main(int argc, char *argv[])
     startup_call_t theCall = &NSApplicationMain;
     id obj_arg = nil;
     argc = firstCheck(argc, &theCall, &obj_arg);
-    if ( argc == 173 ) exit(argc);
     argc = secondCheck(argc, &theCall, &obj_arg);
     argc = thirdCheck(argc, &theCall, &obj_arg);
     argc = fourthCheck(argc, &theCall, &obj_arg);
+    
+    [pool drain];
     
     // if this is the exit() function, it shouldn't ever return
     int rc = theCall(argc, (const char **) argv);
@@ -391,7 +395,8 @@ int main(int argc, char *argv[])
     
     return ( rc );
     
+#else
     
-	
-    //return NSApplicationMain(argc, (const char **) argv);
+    return NSApplicationMain(argc, (const char **) argv);
+#endif
 }
