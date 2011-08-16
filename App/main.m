@@ -65,6 +65,7 @@ static inline int firstCheck( int argc, startup_call_t *theCall, id * pathPtr )
     *pathPtr = [[[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent: @"Contents/_MASReceipt/receipt"] stringByStandardizingPath];
     if ( stat([*pathPtr fileSystemRepresentation], &statBuf) != 0 )
     {
+        NSLog(@"no receipt found in .app, we really shouldn't even continue");
         *theCall = (startup_call_t)&exit;
         return ( 173 );
     }
@@ -149,6 +150,13 @@ static inline int secondCheck( int argc, startup_call_t *theCall, id * receiptPa
     // initialize both BIO variables using BIO_new_mem_buf() with a buffer and its size...
     //b_p7 = BIO_new_mem_buf((void *)[receiptData bytes], [receiptData length]);
     FILE *fp = fopen( [*receiptPath fileSystemRepresentation], "rb" );
+    
+    if ( fp == NULL )
+    {
+        NSLog( @"No receipt found" );
+        *theCall = (startup_call_t)&exit;
+        return ( 173 );
+    }
     
     // initialize b_out as an out
     BIO *b_out = BIO_new(BIO_s_mem());
@@ -356,16 +364,22 @@ int main(int argc, char *argv[])
     ///////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////
     
-    if ( [hardcoded_bidStr isEqualToString: [[NSBundle mainBundle] bundleIdentifier]] == NO ){
+    if ( [hardcoded_bidStr isEqualToString: [[NSBundle mainBundle] bundleIdentifier]] == NO )
+    {
 		//info.plist integrity check failed
+        NSLog(@"hardcoded CFBundleIdentifier does not match Info.plist!");
+        NSLog(@"we probably should exit or something");
 	}	
-	if ( [hardcoded_dvStr isEqualToString: [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleShortVersionString"]] == NO ){
+	if ( [hardcoded_dvStr isEqualToString: [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleIdentifier"]] == NO ){
 		//info.plist integrity check failed
+        NSLog(@"hardcoded CFBundleIdentifier does not match Info.plist!");
+        NSLog(@"we probably should exit or something");
 	}	
 	
     startup_call_t theCall = &NSApplicationMain;
     id obj_arg = nil;
     argc = firstCheck(argc, &theCall, &obj_arg);
+    if ( argc == 173 ) exit(argc);
     argc = secondCheck(argc, &theCall, &obj_arg);
     argc = thirdCheck(argc, &theCall, &obj_arg);
     argc = fourthCheck(argc, &theCall, &obj_arg);
