@@ -341,6 +341,11 @@ initial syntax coloring.
 	[self loadFragment:[[textView textStorage] string]];
 }
 
+- (IBAction) reload:(id)sender;		// Intercept this action - command-R - and apply the changes so it's seen in the webview.
+{
+	[self applyChanges:sender];
+}
+
 - (IBAction)  contentTypePopupChanged:(id)sender;
 {
 	NSMenuItem *selectedItem = [sender selectedItem];		// which item just got selected
