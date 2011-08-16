@@ -606,6 +606,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
     return [[NSDocumentController sharedDocumentController] currentDocument];
 }
 
+#ifndef MAC_APP_STORE
 #define SHA1_DIGEST_LENGTH	20
 
 // Override of KSLicensedAppDelegate
@@ -628,6 +629,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	return [self licenseHash:[aHash bytes] foundInList:invalidListDigests ofSize:INVALID_LIST_COUNT];
 	
 }
+#endif
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
@@ -1185,8 +1187,8 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 
     KTDocumentController *sharedDocumentController = [KTDocumentController sharedDocumentController];
     [sharedDocumentController setAutosavingDelay:interval];
-	
-			 
+
+#ifndef MAC_APP_STORE
 	// Try to check immediately so we have right info for initialization
 	//[self performSelector:@selector(checkRegistrationString:) withObject:nil afterDelay:0.0];
 #ifdef APPLE_DESIGN_AWARDS_KEY
@@ -1194,6 +1196,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	[self checkRegistrationString:APPLE_DESIGN_AWARDS_KEY];
 #else
 	[self checkRegistrationString:nil];
+#endif
 #endif
 
 #ifndef NSAppKitVersionNumber10_7
