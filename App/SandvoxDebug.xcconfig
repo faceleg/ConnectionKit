@@ -36,10 +36,6 @@ GCC_WARN_UNUSED_VARIABLE = YES
 // support direct plugins
 GCC_SYMBOLS_PRIVATE_EXTERN=NO
 
-// To turn on OmniObjectMeter support, include OOM in GCC_PREPROCESSOR_DEFINITIONS
-// and -framework OmniObjectMeterFramework in OTHER_LDFLAGS, and throw away your
-// <build-dir>/intermediates directory -- a simple clean build is not enough 
-
 // Additional warnings we may want from time to time.
 // Note that GCC_WARN_UNINITIALIZED_AUTOS requires GCC_OPTIMIZATION_LEVEL
 

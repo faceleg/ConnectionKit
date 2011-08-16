@@ -2,13 +2,8 @@
 // grab SANDVOX_VERSION
 #include "../Xcode/Configurations/Sandvox.xcconfig"
 
-// release builds are 32-bit Universal, using Leopards's SDK
+// release builds are 32-bit Universal
 ARCHS = ppc i386
-
-//ARCHS = $(ARCHS_STANDARD_32_64_BIT)
-//SDKROOT = macosx10.6
-//MACOSX_DEPLOYMENT_TARGET = 10.5
-
 
 GCC_PRECOMPILE_PREFIX_HEADER = YES
 GCC_PREFIX_HEADER = Marvel_Prefix.pch
