@@ -605,7 +605,6 @@
 		3C4328CA07F7D7F600DD0D92 /* KTHostSetupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D7B07DFC30800DE4994 /* KTHostSetupController.m */; };
 		3C4328E207F7DCA600DD0D92 /* KTDocWindowController+Toolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D3C07DFC0F000DE4994 /* KTDocWindowController+Toolbar.m */; };
 		3C48399113F5D5C700F961C2 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C48399013F5D5C700F961C2 /* libcrypto.dylib */; };
-		3C48399313F5D5D000F961C2 /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C48399213F5D5D000F961C2 /* libssl.dylib */; };
 		3C5A72380BF7ADE100776464 /* NSEntityDescription+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A712D0BF7ADE100776464 /* NSEntityDescription+KTExtensions.m */; };
 		3C5A723C0BF7ADE100776464 /* NSFetchRequest+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71310BF7ADE100776464 /* NSFetchRequest+KTExtensions.m */; };
 		3C5A724B0BF7ADE100776464 /* NSManagedObject+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71400BF7ADE100776464 /* NSManagedObject+KTExtensions.m */; };
@@ -2347,7 +2346,6 @@
 		3C42E4830D64FCE3004F35FD /* IMStatusElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IMStatusElement.xcodeproj; path = ../PlugIns/IMStatusElement/IMStatusElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C42E4F10D650429004F35FD /* FlickrElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FlickrElement.xcodeproj; path = ../PlugIns/FlickrElement/FlickrElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C48399013F5D5C700F961C2 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
-		3C48399213F5D5D000F961C2 /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = usr/lib/libssl.dylib; sourceTree = SDKROOT; };
 		3C4C6A750D64122700398BDA /* DeliciousElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DeliciousElement.xcodeproj; path = ../PlugIns/DeliciousElement/DeliciousElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C4C6AA90D64136C00398BDA /* AmazonElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AmazonElement.xcodeproj; path = ../PlugIns/AmazonElement/AmazonElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C53E41811EE783B005CF7B2 /* TwitterElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TwitterElement.xcodeproj; path = ../PlugIns/TwitterElement/TwitterElement.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -3219,7 +3217,6 @@
 				CEE1BE67117D2299002AA67D /* Symbolication.framework in Frameworks */,
 				CEF2889F11CC2D7300122D03 /* JSTalk.framework in Frameworks */,
 				3C48399113F5D5C700F961C2 /* libcrypto.dylib in Frameworks */,
-				3C48399313F5D5D000F961C2 /* libssl.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3730,10 +3727,10 @@
 				278ACCC7116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.m */,
 				270172B411CFB566001512F6 /* SVProxyHTMLContext.h */,
 				270172B511CFB566001512F6 /* SVProxyHTMLContext.m */,
-				27DD0A551202FC120083C7C1 /* SVWebEditingURL.h */,
 				27DD0A561202FC120083C7C1 /* SVWebEditingURL.m */,
 				2782B2D912367C6E00C5F870 /* SVEnclosure.h */,
 				2762985813153EE5001EC943 /* SVGraphicContainer.h */,
+				27DD0A551202FC120083C7C1 /* SVWebEditingURL.h */,
 				27629965131553BE001EC943 /* SVCallout.h */,
 				27629966131553BE001EC943 /* SVCallout.m */,
 				2705B1AE13EC0514004C678D /* SVWebEditorUpdatesHTMLContext.h */,
@@ -4859,7 +4856,6 @@
 				3C5C0DB10BF820EA003594F8 /* libbz2.dylib */,
 				3C72D4F5094A24390061A876 /* libz.dylib */,
 				3C48399013F5D5C700F961C2 /* libcrypto.dylib */,
-				3C48399213F5D5D000F961C2 /* libssl.dylib */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
