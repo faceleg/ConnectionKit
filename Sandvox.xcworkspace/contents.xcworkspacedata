@@ -10,4 +10,10 @@
    <FileRef
       location = "group:Code/Shared/Code/AmazonSupport/AmazonSupport.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:Code/iMedia/iMedia.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Code/iMedia/ObjectiveFlickr/ObjectiveFlickr.xcodeproj">
+   </FileRef>
 </Workspace>
