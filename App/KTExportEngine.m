@@ -24,7 +24,7 @@
             if (![[NSFileManager defaultManager] removeItemAtPath:exportPath error:&error])
             {
                 // We can't continue because the pesky file can't be removed
-                [self engineDidPublish:NO error:error];
+                [self finishPublishing:NO error:error];
                 return;
             }
         }
