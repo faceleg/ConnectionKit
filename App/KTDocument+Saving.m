@@ -802,10 +802,18 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
             }
             else
             {
-                // Don't try to access -[dupe filename] as it may be a deleted object, and therefore unable to fulfil the fault
+                // Generally, don't try to access -[dupe filename] as it may be a deleted object, and therefore unable to fulfil the fault
                 NSURL *fileURL = [dupe fileURL];
-                [aMediaRecord readFromURL:fileURL options:0 error:NULL];
-                [aMediaRecord setFilename:[fileURL ks_lastPathComponent]];
+                if (fileURL)
+                {
+                    [aMediaRecord readFromURL:fileURL options:0 error:NULL];
+                    [aMediaRecord setFilename:[fileURL ks_lastPathComponent]];
+                }
+                else
+                {
+                    // mid-save, duplicate, in-memory media doesn't know its URL, so record filename, chain together and wait for document to update URLs
+                    [aMediaRecord setFilename:[dupe filename]];
+                }
                 
                 NSString *key = [self keyForDocumentFileWrapper:dupe];
                 OBASSERT(key);
@@ -825,7 +833,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     // Try write
     NSURL *mediaURL = [docURL ks_URLByAppendingPathComponent:filename isDirectory:NO];
-    if ([aMediaRecord writeToURL:mediaURL updateFileURL:NO error:outError]) // NO, because don't final URL yet
+    if ([aMediaRecord writeToURL:mediaURL updateFileURL:NO error:outError]) // NO, because don't know final URL yet
     {
         // I was experimenting with not updating the file URL straight away. I'm not sure why, but I think it was to account for the idea that you might be doing a Save-To op. Unfortunately that breaks Quick Look previews if the home page contains a new image. So I've switched to updating the URL straight off, so it's ready to generate correct preview HTML.
         

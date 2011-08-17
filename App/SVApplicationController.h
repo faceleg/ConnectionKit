@@ -23,6 +23,7 @@
 extern BOOL gWantToCatchSystemExceptions;
 
 
+extern NSString *kSVOpenDocumentsKey;
 extern NSString *kSVLiveDataFeedsKey;
 extern NSString *kSVSetDateFromSourceMaterialKey;
 extern NSString *kLiveEditableAndSelectableLinksDefaultsKey;
@@ -106,6 +107,7 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 - (BOOL) appIsExpired;
 
 - (IBAction)orderFrontPreferencesPanel:(id)sender;
+- (IBAction)emptyCache:(id)sender;
 - (IBAction)saveWindowSize:(id)sender;
 
 - (IBAction)showAvailableComponents:(id)sender;

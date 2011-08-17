@@ -295,10 +295,6 @@
 			baseConfigurationReference = 3C42DE020D64CB7E004F35FD /* Debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = (
-					"-seg1addr",
-					0x505C0000,
-				);
 				PRODUCT_NAME = CollectionArchive;
 				WRAPPER_EXTENSION = svxElement;
 			};
@@ -309,10 +305,6 @@
 			baseConfigurationReference = 3C42DE030D64CB7E004F35FD /* Release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = (
-					"-seg1addr",
-					0x505C0000,
-				);
 				PRODUCT_NAME = CollectionArchive;
 				WRAPPER_EXTENSION = svxElement;
 			};

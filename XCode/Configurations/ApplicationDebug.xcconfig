@@ -38,7 +38,6 @@ GCC_WARN_UNUSED_VARIABLE = YES
 // <build-dir>/intermediates directory -- a simple clean build is not enough 
 
 GCC_PREPROCESSOR_DEFINITIONS = DEBUG SANDVOX_RELEASE
-OTHER_LDFLAGS = -seg1addr 0x70000000
 
 // Additional warnings we may want from time to time.
 // Note that GCC_WARN_UNINITIALIZED_AUTOS requires GCC_OPTIMIZATION_LEVEL

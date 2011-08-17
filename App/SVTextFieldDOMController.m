@@ -168,6 +168,13 @@
     [super webEditorTextDidEndEditing:notification];
     
     
+    // Was the intent likely to delete the box?
+    NSString *text = [self string];
+    if (![text length] || [text isEqualToString:@"\n"])
+    {
+        [self delete];
+    }
+    
     // Restore graphical text
     [self updateStyle];
 }
@@ -348,7 +355,7 @@
             
             // Make sure there's no later content outside the <SPAN> #92432
             DOMNode *nextNode;
-            while (nextNode = [result nextSibling])
+            while ((nextNode = [result nextSibling]))
             {
                 [result appendChild:nextNode];
             }
@@ -371,7 +378,7 @@
                     
                     [aChild setAttribute:@"style" value:style];
                     
-                } while (aChild = [aChild nextElementSibling]);
+                } while ((aChild = [aChild nextElementSibling]));
                 
                 [result removeAttribute:@"style"];
             }
@@ -461,7 +468,6 @@
 - (SVTextDOMController *)newTextDOMController;
 {
     SVTextFieldDOMController *result = [[SVTextFieldDOMController alloc] initWithRepresentedObject:self];
-    [result setPlaceholderHTMLString:NSLocalizedString(@"Title", "placeholder")];
     [result setRichText:YES];
     [result setFieldEditor:YES];
     

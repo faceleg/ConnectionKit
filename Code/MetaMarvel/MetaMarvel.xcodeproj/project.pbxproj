@@ -235,6 +235,7 @@
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = MetaSandvox;
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = mdimporter;
 			};
 			name = Debug;
@@ -245,6 +246,7 @@
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = MetaSandvox;
+				SDKROOT = macosx10.6;
 				WRAPPER_EXTENSION = mdimporter;
 			};
 			name = Release;

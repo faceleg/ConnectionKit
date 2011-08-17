@@ -341,6 +341,11 @@ initial syntax coloring.
 	[self loadFragment:[[textView textStorage] string]];
 }
 
+- (IBAction) reload:(id)sender;		// Intercept this action - command-R - and apply the changes so it's seen in the webview.
+{
+	[self applyChanges:sender];
+}
+
 - (IBAction)  contentTypePopupChanged:(id)sender;
 {
 	NSMenuItem *selectedItem = [sender selectedItem];		// which item just got selected
@@ -560,10 +565,11 @@ initial syntax coloring.
 	NSRange						currRange = range;
     
 	// Perform the syntax coloring:
-	if( _autoSyntaxColoring && range.length > 0 )
+	if( _autoSyntaxColoring && range.length > 0
+	   && currRange.location < [textStorage length])	// make sure in bounds, case #136124
 	{
-		NSRange			effectiveRange;
-		NSString*		rangeMode;
+		NSRange			effectiveRange = NSMakeRange(0,0);
+		NSString*		rangeMode = nil;
 		
 		
 		rangeMode = [textStorage attribute: TD_SYNTAX_COLORING_MODE_ATTR

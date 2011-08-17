@@ -8,6 +8,7 @@
 
 #import "SVFieldEditorHTMLWriterDOMAdapator.h"
 
+#import "NSCharacterSet+Karelia.h"
 #import "NSIndexPath+Karelia.h"
 #import "NSString+Karelia.h"
 
@@ -259,7 +260,8 @@
             NSString *attributeName = [anAttribute name];
             NSString *attributeValue = [anAttribute value];
             
-            if (attributeValue = [self validateAttribute:attributeName value:attributeValue ofElement:elementName])
+            attributeValue = [self validateAttribute:attributeName value:attributeValue ofElement:elementName];
+            if (attributeValue)
             {
                 // Validate individual styling
                 if ([attributeName isEqualToString:@"style"])
@@ -296,8 +298,8 @@
 {
     DOMNode *result = nil;
     
-    NSString *tagName = [[self XMLWriter] topElement];
-    if ([[self class] isElementWithTagNameContent:tagName])
+    NSString *elementName = [[self XMLWriter] topElement];
+    if ([[self class] isElementWithTagNameContent:elementName])
     {
         result = [super endElementWithDOMElement:element];
     }
@@ -318,7 +320,7 @@
         }
         else
         {
-            if ([tagName isEqualToStringCaseInsensitive:@"P"])
+            if ([elementName isEqualToString:@"p"])
             {
                 result = [super endElementWithDOMElement:element];
             }
@@ -332,6 +334,68 @@
                 [_pendingEndDOMElements addObject:element];
             }
         }
+    }
+    
+    return result;
+}
+
+- (DOMNode *)willWriteDOMText:(DOMText *)textNode;
+{
+    DOMNode *result = [super willWriteDOMText:textNode];
+    if (result != textNode) return result;
+    
+    
+    static NSCharacterSet *sWhitespace; // full whitespace/newline set minus &nbsp;
+    if (!sWhitespace)
+    {
+        sWhitespace = [[[NSCharacterSet fullWhitespaceAndNewlineCharacterSet] setByRemovingCharactersInString:@" "] copy];
+    }
+    
+    // The starting text of an element wants *leading* whitespace processed
+    if ([textNode previousSibling]) return textNode;
+    
+    NSString *text = [textNode data];
+    NSRange whitespaceRange = [text rangeOfCharacterFromSet:sWhitespace options:NSAnchoredSearch];
+    
+    if (whitespaceRange.location == 0)
+    {
+        // Inline elements want whitespace *condensed*. Otherwise, strip it
+        NSRange range;
+        if ([[self XMLWriter] canWriteElementInline:[[self XMLWriter] topElement]])
+        {
+            NSRange range = NSMakeRange(whitespaceRange.length, [text length] - whitespaceRange.length);
+            whitespaceRange = [text rangeOfCharacterFromSet:sWhitespace options:NSAnchoredSearch range:range];
+        }
+        else
+        {
+            range = NSMakeRange(0, [text length]);
+        }
+        
+        if (whitespaceRange.location == range.location)
+        {
+            // If there's lots of leading whitespace, this is going to create lots of temp strings, but that's quite an edge case so I'm not worrying for now
+            do
+            {
+                text = [text substringFromIndex:(whitespaceRange.location + whitespaceRange.length)];
+                whitespaceRange = [text rangeOfCharacterFromSet:sWhitespace options:NSAnchoredSearch];
+            }
+            while (whitespaceRange.location == 0);
+            
+            if ([text length])
+            {
+                // Update DOM with the condensed/trimmed text
+                if (range.location > 0) text = [@" " stringByAppendingString:text];
+                [textNode setData:text];
+            }
+            else
+            {
+                // Element was all whitespace so chuck it
+                result = [textNode nextSibling];
+                [[textNode parentNode] removeChild:textNode];
+            }
+        }
+        
+        // Could make sure the leading whitespace is a space character here I guess
     }
     
     return result;
@@ -525,7 +589,13 @@
         
         NSUInteger length = [textNode length];
         NSIndexPath *startPath = [[selection ks_startIndexPathFromNode:nodeToAppend] indexPathByAddingToLastIndex:length];
+        
         NSIndexPath *endPath = [[selection ks_endIndexPathFromNode:nodeToAppend] indexPathByAddingToLastIndex:length];
+        if (!endPath)
+        {
+            // When selection is at end of textNode, WebKit extends selection to cover all of appended text. #136170
+            endPath = [selection ks_endIndexPathFromNode:textNode];
+        }
         
         
         // Delete node by appending to ourself
