@@ -383,8 +383,27 @@
     {
         DOMNode *node = [children item:i];
         
-        // Try adopting the node, then fallback to import, as described in http://www.w3.org/TR/DOM-Level-3-Core/core.html#Document3-adoptNode
-        DOMNode *imported = [document adoptNode:node];
+        // I'd like to try adopting the node, then fallback to import, as described in http://www.w3.org/TR/DOM-Level-3-Core/core.html#Document3-adoptNode
+        // However, in practice adopted nodes don't seem to notice the CSS rules that apply to them. So instead importing, and falling back to adoption if that throws an exception. #135186
+        DOMNode *imported;
+        @try
+        {
+            imported = [document importNode:node deep:YES];
+        }
+        @catch (NSException *exception)
+        {
+            NSString *name = [exception name];
+            if ([name isEqualToString:DOMException])
+            {
+                imported = [document adoptNode:node];
+            }
+            else
+            {
+                @throw exception;
+            }
+        }
+        
+        
         if (!imported)
         {
             // TODO:
