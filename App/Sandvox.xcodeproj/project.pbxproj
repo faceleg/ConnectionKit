@@ -160,7 +160,6 @@
 		2713C0691078177A000864C2 /* SVLayoutView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2713C0671078177A000864C2 /* SVLayoutView.h */; };
 		2713C06A1078177A000864C2 /* SVLayoutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2713C0681078177A000864C2 /* SVLayoutView.m */; };
 		271575CE0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 271575CC0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.m */; };
-		2718591013CFAEB700FCF04E /* libssh2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CB7531713CFA9C90033600F /* libssh2.dylib */; };
 		271884431296A28000139C89 /* KSElementInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 271884411296A28000139C89 /* KSElementInfo.h */; };
 		271884441296A28000139C89 /* KSElementInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 271884421296A28000139C89 /* KSElementInfo.m */; };
 		27196F631090A9D40096B612 /* SVInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = 27196F611090A9D40096B612 /* SVInspector.h */; settings = {ATTRIBUTES = (); }; };
@@ -684,7 +683,6 @@
 		3CACE2A0127FB99400983DF2 /* SVGoogleWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CACE29E127FB99400983DF2 /* SVGoogleWindowController.m */; };
 		3CACE2CA127FC19E00983DF2 /* SVCommentsSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CACE2C8127FC19E00983DF2 /* SVCommentsSheet.xib */; };
 		3CACE2CD127FC21100983DF2 /* SVGoogleSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CACE2CB127FC21100983DF2 /* SVGoogleSheet.xib */; };
-		3CB7531D13CFAB010033600F /* libssh2.dylib in Copy dylibs */ = {isa = PBXBuildFile; fileRef = 3CB7531713CFA9C90033600F /* libssh2.dylib */; };
 		3CBDE9120EBA65D20059C56C /* KTLocalPublishingEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CBDE9100EBA65D20059C56C /* KTLocalPublishingEngine.h */; };
 		3CBDE9130EBA65D20059C56C /* KTLocalPublishingEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CBDE9110EBA65D20059C56C /* KTLocalPublishingEngine.m */; };
 		3CBFD398093C45930057668A /* KTSiteOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CBFD396093C45930057668A /* KTSiteOutlineView.m */; };
@@ -1725,7 +1723,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 12;
 			files = (
-				3CB7531D13CFAB010033600F /* libssh2.dylib in Copy dylibs */,
 			);
 			name = "Copy dylibs";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2431,7 +2428,6 @@
 		3CACE29E127FB99400983DF2 /* SVGoogleWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVGoogleWindowController.m; sourceTree = "<group>"; };
 		3CACE2C9127FC19E00983DF2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SVCommentsSheet.xib; sourceTree = "<group>"; };
 		3CACE2CC127FC21100983DF2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SVGoogleSheet.xib; sourceTree = "<group>"; };
-		3CB7531713CFA9C90033600F /* libssh2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libssh2.dylib; sourceTree = "<group>"; };
 		3CBDE9100EBA65D20059C56C /* KTLocalPublishingEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTLocalPublishingEngine.h; sourceTree = "<group>"; };
 		3CBDE9110EBA65D20059C56C /* KTLocalPublishingEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTLocalPublishingEngine.m; sourceTree = "<group>"; };
 		3CBFD395093C45930057668A /* KTSiteOutlineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTSiteOutlineView.h; sourceTree = "<group>"; };
@@ -3121,7 +3117,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2718591013CFAEB700FCF04E /* libssh2.dylib in Frameworks */,
 				775DFF38067A968500C5B868 /* Cocoa.framework in Frameworks */,
 				3C202DB507E00B9300DE4994 /* AddressBook.framework in Frameworks */,
 				3C72D3C6094A23880061A876 /* Carbon.framework in Frameworks */,
@@ -4813,7 +4808,6 @@
 		3C72D4F4094A240E0061A876 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				3CB7531713CFA9C90033600F /* libssh2.dylib */,
 				3C5C0DB10BF820EA003594F8 /* libbz2.dylib */,
 				3C72D4F5094A24390061A876 /* libz.dylib */,
 			);
