@@ -222,8 +222,6 @@
     
     // Only a handful of block-level elements are supported. They can only appear at the top-level, or directly inside a list item
     if ([tagName isEqualToString:@"P"] ||
-        [tagName isEqualToString:@"UL"] ||
-        [tagName isEqualToString:@"OL"] ||
         [tagName isEqualToString:@"H3"] ||
         [tagName isEqualToString:@"H4"] ||
         [tagName isEqualToString:@"H5"] ||
@@ -232,6 +230,21 @@
         result = ([[self XMLWriter] openElementsCount] == 0 ||
                   [[[self XMLWriter] topElement] isEqualToString:@"li"]);
     }
+    
+    // Lists must be top-level or directly inside another list
+    else if ([tagName isEqualToString:@"UL"] || [tagName isEqualToString:@"OL"])
+    {
+        result = YES;
+        if ([[self XMLWriter] openElementsCount] > 0)
+        {
+            NSString *topElement = [[self XMLWriter] topElement];
+            if (![topElement isEqualToString:@"ul"] && ![topElement isEqualToString:@"ol"])
+            {
+                result = NO;
+            }
+        }
+    }
+    
     else
     {
         // Super allows standard inline elements. We only support them once inside a paragraph or similar

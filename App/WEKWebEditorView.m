@@ -950,9 +950,17 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 - (void)didChangeText;  // posts kSVWebEditorViewDidChangeNotification
 {
-    // Unmark the DOM as changing. #80643
+    if (![_changingTextControllers count])
+    {
+        // No changes were recorded as about to happen, so assume the change was where the current selection is
+        DOMRange *selection = [self selectedDOMRange];
+        if (selection) [self shouldChangeTextInDOMRange:selection];
+    }
+    
+    
     [_changingTextControllers makeObjectsPerformSelector:@selector(webEditorTextDidChange)];
     [_changingTextControllers removeAllObjects];
+    
     
     [[NSNotificationCenter defaultCenter]
      postNotificationName:kSVWebEditorViewDidChangeNotification object:self];
@@ -2124,6 +2132,17 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
             [webView insertNewlineIgnoringFieldEditor:self];
             result = NO;
         }
+
+        // Default Indent and Outdent implementations don't send -should… notifications, only -didChange…
+        else if (command == @selector(indent:) || command == @selector(outdent:))
+        {
+            result = NO;
+
+            DOMRange *range = [self selectedDOMRange];
+            if (range) result = [self shouldChangeTextInDOMRange:[self selectedDOMRange]];
+
+            if (!result) NSBeep();
+        }
     }
     
     return result;
@@ -2150,6 +2169,28 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         if (!defaultValidation && [self respondsToSelector:action])
         {
             return [self validateUserInterfaceItem:item];
+        }
+        else if (result)
+        {
+            if (action == @selector(indent:) || action == @selector(outdent:))
+            {
+                // Seek out the list containing the selection
+                static NSSet *listTagNames;
+                if (!listTagNames) listTagNames = [[NSSet alloc] initWithObjects:@"UL", @"OL", nil];
+                
+                DOMRange *selection = [self selectedDOMRange];
+                DOMNode *container = [selection commonAncestorContainer];
+                DOMElement *list = ([container ks_ancestorWithTagNameInSet:listTagNames]);
+                
+                // Can indent if entire selection is within a list already
+                if (!list) return NO;
+                
+                // Outdent requires there to be another, containing list
+                if (action == @selector(outdent:))
+                {
+                    result = ([[list parentNode] ks_ancestorWithTagNameInSet:listTagNames] != nil);
+                }
+            }
         }
     }
     

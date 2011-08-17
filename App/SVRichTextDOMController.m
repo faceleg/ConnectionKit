@@ -298,7 +298,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
             // Floated graphics should be moved up if enclosed by an anchor
             // All other graphics should be moved up
             if (![graphic shouldWriteHTMLInline] ||
-                [element ks_isDescendantOfElementWithTagName:@"A"])
+                [element ks_ancestorWithTagName:@"A"])
             {
                 // Push the element off up the tree; it will be written next time round
                 [[parentNode parentNode] insertBefore:element refChild:[parentNode nextSibling]];

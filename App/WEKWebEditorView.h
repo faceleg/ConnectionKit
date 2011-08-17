@@ -349,6 +349,22 @@ extern NSString *SVWebEditorViewDidChangeSelectionNotification;
 #pragma mark -
 
 
+@interface SVValidatedUserInterfaceItem : NSObject <NSValidatedUserInterfaceItem>
+{
+@private
+    SEL         _action;
+    NSInteger   _tag;
+}
+
+@property(nonatomic) SEL action;
+@property(nonatomic) NSInteger tag;
+
+@end
+
+
+#pragma mark -
+
+
 @interface WEKWebEditorView (SPI)
 
 // Do NOT attempt to edit this WebView in any way. The whole point of WEKWebEditorView is to provide a more structured API around a WebView's editing capabilities. You should only ever be modifying the WebView through the API WEKWebEditorView and its DataSource/Delegate provides.

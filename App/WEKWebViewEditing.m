@@ -11,21 +11,10 @@
 #import "SVLink.h"
 
 #import "DOMRange+Karelia.h"
+#import "NSString+Karelia.h"
 
 
 #pragma mark -
-
-
-@interface DOMDocument (AVAILABLE_WEBKIT_VERSION_3_0_AND_LATER)
-- (BOOL)execCommand:(NSString *)command userInterface:(BOOL)userInterface value:(NSString *)value;
-- (BOOL)execCommand:(NSString *)command userInterface:(BOOL)userInterface;
-- (BOOL)execCommand:(NSString *)command;
-- (BOOL)queryCommandEnabled:(NSString *)command;
-- (BOOL)queryCommandIndeterm:(NSString *)command;
-- (BOOL)queryCommandState:(NSString *)command;
-- (BOOL)queryCommandSupported:(NSString *)command;
-- (NSString *)queryCommandValue:(NSString *)command;
-@end
 
 
 @implementation WebView (WEKWebViewEditing)
@@ -217,6 +206,164 @@
     else
     {
         [self setSelectedDOMRange:nil affinity:0];
+    }
+}
+
+#pragma mark Alignment
+
+- (NSTextAlignment)wek_alignment;
+{
+    NSTextAlignment result = NSNaturalTextAlignment;
+    
+    DOMDocument *doc = [[self selectedFrame] DOMDocument];
+    if ([[doc queryCommandValue:@"justifyleft"] isEqualToStringCaseInsensitive:@"true"])
+    {
+        result = NSLeftTextAlignment;
+    }
+    else if ([[doc queryCommandValue:@"justifycenter"] isEqualToStringCaseInsensitive:@"true"])
+    {
+        result = NSCenterTextAlignment;
+    }
+    else if ([[doc queryCommandValue:@"justifyright"] isEqualToStringCaseInsensitive:@"true"])
+    {
+        result = NSRightTextAlignment;
+    }
+    else if ([[doc queryCommandValue:@"justifyfull"] isEqualToStringCaseInsensitive:@"true"])
+    {
+        result = NSJustifiedTextAlignment;
+    }
+    
+    return result;
+}
+
+#pragma mark Lists
+
+- (IBAction)insertOrderedList:(id)sender;
+{
+    id delegate = [self editingDelegate];
+    if ([delegate respondsToSelector:@selector(webView:doCommandBySelector:)])
+    {
+        if ([delegate webView:self doCommandBySelector:_cmd]) return;
+    }
+    
+    if ([self orderedList]) return;  // nowt to do
+    
+    DOMDocument *document = [[self selectedFrame] DOMDocument];
+    if ([document execCommand:@"InsertOrderedList"])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
+    }
+    else
+    {
+        NSBeep();
+    }
+}
+
+- (IBAction)insertUnorderedList:(id)sender;
+{
+    id delegate = [self editingDelegate];
+    if ([delegate respondsToSelector:@selector(webView:doCommandBySelector:)])
+    {
+        if ([delegate webView:self doCommandBySelector:_cmd]) return;
+    }
+    
+    if ([self unorderedList]) return;  // nowt to do
+
+    DOMDocument *document = [[self selectedFrame] DOMDocument];
+    if ([document execCommand:@"InsertUnorderedList"])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
+    }
+    else
+    {
+        NSBeep();
+    }
+}
+
+- (IBAction)removeList:(id)sender;
+{
+    id delegate = [self editingDelegate];
+    if ([delegate respondsToSelector:@selector(webView:doCommandBySelector:)])
+    {
+        if ([delegate webView:self doCommandBySelector:_cmd]) return;
+    }
+    
+    if ([self orderedList])
+    {
+        DOMDocument *document = [[self selectedFrame] DOMDocument];
+        [document execCommand:@"InsertOrderedList"];
+        
+        if ([self orderedList])
+        {
+            // Fallback to brute force removing each item
+            DOMRange *range = [self selectedDOMRange];
+            NSArray *listItems = [range ks_intersectingElementsWithTagName:@"LI"];
+            
+            for (DOMElement *aListItem in [listItems reverseObjectEnumerator])
+            {
+                [range selectNodeContents:aListItem];
+                [self setSelectedDOMRange:range affinity:[self selectionAffinity]];
+                if ([self orderedList]) [self removeList:self];   // so change notifications go out properly
+            }
+        }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
+    }
+    else if ([self unorderedList])
+    {
+        DOMDocument *document = [[self selectedFrame] DOMDocument];
+        [document execCommand:@"InsertUnorderedList"];
+        
+        if ([self unorderedList])
+        {
+            // Fallback to brute force removing each item
+            DOMRange *range = [self selectedDOMRange];
+            NSArray *listItems = [range ks_intersectingElementsWithTagName:@"LI"];
+            
+            for (DOMElement *aListItem in [listItems reverseObjectEnumerator])
+            {
+                [range selectNodeContents:aListItem];
+                [self setSelectedDOMRange:range affinity:[self selectionAffinity]];
+                if ([self unorderedList]) [self removeList:self];   // so change notifications go out properly
+            }
+        }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
+    }
+}
+
+- (BOOL)orderedList;
+{
+    DOMDocument *document = [[self selectedFrame] DOMDocument];
+    return [document queryCommandState:@"InsertOrderedList"];
+}
+
+- (BOOL)unorderedList;
+{
+    DOMDocument *document = [[self selectedFrame] DOMDocument];
+    return [document queryCommandState:@"InsertUnorderedList"];
+}
+
+- (NSString *)selectedListTag; // nil, @"UL", @"OL" or NSMixedState
+{
+    DOMRange *selection = [self selectedDOMRange];
+    if (!selection) return nil;
+    
+    NSArray *unorderedLists = [selection ks_intersectingElementsWithTagName:@"UL"];
+    NSArray *orderedLists = [selection ks_intersectingElementsWithTagName:@"OL"];
+    NSArray *paragraphs = [selection ks_intersectingElementsWithTagName:@"P"];
+    
+    if ([unorderedLists count])
+    {
+        return ([orderedLists count] || [paragraphs count] ? NSMultipleValuesMarker : @"UL");
+    }
+    else if ([orderedLists count])
+    {
+        return ([unorderedLists count] || [paragraphs count] ? NSMultipleValuesMarker : @"OL");
+    }
+    else
+    {
+        return nil;
     }
 }
 

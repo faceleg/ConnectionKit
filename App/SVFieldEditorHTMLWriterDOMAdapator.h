@@ -58,11 +58,13 @@
 + (BOOL)isElementWithTagNameContent:(NSString *)tagName;
 
 
-#pragma mark Attribute Whitelist
+#pragma mark Attributes
+
 - (NSString *)validateAttribute:(NSString *)attributeName
                           value:(NSString *)attributeValue
                       ofElement:(NSString *)tagName;
 
+- (void)buildAttributesForDOMElement:(DOMElement *)element element:(NSString *)elementName;
 
 #pragma mark Styling Whitelist
 - (BOOL)validateStyleProperty:(NSString *)propertyName ofElement:(NSString *)element;
