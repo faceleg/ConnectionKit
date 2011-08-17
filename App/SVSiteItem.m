@@ -266,6 +266,8 @@
 	
 	// Get the preferred filename by converting to lowercase, spaces to _, & removing everything else
     NSString *result = [self preferredFilename];
+    if (!result) result = [self filename];
+    if (!result) return nil;    // assume self is something like an external link which has no filename
     
     
 	// Build a list of the file names already taken
