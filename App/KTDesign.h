@@ -98,6 +98,7 @@ extern const int kDesignThumbHeight;
 
    
 // Viewport
+- (NSString *)viewport;
 - (NSUInteger)viewportWidth;	// Mainly used by the iPhone to know a page's optimum width
 
 // Other
