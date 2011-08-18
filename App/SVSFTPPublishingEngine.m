@@ -43,6 +43,7 @@
     {
         _queue = [[NSOperationQueue alloc] init];
         [_queue setMaxConcurrentOperationCount:1];
+        [_queue setSuspended:YES];  // we'll resume once authenticated
     }
     
     return self;
@@ -319,7 +320,7 @@
 
 - (void)SFTPSessionDidInitialize:(CK2SFTPSession *)session;
 {
-    
+    [_queue setSuspended:NO];
 }
 
 - (void)SFTPSession:(CK2SFTPSession *)session didFailWithError:(NSError *)error;
