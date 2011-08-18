@@ -16,7 +16,10 @@
 
 @interface SVDocWindow : NSWindow 
 {
+    BOOL _constrainingToScreenSuspended;
 
 }
+
+@property BOOL constrainingToScreenSuspended;
 
 @end
