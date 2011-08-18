@@ -27,6 +27,7 @@
 #import "ethernet.h"
 
 
+#ifndef MAC_APP_STORE
 // courtesy of http://www.macedition.com/bolts/bolts_20030210.php
 void enableCoreDumps ()
 {
@@ -48,7 +49,7 @@ void enableCoreDumps ()
 	}
 	
 } // enableCoreDumps
-
+#endif
 
 // AQ validation sample methods
 // TODO: additional checking and obfuscation of names, etc.
@@ -351,13 +352,15 @@ int fourthCheck( int argc, startup_call_t *theCall, id * obj_arg )
 
 int main(int argc, char *argv[])
 {	
+#ifndef MAC_APP_STORE
     UInt32 modifierKeys = GetCurrentEventKeyModifiers();
     if ((modifierKeys & controlKey) || (modifierKeys & shiftKey))
 	{
 		NSBeep();
 		enableCoreDumps();
 	}
-	
+#endif
+    
 	LOG((@"required = %d, allowed = %d", MAC_OS_X_VERSION_MIN_REQUIRED, MAC_OS_X_VERSION_MAX_ALLOWED));
     
     ///////////////////////////////////////////////////////////
