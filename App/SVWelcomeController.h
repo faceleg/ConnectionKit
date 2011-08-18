@@ -38,7 +38,9 @@
 // Match the selectors used by NSDocumentController when possible so that actions from menu bar items gets directed to us if the panel is main/key
 - (IBAction)openDocument:(id)sender;
 - (IBAction)openSelectedRecentDocument:(id)sender;
+#ifndef MAC_APP_STORE
 - (IBAction)openLicensing:(id)sender;
+#endif
 - (IBAction)openScreencast:(id)sender;
 - (IBAction)showDiscoverHelp:(id)sender;
 

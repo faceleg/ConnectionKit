@@ -293,7 +293,7 @@
 	}
 }
 
-
+#ifndef MAC_APP_STORE
 - (void) updateLicenseStatus:(NSNotification *)aNotification
 {
 	if (nil != gRegistrationString )
@@ -370,6 +370,7 @@
 		[self.sticky.animator setAlphaValue:1.0];	// animate open
 	}
 }
+#endif
 
 - (void) updateNetworkStatus:(NSNotification *)aNotification
 {
@@ -413,6 +414,7 @@
 	[super showWindow:sender];
 }
 
+#ifndef MAC_APP_STORE
 - (void) setupStickyWindow
 {
 	if (!_sticky)
@@ -443,6 +445,7 @@
 		[[self window] addChildWindow:_sticky ordered:NSWindowAbove];
 	}
 }
+#endif
 
 - (void)loadRecentDocumentList;
 {
@@ -504,16 +507,20 @@
 			  options:NSKeyValueObservingOptionNew
 			  context:nil];
 	
+#ifndef MAC_APP_STORE
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(updateLicenseStatus:)
 												 name:kKSLicenseStatusChangeNotification
 											   object:nil];
+#endif
 
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateNetworkStatus:) name:kKSNetworkIsAvailableNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateNetworkStatus:) name:kKSNetworkIsNotAvailableNotification object:nil];
 		
 	
+#ifndef MAC_APP_STORE
 	[self updateLicenseStatus:nil];
+#endif
 	[self updateNetworkStatus:nil];
 
 	[[self window] setLevel:NSNormalWindowLevel];
@@ -529,8 +536,10 @@
 - (void)windowDidBecomeKey:(NSNotification *)notification
 {
 	[self loadRecentDocumentList];		// recent document may have moved to trash
+#ifndef MAC_APP_STORE
 	[self setupStickyWindow];
 	[self updateLicenseStatus:nil];
+#endif
 }
 
 - (IBAction)openDocument:(id)sender
@@ -564,10 +573,12 @@
 	}
 }
 
+#ifndef MAC_APP_STORE
 - (IBAction) openLicensing:(id)sender
 {
 	[[NSApp delegate] performSelector:@selector(showRegistrationWindow:) withObject:sender afterDelay:0.0];
 }
+#endif
 
 - (IBAction) openScreencast:(id)sender;
 {
