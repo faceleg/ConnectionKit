@@ -25,7 +25,7 @@
     CKTransferRecord        *_record;
 }
 
-- (id)initWithURL:(NSURL *)URL publishingEngine:(SVSFTPPublishingEngine *)engine transferRecord:(CKTransferRecord *)record;
+- (id)initWithURL:(NSURL *)URL path:(NSString *)path publishingEngine:(SVSFTPPublishingEngine *)engine transferRecord:(CKTransferRecord *)record;
 
 @end
 
@@ -181,6 +181,7 @@
             
             
             NSOperation *op = [[SVWriteContentsOfURLToSFTPHandleOperation alloc] initWithURL:localURL
+                                                                                        path:path
                                                                             publishingEngine:self
                                                                               transferRecord:result];
             [_queue addOperation:op];
@@ -330,12 +331,12 @@
 
 @implementation SVWriteContentsOfURLToSFTPHandleOperation
 
-- (id)initWithURL:(NSURL *)URL publishingEngine:(SVSFTPPublishingEngine *)engine transferRecord:(CKTransferRecord *)record;
+- (id)initWithURL:(NSURL *)URL path:(NSString *)path publishingEngine:(SVSFTPPublishingEngine *)engine transferRecord:(CKTransferRecord *)record;
 {
     if (self = [self init])
     {
         _URL = [URL copy];
-        _path = [[record path] copy];   // copy now since it's not threadsafe
+        _path = [path copy];   // copy now since it's not threadsafe
         _engine = [engine retain];
         _record = [record retain];
     }
