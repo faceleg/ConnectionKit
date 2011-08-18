@@ -134,14 +134,6 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>KTApplication</string>
-	<key>SUEnableAutomaticChecks</key>
-	<false/>
-	<key>SUFeedURL</key>
-	<string>http://launch.karelia.com/appcast.php</string>
-	<key>SUPublicDSAKeyFile</key>
-	<string>dsa_pub.pem</string>
-	<key>SUSendProfileInfo</key>
-	<false/>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>
