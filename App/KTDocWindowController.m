@@ -35,6 +35,7 @@
 #import "SVGoogleWindowController.h"
 #import "SVDesignsController.h"
 #import "KTDesign.h"
+#import "SVDocWindow.h"
 
 #import "NSManagedObjectContext+KTExtensions.h"
 
@@ -139,10 +140,11 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (void)window:(NSWindow *)window startCustomAnimationToEnterFullScreenWithDuration:(NSTimeInterval)duration;
 {
-	NSLog(@"Duration = %.2f", duration);
-	// NSFullScreenSlowMotion default ... if set, shift key honored to slow down animation
+	NSLog(@"Duration = %.2f", duration);	// NSWindow has a method to override for duration
+	// NSFullScreenSlowMotion default ... if set, shift key honored to slow down animation.  DOESN'T ACTUALLY WORK
 	
 	NSRect windowFrameScreen = [window frame];
+	// windowFrameScreen = NSInsetRect(windowFrameScreen, -11, -12);
 	//NSRect contentFrameScreen = [window frameRectForContentRect:windowFrameScreen];
 	NSRect contentFrame = [[window contentView] frame];
 	//NSRect windowRect = [[window contentView] convertRect:contentFrame toView:nil];
@@ -151,20 +153,29 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 	NSRect screenFrameScreen = [[NSScreen mainScreen] frame];
 
+	// Calculate rect of screen with the window chrome on it (including toolbar) for us to animate window to that size.
 	NSRect screenWindowFrameScreen = NSMakeRect(
-												screenFrameScreen.origin.x - (windowFrameScreen.origin.x - contentFrameScreen.origin.x),
-												screenFrameScreen.origin.y - (windowFrameScreen.origin.y - contentFrameScreen.origin.y),
-												screenFrameScreen.size.width - (windowFrameScreen.size.width - contentFrameScreen.size.width),
-												screenFrameScreen.size.height - (windowFrameScreen.size.height - contentFrameScreen.size.height) );
+		screenFrameScreen.origin.x + (windowFrameScreen.origin.x - contentFrameScreen.origin.x),
+		screenFrameScreen.origin.y + (windowFrameScreen.origin.y - contentFrameScreen.origin.y),
+		screenFrameScreen.size.width + (windowFrameScreen.size.width - contentFrameScreen.size.width),
+		screenFrameScreen.size.height + (windowFrameScreen.size.height - contentFrameScreen.size.height) );
 	
-	//NSRect screenWindowFrameScreen = [window convertRectToScreen:screenFrameScreen];
-
+	[(SVDocWindow *)window setConstrainingToScreenSuspended:YES];
 	[window setFrame:screenWindowFrameScreen display:YES animate:YES];
-	
-	
-	// Kristin coming later? 
-	// NSWindow has a method to override for duration
+	[(SVDocWindow *)window setConstrainingToScreenSuspended:NO];
 }
+
+/*
+ 
+ GOING FROM FULLSCREEN BACK TO NORMAL
+ 
+ CAN WE GET THE BOUNDS OF THE WINDOW THAT WE ARE GOING TO ANIMATE TO? OR SHOULD WE HAVE SAVED A COPY OF THOSE BOUNDS ABOVE?
+ 
+- (void)window:(NSWindow *)window startCustomAnimationToExitFullScreenWithDuration:(NSTimeInterval)duration;
+{
+	
+}
+ */
 
 - (void)windowDidLoad
 {	
