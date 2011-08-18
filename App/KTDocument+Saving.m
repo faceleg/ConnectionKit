@@ -1055,7 +1055,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     
 	// Create the webview's offscreen window
-	unsigned designViewport = [[[[[self site] rootPage] master] design] viewport];	// Ensures we don't clip anything important
+	unsigned designViewport = [[[[[self site] rootPage] master] design] viewportWidth];	// Ensures we don't clip anything important
 	NSRect frame = NSMakeRect(0.0, 0.0, designViewport+20, designViewport+20);	// The 20 keeps scrollbars out the way
 	
 	_quickLookThumbnailWebViewWindow = [[NSWindow alloc]
