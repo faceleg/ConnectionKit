@@ -129,6 +129,25 @@
 
 #pragma mark Upload
 
+- (CKTransferRecord *)willUploadToPath:(NSString *)path;
+{
+    if (!_sessionStarted)
+    {
+        NSInvocationOperation *op = [[NSInvocationOperation alloc] initWithTarget:[self SFTPSession]
+                                                                         selector:@selector(start)
+                                                                           object:nil];
+        
+        NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+        [queue addOperation:op];
+        [op release];
+        [queue release];
+        
+        _sessionStarted = YES;
+    }
+    
+    return [super willUploadToPath:path];
+}
+
 - (void)didEnqueueUpload:(CKTransferRecord *)record toDirectory:(CKTransferRecord *)parent;
 {
     [parent addContent:record];
@@ -201,8 +220,6 @@
     CK2SFTPSession *sftpSession = [self SFTPSession];
     OBPRECONDITION(sftpSession);
     
-    [sftpSession start];
-    
     NSError *error;
     BOOL result = [sftpSession createDirectoryAtPath:path
                          withIntermediateDirectories:YES
@@ -253,8 +270,6 @@
     CK2SFTPSession *sftpSession = [self SFTPSession];
     OBPRECONDITION(sftpSession);
     
-    [sftpSession start];
-    
     NSError *error;
     CK2SFTPFileHandle *result = [sftpSession openHandleAtPath:path
                                                         flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
@@ -289,8 +304,6 @@
 {
     CK2SFTPSession *sftpSession = [self SFTPSession];
     OBPRECONDITION(sftpSession);
-    
-    [sftpSession start];
     
     NSError *error;
     CK2SFTPFileHandle *handle = [self threaded_openHandleAtPath:path error:&error];
