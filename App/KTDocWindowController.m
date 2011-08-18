@@ -125,13 +125,53 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 }
 
 #pragma mark Window
+- (NSArray *)customWindowsToEnterFullScreenForWindow:(NSWindow *)window;
+{
+	return [NSArray arrayWithObject:[self window]];	
+}
+
+//- (NSTimeInterval)animationResizeTime:(NSRect)newFrame;
+//{
+//	
+//	
+//}
+
+
+- (void)window:(NSWindow *)window startCustomAnimationToEnterFullScreenWithDuration:(NSTimeInterval)duration;
+{
+	NSLog(@"Duration = %.2f", duration);
+	// NSFullScreenSlowMotion default ... if set, shift key honored to slow down animation
+	
+	NSRect windowFrameScreen = [window frame];
+	//NSRect contentFrameScreen = [window frameRectForContentRect:windowFrameScreen];
+	NSRect contentFrame = [[window contentView] frame];
+	//NSRect windowRect = [[window contentView] convertRect:contentFrame toView:nil];
+	// NSRect windowFrame = [window frameRectForContentRect:screenFrame];
+	NSRect contentFrameScreen = [window convertRectToScreen:contentFrame];
+
+	NSRect screenFrameScreen = [[NSScreen mainScreen] frame];
+
+	NSRect screenWindowFrameScreen = NSMakeRect(
+												screenFrameScreen.origin.x - (windowFrameScreen.origin.x - contentFrameScreen.origin.x),
+												screenFrameScreen.origin.y - (windowFrameScreen.origin.y - contentFrameScreen.origin.y),
+												screenFrameScreen.size.width - (windowFrameScreen.size.width - contentFrameScreen.size.width),
+												screenFrameScreen.size.height - (windowFrameScreen.size.height - contentFrameScreen.size.height) );
+	
+	//NSRect screenWindowFrameScreen = [window convertRectToScreen:screenFrameScreen];
+
+	[window setFrame:screenWindowFrameScreen display:YES animate:YES];
+	
+	
+	// Kristin coming later? 
+	// NSWindow has a method to override for duration
+}
 
 - (void)windowDidLoad
 {	
     [super windowDidLoad];
 	
 	[[self window] setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];;
-	
+		
     // Finish setting up controllers
     [[self pagesController] setManagedObjectContext:[[self document] managedObjectContext]];
     [self siteOutlineViewController].displaySmallPageIcons = [[self document] displaySmallPageIcons];
