@@ -4,8 +4,6 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
-	<key>LSMinimumSystemVersion</key>
-	<string>10.6.6</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -124,11 +122,15 @@
 	<true/>
 	<key>KSFeedType</key>
 	<string>${PRODUCT_VARIANT}</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.productivity</string>
 	<key>LSEnvironment</key>
 	<dict>
 		<key>MinimumSystemVersion</key>
 		<string>10.5.7</string>
 	</dict>
+	<key>LSMinimumSystemVersion</key>
+	<string>10.6.6</string>
 	<key>NSAppleScriptEnabled</key>
 	<false/>
 	<key>NSHumanReadableCopyright</key>
