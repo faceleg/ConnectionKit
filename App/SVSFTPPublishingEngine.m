@@ -25,7 +25,7 @@
     CKTransferRecord        *_record;
 }
 
-- (id)initWithURL:(NSURL *)URL publishingEngine:(SVSFTPPublishingEngine *)engine transferRecord:(CKTransferRecord *)record;
+- (id)initWithURL:(NSURL *)URL path:(NSString *)path publishingEngine:(SVSFTPPublishingEngine *)engine transferRecord:(CKTransferRecord *)record;
 
 @end
 
@@ -43,6 +43,7 @@
     {
         _queue = [[NSOperationQueue alloc] init];
         [_queue setMaxConcurrentOperationCount:1];
+        [_queue setSuspended:YES];  // we'll resume once authenticated
     }
     
     return self;
@@ -128,6 +129,25 @@
 
 #pragma mark Upload
 
+- (CKTransferRecord *)willUploadToPath:(NSString *)path;
+{
+    if (!_sessionStarted)
+    {
+        NSInvocationOperation *op = [[NSInvocationOperation alloc] initWithTarget:[self SFTPSession]
+                                                                         selector:@selector(start)
+                                                                           object:nil];
+        
+        NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+        [queue addOperation:op];
+        [op release];
+        [queue release];
+        
+        _sessionStarted = YES;
+    }
+    
+    return [super willUploadToPath:path];
+}
+
 - (void)didEnqueueUpload:(CKTransferRecord *)record toDirectory:(CKTransferRecord *)parent;
 {
     [parent addContent:record];
@@ -181,6 +201,7 @@
             
             
             NSOperation *op = [[SVWriteContentsOfURLToSFTPHandleOperation alloc] initWithURL:localURL
+                                                                                        path:path
                                                                             publishingEngine:self
                                                                               transferRecord:result];
             [_queue addOperation:op];
@@ -196,13 +217,14 @@
 
 - (BOOL)threaded_createDirectoryAtPath:(NSString *)path error:(NSError **)outError;
 {
-    [[self SFTPSession] start];
+    CK2SFTPSession *sftpSession = [self SFTPSession];
+    OBPRECONDITION(sftpSession);
     
     NSError *error;
-    BOOL result = [[self SFTPSession] createDirectoryAtPath:path
-                                withIntermediateDirectories:YES
-                                                       mode:[self remoteDirectoryPermissions]
-                                                      error:&error];
+    BOOL result = [sftpSession createDirectoryAtPath:path
+                         withIntermediateDirectories:YES
+                                                mode:[self remoteDirectoryPermissions]
+                                               error:&error];
     
     
     if (!result)
@@ -217,13 +239,13 @@
             if (failedPath)
             {
                 // …so try to destroy that file…
-                if ([[self SFTPSession] removeFileAtPath:failedPath error:outError])
+                if ([sftpSession removeFileAtPath:failedPath error:outError])
                 {
                     // …then create the directory
-                    if ([[self SFTPSession] createDirectoryAtPath:failedPath
-                                      withIntermediateDirectories:YES
-                                                             mode:[self remoteDirectoryPermissions]
-                                                            error:outError])
+                    if ([sftpSession createDirectoryAtPath:failedPath
+                               withIntermediateDirectories:YES
+                                                      mode:[self remoteDirectoryPermissions]
+                                                     error:outError])
                     {
                         // And finally, might still need to make some child dirs
                         if ([failedPath isEqualToString:path])
@@ -245,13 +267,14 @@
 
 - (CK2SFTPFileHandle *)threaded_openHandleAtPath:(NSString *)path error:(NSError **)outError;
 {
-    [[self SFTPSession] start];
-
+    CK2SFTPSession *sftpSession = [self SFTPSession];
+    OBPRECONDITION(sftpSession);
+    
     NSError *error;
-    CK2SFTPFileHandle *result = [[self SFTPSession] openHandleAtPath:path
-                                                               flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
-                                                                mode:[self remoteFilePermissions]
-                                                               error:&error];
+    CK2SFTPFileHandle *result = [sftpSession openHandleAtPath:path
+                                                        flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
+                                                         mode:[self remoteFilePermissions]
+                                                        error:&error];
     
     if (!result)
     {
@@ -266,10 +289,10 @@
             
             if (madeDir)
             {
-                result = [[self SFTPSession] openHandleAtPath:path
-                                                        flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
-                                                         mode:[self remoteFilePermissions]
-                                                        error:outError];
+                result = [sftpSession openHandleAtPath:path
+                                                 flags:LIBSSH2_FXF_WRITE|LIBSSH2_FXF_CREAT|LIBSSH2_FXF_TRUNC
+                                                  mode:[self remoteFilePermissions]
+                                                 error:outError];
             }
         }
     }
@@ -279,8 +302,9 @@
 
 - (void)threaded_writeData:(NSData *)data toPath:(NSString *)path transferRecord:(CKTransferRecord *)record;
 {
-    [[self SFTPSession] start];
-
+    CK2SFTPSession *sftpSession = [self SFTPSession];
+    OBPRECONDITION(sftpSession);
+    
     NSError *error;
     CK2SFTPFileHandle *handle = [self threaded_openHandleAtPath:path error:&error];
     
@@ -309,7 +333,7 @@
 
 - (void)SFTPSessionDidInitialize:(CK2SFTPSession *)session;
 {
-    
+    [_queue setSuspended:NO];
 }
 
 - (void)SFTPSession:(CK2SFTPSession *)session didFailWithError:(NSError *)error;
@@ -319,7 +343,8 @@
 
 - (void)SFTPSession:(CK2SFTPSession *)session didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge;
 {
-    [self connection:nil didReceiveAuthenticationChallenge:challenge];
+    [[self ks_proxyOnThread:nil waitUntilDone:NO] connection:nil
+                           didReceiveAuthenticationChallenge:challenge];
 }
 
 @end
@@ -330,12 +355,12 @@
 
 @implementation SVWriteContentsOfURLToSFTPHandleOperation
 
-- (id)initWithURL:(NSURL *)URL publishingEngine:(SVSFTPPublishingEngine *)engine transferRecord:(CKTransferRecord *)record;
+- (id)initWithURL:(NSURL *)URL path:(NSString *)path publishingEngine:(SVSFTPPublishingEngine *)engine transferRecord:(CKTransferRecord *)record;
 {
     if (self = [self init])
     {
         _URL = [URL copy];
-        _path = [[record path] copy];   // copy now since it's not threadsafe
+        _path = [path copy];   // copy now since it's not threadsafe
         _engine = [engine retain];
         _record = [record retain];
     }
@@ -372,7 +397,7 @@
                 @try
                 {
                     if ([self isCancelled]) break;
-
+                    
                     NSData *data = [handle readDataOfLength:CK2SFTPPreferredChunkSize];
                     if (![data length]) break;
                     if ([self isCancelled]) break;

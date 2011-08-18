@@ -16,6 +16,7 @@
   @private
     CK2SFTPSession      *_session;
     NSOperationQueue    *_queue;
+    BOOL                _sessionStarted;
 }
 
 @property(nonatomic, retain, readonly) CK2SFTPSession *SFTPSession;
