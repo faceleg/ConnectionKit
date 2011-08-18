@@ -329,7 +329,8 @@
 
 - (void)SFTPSession:(CK2SFTPSession *)session didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge;
 {
-    [self connection:nil didReceiveAuthenticationChallenge:challenge];
+    [[self ks_proxyOnThread:nil waitUntilDone:NO] connection:nil
+                           didReceiveAuthenticationChallenge:challenge];
 }
 
 @end
