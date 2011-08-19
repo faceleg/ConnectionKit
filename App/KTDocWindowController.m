@@ -131,6 +131,12 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	return [NSArray arrayWithObject:[self window]];	
 }
 
+- (NSArray *)customWindowsToExitFullScreenForWindow:(NSWindow *)window;
+{
+	return [NSArray arrayWithObject:[self window]];	
+}
+
+
 //- (NSTimeInterval)animationResizeTime:(NSRect)newFrame;
 //{
 //	
@@ -140,10 +146,12 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (void)window:(NSWindow *)window startCustomAnimationToEnterFullScreenWithDuration:(NSTimeInterval)duration;
 {
-	NSLog(@"Duration = %.2f", duration);	// NSWindow has a method to override for duration
 	// NSFullScreenSlowMotion default ... if set, shift key honored to slow down animation.  DOESN'T ACTUALLY WORK
 	
 	NSRect windowFrameScreen = [window frame];
+	
+	_originalWindowFrame = windowFrameScreen;
+	
 	// windowFrameScreen = NSInsetRect(windowFrameScreen, -11, -12);
 	//NSRect contentFrameScreen = [window frameRectForContentRect:windowFrameScreen];
 	NSRect contentFrame = [[window contentView] frame];
@@ -163,19 +171,36 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[(SVDocWindow *)window setConstrainingToScreenSuspended:YES];
 	[window setFrame:screenWindowFrameScreen display:YES animate:YES];
 	[(SVDocWindow *)window setConstrainingToScreenSuspended:NO];
+		
+	NSDisableScreenUpdates();
+
+	//NSLog(@"%@", [[window contentView] _subtreeDescription]);
+	
+	NSRect afterResizeContentFrame = [[window contentView] frame];
+	[window setStyleMask:[window styleMask] | NSFullScreenWindowMask];
+	[window setFrame:afterResizeContentFrame display:YES];
+		
+	NSEnableScreenUpdates();
+	
+	// dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1ull * NSEC_PER_SEC), dispatch_get_current_queue(), ^{			});
 }
 
-/*
- 
- GOING FROM FULLSCREEN BACK TO NORMAL
- 
- CAN WE GET THE BOUNDS OF THE WINDOW THAT WE ARE GOING TO ANIMATE TO? OR SHOULD WE HAVE SAVED A COPY OF THOSE BOUNDS ABOVE?
  
 - (void)window:(NSWindow *)window startCustomAnimationToExitFullScreenWithDuration:(NSTimeInterval)duration;
 {
+	[(SVDocWindow *)window setConstrainingToScreenSuspended:YES];	
+	[window setStyleMask:[window styleMask] & ~NSFullScreenWindowMask];
+
+	[NSThread sleepForTimeInterval:1.0];	// For some reason, this is needed? Wait before resizing....
 	
+	[window setFrame:_originalWindowFrame display:YES animate:YES];		// this blocks until done
+
+	[(SVDocWindow *)window setConstrainingToScreenSuspended:NO];
+
+
 }
- */
+
+
 
 - (void)windowDidLoad
 {	

@@ -97,6 +97,7 @@ extern NSString *gInfoWindowAutoSaveName;
 	NSTextField								*_designIdentityTitle;
 	NSImageView								*_designIdentityThumbnail;
 
+	NSRect							_originalWindowFrame;
 }
 
 #pragma mark Window Title
