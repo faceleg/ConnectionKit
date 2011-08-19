@@ -191,13 +191,16 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[(SVDocWindow *)window setConstrainingToScreenSuspended:YES];	
 	[window setStyleMask:[window styleMask] & ~NSFullScreenWindowMask];
 
-	[NSThread sleepForTimeInterval:1.0];	// For some reason, this is needed? Wait before resizing....
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
+        
+        [context setDuration:duration];
+        [[window animator] setFrame:_originalWindowFrame display:YES];
+        
+    } completionHandler:^{
+ 
+		[(SVDocWindow *)window setConstrainingToScreenSuspended:NO];	
 	
-	[window setFrame:_originalWindowFrame display:YES animate:YES];		// this blocks until done
-
-	[(SVDocWindow *)window setConstrainingToScreenSuspended:NO];
-
-
+    }];
 }
 
 
