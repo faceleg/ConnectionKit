@@ -61,6 +61,7 @@
 {
     // Bullets
     id listEditor = [NSApp targetForAction:@selector(selectedListTag)];
+    NSNumber *level = [listEditor selectedListIndentLevel];
     NSString *tag = [listEditor selectedListTag];
     
     if (tag == NSMultipleValuesMarker)
@@ -83,6 +84,8 @@
         [oListPopUp selectItemAtIndex:0];
         [oListDetailsView setHidden:YES];
     }
+    
+    [oIndentLevelField setObjectValue:level];
     
     
     BOOL enable = (listEditor != nil);

@@ -15,6 +15,7 @@
     
     IBOutlet NSPopUpButton      *oListPopUp;
     IBOutlet NSView             *oListDetailsView;
+    IBOutlet NSTextField        *oIndentLevelField;
     IBOutlet NSSegmentedControl *oIndentLevelSegmentedControl;
     
   @private
