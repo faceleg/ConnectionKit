@@ -61,32 +61,36 @@
 {
     // Bullets
     id listEditor = [NSApp targetForAction:@selector(selectedListTag)];
-    NSNumber *level = [listEditor selectedListIndentLevel];
     NSString *tag = [listEditor selectedListTag];
+    BOOL hideListDetails = YES;
     
     if (tag == NSMultipleValuesMarker)
     {
         [oListPopUp selectItem:nil];
-        [oListDetailsView setHidden:YES];
     }
     else if ([tag isEqualToString:@"UL"])
     {
         [oListPopUp selectItemAtIndex:1];
-        [oListDetailsView setHidden:NO];
+        hideListDetails = NO;
     }
     else if ([tag isEqualToString:@"OL"])
     {
         [oListPopUp selectItemAtIndex:2];
-        [oListDetailsView setHidden:NO];
+        hideListDetails = NO;
     }
     else
     {
         [oListPopUp selectItemAtIndex:0];
-        [oListDetailsView setHidden:YES];
     }
     
-    if (level == NSMultipleValuesMarker) level = nil;
-    [oIndentLevelField setObjectValue:level];
+    [oListDetailsView setHidden:hideListDetails];
+    if (!hideListDetails)
+    {
+        NSNumber *level = [listEditor selectedListIndentLevel];
+        if (level == NSMultipleValuesMarker) level = nil;
+        
+        [oIndentLevelField setObjectValue:level];
+    }
     
     
     BOOL enable = (listEditor != nil);
