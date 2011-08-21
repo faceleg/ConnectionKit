@@ -9,6 +9,9 @@
 #import "KSInspectorViewController.h"
 
 
+@class SVWebViewSelectionController;
+
+
 @interface SVTextInspector : KSInspectorViewController
 {
     IBOutlet NSSegmentedControl *oAlignmentSegmentedControl;
@@ -17,6 +20,8 @@
     IBOutlet NSView             *oListDetailsView;
     IBOutlet NSTextField        *oIndentLevelField;
     IBOutlet NSSegmentedControl *oIndentLevelSegmentedControl;
+    
+    IBOutlet SVWebViewSelectionController   *oSelectionController;
     
   @private
 }

@@ -45,7 +45,6 @@
 
 - (BOOL)orderedList;
 - (BOOL)unorderedList;
-- (NSNumber *)selectedListIndentLevel; // 0 for non-lists, 1+ for lists, NSMultipleValuesMarker for mixtures
 - (NSString *)selectedListTag; // nil, @"UL", @"OL" or NSMultipleValuesMarker
 
 @end

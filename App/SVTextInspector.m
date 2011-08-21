@@ -8,6 +8,7 @@
 
 #import "SVTextInspector.h"
 
+#import "SVWebViewSelectionController.h"
 #import "WEKWebEditorView.h"
 #import "WEKWebViewEditing.h"
 
@@ -86,10 +87,7 @@
     [oListDetailsView setHidden:hideListDetails];
     if (!hideListDetails)
     {
-        NSNumber *level = [listEditor selectedListIndentLevel];
-        if (level == NSMultipleValuesMarker) level = nil;
-        
-        [oIndentLevelField setObjectValue:level];
+        [oSelectionController setSelection:[listEditor selectedDOMRange]];
     }
     
     
