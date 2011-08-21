@@ -344,6 +344,31 @@
     return [document queryCommandState:@"InsertUnorderedList"];
 }
 
+- (NSNumber *)selectedListIndentLevel;
+{
+    DOMRange *selection = [self selectedDOMRange];
+    if (!selection) return NSNoSelectionMarker;
+    
+    NSUInteger ancestorListsCount = 0;
+    
+    DOMNode *aNode = [selection commonAncestorContainer];
+    while (aNode)
+    {
+        if ([aNode isKindOfClass:[DOMElement class]])
+        {
+            NSString *tagName = [(DOMElement *)aNode tagName];
+            if ([tagName isEqualToString:@"UL"] || [tagName isEqualToString:@"OL"])
+            {
+                ancestorListsCount++;
+            }
+        }
+        
+        aNode = [aNode parentNode];
+    }
+    
+    return [NSNumber numberWithUnsignedInteger:ancestorListsCount];
+}
+
 - (NSString *)selectedListTag; // nil, @"UL", @"OL" or NSMixedState
 {
     DOMRange *selection = [self selectedDOMRange];
