@@ -349,9 +349,11 @@
     DOMRange *selection = [self selectedDOMRange];
     if (!selection) return NSNoSelectionMarker;
     
-    NSUInteger ancestorListsCount = 0;
     
+    // How many levels deep is the selection?
+    NSUInteger ancestorListsCount = 0;
     DOMNode *aNode = [selection commonAncestorContainer];
+    
     while (aNode)
     {
         if ([aNode isKindOfClass:[DOMElement class]])
@@ -365,6 +367,33 @@
         
         aNode = [aNode parentNode];
     }
+    
+    
+    // Does it contain sub-lists?
+    id ancestor = [selection commonAncestorContainer];
+    while (![ancestor respondsToSelector:@selector(getElementsByTagName:)])
+    {
+        ancestor = [ancestor parentNode];
+    }
+    
+    DOMNodeList *nodes = [ancestor getElementsByTagName:@"UL"];
+    NSUInteger i, count = [nodes length];
+    
+    for (i = 0; i < count; i++)
+    {
+        DOMNode *aNode = [nodes item:i];
+        if ([selection intersectsNode:aNode]) return NSMultipleValuesMarker;
+    }
+    
+    nodes = [ancestor getElementsByTagName:@"OL"];
+    count = [nodes length];
+    
+    for (i = 0; i < count; i++)
+    {
+        DOMNode *aNode = [nodes item:i];
+        if ([selection intersectsNode:aNode]) return NSMultipleValuesMarker;
+    }
+    
     
     return [NSNumber numberWithUnsignedInteger:ancestorListsCount];
 }
