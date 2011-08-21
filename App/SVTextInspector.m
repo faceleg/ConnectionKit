@@ -85,6 +85,7 @@
         [oListDetailsView setHidden:YES];
     }
     
+    if (level == NSMultipleValuesMarker) level = nil;
     [oIndentLevelField setObjectValue:level];
     
     
