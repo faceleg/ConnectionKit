@@ -29,10 +29,9 @@
 #import "ethernet.h"
 
 
-// AQ validation sample methods
-// TODO: additional checking and obfuscation of names, etc.
 
-// deal with these hard coded strings
+// MAS validation based on: https://github.com/AlanQuatermain/mac-app-store-validation-sample.git
+
 
 static inline SecCertificateRef AppleRootCA( void )
 {
@@ -94,8 +93,8 @@ static inline SecCertificateRef AppleRootCA( void )
 }
 
 
-static NSString* hardcoded_bidStr = @"com.karelia.Sandvox";
-static NSString* hardcoded_dvStr = @"2.1.8";
+static NSString* hardcoded_identifier = @"com.karelia.Sandvox";
+static NSString* hardcoded_version = APP_STORE_VERSION;
 
 
 typedef int (*startup_call_t)(int, const char **);
@@ -354,16 +353,13 @@ int main(int argc, char *argv[])
 #ifdef MAC_APP_STORE
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
-    if ( [hardcoded_bidStr isEqualToString: [[NSBundle mainBundle] bundleIdentifier]] == NO )
+    if ( [hardcoded_identifier isEqualToString:[[NSBundle mainBundle] bundleIdentifier]] == NO )
     {
-		//info.plist integrity check failed
-        NSLog(@"hardcoded CFBundleIdentifier does not match Info.plist!");
-        NSLog(@"we probably should exit or something");
+        LOG((@"hardcoded CFBundleIdentifier does not match Info.plist!"));
 	}	
-	if ( [hardcoded_dvStr isEqualToString: [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleIdentifier"]] == NO ){
-		//info.plist integrity check failed
-        NSLog(@"hardcoded CFBundleIdentifier does not match Info.plist!");
-        NSLog(@"we probably should exit or something");
+	if ( [hardcoded_version isEqualToString:[[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleIdentifier"]] == NO )
+    {
+        LOG((@"hardcoded CFBundleShortVersionString does not match Info.plist!"));
 	}	
 	
     startup_call_t theCall = &NSApplicationMain;
