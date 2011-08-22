@@ -16,6 +16,8 @@
 #include <errno.h>
 #include "Debug.h"
 
+#import "Registration.h"
+
 #import <sys/stat.h>
 #import <openssl/bio.h>
 #import <openssl/pkcs7.h>
@@ -27,56 +29,10 @@
 #import "ethernet.h"
 
 
-#ifndef MAC_APP_STORE
-// courtesy of http://www.macedition.com/bolts/bolts_20030210.php
-void enableCoreDumps ()
-{
-	struct rlimit rl;
-	
-	rl.rlim_cur = RLIM_INFINITY;
-	rl.rlim_max = RLIM_INFINITY;
-	
-	if (setrlimit (RLIMIT_CORE, &rl) == -1) {
-		fprintf (stderr, 
-				 "error in setrlimit for RLIMIT_CORE: %d (%s)\n",
-				 errno, strerror(errno));
-	}
-	else
-	{
-		fprintf (stderr, 
-				 "Core file will be saved on abort.  Paste \"kill -ABRT %d\" (without the quotes) to into the Terminal to halt and create core dump.\n",
-				 [[NSProcessInfo processInfo] processIdentifier]);
-	}
-	
-} // enableCoreDumps
-#endif
-
 // AQ validation sample methods
 // TODO: additional checking and obfuscation of names, etc.
 
-static NSString* hardcoded_bidStr = @"com.karelia.Sandvox";
-static NSString* hardcoded_dvStr = @"2.1.7b1";
-
-
-typedef int (*startup_call_t)(int, const char **);
-
-static inline int firstCheck( int argc, startup_call_t *theCall, id * pathPtr )
-{
-    struct stat statBuf;
-    *pathPtr = [[[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent: @"Contents/_MASReceipt/receipt"] stringByStandardizingPath];
-    if ( stat([*pathPtr fileSystemRepresentation], &statBuf) != 0 )
-    {
-        NSLog(@"no receipt found in .app, we really shouldn't even continue");
-        *theCall = (startup_call_t)&exit;
-        return ( 173 );
-    }
-    
-    ERR_load_PKCS7_strings();
-    ERR_load_X509_strings();
-    OpenSSL_add_all_digests();
-    
-    return ( argc );
-}
+// deal with these hard coded strings
 
 static inline SecCertificateRef AppleRootCA( void )
 {
@@ -137,7 +93,15 @@ static inline SecCertificateRef AppleRootCA( void )
     return ( cert );
 }
 
-static inline int secondCheck( int argc, startup_call_t *theCall, id * receiptPath )
+
+static NSString* hardcoded_bidStr = @"com.karelia.Sandvox";
+static NSString* hardcoded_dvStr = @"2.1.8";
+
+
+typedef int (*startup_call_t)(int, const char **);
+
+
+static inline int verifySignature( int argc, startup_call_t *theCall, id * receiptPath )
 {
     // the pkcs7 container (the receipt) and the output of the verification
     PKCS7 *p7 = NULL;
@@ -211,7 +175,7 @@ static inline int secondCheck( int argc, startup_call_t *theCall, id * receiptPa
     return ( argc );
 }
 
-static inline int thirdCheck( int argc, startup_call_t *theCall, id * dataPtr )
+static inline int examinePayload( int argc, startup_call_t *theCall, id * dataPtr )
 {
     NSData * payloadData = (NSData *)(*dataPtr);
     void * data = (void *)[payloadData bytes];
@@ -330,7 +294,36 @@ static inline int thirdCheck( int argc, startup_call_t *theCall, id * dataPtr )
     return ( argc );
 }
 
-int fourthCheck( int argc, startup_call_t *theCall, id * obj_arg )
+static inline int locateReceipt(int argc, startup_call_t *theCall, id * pathPtr)
+{
+    // 10.7
+    if ( [[NSBundle mainBundle] respondsToSelector:@selector(appStoreReceiptURL)] )
+    {
+        NSURL *receiptURL = [[NSBundle mainBundle] performSelector:@selector(appStoreReceiptURL)];
+        *pathPtr = [receiptURL path];
+    }
+    // 10.6
+    if ( *pathPtr == nil )
+    {
+        *pathPtr = [[[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent: @"Contents/_MASReceipt/receipt"] stringByStandardizingPath];
+    }
+    struct stat statBuf;
+    if ( stat([*pathPtr fileSystemRepresentation], &statBuf) != 0 )
+    {
+        NSLog(@"no receipt found in .app, we really shouldn't even continue");
+        *theCall = (startup_call_t)&exit;
+        return ( 173 );
+    }
+    
+    ERR_load_PKCS7_strings();
+    ERR_load_X509_strings();
+    OpenSSL_add_all_digests();
+    
+    return ( argc );
+}
+
+
+int verifyKareliaProduct( int argc, startup_call_t *theCall, id * obj_arg )
 {
     SecStaticCodeRef staticCode = NULL;
     if ( SecStaticCodeCreateWithPath((CFURLRef)[[NSBundle mainBundle] bundleURL], kSecCSDefaultFlags, &staticCode) != noErr )
@@ -351,16 +344,7 @@ int fourthCheck( int argc, startup_call_t *theCall, id * obj_arg )
 }
 
 int main(int argc, char *argv[])
-{	
-#ifndef MAC_APP_STORE
-    UInt32 modifierKeys = GetCurrentEventKeyModifiers();
-    if ((modifierKeys & controlKey) || (modifierKeys & shiftKey))
-	{
-		NSBeep();
-		enableCoreDumps();
-	}
-#endif
-    
+{	    
 	LOG((@"required = %d, allowed = %d", MAC_OS_X_VERSION_MIN_REQUIRED, MAC_OS_X_VERSION_MAX_ALLOWED));
     
     ///////////////////////////////////////////////////////////
@@ -384,10 +368,19 @@ int main(int argc, char *argv[])
 	
     startup_call_t theCall = &NSApplicationMain;
     id obj_arg = nil;
-    argc = firstCheck(argc, &theCall, &obj_arg);
-    argc = secondCheck(argc, &theCall, &obj_arg);
-    argc = thirdCheck(argc, &theCall, &obj_arg);
-    argc = fourthCheck(argc, &theCall, &obj_arg);
+    argc = locateReceipt(argc, &theCall, &obj_arg);
+    if ( argc != 173 ) 
+    {
+        argc = verifySignature(argc, &theCall, &obj_arg);
+    }
+    if ( argc != 173 )
+    {
+        argc = examinePayload(argc, &theCall, &obj_arg);
+    }
+    if ( argc != 173 )
+    {
+        argc = verifyKareliaProduct(argc, &theCall, &obj_arg);
+    }
     
     [pool drain];
     

@@ -2661,7 +2661,7 @@
 		CE01A6AF0EAFD63600BDF264 /* NSWorkspace+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSWorkspace+Karelia.m"; sourceTree = "<group>"; };
 		CE01A6B00EAFD63600BDF264 /* QTMovie+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QTMovie+Karelia.h"; sourceTree = "<group>"; };
 		CE01A6B10EAFD63600BDF264 /* QTMovie+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "QTMovie+Karelia.m"; sourceTree = "<group>"; };
-		CE01A6B20EAFD63600BDF264 /* Registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Registration.h; sourceTree = "<group>"; };
+		CE01A6B20EAFD63600BDF264 /* Registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Registration.h; path = ../Code/Shared/AppKit/Registration.h; sourceTree = "<group>"; };
 		CE01A6B30EAFD63600BDF264 /* RichTextHTMLTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RichTextHTMLTransformer.h; sourceTree = "<group>"; };
 		CE01A6B40EAFD63600BDF264 /* RichTextHTMLTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RichTextHTMLTransformer.m; sourceTree = "<group>"; };
 		CE01A6B60EAFD63600BDF264 /* assertions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = assertions.h; sourceTree = "<group>"; };
@@ -5012,6 +5012,7 @@
 			isa = PBXGroup;
 			children = (
 				2A37F4B0FDCFA73011CA2CEA /* main.m */,
+				CE01A6B20EAFD63600BDF264 /* Registration.h */,
 				3C68169413FEC5F400EE0D9B /* receipt */,
 				3C9A37BF13E130590010A469 /* Receipt Validation */,
 			);
@@ -5259,7 +5260,6 @@
 				CE01A6AD0EAFD63600BDF264 /* NSWindowController+Karelia.m */,
 				CE01A6AE0EAFD63600BDF264 /* NSWorkspace+Karelia.h */,
 				CE01A6AF0EAFD63600BDF264 /* NSWorkspace+Karelia.m */,
-				CE01A6B20EAFD63600BDF264 /* Registration.h */,
 				CE01A6B30EAFD63600BDF264 /* RichTextHTMLTransformer.h */,
 				CE01A6B40EAFD63600BDF264 /* RichTextHTMLTransformer.m */,
 				277F4CC31046F3840099B186 /* KSKeyValueBinding.h */,
