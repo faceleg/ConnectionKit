@@ -7,7 +7,7 @@ USER_HEADER_SEARCH_PATHS = "$(SYMROOT)/Release/Sandvox.app/Contents/PrivateHeade
 BUNDLE_LOADER = $(SYMROOT)/Release/Sandvox.app/Contents/MacOS/Sandvox
 
 // we're building for Leopard and above
-MACOSX_DEPLOYMENT_TARGET = 10.5
+MACOSX_DEPLOYMENT_TARGET = 10.6
 
 // plugins are Cocoa Bundles
 INSTALL_PATH = $(HOME)/Library/Bundles
@@ -27,7 +27,7 @@ COPY_PHASE_STRIP = NO
 DEPLOYMENT_LOCATION = NO
 DEPLOYMENT_POSTPROCESSING = YES
 
-ARCHS = $(ARCHS_STANDARD_32_BIT)
+ARCHS = i386
 ONLY_ACTIVE_ARCH = NO
 
 // we use PROJECT_NAME instead of PRODUCT_NAME

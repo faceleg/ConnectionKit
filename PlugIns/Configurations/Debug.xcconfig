@@ -7,7 +7,7 @@ USER_HEADER_SEARCH_PATHS = "$(SYMROOT)/Debug/Sandvox.app/Contents/PrivateHeaders
 BUNDLE_LOADER = $(SYMROOT)/Debug/Sandvox.app/Contents/MacOS/Sandvox
 
 // we're building for Leopard and above
-MACOSX_DEPLOYMENT_TARGET = 10.5
+MACOSX_DEPLOYMENT_TARGET = 10.6
 
 // plugins are Cocoa Bundles
 INSTALL_PATH = $(HOME)/Library/Bundles
@@ -19,7 +19,7 @@ DEBUG_INFORMATION_FORMAT = dwarf;
 PREBINDING = NO
 ZERO_LINK = YES
 
-ARCHS = $(NATIVE_ARCH)
+ARCHS = i386
 ONLY_ACTIVE_ARCH = YES
 
 // we use PROJECT_NAME instead of PRODUCT_NAME
