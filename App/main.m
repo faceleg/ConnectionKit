@@ -233,7 +233,7 @@ static inline int examinePayload( int argc, startup_call_t *theCall, id * dataPt
     }
     
     NSString * bidStr = [[[NSString alloc] initWithBytes: (bundle_id->buf + 2) length: (bundle_id->size - 2) encoding: NSUTF8StringEncoding] autorelease];
-    if ( [bidStr isEqualToString: hardcoded_bidStr] == NO )
+    if ( [bidStr isEqualToString: hardcoded_identifier] == NO )
     {
         free( payload );
         *theCall = (startup_call_t)&exit;
@@ -241,7 +241,7 @@ static inline int examinePayload( int argc, startup_call_t *theCall, id * dataPt
     }
     
     NSString * dvStr = [[[NSString alloc] initWithBytes: (bundle_version->buf + 2) length: (bundle_version->size - 2) encoding: NSUTF8StringEncoding] autorelease];
-    if ( [dvStr isEqualToString: hardcoded_dvStr] == NO )
+    if ( [dvStr isEqualToString: hardcoded_version] == NO )
     {
         free( payload );
         *theCall = (startup_call_t)&exit;
@@ -309,7 +309,7 @@ static inline int locateReceipt(int argc, startup_call_t *theCall, id * pathPtr)
     struct stat statBuf;
     if ( stat([*pathPtr fileSystemRepresentation], &statBuf) != 0 )
     {
-        NSLog(@"no receipt found in .app, we really shouldn't even continue");
+        LOG((@"no receipt found in .app, we really shouldn't even continue"));
         *theCall = (startup_call_t)&exit;
         return ( 173 );
     }
