@@ -1,8 +1,9 @@
 
-// the SLA variant to wrap around the .dmg [ALPHA,BETA,RELEASE]
-// Also determines if VARIANT_ALPHA or VARIANT_BETA or VARIANT_RELEASE is defined.
-// For checking alpha/beta behaviors, better to test for being *not* VARIANT_RELEASE
-// We use the macro with the secret key so that sparkle can match with key on the server end.
+// this need to match version in iTunes Connect
+APP_STORE_VERSION='@\"2.1.8\"'
+
+// App Store builds have no SLA variant
+// this should never be changed from RELEASE for a Mac App Store build
 PRODUCT_VARIANT = RELEASE
 
 
