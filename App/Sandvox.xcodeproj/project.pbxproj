@@ -597,7 +597,6 @@
 		3C2DA6EB104C7AAE0037D270 /* MGScopeBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C2DA6E6104C7AAE0037D270 /* MGScopeBar.m */; };
 		3C2DA6EC104C7AAE0037D270 /* MGScopeBarDelegateProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C2DA6E7104C7AAE0037D270 /* MGScopeBarDelegateProtocol.h */; };
 		3C30161B103DE0580036A9D0 /* KTDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C301619103DE0580036A9D0 /* KTDocument.xib */; };
-		3C382D610E98170600113137 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 3C382D600E98170600113137 /* dsa_pub.pem */; };
 		3C39822C0D2C3EC800432A0C /* SVPagesController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C39822A0D2C3EC800432A0C /* SVPagesController.h */; settings = {ATTRIBUTES = (); }; };
 		3C39822D0D2C3EC800432A0C /* SVPagesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C39822B0D2C3EC800432A0C /* SVPagesController.m */; };
 		3C3F547D0D625919004885E7 /* Connection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3F547C0D625919004885E7 /* Connection.framework */; };
@@ -2333,7 +2332,6 @@
 		3C2DA6E7104C7AAE0037D270 /* MGScopeBarDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGScopeBarDelegateProtocol.h; sourceTree = "<group>"; };
 		3C30161A103DE0580036A9D0 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/KTDocument.xib; sourceTree = "<group>"; };
 		3C30F7DC1312EC070022E49A /* MapElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapElement.xcodeproj; path = ../PlugIns/MapElement/MapElement.xcodeproj; sourceTree = SOURCE_ROOT; };
-		3C382D600E98170600113137 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = ../Code/Shared/Security/dsa_pub.pem; sourceTree = SOURCE_ROOT; };
 		3C39822A0D2C3EC800432A0C /* SVPagesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPagesController.h; sourceTree = "<group>"; };
 		3C39822B0D2C3EC800432A0C /* SVPagesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPagesController.m; sourceTree = "<group>"; };
 		3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */ = {isa = PBXFileReference; explicitFileType = "wrapper.pb-project"; name = Connection.xcodeproj; path = ../../connection/Connection.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -4537,7 +4535,6 @@
 		3C202E9D07E00FA700DE4994 /* Info Files */ = {
 			isa = PBXGroup;
 			children = (
-				3C382D600E98170600113137 /* dsa_pub.pem */,
 				8D15AC360486D014006FF6A4 /* Info.plist */,
 				CEF9D0B00D862B5100BD9895 /* ImageWebKitPlugin-Info.plist */,
 				CE16DC5A0D8711790077C779 /* MovieWebKitPlugin-Info.plist */,
@@ -6902,7 +6899,6 @@
 				3CF948BE0D624A1200B1C83D /* getSafariFrontmostPage.scpt in Resources */,
 				2709BBE30D7B761D003A1A37 /* KTPageMainContentTemplate.html in Resources */,
 				277026740E1E645200407CD1 /* KTCommentsTemplate.html in Resources */,
-				3C382D610E98170600113137 /* dsa_pub.pem in Resources */,
 				27AE75C80EEEB12D00409D80 /* error.png in Resources */,
 				27AE75C90EEEB12D00409D80 /* finished.png in Resources */,
 				27443266103D8693007E7FF0 /* LoadingPlaceholder.xib in Resources */,
