@@ -17,6 +17,7 @@
 
 // 0 for non-lists, 1+ for lists, NSMultipleValuesMarker for mixtures
 @property(nonatomic, copy) NSNumber *listIndentLevel;
+- (NSUInteger)listIndentLevelForDOMNode:(DOMNode *)node;
 
 @property(nonatomic, retain) DOMRange *selection;
 

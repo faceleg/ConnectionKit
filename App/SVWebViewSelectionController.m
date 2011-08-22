@@ -8,6 +8,8 @@
 
 #import "SVWebViewSelectionController.h"
 
+#import "DOMNode+Karelia.h"
+
 
 @implementation SVWebViewSelectionController
 
@@ -37,22 +39,7 @@
     
     
     // How many levels deep is the selection?
-    NSUInteger ancestorListsCount = 0;
-    DOMNode *aNode = [_selection commonAncestorContainer];
-    
-    while (aNode)
-    {
-        if ([aNode isKindOfClass:[DOMElement class]])
-        {
-            NSString *tagName = [(DOMElement *)aNode tagName];
-            if ([tagName isEqualToString:@"UL"] || [tagName isEqualToString:@"OL"])
-            {
-                ancestorListsCount++;
-            }
-        }
-        
-        aNode = [aNode parentNode];
-    }
+    NSUInteger ancestorListsCount = [self listIndentLevelForDOMNode:[_selection commonAncestorContainer]];
     
     
     // Does it contain sub-lists?
@@ -82,6 +69,22 @@
     
     
     return [NSNumber numberWithUnsignedInteger:ancestorListsCount];
+}
+
+- (NSUInteger)listIndentLevelForDOMNode:(DOMNode *)node;
+{
+    static NSSet *listTags;
+    if (!listTags) listTags = [[NSSet alloc] initWithObjects:@"UL", @"OL", nil];
+    
+    NSUInteger result = 0;
+    DOMElement *list = [node ks_ancestorWithTagNameInSet:listTags];
+    while (list)
+    {
+        result++;
+        list = [[list parentNode] ks_ancestorWithTagNameInSet:listTags];
+    }
+    
+    return result;
 }
 
 @end
