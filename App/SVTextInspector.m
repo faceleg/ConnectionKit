@@ -63,7 +63,6 @@
     // Bullets
     id listEditor = [NSApp targetForAction:@selector(selectedListTag)];
     NSString *tag = [listEditor selectedListTag];
-    BOOL hideListDetails = YES;
     
     if (tag == NSMultipleValuesMarker)
     {
@@ -72,23 +71,17 @@
     else if ([tag isEqualToString:@"UL"])
     {
         [oListPopUp selectItemAtIndex:1];
-        hideListDetails = NO;
     }
     else if ([tag isEqualToString:@"OL"])
     {
         [oListPopUp selectItemAtIndex:2];
-        hideListDetails = NO;
     }
     else
     {
         [oListPopUp selectItemAtIndex:0];
     }
     
-    [oListDetailsView setHidden:hideListDetails];
-    if (!hideListDetails)
-    {
-        [oSelectionController setSelection:[listEditor selectedDOMRange]];
-    }
+    [oSelectionController setSelection:[listEditor selectedDOMRange]];
     
     
     BOOL enable = (listEditor != nil);

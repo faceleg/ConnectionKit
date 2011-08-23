@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="30"/>
+			<integer value="1"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -531,14 +531,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">oListDetailsView</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="64636502"/>
-					</object>
-					<int key="connectionID">39</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">oIndentLevelField</string>
 						<reference key="source" ref="1001"/>
 						<reference key="destination" ref="589966140"/>
@@ -572,6 +564,26 @@
 						</object>
 					</object>
 					<int key="connectionID">48</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">hidden: shallowestListIndentLevel</string>
+						<reference key="source" ref="64636502"/>
+						<reference key="destination" ref="71539192"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="64636502"/>
+							<reference key="NSDestination" ref="71539192"/>
+							<string key="NSLabel">hidden: shallowestListIndentLevel</string>
+							<string key="NSBinding">hidden</string>
+							<string key="NSKeyPath">shallowestListIndentLevel</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">NSNegateBoolean</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">50</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -910,7 +922,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">48</int>
+			<int key="maxID">50</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1254,7 +1266,6 @@
 							<string>oAlignmentSegmentedControl</string>
 							<string>oIndentLevelField</string>
 							<string>oIndentLevelSegmentedControl</string>
-							<string>oListDetailsView</string>
 							<string>oListPopUp</string>
 							<string>oSelectionController</string>
 						</object>
@@ -1263,7 +1274,6 @@
 							<string>NSSegmentedControl</string>
 							<string>NSTextField</string>
 							<string>NSSegmentedControl</string>
-							<string>NSView</string>
 							<string>NSPopUpButton</string>
 							<string>SVWebViewSelectionController</string>
 						</object>
@@ -1275,7 +1285,6 @@
 							<string>oAlignmentSegmentedControl</string>
 							<string>oIndentLevelField</string>
 							<string>oIndentLevelSegmentedControl</string>
-							<string>oListDetailsView</string>
 							<string>oListPopUp</string>
 							<string>oSelectionController</string>
 						</object>
@@ -1292,10 +1301,6 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">oIndentLevelSegmentedControl</string>
 								<string key="candidateClassName">NSSegmentedControl</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">oListDetailsView</string>
-								<string key="candidateClassName">NSView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">oListPopUp</string>
