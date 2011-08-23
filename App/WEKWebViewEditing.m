@@ -270,11 +270,7 @@
     if ([self unorderedList]) return;  // nowt to do
 
     DOMDocument *document = [[self selectedFrame] DOMDocument];
-    if ([document execCommand:@"InsertUnorderedList"])
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
-    }
-    else
+    if (![document execCommand:@"InsertUnorderedList"])
     {
         NSBeep();
     }
