@@ -166,6 +166,21 @@
     return [NSNumber numberWithUnsignedInteger:result];
 }
 
+- (NSNumber *)isOrderedList;
+{
+    NSNumber *result = [self listTypeTag];
+    if ([result isKindOfClass:[NSNumber class]])
+    {
+        result = NSBOOL([result unsignedIntegerValue] == 2);
+    }
+    return result;
+}
++ (NSSet *)keyPathsForValuesAffectingIsOrderedList;
+{
+    return [NSSet setWithObject:@"listTypeTag"];
+}
+
+
 - (NSUInteger)listTypeTagForDOMNode:(DOMNode *)node;
 {
     DOMElement *list = [node ks_ancestorWithTagNameInSet:[[self class] listTagNames]];

@@ -22,6 +22,7 @@
 - (NSUInteger)listIndentLevelForDOMNode:(DOMNode *)node;
 
 @property(nonatomic, copy) NSNumber *listTypeTag;
+- (NSNumber *)isOrderedList;
 - (NSUInteger)listTypeTagForDOMNode:(DOMNode *)node;
 
 @property(nonatomic, retain) DOMRange *selection;
