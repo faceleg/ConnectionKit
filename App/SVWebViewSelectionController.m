@@ -81,6 +81,37 @@
     return [NSNumber numberWithUnsignedInteger:result];
 }
 
+- (NSNumber *)deepestListIndentLevel;
+{
+    if (!_selection) return NSNoSelectionMarker;
+    
+    
+    NSUInteger result = 0;
+    
+    // Get all the contained list elements
+    id ancestor = [_selection commonAncestorContainer];
+    while (![ancestor respondsToSelector:@selector(getElementsByTagName:)])
+    {
+        ancestor = [ancestor parentNode];
+    }
+    
+    DOMNodeList *nodes = [ancestor getElementsByTagName:@"LI"];
+    NSUInteger i, count = [nodes length];
+    
+    for (i = 0; i < count; i++)
+    {
+        DOMNode *aNode = [nodes item:i];
+        if ([_selection intersectsNode:aNode])
+        {
+            NSUInteger level = [self listIndentLevelForDOMNode:aNode];
+            if (level > result) result = level;
+        }
+    }
+    
+    
+    return (result ? [NSNumber numberWithUnsignedInteger:result] : [self shallowestListIndentLevel]);
+}
+
 - (NSUInteger)listIndentLevelForDOMNode:(DOMNode *)node;
 {
     static NSSet *listTags;

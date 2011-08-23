@@ -18,6 +18,7 @@
 // 0 for non-lists, 1+ for lists, NSMultipleValuesMarker for mixtures
 @property(nonatomic, copy) NSNumber *listIndentLevel;
 @property(nonatomic, readonly) NSNumber *shallowestListIndentLevel;
+@property(nonatomic, readonly) NSNumber *deepestListIndentLevel;
 - (NSUInteger)listIndentLevelForDOMNode:(DOMNode *)node;
 
 @property(nonatomic, retain) DOMRange *selection;
