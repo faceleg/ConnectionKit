@@ -344,29 +344,6 @@
     return [document queryCommandState:@"InsertUnorderedList"];
 }
 
-- (NSString *)selectedListTag; // nil, @"UL", @"OL" or NSMixedState
-{
-    DOMRange *selection = [self selectedDOMRange];
-    if (!selection) return nil;
-    
-    NSArray *unorderedLists = [selection ks_intersectingElementsWithTagName:@"UL"];
-    NSArray *orderedLists = [selection ks_intersectingElementsWithTagName:@"OL"];
-    NSArray *paragraphs = [selection ks_intersectingElementsWithTagName:@"P"];
-    
-    if ([unorderedLists count])
-    {
-        return ([orderedLists count] || [paragraphs count] ? NSMultipleValuesMarker : @"UL");
-    }
-    else if ([orderedLists count])
-    {
-        return ([unorderedLists count] || [paragraphs count] ? NSMultipleValuesMarker : @"OL");
-    }
-    else
-    {
-        return nil;
-    }
-}
-
 @end
 
 

@@ -61,7 +61,7 @@
 - (void)refreshList;
 {
     // Bullets
-    id listEditor = [NSApp targetForAction:@selector(selectedListTag)];
+    id listEditor = [NSApp targetForAction:@selector(selectedDOMRange)];
     [oSelectionController setSelection:[listEditor selectedDOMRange]];
     
     NSNumber *tag = [oSelectionController listTypeTag];
