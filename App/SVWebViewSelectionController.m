@@ -23,7 +23,8 @@
 @synthesize selection = _selection;
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key;
 {
-    if ([key isEqualToString:@"listIndentLevel"])
+    if ([key isEqualToString:@"listIndentLevel"] ||
+        [key isEqualToString:@"shallowestListIndentLevel"])
     {
         return [NSSet setWithObject:@"selection"];
     }
@@ -39,7 +40,7 @@
     
     
     // How many levels deep is the selection?
-    NSUInteger ancestorListsCount = [self listIndentLevelForDOMNode:[_selection commonAncestorContainer]];
+    NSNumber *result = [self shallowestListIndentLevel];
     
     
     // Does it contain sub-lists?
@@ -68,7 +69,16 @@
     }
     
     
-    return [NSNumber numberWithUnsignedInteger:ancestorListsCount];
+    return result;
+}
+
+- (NSNumber *)shallowestListIndentLevel;
+{
+    if (!_selection) return NSNoSelectionMarker;
+    
+    // How many levels deep is the selection?
+    NSUInteger result = [self listIndentLevelForDOMNode:[_selection commonAncestorContainer]];
+    return [NSNumber numberWithUnsignedInteger:result];
 }
 
 - (NSUInteger)listIndentLevelForDOMNode:(DOMNode *)node;
