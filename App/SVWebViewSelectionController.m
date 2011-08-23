@@ -143,9 +143,15 @@
 {
     if (!_selection) return NSNoSelectionMarker;
     
+    
+    // Inside a list?
+    NSNumber *level = [self shallowestListIndentLevel];
+    BOOL listOnly = ([level isKindOfClass:[NSNumber class]] && [level unsignedIntegerValue] > 0);
+    
     // What list items are selected?
     NSArray *listItems = [_selection ks_intersectingElementsWithTagName:@"LI"];
     if (![listItems count]) return [NSNumber numberWithInt:0];
+    if (!listOnly) return NSMultipleValuesMarker;
     
     // Multiple selection?
     NSUInteger result = [self listTypeTagForDOMNode:[listItems objectAtIndex:0]];
