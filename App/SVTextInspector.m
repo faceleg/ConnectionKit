@@ -62,27 +62,18 @@
 {
     // Bullets
     id listEditor = [NSApp targetForAction:@selector(selectedListTag)];
-    NSString *tag = [listEditor selectedListTag];
+    [oSelectionController setSelection:[listEditor selectedDOMRange]];
     
-    if (tag == NSMultipleValuesMarker)
+    NSNumber *tag = [oSelectionController listTypeTag];
+    if ([tag isKindOfClass:[NSNumber class]])
     {
-        [oListPopUp selectItem:nil];
-    }
-    else if ([tag isEqualToString:@"UL"])
-    {
-        [oListPopUp selectItemAtIndex:1];
-    }
-    else if ([tag isEqualToString:@"OL"])
-    {
-        [oListPopUp selectItemAtIndex:2];
+        [oListPopUp selectItemAtIndex:[tag unsignedIntegerValue]];
     }
     else
     {
-        [oListPopUp selectItemAtIndex:0];
+        [oListPopUp selectItem:nil];
     }
-    
-    [oSelectionController setSelection:[listEditor selectedDOMRange]];
-    
+        
     
     BOOL enable = (listEditor != nil);
     if ([listEditor respondsToSelector:@selector(validateMenuItem:)])

@@ -9,6 +9,7 @@
 #import "SVWebViewSelectionController.h"
 
 #import "DOMNode+Karelia.h"
+#import "DOMRange+Karelia.h"
 
 
 @implementation SVWebViewSelectionController
@@ -24,7 +25,8 @@
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key;
 {
     if ([key isEqualToString:@"listIndentLevel"] ||
-        [key isEqualToString:@"shallowestListIndentLevel"])
+        [key isEqualToString:@"shallowestListIndentLevel"] ||
+        [key isEqualToString:@"listTypeTag"])
     {
         return [NSSet setWithObject:@"selection"];
     }
@@ -33,6 +35,15 @@
         return [super keyPathsForValuesAffectingValueForKey:key];
     }
 }
+
++ (NSSet *)listTagNames;
+{
+    static NSSet *listTags;
+    if (!listTags) listTags = [[NSSet alloc] initWithObjects:@"UL", @"OL", nil];
+    return listTags;
+}
+
+#pragma mark Indentation
 
 - (NSNumber *)listIndentLevel;
 {
@@ -114,18 +125,56 @@
 
 - (NSUInteger)listIndentLevelForDOMNode:(DOMNode *)node;
 {
-    static NSSet *listTags;
-    if (!listTags) listTags = [[NSSet alloc] initWithObjects:@"UL", @"OL", nil];
     
     NSUInteger result = 0;
-    DOMElement *list = [node ks_ancestorWithTagNameInSet:listTags];
+    DOMElement *list = [node ks_ancestorWithTagNameInSet:[[self class] listTagNames]];
     while (list)
     {
         result++;
-        list = [[list parentNode] ks_ancestorWithTagNameInSet:listTags];
+        list = [[list parentNode] ks_ancestorWithTagNameInSet:[[self class] listTagNames]];
     }
     
     return result;
+}
+
+#pragma mark Type
+
+- (NSNumber *)listTypeTag
+{
+    if (!_selection) return NSNoSelectionMarker;
+    
+    // What list items are selected?
+    NSArray *listItems = [_selection ks_intersectingElementsWithTagName:@"LI"];
+    if (![listItems count]) return [NSNumber numberWithInt:0];
+    
+    // Multiple selection?
+    NSUInteger result = [self listTypeTagForDOMNode:[listItems objectAtIndex:0]];
+    
+    NSUInteger i, count = [listItems count];
+    for (i = 1; i < count; i++)
+    {
+        DOMElement *anElement = [listItems objectAtIndex:i];
+        if ([self listTypeTagForDOMNode:anElement] != result) return NSMultipleValuesMarker;
+    }
+    
+    return [NSNumber numberWithUnsignedInteger:result];
+}
+
+- (NSUInteger)listTypeTagForDOMNode:(DOMNode *)node;
+{
+    DOMElement *list = [node ks_ancestorWithTagNameInSet:[[self class] listTagNames]];
+    if ([[list tagName] isEqualToString:@"UL"])
+    {
+        return 1;
+    }
+    else if ([[list tagName] isEqualToString:@"OL"])
+    {
+        return 2;
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 @end

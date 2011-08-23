@@ -21,6 +21,9 @@
 @property(nonatomic, readonly) NSNumber *deepestListIndentLevel;
 - (NSUInteger)listIndentLevelForDOMNode:(DOMNode *)node;
 
+@property(nonatomic, copy) NSNumber *listTypeTag;
+- (NSUInteger)listTypeTagForDOMNode:(DOMNode *)node;
+
 @property(nonatomic, retain) DOMRange *selection;
 
 @end
