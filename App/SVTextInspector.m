@@ -113,6 +113,14 @@
         
         [item setAction:@selector(indent:)];
         enable = [listEditor validateUserInterfaceItem:item];
+        if (enable)
+        {
+            NSNumber *shallow = [oSelectionController deepestListIndentLevel];
+            if ([shallow isKindOfClass:[NSNumber class]])
+            {
+                enable = [shallow unsignedIntegerValue] < 9;
+            }
+        }
         [oIndentLevelSegmentedControl setEnabled:enable forSegment:1];
         
         [item release];
