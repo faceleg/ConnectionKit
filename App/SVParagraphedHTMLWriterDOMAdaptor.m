@@ -9,6 +9,7 @@
 #import "SVParagraphedHTMLWriterDOMAdaptor.h"
 
 #import "DOMNode+Karelia.h"
+#import "DOMRange+Karelia.h"
 #import "NSString+Karelia.h"
 
 
@@ -41,8 +42,21 @@
     DOMNode *newParent = [parent parentNode];
     NSArray *nodes = [parent childDOMNodesAfterChild:[element previousSibling]];
     
+    WebView *webview = [[[element ownerDocument] webFrame] webView];
+    DOMRange *selection = [webview selectedDOMRange];
+    NSSelectionAffinity affinity = [webview selectionAffinity];
+    NSIndexPath *start = [selection ks_startIndexPathFromNode:element];
+    NSIndexPath *end = [selection ks_endIndexPathFromNode:element];
+    
     [newParent insertDOMNodes:nodes beforeChild:[parent nextSibling]];
     
+    if (start || end)
+    {
+        if (start) [selection ks_setStartWithIndexPath:start fromNode:element];
+        if (end) [selection ks_setEndWithIndexPath:end fromNode:element];
+        
+        [webview setSelectedDOMRange:selection affinity:affinity];
+    }
     
     return nil;
 }
