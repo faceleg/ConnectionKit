@@ -93,14 +93,22 @@
     }
     [oListPopUp setEnabled:enable];
     
+        
     
-    [oIndentLevelSegmentedControl setEnabled:(listEditor != nil)];
     if ([listEditor conformsToProtocol:@protocol(NSUserInterfaceValidations)])
     {
         SVValidatedUserInterfaceItem *item = [[SVValidatedUserInterfaceItem alloc] init];
         
         [item setAction:@selector(outdent:)];
         enable = [listEditor validateUserInterfaceItem:item];
+        if (enable)
+        {
+            NSNumber *shallow = [oSelectionController shallowestListIndentLevel];
+            if ([shallow isKindOfClass:[NSNumber class]])
+            {
+                enable = [shallow unsignedIntegerValue] > 1;
+            }
+        }
         [oIndentLevelSegmentedControl setEnabled:enable forSegment:0];
         
         [item setAction:@selector(indent:)];
