@@ -51,7 +51,7 @@ static inline SecCertificateRef AppleRootCA( void )
     if ( err != noErr )
     {
         CFStringRef errStr = SecCopyErrorMessageString( err, NULL );
-        NSLog( @"Error: %d (%@)", err, errStr );
+        NSLog( @"Error: %ld (%@)", err, errStr );
         CFRelease( errStr );
         return NULL;
     }
@@ -63,7 +63,7 @@ static inline SecCertificateRef AppleRootCA( void )
     if ( err != noErr )
     {
         CFStringRef errStr = SecCopyErrorMessageString( err, NULL );
-        NSLog( @"Error: %d (%@)", err, errStr );
+        NSLog( @"Error: %ld (%@)", err, errStr );
         CFRelease( errStr );
         if ( cfReleaseKeychain )
             CFRelease( roots );
@@ -75,7 +75,7 @@ static inline SecCertificateRef AppleRootCA( void )
     if ( err != noErr )
     {
         CFStringRef errStr = SecCopyErrorMessageString( err, NULL );
-        NSLog( @"Error: %d (%@)", err, errStr );
+        NSLog( @"Error: %ld (%@)", err, errStr );
         CFRelease( errStr );
         if ( cfReleaseKeychain )
             CFRelease( roots );
