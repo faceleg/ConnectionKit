@@ -357,7 +357,7 @@ int main(int argc, char *argv[])
     {
         LOG((@"hardcoded CFBundleIdentifier does not match Info.plist!"));
 	}	
-	if ( [hardcoded_version isEqualToString:[[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleIdentifier"]] == NO )
+	if ( [hardcoded_version isEqualToString:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]] == NO )
     {
         LOG((@"hardcoded CFBundleShortVersionString does not match Info.plist!"));
 	}	
