@@ -9,6 +9,7 @@
 #import "WEKWebViewEditing.h"
 
 #import "SVLink.h"
+#import "SVWebViewSelectionController.h"
 
 #import "DOMRange+Karelia.h"
 #import "NSString+Karelia.h"
@@ -284,48 +285,27 @@
         if ([delegate webView:self doCommandBySelector:_cmd]) return;
     }
     
-    if ([self orderedList])
+    
+    DOMRange *selection = [self selectedDOMRange];
+    if (!selection)
     {
-        DOMDocument *document = [[self selectedFrame] DOMDocument];
-        [document execCommand:@"InsertOrderedList"];
-        
-        if ([self orderedList])
-        {
-            // Fallback to brute force removing each item
-            DOMRange *range = [self selectedDOMRange];
-            NSArray *listItems = [range ks_intersectingElementsWithTagName:@"LI"];
-            
-            for (DOMElement *aListItem in [listItems reverseObjectEnumerator])
-            {
-                [range selectNodeContents:aListItem];
-                [self setSelectedDOMRange:range affinity:[self selectionAffinity]];
-                if ([self orderedList]) [self removeList:self];   // so change notifications go out properly
-            }
-        }
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
+        NSBeep();
+        return;
     }
-    else if ([self unorderedList])
+    
+    SVWebViewSelectionController *controller = [[SVWebViewSelectionController alloc] init];
+    [controller setSelection:selection];
+    
+    while ([[controller deepestListIndentLevel] unsignedIntegerValue])
     {
-        DOMDocument *document = [[self selectedFrame] DOMDocument];
-        [document execCommand:@"InsertUnorderedList"];
+        [[[self selectedFrame] DOMDocument] execCommand:@"Outdent"];
         
-        if ([self unorderedList])
-        {
-            // Fallback to brute force removing each item
-            DOMRange *range = [self selectedDOMRange];
-            NSArray *listItems = [range ks_intersectingElementsWithTagName:@"LI"];
-            
-            for (DOMElement *aListItem in [listItems reverseObjectEnumerator])
-            {
-                [range selectNodeContents:aListItem];
-                [self setSelectedDOMRange:range affinity:[self selectionAffinity]];
-                if ([self unorderedList]) [self removeList:self];   // so change notifications go out properly
-            }
-        }
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
+        selection = [self selectedDOMRange];
+        if (!selection) break;
+        [controller setSelection:[self selectedDOMRange]];
     }
+    
+    [controller release];
 }
 
 - (BOOL)orderedList;
