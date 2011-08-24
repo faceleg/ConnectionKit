@@ -500,16 +500,46 @@
     }
 }
 
+- (void)moveDOMNodeAndFollowingSiblingsToAfterParent:(DOMNode *)element;
+{
+    // Move the element and its next siblings up a level. Next stage of recursion will find them there
+    
+    
+    DOMNode *parent = [element parentNode];
+    DOMNode *newParent = [parent parentNode];
+    NSArray *nodes = [parent childDOMNodesAfterChild:[element previousSibling]];
+    
+    WebView *webview = [[[element ownerDocument] webFrame] webView];
+    DOMRange *selection = [webview selectedDOMRange];
+    NSSelectionAffinity affinity = [webview selectionAffinity];
+    NSIndexPath *start = [selection ks_startIndexPathFromNode:element];
+    NSIndexPath *end = [selection ks_endIndexPathFromNode:element];
+    
+    [newParent insertDOMNodes:nodes beforeChild:[parent nextSibling]];
+    
+    if (start || end)
+    {
+        if (start) [selection ks_setStartWithIndexPath:start fromNode:element];
+        if (end) [selection ks_setEndWithIndexPath:end fromNode:element];
+        
+        [webview setSelectedDOMRange:selection affinity:affinity];
+    }
+}
+
 - (DOMNode *)replaceDOMElementWithChildNodes:(DOMElement *)element
 {
     //  Called when the element hasn't fitted the whitelist. Unlinks it, and returns the correct node to write
     // Figure out the preferred next node
-    DOMNode *result = [element firstChild];
-    if (!result) result = [element nextSibling];
     
-    // Remove non-whitelisted element
-    [element ks_replaceWithChildNodes];
+    // Remove non-whitelisted element, but keep children
+    DOMNode *firstChild = [element firstChild];
+    if (firstChild)
+    {
+        [self moveDOMNodeAndFollowingSiblingsToAfterParent:firstChild];
+    }
     
+    DOMNode *result = [element nextSibling];
+    [[element parentNode] removeChild:element];
     
     return result;
 }

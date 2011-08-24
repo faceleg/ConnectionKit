@@ -33,34 +33,6 @@
 
 #pragma mark Cleanup
 
-- (DOMNode *)handleInvalidBlockElement:(DOMElement *)element;
-{
-    // Move the element and its next siblings up a level. Next stage of recursion will find them there
-    
-    
-    DOMNode *parent = [element parentNode];
-    DOMNode *newParent = [parent parentNode];
-    NSArray *nodes = [parent childDOMNodesAfterChild:[element previousSibling]];
-    
-    WebView *webview = [[[element ownerDocument] webFrame] webView];
-    DOMRange *selection = [webview selectedDOMRange];
-    NSSelectionAffinity affinity = [webview selectionAffinity];
-    NSIndexPath *start = [selection ks_startIndexPathFromNode:element];
-    NSIndexPath *end = [selection ks_endIndexPathFromNode:element];
-    
-    [newParent insertDOMNodes:nodes beforeChild:[parent nextSibling]];
-    
-    if (start || end)
-    {
-        if (start) [selection ks_setStartWithIndexPath:start fromNode:element];
-        if (end) [selection ks_setEndWithIndexPath:end fromNode:element];
-        
-        [webview setSelectedDOMRange:selection affinity:affinity];
-    }
-    
-    return nil;
-}
-
 - (NSDictionary *)dictionaryWithCSSStyle:(DOMCSSStyleDeclaration *)style
                                  element:(NSString *)element;
 {
@@ -142,7 +114,8 @@
         {
             if ([[self class] validateElement:tagName])
             {
-                return [self handleInvalidBlockElement:element];
+                [self moveDOMNodeAndFollowingSiblingsToAfterParent:element];
+                return nil;
             }
             else
             {
