@@ -23,7 +23,7 @@
 
 
 @interface DOMNode (KTExtensionsPrivate)
-- (DOMNode *)unlink;
+- (DOMNode *)ks_replaceWithChildNodes;
 - (NSString *)textContent;
 @end
 
@@ -373,7 +373,7 @@
 	}
 	DOMElement *theElement;
 	for (theElement in nodesToUnlink) {
-		(void)[theElement unlink];
+		(void)[theElement ks_replaceWithChildNodes];
 	}
 }
 
@@ -614,7 +614,7 @@
 		// Check for paragraph within paragraph
 		if (1 == [childNodes length] && [[[childNodes item:0] nodeName] isEqualToString:@"P"] )
 		{
-			[[childNodes item:0] unlink];
+			[[childNodes item:0] ks_replaceWithChildNodes];
 			// continue on....
 		}
 		

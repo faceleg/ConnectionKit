@@ -508,7 +508,7 @@
     if (!result) result = [element nextSibling];
     
     // Remove non-whitelisted element
-    [element unlink];
+    [element ks_replaceWithChildNodes];
     
     
     return result;
