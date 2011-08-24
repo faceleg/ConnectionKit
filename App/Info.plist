@@ -123,7 +123,7 @@
 	<key>KSFeedType</key>
 	<string>${PRODUCT_VARIANT}</string>
 	<key>LSApplicationCategoryType</key>
-	<string>public.app-category.productivity</string>
+	<string>public.app-category.graphics-design</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>10.6.6</string>
 	<key>NSAppleScriptEnabled</key>
