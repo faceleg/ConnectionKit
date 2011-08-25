@@ -354,8 +354,25 @@
         DOMElement *paragraph = [doc createElement:@"P"];
         [[self parentNode] insertBefore:paragraph refChild:self];
         
+        // Will selection be affected?
+        WebView *webView = [[[self ownerDocument] webFrame] webView];
+        DOMRange *selection = [webView selectedDOMRange];
+        NSSelectionAffinity affinity = [webView selectionAffinity];
+        
+        NSIndexPath *startPath = [selection ks_startIndexPathFromNode:self];
+        NSIndexPath *endPath = [selection ks_endIndexPathFromNode:self];
+        
         // Move content into the paragraph
         [paragraph appendChild:self];
+        
+        // Restore selection
+        if (startPath) [selection ks_setStartWithIndexPath:startPath fromNode:self];
+        if (endPath) [selection ks_setEndWithIndexPath:endPath fromNode:self];
+        
+        if (startPath || endPath)
+        {
+            [webView setSelectedDOMRange:selection affinity:affinity];
+        }
         
         return paragraph;
     }
