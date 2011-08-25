@@ -1,7 +1,6 @@
 
 // this need to match version in iTunes Connect
 APP_STORE_VERSION='@\"2.1.8\"'
-APP_STORE_VERSION_STRIPPED=2.1.8
 
 // App Store builds have no SLA variant
 // this should never be changed from RELEASE for a Mac App Store build
