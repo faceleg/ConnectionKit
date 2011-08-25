@@ -7194,7 +7194,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "#!/bin/bash\n\nRECEIPT_PATH=${SRCROOT}/receipt\nINSTALLED_RECEIPT_PATH=${CODESIGNING_FOLDER_PATH}/Contents/_MASReceipt\n\nif [ \"${BUILD_STYLE}\" == \"Debug\" ]\nthen\n\techo \"Adding test MAS receipt to Debug build...\"\n\techo \"mkdir -p ${INSTALLED_RECEIPT_PATH}\"\n\tmkdir -p \"${INSTALLED_RECEIPT_PATH}\"\n\techo \"cp ${RECEIPT_PATH} ${INSTALLED_RECEIPT_PATH}/receipt\"\n\tcp \"${RECEIPT_PATH}\" \"${INSTALLED_RECEIPT_PATH}/receipt\"\nfi\n\nif [ \"${BUILD_STYLE}\" == \"Release\" ]\nthen\n\techo \"NOT Adding test MAS receipt to Receipt build...\"\nfi\n\nexit 0\n\n";
+			shellScript = "#!/bin/bash\n\nRECEIPT_PATH=${SRCROOT}/receipt\nINSTALLED_RECEIPT_PATH=${CODESIGNING_FOLDER_PATH}/Contents/_MASReceipt\n\nif [ \"${CONFIGURATION}\" == \"Debug\" ]\nthen\n\techo \"Adding test MAS receipt to Debug build...\"\n\techo \"mkdir -p ${INSTALLED_RECEIPT_PATH}\"\n\tmkdir -p \"${INSTALLED_RECEIPT_PATH}\"\n\techo \"cp ${RECEIPT_PATH} ${INSTALLED_RECEIPT_PATH}/receipt\"\n\tcp \"${RECEIPT_PATH}\" \"${INSTALLED_RECEIPT_PATH}/receipt\"\nfi\n\nif [ \"${CONFIGURATION}\" == \"Release\" ]\nthen\n\techo \"NOT Adding test MAS receipt to Receipt build...\"\nfi\n\nexit 0\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C7D7D5313B3B01D00B58137 /* Generate CFBundleVersion */ = {
