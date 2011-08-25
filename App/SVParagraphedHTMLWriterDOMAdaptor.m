@@ -352,15 +352,10 @@
         // Create a paragraph to contain the text
         DOMDocument *doc = [self ownerDocument];
         DOMElement *paragraph = [doc createElement:@"P"];
-        [[self parentNode] appendChild:paragraph];
+        [[self parentNode] insertBefore:paragraph refChild:self];
         
         // Move content into the paragraph
-        DOMNode *aNode;
-        DOMNode *previousNode = [self previousSibling];
-        while ((aNode = [paragraph previousSibling]) != previousNode)
-        {
-            [paragraph insertBefore:aNode refChild:[paragraph firstChild]];
-        }
+        [paragraph appendChild:self];
         
         return paragraph;
     }
