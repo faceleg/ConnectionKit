@@ -87,8 +87,24 @@
 {
     if (!_selection) return NSNoSelectionMarker;
     
-    // How many levels deep is the selection?
+    // Whole thing must be contained within a list to have more than 0 level
     NSUInteger result = [self listIndentLevelForDOMNode:[_selection commonAncestorContainer]];
+    if (result)
+    {
+        NSArray *listItems = [_selection ks_intersectingElementsWithTagName:@"LI"];
+        if ([listItems count])
+        {
+            result = NSUIntegerMax;
+            
+            for (DOMElement *anItem in listItems) 
+            {
+                NSUInteger level = [self listIndentLevelForDOMNode:anItem];
+                if (level < result) result = level;
+                if (level <= 1) break;  // get out early clause!
+            }
+        }
+    }
+    
     return [NSNumber numberWithUnsignedInteger:result];
 }
 
