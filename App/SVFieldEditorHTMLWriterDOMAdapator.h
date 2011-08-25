@@ -50,7 +50,7 @@
 #pragma mark Cleanup
 - (DOMNode *)handleInvalidDOMElement:(DOMElement *)element;
 - (DOMElement *)replaceDOMElement:(DOMElement *)element withElementWithTagName:(NSString *)tagName;
-- (void)moveDOMNodeAndFollowingSiblingsToAfterParent:(DOMNode *)element;
+- (void)moveDOMNodeToAfterParent:(DOMNode *)node includeFollowingSiblings:(BOOL)moveSiblings;
 
 
 #pragma mark Tag Whitelist

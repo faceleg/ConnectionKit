@@ -114,7 +114,7 @@
         {
             if ([[self class] validateElement:tagName])
             {
-                [self moveDOMNodeAndFollowingSiblingsToAfterParent:element];
+                [self moveDOMNodeToAfterParent:element includeFollowingSiblings:YES];
                 return nil;
             }
             else

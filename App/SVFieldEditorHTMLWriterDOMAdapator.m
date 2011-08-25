@@ -24,7 +24,6 @@
 - (DOMNode *)handleInvalidDOMElement:(DOMElement *)element;
 
 - (DOMElement *)replaceDOMElement:(DOMElement *)element withElementWithTagName:(NSString *)tagName;
-- (void)moveDOMElementToAfterParent:(DOMElement *)element;
 
 - (DOMNode *)replaceDOMElementWithChildNodes:(DOMElement *)element;
 - (void)replaceDOMElement:(DOMElement *)element withElement:(DOMElement *)newElement;
@@ -233,7 +232,7 @@
                     
                     
                     // Pretend we wrote the element and are now finished. Recursion will take us back to the element in its new location to write it for real
-                    [self moveDOMElementToAfterParent:element];
+                    [self moveDOMNodeToAfterParent:element includeFollowingSiblings:NO];
                     result = nil;
                 }
             }
@@ -471,58 +470,42 @@
     [webView setSelectedDOMRange:selection affinity:[webView selectionAffinity]];
 }
 
-- (void)moveDOMElementToAfterParent:(DOMElement *)element;
+- (void)moveDOMNodeToAfterParent:(DOMNode *)node includeFollowingSiblings:(BOOL)moveSiblings;
 {
-    OBPRECONDITION(element);
+    OBPRECONDITION(node);
     /*  Support method that makes the move, and maintains selection when possible
      */
     
     
     // Get hold of selection to see if it will be affected
-    WebView *webView = [[[element ownerDocument] webFrame] webView];
+    WebView *webView = [[[node ownerDocument] webFrame] webView];
     DOMRange *selection = [webView selectedDOMRange];
     NSSelectionAffinity affinity = [webView selectionAffinity];
     
-    NSIndexPath *startPath = [selection ks_startIndexPathFromNode:element];
-    NSIndexPath *endPath = [selection ks_endIndexPathFromNode:element];
+    NSIndexPath *startPath = [selection ks_startIndexPathFromNode:node];
+    NSIndexPath *endPath = [selection ks_endIndexPathFromNode:node];
+    
     
     // Make the move
-    DOMNode *parent = [element parentNode];
-    [[parent parentNode] insertBefore:element refChild:[parent nextSibling]];
+    DOMNode *parent = [node parentNode];
+    if (moveSiblings)
+    {
+        NSArray *nodes = [parent childDOMNodesAfterChild:[node previousSibling]];
+        [[parent parentNode] insertDOMNodes:nodes beforeChild:[parent nextSibling]];
+    }
+    else
+    {
+        [[parent parentNode] insertBefore:node refChild:[parent nextSibling]];
+    }
+    
     
     // Repair the selection as needed
-    if (startPath) [selection ks_setStartWithIndexPath:startPath fromNode:element];
-    if (endPath) [selection ks_setEndWithIndexPath:endPath fromNode:element];
+    if (startPath) [selection ks_setStartWithIndexPath:startPath fromNode:node];
+    if (endPath) [selection ks_setEndWithIndexPath:endPath fromNode:node];
     
     if (startPath || endPath)
     {
         [webView setSelectedDOMRange:selection affinity:affinity];
-    }
-}
-
-- (void)moveDOMNodeAndFollowingSiblingsToAfterParent:(DOMNode *)element;
-{
-    // Move the element and its next siblings up a level. Next stage of recursion will find them there
-    
-    
-    DOMNode *parent = [element parentNode];
-    DOMNode *newParent = [parent parentNode];
-    NSArray *nodes = [parent childDOMNodesAfterChild:[element previousSibling]];
-    
-    WebView *webview = [[[element ownerDocument] webFrame] webView];
-    DOMRange *selection = [webview selectedDOMRange];
-    NSSelectionAffinity affinity = [webview selectionAffinity];
-    NSIndexPath *start = [selection ks_startIndexPathFromNode:element];
-    NSIndexPath *end = [selection ks_endIndexPathFromNode:element];
-    
-    [newParent insertDOMNodes:nodes beforeChild:[parent nextSibling]];
-    
-    if (start || end)
-    {
-        if (start) [selection ks_setStartWithIndexPath:start fromNode:element];
-        if (end) [selection ks_setEndWithIndexPath:end fromNode:element];
-        
-        [webview setSelectedDOMRange:selection affinity:affinity];
     }
 }
 
@@ -535,7 +518,7 @@
     DOMNode *firstChild = [element firstChild];
     if (firstChild)
     {
-        [self moveDOMNodeAndFollowingSiblingsToAfterParent:firstChild];
+        [self moveDOMNodeToAfterParent:firstChild includeFollowingSiblings:YES];
     }
     
     DOMNode *result = [element nextSibling];
