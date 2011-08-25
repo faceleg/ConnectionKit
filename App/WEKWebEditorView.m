@@ -17,6 +17,8 @@
 #import "SVLink.h"
 #import "SVLinkManager.h"
 #import "SVPasteboardItemInternal.h"
+#import "SVWebViewSelectionController.h"
+
 #import "KSSelectionBorder.h"
 
 #import "DOMElement+Karelia.h"
@@ -2179,17 +2181,27 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
                 if (!listTagNames) listTagNames = [[NSSet alloc] initWithObjects:@"UL", @"OL", nil];
                 
                 DOMRange *selection = [self selectedDOMRange];
-                DOMNode *container = [selection commonAncestorContainer];
-                DOMElement *list = ([container ks_ancestorWithTagNameInSet:listTagNames]);
+                SVWebViewSelectionController *controller = [[SVWebViewSelectionController alloc] init];
+                [controller setSelection:selection];
                 
-                // Can indent if entire selection is within a list already
-                if (!list) return NO;
-                
-                // Outdent requires there to be another, containing list
-                if (action == @selector(outdent:))
+                if (action == @selector(indent:))
                 {
-                    result = ([[list parentNode] ks_ancestorWithTagNameInSet:listTagNames] != nil);
+                    NSNumber *shallow = [controller deepestListIndentLevel];
+                    if ([shallow isKindOfClass:[NSNumber class]])
+                    {
+                        result = [shallow unsignedIntegerValue] < 9;
+                    }
                 }
+                else
+                {
+                    NSNumber *shallow = [controller shallowestListIndentLevel];
+                    if ([shallow isKindOfClass:[NSNumber class]])
+                    {
+                        result = [shallow unsignedIntegerValue] > 1;
+                    }
+                }
+                
+                [controller release];
             }
         }
     }
