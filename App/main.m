@@ -351,20 +351,29 @@ int main(int argc, char *argv[])
     ///////////////////////////////////////////////////////////
     
 #ifdef MAC_APP_STORE
+    
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+    startup_call_t theCall = &NSApplicationMain;
+    id obj_arg = nil;
     
     if ( [hardcoded_identifier isEqualToString:[[NSBundle mainBundle] bundleIdentifier]] == NO )
     {
         LOG((@"hardcoded CFBundleIdentifier does not match Info.plist!"));
+        theCall = (startup_call_t)&exit;
+        argc = 173;
 	}	
 	if ( [hardcoded_version isEqualToString:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]] == NO )
     {
         LOG((@"hardcoded CFBundleShortVersionString does not match Info.plist!"));
+        theCall = (startup_call_t)&exit;
+        argc = 173;
 	}	
 	
-    startup_call_t theCall = &NSApplicationMain;
-    id obj_arg = nil;
-    argc = locateReceipt(argc, &theCall, &obj_arg);
+    if ( argc != 173 )
+    {
+        argc = locateReceipt(argc, &theCall, &obj_arg);
+    }
     if ( argc != 173 ) 
     {
         argc = verifySignature(argc, &theCall, &obj_arg);
