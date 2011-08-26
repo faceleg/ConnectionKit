@@ -28,6 +28,8 @@
 {
     [super viewDidLoad];
     
+    //[oIndentLevelFormatter setPartialStringValidationEnabled:YES];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(selectionDidChange:)
                                                  name:WebViewDidChangeSelectionNotification

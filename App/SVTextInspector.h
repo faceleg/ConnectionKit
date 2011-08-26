@@ -17,7 +17,6 @@
     IBOutlet NSSegmentedControl *oAlignmentSegmentedControl;
     
     IBOutlet NSPopUpButton      *oListPopUp;
-    IBOutlet NSTextField        *oIndentLevelField;
     IBOutlet NSSegmentedControl *oIndentLevelSegmentedControl;
     
     IBOutlet SVWebViewSelectionController   *oSelectionController;
