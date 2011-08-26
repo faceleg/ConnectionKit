@@ -14,6 +14,9 @@
       location = "group:Code/iMedia/iMedia.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:Code/iMedia/ObjectiveFlickr/ObjectiveFlickr.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:PlugIns/VictualElement/VictualElement.xcodeproj">
    </FileRef>
    <FileRef
