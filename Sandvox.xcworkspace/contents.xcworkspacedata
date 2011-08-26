@@ -85,4 +85,7 @@
    <FileRef
       location = "group:PlugIns/RSSBadgeElement/RSSBadgeElement.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:Code/MetaMarvel/MetaMarvel.xcodeproj">
+   </FileRef>
 </Workspace>
