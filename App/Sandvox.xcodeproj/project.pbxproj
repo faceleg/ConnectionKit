@@ -8986,6 +8986,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = xibLocalizationPostprocessor;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -9009,6 +9010,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = xibLocalizationPostprocessor;
+				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
 			name = Release;
