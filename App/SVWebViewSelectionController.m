@@ -83,6 +83,35 @@
     return result;
 }
 
+- (void)setListIndentLevel:(NSNumber *)aLevel;
+{
+    NSUInteger level = [aLevel unsignedIntegerValue];
+    if (level < 1 || level > 9) return;
+    
+    NSNumber *currentLevel = [self shallowestListIndentLevel];
+    if (![currentLevel isKindOfClass:[NSNumber class]]) return;
+    
+    if ([currentLevel unsignedIntegerValue] > level)
+    {
+        do
+        {
+            [[[[self selection] commonAncestorContainer] documentView]
+             doCommandBySelector:@selector(outdent:)];
+        }
+        while ([[self shallowestListIndentLevel] unsignedIntegerValue] > level);
+    }
+    else if ([currentLevel unsignedIntegerValue] < level)
+    {
+        while ([[self deepestListIndentLevel] unsignedIntegerValue] < 9)
+        {
+            [[[[self selection] commonAncestorContainer] documentView]
+             doCommandBySelector:@selector(indent:)];
+            
+            if ([[self shallowestListIndentLevel] unsignedIntegerValue] >= level) break;
+        }
+    }
+}
+
 - (NSNumber *)shallowestListIndentLevel;
 {
     if (!_selection) return NSNoSelectionMarker;
