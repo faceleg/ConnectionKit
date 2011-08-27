@@ -234,7 +234,10 @@
 	}
     else if ([[[[[self document] site] hostProperties] valueForKey:@"protocol"] isEqualToString:@"SFTP"])
     {
-        result = [SVSFTPPublishingEngine class];
+        if (![[[[[self document] site] hostProperties] valueForKey:@"usePublicKey"] boolValue])
+        {
+            result = [SVSFTPPublishingEngine class];
+        }
     }
 	
 	return result;
