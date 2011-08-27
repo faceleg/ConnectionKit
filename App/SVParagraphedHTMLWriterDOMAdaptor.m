@@ -9,6 +9,7 @@
 #import "SVParagraphedHTMLWriterDOMAdaptor.h"
 
 #import "DOMNode+Karelia.h"
+#import "DOMRange+Karelia.h"
 #import "NSString+Karelia.h"
 
 
@@ -31,21 +32,6 @@
 @synthesize allowsPagelets = _allowsBlockGraphics;
 
 #pragma mark Cleanup
-
-- (DOMNode *)handleInvalidBlockElement:(DOMElement *)element;
-{
-    // Move the element and its next siblings up a level. Next stage of recursion will find them there
-    
-    
-    DOMNode *parent = [element parentNode];
-    DOMNode *newParent = [parent parentNode];
-    NSArray *nodes = [parent childDOMNodesAfterChild:[element previousSibling]];
-    
-    [newParent insertDOMNodes:nodes beforeChild:[parent nextSibling]];
-    
-    
-    return nil;
-}
 
 - (NSDictionary *)dictionaryWithCSSStyle:(DOMCSSStyleDeclaration *)style
                                  element:(NSString *)element;
@@ -128,7 +114,8 @@
         {
             if ([[self class] validateElement:tagName])
             {
-                return [self handleInvalidBlockElement:element];
+                [self moveDOMNodeToAfterParent:element includeFollowingSiblings:YES];
+                return nil;
             }
             else
             {
@@ -365,14 +352,26 @@
         // Create a paragraph to contain the text
         DOMDocument *doc = [self ownerDocument];
         DOMElement *paragraph = [doc createElement:@"P"];
-        [[self parentNode] appendChild:paragraph];
+        [[self parentNode] insertBefore:paragraph refChild:self];
+        
+        // Will selection be affected?
+        WebView *webView = [[[self ownerDocument] webFrame] webView];
+        DOMRange *selection = [webView selectedDOMRange];
+        NSSelectionAffinity affinity = [webView selectionAffinity];
+        
+        NSIndexPath *startPath = [selection ks_startIndexPathFromNode:self];
+        NSIndexPath *endPath = [selection ks_endIndexPathFromNode:self];
         
         // Move content into the paragraph
-        DOMNode *aNode;
-        DOMNode *previousNode = [self previousSibling];
-        while ((aNode = [paragraph previousSibling]) != previousNode)
+        [paragraph appendChild:self];
+        
+        // Restore selection
+        if (startPath) [selection ks_setStartWithIndexPath:startPath fromNode:self];
+        if (endPath) [selection ks_setEndWithIndexPath:endPath fromNode:self];
+        
+        if (startPath || endPath)
         {
-            [paragraph insertBefore:aNode refChild:[paragraph firstChild]];
+            [webView setSelectedDOMRange:selection affinity:affinity];
         }
         
         return paragraph;

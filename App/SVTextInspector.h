@@ -9,13 +9,17 @@
 #import "KSInspectorViewController.h"
 
 
+@class SVWebViewSelectionController;
+
+
 @interface SVTextInspector : KSInspectorViewController
 {
     IBOutlet NSSegmentedControl *oAlignmentSegmentedControl;
     
     IBOutlet NSPopUpButton      *oListPopUp;
-    IBOutlet NSView             *oListDetailsView;
     IBOutlet NSSegmentedControl *oIndentLevelSegmentedControl;
+    
+    IBOutlet SVWebViewSelectionController   *oSelectionController;
     
   @private
 }

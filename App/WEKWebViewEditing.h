@@ -45,7 +45,6 @@
 
 - (BOOL)orderedList;
 - (BOOL)unorderedList;
-- (NSString *)selectedListTag; // nil, @"UL", @"OL" or NSMultipleValuesMarker
 
 @end
 

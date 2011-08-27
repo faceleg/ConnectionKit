@@ -9,6 +9,7 @@
 #import "WEKWebViewEditing.h"
 
 #import "SVLink.h"
+#import "SVWebViewSelectionController.h"
 
 #import "DOMRange+Karelia.h"
 #import "NSString+Karelia.h"
@@ -270,11 +271,7 @@
     if ([self unorderedList]) return;  // nowt to do
 
     DOMDocument *document = [[self selectedFrame] DOMDocument];
-    if ([document execCommand:@"InsertUnorderedList"])
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
-    }
-    else
+    if (![document execCommand:@"InsertUnorderedList"])
     {
         NSBeep();
     }
@@ -288,48 +285,27 @@
         if ([delegate webView:self doCommandBySelector:_cmd]) return;
     }
     
-    if ([self orderedList])
+    
+    DOMRange *selection = [self selectedDOMRange];
+    if (!selection)
     {
-        DOMDocument *document = [[self selectedFrame] DOMDocument];
-        [document execCommand:@"InsertOrderedList"];
-        
-        if ([self orderedList])
-        {
-            // Fallback to brute force removing each item
-            DOMRange *range = [self selectedDOMRange];
-            NSArray *listItems = [range ks_intersectingElementsWithTagName:@"LI"];
-            
-            for (DOMElement *aListItem in [listItems reverseObjectEnumerator])
-            {
-                [range selectNodeContents:aListItem];
-                [self setSelectedDOMRange:range affinity:[self selectionAffinity]];
-                if ([self orderedList]) [self removeList:self];   // so change notifications go out properly
-            }
-        }
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
+        NSBeep();
+        return;
     }
-    else if ([self unorderedList])
+    
+    SVWebViewSelectionController *controller = [[SVWebViewSelectionController alloc] init];
+    [controller setSelection:selection];
+    
+    while ([[controller deepestListIndentLevel] unsignedIntegerValue])
     {
-        DOMDocument *document = [[self selectedFrame] DOMDocument];
-        [document execCommand:@"InsertUnorderedList"];
+        [[[self selectedFrame] DOMDocument] execCommand:@"Outdent"];
         
-        if ([self unorderedList])
-        {
-            // Fallback to brute force removing each item
-            DOMRange *range = [self selectedDOMRange];
-            NSArray *listItems = [range ks_intersectingElementsWithTagName:@"LI"];
-            
-            for (DOMElement *aListItem in [listItems reverseObjectEnumerator])
-            {
-                [range selectNodeContents:aListItem];
-                [self setSelectedDOMRange:range affinity:[self selectionAffinity]];
-                if ([self unorderedList]) [self removeList:self];   // so change notifications go out properly
-            }
-        }
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
+        selection = [self selectedDOMRange];
+        if (!selection) break;
+        [controller setSelection:[self selectedDOMRange]];
     }
+    
+    [controller release];
 }
 
 - (BOOL)orderedList;
@@ -342,29 +318,6 @@
 {
     DOMDocument *document = [[self selectedFrame] DOMDocument];
     return [document queryCommandState:@"InsertUnorderedList"];
-}
-
-- (NSString *)selectedListTag; // nil, @"UL", @"OL" or NSMixedState
-{
-    DOMRange *selection = [self selectedDOMRange];
-    if (!selection) return nil;
-    
-    NSArray *unorderedLists = [selection ks_intersectingElementsWithTagName:@"UL"];
-    NSArray *orderedLists = [selection ks_intersectingElementsWithTagName:@"OL"];
-    NSArray *paragraphs = [selection ks_intersectingElementsWithTagName:@"P"];
-    
-    if ([unorderedLists count])
-    {
-        return ([orderedLists count] || [paragraphs count] ? NSMultipleValuesMarker : @"UL");
-    }
-    else if ([orderedLists count])
-    {
-        return ([unorderedLists count] || [paragraphs count] ? NSMultipleValuesMarker : @"OL");
-    }
-    else
-    {
-        return nil;
-    }
 }
 
 @end

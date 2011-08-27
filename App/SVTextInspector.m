@@ -8,6 +8,7 @@
 
 #import "SVTextInspector.h"
 
+#import "SVWebViewSelectionController.h"
 #import "WEKWebEditorView.h"
 #import "WEKWebViewEditing.h"
 
@@ -26,6 +27,8 @@
 - (void)viewDidLoad;
 {
     [super viewDidLoad];
+    
+    //[oIndentLevelFormatter setPartialStringValidationEnabled:YES];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(selectionDidChange:)
@@ -60,30 +63,19 @@
 - (void)refreshList;
 {
     // Bullets
-    id listEditor = [NSApp targetForAction:@selector(selectedListTag)];
-    NSString *tag = [listEditor selectedListTag];
+    id listEditor = [NSApp targetForAction:@selector(selectedDOMRange)];
+    [oSelectionController setSelection:[listEditor selectedDOMRange]];
     
-    if (tag == NSMultipleValuesMarker)
+    NSNumber *tag = [oSelectionController listTypeTag];
+    if ([tag isKindOfClass:[NSNumber class]])
     {
-        [oListPopUp selectItem:nil];
-        [oListDetailsView setHidden:YES];
-    }
-    else if ([tag isEqualToString:@"UL"])
-    {
-        [oListPopUp selectItemAtIndex:1];
-        [oListDetailsView setHidden:NO];
-    }
-    else if ([tag isEqualToString:@"OL"])
-    {
-        [oListPopUp selectItemAtIndex:2];
-        [oListDetailsView setHidden:NO];
+        [oListPopUp selectItemAtIndex:[tag unsignedIntegerValue]];
     }
     else
     {
-        [oListPopUp selectItemAtIndex:0];
-        [oListDetailsView setHidden:YES];
+        [oListPopUp selectItem:nil];
     }
-    
+        
     
     BOOL enable = (listEditor != nil);
     if ([listEditor respondsToSelector:@selector(validateMenuItem:)])
@@ -94,8 +86,8 @@
     }
     [oListPopUp setEnabled:enable];
     
+        
     
-    [oIndentLevelSegmentedControl setEnabled:(listEditor != nil)];
     if ([listEditor conformsToProtocol:@protocol(NSUserInterfaceValidations)])
     {
         SVValidatedUserInterfaceItem *item = [[SVValidatedUserInterfaceItem alloc] init];

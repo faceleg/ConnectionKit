@@ -510,6 +510,8 @@
 		27D9A25A117FB49000049638 /* SVAuxiliaryPageletTextDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D9A258117FB49000049638 /* SVAuxiliaryPageletTextDOMController.m */; };
 		27D9B8DE108CD17500B6F28D /* SVHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 27D9B8DC108CD17500B6F28D /* SVHTMLContext.h */; settings = {ATTRIBUTES = (); }; };
 		27D9B8DF108CD17500B6F28D /* SVHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D9B8DD108CD17500B6F28D /* SVHTMLContext.m */; };
+		27DA95731401A557004DE2DA /* SVWebViewSelectionController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DA95711401A557004DE2DA /* SVWebViewSelectionController.h */; };
+		27DA95741401A557004DE2DA /* SVWebViewSelectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DA95721401A557004DE2DA /* SVWebViewSelectionController.m */; };
 		27DB8F7F11204A9400B1895C /* DOMElement+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DB8F7D11204A9400B1895C /* DOMElement+Karelia.h */; };
 		27DB8F8011204A9400B1895C /* DOMElement+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB8F7E11204A9400B1895C /* DOMElement+Karelia.m */; };
 		27DB903011209AEA00B1895C /* DOMNamedNodeMap+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DB902E11209AEA00B1895C /* DOMNamedNodeMap+Karelia.h */; };
@@ -2201,6 +2203,8 @@
 		27D9A258117FB49000049638 /* SVAuxiliaryPageletTextDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVAuxiliaryPageletTextDOMController.m; sourceTree = "<group>"; };
 		27D9B8DC108CD17500B6F28D /* SVHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVHTMLContext.h; sourceTree = "<group>"; };
 		27D9B8DD108CD17500B6F28D /* SVHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVHTMLContext.m; sourceTree = "<group>"; };
+		27DA95711401A557004DE2DA /* SVWebViewSelectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebViewSelectionController.h; sourceTree = "<group>"; };
+		27DA95721401A557004DE2DA /* SVWebViewSelectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebViewSelectionController.m; sourceTree = "<group>"; };
 		27DB8F7D11204A9400B1895C /* DOMElement+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOMElement+Karelia.h"; sourceTree = "<group>"; };
 		27DB8F7E11204A9400B1895C /* DOMElement+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOMElement+Karelia.m"; sourceTree = "<group>"; };
 		27DB902E11209AEA00B1895C /* DOMNamedNodeMap+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOMNamedNodeMap+Karelia.h"; sourceTree = "<group>"; };
@@ -3630,6 +3634,8 @@
 				275B0DDA13D8447400CC5D76 /* TextInspector.xib */,
 				2783A89113DA361900F9A702 /* SVTextInspector.h */,
 				2783A89213DA361900F9A702 /* SVTextInspector.m */,
+				27DA95711401A557004DE2DA /* SVWebViewSelectionController.h */,
+				27DA95721401A557004DE2DA /* SVWebViewSelectionController.m */,
 			);
 			name = "Text Inspector";
 			sourceTree = "<group>";
@@ -6337,6 +6343,7 @@
 				27AA465213EC1802008470C7 /* KSBufferedWriter.h in Headers */,
 				2705B1B013EC0514004C678D /* SVWebEditorUpdatesHTMLContext.h in Headers */,
 				27139E5513F7EA3F00299254 /* SVWebEditorView.h in Headers */,
+				27DA95731401A557004DE2DA /* SVWebViewSelectionController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7843,6 +7850,7 @@
 				27AA465313EC1802008470C7 /* KSBufferedWriter.m in Sources */,
 				2705B1B113EC0514004C678D /* SVWebEditorUpdatesHTMLContext.m in Sources */,
 				27139E5613F7EA3F00299254 /* SVWebEditorView.m in Sources */,
+				27DA95741401A557004DE2DA /* SVWebViewSelectionController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
