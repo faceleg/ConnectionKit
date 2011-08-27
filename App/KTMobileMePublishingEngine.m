@@ -29,7 +29,7 @@
 					  localizedRecoverySuggestion:NSLocalizedString(@"Please run the Host Setup Assistant and re-enter your host's login credentials.", @"Publishing engine authentication error")
 								  underlyingError:nil];
         
-        [self engineDidPublish:NO error:error];
+        [self finishPublishing:NO error:error];
     }
 }
 
@@ -49,7 +49,7 @@
 					  localizedRecoverySuggestion:NSLocalizedString(@"Please check your account settings in the MobileMe System Preferences pane.", @"Publishing engine authentication error")
 								  underlyingError:[challenge error]];
         
-		[self engineDidPublish:NO error:error];
+		[self finishPublishing:NO error:error];
         return;
     }
     
@@ -69,7 +69,7 @@
 					  localizedRecoverySuggestion:NSLocalizedString(@"Please run the Host Setup Assistant and re-enter your host's login credentials.", @"Publishing engine authentication error")
 								  underlyingError:[challenge error]];
         
-		[self engineDidPublish:NO error:error];
+		[self finishPublishing:NO error:error];
     }
 }
 
