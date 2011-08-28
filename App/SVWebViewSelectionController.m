@@ -22,6 +22,22 @@
 }
 
 @synthesize selection = _selection;
+- (void)setSelection:(DOMRange *)selection;
+{
+    // Wind the end of the selection in, as WebKit can be a little enthusiastic, selecting up to the start of following paragraph
+    if (selection)
+    {
+        // Wind in to end of text
+        while (![selection collapsed] &&
+               ([selection endOffset] == 0 || [[selection endContainer] nodeType] != DOM_TEXT_NODE))
+        {
+            [selection ks_collapseBy1];
+        }
+    }
+    
+    [selection retain];
+    [_selection release]; _selection = selection;
+}
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key;
 {
     if ([key isEqualToString:@"listIndentLevel"] ||
