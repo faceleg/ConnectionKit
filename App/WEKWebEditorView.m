@@ -1868,7 +1868,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     // You can cut or copy as long as there is a selection (just hope the datasource comes through for us!)
     else if (action == @selector(cut:) || action == @selector(copy:))
     {
-        result = ([[self selectedItems] count] >= 1);
+        result = ([[self selectedItems] count] >= 1 || [self selectedDOMRange]);
     }
     
     else if ([self respondsToSelector:action])
