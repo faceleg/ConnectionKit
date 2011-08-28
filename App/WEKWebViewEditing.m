@@ -55,11 +55,7 @@
 - (NSArray *)selectedAnchorElements;
 {
     DOMRange *selection = [self selectedDOMRange];
-    DOMHTMLAnchorElement *anchorElement = [selection editableAnchorElement];
-    
-    NSArray *result = nil;
-    if (anchorElement) result = [NSArray arrayWithObject:anchorElement];
-    return result;
+    return [selection ks_intersectingElementsWithTagName:@"A"];
 }
 
 - (NSString *)linkValue;
