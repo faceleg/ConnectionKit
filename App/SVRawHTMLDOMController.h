@@ -10,7 +10,7 @@
 #import "SVRawHTMLGraphic.h"
 
 
-@interface SVRawHTMLDOMController : SVGraphicContainerDOMController
+@interface SVRawHTMLDOMController : SVGraphicDOMController
 
 - (void)editRawHTMLInSelectedBlock:(id)sender;
 
