@@ -316,68 +316,6 @@
     return result;
 }
 
-- (DOMNode *)willWriteDOMText:(DOMText *)textNode;
-{
-    DOMNode *result = [super willWriteDOMText:textNode];
-    if (result != textNode) return result;
-    
-    
-    static NSCharacterSet *sWhitespace; // full whitespace/newline set minus &nbsp;
-    if (!sWhitespace)
-    {
-        sWhitespace = [[[NSCharacterSet fullWhitespaceAndNewlineCharacterSet] setByRemovingCharactersInString:@" "] copy];
-    }
-    
-    // The starting text of an element wants *leading* whitespace processed
-    if ([textNode previousSibling]) return textNode;
-    
-    NSString *text = [textNode data];
-    NSRange whitespaceRange = [text rangeOfCharacterFromSet:sWhitespace options:NSAnchoredSearch];
-    
-    if (whitespaceRange.location == 0)
-    {
-        // Inline elements want whitespace *condensed*. Otherwise, strip it
-        NSRange range;
-        if ([[self XMLWriter] canWriteElementInline:[[self XMLWriter] topElement]])
-        {
-            NSRange range = NSMakeRange(whitespaceRange.length, [text length] - whitespaceRange.length);
-            whitespaceRange = [text rangeOfCharacterFromSet:sWhitespace options:NSAnchoredSearch range:range];
-        }
-        else
-        {
-            range = NSMakeRange(0, [text length]);
-        }
-        
-        if (whitespaceRange.location == range.location)
-        {
-            // If there's lots of leading whitespace, this is going to create lots of temp strings, but that's quite an edge case so I'm not worrying for now
-            do
-            {
-                text = [text substringFromIndex:(whitespaceRange.location + whitespaceRange.length)];
-                whitespaceRange = [text rangeOfCharacterFromSet:sWhitespace options:NSAnchoredSearch];
-            }
-            while (whitespaceRange.location == 0);
-            
-            if ([text length])
-            {
-                // Update DOM with the condensed/trimmed text
-                if (range.location > 0) text = [@" " stringByAppendingString:text];
-                [textNode setData:text];
-            }
-            else
-            {
-                // Element was all whitespace so chuck it
-                result = [textNode nextSibling];
-                [[textNode parentNode] removeChild:textNode];
-            }
-        }
-        
-        // Could make sure the leading whitespace is a space character here I guess
-    }
-    
-    return result;
-}
-
 #pragma mark Cleanup
 
 - (DOMNode *)handleInvalidDOMElement:(DOMElement *)element;
@@ -553,13 +491,100 @@
     [spanStyle setProperty:@"color" value:[fontElement color] priority:@""];
 }
 
-#pragma mark High-level Writing
+#pragma mark Character Data
 
 // Comments have no place in text fields!
 - (DOMNode *)writeComment:(NSString *)comment withDOMComment:(DOMComment *)commentNode;
 {
     DOMNode *result = [commentNode nextSibling];
     [[commentNode parentNode] removeChild:commentNode];
+    return result;
+}
+
+- (DOMNode *)willWriteDOMText:(DOMText *)textNode;
+{
+    DOMNode *result = [super willWriteDOMText:textNode];
+    if (result != textNode) return result;
+    
+    
+    static NSCharacterSet *sWhitespace; // full whitespace/newline set minus &nbsp;
+    if (!sWhitespace)
+    {
+        sWhitespace = [[[NSCharacterSet fullWhitespaceAndNewlineCharacterSet] setByRemovingCharactersInString:@" "] copy];
+    }
+    
+    // The starting text of an element wants *leading* whitespace processed
+    if ([textNode previousSibling]) return textNode;
+    
+    NSString *text = [textNode data];
+    NSRange whitespaceRange = [text rangeOfCharacterFromSet:sWhitespace options:NSAnchoredSearch];
+    
+    if (whitespaceRange.location == 0)
+    {
+        // Inline elements want whitespace *condensed*. Otherwise, strip it
+        NSRange range;
+        if ([[self XMLWriter] canWriteElementInline:[[self XMLWriter] topElement]])
+        {
+            NSRange range = NSMakeRange(whitespaceRange.length, [text length] - whitespaceRange.length);
+            whitespaceRange = [text rangeOfCharacterFromSet:sWhitespace options:NSAnchoredSearch range:range];
+        }
+        else
+        {
+            range = NSMakeRange(0, [text length]);
+        }
+        
+        if (whitespaceRange.location == range.location)
+        {
+            // There's going to be changes; want to maintain selection
+            DOMDocument *doc = [textNode ownerDocument];
+            WebView *webView = [[doc webFrame] webView];
+            DOMRange *selection = [webView selectedDOMRange];
+            NSSelectionAffinity affinity = [webView selectionAffinity];
+            
+            NSIndexPath *startPath = [selection ks_startIndexPathFromNode:textNode];
+            NSIndexPath *endPath = [selection ks_endIndexPathFromNode:textNode];
+            
+            
+            // If there's lots of leading whitespace, this is going to create lots of temp strings, but that's quite an edge case so I'm not worrying for now
+            do
+            {
+                NSUInteger index = (whitespaceRange.location + whitespaceRange.length);
+                text = [text substringFromIndex:index];
+                
+                startPath = [startPath indexPathByAddingToLastIndex:-index];
+                endPath = [endPath indexPathByAddingToLastIndex:-index];
+                
+                whitespaceRange = [text rangeOfCharacterFromSet:sWhitespace options:NSAnchoredSearch];
+            }
+            while (whitespaceRange.location == 0);
+            
+            if ([text length])
+            {
+                // Update DOM with the condensed/trimmed text, maintaining selection
+                if (range.location > 0)
+                {
+                    text = [@" " stringByAppendingString:text];
+                    startPath = [startPath indexPathByAddingToLastIndex:1];
+                    endPath = [endPath indexPathByAddingToLastIndex:1];
+                }
+                
+                [textNode setData:text];
+                
+                if (startPath) [selection ks_setStartWithIndexPath:startPath fromNode:textNode];
+                if (endPath) [selection ks_setEndWithIndexPath:endPath fromNode:textNode];
+                if (startPath || endPath) [webView setSelectedDOMRange:selection affinity:affinity];
+            }
+            else
+            {
+                // Element was all whitespace so chuck it
+                result = [textNode nextSibling];
+                [[textNode parentNode] removeChild:textNode];
+            }
+        }
+        
+        // Could make sure the leading whitespace is a space character here I guess
+    }
+    
     return result;
 }
 
