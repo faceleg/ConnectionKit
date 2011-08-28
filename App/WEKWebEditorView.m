@@ -1865,7 +1865,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
         result = [[self undoManager] canRedo];
     }
     
-    // You can cut or copy as long as there is a suggestion (just hope the datasource comes through for us!)
+    // You can cut or copy as long as there is a selection (just hope the datasource comes through for us!)
     else if (action == @selector(cut:) || action == @selector(copy:))
     {
         result = ([[self selectedItems] count] >= 1);
