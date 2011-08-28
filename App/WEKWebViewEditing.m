@@ -48,6 +48,24 @@
         result = [SVLink linkWithURLString:[anchor getAttribute:@"href"]    // -href sometimes returns full URLs. #111645
                            openInNewWindow:[[anchor target] isEqualToString:@"_blank"]];
     }
+    else if ([anchors count] > 1)
+    {
+        NSSet *anchorsSet = [[NSSet alloc] initWithArray:anchors];
+        NSSet *targets = [anchorsSet valueForKey:@"target"];
+        [anchorsSet release];
+        
+        if ([targets count] == 1)
+        {
+            NSString *href = [[anchors objectAtIndex:0] getAttribute:@"href"]; // see above
+            for (DOMHTMLAnchorElement *anAnchor in anchors)
+            {
+                if (![[anAnchor getAttribute:@"href"] isEqualToString:href]) break;
+            }
+            
+            result = [SVLink linkWithURLString:href
+                               openInNewWindow:[[targets anyObject] isEqualToString:@"_blank"]];
+        }
+    }
     
     return result;
 }
