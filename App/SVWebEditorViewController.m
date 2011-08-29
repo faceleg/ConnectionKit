@@ -18,7 +18,7 @@
 #import "SVLogoImage.h"
 #import "KTMaster.h"
 #import "KTPage.h"
-#import "SVGraphicDOMController.h"
+#import "SVGraphicContainerDOMController.h"
 #import "SVGraphicFactory.h"
 #import "KTImageScalingURLProtocol.h"
 #import "SVLinkManager.h"
@@ -36,6 +36,7 @@
 #import "SVWebContentObjectsController.h"
 #import "SVWebEditorHTMLContext.h"
 #import "SVWebEditorTextRange.h"
+#import "SVWebEditorView.h"
 
 #import "NSArray+Karelia.h"
 #import "NSObject+Karelia.h"
@@ -148,7 +149,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 
 - (void)loadView
 {
-    WEKWebEditorView *editor = [[WEKWebEditorView alloc] init];
+    WEKWebEditorView *editor = [[SVWebEditorView alloc] init];
     
     [self setView:editor];
     [self setWebEditor:editor];
@@ -269,7 +270,8 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     
     
     // Construct HTML Context
-	SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] init];
+    KSStringWriter *writer = [[KSStringWriter alloc] init];
+	SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithOutputWriter:writer];
     
     [context setLiveDataFeeds:[[NSUserDefaults standardUserDefaults] boolForKey:kSVLiveDataFeedsKey]];
     [context setSidebarPageletsController:[_graphicsController sidebarPageletsController]];
@@ -281,8 +283,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
         //[context setBaseURL:[page URL]];
         [context writeDocumentWithPage:page];
     }
-    [context flush];
-        
+    
     
     //  Start loading. Some parts of WebKit need to be attached to a window to work properly, so we need to provide one while it's loading in the
     //  background. It will be removed again after has finished since the webview will be properly part of the view hierarchy.
@@ -305,10 +306,11 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     
     
     // Load the HTML into the webview
-    NSString *pageHTML = [[context outputStringWriter] string];
     if (pageURL) [WebView registerURLSchemeAsLocal:[pageURL scheme]];
-    [webEditor loadHTMLString:pageHTML baseURL:pageURL];
     
+    [writer flush]; // bit of a HACK as it assumes context uses only writer for buffering
+    [webEditor loadHTMLString:[writer string] baseURL:pageURL];
+    [writer release];
     
     // Tidy up. Web Editor HTML Contexts create a retain cycle until -close is called. Yes, I should fix this at some point, but it's part of the design for now. We call -close once the webview has loaded, but sometimes that point is never reached! As far as I can tell it's not a problem to close the context after starting a load. Researched into this prompted by #
     [context close];
@@ -340,7 +342,14 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     
     SVWebEditorHTMLContext *context = [self HTMLContext];
     [_loadedPage release]; _loadedPage = [[context page] retain];
-    [webEditor setContentItem:[self contentDOMController]];
+    
+    SVContentDOMController *contentController = [[SVContentDOMController alloc]
+                                                 initWithWebEditorHTMLContext:[self HTMLContext]
+                                                 node:[[self webEditor] HTMLDocument]];
+    
+    [self setContentDOMController:contentController];
+    [webEditor setContentItem:contentController];
+    [contentController release];
     
     [[self graphicsController] setSelectedObjects:selection];    // restore selection
     
@@ -570,7 +579,6 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     if (context != [self HTMLContext])
     {
         [_context release]; _context = [context retain];
-        [self setContentDOMController:[context rootDOMController]];
     }
 }
 
@@ -583,11 +591,14 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     
     
     //  Populate controller with content. For now, this is simply all the represented objects of all the DOM controllers
-    id anObject = [item representedObject];
-    if (anObject && //  second bit of this if statement: images are owned by 2 DOM controllers, DON'T insert twice!
-        ![[_graphicsController arrangedObjects] containsObjectIdenticalTo:anObject])
+    if ([item isSelectable])
     {
-        [[self graphicsController] addObject:anObject];
+        id anObject = [item representedObject];
+        if (anObject && //  second bit of this if statement: images are owned by 2 DOM controllers, DON'T insert twice!
+            ![[[self graphicsController] arrangedObjects] containsObjectIdenticalTo:anObject])
+        {
+            [[self graphicsController] addObject:anObject];
+        }
     }
     
     
@@ -1193,6 +1204,11 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     OBPRECONDITION(webEditor == [self webEditor]);
     
     
+    // If the selection was forced to change so that we never receieved a -…should… message, our graphic controller's selection may now be out of sync with the views. In rare circumstances, this could cause the link manager to try to access an object that has been deleted
+    // Fortunately the fix is simply to sync the two up again now
+    [[self graphicsController] setSelectedObjects:[[webEditor selectedItems] valueForKey:@"representedObject"]];
+    
+    
     // This used to be done in -…shouldChange… but that often caused WebView to overrite the result moments later
     [self synchronizeLinkManagerWithSelection:[webEditor selectedDOMRange]];
     
@@ -1443,11 +1459,11 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     }
     else if (action == @selector(moveUp:))
     {
-        [[self firstResponderItem] doCommandBySelector:@selector(moveObjectUp:)];
+        [[sender firstResponderItem] doCommandBySelector:@selector(moveObjectUp:)];
     }
     else if (action == @selector(moveDown:))
     {
-        [[self firstResponderItem] doCommandBySelector:@selector(moveObjectDown:)];
+        [[sender firstResponderItem] doCommandBySelector:@selector(moveObjectDown:)];
     }
     else if (action == @selector(reload:))
     {
@@ -1640,7 +1656,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     
     // Node might be in a different frame. #112424
     DOMNode *nodeToTest = node;
-    DOMHTMLElement *myElement = [self HTMLElement];
+    DOMElement *myElement = [self HTMLElement];
     if (myElement)
     {
         while ([nodeToTest ownerDocument] != [myElement ownerDocument])

@@ -12,130 +12,213 @@
 #import "SVCalloutDOMController.h"
 #import "SVContentDOMController.h"
 #import "SVMediaRecord.h"
-#import "KTPage.h"
 #import "SVParagraphedHTMLWriterDOMAdaptor.h"
-#import "SVPasteboardItemInternal.h"
-#import "SVRawHTMLGraphic.h"
-#import "SVResizableDOMController.h"
-#import "SVRichTextDOMController.h"
+#import "SVPlugInDOMController.h"
 #import "SVSidebarDOMController.h"
-#import "SVTemplate.h"
-#import "SVTextAttachment.h"
 #import "SVWebEditorUpdatesHTMLContext.h"
-#import "SVWebEditorViewController.h"
-
 #import "WebEditingKit.h"
+#import "SVWebEditorViewController.h"
 #import "WebViewEditingHelperClasses.h"
 
 #import "DOMElement+Karelia.h"
 #import "DOMNode+Karelia.h"
 #import "NSColor+Karelia.h"
 
-#import "KSGeometry.h"
-
-
-static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
-
-
-
-@interface DOMNode (SVGraphicDOMController)
-- (DOMNodeList *)getElementsByClassName:(NSString *)name;
-@end
-
-
-@interface SVGraphicPlaceholderDOMController : SVGraphicDOMController
-@end
-
-
-#pragma mark -
-
-
-@interface DOMElement (SVGraphicDOMController)
-- (DOMNodeList *)getElementsByClassName:(NSString *)name;
-@end
-
-
-#pragma mark -
-
 
 @implementation SVGraphicDOMController
 
-- (void)dealloc;
-{
-    [self setBodyHTMLElement:nil];
-    OBPOSTCONDITION(!_bodyElement);
-    
-    [_offscreenWebViewController setDelegate:nil];
-    [_offscreenWebViewController release];  // dealloc-ing mid-update
-    [_offscreenDOMControllers release];
-    
-    [self setRepresentedObject:nil];
-    
-    [super dealloc];
-}
-
-#pragma mark Factory
-
-+ (SVGraphicDOMController *)graphicPlaceholderDOMController;
-{
-    SVGraphicDOMController *result = [[[SVGraphicPlaceholderDOMController alloc] init] autorelease];
-    return result;
-}
-
-#pragma mark Content
-
-- (void)setRepresentedObject:(id)object
-{
-    [super setRepresentedObject:object];
-}
-
 #pragma mark DOM
 
-@synthesize bodyHTMLElement = _bodyElement;
-
-- (DOMElement *)graphicDOMElement;
+- (void)setHTMLElement:(DOMHTMLElement *)element;
 {
-    id result = [[[self HTMLElement] getElementsByClassName:@"graphic"] item:0];
-    return result;
-}
-
-- (void)loadHTMLElementFromDocument:(DOMDocument *)document;
-{
-    [super loadHTMLElementFromDocument:document];
+    [super setHTMLElement:element];
     
-    // Locate body element too
-    SVGraphic *graphic = [self representedObject];
-    if ([self isHTMLElementCreated])
+    if ([[self registeredDraggedTypes] count])
     {
-        if ([graphic isPagelet])
+        [element ks_addClassName:@"svx-dragging-destination"];
+    }
+    
+    if (element)    // #103629
+    {
+        DOMNodeList *contents = [element getElementsByClassName:@"figure-content"];
+        if ([contents length]) element = (DOMHTMLElement *)[contents item:0];
+        
+        if (![element ks_isVisible])
         {
-            DOMNodeList *elements = [[self HTMLElement] getElementsByClassName:@"pagelet-body"];
-            [self setBodyHTMLElement:(DOMHTMLElement *)[elements item:0]];
-        }
-        else
-        {
-            if ([self isHTMLElementCreated]) [self setBodyHTMLElement:[self HTMLElement]];
+            // Replace with placeholder
+            NSString *parsedPlaceholderHTML = [[self representedObject] parsedPlaceholderHTMLFromContext:self.HTMLContext];
+            
+            NSArray *children = [self childWebEditorItems];
+            switch ([children count])
+            {
+                case 1:
+                    for (WEKWebEditorItem *anItem in children)
+                    {
+                    	DOMElement *child = [anItem HTMLElement];
+	                    if (![[child tagName] isEqualToString:@"IMG"])  // images already have their own placeholder
+	                    {
+	                        [(DOMHTMLElement *)child setInnerHTML:parsedPlaceholderHTML];
+                        }
+                    }
+                    break;
+                    
+                default:
+                    [element setInnerHTML:parsedPlaceholderHTML];
+            }
         }
     }
 }
 
-- (void)loadPlaceholderDOMElementInDocument:(DOMDocument *)document;
+- (void)itemDidMoveToWebEditor;
 {
-    DOMElement *element = [document createElement:@"DIV"];
-    [[element style] setDisplay:@"none"];
-    [self setHTMLElement:(DOMHTMLElement *)element];
+    [super itemDidMoveToWebEditor];
+    
+    // Try to load it, since in an update this may be the only chance available.
+    if ([self webEditor]) [self HTMLElement];
+}
+
+#pragma mark Selection
+
+- (BOOL)isSelectable;
+{
+    // Normally selectable, unless there's a selectable child. #96670
+    BOOL result = [super isSelectable];
+    if (result)
+    {
+        for (WEKWebEditorItem *anItem in [self childWebEditorItems])
+        {
+            if ([anItem isSelectable]) result = NO;
+        }
+    }
+    
+    return result;
+}
+
+- (DOMRange *)selectableDOMRange;
+{
+    if ([self shouldTrySelectingInline])
+    {
+        DOMElement *element = [self HTMLElement];
+        DOMRange *result = [[element ownerDocument] createRange];
+        [result selectNode:element];
+        return result;
+    }
+    else
+    {
+        return [super selectableDOMRange];
+    }
+}
+
+- (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node;
+{
+    // Plug-ins might run scripts that remove elements from the DOM tree, temporarily or permanently. Thus, be more thorough and check out all descendants. Not a significant performance hit, since there's a containing DOM controller to get past first.
+    
+    WEKWebEditorItem *result = nil;
+    for (WEKWebEditorItem *anItem in [self childWebEditorItems])
+    {
+        result = [anItem hitTestDOMNode:node];
+        if (result) break;
+    }
+    
+    if (!result && [node ks_isDescendantOfElement:[self HTMLElement]]) result = self;
+    
+    
+    // Pretend we're not here if only child element is selectable
+    if (result == self &&
+        [[self childWebEditorItems] count] == 1 &&
+        [[[self childWebEditorItems] objectAtIndex:0] isSelectable])
+    {
+        // Seek out a better matching child which has no siblings. #93557
+        DOMTreeWalker *walker = [[node ownerDocument] createTreeWalker:node
+                                                            whatToShow:DOM_SHOW_ELEMENT
+                                                                filter:nil
+                                                expandEntityReferences:NO];
+        
+        if ([walker currentNode] && ![walker nextSibling]) result = nil;
+    }
+    
+    return result;
+}
+
+- (BOOL)allowsDirectAccessToWebViewWhenSelected;
+{
+    // Generally, no. EXCEPT for inline, non-wrap-causing images
+    BOOL result = NO;
+    
+    SVGraphic *image = [self representedObject];
+    if ([image displayInline])
+    {
+        result = YES;
+    }
+    
+    return result;
+}
+
+#pragma mark Text Editing
+
+- (BOOL)writeAttributedHTML:(SVFieldEditorHTMLWriterDOMAdapator *)writer
+{
+    return [[self representedObject] writeAttributedHTML:writer webEditorItem:self];
+}
+
+- (SVGraphic *)graphic; { return [self representedObject]; }
+
+#pragma mark Drag & Drop
+
+- (void)setRepresentedObject:(id)object;
+{
+    [super setRepresentedObject:object];
+    
+    // Handle whatever the object does
+    [self unregisterDraggedTypes];
+    NSArray *types = [object readableTypesForPasteboard:[NSPasteboard pasteboardWithName:NSDragPboard]];
+    [self registerForDraggedTypes:types];
+}
+
+- (BOOL)performDragOperation:(id <NSDraggingInfo>)sender;
+{
+    SVGraphic *graphic = [self representedObject];
+    return [graphic awakeFromPasteboardItems:[[sender draggingPasteboard] sv_pasteboardItems]];
+}
+
+- (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender;
+{
+    _drawAsDropTarget = YES;
+    [self setNeedsDisplay];
+    
+    return NSDragOperationCopy;
+}
+
+- (void)draggingExited:(id <NSDraggingInfo>)sender;
+{
+    [self setNeedsDisplay];
+    _drawAsDropTarget = NO;
+}
+
+- (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender;
+{
+    [self setNeedsDisplay];
+    _drawAsDropTarget = NO;
+    
+    return YES;
 }
 
 #pragma mark Updating
 
 - (void)updateWithDOMNode:(DOMNode *)node items:(NSArray *)items;
 {
-    // Swap in updated node. Then get the Web Editor to hook new descendant controllers up to the new nodes
-    [[[self HTMLElement] parentNode] replaceChild:node oldChild:[self HTMLElement]];
-    //[self setHTMLElement:nil];  // so Web Editor will endeavour to hook us up again
+    // Swap in updated node and correct items to point at their new ancestorNode
+    DOMNode *parentNode = [[self HTMLElement] parentNode];
+    
+    [parentNode replaceChild:node oldChild:[self HTMLElement]];
+    
+    for (WEKWebEditorItem *anItem in items)
+    {
+        [anItem setAncestorNode:parentNode recursive:YES];
+    }
     
     
-    // Hook up new DOM Controllers
+    
     SVWebEditorViewController *viewController = [self webEditorViewController];
     [viewController willUpdate];    // wrap the replacement like this so doesn't think update finished too early
     {
@@ -154,7 +237,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     
     // Setup the context
-    KSStringWriter *html = [[KSStringWriter alloc] init];
+    KSStringWriter *html = [[[KSStringWriter alloc] init] autorelease];
     DOMHTMLDocument *doc = (DOMHTMLDocument *)[[self HTMLElement] ownerDocument];
     
     SVWebEditorHTMLContext *context = [[[SVWebEditorUpdatesHTMLContext class] alloc]
@@ -165,29 +248,25 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     [context writeJQueryImport];    // for any plug-ins that might depend on it
     [context writeExtraHeaders];
     
-    [[context rootDOMController] setWebEditorViewController:[self webEditorViewController]];
+    //[[context rootDOMController] setWebEditorViewController:[self webEditorViewController]];
     
     
     // Write HTML
-    SVGraphic *graphic = [self representedObject];
-    id <SVGraphicContainer> container = [[self graphicContainerDOMController] representedObject];   // rarely nil, but sometimes is. #116816
+    id <SVComponent> container = [[self parentWebEditorItem] representedObject];   // rarely nil, but sometimes is. #116816
     
     if (container) [context beginGraphicContainer:container];
-    [context writeGraphic:graphic];
+    [context writeGraphic:[self representedObject]];
     if (container) [context endGraphicContainer];
     
     
     // Copy out controllers
-    [_offscreenDOMControllers release];
-    _offscreenDOMControllers = [[[context rootDOMController] childWebEditorItems] copy];
+    [_offscreenContext release];
+    _offscreenContext = [context retain];
     
     
     // Copy top-level dependencies across to parent. #79396
     [context flush];    // you never know!
-    for (KSObjectKeyPathPair *aDependency in [[context rootDOMController] dependencies])
-    {
-        [(SVDOMController *)[self parentWebEditorItem] addDependency:aDependency];
-    }
+    [[self mutableSetValueForKeyPath:@"parentWebEditorItem.dependencies"] unionSet:[[context rootElement] dependencies]];
     
     
     // Copy across data resources
@@ -204,32 +283,40 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     // Bring end body code into the html
     [context writeEndBodyString];
     [context close];
+    
+    
+	DOMDocumentFragment *fragment = [doc createDocumentFragmentWithMarkupString:[html string] baseURL:nil];
     [context release];
     
     
-    DOMDocumentFragment *fragment = [doc createDocumentFragmentWithMarkupString:[html string] baseURL:nil];
-    
     if (fragment)
     {
+        SVContentDOMController *rootController = [[SVContentDOMController alloc]
+                                                  initWithWebEditorHTMLContext:_offscreenContext
+                                                  node:fragment];
         DOMElement *anElement = [fragment firstChildOfClass:[DOMElement class]];
         while (anElement)
         {
             if ([[anElement getElementsByTagName:@"SCRIPT"] length]) break; // deliberately ignoring top-level scripts
             
-            NSString *ID = [anElement getAttribute:@"id"];
-            if ([ID isEqualToString:[[_offscreenDOMControllers objectAtIndex:0] elementIdName]])
+            NSString *ID = [[[rootController childWebEditorItems] objectAtIndex:0] elementIdName];
+            if ([ID isEqualToString:[anElement getAttribute:@"id"]])
             {
                 // Search for any following scripts
                 if ([anElement nextSiblingOfClass:[DOMHTMLScriptElement class]]) break;
                 
                 // No scripts, so can update directly
-                [self updateWithDOMNode:anElement items:_offscreenDOMControllers];
-                [_offscreenDOMControllers release]; _offscreenDOMControllers = nil;
+                [self updateWithDOMNode:anElement items:[rootController childWebEditorItems]];
+                
+                [rootController release];
+                [_offscreenContext release]; _offscreenContext = nil;
                 return;
             }
             
             anElement = [anElement nextSiblingOfClass:[DOMElement class]];
         }
+        
+        [rootController release];
     }
     
     
@@ -246,7 +333,6 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     }
     
     [_offscreenWebViewController loadHTMLFragment:[html string]];
-    [html release];
 }
 
 + (DOMHTMLHeadElement *)headOfDocument:(DOMDocument *)document;
@@ -280,7 +366,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 {
     [_offscreenWebViewController setDelegate:nil];
     [_offscreenWebViewController release]; _offscreenWebViewController = nil;
-    [_offscreenDOMControllers release]; _offscreenDOMControllers = nil;
+    [_offscreenContext release]; _offscreenContext = nil;
 }
 
 - (void)offscreenWebViewController:(SVOffscreenWebViewController *)controller
@@ -297,8 +383,27 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     {
         DOMNode *node = [children item:i];
         
-        // Try adopting the node, then fallback to import, as described in http://www.w3.org/TR/DOM-Level-3-Core/core.html#Document3-adoptNode
-        DOMNode *imported = [document adoptNode:node];
+        // I'd like to try adopting the node, then fallback to import, as described in http://www.w3.org/TR/DOM-Level-3-Core/core.html#Document3-adoptNode
+        // However, in practice adopted nodes don't seem to notice the CSS rules that apply to them. So instead importing, and falling back to adoption if that throws an exception. #135186
+        DOMNode *imported;
+        @try
+        {
+            imported = [document importNode:node deep:YES];
+        }
+        @catch (NSException *exception)
+        {
+            NSString *name = [exception name];
+            if ([name isEqualToString:DOMException])
+            {
+                imported = [document adoptNode:node];
+            }
+            else
+            {
+                @throw exception;
+            }
+        }
+        
+        
         if (!imported)
         {
             // TODO:
@@ -317,8 +422,7 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
             {
                 DOMHTMLElement *element = (DOMHTMLElement *)imported;
                 NSString *ID = [element idName];
-                
-                if ([ID isEqualToString:[[_offscreenDOMControllers objectAtIndex:0] elementIdName]])
+                if (ID)
                 {
                     [fragment appendChild:imported];
                     importedContent = YES;
@@ -355,8 +459,9 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     if ([graphic isCallout] && ![self calloutDOMController])
     {
         // Create a callout stack where we are know
-        SVCalloutDOMController *calloutController = [[SVCalloutDOMController alloc] initWithHTMLDocument:(DOMHTMLDocument *)document];
-        [calloutController createHTMLElement];
+        SVCalloutDOMController *calloutController = [[SVCalloutDOMController alloc]
+                                                     initWithIdName:nil
+                                                     ancestorNode:[[self HTMLElement] ownerDocument]];
         
         [[[self HTMLElement] parentNode] replaceChild:[calloutController HTMLElement]
                                              oldChild:[self HTMLElement]];
@@ -373,7 +478,13 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     
     
     // Update
-    [self updateWithDOMNode:fragment items:_offscreenDOMControllers];
+    SVContentDOMController *rootController = [[SVContentDOMController alloc]
+                                              initWithWebEditorHTMLContext:_offscreenContext
+                                              node:fragment];
+    
+    [self updateWithDOMNode:fragment items:[rootController childWebEditorItems]];
+    [rootController release];
+    
     
     DOMNode *body = [(DOMHTMLDocument *)document body];
     [body insertBefore:bodyFragment refChild:[body firstChild]];
@@ -384,692 +495,22 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
     [self stopUpdate];
 }
 
-- (void)updateSize;
-{
-    SVGraphic *graphic = [self representedObject];
-    DOMElement *element = [self graphicDOMElement];
-    
-    [self setNeedsDisplay];
-    
-    NSNumber *width = [graphic containerWidth];
-    if (width && ![graphic isExplicitlySized])
-    {
-        [[element style] setWidth:[NSString stringWithFormat:@"%@px", width]];
-    }
-    else
-    {
-        [[element style] setWidth:nil];
-    }
-    
-    [self didUpdateWithSelector:_cmd];
-    [self setNeedsDisplay];
-}
-
-- (void)updateWrap;
-{
-    SVGraphic *graphic = [self representedObject];
-    
-    
-    // Some wrap changes actually need a full update. #94915
-    BOOL writeInline = [graphic shouldWriteHTMLInline];
-    NSString *oldTag = [[self HTMLElement] tagName];
-    
-    if ((writeInline && ![oldTag isEqualToString:@"IMG"]) ||
-        (!writeInline && ![oldTag isEqualToString:@"DIV"]))
-    {
-        [self update];
-        return;
-    }
-    
-    
-    // Will need redraw of some kind, particularly if selected
-    [self setNeedsDisplay];
-    
-    // Update class name to get new wrap
-    SVHTMLContext *context = [[SVHTMLContext alloc] initWithOutputWriter:nil];
-    [graphic buildClassName:context includeWrap:YES];
-    
-    NSString *className = [[[context currentElementInfo] attributesAsDictionary] objectForKey:@"class"];
-    DOMHTMLElement *element = [self HTMLElement];
-    [element setClassName:className];
-    
-    [context release];
-    
-    
-    [self didUpdateWithSelector:_cmd];
-}
-
-- (void)setNeedsUpdate;
-{
-    id object = [self representedObject];
-    if ([object respondsToSelector:@selector(requiresPageLoad)] && [object requiresPageLoad])
-    {
-        [[self webEditorViewController] setNeedsUpdate];
-    }
-    else
-    {
-        [super setNeedsUpdate];
-    }
-}
-
-- (void)itemWillMoveToWebEditor:(WEKWebEditorView *)newWebEditor;
-{
-    [super itemWillMoveToWebEditor:newWebEditor];
-    
-    if (_offscreenWebViewController)
-    {
-        // If the update finishes while we're away from a web editor, there's no way to tell it so. So pretend the update has finished when removed. Likewise, pretend the update has started if added back to the editor. #131984
-        if (newWebEditor)
-        {
-            [[newWebEditor delegate] performSelector:@selector(willUpdate)];
-        }
-        else
-        {
-            //[self stopUpdate];
-            [self didUpdateWithSelector:@selector(update)];
-        }
-    }
-}
-
-#pragma mark Dependencies
-
-- (void)startObservingDependencies;
-{
-    if (!_observingWidth)
-    {
-        [self addObserver:self
-                 forKeyPath:@"representedObject.contentWidth"
-                    options:0
-                    context:sGraphicSizeObservationContext];
-        _observingWidth = YES;
-    }
-    
-    [super startObservingDependencies];
-}
-
-- (void)stopObservingDependencies;
-{
-    if (_observingWidth)
-    {
-        [self removeObserver:self forKeyPath:@"representedObject.contentWidth"];
-        _observingWidth = NO;
-    }
-    
-    [super stopObservingDependencies];
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context
-{
-    if (context == sGraphicSizeObservationContext)
-    {
-        if ([[self webEditor] inLiveGraphicResize])
-        {
-            [self updateSize];  // needs to happen immediately
-        }
-        else
-        {
-            [self setNeedsUpdateWithSelector:@selector(updateSize)];
-        }
-    }
-    
-    else
-    {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    }
-}
-
-- (void)dependenciesTracker:(KSDependenciesTracker *)tracker didObserveChange:(NSDictionary *)change forDependency:(KSObjectKeyPathPair *)dependency;
-{
-    // Special case where we don't want complete update
-    if ([[dependency keyPath] isEqualToString:@"textAttachment.wrap"])
-    {
-        [self setNeedsUpdateWithSelector:@selector(updateWrap)];
-    }
-    else
-    {
-        [super dependenciesTracker:tracker didObserveChange:change forDependency:dependency];
-    }
-}
-
-#pragma mark Selection & Editing
-
-- (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node;
-{
-    OBPRECONDITION(node);
-    
-    WEKWebEditorItem *result = nil;
-    
-    
-    if ([self isSelectable])    // think we don't need this code branch any more
-    {
-        // Standard logic mostly works, but we want to ignore anything outside the graphic, instead of the HTML element
-        DOMElement *testElement = [self graphicDOMElement];
-        if (!testElement) testElement = [self HTMLElement];
-        
-        if ([node ks_isDescendantOfElement:testElement])
-        {
-            NSArray *children = [self childWebEditorItems];
-            
-            // Search for a descendant
-            // Body DOM Controller will take care of looking for a single selectable child for us
-            for (WEKWebEditorItem *anItem in children)
-            {
-                result = [anItem hitTestDOMNode:node];
-                if (result) break;
-            }
-            
-            
-            if (!result && [children count] > 1) result = self;
-        }
-    }
-    else
-    {
-        result = [super hitTestDOMNode:node];
-    }
-    
-    return result;
-}
-
-- (BOOL)isSelectable { return NO; }
-
-- (void)setEditing:(BOOL)editing;
-{
-    [super setEditing:editing];
-    
-    
-    // Make sure we're selectable while editing
-    if (editing)
-    {
-        [[[self HTMLElement] style] setProperty:@"-webkit-user-select"
-                                          value:@"auto"
-                                       priority:@""];
-    }
-    else
-    {
-        [[[self HTMLElement] style] removeProperty:@"-webkit-user-select"];
-    }
-}
-
-- (NSRect)selectionFrame;
-{
-    if (![self isSelectable])
-    {
-        // Union together children, but only vertically once the first has been found
-        NSRect result = NSZeroRect;
-        for (WEKWebEditorItem *anItem in [self selectableTopLevelDescendants])
-        {
-            if (result.size.width > 0.0f)
-            {
-                result = [KSGeometry KSVerticallyUnionRect:result :[anItem selectionFrame]];
-            }
-            else
-            {
-                result = NSUnionRect(result, [anItem selectionFrame]);
-            }
-        }
-        
-        return result;
-    }
-    
-    return [[self HTMLElement] boundingBox];
-}
-
-#pragma mark Paste
-
-- (void)paste:(id)sender;
-{
-    SVGraphic *graphic = [self representedObject];
-    
-    if (![graphic awakeFromPasteboardItems:[[NSPasteboard generalPasteboard] sv_pasteboardItems]])
-    {
-        if (![[self nextResponder] tryToPerform:_cmd with:sender])
-        {
-            NSBeep();
-        }
-    }
-}
-
-#pragma mark Events
-
-- (NSMenu *)menuForEvent:(NSEvent *)theEvent;
-{
-    if (![self isSelected]) return [super menuForEvent:theEvent];
-    
-    
-    NSMenu *result = [[[NSMenu alloc] init] autorelease];
-    
-    [result addItemWithTitle:NSLocalizedString(@"Delete", "menu item")
-                      action:@selector(delete:)
-               keyEquivalent:@""];
-    
-    return result;
-}
-
-#pragma mark Attributed HTML
-
-- (BOOL)writeAttributedHTML:(SVFieldEditorHTMLWriterDOMAdapator *)adaptor;
-{
-    SVGraphic *graphic = [self representedObject];
-    SVTextAttachment *attachment = [graphic textAttachment];
-    
-    
-    // Is it allowed?
-    if ([graphic isPagelet])
-    {
-        if ([adaptor importsGraphics] && [(id)adaptor allowsPagelets])
-        {
-            if ([[adaptor XMLWriter] openElementsCount] > 0)
-            {
-                return NO;
-            }
-        }
-        else
-        {
-            NSLog(@"This text block does not support block graphics");
-            return NO;
-        }
-    }
-    
-    
-    
-    
-    // Go ahead and write    
-    
-    // Newly inserted graphics tend not to have a corresponding text attachment yet. If so, create one
-    if (!attachment)
-    {
-        attachment = [SVTextAttachment textAttachmentWithGraphic:graphic];
-        
-        // Guess placement from controller hierarchy
-        SVGraphicPlacement placement = ([self calloutDOMController] ?
-                                        SVGraphicPlacementCallout :
-                                        SVGraphicPlacementInline);
-        [attachment setPlacement:[NSNumber numberWithInteger:placement]];
-        
-        //[attachment setWrap:[NSNumber numberWithInteger:SVGraphicWrapRightSplit]];
-        [attachment setBody:[[self textDOMController] representedObject]];
-    }
-    
-    
-    // Set attachment location
-    [adaptor writeTextAttachment:attachment];
-    
-    [[adaptor XMLWriter] flush];
-    KSStringWriter *stringWriter = [adaptor valueForKeyPath:@"_output"];     // HACK!
-    NSRange range = NSMakeRange([(NSString *)stringWriter length] - 1, 1);  // HACK!
-    
-    if (!NSEqualRanges([attachment range], range))
-    {
-        [attachment setRange:range];
-    }
-    
-    
-    
-    
-    
-    return YES;
-}
-
-#pragma mark Moving
-
-- (BOOL)moveToPosition:(CGPoint)position event:(NSEvent *)event;
-{
-    // See if super fancies a crack
-    if ([super moveToPosition:position event:event]) return YES;
-    
-    
-    WEKWebEditorItem <SVGraphicContainerDOMController> *dragController = [self graphicContainerDOMController];
-    if ([dragController graphicContainerDOMController]) dragController = [dragController graphicContainerDOMController];
-    
-    [dragController moveGraphicWithDOMController:self toPosition:position event:event];
-    
-    
-    // Starting a move turns off selection handles so needs display
-    if (dragController && ![self hasRelativePosition])
-    {
-        [self setNeedsDisplay];
-        //_moving = YES;
-    }
-    
-    return (dragController != nil);
-}
-
-- (void)moveEnded;
-{
-    [super moveEnded];
-    [self removeRelativePosition:YES];
-}
-
-/*  Have to re-implement because SVDOMController overrides
- */
-- (CGPoint)position;
-{
-    NSRect rect = [self selectionFrame];
-    return CGPointMake(NSMidX(rect), NSMidY(rect));
-}
-
-- (NSArray *)relativePositionDOMElements;
-{
-    DOMElement *result = [self graphicDOMElement];
-    if (result)
-    {
-        DOMElement *caption = [result nextSiblingOfClass:[DOMElement class]];
-        return NSARRAY(result, caption);    // caption may be nil, so go ignored
-    }
-    else
-    {
-        return [super relativePositionDOMElements];
-    }
-}
-
-- (KSSelectionBorder *)newSelectionBorder;
-{
-    KSSelectionBorder *result = [super newSelectionBorder];
-    
-    // Turn off handles while moving
-    if ([self hasRelativePosition]) [result setEditing:YES];
-    
-    return result;
-}
-
-#pragma mark Resizing
-
-- (unsigned int)resizingMask
-{
-    DOMElement *element = [self graphicDOMElement];
-    return (element ? [self resizingMaskForDOMElement:element] : 0);
-}
-
-- (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
-{
-    // Apply the change
-    SVGraphic *graphic = [self representedObject];
-    
-    NSNumber *width = (size.width > 0 ? [NSNumber numberWithInt:size.width] : nil);
-    NSNumber *height = (size.height > 0 ? [NSNumber numberWithInt:size.height] : nil);
-    [graphic setWidth:width];
-    [graphic setHeight:height];
-    
-    
-    [super resizeToSize:size byMovingHandle:handle];
-}
-
-
-- (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;
-{
-    /*  This logic is almost identical to SVResizableDOMController, although the code here can probably be pared down to deal only with width
-     */
-    
-    
-    // If constrained proportions, apply that
-    SVGraphic *graphic = [self representedObject];
-    NSNumber *ratio = [graphic constrainedProportionsRatio];
-
-    if (ratio)
-    {
-        BOOL resizingWidth = (handle == kSVGraphicUpperLeftHandle ||
-                              handle == kSVGraphicMiddleLeftHandle ||
-                              handle == kSVGraphicLowerLeftHandle ||
-                              handle == kSVGraphicUpperRightHandle ||
-                              handle == kSVGraphicMiddleRightHandle ||
-                              handle == kSVGraphicLowerRightHandle);
-        
-        BOOL resizingHeight = (handle == kSVGraphicUpperLeftHandle ||
-                               handle == kSVGraphicUpperMiddleHandle ||
-                               handle == kSVGraphicUpperRightHandle ||
-                               handle == kSVGraphicLowerLeftHandle ||
-                               handle == kSVGraphicLowerMiddleHandle ||
-                               handle == kSVGraphicLowerRightHandle);
-        
-        if (resizingWidth)
-        {
-            if (resizingHeight)
-            {
-                // Go for the biggest size of the two possibilities
-                CGFloat unconstrainedRatio = size.width / size.height;
-                if (unconstrainedRatio < [ratio floatValue])
-                {
-                    size.width = size.height * [ratio floatValue];
-                }
-                else
-                {
-                    size.height = size.width / [ratio floatValue];
-                }
-            }
-            else
-            {
-                size.height = size.width / [ratio floatValue];
-            }
-        }
-        else if (resizingHeight)
-        {
-            size.width = size.height * [ratio floatValue];
-        }
-    }
-    
-    
-    
-    if (snapToFit)
-    {
-        CGFloat maxWidth = [self maxWidth];
-        if (size.width > maxWidth)
-        {
-            // Keep within max width
-            // Switch over to auto-sized for simple graphics
-            size.width = ([graphic isExplicitlySized] ? maxWidth : 0.0f);
-            if (ratio) size.height = maxWidth / [ratio floatValue];
-        }
-    }
-    
-    
-    return size;
-}
-
-- (CGFloat)maxWidth;
-{
-    // Base limit on design rather than the DOM
-    SVGraphic *graphic = [self representedObject];
-    OBASSERT(graphic);
-    
-    KTPage *page = [[self HTMLContext] page];
-    return [graphic maxWidthOnPage:page];
-}
-
-@end
-
-
-#pragma mark -
-
-
-@implementation WEKWebEditorItem (SVGraphicDOMController)
-
-- (SVGraphicDOMController *)enclosingGraphicDOMController;
-{
-    id result = [self parentWebEditorItem];
-    
-    if (![result isKindOfClass:[SVGraphicDOMController class]])
-    {
-        result = [result enclosingGraphicDOMController];
-    }
-    
-    return result;
-}
-
-@end
-
-
-#pragma mark -
-
-
-@implementation SVGraphicBodyDOMController
-
-#pragma mark DOM
-
-- (void)setHTMLElement:(DOMHTMLElement *)element;
-{
-    [super setHTMLElement:element];
-    
-    if ([[self registeredDraggedTypes] count])
-    {
-        [element ks_addClassName:@"svx-dragging-destination"];
-    }
-    
-    if (element)    // #103629
-    {
-        DOMNodeList *contents = [element getElementsByClassName:@"figure-content"];
-        if ([contents length]) element = (DOMHTMLElement *)[contents item:0];
-        
-        if (![element ks_isVisible])
-        {
-            // Replace with placeholder
-            NSString *parsedPlaceholderHTML = [[self representedObject] parsedPlaceholderHTMLFromContext:self.HTMLContext];
-            
-            NSArray *children = [self childWebEditorItems];
-            switch ([children count])
-            {
-                case 1:
-                    for (WEKWebEditorItem *anItem in children)
-                    {
-                        [[anItem HTMLElement] setInnerHTML:parsedPlaceholderHTML];
-                    }
-                    break;
-                    
-                default:
-                    [element setInnerHTML:parsedPlaceholderHTML];
-            }
-        }
-    }
-}
-
-- (void)itemDidMoveToWebEditor;
-{
-    [super itemDidMoveToWebEditor];
-    
-    // Try to load it, since in an update this may be the only chance available.
-    if ([self webEditor]) [self HTMLElement];
-}
-
-#pragma mark Selection
-
-- (BOOL)isSelectable;
-{
-    // Normally selectable, unless there's a selectable child. #96670
-    BOOL result = YES;
-    for (WEKWebEditorItem *anItem in [self childWebEditorItems])
-    {
-        if ([anItem isSelectable]) result = NO;
-    }
-    
-    return result;
-}
-
-- (DOMRange *)selectableDOMRange;
-{
-    if ([self shouldTrySelectingInline])
-    {
-        DOMElement *element = [self HTMLElement];
-        DOMRange *result = [[element ownerDocument] createRange];
-        [result selectNode:element];
-        return result;
-    }
-    else
-    {
-        return [super selectableDOMRange];
-    }
-}
-
-- (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node;
-{
-    WEKWebEditorItem *result = [super hitTestDOMNode:node];
-    
-    
-    // Pretend we're not here if only child element is selectable
-    if (result == self &&
-        [[self childWebEditorItems] count] == 1 &&
-        [[[self childWebEditorItems] objectAtIndex:0] isSelectable])
-    {
-        // Seek out a better matching child which has no siblings. #93557
-        DOMTreeWalker *walker = [[node ownerDocument] createTreeWalker:node
-                                                            whatToShow:DOM_SHOW_ELEMENT
-                                                                filter:nil
-                                                expandEntityReferences:NO];
-        
-        if ([walker currentNode] && ![walker nextSibling]) result = nil;
-    }
-    
-    return result;
-}
-
-- (BOOL)allowsDirectAccessToWebViewWhenSelected;
-{
-    // Generally, no. EXCEPT for inline, non-wrap-causing images
-    BOOL result = NO;
-    
-    SVGraphic *image = [self representedObject];
-    if ([image displayInline])
-    {
-        result = YES;
-    }
-    
-    return result;
-}
-
-#pragma mark Drag & Drop
-
-- (void) setRepresentedObject:(id)object;
-{
-    [super setRepresentedObject:object];
-    
-    // Handle whatever the object does
-    [self unregisterDraggedTypes];
-    NSArray *types = [object readableTypesForPasteboard:[NSPasteboard pasteboardWithName:NSDragPboard]];
-    [self registerForDraggedTypes:types];
-}
-
-- (BOOL)performDragOperation:(id <NSDraggingInfo>)sender;
-{
-    SVGraphic *graphic = [self representedObject];
-    return [graphic awakeFromPasteboardItems:[[sender draggingPasteboard] sv_pasteboardItems]];
-}
-
-- (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender;
-{
-    _drawAsDropTarget = YES;
-    [self setNeedsDisplay];
-    
-    return NSDragOperationCopy;
-}
-
-- (void)draggingExited:(id <NSDraggingInfo>)sender;
-{
-    [self setNeedsDisplay];
-    _drawAsDropTarget = NO;
-}
-
-- (BOOL) prepareForDragOperation:(id <NSDraggingInfo>)sender;
-{
-    [self setNeedsDisplay];
-    _drawAsDropTarget = NO;
-    
-    return YES;
-}
-
 #pragma mark Resize
 
-- (void) resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
+- (void)XresizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
 {
     return [[self enclosingGraphicDOMController] resizeToSize:size byMovingHandle:handle];
 }
 
-- (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;
+- (CGFloat)maxWidthForChild:(WEKWebEditorItem *)aChild;
 {
-    // Body lives inside a graphic DOM controller, so use the size limit from that instead
-    return [(SVDOMController *)[self parentWebEditorItem] constrainSize:size
-                                                                 handle:handle
-                                                              snapToFit:snapToFit];
+    // Carry on up
+    return [[self parentWebEditorItem] maxWidthForChild:aChild];
+}
+
+- (CGFloat)constrainToMaxWidth:(CGFloat)maxWidth;
+{
+    return ([[self representedObject] isExplicitlySized] ? [super constrainToMaxWidth:maxWidth] : 0.0f);
 }
 
 - (NSSize)minSize;
@@ -1087,7 +528,22 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 
 - (NSRect)dropTargetRect;
 {
-    NSRect result = [[self HTMLElement] boundingBox];
+    // Figure best element to draw
+    DOMElement *element = nil;
+    if (![self isSelectable])
+    {
+        for (WEKWebEditorItem *anItem in [self childWebEditorItems])
+        {
+            if ([anItem isSelectable])
+            {
+                element = [anItem HTMLElement];
+                break;
+            }
+        }
+    }
+    if (!element) element = [self HTMLElement];
+    
+    NSRect result = [element boundingBox];
     
     // Movies draw using Core Animation so sit above any custom drawing of our own. Workaround by outsetting the rect
     NSString *tagName = [[self HTMLElement] tagName];
@@ -1132,32 +588,86 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
 #pragma mark -
 
 
-@implementation SVGraphicPlaceholderDOMController
+#import "SVCalloutDOMController.h"
+#import "SVRichTextDOMController.h"
+#import "SVTextAttachment.h"
 
-- (void)loadHTMLElementFromDocument:(DOMHTMLDocument *)document;
+
+@implementation SVGraphic (SVDOMController)
+
+- (BOOL)writeAttributedHTML:(SVFieldEditorHTMLWriterDOMAdapator *)adaptor
+              webEditorItem:(WEKWebEditorItem *)item;
 {
-    [self loadPlaceholderDOMElementInDocument:document];
+    SVTextAttachment *attachment = [self textAttachment];
+    
+    
+    // Is it allowed?
+    if ([self isPagelet])
+    {
+        if ([adaptor importsGraphics] && [(id)adaptor allowsPagelets])
+        {
+            if ([[adaptor XMLWriter] openElementsCount] > 0)
+            {
+                return NO;
+            }
+        }
+        else
+        {
+            NSLog(@"This text block does not support block graphics");
+            return NO;
+        }
+    }
+    
+    
+    
+    
+    // Go ahead and write    
+    
+    // Newly inserted graphics tend not to have a corresponding text attachment yet. If so, create one
+    if (!attachment)
+    {
+        attachment = [SVTextAttachment textAttachmentWithGraphic:self];
+        
+        // Guess placement from controller hierarchy
+        SVGraphicPlacement placement = ([item calloutDOMController] ?
+                                        SVGraphicPlacementCallout :
+                                        SVGraphicPlacementInline);
+        [attachment setPlacement:[NSNumber numberWithInteger:placement]];
+        
+        //[attachment setWrap:[NSNumber numberWithInteger:SVGraphicWrapRightSplit]];
+        [attachment setBody:[(SVRichTextDOMController *)[item textDOMController] richTextStorage]];
+    }
+    
+    
+    // Set attachment location
+    [adaptor writeTextAttachment:attachment];
+    
+    [[adaptor XMLWriter] flush];
+    KSStringWriter *stringWriter = [adaptor valueForKeyPath:@"_output"];     // HACK!
+    NSRange range = NSMakeRange([(NSString *)stringWriter length] - 1, 1);  // HACK!
+    
+    if (!NSEqualRanges([attachment range], range))
+    {
+        [attachment setRange:range];
+    }
+    
+    
+    
+    
+    
+    return YES;
 }
 
-@end
+- (BOOL)requiresPageLoad; { return NO; }
 
+@end
 
 
 #pragma mark -
 
 
-@implementation SVGraphic (SVDOMController)
+@implementation WEKWebEditorItem (SVGraphicDOMController)
 
-- (SVDOMController *)newDOMController;
-{
-    return [[SVGraphicDOMController alloc] initWithRepresentedObject:self];
-}
-
-- (SVDOMController *)newBodyDOMController;
-{
-    return [[SVGraphicBodyDOMController alloc] initWithRepresentedObject:self];
-}
-
-- (BOOL)requiresPageLoad; { return NO; }
+- (SVGraphic *)graphic; { return nil; }
 
 @end

@@ -116,10 +116,10 @@
 
 - (BOOL)shouldWriteHTMLInline; { return YES; }  // we're not a pagelet
 
-- (void)writeBody:(SVHTMLContext *)context;
+- (void)writeHTML:(SVHTMLContext *)context;
 {
     [context pushClassName:@"logo"];
-    [super writeBody:context];
+    [super writeHTML:context];
 }
 
 #pragma mark Serialization

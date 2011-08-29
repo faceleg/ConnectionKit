@@ -63,7 +63,7 @@
     [_HTMLString release]; _HTMLString = html;
     
     // Update DOM to match
-    if (updateDOM && [self textHTMLElement]) [self setNeedsUpdate];
+    if (updateDOM && [self isTextHTMLElementLoaded]) [self setNeedsUpdate];
 }
 
 - (NSString *)string
@@ -77,42 +77,22 @@
     [[self innerTextHTMLElement] setInnerText:string];
 }
 
-#pragma mark Web Editor Item
-
-/*      turned off for #75052
-- (BOOL)isSelectable
-{
-    BOOL result = ([self representedObject] && [[self selectableAncestors] count] == 0);
-    
-    if ([self textBlock] && [[self textBlock] hyperlinkString]) result = NO;
-    
-    return result;
-}*/
-
-// TODO: This logic is the same as aux text
-- (BOOL)isSelectable;
-{
-    return ([self representedObject] && [self enclosingGraphicDOMController]);
-}
-
 #pragma mark Updating
 
 - (void)updateStyle
 {
     // Regenerate style
-      SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc]
+    SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc]
                                        initWithOutputWriter:nil
                                        inheritFromContext:[self HTMLContext]];
     [[self textBlock] buildGraphicalText:context];
     
     
     // Copy across dependencies. #117522
-    for (KSObjectKeyPathPair *aDependency in [[context rootDOMController] dependencies])
-    {
-        [self addDependency:aDependency];
-    }
+    [[self mutableSetValueForKey:@"dependencies"] unionSet:[[context rootElement] dependencies]];
+
     
-    NSString *style = [[[context currentElementInfo] attributesAsDictionary] objectForKey:@"style"];
+    NSString *style = [[[context currentAttributes] attributesAsDictionary] objectForKey:@"style"];
     [[[self textHTMLElement] style] setCssText:style];
     [self setAlignment:[self alignment]];   // repair alignemnt #113613
     
@@ -172,7 +152,7 @@
     NSString *text = [self string];
     if (![text length] || [text isEqualToString:@"\n"])
     {
-        [self delete];
+        [self deleteForward:self];
     }
     
     // Restore graphical text
@@ -204,7 +184,7 @@
 {
     _alignment = alignment;
     
-    if ([self isHTMLElementCreated])
+    if ([self isHTMLElementLoaded])
     {
         DOMCSSStyleDeclaration *style = [[self textHTMLElement] style];
         
@@ -312,7 +292,7 @@
     // Display new placeholder if appropriate
     if ([[self HTMLString] length] == 0)
     {
-        [[self textHTMLElement] setInnerText:placeholder];
+        [[self textHTMLElement] setInnerHTML:placeholder];  // placeholder is HTML
     }
 }
 
@@ -450,7 +430,7 @@
 
 - (NSString *)blurb
 {
-    if ([self isHTMLElementCreated]) return [[self textHTMLElement] innerText];
+    if ([self isHTMLElementLoaded]) return [[self textHTMLElement] innerText];
     return [super blurb];
 }
 
@@ -465,9 +445,10 @@
 
 @implementation SVTitleBox (SVDOMController)
 
-- (SVTextDOMController *)newTextDOMController;
+- (SVTextDOMController *)newTextDOMControllerWithIdName:(NSString *)elementID ancestorNode:(DOMNode *)node;
 {
-    SVTextFieldDOMController *result = [[SVTextFieldDOMController alloc] initWithRepresentedObject:self];
+    SVTextFieldDOMController *result = [[SVTextFieldDOMController alloc] initWithIdName:elementID ancestorNode:node];
+    [result setRepresentedObject:self];
     [result setRichText:YES];
     [result setFieldEditor:YES];
     
@@ -476,6 +457,8 @@
         toObject:self
      withKeyPath:@"textHTMLString"
          options:nil];
+    
+    [result setPlaceholderHTMLString:NSLocalizedString(@"Title", "placeholder")];   // do after binding, avoids accidental overwrite
     
     [result bind:NSAlignmentBinding toObject:self withKeyPath:@"alignment" options:nil];
     

@@ -9,23 +9,13 @@
 #import "WEKWebViewEditing.h"
 
 #import "SVLink.h"
+#import "SVWebViewSelectionController.h"
 
 #import "DOMRange+Karelia.h"
+#import "NSString+Karelia.h"
 
 
 #pragma mark -
-
-
-@interface DOMDocument (AVAILABLE_WEBKIT_VERSION_3_0_AND_LATER)
-- (BOOL)execCommand:(NSString *)command userInterface:(BOOL)userInterface value:(NSString *)value;
-- (BOOL)execCommand:(NSString *)command userInterface:(BOOL)userInterface;
-- (BOOL)execCommand:(NSString *)command;
-- (BOOL)queryCommandEnabled:(NSString *)command;
-- (BOOL)queryCommandIndeterm:(NSString *)command;
-- (BOOL)queryCommandState:(NSString *)command;
-- (BOOL)queryCommandSupported:(NSString *)command;
-- (NSString *)queryCommandValue:(NSString *)command;
-@end
 
 
 @implementation WebView (WEKWebViewEditing)
@@ -58,6 +48,24 @@
         result = [SVLink linkWithURLString:[anchor getAttribute:@"href"]    // -href sometimes returns full URLs. #111645
                            openInNewWindow:[[anchor target] isEqualToString:@"_blank"]];
     }
+    else if ([anchors count] > 1)
+    {
+        NSSet *anchorsSet = [[NSSet alloc] initWithArray:anchors];
+        NSSet *targets = [anchorsSet valueForKey:@"target"];
+        [anchorsSet release];
+        
+        if ([targets count] == 1)
+        {
+            NSString *href = [[anchors objectAtIndex:0] getAttribute:@"href"]; // see above
+            for (DOMHTMLAnchorElement *anAnchor in anchors)
+            {
+                if (![[anAnchor getAttribute:@"href"] isEqualToString:href]) break;
+            }
+            
+            result = [SVLink linkWithURLString:href
+                               openInNewWindow:[[targets anyObject] isEqualToString:@"_blank"]];
+        }
+    }
     
     return result;
 }
@@ -65,11 +73,7 @@
 - (NSArray *)selectedAnchorElements;
 {
     DOMRange *selection = [self selectedDOMRange];
-    DOMHTMLAnchorElement *anchorElement = [selection editableAnchorElement];
-    
-    NSArray *result = nil;
-    if (anchorElement) result = [NSArray arrayWithObject:anchorElement];
-    return result;
+    return [selection ks_intersectingElementsWithTagName:@"A"];
 }
 
 - (NSString *)linkValue;
@@ -218,6 +222,116 @@
     {
         [self setSelectedDOMRange:nil affinity:0];
     }
+}
+
+#pragma mark Alignment
+
+- (NSTextAlignment)wek_alignment;
+{
+    NSTextAlignment result = NSNaturalTextAlignment;
+    
+    DOMDocument *doc = [[self selectedFrame] DOMDocument];
+    if ([[doc queryCommandValue:@"justifyleft"] isEqualToStringCaseInsensitive:@"true"])
+    {
+        result = NSLeftTextAlignment;
+    }
+    else if ([[doc queryCommandValue:@"justifycenter"] isEqualToStringCaseInsensitive:@"true"])
+    {
+        result = NSCenterTextAlignment;
+    }
+    else if ([[doc queryCommandValue:@"justifyright"] isEqualToStringCaseInsensitive:@"true"])
+    {
+        result = NSRightTextAlignment;
+    }
+    else if ([[doc queryCommandValue:@"justifyfull"] isEqualToStringCaseInsensitive:@"true"])
+    {
+        result = NSJustifiedTextAlignment;
+    }
+    
+    return result;
+}
+
+#pragma mark Lists
+
+- (IBAction)insertOrderedList:(id)sender;
+{
+    id delegate = [self editingDelegate];
+    if ([delegate respondsToSelector:@selector(webView:doCommandBySelector:)])
+    {
+        if ([delegate webView:self doCommandBySelector:_cmd]) return;
+    }
+    
+    if ([self orderedList]) return;  // nowt to do
+    
+    DOMDocument *document = [[self selectedFrame] DOMDocument];
+    if ([document execCommand:@"InsertOrderedList"])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
+    }
+    else
+    {
+        NSBeep();
+    }
+}
+
+- (IBAction)insertUnorderedList:(id)sender;
+{
+    id delegate = [self editingDelegate];
+    if ([delegate respondsToSelector:@selector(webView:doCommandBySelector:)])
+    {
+        if ([delegate webView:self doCommandBySelector:_cmd]) return;
+    }
+    
+    if ([self unorderedList]) return;  // nowt to do
+
+    DOMDocument *document = [[self selectedFrame] DOMDocument];
+    if (![document execCommand:@"InsertUnorderedList"])
+    {
+        NSBeep();
+    }
+}
+
+- (IBAction)removeList:(id)sender;
+{
+    id delegate = [self editingDelegate];
+    if ([delegate respondsToSelector:@selector(webView:doCommandBySelector:)])
+    {
+        if ([delegate webView:self doCommandBySelector:_cmd]) return;
+    }
+    
+    
+    DOMRange *selection = [self selectedDOMRange];
+    if (!selection)
+    {
+        NSBeep();
+        return;
+    }
+    
+    SVWebViewSelectionController *controller = [[SVWebViewSelectionController alloc] init];
+    [controller setSelection:selection];
+    
+    while ([[controller deepestListIndentLevel] unsignedIntegerValue])
+    {
+        [[[self selectedFrame] DOMDocument] execCommand:@"Outdent"];
+        
+        selection = [self selectedDOMRange];
+        if (!selection) break;
+        [controller setSelection:[self selectedDOMRange]];
+    }
+    
+    [controller release];
+}
+
+- (BOOL)orderedList;
+{
+    DOMDocument *document = [[self selectedFrame] DOMDocument];
+    return [document queryCommandState:@"InsertOrderedList"];
+}
+
+- (BOOL)unorderedList;
+{
+    DOMDocument *document = [[self selectedFrame] DOMDocument];
+    return [document queryCommandState:@"InsertUnorderedList"];
 }
 
 @end

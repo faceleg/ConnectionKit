@@ -10,8 +10,10 @@
 
 #import "SVArticleDOMController.h"
 #import "SVAttributedHTML.h"
-#import "SVGraphicDOMController.h"
+#import "SVContentDOMController.h"
+#import "SVGraphicContainerDOMController.h"
 #import "KTPage.h"
+#import "SVPagelet.h"
 #import "SVTextAttachment.h"
 #import "SVWebEditorViewController.h"
 #import "WebEditingKit.h"
@@ -45,28 +47,20 @@
 
 static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMControllerPageletsObservation";
 
-- (id)initWithPageletsController:(SVSidebarPageletsController *)pageletsController;
-{
-    // Get pagelets controller nicelt setup
-    OBPRECONDITION(pageletsController);
-    
-    
-    [self init];
-    [self setElementIdName:@"sidebar-container" includeWhenPublishing:YES];
-    
-    _pageletsController = [pageletsController retain];
-    [_pageletsController addObserver:self
-                          forKeyPath:@"arrangedObjects"
-                             options:0
-                             context:sSVSidebarDOMControllerPageletsObservation];
-    
-    return self;
-}
-
 - (void)awakeFromHTMLContext:(SVWebEditorHTMLContext *)context;
 {
     [super awakeFromHTMLContext:context];
     [self setPageletDOMControllers:[self childWebEditorItems]];
+    
+    if (!_pageletsController)
+    {
+        _pageletsController = [[context sidebarPageletsController] retain];
+        
+        [_pageletsController addObserver:self
+                              forKeyPath:@"arrangedObjects"
+                                 options:0
+                                 context:sSVSidebarDOMControllerPageletsObservation];
+    }
 }
 
 - (void)dealloc;
@@ -84,41 +78,29 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 #pragma mark DOM
 
 @synthesize sidebarDivElement = _sidebarDiv;
-@synthesize contentDOMElement = _contentElement;
-
-- (void)loadHTMLElementFromDocument:(DOMDocument *)document;
+- (DOMElement *)sidebarDivElement;
 {
-    [super loadHTMLElementFromDocument:document];
+    [self HTMLElement]; // make sure it's loaded
+    return _sidebarDiv;
+}
+
+@synthesize contentDOMElement = _contentElement;
+- (DOMElement *)contentDOMElement;
+{
+    [self HTMLElement]; // make sure it's loaded
+    return _contentElement;
+}
+
+- (void)loadHTMLElement;
+{
+    [super loadHTMLElement];
     
     // Also seek out sidebar divs
-    [self setSidebarDivElement:[document getElementById:@"sidebar"]];
-    [self setContentDOMElement:[document getElementById:@"sidebar-content"]];
+    [self setSidebarDivElement:[[self HTMLDocument] getElementById:@"sidebar"]];
+    [self setContentDOMElement:[[self HTMLDocument] getElementById:@"sidebar-content"]];
 }
 
 #pragma mark Updating
-
-+ (void)loadHTMLElementsOfDOMControllers:(NSArray *)controllers fromDocumentFragment:(DOMDocumentFragment *)fragment;
-{
-    // TODO: ought to search more than top-level of tree
-    NSDictionary *controllersByID = [[NSDictionary alloc]
-                                     initWithObjects:controllers
-                                     forKeys:[controllers valueForKey:@"elementIdName"]];
-    
-    DOMHTMLElement *anElement = [fragment firstChildOfClass:[DOMElement class]];
-    while (anElement)
-    {
-        NSString *ID = [anElement getAttribute:@"id"];
-        if (ID)
-        {
-            SVDOMController *controller = [controllersByID objectForKey:ID];
-            [controller setHTMLElement:anElement];
-        }
-        
-        anElement = [anElement nextSiblingOfClass:[DOMElement class]];
-    }
-    
-    [controllersByID release];
-}
 
 - (WEKWebEditorItem *)childItemForRepresentedObject:(id)object;
 {
@@ -133,6 +115,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 {
     // Arrange DOM nodes to match. Start by removing all
     DOMElement *contentElement = [self contentDOMElement];
+    OBASSERT(contentElement);
     [[contentElement mutableChildDOMNodes] removeAllObjects];
     
     
@@ -147,22 +130,26 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     [context beginGraphicContainer:[self representedObject]];
     [context writeGraphics:pagelets];
     [context endGraphicContainer];
+    [context close];
     
     
     // Load HTML into DOM, hooking up to controllers
-    DOMDocumentFragment *fragment = [(DOMHTMLDocument *)[[self HTMLElement] ownerDocument]
+    DOMDocument *doc = [[self HTMLElement] ownerDocument];
+    DOMDocumentFragment *fragment = [(DOMHTMLDocument *)doc
                                      createDocumentFragmentWithMarkupString:html
                                      baseURL:nil];
     [html release];
     
-    NSMutableArray *controllers = [[[context rootDOMController] childWebEditorItems] mutableCopy];
+    SVContentDOMController *rootController = [[SVContentDOMController alloc]
+                                              initWithWebEditorHTMLContext:context
+                                              node:fragment];
+    NSMutableArray *controllers = [[rootController childWebEditorItems] mutableCopy];
+    [rootController release];
     [context release];
-    
-    [[self class] loadHTMLElementsOfDOMControllers:controllers fromDocumentFragment:fragment];
     
     
     // Figure out correct DOM controllers for pagelets
-    SVGraphic *aPagelet;
+    SVPagelet *aPagelet;
     WEKWebEditorItem *nextController = nil;
     
     for (NSUInteger i = [controllers count] - 1; i < NSNotFound;)
@@ -185,7 +172,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         else
         {            
             controller = [controllers objectAtIndex:i];
-            [controller loadPlaceholderDOMElementInDocument:[contentElement ownerDocument]];
+            [controller loadPlaceholderDOMElement];
             [self addChildWebEditorItem:controller];
             [controller setHTMLContext:[self HTMLContext]];
             
@@ -255,11 +242,26 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     }
 }
 
+// Stop SVDOMController trying to do our job
+- (BOOL)canUpdate; { return NO; }
+
 #pragma mark Pagelets Controller
 
 @synthesize pageletDOMControllers = _DOMControllers;
 
 @synthesize pageletsController = _pageletsController;
+
+#pragma mark Resizing
+
+- (CGFloat)maxWidthForChild:(WEKWebEditorItem *)aChild;
+{
+    // Base limit on design rather than the DOM
+    SVGraphic *graphic = [aChild representedObject];
+    OBASSERT(graphic);
+    
+    KTPage *page = [[self HTMLContext] page];
+    return [graphic maxWidthOnPage:page];
+}
 
 #pragma mark Placement Actions
 
@@ -355,6 +357,28 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     
     [sidebarPageletsController insertPageletsFromPasteboard:[NSPasteboard generalPasteboard]
                                       atArrangedObjectIndex:index];
+}
+
+#pragma mark Delete
+
+- (void)delete:(id)sender forwardingSelector:(SEL)action;
+{
+    [[self pageletsController] remove:sender];
+}
+
+- (void)delete:(id)sender;
+{
+    [self delete:sender forwardingSelector:_cmd];
+}
+
+- (void)deleteForward:(id)sender;
+{
+    [self delete:sender forwardingSelector:_cmd];
+}
+
+- (void)deleteBackward:(id)sender;
+{
+    [self delete:sender forwardingSelector:_cmd];
 }
 
 #pragma mark Drop
@@ -637,7 +661,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
                 result = YES;
                 [webEditor forgetDraggedItems];
                 
-                SVGraphic *pagelet = [aPageletItem representedObject];
+                SVGraphic *pagelet = [[aPageletItem representedObject] graphic];
                 [pageletsController
                  moveObject:pagelet toIndex:dropIndex];
             }
@@ -707,7 +731,9 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 - (void)tryToMovePagelet:(SVDOMController *)pagelet downToPosition:(CGPoint)position;
 {
     NSArray *pagelets = [self pageletDOMControllers];
-    NSUInteger index = [pagelets indexOfObjectIdenticalTo:pagelet]  + 1;
+    OBASSERT(pagelets);
+    
+    NSUInteger index = [pagelets indexOfObjectIdenticalTo:pagelet] + 1;
     
     CGPoint startPosition = [pagelet positionIgnoringRelativePosition];
     CGFloat gapAvailable = position.y - startPosition.y;
@@ -715,12 +741,12 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     
     if (index < [pagelets count])
     {
-        SVGraphicDOMController *nextPagelet = [pagelets objectAtIndex:index];
+        SVGraphicContainerDOMController *nextPagelet = [pagelets objectAtIndex:index];
         if (2 * gapAvailable > [[nextPagelet HTMLElement] boundingBox].size.height)
         {
             // Make the swap
-            [[self pageletsController] moveObject:[pagelet representedObject]
-                                      afterObject:[nextPagelet representedObject]];
+            [[self pageletsController] moveObject:[[pagelet representedObject] graphic]
+                                      afterObject:[[nextPagelet representedObject] graphic]];
             
             // By calling back in, we should account for a drag that somehow covers multiple pagelets
             [self updateIfNeeded];
@@ -734,7 +760,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         if (position.y > startPosition.y) position = startPosition;
     }
     
-    [pagelet moveToRelativePosition:CGPointMake(0.0f, position.y - startPosition.y)];
+    [pagelet moveToPosition:position];
 }
 
 - (void)tryToMovePagelet:(SVDOMController *)pagelet upToPosition:(CGPoint)position;
@@ -748,12 +774,12 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         
     if (index > 0)
     {
-        SVGraphicDOMController *previousPagelet = [pagelets objectAtIndex:index-1];
+        SVGraphicContainerDOMController *previousPagelet = [pagelets objectAtIndex:index-1];
         if (2 * -gapAvailable > [[previousPagelet HTMLElement] boundingBox].size.height)
         {
             // Make the swap
-            [[self pageletsController] moveObject:[pagelet representedObject]
-                                     beforeObject:[previousPagelet representedObject]];
+            [[self pageletsController] moveObject:[[pagelet representedObject] graphic]
+                                     beforeObject:[[previousPagelet representedObject] graphic]];
             
             // By calling back in, we should account for a drag that somehow covers multiple pagelets
             [self updateIfNeeded];
@@ -767,26 +793,54 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         if (position.y < startPosition.y) position = startPosition;
     }    
     
-    [pagelet moveToRelativePosition:CGPointMake(0.0f, position.y - startPosition.y)];
+    [pagelet moveToPosition:position];
 }
 
-- (void)moveGraphicWithDOMController:(SVDOMController *)graphicController
-                          toPosition:(CGPoint)position
-                               event:(NSEvent *)event;
+- (BOOL)dragItem:(SVDOMController *)controller withEvent:(NSEvent *)event offset:(NSSize)mouseOffset slideBack:(BOOL)slideBack;
 {
-    OBPRECONDITION(graphicController);
+    while ([controller parentWebEditorItem] != self)
+    {
+        controller = (SVDOMController *)[controller parentWebEditorItem];
+        if (!controller) return NO;
+    }
+    
+    NSView *view = [[[[self webEditor] firstResponderItem] HTMLElement] documentView];
+    
+    NSPoint mouseDown = [view convertPoint:NSMakePoint([event locationInWindow].x - mouseOffset.width,
+                                                       [event locationInWindow].y - mouseOffset.height)
+                                  fromView:nil];
+    
+    // Set the item's anchor point such that -position is where mouse down was
+    [controller setAnchorPoint:[controller anchorPointToGivePosition:NSPointToCGPoint(mouseDown)]];
+    
+    do
+    {
+        // Calculate change from event
+        [view autoscroll:event];
+        
+        NSPoint target = [view convertPoint:[event locationInWindow] fromView:nil];
+        target.x = mouseDown.x;
+        
+        
+        
+        // Do any of siblings fit into the available space?
+        CGFloat delta = [event deltaY];
+        if (delta < 0.0f)
+        {
+            [self tryToMovePagelet:controller upToPosition:NSPointToCGPoint(target)];
+        }
+        else if (delta > 0.0f)
+        {
+            [self tryToMovePagelet:controller downToPosition:NSPointToCGPoint(target)];
+        }
+        
+        event = [[event window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
+    }
+    while ([event type] != NSLeftMouseUp);
     
     
-    // Do any of siblings fit into the available space?
-    CGFloat delta = [event deltaY];
-    if (delta < 0.0f)
-    {
-        [self tryToMovePagelet:graphicController upToPosition:position];
-    }
-    else if (delta > 0.0f)
-    {
-        [self tryToMovePagelet:graphicController downToPosition:position];
-    }
+    [controller moveEnded];
+    return YES;
 }
 
 - (void)moveObjectUp:(id)sender;
@@ -862,20 +916,6 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 - (SVSidebarDOMController *)sidebarDOMController;
 {
     return [[self parentWebEditorItem] sidebarDOMController];
-}
-
-@end
-
-
-
-#pragma mark -
-
-
-@implementation SVSidebar (SVSidebarDOMController)
-
-- (SVDOMController *)newDOMController;
-{
-    return [[SVSidebarDOMController alloc] initWithRepresentedObject:self];
 }
 
 @end

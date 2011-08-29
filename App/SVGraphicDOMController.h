@@ -14,58 +14,42 @@
 #import "SVOffscreenWebViewController.h"
 
 
+@class SVFieldEditorHTMLWriterDOMAdapator;
+
+
+// And provide a base implementation of the protocol:
+@interface SVGraphic (SVDOMController)
+
+- (BOOL)requiresPageLoad;
+
+- (BOOL)writeAttributedHTML:(SVFieldEditorHTMLWriterDOMAdapator *)adaptor
+              webEditorItem:(WEKWebEditorItem *)item;
+
+@end
+
+@interface SVAuxiliaryPageletText (SVDOMController)
+@end
+
+
+#pragma mark -
+
+
 @interface SVGraphicDOMController : SVDOMController <SVOffscreenWebViewControllerDelegate>
 {
   @private
-    DOMHTMLElement  *_bodyElement;
-    
-    BOOL    _observingWidth;
+    BOOL    _drawAsDropTarget;
     
     SVOffscreenWebViewController    *_offscreenWebViewController;
-    NSArray                         *_offscreenDOMControllers;
+    SVWebEditorHTMLContext          *_offscreenContext;
 }
 
-+ (SVGraphicDOMController *)graphicPlaceholderDOMController;
-
-@property(nonatomic, retain) DOMHTMLElement *bodyHTMLElement;
-- (DOMElement *)graphicDOMElement;
-- (void)loadPlaceholderDOMElementInDocument:(DOMDocument *)document;
-
-- (void)update;
-- (void)updateSize;
-
-
 @end
+
 
 
 #pragma mark -
 
 
 @interface WEKWebEditorItem (SVGraphicDOMController)
-- (SVGraphicDOMController *)enclosingGraphicDOMController;
-@end
-
-
-#pragma mark -
-
-
-// And provide a base implementation of the protocol:
-@interface SVGraphic (SVDOMController) <SVDOMControllerRepresentedObject>
-- (SVDOMController *)newBodyDOMController;
-- (BOOL)requiresPageLoad;
-@end
-
-@interface SVAuxiliaryPageletText (SVDOMController) <SVDOMControllerRepresentedObject>
-@end
-
-
-#pragma mark -
-
-
-@interface SVGraphicBodyDOMController : SVDOMController
-{
-@private
-    BOOL    _drawAsDropTarget;
-}
-
+- (SVGraphic *)graphic;
 @end

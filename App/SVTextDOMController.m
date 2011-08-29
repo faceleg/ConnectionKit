@@ -9,7 +9,7 @@
 #import "SVTextDOMController.h"
 
 #import "SVHTMLTextBlock.h"
-#import "SVMediaDOMController.h"
+#import "SVPlugInDOMController.h"
 #import "SVTitleBox.h"
 #import "WebEditingKit.h"
 #import "SVWebEditorViewController.h"
@@ -117,7 +117,7 @@
         }
         else
         {
-            result = [[SVMediaDOMController alloc] init];
+            result = [[SVPlugInDOMController alloc] init];
             [result setHTMLElement:(DOMHTMLElement *)node];
             
             [self addChildWebEditorItem:result];
@@ -183,12 +183,6 @@
     }
     
     return result;
-}
-
-- (void)delete;
-{
-    SVTitleBox *text = [self representedObject];
-    [text setHidden:NSBOOL(YES)];
 }
 
 - (KSSelectionBorder *)newSelectionBorder;

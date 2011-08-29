@@ -8,12 +8,19 @@
 
 #import "WEKRootItem.h"
 
+#import "WEKWebEditorView.h"
+
 
 @implementation WEKRootItem
 
-- (DOMHTMLElement *)HTMLElement { return nil; }
+- (DOMElement *)HTMLElement { return nil; }
 
 @synthesize webEditor = _webEditor;
+- (void)setWebEditor:(WEKWebEditorView *)webEditor;
+{
+    _webEditor = webEditor;
+    [self setNextResponder:webEditor];
+}
 
 - (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node;
 {
@@ -30,13 +37,6 @@
     }
     
     return result;
-}
-
-/*  Route events back to the web editor since no item handled it
- */
-- (void)mouseDown:(NSEvent *)theEvent;
-{
-    [[self webEditor] performSelector:@selector(mouseDown2:) withObject:theEvent];
 }
 
 @end

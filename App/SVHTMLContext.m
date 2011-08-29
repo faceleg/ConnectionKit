@@ -20,6 +20,7 @@
 #import "SVMediaGraphic.h"
 #import "SVMediaRequest.h"
 #import "KTPage.h"
+#import "SVPagesController.h"
 #import "SVSidebarDOMController.h"
 #import "KTSite.h"
 #import "SVTemplate.h"
@@ -38,7 +39,7 @@
 
 #import "KSPathUtilities.h"
 #import "KSSHA1Stream.h"
-#import "KSStringWriter.h"
+#import "KSBufferedWriter.h"
 
 #import "Registration.h"
 
@@ -74,7 +75,6 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 - (void)startPlaceholder;
 - (void)endPlaceholder;
 
-- (NSMutableString *)extraHeaderMarkup;
 - (NSMutableString *)endBodyMarkup; // can append to, query, as you like while parsing
 
 @end
@@ -87,40 +87,34 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 #pragma mark Init & Dealloc
 
-- (id)initWithOutputWriter:(id <KSWriter>)output; // designated initializer
+- (id)initWithOutputWriter:(id)output; // designated initializer
 {
-    [super initWithOutputWriter:output];
-    
-    
-    _includeStyling = YES;
-    
-    _liveDataFeeds = YES;
-        
-    _headerLevel = 1;
-    
-    _headerMarkup = [[NSMutableString alloc] init];
-    _endBodyMarkup = [[NSMutableString alloc] init];
-    _iteratorsStack = [[NSMutableArray alloc] init];
-    _graphicContainers = [[NSMutableArray alloc] init];
-    
-    return self;
-}
-
-- (id)initWithOutputStringWriter:(KSStringWriter *)output;
-{
-    if (self = [self initWithOutputWriter:output])
+    if (!output || [output conformsToProtocol:@protocol(KSMultiBufferingWriter)])
     {
-        _output = [output retain];
+        if (self = [super initWithOutputWriter:output])
+        {
+            _buffer = [output retain];
+            
+            _includeStyling = YES;
+            
+            _liveDataFeeds = YES;
+            
+            _headerLevel = 1;
+            
+            _preHTMLMarkup = [[NSMutableArray alloc] init];
+            _extraHeadMarkup = [[NSMutableArray alloc] init];
+            _endBodyMarkup = [[NSMutableString alloc] init];
+            _iteratorsStack = [[NSMutableArray alloc] init];
+            _graphicContainers = [[NSMutableArray alloc] init];
+        }
+    }
+    else
+    {
+        KSStringWriter *stringWriter = [[KSBufferedWriter alloc] initWithOutputWriter:output];
+        self = [self initWithOutputWriter:stringWriter];
+        [stringWriter release];
     }
     
-    return self;
-}
-
-- (id)init;
-{
-    KSStringWriter *output = [[KSStringWriter alloc] init];
-    self = [self initWithOutputStringWriter:output];
-    [output release];
     return self;
 }
 
@@ -131,8 +125,6 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     
     if (self = [self initWithOutputWriter:output docType:[context docType] encoding:encoding])
     {
-        if ([output isKindOfClass:[KSStringWriter class]]) _output = [output retain];
-        
         // Copy across properties
         [self setIndentationLevel:[context indentationLevel]];
         _currentPage = [[context page] retain];
@@ -153,8 +145,9 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     [_article release];
     
     [_mainCSSURL release];
-        
-    [_headerMarkup release]; _headerMarkup = nil;   // accessed in -flush
+    
+    [_preHTMLMarkup release];
+    [_extraHeadMarkup release];
     [_endBodyMarkup release];
     [_iteratorsStack release];
     [_graphicContainers release];
@@ -165,11 +158,6 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 }
 
 #pragma mark Status
-
-- (void)reset;
-{
-    [[self outputStringWriter] removeAllCharacters];
-}
 
 - (BOOL)isWritingPagelet; { return _writingPagelet; }
 
@@ -201,7 +189,8 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     
     
     // First Code Injection.  Can't use a convenience method since we need this context.  Make sure this matches the convenience methods though!
-	[page write:self codeInjectionSection:@"beforeHTML" masterFirst:YES];
+	[self writePreHTMLMarkup];
+    [page write:self codeInjectionSection:@"beforeHTML" masterFirst:YES];
     
     
     // Start the document
@@ -305,7 +294,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 #pragma mark Properties
 
-@synthesize outputStringWriter = _output;
+@synthesize outputStringWriter = _buffer;
 @synthesize totalCharactersWritten = _charactersWritten;
 
 @synthesize baseURL = _baseURL;
@@ -396,13 +385,16 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     }
     else
     {
-        if (_headerMarkupIndex != NSNotFound)
+        if (_extraHeadBuffer > 0)
         {
-            KSHTMLWriter *writer = [[KSHTMLWriter alloc] initWithOutputWriter:[self extraHeaderMarkup]];
+            NSMutableString *html = [[NSMutableString alloc] init];
+            KSHTMLWriter *writer = [[KSHTMLWriter alloc] initWithOutputWriter:html];
             
             [writer writeStyleElementWithCSSString:css];
             [writer writeString:@"\n"];
             
+            [self addMarkupToHead:html];
+            [html release];
             [writer release];
         }
         else
@@ -502,73 +494,21 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 #pragma mark Graphics
 
-- (void)writeBodyOfGraphic:(id <SVGraphic>)graphic;
-{
-    [self incrementHeaderLevel];
-    @try
-    {
-        // Graphic body
-        if (![graphic isPagelet] && ![graphic shouldWriteHTMLInline])
-        {
-            [self startElement:@"div"]; // <div class="graphic">
-            
-            
-            [self pushClassName:@"figure-content"];  // identifies for #84956
-        }
-        
-        if (![graphic isKindOfClass:[SVPlugInGraphic class]] || [graphic isKindOfClass:[SVMediaGraphic class]])
-        {
-            // It's almost certainly media, generate DOM controller to match
-            [graphic writeBody:self];
-        }
-        else
-        {
-            @try
-            {
-                [[self writeElement:@"div" contentsInvocationTarget:graphic]
-                 writeBody:self];
-            }
-            @catch (NSException *exception)
-            {
-                // Was probably caused by a plug-in. Log and soldier on. #88083
-                NSLog(@"Writing graphic body raised exception, probably due to incorrect use of HTML Writer");
-            }
-        }
-        
-        if (![graphic isPagelet] && ![graphic shouldWriteHTMLInline])
-        {
-            [self endElement];
-        }
-    }
-    @finally
-    {
-        [self decrementHeaderLevel];
-    }
-}
-
 - (void)writeGraphic:(id <SVGraphic>)graphic;
 {
-    // Special case. When writing a graphic nested in itself that's our cue to generate the body
-    if (graphic == [self currentGraphicContainer])
-    {
-        return [self writeBodyOfGraphic:graphic];
-    }
-    
-    
     // Update number of graphics
     _numberOfGraphics++;
+    BOOL written = NO;
     
-    id <SVGraphicContainer> container = [self currentGraphicContainer];
-    [self beginGraphicContainer:graphic];
-    
-    if (container)
+    id <SVComponent> container = [self currentGraphicContainer];
+    if ([container respondsToSelector:@selector(HTMLContext:writeGraphic:)])
     {
         if ([graphic isPagelet])
         {
             _writingPagelet = YES;
             @try
             {
-                [container write:self graphic:graphic];
+                written = [container HTMLContext:self writeGraphic:graphic];
             }
             @finally
             {
@@ -577,15 +517,16 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
         }
         else
         {
-            [container write:self graphic:graphic];
+            written = [container HTMLContext:self writeGraphic:graphic];
         }
     }
-    else 
-    {
-        [graphic writeBody:self];
-    }
     
-    [self endGraphicContainer];
+    if (!written)
+    {
+        [self beginGraphicContainer:graphic];
+        [graphic writeHTML:self];
+        [self endGraphicContainer];
+    }
 }
 
 - (void)writeGraphics:(NSArray *)graphics;  // convenience
@@ -604,12 +545,12 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 #pragma mark Graphic Containers
 
-- (id <SVGraphicContainer>)currentGraphicContainer;
+- (id <SVComponent>)currentGraphicContainer;
 {
     return [_graphicContainers lastObject];
 }
 
-- (void)beginGraphicContainer:(id <SVGraphicContainer>)container;
+- (void)beginGraphicContainer:(id <SVComponent>)container;
 {
     [_graphicContainers addObject:container];
 }
@@ -753,8 +694,16 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 #pragma mark Text Blocks
 
-- (void)willBeginWritingHTMLTextBlock:(SVHTMLTextBlock *)block; { }
-- (void)didEndWritingHTMLTextBlock; { }
+- (void)willBeginWritingHTMLTextBlock:(SVHTMLTextBlock *)block;
+{
+    [self beginGraphicContainer:block];
+}
+
+- (void)didEndWritingHTMLTextBlock;
+{
+    [self endGraphicContainer];
+}
+
 - (void)willWriteSummaryOfPage:(SVSiteItem *)page; { }
 
 #pragma mark Sidebar
@@ -1066,15 +1015,18 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 - (void)linkToCSSAtURL:(NSURL *)fileURL
 {
-    if (_headerMarkupIndex != NSNotFound)
+    if (_extraHeadBuffer > 0)
     {
-        KSHTMLWriter *writer = [[KSHTMLWriter alloc] initWithOutputWriter:[self extraHeaderMarkup]];
+        NSMutableString *html = [[NSMutableString alloc] init];
+        KSHTMLWriter *writer = [[KSHTMLWriter alloc] initWithOutputWriter:html];
         
         [writer writeLinkToStylesheet:[self relativeStringFromURL:fileURL]
                                 title:nil
                                 media:nil];
         
         [writer writeString:@"\n"];
+        [self addMarkupToHead:html];
+        [html release];
         [writer release];
     }
     else
@@ -1405,12 +1357,93 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 #pragma mark Extra markup
 
+- (void)_writePreHTMLMarkup:(NSString *)markup;
+{
+    NSUInteger buffer = (_preHTMLBuffer - 1);   // want to write just before the buffer
+    [[self outputStringWriter] writeString:markup toBufferAtIndex:buffer];
+    
+    if (![markup hasSuffix:@"\n"])
+    {
+        [[self outputStringWriter] writeString:@"\n" toBufferAtIndex:buffer];
+    }
+}
+
+- (void)writePreHTMLMarkup;
+{
+    OBASSERT(_preHTMLBuffer == 0);
+    
+    // Time to start buffering in case a plug-in wants to inject code here
+    KSStringWriter *stringWriter = [self outputStringWriter];
+    if (!stringWriter) return;  // nowt to do
+    
+    [stringWriter beginBuffering];
+    _preHTMLBuffer = [stringWriter numberOfBuffers];
+    OBASSERT(_preHTMLBuffer > 0);
+    
+    
+    // Write any pending markup
+    for (NSString *aString in _preHTMLMarkup)
+    {
+        [self _writePreHTMLMarkup:aString];
+    }
+}
+
+- (void)addMarkupBeforeHTML:(NSString *)markup;
+{
+    if ([_preHTMLMarkup containsObject:markup]) return; // ignore dupes
+    [_preHTMLMarkup addObject:markup];
+    
+    if (_preHTMLBuffer > 0)
+    {
+        [self _writePreHTMLMarkup:markup];
+    }
+}
+
+- (void)_writeExtraHeader:(NSString *)markup;
+{
+    NSUInteger buffer = (_extraHeadBuffer - 1);   // want to write just before the buffer
+    [[self outputStringWriter] writeString:markup toBufferAtIndex:buffer];
+    
+    if (![markup hasSuffix:@"\n"])
+    {
+        [[self outputStringWriter] writeString:@"\n" toBufferAtIndex:buffer];
+    }
+}
+
+- (void)writeExtraHeaders;  // writes any code plug-ins etc. have requested should inside the <head> element
+{
+    OBASSERT(_extraHeadBuffer == 0);
+    
+    // Time to start buffering in case a plug-in wants to inject code here
+    KSStringWriter *stringWriter = [self outputStringWriter];
+    if (!stringWriter) return;  // nowt to do
+    
+    [stringWriter beginBuffering];
+    _extraHeadBuffer = [stringWriter numberOfBuffers];
+    OBASSERT(_extraHeadBuffer > 0);
+    
+    
+    // Write any pending markup
+    for (NSString *aString in _extraHeadMarkup)
+    {
+        [self _writeExtraHeader:aString];
+    }
+}
+
 - (void)addMarkupToHead:(NSString *)markup;
 {
-    if ([[self extraHeaderMarkup] rangeOfString:markup].location == NSNotFound)
+    if ([_extraHeadMarkup containsObject:markup]) return; // ignore dupes
+    [_extraHeadMarkup addObject:markup];
+    
+    if (_extraHeadBuffer > 0)
     {
-        [[self extraHeaderMarkup] appendString:markup];
+        [self _writeExtraHeader:markup];
     }
+}
+
+- (NSMutableString *)endBodyMarkup; // can append to, query, as you like while parsing
+{
+    return _endBodyMarkup;
 }
 
 - (void)addMarkupToEndOfBody:(NSString *)markup;
@@ -1421,41 +1454,10 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     }
 }
 
-- (NSMutableString *)extraHeaderMarkup; // can append to, query, as you like while parsing
-{
-    return _headerMarkup;
-}
-
-- (void)writeExtraHeaders;  // writes any code plug-ins etc. have requested should inside the <head> element
-{
-    // Record where to make the insert
-    _headerMarkupIndex = [[self outputStringWriter] length];
-}
-
-- (NSMutableString *)endBodyMarkup; // can append to, query, as you like while parsing
-{
-    return _endBodyMarkup;
-}
-
 - (void)writeEndBodyString; // writes any code plug-ins etc. have requested should go at the end of the page, before </body>
 {
     // Write the end body markup
     [self writeString:[self endBodyMarkup]];
-}
-
-- (void)flush;
-{
-    [super flush];
-    
-    // Finish buffering extra header
-    if (_headerMarkupIndex < NSNotFound && _headerMarkup)
-    {
-        [[self outputStringWriter] insertString:[self extraHeaderMarkup]
-                                        atIndex:_headerMarkupIndex];
-        
-        [_headerMarkup deleteCharactersInRange:NSMakeRange(0, [_headerMarkup length])];
-        _headerMarkupIndex = NSNotFound; // so nothing gets mistakenly written afterwards
-    }
 }
 
 #pragma mark Content
@@ -1665,14 +1667,53 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 - (void)close;
 {
+    [_buffer flush];
+    
     [super close];
     
-    [_output release]; _output = nil;
+    [_buffer release]; _buffer = nil;
 }
 
-#pragma mark Legacy
+#pragma mark Pages
 
 @synthesize page = _currentPage;
+
+- (NSArray *)childrenOfPage:(id <SVPage>)page;
+{
+    NSArrayController *controller = [SVPagesController
+                                     controllerWithPagesInCollection:page
+                                     bind:[self isForEditing]];
+    
+    [self addDependencyOnObject:controller keyPath:@"arrangedObjects"];
+    
+    return [controller arrangedObjects];
+}
+
+- (NSArray *)indexChildrenOfPage:(id <SVPage>)page;
+{
+    NSArrayController *controller = [SVPagesController
+                                     controllerWithPagesInCollection:page
+                                     bind:[self isForEditing]];
+    
+    [controller setFilterPredicate:[NSPredicate predicateWithFormat:@"shouldIncludeInIndexes == YES"]];
+    
+    [self addDependencyOnObject:controller keyPath:@"arrangedObjects"];
+    
+    return [controller arrangedObjects];
+}
+
+- (NSArray *)sitemapChildrenOfPage:(id <SVPage>)page;
+{
+    NSArrayController *controller = [SVPagesController
+                                     controllerWithPagesInCollection:page
+                                     bind:[self isForEditing]];
+    
+    [controller setFilterPredicate:[NSPredicate predicateWithFormat:@"shouldIncludeInSiteMaps == YES"]];
+    
+    [self addDependencyOnObject:controller keyPath:@"arrangedObjects"];
+    
+    return [controller arrangedObjects];
+}
 
 #pragma mark RSS
 

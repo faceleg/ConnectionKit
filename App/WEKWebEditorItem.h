@@ -14,6 +14,9 @@
 @class WEKWebEditorView;
 
 
+#define MIN_GRAPHIC_LIVE_RESIZE 16.0f
+
+
 @interface WEKWebEditorItem : WEKDOMController
 {
   @private
@@ -21,10 +24,23 @@
     NSArray             *_childControllers;
     WEKWebEditorItem    *_parentController; // weak ref
     
+    BOOL    _selectable;
     BOOL    _selected;
     BOOL    _editing;
+    
+    NSNumber    *_width;
+    NSNumber    *_height;
+    BOOL        _horizontallyResizable;
+    BOOL        _verticallyResizable;
+    NSSize      _aspectRatio;
+    NSSize      _delta;
 }
 
+#pragma mark DOM
+- (void)setAncestorNode:(DOMNode *)node recursive:(BOOL)recurse;
+
+
+#pragma mark Web Editor
 @property(nonatomic, assign, readonly) WEKWebEditorView *webEditor;  // NOT KVO-compliant
 
 
@@ -56,7 +72,7 @@
 
 #pragma mark Selection
 
-- (BOOL)isSelectable;                   // default is NO
+@property(nonatomic, getter=isSelectable) BOOL selectable; // default is NO
 - (DOMRange *)selectableDOMRange;
 - (BOOL)shouldTrySelectingInline;
 - (unsigned int)resizingMask;
@@ -95,15 +111,42 @@
 - (CGPoint)position;    // center point (for moving) in doc view coordinates
 
 
+#pragma mark Metrics
+
+@property(nonatomic, copy) NSNumber *width;
+@property(nonatomic, copy) NSNumber *height;
+
+- (void)updateWidth;    // updates DOM to match .width property. Override if want alternative update system
+- (void)updateHeight;   // same, but for height
+
+
 #pragma mark Resizing
+
+@property(nonatomic, getter=isHorizontallyResizable) BOOL horizontallyResizable;
+@property(nonatomic, getter=isVerticallyResizable) BOOL verticallyResizable;
+
+@property(nonatomic) NSSize aspectRatio;
+@property(nonatomic) NSSize sizeDelta;
+- (NSSize)minSize;
+
+- (CGFloat)maxWidth;    // calls -maxWidthForChild: on parent
+- (CGFloat)maxWidthForChild:(WEKWebEditorItem *)aChild; // can override to tweak behaviour
+
 - (unsigned int)resizingMask;   // default is 0
-- (SVGraphicHandle)resizeUsingHandle:(SVGraphicHandle)handle event:(NSEvent *)event;
+- (unsigned int)resizingMaskForDOMElement:(DOMElement *)element;    // support
+
 - (BOOL)shouldResizeInline; // Default is NO. If YES, cursor will be locked to match the resize
+
+- (SVGraphicHandle)resizeUsingHandle:(SVGraphicHandle)handle event:(NSEvent *)event;
+- (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
+- (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;
+- (CGFloat)constrainToMaxWidth:(CGFloat)maxWidth;   // default is return maxWidth, but you can go for 0 instead
+
 
 
 #pragma mark Layout
 
-- (NSRect)boundingBox;  // like -[DOMNode boundingBox] but performs union with subcontroller boxes
+- (NSRect)frame;  // like -[DOMNode boundingBox] but performs union with subcontroller boxes
 - (NSRect)selectionFrame;
 
 // Expressed in -HTMLElement's document view's coordinates. If overrding, generally call super and union your custom rect with that

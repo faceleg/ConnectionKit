@@ -8,8 +8,7 @@
 
 #import "SVTitleBox.h"
 
-
-@class SVGraphic;
+#import "SVGraphic.h"
 
 
 @interface SVPageletTitleBox : SVTitleBox

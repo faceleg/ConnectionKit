@@ -10,6 +10,7 @@
 #import "SVInspectorViewController.h"
 #import "SVLinkInspector.h"
 #import "SVMetricsInspector.h"
+#import "SVTextInspector.h"
 #import "SVPageInspector.h"
 #import "SVPlugInInspector.h"
 #import "SVDocumentInspector.h"
@@ -120,7 +121,7 @@
     
     
     // Text
-    _textInspector = [[KSInspectorViewController alloc] initWithNibName:@"TextInspector" bundle:nil];
+    _textInspector = [[SVTextInspector alloc] initWithNibName:@"TextInspector" bundle:nil];
     [_textInspector setIdentifier:@"com.karelia.Sandvox.TextInspector"];
     [_textInspector setTitle:NSLocalizedString(@"Text", @"Text Inspector")];
     [_textInspector setIcon:[NSImage imageNamed:@"text_inspector"]];

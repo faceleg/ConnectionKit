@@ -35,9 +35,11 @@
 
 @implementation SVRawHTMLGraphic (SVRawHTMLDOMController)
 
-- (SVDOMController *)newDOMController;
+- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID ancestorNode:(DOMNode *)document;
 {
-    return [[SVRawHTMLDOMController alloc] initWithRepresentedObject:self];
+    SVDOMController *result = [[SVRawHTMLDOMController alloc] initWithIdName:elementID ancestorNode:document];
+    [result setRepresentedObject:self];
+    return result;
 }
 
 @end

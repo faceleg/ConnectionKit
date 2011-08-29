@@ -5,6 +5,9 @@
 // release builds are 32-bit Universal, using Leopards's SDK
 ARCHS = ppc i386
 
+LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks"
+
+
 //ARCHS = $(ARCHS_STANDARD_32_64_BIT)
 //SDKROOT = macosx10.6
 //MACOSX_DEPLOYMENT_TARGET = 10.5

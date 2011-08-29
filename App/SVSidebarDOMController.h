@@ -13,7 +13,7 @@
 #import "SVSidebarPageletsController.h"
 
 
-@class SVGraphicDOMController;
+@class SVGraphicContainerDOMController;
 
 @interface SVSidebarDOMController : SVDOMController <SVGraphicContainerDOMController>
 {
@@ -28,8 +28,6 @@
     DOMElement  *_dragCaret;
     BOOL        _drawAsDropTarget;
 }
-
-- (id)initWithPageletsController:(SVSidebarPageletsController *)pageletsController;
 
 @property(nonatomic, retain) DOMElement *sidebarDivElement;
 @property(nonatomic, retain) DOMElement *contentDOMElement;

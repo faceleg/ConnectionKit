@@ -10,6 +10,7 @@
 
 #import "SVArticleDOMController.h"
 #import "SVGraphicFactory.h"
+#import "SVGraphicContainer.h"
 #import "SVRawHTMLGraphic.h"
 #import "SVTextAttachment.h"
 #import "SVWebEditorHTMLContext.h"
@@ -86,8 +87,6 @@
     
     // Can't convert to raw HTML if contains an embedded image
     BOOL treatAsImageContainer = [self DOMElementContainsAnInDocumentImage:element];
-    
-    
     if (treatAsImageContainer)
     {
         return [super handleInvalidDOMElement:element];
@@ -97,6 +96,9 @@
     // Ignore most empty elements! #119910
     if (![tagName isEqualToString:@"SCRIPT"] &&
         ![tagName isEqualToString:@"IFRAME"] &&
+        ![tagName isEqualToString:@"VIDEO"] &&
+        ![tagName isEqualToString:@"AUDIO"] &&
+        ![tagName isEqualToString:@"OBJECT"] &&
         [[(DOMHTMLElement *)element innerText] isWhitespace])
     {
         return [super handleInvalidDOMElement:element];
@@ -123,14 +125,17 @@
     }
     [attachment setCausesWrap:NSBOOL(causesWrap)];
     
-    SVRichText *container = [[self textDOMController] representedObject];
-    if ([container attachmentsMustBeWrittenInline]) [attachment setWrap:[NSNumber numberWithInt:SVGraphicWrapFloat_1_0]];
+    SVRichText *text = [[self textDOMController] representedObject];
+    if ([text attachmentsMustBeWrittenInline]) [attachment setWrap:[NSNumber numberWithInt:SVGraphicWrapFloat_1_0]];
     
     
     // Create controller for graphic and hook up to imported node
-    SVDOMController *controller = [graphic newDOMController];
-    [controller awakeFromHTMLContext:[[self textDOMController] HTMLContext]];
+    SVInlineGraphicContainer *container = [[SVInlineGraphicContainer alloc] initWithGraphic:graphic];
+    SVDOMController *controller = [container newDOMControllerWithElementIdName:nil ancestorNode:nil];
+    [container release];
+    
     [controller setHTMLElement:(DOMHTMLElement *)element];
+    [controller awakeFromHTMLContext:[[self textDOMController] HTMLContext]];
     
     [[self textDOMController] addChildWebEditorItem:controller];
     OBASSERT([[self textDOMController] hitTestDOMNode:element] == controller);

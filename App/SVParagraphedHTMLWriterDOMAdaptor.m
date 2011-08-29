@@ -8,8 +8,9 @@
 
 #import "SVParagraphedHTMLWriterDOMAdaptor.h"
 
-#import "NSString+Karelia.h"
 #import "DOMNode+Karelia.h"
+#import "DOMRange+Karelia.h"
+#import "NSString+Karelia.h"
 
 
 @implementation SVParagraphedHTMLWriterDOMAdaptor
@@ -31,21 +32,6 @@
 @synthesize allowsPagelets = _allowsBlockGraphics;
 
 #pragma mark Cleanup
-
-- (DOMNode *)handleInvalidBlockElement:(DOMElement *)element;
-{
-    // Move the element and its next siblings up a level. Next stage of recursion will find them there
-    
-    
-    DOMNode *parent = [element parentNode];
-    DOMNode *newParent = [parent parentNode];
-    NSArray *nodes = [parent childDOMNodesAfterChild:[element previousSibling]];
-    
-    [newParent insertDOMNodes:nodes beforeChild:[parent nextSibling]];
-    
-    
-    return nil;
-}
 
 - (NSDictionary *)dictionaryWithCSSStyle:(DOMCSSStyleDeclaration *)style
                                  element:(NSString *)element;
@@ -128,7 +114,8 @@
         {
             if ([[self class] validateElement:tagName])
             {
-                return [self handleInvalidBlockElement:element];
+                [self moveDOMNodeToAfterParent:element includeFollowingSiblings:YES];
+                return nil;
             }
             else
             {
@@ -153,17 +140,21 @@
     // The same goes for two+ line breaks in a row at the end of a paragraph
     if ([elementName isEqualToString:@"br"] && _potentiallyPointlessLineBreak == nil)
     {
-        DOMNode *prior = [element previousSibling];
-        if (prior &&
-            !([prior nodeType] == DOM_ELEMENT_NODE && [[(DOMElement *)prior tagName] isEqualToString:@"BR"]))
+        NSString *parent = [[self XMLWriter] topElement];
+        if ([parent isEqualToString:@"p"] || [parent isEqualToString:@"li"])
         {
-            [_output cancelFlushOnNextWrite];   // as we're about to write into the buffer
-                                                //[_pendingStartTagDOMElements addObject:element];
-            [_output beginBuffering];
-            
-            _potentiallyPointlessLineBreak = [element retain];  // made sure was nil above
-            
-            // Don't need to flush on next write since linebreaks are always empty elements. We'll set up flushing once element ends
+            DOMNode *prior = [element previousSibling];
+            if (prior &&
+                !([prior nodeType] == DOM_ELEMENT_NODE && [[(DOMElement *)prior tagName] isEqualToString:@"BR"]))
+            {
+                [_output cancelFlushOnNextWrite];   // as we're about to write into the buffer
+                                                    //[_pendingStartTagDOMElements addObject:element];
+                [_output beginBuffering];
+                
+                _potentiallyPointlessLineBreak = [element retain];  // made sure was nil above
+                
+                // Don't need to flush on next write since linebreaks are always empty elements. We'll set up flushing once element ends
+            }
         }
     }
     
@@ -204,23 +195,6 @@
 
 #pragma mark Characters
 
-- (DOMNode *)willWriteDOMText:(DOMText *)textNode;
-{
-   if ([[self XMLWriter] openElementsCount] > 0)
-   {
-       // Ignore whitespace
-       DOMNode *nextNode = [textNode nextSibling];
-       
-       if (!nextNode && ![textNode previousSibling] && [[textNode data] isWhitespace])
-       {
-           [[textNode parentNode] removeChild:textNode];
-           return nextNode;
-       }
-    }
-    
-    return [super willWriteDOMText:textNode];
-}
-
 - (DOMNode *)didWriteDOMText:(DOMText *)textNode nextNode:(DOMNode *)nextNode;
 {
     DOMNode *result = [super didWriteDOMText:textNode nextNode:nextNode];
@@ -233,10 +207,8 @@
 {
     BOOL result;
     
-    // Only a handul of block-level elements are supported. They can only appear at the top-level, or directly inside a list item
+    // Only a handful of block-level elements are supported. They can only appear at the top-level, or directly inside a list item
     if ([tagName isEqualToString:@"P"] ||
-        [tagName isEqualToString:@"UL"] ||
-        [tagName isEqualToString:@"OL"] ||
         [tagName isEqualToString:@"H3"] ||
         [tagName isEqualToString:@"H4"] ||
         [tagName isEqualToString:@"H5"] ||
@@ -245,6 +217,21 @@
         result = ([[self XMLWriter] openElementsCount] == 0 ||
                   [[[self XMLWriter] topElement] isEqualToString:@"li"]);
     }
+    
+    // Lists must be top-level or directly inside another list
+    else if ([tagName isEqualToString:@"UL"] || [tagName isEqualToString:@"OL"])
+    {
+        result = YES;
+        if ([[self XMLWriter] openElementsCount] > 0)
+        {
+            NSString *topElement = [[self XMLWriter] topElement];
+            if (![topElement isEqualToString:@"ul"] && ![topElement isEqualToString:@"ol"])
+            {
+                result = NO;
+            }
+        }
+    }
+    
     else
     {
         // Super allows standard inline elements. We only support them once inside a paragraph or similar
@@ -365,14 +352,26 @@
         // Create a paragraph to contain the text
         DOMDocument *doc = [self ownerDocument];
         DOMElement *paragraph = [doc createElement:@"P"];
-        [[self parentNode] appendChild:paragraph];
+        [[self parentNode] insertBefore:paragraph refChild:self];
+        
+        // Will selection be affected?
+        WebView *webView = [[[self ownerDocument] webFrame] webView];
+        DOMRange *selection = [webView selectedDOMRange];
+        NSSelectionAffinity affinity = [webView selectionAffinity];
+        
+        NSIndexPath *startPath = [selection ks_startIndexPathFromNode:self];
+        NSIndexPath *endPath = [selection ks_endIndexPathFromNode:self];
         
         // Move content into the paragraph
-        DOMNode *aNode;
-        DOMNode *previousNode = [self previousSibling];
-        while ((aNode = [paragraph previousSibling]) != previousNode)
+        [paragraph appendChild:self];
+        
+        // Restore selection
+        if (startPath) [selection ks_setStartWithIndexPath:startPath fromNode:self];
+        if (endPath) [selection ks_setEndWithIndexPath:endPath fromNode:self];
+        
+        if (startPath || endPath)
         {
-            [paragraph insertBefore:aNode refChild:[paragraph firstChild]];
+            [webView setSelectedDOMRange:selection affinity:affinity];
         }
         
         return paragraph;

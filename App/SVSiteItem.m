@@ -16,6 +16,7 @@
 #import "KTMaster.h"
 #import "SVMediaRecord.h"
 #import "KTPage.h"
+#import "KTPublishingEngine.h"
 #import "KTSite.h"
 #import "SVWebEditingURL.h"
 
@@ -26,7 +27,7 @@
 
 #import "KSError.h"
 #import "KSPathUtilities.h"
-#import "KTPublishingEngine.h"
+#import "KSURLUtilities.h"
 
 #import "KSStringXMLEntityEscaping.h"
 
@@ -266,6 +267,8 @@
 	
 	// Get the preferred filename by converting to lowercase, spaces to _, & removing everything else
     NSString *result = [self preferredFilename];
+    if (!result) result = [self filename];
+    if (!result) return nil;    // assume self is something like an external link which has no filename
     
     
 	// Build a list of the file names already taken
@@ -280,23 +283,19 @@
 	
     
 	// Now munge it to make it unique.  Keep adding a number until we find an open slot.
-	NSString *baseFilename = result;
-	NSUInteger suffixCount = 2;
 	while ([unavailableFileNames containsObject:result])
 	{
-		result = [baseFilename ks_stringWithPathSuffix:[NSString stringWithFormat:
-                                                        @"_%u",
-                                                        suffixCount++]];
+		result = [result ks_stringByIncrementingPath];
 	}
     
     [unavailableFileNames release];
     
 	
 	OBPOSTCONDITION(result);
-	
 	return result;
 }
 
+- (NSString *)fileNameExtension; { return [[self URL] ks_pathExtension]; }
 - (BOOL)canPreview { return NO; }
 
 - (NSString *)previewPath
@@ -753,6 +752,10 @@
     BOOL result = ([[self includeInSiteMap] boolValue] && 
                    ([self datePublished] || ![self isDraftOrHasDraftAncestor]));
     return result;
+}
++ (NSSet *)keyPathsForValuesAffectingShouldIncludeInSiteMaps;
+{
+    return [NSSet setWithObjects:@"includeInSiteMap", @"datePublished", @"isDraft", nil];
 }
 
 - (NSString *)language { return nil; }

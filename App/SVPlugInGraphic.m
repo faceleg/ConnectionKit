@@ -8,13 +8,14 @@
 
 #import "SVPlugInGraphic.h"
 
-#import "SVDOMController.h"
+#import "Sandvox.h"
+
+#import "SVGraphicFactory.h"
+#import "SVHTMLContext.h"
+#import "SVIndexDOMController.h"
 #import "SVLogoImage.h"
 #import "SVMediaProtocol.h"
 #import "KTPage.h"
-#import "Sandvox.h"
-#import "SVGraphicFactory.h"
-#import "SVHTMLContext.h"
 
 #import "NSManagedObject+KTExtensions.h"
 #import "NSObject+Karelia.h"
@@ -282,54 +283,64 @@ static void *sPlugInMinWidthObservationContext = &sPlugInMinWidthObservationCont
 
 #pragma mark HTML
 
-- (void)writeBody:(SVHTMLContext *)context
+- (void)writeHTML:(SVHTMLContext *)context
 {
-    NSUInteger openElements = [context openElementsCount];
-        
-    NSString *identifier = [self plugInIdentifier];
-    if (![self shouldWriteHTMLInline])
+    [context incrementHeaderLevel];
+    @try
     {
-        [context writeComment:[NSString stringWithFormat:@" %@ ", identifier]];
-    }
-    
-    
-    SVPlugIn *plugIn = [self plugIn];
-    if (plugIn)
-    {
-        @try
-        {
-            [[self plugIn] writeHTML:context];
-        }
-        @catch (NSException *exception)
-        {
-            NSLog(@"Plug-in threw exception: %@ %@", [exception name], [exception reason]);
+        NSUInteger openElements = [context openElementsCount];
             
-            // Correct open elements count if plug-in managed to break this. #88083
-            while ([context openElementsCount] > openElements)
-            {
-                [context endElement];
-            }
-        }
-    }
-    else
-    {
-        SVGraphicFactory *factory = [SVGraphicFactory factoryWithIdentifier:[self plugInIdentifier]];
-        if (factory)
+        NSString *identifier = [self plugInIdentifier];
+        if (![self shouldWriteHTMLInline])
         {
-            [context writePlaceholderWithText:NSLocalizedString(@"Plug-in failed to load", "placeholder")
-                                  options:0];
+            [context startElement:@"div"];
+            [context writeComment:[NSString stringWithFormat:@" %@ ", identifier]];
+        }
+        
+        
+        SVPlugIn *plugIn = [self plugIn];
+        if (plugIn)
+        {
+            @try
+            {
+                [[self plugIn] writeHTML:context];
+            }
+            @catch (NSException *exception)
+            {
+                NSLog(@"Plug-in threw exception: %@ %@", [exception name], [exception reason]);
+                
+                // Correct open elements count if plug-in managed to break this. #88083
+                while ([context openElementsCount] > openElements)
+                {
+                    [context endElement];
+                }
+            }
         }
         else
         {
-            [context writePlaceholderWithText:[NSString stringWithFormat:NSLocalizedString(@"Plug-in not found (%@)", "placeholder"), [self plugInIdentifier]]
+            SVGraphicFactory *factory = [SVGraphicFactory factoryWithIdentifier:[self plugInIdentifier]];
+            if (factory)
+            {
+                [context writePlaceholderWithText:NSLocalizedString(@"Plug-in failed to load", "placeholder")
                                       options:0];
+            }
+            else
+            {
+                [context writePlaceholderWithText:[NSString stringWithFormat:NSLocalizedString(@"Plug-in not found (%@)", "placeholder"), [self plugInIdentifier]]
+                                          options:0];
+            }
+        }
+        
+        
+        if (![self shouldWriteHTMLInline])
+        {
+            [context writeComment:[NSString stringWithFormat:@" /%@ ", identifier]];
+            [context endElement];
         }
     }
-    
-    
-    if (![self shouldWriteHTMLInline])
+    @finally
     {
-        [context writeComment:[NSString stringWithFormat:@" /%@ ", identifier]];
+        [context decrementHeaderLevel];
     }
 }
 
@@ -524,6 +535,27 @@ static void *sPlugInMinWidthObservationContext = &sPlugInMinWidthObservationCont
 }
 
 #pragma mark DOM
+
+- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID
+                                                  ancestorNode:(DOMNode *)node;
+{
+    if ([[self plugIn] isKindOfClass:[SVIndexPlugIn class]])
+    {
+        SVDOMController *result = [[SVIndexDOMController alloc] initWithIdName:elementID
+                                                                             ancestorNode:node];
+        [result setRepresentedObject:self];
+        
+        if ([self textAttachment])
+        {
+            [result bind:NSWidthBinding toObject:self withKeyPath:@"width" options:nil];
+            [result setHorizontallyResizable:YES];
+        }
+        
+        return result;
+    }
+    
+    return [super newDOMControllerWithElementIdName:elementID ancestorNode:node];
+}
 
 - (BOOL)requiresPageLoad;
 {

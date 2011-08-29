@@ -13,3 +13,10 @@
 
 @interface SVSizeFormatter : NSNumberFormatter
 @end
+
+
+#pragma mark -
+
+
+@interface SVIndentLevelFormatter : NSNumberFormatter
+@end

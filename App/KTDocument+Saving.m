@@ -410,6 +410,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
 	
 	SVHTMLContext *previewContext = nil;
+    NSMutableString *previewHTML = nil;
     NSMutableArray *filesToDelete = [[NSMutableArray alloc] init];
     
     if (result)
@@ -435,14 +436,16 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
          
             
             
-            
         if (saveOperation != NSAutosaveOperation)
         {
             // Generate Quick Look preview HTML. Do this AFTER processing media so their URLs now point to a file inside the doc
-            previewContext = [[SVQuickLookPreviewHTMLContext alloc] init];
+            previewHTML = [[NSMutableString alloc] init];
+            previewContext = [[SVQuickLookPreviewHTMLContext alloc] initWithOutputWriter:previewHTML];
+            
             [previewContext setBaseURL:[KTDocument quickLookPreviewURLForDocumentURL:inURL]];
+            
             [self writePreviewHTML:previewContext];
-            [previewContext flush];
+            [previewContext close];
         }
     }
     
@@ -561,11 +564,11 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 		// Write out Quick Look preview
         if (previewContext)
         {
-            [self writePreviewHTMLString:[[previewContext outputStringWriter] string]
-                                   toURL:[previewContext baseURL]];
-            
+            [self writePreviewHTMLString:previewHTML toURL:[previewContext baseURL]];
             [previewContext release];
         }
+        
+        [previewHTML release];
         [_previewResourcesFileWrapper release]; _previewResourcesFileWrapper = nil;
     }
     
@@ -690,22 +693,6 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     {
         // Do the save
         if (result) result = [context save:&error];
-        
-        
-        // For regular docs, overwrite the version hashes so it looks like an original Sandvox 2.0 document
-        if (saveOp != NSAutosaveOperation)
-        {
-            NSString *hashesPath = [[NSBundle mainBundle] pathForResource:@"VersionHashes2_0" ofType:@"plist"];
-            NSDictionary *hashes_2_0 = [NSDictionary dictionaryWithContentsOfFile:hashesPath];
-            if (hashes_2_0)
-            {
-                NSDictionary *metadata = [coordinator metadataForPersistentStore:store];
-                
-                metadata = [metadata ks_dictionaryBySettingObject:hashes_2_0 forKey:NSStoreModelVersionHashesKey];
-                
-                [NSPersistentStoreCoordinator setMetadata:metadata forPersistentStoreOfType:NSBinaryStoreType URL:URL error:NULL];
-            }
-        }
     }
     
     
@@ -1027,19 +1014,22 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	OBASSERT([NSThread currentThread] == [self thread]);
     
     // Put together the HTML for the thumbnail
-    SVHTMLContext *context = [[SVWebEditorHTMLContext alloc] init];
+    KSStringWriter *writer = [[KSStringWriter alloc] init];
+    SVHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithOutputWriter:writer];
+
     [context setLiveDataFeeds:NO];
     
     [context writeDocumentWithPage:[[self site] rootPage]];
-	
-    NSString *thumbnailHTML = [[context outputStringWriter] string];
+    [context close];
     [context release];
     
 	
     // Load into webview
     [self performSelectorOnMainThread:@selector(_startGeneratingQuickLookThumbnailWithHTML:)
-                           withObject:thumbnailHTML
+                           withObject:[writer string]
                         waitUntilDone:YES];
+    
+    [writer release];
 }
 
 - (void)_startGeneratingQuickLookThumbnailWithHTML:(NSString *)thumbnailHTML
@@ -1049,7 +1039,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     
 	// Create the webview's offscreen window
-	unsigned designViewport = [[[[[self site] rootPage] master] design] viewport];	// Ensures we don't clip anything important
+	unsigned designViewport = [[[[[self site] rootPage] master] design] viewportWidth];	// Ensures we don't clip anything important
 	NSRect frame = NSMakeRect(0.0, 0.0, designViewport+20, designViewport+20);	// The 20 keeps scrollbars out the way
 	
 	_quickLookThumbnailWebViewWindow = [[NSWindow alloc]

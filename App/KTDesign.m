@@ -723,16 +723,27 @@ const int kDesignThumbHeight = 65;
 	return NSMakeSize(width, height);
 }
 
+- (NSString *)viewport;
+{
+    NSString *result = [self pluginPropertyForKey:@"viewport"];
+    if (![result isKindOfClass:[NSString class]])
+    {
+        result = [NSString stringWithFormat:@"width=%u", [self viewportWidth]];
+    }
+    return result;
+}
+
 /*	The width of the design for the iPhone's benefit.
  *	If no value is found in the dictionary we assume 771 pixels.
  */
-- (unsigned)viewport
+- (NSUInteger)viewportWidth
 {
-	unsigned result = 771;
+	NSUInteger result = 771;
 	
 	NSNumber *viewport = [self pluginPropertyForKey:@"viewport"];
-	if (viewport) {
-		unsigned probablyResult = [viewport unsignedIntValue];
+	if ([viewport respondsToSelector:@selector(unsignedIntegerValue)])
+    {
+		NSUInteger probablyResult = [viewport unsignedIntegerValue];
 		if (probablyResult > 100)
 		{
 			result = probablyResult;

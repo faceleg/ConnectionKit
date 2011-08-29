@@ -16,22 +16,6 @@
 #import "DOMNode+Karelia.h"
 
 
-@interface SVValidatedUserInterfaceItem : NSObject <NSValidatedUserInterfaceItem>
-{
-  @private
-    SEL         _action;
-    NSInteger   _tag;
-}
-
-@property(nonatomic) SEL action;
-@property(nonatomic) NSInteger tag;
-
-@end
-
-
-#pragma mark -
-
-
 // Super-simple class that watches a WebView waiting for an edit
 @interface SVWebViewChangeWatcher : NSObject
 {
@@ -134,7 +118,12 @@
     [watcher release];
     
     
-    // WebView didn't handle the delete so go ahead and give to the datasource
+    // WebView didn't handle the delete so go ahead and do it with the controllers
+    [[self firstResponderItem] doCommandBySelector:action];
+    return;
+    
+    
+    //give to the datasource
     NSArray *selection = [self selectedItems];
     if (![selection count])
     {
@@ -277,7 +266,7 @@
 {
     OBPRECONDITION(item);
     
-    DOMHTMLElement *selectedElement = [item HTMLElement];
+    DOMElement *selectedElement = [item HTMLElement];
     NSRect selectionRect = [selectedElement boundingBox];
     [[selectedElement documentView] scrollRectToVisible:selectionRect];
 }

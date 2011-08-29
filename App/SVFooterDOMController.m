@@ -20,7 +20,7 @@
     
     if ([[[master extensibleProperties] valueForKey:@"migrateRawHTMLOnNextEdit"] boolValue])
     {
-        SVMigrationHTMLWriterDOMAdaptor *result = [[SVMigrationHTMLWriterDOMAdaptor alloc] initWithOutputStringWriter:stringWriter];
+        SVMigrationHTMLWriterDOMAdaptor *result = [[SVMigrationHTMLWriterDOMAdaptor alloc] initWithOutputWriter:stringWriter];
         
         [result setTextDOMController:self];
         
@@ -44,9 +44,10 @@
 
 @implementation SVFooter
 
-- (SVTextDOMController *)newTextDOMController;
+- (SVTextDOMController *)newTextDOMControllerWithIdName:(NSString *)elementID ancestorNode:(DOMNode *)node;
 {
-    SVTextDOMController *result = [[SVFooterDOMController alloc] initWithRepresentedObject:self];
+    SVTextDOMController *result = [[SVFooterDOMController alloc] initWithIdName:elementID ancestorNode:node];
+    [result setRepresentedObject:self];
     [result setRichText:YES];
     [result setFieldEditor:YES];
     [(id)result setImportsGraphics:YES];

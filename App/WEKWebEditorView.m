@@ -17,6 +17,8 @@
 #import "SVLink.h"
 #import "SVLinkManager.h"
 #import "SVPasteboardItemInternal.h"
+#import "SVWebViewSelectionController.h"
+
 #import "KSSelectionBorder.h"
 
 #import "DOMElement+Karelia.h"
@@ -480,28 +482,37 @@ typedef enum {  // this copied from WebPreferences+Private.h
         if (!event || [item allowsDirectAccessToWebViewWhenSelected]) return;
         
         
-        // Should start a move/drag?
-        if ([[[item HTMLElement] documentView] _web_dragShouldBeginFromMouseDown:event withExpiration:[NSDate distantFuture]])
+        // Consider as start of drag?
+        NSPoint mouseDownLocation = [event locationInWindow];
+        
+        NSView *view = [[item HTMLElement] documentView];
+        
+        NSEvent *mouseDown = event;
+        event = [[self window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
+        
+        while ([event type] != NSLeftMouseUp)
         {
-            if (selectableRange)
+            // Calculate change from event
+            [view autoscroll:event];
+            
+            NSSize offset = NSMakeSize([event locationInWindow].x - mouseDownLocation.x,
+                                       [event locationInWindow].y - mouseDownLocation.y);
+            
+            if (offset.width > 4.0f || offset.width < -4.0f || offset.height > 4.0f || offset.height < -4.0f)
             {
-                [self dragImageForEvent:event];
+                if ([self dragSelectionWithEvent:event offset:offset slideBack:YES])
+                {
+                    return;
+                }
             }
-            else
-            {
-                [self moveItemForEvent:event];
-            }
-            return;
+            
+            event = [[self window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
         }
 
         
-        // Run until mouse up
-        NSEvent *mouseUp = [[self window] nextEventMatchingMask:NSLeftMouseUpMask];
-        
-        
         // Start editing the item? Needs the item to be sole selection, and mouse up to be quick enough
         if (canBeginEditing &&
-            ([mouseUp timestamp] - [event timestamp] < 0.5))
+            ([event timestamp] - [mouseDown timestamp] < 0.5))
         {
             // Is the item at that location supposed to be for editing?
             // This is true if the clicked child item is either:
@@ -511,7 +522,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
             // Actually, trying out ignoring that! Mike. #84932
             
             
-            NSPoint location = [self convertPoint:[event locationInWindow] fromView:nil];
+            NSPoint location = [self convertPoint:[mouseDown locationInWindow] fromView:nil];
             NSDictionary *elementInfo = [[self webView] elementAtPoint:location];
             DOMElement *element = [elementInfo objectForKey:WebElementDOMNodeKey];
             if (!element) return;   // happens if mouse up was somehow outside doc rect
@@ -568,8 +579,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
                 
                 // Can't call -sendEvent: as that doesn't update -currentEvent.
                 // Post in reverse order since I'm placing onto the front of the queue
-                [NSApp postEvent:[mouseUp ks_eventWithClickCount:1] atStart:YES];
                 [NSApp postEvent:[event ks_eventWithClickCount:1] atStart:YES];
+                [NSApp postEvent:[mouseDown ks_eventWithClickCount:1] atStart:YES];
             }
         }
     }
@@ -941,9 +952,17 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 - (void)didChangeText;  // posts kSVWebEditorViewDidChangeNotification
 {
-    // Unmark the DOM as changing. #80643
+    if (![_changingTextControllers count])
+    {
+        // No changes were recorded as about to happen, so assume the change was where the current selection is
+        DOMRange *selection = [self selectedDOMRange];
+        if (selection) [self shouldChangeTextInDOMRange:selection];
+    }
+    
+    
     [_changingTextControllers makeObjectsPerformSelector:@selector(webEditorTextDidChange)];
     [_changingTextControllers removeAllObjects];
+    
     
     [[NSNotificationCenter defaultCenter]
      postNotificationName:kSVWebEditorViewDidChangeNotification object:self];
@@ -1205,7 +1224,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     if (_dragHighlightNode)
     {
         WEKWebEditorItem *item = [[self contentItem] hitTestDOMNode:_dragHighlightNode];
-        NSRect dropRect = (item ? [item boundingBox] : [_dragHighlightNode boundingBox]);    // pretending it's a node
+        NSRect dropRect = (item ? [item frame] : [_dragHighlightNode boundingBox]);    // pretending it's a node
         
         [[NSColor aquaColor] setFill];
         NSFrameRectWithWidth(dropRect, 1.0f);
@@ -1534,8 +1553,15 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
 }
 
-- (void)mouseDown2:(NSEvent *)event;
+/*  Actions we could take from this:
+ *      - Deselect everything
+ *      - Change selection to new item
+ *      - Start editing selected item (actually happens upon -mouseUp:)
+ *      - Add to the selection
+ */
+- (void)mouseDown:(NSEvent *)event;
 {
+    // Direct to target item
     NSPoint location = [self convertPoint:[event locationInWindow] fromView:nil];
     
     SVGraphicHandle handle;
@@ -1550,26 +1576,31 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
     
     
-    
-    
-    
-    
-    
-    // What was clicked? We want to know top-level object
-    
+    // Feed event through item if there is one
     if (item)
     {
-        
-        // If mousing down on an image, pass the event through
-        if ([item allowsDirectAccessToWebViewWhenSelected])
+        if (!_forwardedWebViewCommand)
         {
-            // Must do before changing selection so that WebView becomes first responder
-            // Post the event as if in the past so that a drag can begin immediately. #109381
-            [self forwardMouseEvent:[event ks_eventWithTimestamp:0]
-                           selector:@selector(mouseDown:)
-                   cachedTargetView:nil];
-            
-            [self selectItem:item event:event];
+            // If no item chooses to handle it, want the event to fall through to appropriate bit of the webview
+            NSView *fallbackView = [[self webView] hitTest:location];
+            NSResponder *oldResponder = [_rootItem nextResponder];
+            [_rootItem setNextResponder:fallbackView];
+            @try
+            {
+                _forwardedWebViewCommand = _cmd;
+                @try
+                {
+                    [item mouseDown:event]; // calls back through to this method if no item traps the event
+                }
+                @finally
+                {
+                    _forwardedWebViewCommand = NULL;
+                }
+            }
+            @finally
+            {
+                [_rootItem setNextResponder:oldResponder];
+            }
         }
         else
         {
@@ -1596,28 +1627,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
             // Don't really expect to hit this point. Since if there is no item at the location, we should never have hit-tested positively in the first place
             [super mouseDown:event];
         }
-    }
-}
-
-/*  Actions we could take from this:
- *      - Deselect everything
- *      - Change selection to new item
- *      - Start editing selected item (actually happens upon -mouseUp:)
- *      - Add to the selection
- */
-- (void)mouseDown:(NSEvent *)event;
-{
-    // Direct to target item
-    NSPoint location = [self convertPoint:[event locationInWindow] fromView:nil];
-    WEKWebEditorItem *item = [self itemHitTest:location handle:NULL];
-    
-    if (item)
-    {
-        [item mouseDown:event]; // calls through to -mouseDown2: if no item handles it
-    }
-    else
-    {
-        [self mouseDown2:event];
     }
 }
 
@@ -1856,10 +1865,10 @@ typedef enum {  // this copied from WebPreferences+Private.h
         result = [[self undoManager] canRedo];
     }
     
-    // You can cut or copy as long as there is a suggestion (just hope the datasource comes through for us!)
+    // You can cut or copy as long as there is a selection (just hope the datasource comes through for us!)
     else if (action == @selector(cut:) || action == @selector(copy:))
     {
-        result = ([[self selectedItems] count] >= 1);
+        result = ([[self selectedItems] count] >= 1 || [self selectedDOMRange]);
     }
     
     else if ([self respondsToSelector:action])
@@ -2054,10 +2063,90 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     return (WebDragSourceActionDHTML | WebDragSourceActionSelection);
 }
 
-- (BOOL)webView:(WebView *)sender shouldPerformAction:(SEL)action fromSender:(id)fromObject;
+- (BOOL)webView:(WebView *)webView shouldPerformAction:(SEL)command fromSender:(id)fromObject;
 {
-    // Give focused text a chance
-    BOOL result = ![(WEKWebEditorItem *)_focusedText tryToPerform:action with:fromObject];
+    BOOL result = YES;
+    
+    
+    // _forwardedWebViewCommand indicates that the command is already being processed by the Web Editor, so it's now up to the WebView to handle. Otherwise it's easy to get stuck in an infinite loop.
+    if (_forwardedWebViewCommand) return result;
+    
+    
+    
+    // Does the text view want to take command?
+    result = ![_focusedText webEditorTextDoCommandBySelector:command];
+    
+    // Is it a command which we handle? (our implementation may well call back through to the WebView when appropriate)
+    if (result)
+    {
+        if (command == @selector(moveUp:) || command == @selector(moveDown:))
+        {   // don't want these to go to self
+        }
+        
+        else if (command == @selector(moveLeft:) || command == @selector(moveRight:))
+        {
+            // Handle ourselves
+            [self doCommandBySelector:command];
+            result = NO;
+        }
+        
+        else if (command == @selector(cancelOperation:))
+        {
+            // End editing
+            if ([[self editingItems] count])
+            {
+                [self setEditingItems:nil];
+                //result = YES; // still let webkit do its default action too
+            }
+        }
+        
+        else if (command == @selector(clearStyles:))
+        {
+            // Get no other delegate method warning of impending change, so fake one here
+            DOMRange *range = [self selectedDOMRange];
+            if (!range || ![self shouldChangeTextInDOMRange:range])
+            {
+                result = NO;
+                NSBeep();
+            }
+        }
+        
+        else if (command == @selector(delete:))
+        {
+            // For text, generally want WebView to handle it. But if there's an empty selection, nothing for WebKit to do so see if we can take over
+            DOMRange *selection = [self selectedDOMRange];
+            if ([selection collapsed])
+            {
+                [self delete:nil];
+                result = NO;
+            }
+            else if (selection)
+            {
+                // WebKit BUG: -delete: doesn't ask permission of the delegate, so we must do so here
+                [self webView:webView shouldDeleteDOMRange:selection];
+            }
+        }
+        
+        // Treat Shift-Return to insert a linebreak. #102658
+        else if (command == @selector(insertNewline:) &&
+                 [[[self window] currentEvent] modifierFlags] & NSShiftKeyMask)
+        {
+            [webView insertNewlineIgnoringFieldEditor:self];
+            result = NO;
+        }
+
+        // Default Indent and Outdent implementations don't send -should… notifications, only -didChange…
+        else if (command == @selector(indent:) || command == @selector(outdent:))
+        {
+            result = NO;
+
+            DOMRange *range = [self selectedDOMRange];
+            if (range) result = [self shouldChangeTextInDOMRange:[self selectedDOMRange]];
+
+            if (!result) NSBeep();
+        }
+    }
+    
     return result;
 }
 
@@ -2082,6 +2171,38 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         if (!defaultValidation && [self respondsToSelector:action])
         {
             return [self validateUserInterfaceItem:item];
+        }
+        else if (result)
+        {
+            if (action == @selector(indent:) || action == @selector(outdent:))
+            {
+                // Seek out the list containing the selection
+                static NSSet *listTagNames;
+                if (!listTagNames) listTagNames = [[NSSet alloc] initWithObjects:@"UL", @"OL", nil];
+                
+                DOMRange *selection = [self selectedDOMRange];
+                SVWebViewSelectionController *controller = [[SVWebViewSelectionController alloc] init];
+                [controller setSelection:selection];
+                
+                if (action == @selector(indent:))
+                {
+                    NSNumber *shallow = [controller deepestListIndentLevel];
+                    if ([shallow isKindOfClass:[NSNumber class]])
+                    {
+                        result = [shallow unsignedIntegerValue] < 9;
+                    }
+                }
+                else
+                {
+                    NSNumber *shallow = [controller shallowestListIndentLevel];
+                    if ([shallow isKindOfClass:[NSNumber class]])
+                    {
+                        result = [shallow unsignedIntegerValue] > 1;
+                    }
+                }
+                
+                [controller release];
+            }
         }
     }
     
@@ -2621,84 +2742,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 - (BOOL)webView:(WebView *)webView doCommandBySelector:(SEL)command
 {
-    BOOL result = NO;
-    
-    
-    // _forwardedWebViewCommand indicates that the command is already being processed by the Web Editor, so it's now up to the WebView to handle. Otherwise it's easy to get stuck in an infinite loop.
-    if (_forwardedWebViewCommand) return result;
-    
-    
-    
-    // Does the text view want to take command?
-    result = [_focusedText webEditorTextDoCommandBySelector:command];
-    
-    // Is it a command which we handle? (our implementation may well call back through to the WebView when appropriate)
-    if (!result)
-    {
-        if (command == @selector(moveUp:) || command == @selector(moveDown:))
-        {   // don't want these to go to self
-        }
-        
-        else if (command == @selector(moveLeft:) || command == @selector(moveRight:))
-        {
-            // Handle ourselves
-            [self doCommandBySelector:command];
-            result = YES;
-        }
-        
-        else if (command == @selector(cancelOperation:))
-        {
-            // End editing
-            if ([[self editingItems] count])
-            {
-                [self setEditingItems:nil];
-                //result = YES; // still let webkit do its default action too
-            }
-        }
-        
-        else if (command == @selector(clearStyles:))
-        {
-            // Get no other delegate method warning of impending change, so fake one here
-            DOMRange *range = [self selectedDOMRange];
-            if (!range || ![self shouldChangeTextInDOMRange:range])
-            {
-                result = YES;
-                NSBeep();
-            }
-        }
-        
-        else if (command == @selector(createLink:))
-        {
-            [self doCommandBySelector:command];
-            result = YES;
-        }
-        
-        else if (command == @selector(delete:))
-        {
-            // For text, generally want WebView to handle it. But if there's an empty selection, nothing for WebKit to do so see if we can take over
-            DOMRange *selection = [self selectedDOMRange];
-            if (selection && [selection collapsed])
-            {
-                [self delete:nil];
-                result = YES;
-            }
-            else
-            {
-                // WebKit BUG: -delete: doesn't ask permission of the delegate, so we must do so here
-                [self webView:webView shouldDeleteDOMRange:selection];
-            }
-        }
-        
-        // Treat Shift-Return to insert a linebreak. #102658
-        else if (command == @selector(insertNewline:) &&
-                 [[[self window] currentEvent] modifierFlags] & NSShiftKeyMask)
-        {
-            [webView insertNewlineIgnoringFieldEditor:self];
-            result = YES;
-        }
-    }
-    
-    return result;
+    return ![self webView:webView shouldPerformAction:command fromSender:nil];
 }
 
 #pragma mark WebEditingDelegate Private

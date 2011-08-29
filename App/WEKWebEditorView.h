@@ -216,6 +216,10 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 @interface WEKWebEditorView (Dragging)
 
 #pragma mark Dragging Source
+
+// Just like NSTextView except has no idea how to start a drag, so returns NO by default
+- (BOOL)dragSelectionWithEvent:(NSEvent *)event offset:(NSSize)mouseOffset slideBack:(BOOL)slideBack;
+
 - (NSArray *)draggedItems;
 - (void)removeDraggedItems; // removes from DOM and item tree, then calls -forgetDraggedItems. You are responsible for calling -didChangeText after
 - (void)forgetDraggedItems; // call if you want to take over handling of drag source
@@ -339,6 +343,22 @@ extern NSString *SVWebEditorViewDidChangeSelectionNotification;
                    event:(NSEvent *)event
               pasteboard:(NSPasteboard *)pasteboard 
                   source:(id)source;
+@end
+
+
+#pragma mark -
+
+
+@interface SVValidatedUserInterfaceItem : NSObject <NSValidatedUserInterfaceItem>
+{
+@private
+    SEL         _action;
+    NSInteger   _tag;
+}
+
+@property(nonatomic) SEL action;
+@property(nonatomic) NSInteger tag;
+
 @end
 
 

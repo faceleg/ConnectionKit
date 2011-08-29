@@ -81,6 +81,42 @@
     }
 }
 
+#pragma mark Lists
+
+- (IBAction)insertOrderedList:(id)sender;
+{
+    // Ask permission
+    WEKWebEditorView *webEditor = [self webEditor];
+    if (webEditor)
+    {
+        DOMRange *selection = [self selectedDOMRange];
+        if (selection && ![webEditor shouldChangeTextInDOMRange:selection])
+        {
+            NSBeep();
+            return;
+        }
+    }
+    
+    [super insertOrderedList:sender];
+}
+
+- (IBAction)insertUnorderedList:(id)sender;
+{
+    // Ask permission
+    WEKWebEditorView *webEditor = [self webEditor];
+    if (webEditor)
+    {
+        DOMRange *selection = [self selectedDOMRange];
+        if (selection && ![webEditor shouldChangeTextInDOMRange:selection])
+        {
+            NSBeep();
+            return;
+        }
+    }
+    
+    [super insertUnorderedList:sender];
+}
+
 #pragma mark Formatting
 
 - (IBAction)clearStyles:(id)sender
@@ -107,6 +143,38 @@
     {
         DOMDocument *document = [[self selectedFrame] DOMDocument];
         BOOL result = [document queryCommandEnabled:@"removeFormat"];
+        return result;
+    }
+    else if ([menuItem action] == @selector(insertOrderedList:))
+    {
+        DOMDocument *document = [[self selectedFrame] DOMDocument];
+        BOOL result = [document queryCommandEnabled:@"InsertOrderedList"];
+        return result;
+    }
+    else if ([menuItem action] == @selector(insertUnorderedList:))
+    {
+        DOMDocument *document = [[self selectedFrame] DOMDocument];
+        BOOL result = [document queryCommandEnabled:@"InsertUnorderedList"];
+        return result;
+    }
+    else if ([menuItem action] == @selector(removeList:))
+    {
+        BOOL result = NO;
+        DOMDocument *document = [[self selectedFrame] DOMDocument];
+        
+        if ([self orderedList])
+        {
+            result = [document queryCommandEnabled:@"InsertOrderedList"];
+        }
+        else if ([self unorderedList])
+        {
+            result = [document queryCommandEnabled:@"InsertUnorderedList"];
+        }
+        else
+        {
+            result = [document queryCommandEnabled:@"InsertParagraph"];
+        }
+        
         return result;
     }
     else

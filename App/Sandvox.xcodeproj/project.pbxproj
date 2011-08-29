@@ -122,8 +122,8 @@
 		270228E712A5C3CB00873AF4 /* SVHTMLValidator.h in Headers */ = {isa = PBXBuildFile; fileRef = 270228E512A5C3CB00873AF4 /* SVHTMLValidator.h */; };
 		270228E812A5C3CB00873AF4 /* SVHTMLValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = 270228E612A5C3CB00873AF4 /* SVHTMLValidator.m */; };
 		270229E512A5DC3D00873AF4 /* InvalidHTMLPlaceholder.html in Resources */ = {isa = PBXBuildFile; fileRef = 270229E412A5DC3D00873AF4 /* InvalidHTMLPlaceholder.html */; };
-		2704228112142F710077298A /* SVResizableDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2704227F12142F710077298A /* SVResizableDOMController.h */; };
-		2704228212142F710077298A /* SVResizableDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2704228012142F710077298A /* SVResizableDOMController.m */; };
+		2704228112142F710077298A /* SVPlugInDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2704227F12142F710077298A /* SVPlugInDOMController.h */; };
+		2704228212142F710077298A /* SVPlugInDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2704228012142F710077298A /* SVPlugInDOMController.m */; };
 		2705B1B013EC0514004C678D /* SVWebEditorUpdatesHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 2705B1AE13EC0514004C678D /* SVWebEditorUpdatesHTMLContext.h */; };
 		2705B1B113EC0514004C678D /* SVWebEditorUpdatesHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 2705B1AF13EC0514004C678D /* SVWebEditorUpdatesHTMLContext.m */; };
 		27080FBE113DD9C900E66F92 /* SVLogoImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 27080FBC113DD9C900E66F92 /* SVLogoImage.h */; };
@@ -153,6 +153,8 @@
 		2713726611542AFF003AB050 /* SVAttributedHTMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2713726411542AFF003AB050 /* SVAttributedHTMLWriter.m */; };
 		2713756911551296003AB050 /* SVAttributedHTML.h in Headers */ = {isa = PBXBuildFile; fileRef = 2713756711551296003AB050 /* SVAttributedHTML.h */; };
 		2713756A11551296003AB050 /* SVAttributedHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 2713756811551296003AB050 /* SVAttributedHTML.m */; };
+		27139E5513F7EA3F00299254 /* SVWebEditorView.h in Headers */ = {isa = PBXBuildFile; fileRef = 27139E5313F7EA3F00299254 /* SVWebEditorView.h */; };
+		27139E5613F7EA3F00299254 /* SVWebEditorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27139E5413F7EA3F00299254 /* SVWebEditorView.m */; };
 		2713BDFD10778AE8000864C2 /* NSResponder+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 2713BDFB10778AE8000864C2 /* NSResponder+Karelia.h */; };
 		2713BDFE10778AE8000864C2 /* NSResponder+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 2713BDFC10778AE8000864C2 /* NSResponder+Karelia.m */; };
 		2713C05410780FFD000864C2 /* SVLoadingPlaceholderViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2713C05210780FFD000864C2 /* SVLoadingPlaceholderViewController.h */; };
@@ -160,8 +162,8 @@
 		2713C0691078177A000864C2 /* SVLayoutView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2713C0671078177A000864C2 /* SVLayoutView.h */; };
 		2713C06A1078177A000864C2 /* SVLayoutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2713C0681078177A000864C2 /* SVLayoutView.m */; };
 		271575CE0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 271575CC0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.m */; };
-		271884431296A28000139C89 /* KSElementInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 271884411296A28000139C89 /* KSElementInfo.h */; };
-		271884441296A28000139C89 /* KSElementInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 271884421296A28000139C89 /* KSElementInfo.m */; };
+		271884431296A28000139C89 /* KSXMLAttributes.h in Headers */ = {isa = PBXBuildFile; fileRef = 271884411296A28000139C89 /* KSXMLAttributes.h */; };
+		271884441296A28000139C89 /* KSXMLAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 271884421296A28000139C89 /* KSXMLAttributes.m */; };
 		27196F631090A9D40096B612 /* SVInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = 27196F611090A9D40096B612 /* SVInspector.h */; settings = {ATTRIBUTES = (); }; };
 		27196F641090A9D40096B612 /* SVInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 27196F621090A9D40096B612 /* SVInspector.m */; };
 		27196F801090AEDC0096B612 /* KSDocumentController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27196F7E1090AEDC0096B612 /* KSDocumentController.h */; };
@@ -173,6 +175,7 @@
 		271BFA4F10F00C2D006EA3A2 /* SVPageProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 271BFA4E10F00C2D006EA3A2 /* SVPageProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		271DFB8B137ECD540032D6F4 /* SVRawHTMLDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 271DFB89137ECD540032D6F4 /* SVRawHTMLDOMController.h */; };
 		271DFB8C137ECD540032D6F4 /* SVRawHTMLDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 271DFB8A137ECD540032D6F4 /* SVRawHTMLDOMController.m */; };
+		2720F3E213D64E79007DD23C /* SVComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 2720F3E113D64E79007DD23C /* SVComponent.h */; };
 		272321E00D48B6070075F31F /* KTCollectionIndexFilenameButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 272321DE0D48B6070075F31F /* KTCollectionIndexFilenameButton.h */; settings = {ATTRIBUTES = (); }; };
 		272321E10D48B6070075F31F /* KTCollectionIndexFilenameButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 272321DF0D48B6070075F31F /* KTCollectionIndexFilenameButton.m */; };
 		2725BA46121DE9990074EAA0 /* NSImageView+IMBImageItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 2725BA44121DE9990074EAA0 /* NSImageView+IMBImageItem.h */; };
@@ -359,8 +362,12 @@
 		2782B2DA12367C6E00C5F870 /* SVEnclosure.h in Headers */ = {isa = PBXBuildFile; fileRef = 2782B2D912367C6E00C5F870 /* SVEnclosure.h */; };
 		2782D1D91257483F00B7CF1A /* SVSummaryDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2782D1D71257483F00B7CF1A /* SVSummaryDOMController.h */; };
 		2782D1DA1257483F00B7CF1A /* SVSummaryDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2782D1D81257483F00B7CF1A /* SVSummaryDOMController.m */; };
+		2783A89313DA361900F9A702 /* SVTextInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = 2783A89113DA361900F9A702 /* SVTextInspector.h */; };
+		2783A89413DA361900F9A702 /* SVTextInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 2783A89213DA361900F9A702 /* SVTextInspector.m */; };
 		2785197F104FD34A009C8558 /* KSWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2785197D104FD34A009C8558 /* KSWebViewController.h */; };
 		27851980104FD34A009C8558 /* KSWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2785197E104FD34A009C8558 /* KSWebViewController.m */; };
+		278645B713C62D1C0098C34F /* SVElementInfoGatheringHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 278645B513C62D1C0098C34F /* SVElementInfoGatheringHTMLContext.h */; };
+		278645B813C62D1C0098C34F /* SVElementInfoGatheringHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 278645B613C62D1C0098C34F /* SVElementInfoGatheringHTMLContext.m */; };
 		278ACCC8116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 278ACCC6116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.h */; };
 		278ACCC9116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 278ACCC7116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.m */; };
 		278DB99612B6DDAC006C462F /* GraphicPlaceholder.html in Resources */ = {isa = PBXBuildFile; fileRef = 278DB99512B6DDAC006C462F /* GraphicPlaceholder.html */; };
@@ -429,6 +436,8 @@
 		27A8223E12EF532D00152934 /* KSDependenciesTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A8223C12EF532D00152934 /* KSDependenciesTracker.m */; };
 		27AA10290CDA065A001D6B9B /* KTMissingMediaController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27AA10270CDA065A001D6B9B /* KTMissingMediaController.h */; settings = {ATTRIBUTES = (); }; };
 		27AA102A0CDA065A001D6B9B /* KTMissingMediaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AA10280CDA065A001D6B9B /* KTMissingMediaController.m */; };
+		27AA465213EC1802008470C7 /* KSBufferedWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 27AA465013EC1802008470C7 /* KSBufferedWriter.h */; };
+		27AA465313EC1802008470C7 /* KSBufferedWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AA465113EC1802008470C7 /* KSBufferedWriter.m */; };
 		27ACACB60D588F64004732D0 /* KTPlaceholderBindingTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 27ACACB40D588F64004732D0 /* KTPlaceholderBindingTextField.h */; settings = {ATTRIBUTES = (); }; };
 		27ACACB70D588F64004732D0 /* KTPlaceholderBindingTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 27ACACB50D588F64004732D0 /* KTPlaceholderBindingTextField.m */; };
 		27ACC6EF126317CE00EA521E /* SVFillController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27ACC6ED126317CE00EA521E /* SVFillController.h */; };
@@ -489,6 +498,8 @@
 		27D353B911A9CC7200BC4DB8 /* KSComparisonValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D353B711A9CC7200BC4DB8 /* KSComparisonValueTransformer.m */; };
 		27D47EBF115A60CB007550F6 /* SVCalloutDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 273D705810E8ECB4003F5BA8 /* SVCalloutDOMController.h */; };
 		27D47EC0115A60CB007550F6 /* SVCalloutDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273D705910E8ECB4003F5BA8 /* SVCalloutDOMController.m */; };
+		27D68FD013CF6D2E00D7B867 /* SVPagelet.h in Headers */ = {isa = PBXBuildFile; fileRef = 27D68FCE13CF6D2E00D7B867 /* SVPagelet.h */; };
+		27D68FD113CF6D2E00D7B867 /* SVPagelet.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D68FCF13CF6D2E00D7B867 /* SVPagelet.m */; };
 		27D6DE9C0DCFA95800C8834F /* KTHostProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = CEAE1667084530C1007025D4 /* KTHostProperties.h */; settings = {ATTRIBUTES = (); }; };
 		27D7340612118E3400722189 /* SVIndexPlugIn.h in Headers */ = {isa = PBXBuildFile; fileRef = 27D7340412118E3400722189 /* SVIndexPlugIn.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27D7340712118E3400722189 /* SVIndexPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D7340512118E3400722189 /* SVIndexPlugIn.m */; };
@@ -499,6 +510,8 @@
 		27D9A25A117FB49000049638 /* SVAuxiliaryPageletTextDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D9A258117FB49000049638 /* SVAuxiliaryPageletTextDOMController.m */; };
 		27D9B8DE108CD17500B6F28D /* SVHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 27D9B8DC108CD17500B6F28D /* SVHTMLContext.h */; settings = {ATTRIBUTES = (); }; };
 		27D9B8DF108CD17500B6F28D /* SVHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D9B8DD108CD17500B6F28D /* SVHTMLContext.m */; };
+		27DA95731401A557004DE2DA /* SVWebViewSelectionController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DA95711401A557004DE2DA /* SVWebViewSelectionController.h */; };
+		27DA95741401A557004DE2DA /* SVWebViewSelectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DA95721401A557004DE2DA /* SVWebViewSelectionController.m */; };
 		27DB8F7F11204A9400B1895C /* DOMElement+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DB8F7D11204A9400B1895C /* DOMElement+Karelia.h */; };
 		27DB8F8011204A9400B1895C /* DOMElement+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB8F7E11204A9400B1895C /* DOMElement+Karelia.m */; };
 		27DB903011209AEA00B1895C /* DOMNamedNodeMap+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DB902E11209AEA00B1895C /* DOMNamedNodeMap+Karelia.h */; };
@@ -563,8 +576,18 @@
 		27FA98961194BF06003B8308 /* SidebarTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 27FA98951194BF06003B8308 /* SidebarTemplate.html */; };
 		27FAD5531146AEF80040FA44 /* SVTabViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FAD5511146AEF80040FA44 /* SVTabViewController.h */; };
 		27FAD5541146AEF80040FA44 /* SVTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FAD5521146AEF80040FA44 /* SVTabViewController.m */; };
+		27FBC9BD13D4F0A3002F720B /* SVInlineGraphicContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FBC9BC13D4F0A3002F720B /* SVInlineGraphicContainer.m */; };
 		27FC47EF1030CE7500A4A5E2 /* NSSet+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FC47ED1030CE7500A4A5E2 /* NSSet+Karelia.h */; settings = {ATTRIBUTES = (); }; };
 		27FC47F01030CE7500A4A5E2 /* NSSet+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FC47EE1030CE7500A4A5E2 /* NSSet+Karelia.m */; };
+		27FD6A6713C08B7900E9D407 /* CK2SFTPSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FD6A6513C08B7900E9D407 /* CK2SFTPSession.h */; };
+		27FD6A6813C08B7900E9D407 /* CK2SFTPSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FD6A6613C08B7900E9D407 /* CK2SFTPSession.m */; };
+		27FD6B4713C09C4500E9D407 /* libssh2_publickey.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FD6B4413C09C4500E9D407 /* libssh2_publickey.h */; };
+		27FD6B4813C09C4500E9D407 /* libssh2_sftp.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FD6B4513C09C4500E9D407 /* libssh2_sftp.h */; };
+		27FD6B4913C09C4500E9D407 /* libssh2.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FD6B4613C09C4500E9D407 /* libssh2.h */; };
+		27FD6D0713C10D3500E9D407 /* SVSFTPPublishingEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FD6D0513C10D3500E9D407 /* SVSFTPPublishingEngine.h */; };
+		27FD6D0813C10D3500E9D407 /* SVSFTPPublishingEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FD6D0613C10D3500E9D407 /* SVSFTPPublishingEngine.m */; };
+		27FD6DEB13C1229200E9D407 /* CK2SFTPFileHandle.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FD6DE913C1229200E9D407 /* CK2SFTPFileHandle.h */; };
+		27FD6DEC13C1229200E9D407 /* CK2SFTPFileHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FD6DEA13C1229200E9D407 /* CK2SFTPFileHandle.m */; };
 		27FDA7081238F4C3006E1A0D /* KSURLUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FDA7061238F4C3006E1A0D /* KSURLUtilities.h */; };
 		27FDA7091238F4C3006E1A0D /* KSURLUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FDA7071238F4C3006E1A0D /* KSURLUtilities.m */; };
 		27FDA7211238F66F006E1A0D /* KSPathUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FDA71F1238F66F006E1A0D /* KSPathUtilities.h */; };
@@ -606,6 +629,8 @@
 		3C3F54A20D625983004885E7 /* AmazonSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3F54A10D625983004885E7 /* AmazonSupport.framework */; };
 		3C4328CA07F7D7F600DD0D92 /* KTHostSetupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D7B07DFC30800DE4994 /* KTHostSetupController.m */; };
 		3C4328E207F7DCA600DD0D92 /* KTDocWindowController+Toolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D3C07DFC0F000DE4994 /* KTDocWindowController+Toolbar.m */; };
+		3C48038D13FB737A00E9F309 /* libssh2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C48038C13FB737A00E9F309 /* libssh2.dylib */; };
+		3C48039213FB73D500E9F309 /* libssh2.dylib in Copy dylibs */ = {isa = PBXBuildFile; fileRef = 3C48038C13FB737A00E9F309 /* libssh2.dylib */; };
 		3C5A72380BF7ADE100776464 /* NSEntityDescription+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A712D0BF7ADE100776464 /* NSEntityDescription+KTExtensions.m */; };
 		3C5A723C0BF7ADE100776464 /* NSFetchRequest+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71310BF7ADE100776464 /* NSFetchRequest+KTExtensions.m */; };
 		3C5A724B0BF7ADE100776464 /* NSManagedObject+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71400BF7ADE100776464 /* NSManagedObject+KTExtensions.m */; };
@@ -714,6 +739,13 @@
 		79D35F9D0974C84000241EDA /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79D35F950974C84000241EDA /* Growl.framework */; };
 		79D35FA20974C8D900241EDA /* Growl.framework in Copy Frameworks ALWAYS */ = {isa = PBXBuildFile; fileRef = 79D35F950974C84000241EDA /* Growl.framework */; };
 		8D15AC320486D014006FF6A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		CE0142BD13E9D98800BBA6F1 /* text_inspector.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE0142BC13E9D98800BBA6F1 /* text_inspector.tiff */; };
+		CE0142C313E9D9A400BBA6F1 /* centerjustified_inspector.tif in Resources */ = {isa = PBXBuildFile; fileRef = CE0142BF13E9D9A400BBA6F1 /* centerjustified_inspector.tif */; };
+		CE0142C413E9D9A400BBA6F1 /* fulljustified_inspector.tif in Resources */ = {isa = PBXBuildFile; fileRef = CE0142C013E9D9A400BBA6F1 /* fulljustified_inspector.tif */; };
+		CE0142C513E9D9A400BBA6F1 /* leftjustified_inspector.tif in Resources */ = {isa = PBXBuildFile; fileRef = CE0142C113E9D9A400BBA6F1 /* leftjustified_inspector.tif */; };
+		CE0142C613E9D9A400BBA6F1 /* rightjustified_inspector.tif in Resources */ = {isa = PBXBuildFile; fileRef = CE0142C213E9D9A400BBA6F1 /* rightjustified_inspector.tif */; };
+		CE0142CA13E9D9D300BBA6F1 /* indent_left.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE0142C813E9D9D300BBA6F1 /* indent_left.tiff */; };
+		CE0142CB13E9D9D300BBA6F1 /* indent_right.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE0142C913E9D9D300BBA6F1 /* indent_right.tiff */; };
 		CE01A7270EAFD63600BDF264 /* CIImage+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6220EAFD63600BDF264 /* CIImage+Karelia.h */; };
 		CE01A7280EAFD63600BDF264 /* CIImage+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6230EAFD63600BDF264 /* CIImage+Karelia.m */; };
 		CE01A7290EAFD63600BDF264 /* KSAbstractBugReporter.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6240EAFD63600BDF264 /* KSAbstractBugReporter.h */; };
@@ -1709,6 +1741,17 @@
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		3CB7531C13CFAAF70033600F /* Copy dylibs */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				3C48039213FB73D500E9F309 /* libssh2.dylib in Copy dylibs */,
+			);
+			name = "Copy dylibs";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CEC10DFF0D7793AE00513E70 /* Copy Frameworks ALWAYS */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1734,8 +1777,8 @@
 		270228E512A5C3CB00873AF4 /* SVHTMLValidator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVHTMLValidator.h; sourceTree = "<group>"; };
 		270228E612A5C3CB00873AF4 /* SVHTMLValidator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVHTMLValidator.m; sourceTree = "<group>"; };
 		270229E412A5DC3D00873AF4 /* InvalidHTMLPlaceholder.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = InvalidHTMLPlaceholder.html; sourceTree = "<group>"; };
-		2704227F12142F710077298A /* SVResizableDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVResizableDOMController.h; sourceTree = "<group>"; };
-		2704228012142F710077298A /* SVResizableDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVResizableDOMController.m; sourceTree = "<group>"; };
+		2704227F12142F710077298A /* SVPlugInDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPlugInDOMController.h; sourceTree = "<group>"; };
+		2704228012142F710077298A /* SVPlugInDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPlugInDOMController.m; sourceTree = "<group>"; };
 		2705B1AE13EC0514004C678D /* SVWebEditorUpdatesHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorUpdatesHTMLContext.h; sourceTree = "<group>"; };
 		2705B1AF13EC0514004C678D /* SVWebEditorUpdatesHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebEditorUpdatesHTMLContext.m; sourceTree = "<group>"; };
 		27080FBC113DD9C900E66F92 /* SVLogoImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVLogoImage.h; sourceTree = "<group>"; };
@@ -1765,6 +1808,8 @@
 		2713726411542AFF003AB050 /* SVAttributedHTMLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVAttributedHTMLWriter.m; sourceTree = "<group>"; };
 		2713756711551296003AB050 /* SVAttributedHTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVAttributedHTML.h; sourceTree = "<group>"; };
 		2713756811551296003AB050 /* SVAttributedHTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVAttributedHTML.m; sourceTree = "<group>"; };
+		27139E5313F7EA3F00299254 /* SVWebEditorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorView.h; sourceTree = "<group>"; };
+		27139E5413F7EA3F00299254 /* SVWebEditorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebEditorView.m; sourceTree = "<group>"; };
 		2713BDFB10778AE8000864C2 /* NSResponder+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSResponder+Karelia.h"; sourceTree = "<group>"; };
 		2713BDFC10778AE8000864C2 /* NSResponder+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSResponder+Karelia.m"; sourceTree = "<group>"; };
 		2713C05210780FFD000864C2 /* SVLoadingPlaceholderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVLoadingPlaceholderViewController.h; sourceTree = "<group>"; };
@@ -1779,8 +1824,8 @@
 		27168E610DAA45D200BBC2C6 /* KTMediaManager+MediaFiles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTMediaManager+MediaFiles.m"; sourceTree = "<group>"; };
 		2716F2D20CE61A8000DE635E /* KTMissingMediaArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMissingMediaArrayController.h; sourceTree = "<group>"; };
 		2716F2D30CE61A8000DE635E /* KTMissingMediaArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMissingMediaArrayController.m; sourceTree = "<group>"; };
-		271884411296A28000139C89 /* KSElementInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSElementInfo.h; sourceTree = "<group>"; };
-		271884421296A28000139C89 /* KSElementInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSElementInfo.m; sourceTree = "<group>"; };
+		271884411296A28000139C89 /* KSXMLAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSXMLAttributes.h; sourceTree = "<group>"; };
+		271884421296A28000139C89 /* KSXMLAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSXMLAttributes.m; sourceTree = "<group>"; };
 		27196F611090A9D40096B612 /* SVInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVInspector.h; sourceTree = "<group>"; };
 		27196F621090A9D40096B612 /* SVInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVInspector.m; sourceTree = "<group>"; };
 		27196F7E1090AEDC0096B612 /* KSDocumentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSDocumentController.h; sourceTree = "<group>"; };
@@ -1792,6 +1837,7 @@
 		271BFA4E10F00C2D006EA3A2 /* SVPageProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPageProtocol.h; sourceTree = "<group>"; };
 		271DFB89137ECD540032D6F4 /* SVRawHTMLDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRawHTMLDOMController.h; sourceTree = "<group>"; };
 		271DFB8A137ECD540032D6F4 /* SVRawHTMLDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRawHTMLDOMController.m; sourceTree = "<group>"; };
+		2720F3E113D64E79007DD23C /* SVComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVComponent.h; sourceTree = "<group>"; };
 		272321DE0D48B6070075F31F /* KTCollectionIndexFilenameButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTCollectionIndexFilenameButton.h; sourceTree = "<group>"; };
 		272321DF0D48B6070075F31F /* KTCollectionIndexFilenameButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTCollectionIndexFilenameButton.m; sourceTree = "<group>"; };
 		27238AFA12C3FE3A00999CD1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/RawHTMLInspector.xib; sourceTree = "<group>"; };
@@ -1996,8 +2042,12 @@
 		2782D1D71257483F00B7CF1A /* SVSummaryDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSummaryDOMController.h; sourceTree = "<group>"; };
 		2782D1D81257483F00B7CF1A /* SVSummaryDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSummaryDOMController.m; sourceTree = "<group>"; };
 		27836C640CAB092E0072CC52 /* Design of WebView loading.graffle */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "Design of WebView loading.graffle"; sourceTree = "<group>"; };
+		2783A89113DA361900F9A702 /* SVTextInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVTextInspector.h; sourceTree = "<group>"; };
+		2783A89213DA361900F9A702 /* SVTextInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVTextInspector.m; sourceTree = "<group>"; };
 		2785197D104FD34A009C8558 /* KSWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSWebViewController.h; sourceTree = "<group>"; };
 		2785197E104FD34A009C8558 /* KSWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSWebViewController.m; sourceTree = "<group>"; };
+		278645B513C62D1C0098C34F /* SVElementInfoGatheringHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVElementInfoGatheringHTMLContext.h; sourceTree = "<group>"; };
+		278645B613C62D1C0098C34F /* SVElementInfoGatheringHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVElementInfoGatheringHTMLContext.m; sourceTree = "<group>"; };
 		2786BEE40CAD24980086F9E0 /* KTMediaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaManager.h; sourceTree = "<group>"; };
 		2786BEE50CAD24980086F9E0 /* KTMediaManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaManager.m; sourceTree = "<group>"; };
 		278ACCC6116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVQuickLookPreviewHTMLContext.h; sourceTree = "<group>"; };
@@ -2073,6 +2123,8 @@
 		27A8223C12EF532D00152934 /* KSDependenciesTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSDependenciesTracker.m; sourceTree = "<group>"; };
 		27AA10270CDA065A001D6B9B /* KTMissingMediaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMissingMediaController.h; sourceTree = "<group>"; };
 		27AA10280CDA065A001D6B9B /* KTMissingMediaController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMissingMediaController.m; sourceTree = "<group>"; };
+		27AA465013EC1802008470C7 /* KSBufferedWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSBufferedWriter.h; sourceTree = "<group>"; };
+		27AA465113EC1802008470C7 /* KSBufferedWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSBufferedWriter.m; sourceTree = "<group>"; };
 		27ACA30F0D57A8E0004732D0 /* KTSummaryWebViewTextBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTSummaryWebViewTextBlock.h; sourceTree = "<group>"; };
 		27ACA3100D57A8E0004732D0 /* KTSummaryWebViewTextBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTSummaryWebViewTextBlock.m; sourceTree = "<group>"; };
 		27ACACB40D588F64004732D0 /* KTPlaceholderBindingTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPlaceholderBindingTextField.h; sourceTree = "<group>"; };
@@ -2136,6 +2188,8 @@
 		27CFC5DF123E280800BF018C /* Sandvox 1.5.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = "Sandvox 1.5.xcdatamodel"; sourceTree = "<group>"; };
 		27D353B611A9CC7200BC4DB8 /* KSComparisonValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSComparisonValueTransformer.h; sourceTree = "<group>"; };
 		27D353B711A9CC7200BC4DB8 /* KSComparisonValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSComparisonValueTransformer.m; sourceTree = "<group>"; };
+		27D68FCE13CF6D2E00D7B867 /* SVPagelet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPagelet.h; sourceTree = "<group>"; };
+		27D68FCF13CF6D2E00D7B867 /* SVPagelet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPagelet.m; sourceTree = "<group>"; };
 		27D7340412118E3400722189 /* SVIndexPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndexPlugIn.h; sourceTree = "<group>"; };
 		27D7340512118E3400722189 /* SVIndexPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndexPlugIn.m; sourceTree = "<group>"; };
 		27D7345312119C6600722189 /* SVMediaGraphicInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaGraphicInspector.h; sourceTree = "<group>"; };
@@ -2149,6 +2203,8 @@
 		27D9A258117FB49000049638 /* SVAuxiliaryPageletTextDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVAuxiliaryPageletTextDOMController.m; sourceTree = "<group>"; };
 		27D9B8DC108CD17500B6F28D /* SVHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVHTMLContext.h; sourceTree = "<group>"; };
 		27D9B8DD108CD17500B6F28D /* SVHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVHTMLContext.m; sourceTree = "<group>"; };
+		27DA95711401A557004DE2DA /* SVWebViewSelectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebViewSelectionController.h; sourceTree = "<group>"; };
+		27DA95721401A557004DE2DA /* SVWebViewSelectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebViewSelectionController.m; sourceTree = "<group>"; };
 		27DB8F7D11204A9400B1895C /* DOMElement+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOMElement+Karelia.h"; sourceTree = "<group>"; };
 		27DB8F7E11204A9400B1895C /* DOMElement+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOMElement+Karelia.m"; sourceTree = "<group>"; };
 		27DB902E11209AEA00B1895C /* DOMNamedNodeMap+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOMNamedNodeMap+Karelia.h"; sourceTree = "<group>"; };
@@ -2220,8 +2276,18 @@
 		27FA98951194BF06003B8308 /* SidebarTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SidebarTemplate.html; sourceTree = "<group>"; };
 		27FAD5511146AEF80040FA44 /* SVTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVTabViewController.h; sourceTree = "<group>"; };
 		27FAD5521146AEF80040FA44 /* SVTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVTabViewController.m; sourceTree = "<group>"; };
+		27FBC9BC13D4F0A3002F720B /* SVInlineGraphicContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVInlineGraphicContainer.m; sourceTree = "<group>"; };
 		27FC47ED1030CE7500A4A5E2 /* NSSet+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSSet+Karelia.h"; sourceTree = "<group>"; };
 		27FC47EE1030CE7500A4A5E2 /* NSSet+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSSet+Karelia.m"; sourceTree = "<group>"; };
+		27FD6A6513C08B7900E9D407 /* CK2SFTPSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CK2SFTPSession.h; sourceTree = "<group>"; };
+		27FD6A6613C08B7900E9D407 /* CK2SFTPSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CK2SFTPSession.m; sourceTree = "<group>"; };
+		27FD6B4413C09C4500E9D407 /* libssh2_publickey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libssh2_publickey.h; path = include/libssh2_publickey.h; sourceTree = "<group>"; };
+		27FD6B4513C09C4500E9D407 /* libssh2_sftp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libssh2_sftp.h; path = include/libssh2_sftp.h; sourceTree = "<group>"; };
+		27FD6B4613C09C4500E9D407 /* libssh2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libssh2.h; path = include/libssh2.h; sourceTree = "<group>"; };
+		27FD6D0513C10D3500E9D407 /* SVSFTPPublishingEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSFTPPublishingEngine.h; sourceTree = "<group>"; };
+		27FD6D0613C10D3500E9D407 /* SVSFTPPublishingEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSFTPPublishingEngine.m; sourceTree = "<group>"; };
+		27FD6DE913C1229200E9D407 /* CK2SFTPFileHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CK2SFTPFileHandle.h; sourceTree = "<group>"; };
+		27FD6DEA13C1229200E9D407 /* CK2SFTPFileHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CK2SFTPFileHandle.m; sourceTree = "<group>"; };
 		27FDA7061238F4C3006E1A0D /* KSURLUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSURLUtilities.h; sourceTree = "<group>"; };
 		27FDA7071238F4C3006E1A0D /* KSURLUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSURLUtilities.m; sourceTree = "<group>"; };
 		27FDA71F1238F66F006E1A0D /* KSPathUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSPathUtilities.h; sourceTree = "<group>"; };
@@ -2300,6 +2366,7 @@
 		3C42E2990D64D253004F35FD /* PageCounterElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PageCounterElement.xcodeproj; path = ../PlugIns/PageCounterElement/PageCounterElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C42E4830D64FCE3004F35FD /* IMStatusElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IMStatusElement.xcodeproj; path = ../PlugIns/IMStatusElement/IMStatusElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C42E4F10D650429004F35FD /* FlickrElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FlickrElement.xcodeproj; path = ../PlugIns/FlickrElement/FlickrElement.xcodeproj; sourceTree = SOURCE_ROOT; };
+		3C48038C13FB737A00E9F309 /* libssh2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssh2.dylib; path = ../Code/SFTP/libssh2.dylib; sourceTree = SOURCE_ROOT; };
 		3C4C6A750D64122700398BDA /* DeliciousElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DeliciousElement.xcodeproj; path = ../PlugIns/DeliciousElement/DeliciousElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C4C6AA90D64136C00398BDA /* AmazonElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AmazonElement.xcodeproj; path = ../PlugIns/AmazonElement/AmazonElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C53E41811EE783B005CF7B2 /* TwitterElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TwitterElement.xcodeproj; path = ../PlugIns/TwitterElement/TwitterElement.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -2431,6 +2498,13 @@
 		79D35F950974C84000241EDA /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = ../Code/Shared/ThirdParty/Growl/Growl.framework; sourceTree = SOURCE_ROOT; };
 		8D15AC360486D014006FF6A4 /* Info.plist */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 4; path = Info.plist; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* Sandvox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sandvox.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE0142BC13E9D98800BBA6F1 /* text_inspector.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = text_inspector.tiff; sourceTree = "<group>"; };
+		CE0142BF13E9D9A400BBA6F1 /* centerjustified_inspector.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = centerjustified_inspector.tif; sourceTree = "<group>"; };
+		CE0142C013E9D9A400BBA6F1 /* fulljustified_inspector.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = fulljustified_inspector.tif; sourceTree = "<group>"; };
+		CE0142C113E9D9A400BBA6F1 /* leftjustified_inspector.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = leftjustified_inspector.tif; sourceTree = "<group>"; };
+		CE0142C213E9D9A400BBA6F1 /* rightjustified_inspector.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = rightjustified_inspector.tif; sourceTree = "<group>"; };
+		CE0142C813E9D9D300BBA6F1 /* indent_left.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = indent_left.tiff; sourceTree = "<group>"; };
+		CE0142C913E9D9D300BBA6F1 /* indent_right.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = indent_right.tiff; sourceTree = "<group>"; };
 		CE01A6220EAFD63600BDF264 /* CIImage+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CIImage+Karelia.h"; sourceTree = "<group>"; };
 		CE01A6230EAFD63600BDF264 /* CIImage+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CIImage+Karelia.m"; sourceTree = "<group>"; };
 		CE01A6240EAFD63600BDF264 /* KSAbstractBugReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSAbstractBugReporter.h; sourceTree = "<group>"; };
@@ -3126,6 +3200,7 @@
 				CEBEB32D10AA7B07006E7D8A /* iMedia.framework in Frameworks */,
 				CEE1BE67117D2299002AA67D /* Symbolication.framework in Frameworks */,
 				CEF2889F11CC2D7300122D03 /* JSTalk.framework in Frameworks */,
+				3C48038D13FB737A00E9F309 /* libssh2.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3359,6 +3434,8 @@
 				27579A30132BAAE00006C605 /* KSMutableDataWriter.m */,
 				27A6098311282AC0007C301F /* KSWriter.h */,
 				27A6098411282AC0007C301F /* KSWriter.m */,
+				27AA465013EC1802008470C7 /* KSBufferedWriter.h */,
+				27AA465113EC1802008470C7 /* KSBufferedWriter.m */,
 			);
 			path = KSWriter;
 			sourceTree = "<group>";
@@ -3412,8 +3489,8 @@
 				277E724C1133595A0081389F /* SVGraphicDOMController.m */,
 				27FA98831194BC0C003B8308 /* SVSidebarDOMController.h */,
 				27FA98841194BC0C003B8308 /* SVSidebarDOMController.m */,
-				2704227F12142F710077298A /* SVResizableDOMController.h */,
-				2704228012142F710077298A /* SVResizableDOMController.m */,
+				2704227F12142F710077298A /* SVPlugInDOMController.h */,
+				2704228012142F710077298A /* SVPlugInDOMController.m */,
 				27503418126C6BCF006F87ED /* SVMediaDOMController.h */,
 				27503419126C6BCF006F87ED /* SVMediaDOMController.m */,
 				27F33BDA126E101600CDC551 /* SVIndexDOMController.h */,
@@ -3520,7 +3597,7 @@
 			name = "Publishing UI";
 			sourceTree = "<group>";
 		};
-		2759CC98103970FC00E2C046 /* Main Controllers */ = {
+		2759CC98103970FC00E2C046 /* Main Components */ = {
 			isa = PBXGroup;
 			children = (
 				276F8AB010D572780094AA73 /* SVDOMController.h */,
@@ -3538,8 +3615,10 @@
 				2759CC9A1039711200E2C046 /* SVWebEditorViewController.m */,
 				27DD09401202DF980083C7C1 /* SVContentDOMController.h */,
 				27DD09411202DF980083C7C1 /* SVContentDOMController.m */,
+				27139E5313F7EA3F00299254 /* SVWebEditorView.h */,
+				27139E5413F7EA3F00299254 /* SVWebEditorView.m */,
 			);
-			name = "Main Controllers";
+			name = "Main Components";
 			sourceTree = "<group>";
 		};
 		275A641510501D2900AE6E2A /* General */ = {
@@ -3562,6 +3641,10 @@
 			isa = PBXGroup;
 			children = (
 				275B0DDA13D8447400CC5D76 /* TextInspector.xib */,
+				2783A89113DA361900F9A702 /* SVTextInspector.h */,
+				2783A89213DA361900F9A702 /* SVTextInspector.m */,
+				27DA95711401A557004DE2DA /* SVWebViewSelectionController.h */,
+				27DA95721401A557004DE2DA /* SVWebViewSelectionController.m */,
 			);
 			name = "Text Inspector";
 			sourceTree = "<group>";
@@ -3651,6 +3734,12 @@
 				2762985813153EE5001EC943 /* SVGraphicContainer.h */,
 				27629965131553BE001EC943 /* SVCallout.h */,
 				27629966131553BE001EC943 /* SVCallout.m */,
+				278645B513C62D1C0098C34F /* SVElementInfoGatheringHTMLContext.h */,
+				278645B613C62D1C0098C34F /* SVElementInfoGatheringHTMLContext.m */,
+				27D68FCE13CF6D2E00D7B867 /* SVPagelet.h */,
+				27D68FCF13CF6D2E00D7B867 /* SVPagelet.m */,
+				27FBC9BC13D4F0A3002F720B /* SVInlineGraphicContainer.m */,
+				2720F3E113D64E79007DD23C /* SVComponent.h */,
 				2705B1AE13EC0514004C678D /* SVWebEditorUpdatesHTMLContext.h */,
 				2705B1AF13EC0514004C678D /* SVWebEditorUpdatesHTMLContext.m */,
 			);
@@ -3876,6 +3965,8 @@
 				276D4907137FFE6D004F4954 /* SVPublishingDigestStorage.m */,
 				2743F0C313BC755A009EA6D3 /* SVImageRecipe.h */,
 				2743F0C413BC755A009EA6D3 /* SVImageRecipe.m */,
+				27FD6D0513C10D3500E9D407 /* SVSFTPPublishingEngine.h */,
+				27FD6D0613C10D3500E9D407 /* SVSFTPPublishingEngine.m */,
 			);
 			name = "Publishing Engine";
 			sourceTree = "<group>";
@@ -3915,7 +4006,7 @@
 		27BDAA6A10C88E49008C8199 /* Web Editor */ = {
 			isa = PBXGroup;
 			children = (
-				2759CC98103970FC00E2C046 /* Main Controllers */,
+				2759CC98103970FC00E2C046 /* Main Components */,
 				277E6DCB112DB4AA0081389F /* Text DOM Controllers */,
 				273DCF9410CBD49D003CCE97 /* Other DOM Controllers */,
 				271B497B105468AA008B698C /* Framework */,
@@ -3973,8 +4064,8 @@
 				270172F211CFBEF3001512F6 /* KSStringXMLEntityEscaping.m */,
 				27F2777F11F9A33E00B7F8FA /* KSCSSWriter.h */,
 				27F2778011F9A33E00B7F8FA /* KSCSSWriter.m */,
-				271884411296A28000139C89 /* KSElementInfo.h */,
-				271884421296A28000139C89 /* KSElementInfo.m */,
+				271884411296A28000139C89 /* KSXMLAttributes.h */,
+				271884421296A28000139C89 /* KSXMLAttributes.m */,
 			);
 			name = KSHTMLWriter;
 			path = ../Code/KSHTMLWriter;
@@ -4146,6 +4237,29 @@
 				27ACC6EE126317CE00EA521E /* SVFillController.m */,
 			);
 			name = Shared;
+			sourceTree = "<group>";
+		};
+		27FD6A6313C08AD600E9D407 /* libssh2 */ = {
+			isa = PBXGroup;
+			children = (
+				27FD6B4413C09C4500E9D407 /* libssh2_publickey.h */,
+				27FD6B4513C09C4500E9D407 /* libssh2_sftp.h */,
+				27FD6B4613C09C4500E9D407 /* libssh2.h */,
+			);
+			name = libssh2;
+			path = ../Code/SFTP/libssh2;
+			sourceTree = "<group>";
+		};
+		27FD6A6413C08AFD00E9D407 /* SFTP */ = {
+			isa = PBXGroup;
+			children = (
+				27FD6A6513C08B7900E9D407 /* CK2SFTPSession.h */,
+				27FD6A6613C08B7900E9D407 /* CK2SFTPSession.m */,
+				27FD6DE913C1229200E9D407 /* CK2SFTPFileHandle.h */,
+				27FD6DEA13C1229200E9D407 /* CK2SFTPFileHandle.m */,
+			);
+			name = SFTP;
+			path = ../Code/SFTP;
 			sourceTree = "<group>";
 		};
 		27FDA7051238F483006E1A0D /* KSFileUtilities */ = {
@@ -4357,6 +4471,8 @@
 				27AE74720EEDE6AD00409D80 /* Publishing Engine */,
 				275666F10F015E9900878A05 /* Publishing UI */,
 				27AE74710EEDE68600409D80 /* Host Properties */,
+				27FD6A6413C08AFD00E9D407 /* SFTP */,
+				27FD6A6313C08AD600E9D407 /* libssh2 */,
 			);
 			name = "Remote Transfer";
 			sourceTree = "<group>";
@@ -4773,6 +4889,7 @@
 		3C72D4F4094A240E0061A876 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				3C48038C13FB737A00E9F309 /* libssh2.dylib */,
 				3C5C0DB10BF820EA003594F8 /* libbz2.dylib */,
 				3C72D4F5094A24390061A876 /* libz.dylib */,
 			);
@@ -5400,6 +5517,12 @@
 		CE1BE7D211D2AD1E00D875AE /* Inspector */ = {
 			isa = PBXGroup;
 			children = (
+				CE0142BF13E9D9A400BBA6F1 /* centerjustified_inspector.tif */,
+				CE0142C013E9D9A400BBA6F1 /* fulljustified_inspector.tif */,
+				CE0142C113E9D9A400BBA6F1 /* leftjustified_inspector.tif */,
+				CE0142C213E9D9A400BBA6F1 /* rightjustified_inspector.tif */,
+				CE0142C813E9D9D300BBA6F1 /* indent_left.tiff */,
+				CE0142C913E9D9D300BBA6F1 /* indent_right.tiff */,
 				CEB516A812B7DFC2003A5505 /* excerpt_longer.gif */,
 				CEB516A912B7DFC2003A5505 /* excerpt_shorter.gif */,
 				CE01E6F51208A7F10093565F /* target_set.tiff */,
@@ -5428,6 +5551,7 @@
 				CE01E6FA1208A8090093565F /* graphic_inspector.tiff */,
 				CE01E6FB1208A8090093565F /* link_inspector.tiff */,
 				CE01E6FC1208A8090093565F /* page_inspector.tiff */,
+				CE0142BC13E9D98800BBA6F1 /* text_inspector.tiff */,
 				CE01E6FD1208A8090093565F /* document_inspector.tiff */,
 				CE01E6FE1208A8090093565F /* wrap_inspector.tiff */,
 				CEE2C64E120B25E7000E3C0E /* plugin_inspector.tiff */,
@@ -6148,7 +6272,7 @@
 				CEDA2DC0120CD437005FE23E /* SVVideoInspector.h in Headers */,
 				27D7340612118E3400722189 /* SVIndexPlugIn.h in Headers */,
 				27D7345512119C6600722189 /* SVMediaGraphicInspector.h in Headers */,
-				2704228112142F710077298A /* SVResizableDOMController.h in Headers */,
+				2704228112142F710077298A /* SVPlugInDOMController.h in Headers */,
 				2725BA46121DE9990074EAA0 /* NSImageView+IMBImageItem.h in Headers */,
 				2725BC38121F3F690074EAA0 /* SVArchivePage.h in Headers */,
 				275C5F88122831CE00CD22B8 /* SVMedia.h in Headers */,
@@ -6177,7 +6301,7 @@
 				3CACE246127FB82300983DF2 /* SVCommentsWindowController.h in Headers */,
 				3CACE29F127FB99400983DF2 /* SVGoogleWindowController.h in Headers */,
 				27711D541282BBCA00AE27CC /* SVImageItem.h in Headers */,
-				271884431296A28000139C89 /* KSElementInfo.h in Headers */,
+				271884431296A28000139C89 /* KSXMLAttributes.h in Headers */,
 				276C004E129BE40500568A73 /* SVGraphicContainerDOMController.h in Headers */,
 				276C010C129C00F800568A73 /* DOMTreeWalker+Karelia.h in Headers */,
 				277586CB129E846B0027C7FF /* NSBundle+Sandvox.h in Headers */,
@@ -6214,8 +6338,21 @@
 				2743EE7F13BBB942009EA6D3 /* SVJSONSerialization.h in Headers */,
 				2743F0C513BC755A009EA6D3 /* SVImageRecipe.h in Headers */,
 				27F503E813BF3E1300F0FFD7 /* KSPerformOnThreadOperation.h in Headers */,
+				27FD6A6713C08B7900E9D407 /* CK2SFTPSession.h in Headers */,
+				27FD6B4713C09C4500E9D407 /* libssh2_publickey.h in Headers */,
+				27FD6B4813C09C4500E9D407 /* libssh2_sftp.h in Headers */,
+				27FD6B4913C09C4500E9D407 /* libssh2.h in Headers */,
+				27FD6D0713C10D3500E9D407 /* SVSFTPPublishingEngine.h in Headers */,
+				27FD6DEB13C1229200E9D407 /* CK2SFTPFileHandle.h in Headers */,
 				276BC94713C34DDC00EB2798 /* SVWorkspaceIconProtocol.h in Headers */,
+				2783A89313DA361900F9A702 /* SVTextInspector.h in Headers */,
+				278645B713C62D1C0098C34F /* SVElementInfoGatheringHTMLContext.h in Headers */,
+				27D68FD013CF6D2E00D7B867 /* SVPagelet.h in Headers */,
+				2720F3E213D64E79007DD23C /* SVComponent.h in Headers */,
+				27AA465213EC1802008470C7 /* KSBufferedWriter.h in Headers */,
 				2705B1B013EC0514004C678D /* SVWebEditorUpdatesHTMLContext.h in Headers */,
+				27139E5513F7EA3F00299254 /* SVWebEditorView.h in Headers */,
+				27DA95731401A557004DE2DA /* SVWebViewSelectionController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6252,6 +6389,7 @@
 				8D15AC2B0486D014006FF6A4 /* Resources */,
 				3C536FA713BC3058004222D5 /* Generate CFBundleShortVersionString */,
 				3C7D7D5313B3B01D00B58137 /* Generate CFBundleVersion */,
+				3CB7531C13CFAAF70033600F /* Copy dylibs */,
 			);
 			buildRules = (
 			);
@@ -6953,6 +7091,13 @@
 				27C96A1E13B36CDF00EBC76A /* object_blockquote.tiff in Resources */,
 				275B0DDB13D8447400CC5D76 /* TextInspector.xib in Resources */,
 				2701222713DA083B006CEE92 /* VersionHashes2_0.plist in Resources */,
+				CE0142BD13E9D98800BBA6F1 /* text_inspector.tiff in Resources */,
+				CE0142C313E9D9A400BBA6F1 /* centerjustified_inspector.tif in Resources */,
+				CE0142C413E9D9A400BBA6F1 /* fulljustified_inspector.tif in Resources */,
+				CE0142C513E9D9A400BBA6F1 /* leftjustified_inspector.tif in Resources */,
+				CE0142C613E9D9A400BBA6F1 /* rightjustified_inspector.tif in Resources */,
+				CE0142CA13E9D9D300BBA6F1 /* indent_left.tiff in Resources */,
+				CE0142CB13E9D9D300BBA6F1 /* indent_right.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6984,7 +7129,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### UPDATE Designs ToT FOR RELEASE BUILDS\n###\n\nDESIGNS_PATH=${SRCROOT}/../../Designs\n\n# for some reason using which to find svn works on Leopard, not on Tiger\n# SVN_PATH=`which svn`\n\n# so we do this instead and hope for the best\nif [ -e /usr/local/bin/svn ]\nthen\n\tSVN_PATH=/usr/local/bin/svn\nelif [ -e /usr/bin/svn ]\nthen\n\tSVN_PATH=/usr/bin/svn\nelif [ -e /opt/local/bin/svn ]\nthen\n\tSVN_PATH=/opt/local/bin/svn\nelse\n\techo \"ERROR - CANT FIND SVN\"\n\texit 1\nfi\n\npushd \"${SRCROOT}\"\n\necho \"syncing Designs with ToT ...\"\ncd \"${DESIGNS_PATH}\"\n${SVN_PATH} update\necho \"... finished syncing Designs\"\n\npopd\n\nexit 0\n";
+			shellScript = "#!/bin/bash\n\n###\n### UPDATE Designs ToT FOR RELEASE BUILDS\n###\n\nDESIGNS_PATH=${SRCROOT}/../../Designs\n\n# for some reason using which to find svn works on Leopard, not on Tiger\n# SVN_PATH=`which svn`\n\n# so we do this instead and hope for the best\nif [ -e /usr/local/bin/svn ]\nthen\n\tSVN_PATH=/usr/local/bin/svn\nelif [ -e /usr/bin/svn ]\nthen\n\tSVN_PATH=/usr/bin/svn\nelif [ -e /opt/local/bin/svn ]\nthen\n\tSVN_PATH=/opt/local/bin/svn\nelse\n\techo \"ERROR - CANT FIND SVN\"\n\texit 1\nfi\n\npushd \"${SRCROOT}\"\n\necho \"syncing Designs with ToT ...\"\ncd \"${DESIGNS_PATH}\"\n\"${SVN_PATH}\" update\necho \"... finished syncing Designs\"\n\npopd\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
 		3C3E75F90F1C5F42002E3A9A /* ShellScript */ = {
@@ -7013,7 +7158,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### UPDATE CFBundleShortVersionString in Info.plist of TARGET to be LATEST_V_TAG\n###\n\n# find git on local machine\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\n# if Release, fetch tags\nif [ \"${BUILD_STYLE}\" == \"Release\" ]\nthen\n\tpushd \"${SRCROOT}/..\" > /dev/null\n\t${GIT_PATH} fetch\n\tpopd > /dev/null\nfi\n\n# find latest v tag\npushd \"${SRCROOT}/..\" > /dev/null\nLATEST_V_TAG=$(${GIT_PATH} describe --tags --match v*)\npopd > /dev/null\n\nif [[ ${LATEST_V_TAG} == *-* ]]\nthen\n\t# extract everything up to -\n\tposition=`echo ${LATEST_V_TAG} | sed -n \"s/[-].*//p\" | wc -c`\n\tpositionminusone=$(($position - 1))\n\tLATEST_V_TAG=${LATEST_V_TAG:0:$positionminusone}\nfi\n\n# strip leading 'v' from LATEST_V_TAG to get GIT_TAG\nGIT_TAG=${LATEST_V_TAG:1}\n\n# check that we have something useable\nif [ \"${GIT_TAG}\" == \"\" ]\nthen\n\techo \"Could not find suitable v tag. Exiting...\"\n\texit 1\nfi\n\n# set CFBundleShortVersionString\necho \"Setting CFBundleShortVersionString to ${GIT_TAG}\"\nTARGET_PLIST_PATH=${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\n/usr/libexec/PlistBuddy -c \"Delete CFBundleShortVersionString\" \"${TARGET_PLIST_PATH}\"\n/usr/libexec/PlistBuddy -c \"Add CFBundleShortVersionString string ${GIT_TAG}\" \"${TARGET_PLIST_PATH}\"\n\n# read CFBundleShortVersionString\nTARGET_VERSION=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"${TARGET_PLIST_PATH}\")\n\n# verify\nif [ \"${TARGET_VERSION:-0}\" == ${GIT_TAG} ]\nthen\n\techo \"Info.plist CFBundleShortVersionString verified.\"\n\texit 0\nfi\n\necho \"Could not verify CFBundleShortVersionString in Info.plist. Cannot continue.\"\n\nexit 1\n";
+			shellScript = "#!/bin/bash\n\n###\n### UPDATE CFBundleShortVersionString in Info.plist of TARGET to be LATEST_V_TAG\n###\n\n# find git on local machine\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\n# if Release, fetch tags\nif [ \"${CONFIGURATION}\" == \"Release\" ]\nthen\n\tpushd \"${SRCROOT}/..\" > /dev/null\n\t${GIT_PATH} fetch\n\tpopd > /dev/null\nfi\n\n# find latest v tag\npushd \"${SRCROOT}/..\" > /dev/null\nLATEST_V_TAG=$(${GIT_PATH} describe --tags --match v*)\npopd > /dev/null\n\nif [[ ${LATEST_V_TAG} == *-* ]]\nthen\n\t# extract everything up to -\n\tposition=`echo ${LATEST_V_TAG} | sed -n \"s/[-].*//p\" | wc -c`\n\tpositionminusone=$(($position - 1))\n\tLATEST_V_TAG=${LATEST_V_TAG:0:$positionminusone}\nfi\n\n# strip leading 'v' from LATEST_V_TAG to get GIT_TAG\nGIT_TAG=${LATEST_V_TAG:1}\n\n# check that we have something useable\nif [ \"${GIT_TAG}\" == \"\" ]\nthen\n\techo \"Could not find suitable v tag. Exiting...\"\n\texit 1\nfi\n\n# set CFBundleShortVersionString\necho \"Setting CFBundleShortVersionString to ${GIT_TAG}\"\nTARGET_PLIST_PATH=${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\n/usr/libexec/PlistBuddy -c \"Delete CFBundleShortVersionString\" \"${TARGET_PLIST_PATH}\"\n/usr/libexec/PlistBuddy -c \"Add CFBundleShortVersionString string ${GIT_TAG}\" \"${TARGET_PLIST_PATH}\"\n\n# read CFBundleShortVersionString\nTARGET_VERSION=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"${TARGET_PLIST_PATH}\")\n\n# verify\nif [ \"${TARGET_VERSION:-0}\" == ${GIT_TAG} ]\nthen\n\techo \"Info.plist CFBundleShortVersionString verified.\"\n\texit 0\nfi\n\necho \"Could not verify CFBundleShortVersionString in Info.plist. Cannot continue.\"\n\nexit 1\n";
 			showEnvVarsInLog = 0;
 		};
 		3C7D7D5313B3B01D00B58137 /* Generate CFBundleVersion */ = {
@@ -7028,7 +7173,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "#!/bin/bash\n\n###\n### UPDATE CFBundleVersion in Info.plist of TARGET to be LATEST_B_TAG\n### (computing and tagging as LATEST_B_TAG, if necessary)\n###\n\n# find git on local machine\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\n# if Release, fetch tags\nif [ \"${BUILD_STYLE}\" == \"Release\" ]\nthen\n\tpushd \"${SRCROOT}/..\" > /dev/null\n\t${GIT_PATH} fetch\n\tpopd > /dev/null\nfi\n\n# find latest b tag\nLATEST_B_TAG=$(${GIT_PATH} describe --tags --match b*)\n\nif [[ ${LATEST_B_TAG} == *-* ]]\nthen\n\t# compute new tag\n\t# extract 5 character tag number starting at position 1\n\tTAG_NUM=${LATEST_B_TAG:1:5}\n\t\n\t# if Release, add 1\n\tif [ \"${BUILD_STYLE}\" == \"Release\" ]\n\tthen\n\t\tTAG_NUM=$(($TAG_NUM + 1))\n\tfi\n\n\t# create new LATEST_B_TAG\n\tLATEST_B_TAG=\"b${TAG_NUM}\"\n\t\n\t# if Release, tag SRCROOT with new LATEST_B_TAG\n\tif [ \"${BUILD_STYLE}\" == \"Release\" ]\n\tthen\n\t\tpushd \"${SRCROOT}/..\" > /dev/null\n\t\t${GIT_PATH} tag ${LATEST_B_TAG}\n\t\t${GIT_PATH} push --tags\n\t\tpopd > /dev/null\n\tfi\nfi\n\n# strip leading 'b' from LATEST_B_TAG to get GET_TAG\nGIT_TAG=${LATEST_B_TAG:1}\n\n# set CFBundleVersion\necho \"Setting CFBundleVersion to ${GIT_TAG}\"\nTARGET_PLIST_PATH=${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\n/usr/libexec/PlistBuddy -c \"Delete CFBundleVersion\" \"${TARGET_PLIST_PATH}\"\n/usr/libexec/PlistBuddy -c \"Add CFBundleVersion string ${GIT_TAG}\" \"${TARGET_PLIST_PATH}\"\n\n# read CFBundleVerison\nTARGET_BUILD_NUMBER=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${TARGET_PLIST_PATH}\")\n\n# verify\nif [ \"${TARGET_BUILD_NUMBER:-0}\" -eq ${GIT_TAG} ]\nthen\n\techo \"Info.plist CFBundleVersion verified.\"\n\texit 0\nfi\n\necho \"Could not verify CFBundleVersion in Info.plist. Cannot continue.\"\n\nexit 1\n";
+			shellScript = "#!/bin/bash\n\n###\n### UPDATE CFBundleVersion in Info.plist of TARGET to be LATEST_B_TAG\n### (computing and tagging as LATEST_B_TAG, if necessary)\n###\n\n# find git on local machine\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\n# if Release, fetch tags\nif [ \"${CONFIGURATION}\" == \"Release\" ]\nthen\n\tpushd \"${SRCROOT}/..\" > /dev/null\n\t${GIT_PATH} fetch\n\tpopd > /dev/null\nfi\n\n# find latest b tag\nLATEST_B_TAG=$(${GIT_PATH} describe --tags --match b*)\n\nif [[ ${LATEST_B_TAG} == *-* ]]\nthen\n\t# compute new tag\n\t# extract 5 character tag number starting at position 1\n\tTAG_NUM=${LATEST_B_TAG:1:5}\n\t\n\t# if Release, add 1\n\tif [ \"${CONFIGURATION}\" == \"Release\" ]\n\tthen\n\t\tTAG_NUM=$(($TAG_NUM + 1))\n\tfi\n\n\t# create new LATEST_B_TAG\n\tLATEST_B_TAG=\"b${TAG_NUM}\"\n\t\n\t# if Release, tag SRCROOT with new LATEST_B_TAG\n\tif [ \"${CONFIGURATION}\" == \"Release\" ]\n\tthen\n\t\tpushd \"${SRCROOT}/..\" > /dev/null\n\t\t${GIT_PATH} tag ${LATEST_B_TAG}\n\t\t${GIT_PATH} push --tags\n\t\tpopd > /dev/null\n\tfi\nfi\n\n# strip leading 'b' from LATEST_B_TAG to get GET_TAG\nGIT_TAG=${LATEST_B_TAG:1}\n\n# set CFBundleVersion\necho \"Setting CFBundleVersion to ${GIT_TAG}\"\nTARGET_PLIST_PATH=${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\n/usr/libexec/PlistBuddy -c \"Delete CFBundleVersion\" \"${TARGET_PLIST_PATH}\"\n/usr/libexec/PlistBuddy -c \"Add CFBundleVersion string ${GIT_TAG}\" \"${TARGET_PLIST_PATH}\"\n\n# read CFBundleVerison\nTARGET_BUILD_NUMBER=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${TARGET_PLIST_PATH}\")\n\n# verify\nif [ \"${TARGET_BUILD_NUMBER:-0}\" -eq ${GIT_TAG} ]\nthen\n\techo \"Info.plist CFBundleVersion verified.\"\n\texit 0\nfi\n\necho \"Could not verify CFBundleVersion in Info.plist. Cannot continue.\"\n\nexit 1\n";
 			showEnvVarsInLog = 0;
 		};
 		3C7D7D5713B3B04300B58137 /* Script - Copy CFBundleVersion to PlugIns */ = {
@@ -7043,7 +7188,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "\n# read CFBundleVersion\nSANDVOX_PLIST_PATH=${TARGET_BUILD_DIR}/Sandvox.app/Contents/Info.plist\nSANDVOX_BUILD_NUMBER=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${SANDVOX_PLIST_PATH}\")\nSANDVOX_VERSION=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"${SANDVOX_PLIST_PATH}\")\n\n# update each plug-in's CFBundleVersion and CFBundleShortVersionString\npushd \"${TARGET_BUILD_DIR}\"\nfor i in *.svxElement\ndo\n\tPLUGIN_PLIST_PATH=${PWD}/${i}/Contents/Info.plist\n\n\t/usr/libexec/PlistBuddy -c \"Delete CFBundleVersion\" \"${PLUGIN_PLIST_PATH}\"\n\t/usr/libexec/PlistBuddy -c \"Add CFBundleVersion string ${SANDVOX_BUILD_NUMBER}\" \"${PLUGIN_PLIST_PATH}\"\n\n\t/usr/libexec/PlistBuddy -c \"Delete CFBundleShortVersionString\" \"${PLUGIN_PLIST_PATH}\"\n\t/usr/libexec/PlistBuddy -c \"Add CFBundleShortVersionString string ${SANDVOX_VERSION}\" \"${PLUGIN_PLIST_PATH}\"\ndone\npopd\n\n";
+			shellScript = "\n# read CFBundleVersion\nSANDVOX_PLIST_PATH=${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Info.plist\nSANDVOX_BUILD_NUMBER=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${SANDVOX_PLIST_PATH}\")\nSANDVOX_VERSION=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"${SANDVOX_PLIST_PATH}\")\n\n# update each plug-in's CFBundleVersion and CFBundleShortVersionString\npushd \"${BUILT_PRODUCTS_DIR}\"\nfor i in *.svxElement\ndo\n\tPLUGIN_PLIST_PATH=${PWD}/${i}/Contents/Info.plist\n\n\t/usr/libexec/PlistBuddy -c \"Delete CFBundleVersion\" \"${PLUGIN_PLIST_PATH}\"\n\t/usr/libexec/PlistBuddy -c \"Add CFBundleVersion string ${SANDVOX_BUILD_NUMBER}\" \"${PLUGIN_PLIST_PATH}\"\n\n\t/usr/libexec/PlistBuddy -c \"Delete CFBundleShortVersionString\" \"${PLUGIN_PLIST_PATH}\"\n\t/usr/libexec/PlistBuddy -c \"Add CFBundleShortVersionString string ${SANDVOX_VERSION}\" \"${PLUGIN_PLIST_PATH}\"\ndone\npopd\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C88838C0BFCB49C00921FA4 /* Build Disk Image */ = {
@@ -7072,7 +7217,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "#!/bin/bash\n\n### this script should NOT have 'Run script only when installing' checked\n\n### we could do this externally, but we'd have to export everything we need\n### e.g.,\n# export APPNAME=\\\"Sandvox\\\"\n# ${SRCROOT}/../Tools/preflight-build\n\n###\n### peform any necessary checks before commencing build\n###\n\n# find git on local machine\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\n## Update Submodules \npushd \"${SRCROOT}/..\"\n${GIT_PATH} submodule update --init --recursive\npopd\n\n## UpdateBDAlias\npushd \"${SRCROOT}/../../bdalias\"\n${GIT_PATH} checkout ${BDALIAS_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching BDAlias from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${BDALIAS_COMMIT}\n\techo \"... finished fetching BDAlias\"\nfi\npopd\n\n## UpdateConnectionKit\npushd \"${SRCROOT}/../../connection\"\n${GIT_PATH} checkout ${CK_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching ConnectionKit from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${CK_COMMIT}\n\techo \"... finished fetching KSError\"\nfi\npopd\n\n## UpdateKSError\npushd \"${SRCROOT}/../../KSError\"\n${GIT_PATH} checkout ${KSERROR_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSError from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSERROR_COMMIT}\n\techo \"... finished fetching KSError\"\nfi\npopd\n\n## UpdateKSExtensibleManagedObject\npushd \"${SRCROOT}/../../KSExtensibleManagedObject\"\n${GIT_PATH} checkout ${KSEXTENSIBLEMANAGEDOBJECT_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSExtensibleManagedObject from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSEXTENSIBLEMANAGEDOBJECT_COMMIT}\n\techo \"... finished fetching KSExtensibleManagedObject\"\nfi\npopd\n\n## UpdateKSFileUtilities\npushd \"${SRCROOT}/../../KSFileUtilities\"\n${GIT_PATH} checkout ${KSFILEUTILS_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSFileUtilities from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSFILEUTILS_COMMIT}\n\techo \"... finished fetching KSFileUtilities\"\nfi\npopd\n\n## UpdateKSSelectionBorder\npushd \"${SRCROOT}/../../KSSelectionBorder\"\n${GIT_PATH} checkout ${KSSELECTIONBORDER_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSSelectionBorder from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSSELECTIONBORDER_COMMIT}\n\techo \"... finished fetching KSSelectionBorder\"\nfi\npopd\n\n## UpdateKSThreadProxy\npushd \"${SRCROOT}/../../KSThreadProxy\"\n${GIT_PATH} checkout ${KSTHREADPROXY_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSThreadProxy from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSTHREADPROXY_COMMIT}\n\techo \"... finished fetching KSThreadProxy\"\nfi\npopd\n\n## UpdateYRKSpinningProgressIndicator\npushd \"${SRCROOT}/../../yrk-spinning-progress-indicator\"\n${GIT_PATH} checkout ${YRKSPINNINGPROGRESSINDICATOR_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching yrk-spinning-progress-indicator from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${YRKSPINNINGPROGRESSINDICATOR_COMMIT}\n\techo \"... finished fetching yrk-spinning-progress-indicator\"\nfi\npopd\n\n###\n### further preflight based on type of build\n###\n\nif [ \"${BUILD_STYLE}\" == \"Debug\" ]\nthen\n\techo \"Preflighting Debug build...\"\n\t# we could do something here before doing Debug builds\nfi\n\nif [ \"${BUILD_STYLE}\" == \"Release\" ]\nthen\n\techo \"Preflighting Release build...\"\n\t# we could do something here before doing Debug builds\n\t# some magic git incantation that returns exit 1 if we have unstaged changes / unpushed changes?\nfi\n\nexit 0\n";
+			shellScript = "#!/bin/bash\n\n### this script should NOT have 'Run script only when installing' checked\n\n### we could do this externally, but we'd have to export everything we need\n### e.g.,\n# export APPNAME=\\\"Sandvox\\\"\n# ${SRCROOT}/../Tools/preflight-build\n\n###\n### peform any necessary checks before commencing build\n###\n\n# find git on local machine\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\n## Update Submodules \npushd \"${SRCROOT}/..\"\n${GIT_PATH} submodule update --init --recursive\npopd\n\n## UpdateBDAlias\npushd \"${SRCROOT}/../../bdalias\"\n${GIT_PATH} checkout ${BDALIAS_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching BDAlias from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${BDALIAS_COMMIT}\n\techo \"... finished fetching BDAlias\"\nfi\npopd\n\n## UpdateConnectionKit\npushd \"${SRCROOT}/../../connection\"\n${GIT_PATH} checkout ${CK_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching ConnectionKit from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${CK_COMMIT}\n\techo \"... finished fetching KSError\"\nfi\npopd\n\n## UpdateKSError\npushd \"${SRCROOT}/../../KSError\"\n${GIT_PATH} checkout ${KSERROR_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSError from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSERROR_COMMIT}\n\techo \"... finished fetching KSError\"\nfi\npopd\n\n## UpdateKSExtensibleManagedObject\npushd \"${SRCROOT}/../../KSExtensibleManagedObject\"\n${GIT_PATH} checkout ${KSEXTENSIBLEMANAGEDOBJECT_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSExtensibleManagedObject from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSEXTENSIBLEMANAGEDOBJECT_COMMIT}\n\techo \"... finished fetching KSExtensibleManagedObject\"\nfi\npopd\n\n## UpdateKSFileUtilities\npushd \"${SRCROOT}/../../KSFileUtilities\"\n${GIT_PATH} checkout ${KSFILEUTILS_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSFileUtilities from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSFILEUTILS_COMMIT}\n\techo \"... finished fetching KSFileUtilities\"\nfi\npopd\n\n## UpdateKSSelectionBorder\npushd \"${SRCROOT}/../../KSSelectionBorder\"\n${GIT_PATH} checkout ${KSSELECTIONBORDER_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSSelectionBorder from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSSELECTIONBORDER_COMMIT}\n\techo \"... finished fetching KSSelectionBorder\"\nfi\npopd\n\n## UpdateKSThreadProxy\npushd \"${SRCROOT}/../../KSThreadProxy\"\n${GIT_PATH} checkout ${KSTHREADPROXY_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSThreadProxy from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSTHREADPROXY_COMMIT}\n\techo \"... finished fetching KSThreadProxy\"\nfi\npopd\n\n## UpdateYRKSpinningProgressIndicator\npushd \"${SRCROOT}/../../yrk-spinning-progress-indicator\"\n${GIT_PATH} checkout ${YRKSPINNINGPROGRESSINDICATOR_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching yrk-spinning-progress-indicator from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${YRKSPINNINGPROGRESSINDICATOR_COMMIT}\n\techo \"... finished fetching yrk-spinning-progress-indicator\"\nfi\npopd\n\n###\n### further preflight based on type of build\n###\n\nif [ \"${CONFIGURATION}\" == \"Debug\" ]\nthen\n\techo \"Preflighting Debug build...\"\n\t# we could do something here before doing Debug builds\nfi\n\nif [ \"${CONFIGURATION}\" == \"Release\" ]\nthen\n\techo \"Preflighting Release build...\"\n\t# we could do something here before doing Debug builds\n\t# some magic git incantation that returns exit 1 if we have unstaged changes / unpushed changes?\nfi\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
 		3C99107209298C4400ED5CBF /* Generate Localizable.strings */ = {
@@ -7103,7 +7248,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/bash;
-			shellScript = "\necho \"Removing Private Headers from frameworks ...\"\n\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/Versions/A/PrivateHeaders\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/Versions/A/PrivateHeaders\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/Versions/A/PrivateHeaders\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/Versions/A/PrivateHeaders\"\n\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/PrivateHeaders\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/PrivateHeaders\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/PrivateHeaders\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/PrivateHeaders\"\n\n\necho \"Removing Headers from frameworks ...\"\n\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/Versions/A/Headers\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/BWToolkitFramework.framework/Versions/A/Headers\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Versions/A/Headers\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/Versions/A/Headers\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/Versions/A/Headers\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/Versions/A/Headers\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Growl.framework/Versions/A/Headers\"\n\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/Headers\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/BWToolkitFramework.framework/Headers\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Headers\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/Headers\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/Headers\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/Headers\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Growl.framework/Headers\"\n\n\necho TARGET_BUILD_DIR ${TARGET_BUILD_DIR}\n";
+			shellScript = "\necho \"Removing Private Headers from frameworks ...\"\n\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/Versions/A/PrivateHeaders\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/Versions/A/PrivateHeaders\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/Versions/A/PrivateHeaders\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/Versions/A/PrivateHeaders\"\n\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/PrivateHeaders\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/PrivateHeaders\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/PrivateHeaders\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/PrivateHeaders\"\n\n\necho \"Removing Headers from frameworks ...\"\n\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/Versions/A/Headers\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/BWToolkitFramework.framework/Versions/A/Headers\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Versions/A/Headers\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/Versions/A/Headers\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/Versions/A/Headers\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/Versions/A/Headers\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/Growl.framework/Versions/A/Headers\"\n\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/Headers\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/BWToolkitFramework.framework/Headers\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Headers\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/Headers\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/Headers\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/Headers\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/Growl.framework/Headers\"\n\n\necho BUILT_PRODUCTS_DIR ${BUILT_PRODUCTS_DIR}\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66B20BFA8423007A4871 /* Script - Remove PrivateHeaders */ = {
@@ -7118,7 +7263,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/bash;
-			shellScript = "\necho \"###\"\necho \"Removing PrivateHeaders from ${TARGET_BUILD_DIR}/Sandvox.app/Contents/PrivateHeaders/ ...\"\n\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/PrivateHeaders\"\n\necho \"Removing ContactPassword.h ...\"\necho \"###\"\n\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Headers/ContactPassword.h\"\n\n";
+			shellScript = "\necho \"###\"\necho \"Removing PrivateHeaders from ${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/PrivateHeaders/ ...\"\n\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/PrivateHeaders\"\n\necho \"Removing ContactPassword.h ...\"\necho \"###\"\n\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Headers/ContactPassword.h\"\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66C60BFA940C007A4871 /* Script - Add PlugIns */ = {
@@ -7134,7 +7279,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/bash;
-			shellScript = "\nPBXCP=${SRCROOT}/../Code/Shared/Tools/pbxcp\n\nBUILDSETTINGS_DIR=/tmp/build-sandvox\nBUILDSETTINGS_PATH=${BUILDSETTINGS_DIR}/BuildSettings.h\n\nPLUGINS_FOLDER_PATH=${TARGET_BUILD_DIR}/Sandvox.app/Contents/PlugIns\nmkdir -p \"${PLUGINS_FOLDER_PATH}\"\n\npushd \"${TARGET_BUILD_DIR}\"\n\nfor i in *.svxElement\ndo\n\n\tif [ -e \"${PWD}/${i}/Contents/Resources/BUNDLED\" ];\n\tthen\n\n\t\techo \"BUNDLED: PBXCp \\\"$i\\\" ${PLUGINS_FOLDER_PATH}\"\n\n\t\t\"${PBXCP}\" \\\n\t\t\t-exclude .DS_Store -exclude CVS -exclude .svn -exclude BUNDLED -resolve-src-symlinks \\\n\t\t\t\"${PWD}/${i}\" \"${PLUGINS_FOLDER_PATH}\"\n\telse\n\t\techo \"-------------- Not including $i\"\n\tfi\n\ndone\n\npopd\n\n";
+			shellScript = "\nPBXCP=${SRCROOT}/../Code/Shared/Tools/pbxcp\n\nPLUGINS_FOLDER_PATH=${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/PlugIns\nmkdir -p \"${PLUGINS_FOLDER_PATH}\"\n\npushd \"${BUILT_PRODUCTS_DIR}\"\n\nfor i in *.svxElement\ndo\n\n\tif [ -e \"${PWD}/${i}/Contents/Resources/BUNDLED\" ];\n\tthen\n\n\t\techo \"BUNDLED: PBXCp \\\"$i\\\" ${PLUGINS_FOLDER_PATH}\"\n\n\t\t\"${PBXCP}\" \\\n\t\t\t-exclude .DS_Store -exclude CVS -exclude .svn -exclude BUNDLED -resolve-src-symlinks \\\n\t\t\t\"${PWD}/${i}\" \"${PLUGINS_FOLDER_PATH}\"\n\telse\n\t\techo \"-------------- Not including $i\"\n\tfi\n\ndone\n\npopd\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66CC0BFA94BA007A4871 /* Script - Add Designs */ = {
@@ -7149,7 +7294,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/bash;
-			shellScript = "\nPBXCP=${SRCROOT}/../Code/Shared/Tools/pbxcp\n\nDESIGNS_FOLDER_PATH=${TARGET_BUILD_DIR}/Sandvox.app/Contents/Designs\nmkdir -p \"${DESIGNS_FOLDER_PATH}\"\n\npushd ../../Designs\n\nfor i in *\ndo\n    if [ -e \"${i}/BUNDLED\" ];    # BUNDLE EVERYTHING IN THE APP\n    then\n        # put into application\n        echo \"BUNDLED DESIGN: PBXCp \\\"$i\\\" ${DESIGNS_FOLDER_PATH}\"\n\n        \"${PBXCP}\" \\\n            -exclude .localized -exclude Sources -exclude sources -exclude Testing_Files -exclude .DS_Store -exclude CVS -exclude .svn -exclude BUNDLED -exclude HIDDEN -exclude BONUS -exclude .psd -exclude sources -resolve-src-symlinks \\\n            \"${PWD}/${i}\" \"${DESIGNS_FOLDER_PATH}\"\n\n      # TODO: put correct SANDVOX_VERSION and CFBundleVersion into Info.plist for each copied design\n\n    else\n        echo \"--------------  Not including $i\"\n    fi\ndone\n\npopd\n";
+			shellScript = "\nPBXCP=${SRCROOT}/../Code/Shared/Tools/pbxcp\n\nDESIGNS_FOLDER_PATH=${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Designs\nmkdir -p \"${DESIGNS_FOLDER_PATH}\"\n\npushd ../../Designs\n\nfor i in *\ndo\n    if [ -e \"${i}/BUNDLED\" ];    # BUNDLE EVERYTHING IN THE APP\n    then\n        # put into application\n        echo \"BUNDLED DESIGN: PBXCp \\\"$i\\\" ${DESIGNS_FOLDER_PATH}\"\n\n        \"${PBXCP}\" \\\n            -exclude .localized -exclude Sources -exclude sources -exclude Testing_Files -exclude .DS_Store -exclude CVS -exclude .svn -exclude BUNDLED -exclude HIDDEN -exclude BONUS -exclude .psd -exclude sources -resolve-src-symlinks \\\n            \"${PWD}/${i}\" \"${DESIGNS_FOLDER_PATH}\"\n\n      # TODO: put correct SANDVOX_VERSION and CFBundleVersion into Info.plist for each copied design\n\n    else\n        echo \"--------------  Not including $i\"\n    fi\ndone\n\npopd\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66E60BFA95B9007A4871 /* Script - Add png2ico */ = {
@@ -7164,7 +7309,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "\nPBXCP=${SRCROOT}/../Code/Shared/Tools/pbxcp\n\nEXECUTABLE=${PROJECT_DIR}/../Code/png2ico/png2ico\nEXECUTABLES_DIR=${TARGET_BUILD_DIR}/Sandvox.app/Contents/MacOS\n\necho \"png2ico: PBXCp ${EXECUTABLE} ${EXECUTABLES_DIR}\"\n\n\"${PBXCP}\" \"${EXECUTABLE}\" \"${EXECUTABLES_DIR}\"\n\n";
+			shellScript = "\nPBXCP=${SRCROOT}/../Code/Shared/Tools/pbxcp\n\nEXECUTABLE=${PROJECT_DIR}/../Code/png2ico/png2ico\nEXECUTABLES_DIR=${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/MacOS\n\necho \"png2ico: PBXCp ${EXECUTABLE} ${EXECUTABLES_DIR}\"\n\n\"${PBXCP}\" \"${EXECUTABLE}\" \"${EXECUTABLES_DIR}\"\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66E80BFA95DD007A4871 /* Script - Add Spotlight Importer */ = {
@@ -7179,7 +7324,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "\nPBXCP=${SRCROOT}/../Code/Shared/Tools/pbxcp\n\nIMPORTER=${TARGET_BUILD_DIR}/MetaSandvox.mdimporter\nSPOTLIGHT_DIR=${TARGET_BUILD_DIR}/Sandvox.app/Contents/Library/Spotlight\n\necho \"Spotlight Importer: PBXCp ${IMPORTER} ${SPOTLIGHT_DIR}\"\n\nmkdir -p \"${SPOTLIGHT_DIR}\"\n\n\"${PBXCP}\" \\\n  -exclude .DS_Store -exclude CVS -exclude .svn -resolve-src-symlinks \\\n  \"${IMPORTER}\" \"${SPOTLIGHT_DIR}\"\n\n\n";
+			shellScript = "\nPBXCP=${SRCROOT}/../Code/Shared/Tools/pbxcp\n\nIMPORTER=${BUILT_PRODUCTS_DIR}/MetaSandvox.mdimporter\nSPOTLIGHT_DIR=${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Library/Spotlight\n\necho \"Spotlight Importer: PBXCp ${IMPORTER} ${SPOTLIGHT_DIR}\"\n\nmkdir -p \"${SPOTLIGHT_DIR}\"\n\n\"${PBXCP}\" \\\n  -exclude .DS_Store -exclude CVS -exclude .svn -resolve-src-symlinks \\\n  \"${IMPORTER}\" \"${SPOTLIGHT_DIR}\"\n\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3CA0FEE30D7614AB0093562D /* ShellScript */ = {
@@ -7223,7 +7368,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/bash;
-			shellScript = "echo \"###\"\necho \"Removing Unsupported languages from ${TARGET_BUILD_DIR}/Sandvox.app/...\"\n\n\n# COMMENT ONE OF THESE OUT DEPENDING ON WHAT KIND OF BUILD THIS IS....  USUALLY WE MAKE SPECIAL BUILDS FOR THE LOCALIZERS.\n\n\n# Localization builds only -- Let the languages we are working on localizing through.\n\n#find \"${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH}\" -name '*.lproj' | grep -vE '/en\\.|/fr\\.|/de\\.|/es\\.|/pt_BR\\.' | xargs rm -rf\n\n\n\n# Release builds -- listed here are the languages we are allowed to keep.\n\nfind \"${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH}\" -name '*.lproj' | grep -vE '/en\\.|/fr\\.|/de\\.|/pt_BR\\.' | xargs rm -rf\n";
+			shellScript = "echo \"###\"\necho \"Removing Unsupported languages from ${BUILT_PRODUCTS_DIR}/Sandvox.app/...\"\n\n\n# COMMENT ONE OF THESE OUT DEPENDING ON WHAT KIND OF BUILD THIS IS....  USUALLY WE MAKE SPECIAL BUILDS FOR THE LOCALIZERS.\n\n\n# Localization builds only -- Let the languages we are working on localizing through.\n\n#find \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}\" -name '*.lproj' | grep -vE '/en\\.|/fr\\.|/de\\.|/es\\.|/pt_BR\\.' | xargs rm -rf\n\n\n\n# Release builds -- listed here are the languages we are allowed to keep.\n\nfind \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}\" -name '*.lproj' | grep -vE '/en\\.|/fr\\.|/de\\.|/pt_BR\\.' | xargs rm -rf\n";
 			showEnvVarsInLog = 0;
 		};
 		CEC65E5D0E1AFD170065C3D0 /* Copy Sparkle - Strip Localizations */ = {
@@ -7238,7 +7383,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "\n# as of July 2008, we are only localized for\n# da, de, en, fr, it, ja, sv, zh_CN, and zh_TW\n\n# this script copies Sparkle into the app, but excludes those\n# those localizations not specified above\n\nPBXCP=${PROJECT_DIR}/../Code/Shared/Tools/pbxcp\nSPARKLE=${SRCROOT}/../Code/Shared/ThirdParty/Sparkle/Sparkle.framework\n\necho \"Copying Sparkle from ${SPARKLE} to ${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH} ...\"\n\n\"${PBXCP}\" \\\n\t-exclude .DS_Store -exclude CVS -exclude .svn -exclude PrivateHeaders -exclude Headers \\\n\t-resolve-src-symlinks -v \\\n\t\"${SPARKLE}\" \\\n\t\"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}\"\n";
+			shellScript = "\n# as of July 2008, we are only localized for\n# da, de, en, fr, it, ja, sv, zh_CN, and zh_TW\n\n# this script copies Sparkle into the app, but excludes those\n# those localizations not specified above\n\nPBXCP=${PROJECT_DIR}/../Code/Shared/Tools/pbxcp\nSPARKLE=${SRCROOT}/../Code/Shared/ThirdParty/Sparkle/Sparkle.framework\n\necho \"Copying Sparkle from ${SPARKLE} to ${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH} ...\"\n\n\"${PBXCP}\" \\\n\t-exclude .DS_Store -exclude CVS -exclude .svn -exclude PrivateHeaders -exclude Headers \\\n\t-resolve-src-symlinks -v \\\n\t\"${SPARKLE}\" \\\n\t\"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CEF64406134B69A60011AC68 /* Script - Remove other resources */ = {
@@ -7253,7 +7398,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "\necho \"### Removing dumb resources\"\n\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Versions/A/Resources/en.lproj/DropletLauncher.nib\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Versions/A/Resources/DropletIcon.icns\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Versions/A/Resources/DropletLauncher\"\nrm -rf \"${TARGET_BUILD_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Versions/A/Resources/fr.lproj/DropletLauncher.nib\"\n\necho TARGET_BUILD_DIR ${TARGET_BUILD_DIR}\n";
+			shellScript = "\necho \"### Removing dumb resources\"\n\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Versions/A/Resources/en.lproj/DropletLauncher.nib\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Versions/A/Resources/DropletIcon.icns\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Versions/A/Resources/DropletLauncher\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Versions/A/Resources/fr.lproj/DropletLauncher.nib\"\n\necho BUILT_PRODUCTS_DIR ${BUILT_PRODUCTS_DIR}\n";
 		};
 		CEFD3EFC12E9FA0100D3A6CD /* Script - Internationalize XIBs */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -7267,7 +7412,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/zsh;
-			shellScript = "                                                                                                                                                             \n\nif [[ $PRODUCT_VARIANT == 'RELEASE' ]]; then\n\techo \"Skipping nib i18n for Release Versions\"\n\texit 0\nfi;\n\necho \"nib i18n:\"\n\n# Strangely, this wasn't defined anymore....\nUNLOCALIZED_RESOURCES_FOLDER_PATH=\"${PRODUCT_NAME}.app/Contents/Resources\"\n\n#echo \"looking in:\"\n#echo ${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\n#echo \"looking at:\"\n#echo ${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/**/*.nib\n\n\nforeach nibFile (${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/**/*.nib) # getting every nib in the built product - but not plugins\n\t#echo \"nibFile=${nibFile}\"\n\t#echo \"SOURCE_ROOT=${SOURCE_ROOT}\"\n\n\tstringsFilePath=${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/en.lproj/`basename ${nibFile} .nib`.strings # The path where the strings file will go\n\t#echo \"stringsFilePath=${stringsFilePath}\"\n\n\t# Look for the .xib file corresponding to that built nib file\n\txibFile=`basename ${nibFile} .nib`.xib\n\t#echo \"xibFile=${xibFile}\"\n\n\txibFilePath=`echo ${SOURCE_ROOT}/en.lproj/${xibFile}`\n\n\tif [[ -e ${xibFilePath} ]] {\n\t\techo \"*** APP: en.lproj: Getting strings out of Xib: ${xibFilePath}\"\n\t\trm -f ${stringsFilePath}~\n\t\t#echo \"ibtool --generate-stringsfile ${stringsFilePath}~ ${xibFilePath}\"\n\t\tibtool --generate-stringsfile ${stringsFilePath}~ ${xibFilePath}\n\t\tif [[ -e ${stringsFilePath}~ ]] {\n\t\t\t${BUILT_PRODUCTS_DIR}/xibLocalizationPostprocessor ${stringsFilePath}~ ${stringsFilePath}\n\t\t\trm -f ${stringsFilePath}~\n\t    } else {\n\t\t\techo \"ERROR ********* ibtool did not get strings from ${xibFilePath} to ${stringsFilePath}~\"\n\t\t}\n\t}\n\n\txibFilePath=`echo ${SOURCE_ROOT}/../../Shared/Interfaces/en.lproj/${xibFile}`\n\n\tif [[ -e ${xibFilePath} ]] {\n\t\techo \"*** SHARED: Getting strings out of Xib: ${xibFilePath}\"\n\t\trm -f ${stringsFilePath}~\n\t\tibtool --generate-stringsfile ${stringsFilePath}~ ${xibFilePath}\n\t\tif [[ -e ${stringsFilePath}~ ]] {\n\t\t\t${BUILT_PRODUCTS_DIR}/xibLocalizationPostprocessor ${stringsFilePath}~ ${stringsFilePath}\n\t\t\trm -f ${stringsFilePath}~\n\t    } else {\n\t\t\techo \"ERROR ********* ibtool did not get strings from ${xibFilePath} to ${stringsFilePath}~\"\n\t\t}\n\t}\n\nend\n\n\n\n\n\n#echo \"gonna do these plugins:\"\n#echo ${TARGET_BUILD_DIR}/${PRODUCT_NAME}.app/Contents/Plugins/**/*.nib\n\nforeach nibFile (${TARGET_BUILD_DIR}/${PRODUCT_NAME}.app/Contents/Plugins/**/*.nib) # getting every nib in the built product - but not plugins\n\t#echo \"nibFile=${nibFile}\"\n\t\n\telementBaseName=`dirname ${nibFile}`\n\telementBaseName=`dirname ${elementBaseName}`\n\telementBaseName=`dirname ${elementBaseName}`\n\telementBaseName=`dirname ${elementBaseName}`\n#echo \"elementBaseName = ${elementBaseName}\"\n\telementBaseName=`basename ${elementBaseName} .svxElement`\n#echo \"elementBaseName = ${elementBaseName}\"\n\n\tstringsFilePath=`dirname ${nibFile}`/`basename ${nibFile} .nib`.strings # The path where the strings file will go\n\t#echo \"stringsFilePath=${stringsFilePath}\"\n\n\t# Look for the .xib file corresponding to that built nib file\n\txibFile=`basename ${nibFile} .nib`.xib\n\t#echo \"xibFile=${xibFile}\"\n\n\n\txibFilePath=`echo ${SOURCE_ROOT}/../Plugins/${elementBaseName}Element/en.lproj/${xibFile}`\n\n\tif [[ -e ${xibFilePath} ]] {\n\t\techo \"*** PLUGIN: Getting strings out of Xib: ${xibFilePath}\"\n\t\trm -f ${stringsFilePath}~\n\t\tibtool --generate-stringsfile ${stringsFilePath}~ ${xibFilePath}\n\t\tif [[ -e ${stringsFilePath}~ ]] {\n\t\t\t${BUILT_PRODUCTS_DIR}/xibLocalizationPostprocessor ${stringsFilePath}~ ${stringsFilePath}\n\t\t\trm -f ${stringsFilePath}~\n\t    } else {\n\t\t\techo \"ERROR ********* ibtool did not get strings from ${xibFilePath} to ${stringsFilePath}~\"\n\t\t}\n\t}\n\nend\n\n";
+			shellScript = "                                                                                                                                                             \n\nif [[ $PRODUCT_VARIANT == 'RELEASE' ]]; then\n\techo \"Skipping nib i18n for Release Versions\"\n\texit 0\nfi;\n\necho \"nib i18n:\"\n\n# Strangely, this wasn't defined anymore....\nUNLOCALIZED_RESOURCES_FOLDER_PATH=\"${PRODUCT_NAME}.app/Contents/Resources\"\n\n#echo \"looking in:\"\n#echo ${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\n#echo \"looking at:\"\n#echo ${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/**/*.nib\n\n\nforeach nibFile (${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/**/*.nib) # getting every nib in the built product - but not plugins\n\t#echo \"nibFile=${nibFile}\"\n\t#echo \"SOURCE_ROOT=${SOURCE_ROOT}\"\n\n\tstringsFilePath=${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/en.lproj/`basename ${nibFile} .nib`.strings # The path where the strings file will go\n\t#echo \"stringsFilePath=${stringsFilePath}\"\n\n\t# Look for the .xib file corresponding to that built nib file\n\txibFile=`basename ${nibFile} .nib`.xib\n\t#echo \"xibFile=${xibFile}\"\n\n\txibFilePath=`echo ${SOURCE_ROOT}/en.lproj/${xibFile}`\n\n\tif [[ -e ${xibFilePath} ]] {\n\t\techo \"*** APP: en.lproj: Getting strings out of Xib: ${xibFilePath}\"\n\t\trm -f ${stringsFilePath}~\n\t\t#echo \"ibtool --generate-stringsfile ${stringsFilePath}~ ${xibFilePath}\"\n\t\tibtool --generate-stringsfile ${stringsFilePath}~ ${xibFilePath}\n\t\tif [[ -e ${stringsFilePath}~ ]] {\n\t\t\t${BUILT_PRODUCTS_DIR}/xibLocalizationPostprocessor ${stringsFilePath}~ ${stringsFilePath}\n\t\t\trm -f ${stringsFilePath}~\n\t    } else {\n\t\t\techo \"ERROR ********* ibtool did not get strings from ${xibFilePath} to ${stringsFilePath}~\"\n\t\t}\n\t}\n\n\txibFilePath=`echo ${SOURCE_ROOT}/../../Shared/Interfaces/en.lproj/${xibFile}`\n\n\tif [[ -e ${xibFilePath} ]] {\n\t\techo \"*** SHARED: Getting strings out of Xib: ${xibFilePath}\"\n\t\trm -f ${stringsFilePath}~\n\t\tibtool --generate-stringsfile ${stringsFilePath}~ ${xibFilePath}\n\t\tif [[ -e ${stringsFilePath}~ ]] {\n\t\t\t${BUILT_PRODUCTS_DIR}/xibLocalizationPostprocessor ${stringsFilePath}~ ${stringsFilePath}\n\t\t\trm -f ${stringsFilePath}~\n\t    } else {\n\t\t\techo \"ERROR ********* ibtool did not get strings from ${xibFilePath} to ${stringsFilePath}~\"\n\t\t}\n\t}\n\nend\n\n\n\n\n\n#echo \"gonna do these plugins:\"\n#echo ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/Plugins/**/*.nib\n\nforeach nibFile (${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/Plugins/**/*.nib) # getting every nib in the built product - but not plugins\n\t#echo \"nibFile=${nibFile}\"\n\t\n\telementBaseName=`dirname ${nibFile}`\n\telementBaseName=`dirname ${elementBaseName}`\n\telementBaseName=`dirname ${elementBaseName}`\n\telementBaseName=`dirname ${elementBaseName}`\n#echo \"elementBaseName = ${elementBaseName}\"\n\telementBaseName=`basename ${elementBaseName} .svxElement`\n#echo \"elementBaseName = ${elementBaseName}\"\n\n\tstringsFilePath=`dirname ${nibFile}`/`basename ${nibFile} .nib`.strings # The path where the strings file will go\n\t#echo \"stringsFilePath=${stringsFilePath}\"\n\n\t# Look for the .xib file corresponding to that built nib file\n\txibFile=`basename ${nibFile} .nib`.xib\n\t#echo \"xibFile=${xibFile}\"\n\n\n\txibFilePath=`echo ${SOURCE_ROOT}/../Plugins/${elementBaseName}Element/en.lproj/${xibFile}`\n\n\tif [[ -e ${xibFilePath} ]] {\n\t\techo \"*** PLUGIN: Getting strings out of Xib: ${xibFilePath}\"\n\t\trm -f ${stringsFilePath}~\n\t\tibtool --generate-stringsfile ${stringsFilePath}~ ${xibFilePath}\n\t\tif [[ -e ${stringsFilePath}~ ]] {\n\t\t\t${BUILT_PRODUCTS_DIR}/xibLocalizationPostprocessor ${stringsFilePath}~ ${stringsFilePath}\n\t\t\trm -f ${stringsFilePath}~\n\t    } else {\n\t\t\techo \"ERROR ********* ibtool did not get strings from ${xibFilePath} to ${stringsFilePath}~\"\n\t\t}\n\t}\n\nend\n\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -7635,7 +7781,7 @@
 				CEDA2DC1120CD437005FE23E /* SVVideoInspector.m in Sources */,
 				27D7340712118E3400722189 /* SVIndexPlugIn.m in Sources */,
 				27D7345612119C6600722189 /* SVMediaGraphicInspector.m in Sources */,
-				2704228212142F710077298A /* SVResizableDOMController.m in Sources */,
+				2704228212142F710077298A /* SVPlugInDOMController.m in Sources */,
 				CE65643B1219DAC8006C5B0D /* KSSimpleURLConnection.m in Sources */,
 				2725BA47121DE9990074EAA0 /* NSImageView+IMBImageItem.m in Sources */,
 				2725BC39121F3F690074EAA0 /* SVArchivePage.m in Sources */,
@@ -7664,7 +7810,7 @@
 				3CACE247127FB82300983DF2 /* SVCommentsWindowController.m in Sources */,
 				3CACE2A0127FB99400983DF2 /* SVGoogleWindowController.m in Sources */,
 				27711D551282BBCA00AE27CC /* SVImageItem.m in Sources */,
-				271884441296A28000139C89 /* KSElementInfo.m in Sources */,
+				271884441296A28000139C89 /* KSXMLAttributes.m in Sources */,
 				276C004F129BE40500568A73 /* SVGraphicContainerDOMController.m in Sources */,
 				276C010D129C00F800568A73 /* DOMTreeWalker+Karelia.m in Sources */,
 				277586F3129E87F80027C7FF /* SVLabel.m in Sources */,
@@ -7703,8 +7849,18 @@
 				2743EE8013BBB942009EA6D3 /* SVJSONSerialization.m in Sources */,
 				2743F0C613BC755A009EA6D3 /* SVImageRecipe.m in Sources */,
 				27F503E913BF3E1300F0FFD7 /* KSPerformOnThreadOperation.m in Sources */,
+				27FD6A6813C08B7900E9D407 /* CK2SFTPSession.m in Sources */,
+				27FD6D0813C10D3500E9D407 /* SVSFTPPublishingEngine.m in Sources */,
+				27FD6DEC13C1229200E9D407 /* CK2SFTPFileHandle.m in Sources */,
 				276BC94813C34DDC00EB2798 /* SVWorkspaceIconProtocol.m in Sources */,
+				2783A89413DA361900F9A702 /* SVTextInspector.m in Sources */,
+				278645B813C62D1C0098C34F /* SVElementInfoGatheringHTMLContext.m in Sources */,
+				27D68FD113CF6D2E00D7B867 /* SVPagelet.m in Sources */,
+				27FBC9BD13D4F0A3002F720B /* SVInlineGraphicContainer.m in Sources */,
+				27AA465313EC1802008470C7 /* KSBufferedWriter.m in Sources */,
 				2705B1B113EC0514004C678D /* SVWebEditorUpdatesHTMLContext.m in Sources */,
+				27139E5613F7EA3F00299254 /* SVWebEditorView.m in Sources */,
+				27DA95741401A557004DE2DA /* SVWebViewSelectionController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8726,6 +8882,11 @@
 					"\"$(SRCROOT)\"",
 				);
 				INFOPLIST_FILE = Info.plist;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../Code/SFTP\"",
+				);
+				OTHER_LDFLAGS = "-lsasl2";
 				PRODUCT_NAME = Sandvox;
 				WRAPPER_EXTENSION = app;
 			};
@@ -8751,6 +8912,11 @@
 					"\"$(SRCROOT)\"",
 				);
 				INFOPLIST_FILE = Info.plist;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../Code/SFTP\"",
+				);
 				MOMC_NO_WARNINGS = YES;
 				PRODUCT_NAME = Sandvox;
 				WRAPPER_EXTENSION = app;

@@ -12,9 +12,8 @@
 
 #import "KSHTMLWriter.h"
 
-#import "SVGraphicContainer.h"
+#import "SVComponent.h"
 #import "Sandvox.h"
-#import "KSMegaBufferedWriter.h"
 #import "KT.h"
 
 #import <iMedia/iMedia.h>
@@ -43,7 +42,6 @@ typedef NSUInteger SVPageImageRepresentationOptions2;
 #pragma mark -
 
 
-@class KSStringWriter;
 @class KTPage, SVSiteItem, SVArchivePage, SVGraphic, SVHTMLTextBlock, SVLink, SVMedia, SVMediaRequest, SVSidebarPageletsController;
 @class SVTemplate;
 @protocol SVGraphic, SVMedia, SVEnclosure;
@@ -52,8 +50,8 @@ typedef NSUInteger SVPageImageRepresentationOptions2;
 @interface SVHTMLContext : KSHTMLWriter <SVPlugInContext>
 {
   @private
-    KSStringWriter  *_output;
-    NSUInteger      _charactersWritten;
+    id <KSMultiBufferingWriter> _buffer;
+    NSUInteger                  _charactersWritten;
     
     NSURL   *_baseURL;
     
@@ -68,9 +66,11 @@ typedef NSUInteger SVPageImageRepresentationOptions2;
     
     NSUInteger      _headerLevel;
 	
-    NSMutableString         *_headerMarkup;
-    NSMutableString         *_endBodyMarkup;
-    NSUInteger              _headerMarkupIndex;
+    NSMutableString *_endBodyMarkup;
+    NSUInteger      _preHTMLBuffer;
+    NSMutableArray  *_preHTMLMarkup;
+    NSUInteger      _extraHeadBuffer;
+    NSMutableArray  *_extraHeadMarkup;
     
     NSMutableArray  *_iteratorsStack;
     BOOL            _writingPagelet;
@@ -83,18 +83,8 @@ typedef NSUInteger SVPageImageRepresentationOptions2;
 
 #pragma mark Init
 
-// Like -initWithOutputWriter: but gives the context more info about the output. In practice this means that if a page component changes the doctype, the output will be wiped and the page rewritten with the new doctype.
-- (id)initWithOutputStringWriter:(KSStringWriter *)output;
-
-- (id)init; // calls through to -initWithMutableString:
-
 // For if you need a fresh context based off an existing one
 - (id)initWithOutputWriter:(id <KSWriter>)output inheritFromContext:(SVHTMLContext *)context;
-
-
-#pragma mark Status
-// Throws away any data that can be, ready for more to write. Mainly used to retry writing after a doctype change
-- (void)reset;
 
 
 #pragma mark Document
@@ -107,7 +97,7 @@ typedef NSUInteger SVPageImageRepresentationOptions2;
 #pragma mark Properties
 
 // Not 100% sure I want to expose this!
-@property(nonatomic, retain, readonly) KSStringWriter *outputStringWriter;
+@property(nonatomic, retain, readonly) id <KSMultiBufferingWriter> outputStringWriter;
 @property(nonatomic, readonly) NSUInteger totalCharactersWritten;
 
 @property(nonatomic, retain, readonly) KTPage *page;    // does NOT affect .baseURL
@@ -151,8 +141,8 @@ typedef NSUInteger SVPageImageRepresentationOptions2;
 
 #pragma mark Graphic Containers
 
-- (id <SVGraphicContainer>)currentGraphicContainer;
-- (void)beginGraphicContainer:(id <SVGraphicContainer>)container;
+- (id <SVComponent>)currentGraphicContainer;
+- (void)beginGraphicContainer:(id <SVComponent>)container;
 - (void)endGraphicContainer;
 
 - (void)writeCalloutWithGraphics:(NSArray *)pagelets;
@@ -250,6 +240,7 @@ typedef NSUInteger SVPageImageRepresentationOptions2;
 
 #pragma mark Extra markup
 
+- (void)writePreHTMLMarkup;
 - (void)writeExtraHeaders;  // writes any code plug-ins etc. have requested should be inside the <head> element
 
 - (void)writeEndBodyString; // writes any code plug-ins etc. have requested should go at the end of the page, before </body>
