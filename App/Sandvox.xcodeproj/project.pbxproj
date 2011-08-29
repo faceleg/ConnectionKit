@@ -4457,7 +4457,6 @@
 		3C202DF507E00CCC00DE4994 /* Product Dependencies */ = {
 			isa = PBXGroup;
 			children = (
-				3CA9FD020D63A04A00815310 /* DataSources */,
 				3CA9FD200D63A06A00815310 /* Indexes */,
 				3CA9FD350D63A08000815310 /* Elements */,
 				3CA9FD410D63A0B400815310 /* Frameworks */,
@@ -4904,13 +4903,6 @@
 				3CA6B98C11F9130B004A4794 /* YRKSpinningProgressIndicator.m */,
 			);
 			name = YRKSpinningProgressIndicator;
-			sourceTree = "<group>";
-		};
-		3CA9FD020D63A04A00815310 /* DataSources */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = DataSources;
 			sourceTree = "<group>";
 		};
 		3CA9FD200D63A06A00815310 /* Indexes */ = {
@@ -8804,6 +8796,7 @@
 					"\"$(SRCROOT)/../Code/SFTP\"",
 				);
 				MOMC_NO_WARNINGS = YES;
+				OTHER_LDFLAGS = "-lsasl2";
 				PRODUCT_NAME = Sandvox;
 				WRAPPER_EXTENSION = app;
 			};
