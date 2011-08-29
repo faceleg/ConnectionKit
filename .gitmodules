@@ -13,3 +13,6 @@
 [submodule "Code/SFTP"]
 	path = Code/SFTP
 	url = git@github.com:karelia/libssh2_sftp-Cocoa-wrapper.git
+[submodule "Code/ConnectionKit"]
+	path = Code/ConnectionKit
+	url = git@github.com:karelia/ConnectionKit.git
