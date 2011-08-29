@@ -347,6 +347,12 @@
                            didReceiveAuthenticationChallenge:challenge];
 }
 
+- (void)SFTPSession:(CK2SFTPSession *)session appendStringToTranscript:(NSString *)string;
+{
+    [[self ks_proxyOnThread:nil waitUntilDone:NO]
+     connection:[self connection] appendString:string toTranscript:CKTranscriptSent];
+}
+
 @end
 
 

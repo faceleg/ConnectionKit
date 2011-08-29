@@ -1337,7 +1337,11 @@ static void *sProgressObservationContext = &sProgressObservationContext;
 - (void)connection:(id <CKConnection>)connection appendString:(NSString *)string toTranscript:(CKTranscriptType)transcript
 {
 	string = [string stringByAppendingString:@"\n"];
-	NSAttributedString *attributedString = [[connection class] attributedStringForString:string transcript:transcript];
+    
+    Class connectionClass = [connection class];
+    if (!connectionClass) connectionClass = [CKAbstractConnection class];
+    
+	NSAttributedString *attributedString = [connectionClass attributedStringForString:string transcript:transcript];
 	[[[KTTranscriptController sharedControllerWithoutLoading] textStorage] appendAttributedString:attributedString];
 }
 
