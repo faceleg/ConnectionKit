@@ -628,6 +628,16 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 #pragma mark Metrics
 
+- (NSString *)startResizableElement:(NSString *)elementName
+                             object:(NSObject *)object
+                            options:(SVResizingOptions)options
+                          sizeDelta:(NSSize)sizeDelta;
+{
+    [self buildAttributesForResizableElement:elementName object:object DOMControllerClass:nil sizeDelta:sizeDelta options:options];
+    
+    [self startElement:elementName];
+}
+
 - (void)buildAttributesForResizableElement:(NSString *)elementName
                                     object:(NSObject *)object
                         DOMControllerClass:(Class)controllerClass
