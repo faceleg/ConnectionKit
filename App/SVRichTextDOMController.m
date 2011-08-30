@@ -963,7 +963,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
                 parent = [selection parentWebEditorItem];
             }
             
-            SVGraphic *selectedGraphic = [selection representedObject];
+            SVGraphic *selectedGraphic = [selection graphic];
             [[graphic textAttachment] setPlacement:[selectedGraphic placement]];
             
             result = [[[self HTMLElement] ownerDocument] createRange];
