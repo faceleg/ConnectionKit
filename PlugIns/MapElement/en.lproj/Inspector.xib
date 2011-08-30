@@ -61,7 +61,7 @@
                 <double key="NSSize">11</double>
                 <int key="NSfFlags">16</int>
               </object>
-              <string key="NSAlternateContents">Google</string>
+              <string key="NSAlternateContents">Google Maps Mapping Service</string>
               <object class="NSMutableString" key="NSKeyEquivalent">
                 <characters key="NS.bytes"/>
               </object>
