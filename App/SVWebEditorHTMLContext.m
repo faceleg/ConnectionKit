@@ -101,13 +101,13 @@
     
     
     // Create controller
-    [self willBeginWritingHTMLTextBlock:textBlock];
+    [self beginGraphicContainer:textBlock];
     [textBlock release];
     
     [super writeElement:elementName withTitleOfPage:page asPlainText:plainText attributes:attributes];
 
     
-    [self didEndWritingHTMLTextBlock];
+    [self endGraphicContainer];
 }
 
 - (void)XwillWriteSummaryOfPage:(SVSiteItem *)page;

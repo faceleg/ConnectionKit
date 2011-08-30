@@ -166,8 +166,6 @@ typedef NSUInteger SVPageImageRepresentationOptions2;
 
 
 #pragma mark Text Blocks
-- (void)willBeginWritingHTMLTextBlock:(SVHTMLTextBlock *)textBlock;
-- (void)didEndWritingHTMLTextBlock;
 - (void)willWriteSummaryOfPage:(SVSiteItem *)page;
 
 
