@@ -44,11 +44,6 @@
 static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 
 
-@interface DOMElement (SVParagraphedHTMLWriter)
-- (DOMNodeList *)getElementsByClassName:(NSString *)name;
-@end
-
-
 @interface SVRichTextDOMController ()
 - (SVDOMController *)convertImageElement:(DOMHTMLImageElement *)imageElement toGraphic:(SVMediaGraphic *)image;
 @end
