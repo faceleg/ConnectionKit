@@ -5,6 +5,9 @@
 // release builds are 32-bit Universal
 ARCHS = i386
 
+LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks"
+
+
 GCC_PRECOMPILE_PREFIX_HEADER = YES
 GCC_PREFIX_HEADER = Marvel_Prefix.pch
 

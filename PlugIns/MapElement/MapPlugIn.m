@@ -159,7 +159,7 @@
                                                        plugIn:self
                                                       options:0
                                               preferredIdName:@"googlemap"
-                                                   attributes:nil];
+                                                   attributes:[NSDictionary dictionaryWithObject:@"googlemap" forKey:@"class"]];
             [context endElement]; // </div>
             
             

@@ -16,7 +16,7 @@
 #import "KTHostProperties.h"
 #import "KTMobileMePublishingEngine.h"
 #import "KTPublishingWindowController.h"
-#import "KTRemotePublishingEngine.h"
+#import "SVSFTPPublishingEngine.h"
 #import "SVSiteOutlineViewController.h"
 #import "SVPagesController.h"
 #import "KTToolbars.h"
@@ -232,6 +232,13 @@
 	{
 		result = [KTMobileMePublishingEngine class];
 	}
+    else if ([[[[[self document] site] hostProperties] valueForKey:@"protocol"] isEqualToString:@"SFTP"])
+    {
+        if (![[[[[self document] site] hostProperties] valueForKey:@"usePublicKey"] boolValue])
+        {
+            result = [SVSFTPPublishingEngine class];
+        }
+    }
 	
 	return result;
 }

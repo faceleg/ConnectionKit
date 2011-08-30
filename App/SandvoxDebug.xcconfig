@@ -2,6 +2,8 @@
 // grab SANDVOX_VERSION
 #include "../Xcode/Configurations/Sandvox.xcconfig"
 
+LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks"
+
 COPY_PHASE_STRIP = NO
 DEBUG_INFORMATION_FORMAT = dwarf
 FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../Code/Shared/ThirdParty/BWToolkit" "$(SRCROOT)/../Code/Shared/ThirdParty/Sparkle" "$(SRCROOT)/../Code/Shared/ThirdParty/JSTalk" "$(SRCROOT)/../Code/Shared/ThirdParty/Growl" "$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks"

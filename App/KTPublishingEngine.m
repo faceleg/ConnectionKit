@@ -85,8 +85,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 - (void)addResourceFile:(NSURL *)resourceURL;
 
 - (CKTransferRecord *)createDirectory:(NSString *)remotePath;
-- (unsigned long)remoteFilePermissions;
-- (unsigned long)remoteDirectoryPermissions;
 
 @end
 
@@ -146,10 +144,23 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         
         
         // Content Hash cache
-        NSArray *records = [[site managedObjectContext]
-                            fetchAllObjectsForEntityForName:@"FilePublishingRecord"
-                            predicate:[NSPredicate predicateWithFormat:@"contentHash != nil"]
-                            error:NULL];
+        // Favour the records with shortest paths for consistent results each publish
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        [request setPredicate:[NSPredicate predicateWithFormat:@"contentHash != nil"]];
+        
+        [request setEntity:[NSEntityDescription entityForName:@"FilePublishingRecord"
+                                       inManagedObjectContext:[site managedObjectContext]]];
+        
+        [request setSortDescriptors:NSARRAY([[[NSSortDescriptor alloc] initWithKey:@"filename.length"
+                                                                         ascending:YES]
+                                             autorelease],
+                                            [[[NSSortDescriptor alloc] initWithKey:@"filename"
+                                                                         ascending:YES
+                                                                          selector:@selector(caseInsensitiveCompare:)]
+                                             autorelease])];
+        
+        NSArray *records = [[site managedObjectContext] executeFetchRequest:request error:NULL];
+        [request release];
         
         _publishingRecordsByImageRecipe = [[NSMutableDictionary alloc] initWithCapacity:[records count]];
         
@@ -158,7 +169,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             SVImageRecipe *recipe = [[SVImageRecipe alloc] initWithContentHash:[aRecord contentHash]];
             if (recipe)
             {
-                [_publishingRecordsByImageRecipe setObject:aRecord forKey:recipe];
+                CFDictionaryAddValue((CFMutableDictionaryRef)_publishingRecordsByImageRecipe,
+                                     recipe,
+                                     aRecord);
                 [recipe release];
             }
         }
@@ -172,8 +185,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     // The connection etc. should already have been shut down
     OBASSERT(!_connection);
     
-    [_baseTransferRecord release];
-    [_rootTransferRecord release];
+    [self setRootTransferRecord:nil];
+    
     [_site release];
 	[_documentRootPath release];
     [_subfolderPath release];
@@ -227,7 +240,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	self.countOfPublishedItems = 0;
 	
 	if ([self status] != KTPublishingEngineStatusNotStarted) return;
+    
     _status = KTPublishingEngineStatusGatheringMedia;
+    _isExecuting = YES;
     
     [self main];
 }
@@ -287,7 +302,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     // Store the op ready for dependencies to be added
     NSOperation *nextOp = [[NSInvocationOperation alloc]
                                      initWithTarget:self
-                                     selector:@selector(finishPublishing)
+                                     selector:@selector(finishGeneratingContent)
                                      object:nil];
     
     [self setStartNextPhaseOperation:nextOp];
@@ -321,7 +336,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     // Mark self as finished
     if ([self status] > KTPublishingEngineStatusNotStarted && [self status] < KTPublishingEngineStatusFinished)
     {
-        [self engineDidPublish:NO error:[NSError errorWithDomain:NSCocoaErrorDomain code:NSUserCancelledError userInfo:nil]];
+        [self finishPublishing:YES error:nil];
     }
 }
 
@@ -368,13 +383,20 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (CKTransferRecord *)rootTransferRecord { return _rootTransferRecord; }
 
+static void *sProgressObservationContext = &sProgressObservationContext;
+
 /*  Also has the side-effect of updating the base transfer record
  */
 - (void)setRootTransferRecord:(CKTransferRecord *)rootRecord
 {
+    [_rootTransferRecord removeObserver:self forKeyPath:@"progress"];
+    
     [rootRecord retain];
     [_rootTransferRecord release];
     _rootTransferRecord = rootRecord;
+    
+    [rootRecord addObserver:self forKeyPath:@"progress" options:0 context:sProgressObservationContext];
+    
     
     // If there is a subfolder, create it. This also gives us a valid -baseTransferRecord
     [self willChangeValueForKey:@"baseTransferRecord"]; // Automatic KVO-notifications are used for rootTransferRecord
@@ -1136,6 +1158,18 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)setDelegate:(id <KTPublishingEngineDelegate>)delegate { _delegate = delegate; }
 
+- (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (context == sProgressObservationContext)
+    {
+        [[self delegate] publishingEngineDidUpdateProgress:self];
+    }
+    else
+    {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
+
 @end
 
 
@@ -1149,9 +1183,10 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 /*  Call this method once publishing has ended, whether it be successfully or not.
  *  This method is responsible for cleaning up after publishing, and informing the delegate.
  */
-- (void)engineDidPublish:(BOOL)didPublish error:(NSError *)error
+- (void)finishPublishing:(BOOL)didPublish error:(NSError *)error
 {
-    OBPRECONDITION([self status] > KTPublishingEngineStatusNotStarted && [self status] < KTPublishingEngineStatusFinished);
+    //OBPRECONDITION([self status] > KTPublishingEngineStatusNotStarted && [self status] < KTPublishingEngineStatusFinished);
+    // Why did I ever care about the status? It's possible to file while trying to get started. Mike
     
     
     // In the event of failure, end page parsing and media URL connections
@@ -1171,15 +1206,22 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     
     // Inform the delegate
-    if (didPublish)
-    {
-        [[self delegate] publishingEngineDidFinish:self];
-    }
-    else
+    [self willChangeValueForKey:@"isFinished"];
+    [self willChangeValueForKey:@"isExecuting"];
+    
+    if (!didPublish)
     {
         [[self delegate] publishingEngine:self didFailWithError:error];
     }
+    
+    _isFinished = YES;
+    _isExecuting = NO;
+    [self didChangeValueForKey:@"isFinished"];
+    [self didChangeValueForKey:@"isExecuting"];
 }
+
+- (BOOL)isExecuting; { return _isExecuting; }
+- (BOOL)isFinished; { return _isFinished; }
 
 #pragma mark Connection
 
@@ -1223,7 +1265,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	[[self delegate] publishingEngine:self didBeginUploadToPath:remotePath];
 }
 
-- (void)connection:(id <CKConnection>)con upload:(NSString *)remotePath progressedTo:(NSNumber *)percent;
+- (void)recordDidProgress:(NSNotification *)notification;
 {
     if ([self status] <= KTPublishingEngineStatusUploading)
     {
@@ -1249,7 +1291,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         ![con isConnected] &&
         [[(CKAbstractQueueConnection *)con commandQueue] count] == 0)
     {
-        [self engineDidPublish:YES error:nil];
+        [self finishPublishing:YES error:nil];
     }
     else
     {
@@ -1288,14 +1330,18 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	}
 	else
 	{
-		[self engineDidPublish:NO error:error];
+		[self finishPublishing:NO error:error];
 	}
 }
 
 - (void)connection:(id <CKConnection>)connection appendString:(NSString *)string toTranscript:(CKTranscriptType)transcript
 {
 	string = [string stringByAppendingString:@"\n"];
-	NSAttributedString *attributedString = [[connection class] attributedStringForString:string transcript:transcript];
+    
+    Class connectionClass = [connection class];
+    if (!connectionClass) connectionClass = [CKAbstractConnection class];
+    
+	NSAttributedString *attributedString = [connectionClass attributedStringForString:string transcript:transcript];
 	[[[KTTranscriptController sharedControllerWithoutLoading] textStorage] appendAttributedString:attributedString];
 }
 
@@ -1324,7 +1370,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     }
 }
 
-- (void)finishPublishing;
+- (void)finishGeneratingContent;
 {
     OBASSERT([NSThread isMainThread]);
     
@@ -1340,7 +1386,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     // Once everything is uploaded, disconnect. May be that nothing was published, so end immediately
     [[self connection] disconnect];
-    if (![[[self baseTransferRecord] contents] count]) [self engineDidPublish:YES error:NULL];
+    if (![[[self baseTransferRecord] contents] count]) [self finishPublishing:YES error:NULL];
 }
 
 #pragma mark Uploading Support

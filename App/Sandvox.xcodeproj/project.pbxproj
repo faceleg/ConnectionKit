@@ -564,6 +564,15 @@
 		27FAD5541146AEF80040FA44 /* SVTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FAD5521146AEF80040FA44 /* SVTabViewController.m */; };
 		27FC47EF1030CE7500A4A5E2 /* NSSet+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FC47ED1030CE7500A4A5E2 /* NSSet+Karelia.h */; settings = {ATTRIBUTES = (); }; };
 		27FC47F01030CE7500A4A5E2 /* NSSet+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FC47EE1030CE7500A4A5E2 /* NSSet+Karelia.m */; };
+		27FD6A6713C08B7900E9D407 /* CK2SFTPSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FD6A6513C08B7900E9D407 /* CK2SFTPSession.h */; };
+		27FD6A6813C08B7900E9D407 /* CK2SFTPSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FD6A6613C08B7900E9D407 /* CK2SFTPSession.m */; };
+		27FD6B4713C09C4500E9D407 /* libssh2_publickey.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FD6B4413C09C4500E9D407 /* libssh2_publickey.h */; };
+		27FD6B4813C09C4500E9D407 /* libssh2_sftp.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FD6B4513C09C4500E9D407 /* libssh2_sftp.h */; };
+		27FD6B4913C09C4500E9D407 /* libssh2.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FD6B4613C09C4500E9D407 /* libssh2.h */; };
+		27FD6D0713C10D3500E9D407 /* SVSFTPPublishingEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FD6D0513C10D3500E9D407 /* SVSFTPPublishingEngine.h */; };
+		27FD6D0813C10D3500E9D407 /* SVSFTPPublishingEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FD6D0613C10D3500E9D407 /* SVSFTPPublishingEngine.m */; };
+		27FD6DEB13C1229200E9D407 /* CK2SFTPFileHandle.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FD6DE913C1229200E9D407 /* CK2SFTPFileHandle.h */; };
+		27FD6DEC13C1229200E9D407 /* CK2SFTPFileHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FD6DEA13C1229200E9D407 /* CK2SFTPFileHandle.m */; };
 		27FDA7081238F4C3006E1A0D /* KSURLUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FDA7061238F4C3006E1A0D /* KSURLUtilities.h */; };
 		27FDA7091238F4C3006E1A0D /* KSURLUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FDA7071238F4C3006E1A0D /* KSURLUtilities.m */; };
 		27FDA7211238F66F006E1A0D /* KSPathUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FDA71F1238F66F006E1A0D /* KSPathUtilities.h */; };
@@ -603,6 +612,8 @@
 		3C3F54A20D625983004885E7 /* AmazonSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3F54A10D625983004885E7 /* AmazonSupport.framework */; };
 		3C4328CA07F7D7F600DD0D92 /* KTHostSetupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D7B07DFC30800DE4994 /* KTHostSetupController.m */; };
 		3C4328E207F7DCA600DD0D92 /* KTDocWindowController+Toolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D3C07DFC0F000DE4994 /* KTDocWindowController+Toolbar.m */; };
+		3C48038D13FB737A00E9F309 /* libssh2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C48038C13FB737A00E9F309 /* libssh2.dylib */; };
+		3C48039213FB73D500E9F309 /* libssh2.dylib in Copy dylibs */ = {isa = PBXBuildFile; fileRef = 3C48038C13FB737A00E9F309 /* libssh2.dylib */; };
 		3C48399113F5D5C700F961C2 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C48399013F5D5C700F961C2 /* libcrypto.dylib */; };
 		3C5A72380BF7ADE100776464 /* NSEntityDescription+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A712D0BF7ADE100776464 /* NSEntityDescription+KTExtensions.m */; };
 		3C5A723C0BF7ADE100776464 /* NSFetchRequest+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71310BF7ADE100776464 /* NSFetchRequest+KTExtensions.m */; };
@@ -1339,6 +1350,41 @@
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = ContactElement;
 		};
+		27E87737140C173E0027A738 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 79CFD12609F702BE00172CDD;
+			remoteInfo = Framework;
+		};
+		27E87739140C173E0027A738 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 09D6601D09FD37990000BA00;
+			remoteInfo = UnitTest;
+		};
+		27E8773B140C173E0027A738 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 795FF4F10B0C013200EA9292;
+			remoteInfo = DropletHelper;
+		};
+		27E8773D140C173E0027A738 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7983E6D20B0C4DF000F5078E;
+			remoteInfo = DropletLauncher;
+		};
+		27E8773F140C18890027A738 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 79CFD12509F702BE00172CDD;
+			remoteInfo = Framework;
+		};
 		3C0049551210CB87006BAD9C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3CA900670D63C76100815310 /* IFrameElement.xcodeproj */;
@@ -1675,41 +1721,6 @@
 			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = GalleryIndex;
 		};
-		CE559B611085296D008870B5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 79CFD12509F702BE00172CDD;
-			remoteInfo = Framework;
-		};
-		CE7638091083F70600EEA9CF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 79CFD12609F702BE00172CDD;
-			remoteInfo = Framework;
-		};
-		CE76380B1083F70600EEA9CF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 09D6601D09FD37990000BA00;
-			remoteInfo = UnitTest;
-		};
-		CE76380D1083F70600EEA9CF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 795FF4F10B0C013200EA9292;
-			remoteInfo = DropletHelper;
-		};
-		CE76380F1083F70600EEA9CF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 7983E6D20B0C4DF000F5078E;
-			remoteInfo = DropletLauncher;
-		};
 		CE9983190D614DD700F2DD12 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3F147C09D521AE00C01EED /* MetaMarvel.xcodeproj */;
@@ -1754,6 +1765,17 @@
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 1;
+		};
+		3CB7531C13CFAAF70033600F /* Copy dylibs */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				3C48039213FB73D500E9F309 /* libssh2.dylib in Copy dylibs */,
+			);
+			name = "Copy dylibs";
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		CEC10DFF0D7793AE00513E70 /* Copy Frameworks ALWAYS */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -2129,8 +2151,8 @@
 		27AD53A40D6B40C300883550 /* SVHTMLTemplateParser+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVHTMLTemplateParser+Private.h"; sourceTree = "<group>"; };
 		27AE74730EEDE6CC00409D80 /* KTPublishingWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPublishingWindowController.h; sourceTree = "<group>"; };
 		27AE74740EEDE6CC00409D80 /* KTPublishingWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPublishingWindowController.m; sourceTree = "<group>"; };
-		27AE75C60EEEB12D00409D80 /* error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = error.png; path = ../../connection/error.png; sourceTree = SOURCE_ROOT; };
-		27AE75C70EEEB12D00409D80 /* finished.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = finished.png; path = ../../connection/finished.png; sourceTree = SOURCE_ROOT; };
+		27AE75C60EEEB12D00409D80 /* error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = error.png; path = ../Code/ConnectionKit/error.png; sourceTree = SOURCE_ROOT; };
+		27AE75C70EEEB12D00409D80 /* finished.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = finished.png; path = ../Code/ConnectionKit/finished.png; sourceTree = SOURCE_ROOT; };
 		27AED14B1087CC9C005EDA77 /* SVDocWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDocWindow.h; sourceTree = "<group>"; };
 		27AED14C1087CC9C005EDA77 /* SVDocWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDocWindow.m; sourceTree = "<group>"; };
 		27AED2591088C754005EDA77 /* DOMRange+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOMRange+Karelia.h"; sourceTree = "<group>"; };
@@ -2265,8 +2287,17 @@
 		27FA98951194BF06003B8308 /* SidebarTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SidebarTemplate.html; sourceTree = "<group>"; };
 		27FAD5511146AEF80040FA44 /* SVTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVTabViewController.h; sourceTree = "<group>"; };
 		27FAD5521146AEF80040FA44 /* SVTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVTabViewController.m; sourceTree = "<group>"; };
-		27FC47ED1030CE7500A4A5E2 /* NSSet+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSSet+Karelia.h"; sourceTree = "<group>"; };
-		27FC47EE1030CE7500A4A5E2 /* NSSet+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSSet+Karelia.m"; sourceTree = "<group>"; };
+		27FC47ED1030CE7500A4A5E2 /* NSSet+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSSet+Karelia.h"; path = "../../Shared/Foundation/NSSet+Karelia.h"; sourceTree = "<group>"; };
+		27FC47EE1030CE7500A4A5E2 /* NSSet+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSSet+Karelia.m"; path = "../../Shared/Foundation/NSSet+Karelia.m"; sourceTree = "<group>"; };
+		27FD6A6513C08B7900E9D407 /* CK2SFTPSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CK2SFTPSession.h; sourceTree = "<group>"; };
+		27FD6A6613C08B7900E9D407 /* CK2SFTPSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CK2SFTPSession.m; sourceTree = "<group>"; };
+		27FD6B4413C09C4500E9D407 /* libssh2_publickey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libssh2_publickey.h; path = include/libssh2_publickey.h; sourceTree = "<group>"; };
+		27FD6B4513C09C4500E9D407 /* libssh2_sftp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libssh2_sftp.h; path = include/libssh2_sftp.h; sourceTree = "<group>"; };
+		27FD6B4613C09C4500E9D407 /* libssh2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libssh2.h; path = include/libssh2.h; sourceTree = "<group>"; };
+		27FD6D0513C10D3500E9D407 /* SVSFTPPublishingEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSFTPPublishingEngine.h; sourceTree = "<group>"; };
+		27FD6D0613C10D3500E9D407 /* SVSFTPPublishingEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSFTPPublishingEngine.m; sourceTree = "<group>"; };
+		27FD6DE913C1229200E9D407 /* CK2SFTPFileHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CK2SFTPFileHandle.h; sourceTree = "<group>"; };
+		27FD6DEA13C1229200E9D407 /* CK2SFTPFileHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CK2SFTPFileHandle.m; sourceTree = "<group>"; };
 		27FDA7061238F4C3006E1A0D /* KSURLUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSURLUtilities.h; sourceTree = "<group>"; };
 		27FDA7071238F4C3006E1A0D /* KSURLUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSURLUtilities.m; sourceTree = "<group>"; };
 		27FDA71F1238F66F006E1A0D /* KSPathUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSPathUtilities.h; sourceTree = "<group>"; };
@@ -2334,7 +2365,7 @@
 		3C30F7DC1312EC070022E49A /* MapElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapElement.xcodeproj; path = ../PlugIns/MapElement/MapElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C39822A0D2C3EC800432A0C /* SVPagesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPagesController.h; sourceTree = "<group>"; };
 		3C39822B0D2C3EC800432A0C /* SVPagesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPagesController.m; sourceTree = "<group>"; };
-		3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */ = {isa = PBXFileReference; explicitFileType = "wrapper.pb-project"; name = Connection.xcodeproj; path = ../../connection/Connection.xcodeproj; sourceTree = SOURCE_ROOT; };
+		3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */ = {isa = PBXFileReference; explicitFileType = "wrapper.pb-project"; name = Connection.xcodeproj; path = ../Code/ConnectionKit/Connection.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C3F147C09D521AE00C01EED /* MetaMarvel.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MetaMarvel.xcodeproj; path = ../Code/MetaMarvel/MetaMarvel.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C3F547C0D625919004885E7 /* Connection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Connection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C3F54A10D625983004885E7 /* AmazonSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AmazonSupport.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2343,6 +2374,7 @@
 		3C42E2990D64D253004F35FD /* PageCounterElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PageCounterElement.xcodeproj; path = ../PlugIns/PageCounterElement/PageCounterElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C42E4830D64FCE3004F35FD /* IMStatusElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IMStatusElement.xcodeproj; path = ../PlugIns/IMStatusElement/IMStatusElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C42E4F10D650429004F35FD /* FlickrElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FlickrElement.xcodeproj; path = ../PlugIns/FlickrElement/FlickrElement.xcodeproj; sourceTree = SOURCE_ROOT; };
+		3C48038C13FB737A00E9F309 /* libssh2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssh2.dylib; path = ../Code/SFTP/libssh2.dylib; sourceTree = SOURCE_ROOT; };
 		3C48399013F5D5C700F961C2 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
 		3C4C6A750D64122700398BDA /* DeliciousElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DeliciousElement.xcodeproj; path = ../PlugIns/DeliciousElement/DeliciousElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C4C6AA90D64136C00398BDA /* AmazonElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AmazonElement.xcodeproj; path = ../PlugIns/AmazonElement/AmazonElement.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -3216,6 +3248,7 @@
 				CEE1BE67117D2299002AA67D /* Symbolication.framework in Frameworks */,
 				CEF2889F11CC2D7300122D03 /* JSTalk.framework in Frameworks */,
 				3C48399113F5D5C700F961C2 /* libcrypto.dylib in Frameworks */,
+				3C48038D13FB737A00E9F309 /* libssh2.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3957,6 +3990,8 @@
 				276D4907137FFE6D004F4954 /* SVPublishingDigestStorage.m */,
 				2743F0C313BC755A009EA6D3 /* SVImageRecipe.h */,
 				2743F0C413BC755A009EA6D3 /* SVImageRecipe.m */,
+				27FD6D0513C10D3500E9D407 /* SVSFTPPublishingEngine.h */,
+				27FD6D0613C10D3500E9D407 /* SVSFTPPublishingEngine.m */,
 			);
 			name = "Publishing Engine";
 			sourceTree = "<group>";
@@ -4118,6 +4153,17 @@
 			name = "Plug-ins";
 			sourceTree = "<group>";
 		};
+		27E87730140C173E0027A738 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				27E87738140C173E0027A738 /* Connection.framework */,
+				27E8773A140C173E0027A738 /* UnitTest.octest */,
+				27E8773C140C173E0027A738 /* DropletHelper.app */,
+				27E8773E140C173E0027A738 /* DropletLauncher */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		27F365E01160209B003BDA5F /* Plug-In Inspector */ = {
 			isa = PBXGroup;
 			children = (
@@ -4227,6 +4273,29 @@
 				27ACC6EE126317CE00EA521E /* SVFillController.m */,
 			);
 			name = Shared;
+			sourceTree = "<group>";
+		};
+		27FD6A6313C08AD600E9D407 /* libssh2 */ = {
+			isa = PBXGroup;
+			children = (
+				27FD6B4413C09C4500E9D407 /* libssh2_publickey.h */,
+				27FD6B4513C09C4500E9D407 /* libssh2_sftp.h */,
+				27FD6B4613C09C4500E9D407 /* libssh2.h */,
+			);
+			name = libssh2;
+			path = ../Code/SFTP/libssh2;
+			sourceTree = "<group>";
+		};
+		27FD6A6413C08AFD00E9D407 /* SFTP */ = {
+			isa = PBXGroup;
+			children = (
+				27FD6A6513C08B7900E9D407 /* CK2SFTPSession.h */,
+				27FD6A6613C08B7900E9D407 /* CK2SFTPSession.m */,
+				27FD6DE913C1229200E9D407 /* CK2SFTPFileHandle.h */,
+				27FD6DEA13C1229200E9D407 /* CK2SFTPFileHandle.m */,
+			);
+			name = SFTP;
+			path = ../Code/SFTP;
 			sourceTree = "<group>";
 		};
 		27FDA7051238F483006E1A0D /* KSFileUtilities */ = {
@@ -4438,6 +4507,8 @@
 				27AE74720EEDE6AD00409D80 /* Publishing Engine */,
 				275666F10F015E9900878A05 /* Publishing UI */,
 				27AE74710EEDE68600409D80 /* Host Properties */,
+				27FD6A6413C08AFD00E9D407 /* SFTP */,
+				27FD6A6313C08AD600E9D407 /* libssh2 */,
 			);
 			name = "Remote Transfer";
 			sourceTree = "<group>";
@@ -4851,6 +4922,7 @@
 		3C72D4F4094A240E0061A876 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				3C48038C13FB737A00E9F309 /* libssh2.dylib */,
 				3C5C0DB10BF820EA003594F8 /* libbz2.dylib */,
 				3C72D4F5094A24390061A876 /* libz.dylib */,
 				3C48399013F5D5C700F961C2 /* libcrypto.dylib */,
@@ -5792,17 +5864,6 @@
 			path = ../../../../KSSelectionBorder/ESCursors;
 			sourceTree = "<group>";
 		};
-		CE7638021083F70600EEA9CF /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				CE76380A1083F70600EEA9CF /* Connection.framework */,
-				CE76380C1083F70600EEA9CF /* UnitTest.octest */,
-				CE76380E1083F70600EEA9CF /* DropletHelper.app */,
-				CE7638101083F70600EEA9CF /* DropletLauncher */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		CE89FE3011F7B92D00B180EB /* Localization */ = {
 			isa = PBXGroup;
 			children = (
@@ -6356,6 +6417,12 @@
 				2743EE7F13BBB942009EA6D3 /* SVJSONSerialization.h in Headers */,
 				2743F0C513BC755A009EA6D3 /* SVImageRecipe.h in Headers */,
 				27F503E813BF3E1300F0FFD7 /* KSPerformOnThreadOperation.h in Headers */,
+				27FD6A6713C08B7900E9D407 /* CK2SFTPSession.h in Headers */,
+				27FD6B4713C09C4500E9D407 /* libssh2_publickey.h in Headers */,
+				27FD6B4813C09C4500E9D407 /* libssh2_sftp.h in Headers */,
+				27FD6B4913C09C4500E9D407 /* libssh2.h in Headers */,
+				27FD6D0713C10D3500E9D407 /* SVSFTPPublishingEngine.h in Headers */,
+				27FD6DEB13C1229200E9D407 /* CK2SFTPFileHandle.h in Headers */,
 				276BC94713C34DDC00EB2798 /* SVWorkspaceIconProtocol.h in Headers */,
 				3C9A37BC13E1304D0010A469 /* ethernet.h in Headers */,
 				3C9A37E213E137950010A469 /* Payload.h in Headers */,
@@ -6422,13 +6489,14 @@
 				3C536FA713BC3058004222D5 /* Generate CFBundleShortVersionString */,
 				3C7D7D5313B3B01D00B58137 /* Generate CFBundleVersion */,
 				3C6816C813FEC68500EE0D9B /* Add Test Receipt */,
+				3CB7531C13CFAAF70033600F /* Copy dylibs */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				3C535FFC13BC247F004222D5 /* PBXTargetDependency */,
+				27E87740140C18890027A738 /* PBXTargetDependency */,
 				CED864B110AA41DC002DF34F /* PBXTargetDependency */,
-				CE559B621085296D008870B5 /* PBXTargetDependency */,
 				27B4129A13DF7F7F004173E8 /* PBXTargetDependency */,
 				3C1F512711D576D00036B375 /* PBXTargetDependency */,
 			);
@@ -6518,7 +6586,7 @@
 					ProjectRef = 274339E90D77339B00164FA5 /* CollectionArchiveElement.xcodeproj */;
 				},
 				{
-					ProductGroup = CE7638021083F70600EEA9CF /* Products */;
+					ProductGroup = 27E87730140C173E0027A738 /* Products */;
 					ProjectRef = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
 				},
 				{
@@ -6666,6 +6734,34 @@
 			remoteRef = 27CFC646123E79A900BF018C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		27E87738140C173E0027A738 /* Connection.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Connection.framework;
+			remoteRef = 27E87737140C173E0027A738 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		27E8773A140C173E0027A738 /* UnitTest.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = UnitTest.octest;
+			remoteRef = 27E87739140C173E0027A738 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		27E8773C140C173E0027A738 /* DropletHelper.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = DropletHelper.app;
+			remoteRef = 27E8773B140C173E0027A738 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		27E8773E140C173E0027A738 /* DropletLauncher */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = DropletLauncher;
+			remoteRef = 27E8773D140C173E0027A738 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		3C0049561210CB87006BAD9C /* IFrame.svxElement */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
@@ -6811,34 +6907,6 @@
 			fileType = wrapper.cfbundle;
 			path = GalleryIndex.svxElement;
 			remoteRef = CE54150E133C08DA003F635A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CE76380A1083F70600EEA9CF /* Connection.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Connection.framework;
-			remoteRef = CE7638091083F70600EEA9CF /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CE76380C1083F70600EEA9CF /* UnitTest.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = UnitTest.octest;
-			remoteRef = CE76380B1083F70600EEA9CF /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CE76380E1083F70600EEA9CF /* DropletHelper.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = DropletHelper.app;
-			remoteRef = CE76380D1083F70600EEA9CF /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CE7638101083F70600EEA9CF /* DropletLauncher */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = DropletLauncher;
-			remoteRef = CE76380F1083F70600EEA9CF /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CE99831A0D614DD700F2DD12 /* MetaSandvox.mdimporter */ = {
@@ -7253,7 +7321,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "#!/bin/bash\n\n### this script should NOT have 'Run script only when installing' checked\n\n### we could do this externally, but we'd have to export everything we need\n### e.g.,\n# export APPNAME=\\\"Sandvox\\\"\n# ${SRCROOT}/../Tools/preflight-build\n\n###\n### peform any necessary checks before commencing build\n###\n\n# find git on local machine\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\n## Update Submodules \npushd \"${SRCROOT}/..\"\n${GIT_PATH} submodule update --init --recursive\npopd\n\n## UpdateBDAlias\npushd \"${SRCROOT}/../../bdalias\"\n${GIT_PATH} checkout ${BDALIAS_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching BDAlias from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${BDALIAS_COMMIT}\n\techo \"... finished fetching BDAlias\"\nfi\npopd\n\n## UpdateConnectionKit\npushd \"${SRCROOT}/../../connection\"\n${GIT_PATH} checkout ${CK_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching ConnectionKit from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${CK_COMMIT}\n\techo \"... finished fetching KSError\"\nfi\npopd\n\n## UpdateKSError\npushd \"${SRCROOT}/../../KSError\"\n${GIT_PATH} checkout ${KSERROR_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSError from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSERROR_COMMIT}\n\techo \"... finished fetching KSError\"\nfi\npopd\n\n## UpdateKSExtensibleManagedObject\npushd \"${SRCROOT}/../../KSExtensibleManagedObject\"\n${GIT_PATH} checkout ${KSEXTENSIBLEMANAGEDOBJECT_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSExtensibleManagedObject from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSEXTENSIBLEMANAGEDOBJECT_COMMIT}\n\techo \"... finished fetching KSExtensibleManagedObject\"\nfi\npopd\n\n## UpdateKSFileUtilities\npushd \"${SRCROOT}/../../KSFileUtilities\"\n${GIT_PATH} checkout ${KSFILEUTILS_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSFileUtilities from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSFILEUTILS_COMMIT}\n\techo \"... finished fetching KSFileUtilities\"\nfi\npopd\n\n## UpdateKSSelectionBorder\npushd \"${SRCROOT}/../../KSSelectionBorder\"\n${GIT_PATH} checkout ${KSSELECTIONBORDER_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSSelectionBorder from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSSELECTIONBORDER_COMMIT}\n\techo \"... finished fetching KSSelectionBorder\"\nfi\npopd\n\n## UpdateKSThreadProxy\npushd \"${SRCROOT}/../../KSThreadProxy\"\n${GIT_PATH} checkout ${KSTHREADPROXY_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSThreadProxy from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSTHREADPROXY_COMMIT}\n\techo \"... finished fetching KSThreadProxy\"\nfi\npopd\n\n## UpdateYRKSpinningProgressIndicator\npushd \"${SRCROOT}/../../yrk-spinning-progress-indicator\"\n${GIT_PATH} checkout ${YRKSPINNINGPROGRESSINDICATOR_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching yrk-spinning-progress-indicator from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${YRKSPINNINGPROGRESSINDICATOR_COMMIT}\n\techo \"... finished fetching yrk-spinning-progress-indicator\"\nfi\npopd\n\n###\n### further preflight based on type of build\n###\n\nif [ \"${CONFIGURATION}\" == \"Debug\" ]\nthen\n\techo \"Preflighting Debug build...\"\n\t# we could do something here before doing Debug builds\nfi\n\nif [ \"${CONFIGURATION}\" == \"Release\" ]\nthen\n\techo \"Preflighting Release build...\"\n\t# we could do something here before doing Debug builds\n\t# some magic git incantation that returns exit 1 if we have unstaged changes / unpushed changes?\nfi\n\nexit 0\n";
+			shellScript = "#!/bin/bash\n\n### this script should NOT have 'Run script only when installing' checked\n\n### we could do this externally, but we'd have to export everything we need\n### e.g.,\n# export APPNAME=\\\"Sandvox\\\"\n# ${SRCROOT}/../Tools/preflight-build\n\n###\n### peform any necessary checks before commencing build\n###\n\n# find git on local machine\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\n## Update Submodules \npushd \"${SRCROOT}/..\"\n${GIT_PATH} submodule update --init --recursive\npopd\n\n## UpdateBDAlias\npushd \"${SRCROOT}/../../bdalias\"\n${GIT_PATH} checkout ${BDALIAS_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching BDAlias from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${BDALIAS_COMMIT}\n\techo \"... finished fetching BDAlias\"\nfi\npopd\n\n## UpdateKSError\npushd \"${SRCROOT}/../../KSError\"\n${GIT_PATH} checkout ${KSERROR_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSError from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSERROR_COMMIT}\n\techo \"... finished fetching KSError\"\nfi\npopd\n\n## UpdateKSExtensibleManagedObject\npushd \"${SRCROOT}/../../KSExtensibleManagedObject\"\n${GIT_PATH} checkout ${KSEXTENSIBLEMANAGEDOBJECT_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSExtensibleManagedObject from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSEXTENSIBLEMANAGEDOBJECT_COMMIT}\n\techo \"... finished fetching KSExtensibleManagedObject\"\nfi\npopd\n\n## UpdateKSFileUtilities\npushd \"${SRCROOT}/../../KSFileUtilities\"\n${GIT_PATH} checkout ${KSFILEUTILS_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSFileUtilities from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSFILEUTILS_COMMIT}\n\techo \"... finished fetching KSFileUtilities\"\nfi\npopd\n\n## UpdateKSSelectionBorder\npushd \"${SRCROOT}/../../KSSelectionBorder\"\n${GIT_PATH} checkout ${KSSELECTIONBORDER_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSSelectionBorder from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSSELECTIONBORDER_COMMIT}\n\techo \"... finished fetching KSSelectionBorder\"\nfi\npopd\n\n## UpdateKSThreadProxy\npushd \"${SRCROOT}/../../KSThreadProxy\"\n${GIT_PATH} checkout ${KSTHREADPROXY_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSThreadProxy from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSTHREADPROXY_COMMIT}\n\techo \"... finished fetching KSThreadProxy\"\nfi\npopd\n\n## UpdateYRKSpinningProgressIndicator\npushd \"${SRCROOT}/../../yrk-spinning-progress-indicator\"\n${GIT_PATH} checkout ${YRKSPINNINGPROGRESSINDICATOR_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching yrk-spinning-progress-indicator from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${YRKSPINNINGPROGRESSINDICATOR_COMMIT}\n\techo \"... finished fetching yrk-spinning-progress-indicator\"\nfi\npopd\n\n###\n### further preflight based on type of build\n###\n\nif [ \"${CONFIGURATION}\" == \"Debug\" ]\nthen\n\techo \"Preflighting Debug build...\"\n\t# we could do something here before doing Debug builds\nfi\n\nif [ \"${CONFIGURATION}\" == \"Release\" ]\nthen\n\techo \"Preflighting Release build...\"\n\t# we could do something here before doing Debug builds\n\t# some magic git incantation that returns exit 1 if we have unstaged changes / unpushed changes?\nfi\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
 		3C99107209298C4400ED5CBF /* Generate Localizable.strings */ = {
@@ -7869,6 +7937,9 @@
 				2743EE8013BBB942009EA6D3 /* SVJSONSerialization.m in Sources */,
 				2743F0C613BC755A009EA6D3 /* SVImageRecipe.m in Sources */,
 				27F503E913BF3E1300F0FFD7 /* KSPerformOnThreadOperation.m in Sources */,
+				27FD6A6813C08B7900E9D407 /* CK2SFTPSession.m in Sources */,
+				27FD6D0813C10D3500E9D407 /* SVSFTPPublishingEngine.m in Sources */,
+				27FD6DEC13C1229200E9D407 /* CK2SFTPFileHandle.m in Sources */,
 				276BC94813C34DDC00EB2798 /* SVWorkspaceIconProtocol.m in Sources */,
 				3C9A37BB13E1304D0010A469 /* ethernet.c in Sources */,
 				3C9A37EA13E1381A0010A469 /* Payload.c in Sources */,
@@ -7936,6 +8007,11 @@
 			isa = PBXTargetDependency;
 			name = ContactElement;
 			targetProxy = 27CFC648123E79C300BF018C /* PBXContainerItemProxy */;
+		};
+		27E87740140C18890027A738 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Framework;
+			targetProxy = 27E8773F140C18890027A738 /* PBXContainerItemProxy */;
 		};
 		3C0049581210CB9A006BAD9C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -8071,11 +8147,6 @@
 			isa = PBXTargetDependency;
 			name = TwitterElement;
 			targetProxy = 3CFEF268122C3452005A08FC /* PBXContainerItemProxy */;
-		};
-		CE559B621085296D008870B5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Framework;
-			targetProxy = CE559B611085296D008870B5 /* PBXContainerItemProxy */;
 		};
 		CED864B110AA41DC002DF34F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -8907,6 +8978,10 @@
 					"\"$(SRCROOT)\"",
 				);
 				INFOPLIST_FILE = Info.plist;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../Code/SFTP\"",
+				);
 				OTHER_LDFLAGS = "-lsasl2";
 				PRODUCT_NAME = Sandvox;
 				WRAPPER_EXTENSION = app;
@@ -8933,6 +9008,11 @@
 					"\"$(SRCROOT)\"",
 				);
 				INFOPLIST_FILE = Info.plist;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../Code/SFTP\"",
+				);
 				MOMC_NO_WARNINGS = YES;
 				OTHER_LDFLAGS = "-lsasl2";
 				PRODUCT_NAME = Sandvox;
