@@ -130,6 +130,19 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     return result;
 }
 
+#pragma mark Hierarchy
+
+- (void)itemWillMoveToParentWebEditorItem:(WEKWebEditorItem *)item;
+{
+    [super itemWillMoveToParentWebEditorItem:item];
+    
+    // Dirty, dirty HACK. Don't want to be selectable if sitting straight inside something naturally selectable. Makes inline Text Boxes work right
+    if ([item isSelectable])
+    {
+        [self setSelectable:NO];
+    }
+}
+
 #pragma mark Updating
 
 - (void)writeUpdateHTML:(SVHTMLContext *)context;
