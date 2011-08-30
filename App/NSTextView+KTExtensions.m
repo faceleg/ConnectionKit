@@ -17,6 +17,170 @@
 #import "NSColor+Karelia.h"
 #import "NSScanner+Karelia.h"
 
+unsigned TE_numberOfLeadingSpacesFromRangeInString(NSString *string, NSRange *range, unsigned tabWidth) {
+    // Returns number of spaces, accounting for expanding tabs.
+    NSRange searchRange = (range ? *range : NSMakeRange(0, [string length]));
+    unichar buff[100];
+    unsigned i = 0;
+    unsigned spaceCount = 0;
+    BOOL done = NO;
+    unsigned tabW = tabWidth;
+    unsigned endOfWhiteSpaceIndex = NSNotFound;
+	
+    if (range->length == 0) {
+        return 0;
+    }
+    
+    while ((searchRange.length > 0) && !done) {
+        [string getCharacters:buff range:NSMakeRange(searchRange.location, ((searchRange.length > 100) ? 100 : searchRange.length))];
+        for (i=0; i < ((searchRange.length > 100) ? 100 : searchRange.length); i++) {
+            if (buff[i] == (unichar)' ') {
+                spaceCount++;
+            } else if (buff[i] == (unichar)'\t') {
+                // MF:!!! Perhaps this should account for the case of 2 spaces follwed by a tab really being visually equivalent to 8 spaces (for 8 space tabs) and not 10 spaces.
+                spaceCount += tabW;
+            } else {
+                done = YES;
+                endOfWhiteSpaceIndex = searchRange.location + i;
+                break;
+            }
+        }
+        searchRange.location += ((searchRange.length > 100) ? 100 : searchRange.length);
+        searchRange.length -= ((searchRange.length > 100) ? 100 : searchRange.length);
+    }
+    if (range && (endOfWhiteSpaceIndex != NSNotFound)) {
+        range->length = endOfWhiteSpaceIndex - range->location;
+    }
+    return spaceCount;
+}
+
+NSString *TE_tabbifiedStringWithNumberOfSpaces(unsigned origNumSpaces, unsigned tabWidth, BOOL usesTabs) {
+    static NSMutableString *sharedString = nil;
+    static unsigned numTabs = 0;
+    static unsigned numSpaces = 0;
+	
+    int diffInTabs;
+    int diffInSpaces;
+	
+    // TabWidth of 0 means don't use tabs!
+    if (!usesTabs || (tabWidth == 0)) {
+        diffInTabs = 0 - numTabs;
+        diffInSpaces = origNumSpaces - numSpaces;
+    } else {
+        diffInTabs = (origNumSpaces / tabWidth) - numTabs;
+        diffInSpaces = (origNumSpaces % tabWidth) - numSpaces;
+    }
+    
+    if (!sharedString) {
+        sharedString = [[NSMutableString alloc] init];
+    }
+    
+    if (diffInTabs < 0) {
+        [sharedString deleteCharactersInRange:NSMakeRange(0, -diffInTabs)];
+    } else {
+        unsigned numToInsert = diffInTabs;
+        while (numToInsert > 0) {
+            [sharedString replaceCharactersInRange:NSMakeRange(0, 0) withString:@"\t"];
+            numToInsert--;
+        }
+    }
+    numTabs += diffInTabs;
+	
+    if (diffInSpaces < 0) {
+        [sharedString deleteCharactersInRange:NSMakeRange(numTabs, -diffInSpaces)];
+    } else {
+        unsigned numToInsert = diffInSpaces;
+        while (numToInsert > 0) {
+            [sharedString replaceCharactersInRange:NSMakeRange(numTabs, 0) withString:@" "];
+            numToInsert--;
+        }
+    }
+    numSpaces += diffInSpaces;
+	
+    return sharedString;
+}
+
+static void indentParagraphRangeInAttributedString(NSRange range, NSMutableAttributedString *attrString, int levels, NSRange *selRange, NSDictionary *defaultAttrs, unsigned tabWidth, unsigned indentWidth, BOOL usesTabs) {
+    NSRange leadingSpaceRange = range;
+    unsigned numSpaces = TE_numberOfLeadingSpacesFromRangeInString([attrString string], &leadingSpaceRange, tabWidth);
+    NSString *newWhitespace;
+    unsigned newWhitespaceLength;
+    int curLevels;
+    
+    curLevels = numSpaces / indentWidth;
+    if ((levels < 0) && (numSpaces % indentWidth != 0)) {
+        curLevels++;
+    }
+    curLevels += levels;
+    if (curLevels < 0) {
+        curLevels = 0;
+    }
+    numSpaces = curLevels * indentWidth;
+	
+    newWhitespace = TE_tabbifiedStringWithNumberOfSpaces(numSpaces, tabWidth, usesTabs);
+    newWhitespaceLength = [newWhitespace length];
+    
+    // Adjust the selection
+    if (NSMaxRange(leadingSpaceRange) <= selRange->location) {
+        // Change occurs entirely before selection.  Adjust selection location.
+        selRange->location += (newWhitespaceLength - leadingSpaceRange.length);
+    } else if (NSMaxRange(*selRange) > leadingSpaceRange.location) {
+        // Change is not entirely before selection, and not entirely after.
+        BOOL overlapBefore = ((leadingSpaceRange.location < selRange->location) ? YES : NO);
+        BOOL overlapAfter = ((NSMaxRange(leadingSpaceRange) > NSMaxRange(*selRange)) ? YES : NO);
+        if (!overlapBefore && !overlapAfter) {
+            // Change is entirely within the selection.  Adjust selection length.
+            selRange->length += (newWhitespaceLength - leadingSpaceRange.length);
+        } else if (overlapBefore && overlapAfter) {
+            // The range being changed completely encompasses the selection.  New selection is insertion point after change.
+            *selRange = NSMakeRange(leadingSpaceRange.location + newWhitespaceLength, 0);
+        } else if (overlapBefore) {
+            // overlapBefore && !overlapAfter
+            // Bring in the selection at the front to avoid the overlap.
+            *selRange = NSMakeRange(leadingSpaceRange.location + newWhitespaceLength, NSMaxRange(*selRange) - NSMaxRange(leadingSpaceRange));
+        } else {
+            // overlapAfter && !overlapBefore
+            // Push out the selection at the end to include the whole chage.
+            *selRange = NSMakeRange(selRange->location, leadingSpaceRange.location + newWhitespaceLength - selRange->location);
+        }
+    } else {
+        // Change occurs entirely after selection.  Do nothing unless selection is an insertion point immediately before the change.
+        if ((selRange->length == 0) && (selRange->location == leadingSpaceRange.location)) {
+            // An insertion point immediately prior to the change means it was at the beginning of the line that we're indenting.  It is usually desirable to have the insertion point end up after the modified leading whitespace in this case.
+            *selRange = NSMakeRange(leadingSpaceRange.location + newWhitespaceLength, 0);
+        }
+    }
+    [attrString replaceCharactersInRange:leadingSpaceRange withString:newWhitespace];
+    [attrString setAttributes:defaultAttrs range:NSMakeRange(leadingSpaceRange.location, [newWhitespace length])];
+}
+
+
+NSAttributedString *TE_attributedStringByIndentingParagraphs(NSAttributedString *origString, int levels,  NSRange *selRange, NSDictionary *defaultAttrs, unsigned tabWidth, unsigned indentWidth, BOOL usesTabs) {
+    NSMutableAttributedString *newString = [origString mutableCopy];
+    NSRange paraRange;
+    
+    if ([newString length] == 0) {
+        // This basically means the selection was at the end of a doc with an extra line frag.  In this special case where that's all that's selected, we'll add spaces to the extra line.
+        paraRange = NSMakeRange(0, 0);
+        indentParagraphRangeInAttributedString(paraRange, newString, levels, selRange, defaultAttrs, tabWidth, indentWidth, usesTabs);
+    } else {
+        // We'll run through the range by paragraphs, backwards, so we don't have to care about changes being made to each paragraph as we go.
+        paraRange = [[newString string] lineRangeForRange:NSMakeRange([newString length] - 1, 1)];
+        while (1) {
+            indentParagraphRangeInAttributedString(paraRange, newString, levels, selRange, defaultAttrs, tabWidth, indentWidth, usesTabs);
+            if (paraRange.location == 0) {
+                // We're done
+                break;
+            } else {
+                // Find range of previous paragraph
+                paraRange = [[newString string] lineRangeForRange:NSMakeRange(paraRange.location - 1, 1)];
+            }
+        }
+    }
+    
+    return [newString autorelease];
+}
+
 @interface NSTextView ()
 
 -(NSDictionary*)	syntaxDefinitionDictionary;
@@ -300,6 +464,40 @@ Makes the view so wide that text won't wrap anymore.
     [self setHorizontallyResizable:YES];
     [self setVerticallyResizable:YES];
     [self setAutoresizingMask:NSViewNotSizable];
+}
+
+#pragma mark -
+#pragma mark Indentation support
+
+- (void)TE_doUserIndentByNumberOfLevels:(int)levels {
+    // Because of the way paragraph ranges work we will add spaces a final paragraph separator only if the selection is an insertion point at the end of the text.
+    // We ask for rangeForUserTextChange and extend it to paragraph boundaries instead of asking rangeForUserParagraphAttributeChange because this is not an attribute change and we don't want it to be affected by the usesRuler setting.
+    NSRange charRange = [[self string] lineRangeForRange:[self rangeForUserTextChange]];
+    NSRange selRange = [self selectedRange];
+    if (charRange.location != NSNotFound) {
+        NSTextStorage *textStorage = [self textStorage];
+        NSAttributedString *newText;
+        unsigned tabWidth = 4; // [[TEPreferencesController sharedPreferencesController] tabWidth];
+        unsigned indentWidth = 4; // [[TEPreferencesController sharedPreferencesController] indentWidth];
+        BOOL usesTabs = YES; // [[TEPreferencesController sharedPreferencesController] usesTabs];
+		
+        selRange.location -= charRange.location;
+        newText = TE_attributedStringByIndentingParagraphs([textStorage attributedSubstringFromRange:charRange], levels,  &selRange, [self typingAttributes], tabWidth, indentWidth, usesTabs);
+        selRange.location += charRange.location;
+        if ([self shouldChangeTextInRange:charRange replacementString:[newText string]]) {
+            [textStorage replaceCharactersInRange:charRange withAttributedString:newText];
+            [self setSelectedRange:selRange];
+            [self didChangeText];
+        }
+    }
+}
+
+- (void)indent:(id)sender {
+    [self TE_doUserIndentByNumberOfLevels:1];
+}
+
+- (void)outdent:(id)sender {
+    [self TE_doUserIndentByNumberOfLevels:-1];
 }
 
 
