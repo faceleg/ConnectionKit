@@ -516,6 +516,8 @@
 	}
 }
 
+- (void)writeEnclosures; { }    // for subclasses to implement. #130155
+
 #pragma mark Thumbnail
 
 - (BOOL)hasThumbnail;

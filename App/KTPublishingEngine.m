@@ -144,10 +144,23 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         
         
         // Content Hash cache
-        NSArray *records = [[site managedObjectContext]
-                            fetchAllObjectsForEntityForName:@"FilePublishingRecord"
-                            predicate:[NSPredicate predicateWithFormat:@"contentHash != nil"]
-                            error:NULL];
+        // Favour the records with shortest paths for consistent results each publish
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        [request setPredicate:[NSPredicate predicateWithFormat:@"contentHash != nil"]];
+        
+        [request setEntity:[NSEntityDescription entityForName:@"FilePublishingRecord"
+                                       inManagedObjectContext:[site managedObjectContext]]];
+        
+        [request setSortDescriptors:NSARRAY([[[NSSortDescriptor alloc] initWithKey:@"filename.length"
+                                                                         ascending:YES]
+                                             autorelease],
+                                            [[[NSSortDescriptor alloc] initWithKey:@"filename"
+                                                                         ascending:YES
+                                                                          selector:@selector(caseInsensitiveCompare:)]
+                                             autorelease])];
+        
+        NSArray *records = [[site managedObjectContext] executeFetchRequest:request error:NULL];
+        [request release];
         
         _publishingRecordsByImageRecipe = [[NSMutableDictionary alloc] initWithCapacity:[records count]];
         
@@ -156,7 +169,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             SVImageRecipe *recipe = [[SVImageRecipe alloc] initWithContentHash:[aRecord contentHash]];
             if (recipe)
             {
-                [_publishingRecordsByImageRecipe setObject:aRecord forKey:recipe];
+                CFDictionaryAddValue((CFMutableDictionaryRef)_publishingRecordsByImageRecipe,
+                                     recipe,
+                                     aRecord);
                 [recipe release];
             }
         }
@@ -1322,7 +1337,11 @@ static void *sProgressObservationContext = &sProgressObservationContext;
 - (void)connection:(id <CKConnection>)connection appendString:(NSString *)string toTranscript:(CKTranscriptType)transcript
 {
 	string = [string stringByAppendingString:@"\n"];
-	NSAttributedString *attributedString = [[connection class] attributedStringForString:string transcript:transcript];
+    
+    Class connectionClass = [connection class];
+    if (!connectionClass) connectionClass = [CKAbstractConnection class];
+    
+	NSAttributedString *attributedString = [connectionClass attributedStringForString:string transcript:transcript];
 	[[[KTTranscriptController sharedControllerWithoutLoading] textStorage] appendAttributedString:attributedString];
 }
 
