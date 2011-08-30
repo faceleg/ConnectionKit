@@ -644,14 +644,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
                                  sizeDelta:(NSSize)sizeDelta
                                    options:(SVResizingOptions)options;
 {
-    id graphic = ([object isKindOfClass:[SVGraphic class]] ? object : [object valueForKey:@"container"]);
-    if (![self isWritingPagelet] && ![graphic shouldWriteHTMLInline])
-    {
-        [self pushClassName:@"graphic"];    // so it gets laid out right when a few levels of tags down. #98767
-    }
-    
-    
-	int w = [object integerForKey:@"width"];
+    int w = [object integerForKey:@"width"];
 	int h = [object integerForKey:@"height"];
     NSNumber *width  = (w+sizeDelta.width <= 0) ? nil : [NSNumber numberWithInt:w+sizeDelta.width];
 	NSNumber *height = (h+sizeDelta.height <= 0) ? nil : [NSNumber numberWithInt:h+sizeDelta.height];
