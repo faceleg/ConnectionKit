@@ -455,9 +455,8 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 }
 + (NSSet *)keyPathsForValuesAffectingContentWidth; { return [NSSet setWithObject:@"width"]; }
 
-- (NSNumber *)contentHeight; { return [self height]; }
+- (NSNumber *)contentHeight; { return NSNotApplicableMarker; }
 - (void)setContentHeight:(NSNumber *)height; { [self setHeight:height]; }
-+ (NSSet *)keyPathsForValuesAffectingContentHeight; { return [NSSet setWithObject:@"height"]; }
 
 #pragma mark Sidebar
 
