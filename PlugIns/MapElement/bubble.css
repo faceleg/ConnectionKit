@@ -12,24 +12,33 @@
 */
 
 .gmap_marker {
-	margin: 0.9em;
-	font-family: Helvetica, Verdana, Arial, sans-serif;
+	margin: 10px!important;
+	font-family: Helvetica, Verdana, Arial, sans-serif!important;
+	line-height: 16px!important;
 }
 
-p.locationlabel {
-	margin: 0px;
-	font-weight: bold;
-	font-size: smaller;
+.gmap_marker span {
+	margin: 0px!important;
+	padding: 0px!important;
+	font-size: 12px!important;
+	line-height: 16px!important;
+	color: #000!important;
 }
 
-p.location {
-	margin: 0px;
-	font-size: smaller;
+.gmap_marker br {
+	line-height: 16px!important;
 }
 
-p.directions {
-	padding-top: 0.5em;
-	margin: 0px;
-	font-size: smaller;
+.gmap_marker span.locationlabel {
+	font-weight: bold!important;
 }
 
+.gmap_marker a {
+	border: 0px none!important;
+	color: #00f!important;
+	text-decoration: underline!important;
+}
+
+.googlemap img {
+	background: transparent!important;
+}
