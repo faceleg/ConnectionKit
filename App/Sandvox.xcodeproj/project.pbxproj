@@ -3026,6 +3026,11 @@
 		CEAD38E11384328700161C8F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/KTDocument.strings; sourceTree = "<group>"; };
 		CEAD38E21384328700161C8F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/SVGoogleSheet.strings; sourceTree = "<group>"; };
 		CEAD39B01384342400161C8F /* MediaInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaInspector.xib; sourceTree = "<group>"; };
+		CEAD8BA113CF83A2007C9948 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/KSBugReporterViews.strings; sourceTree = "<group>"; };
+		CEAD8BA213CF83A2007C9948 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/KSCrash.strings; sourceTree = "<group>"; };
+		CEAD8BA313CF83A2007C9948 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/KSException.strings; sourceTree = "<group>"; };
+		CEAD8BA413CF83A2007C9948 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/KSFeedback.strings; sourceTree = "<group>"; };
+		CEAD8BA613CF83A2007C9948 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/KSJoinList.strings; sourceTree = "<group>"; };
 		CEAE132B08450536007025D4 /* RSSTemplate.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = RSSTemplate.xml; sourceTree = "<group>"; };
 		CEAE1667084530C1007025D4 /* KTHostProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTHostProperties.h; sourceTree = "<group>"; };
 		CEAE1668084530C1007025D4 /* KTHostProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTHostProperties.m; sourceTree = "<group>"; };
@@ -3111,6 +3116,10 @@
 		CEE2C64E120B25E7000E3C0E /* plugin_inspector.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = plugin_inspector.tiff; sourceTree = "<group>"; };
 		CEE77B7E12528930001F74FC /* SVAudioVisualPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVAudioVisualPlugIn.h; sourceTree = "<group>"; };
 		CEE77B7F12528930001F74FC /* SVAudioVisualPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVAudioVisualPlugIn.m; sourceTree = "<group>"; };
+		CEE969BA13CF77E20088A65E /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = ja; path = ja.lproj/Credits.html; sourceTree = "<group>"; };
+		CEE969C213CF77E20088A65E /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEE969D013CF77E20088A65E /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEE969D913CF77E20088A65E /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Shared.strings; sourceTree = "<group>"; };
 		CEED942F12691AD1004ACB0E /* sound_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sound_placeholder.png; sourceTree = "<group>"; };
 		CEF12E770D908EB400FCAC70 /* YouTubeElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = YouTubeElement.xcodeproj; path = ../PlugIns/YouTubeElement/YouTubeElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		CEF2889E11CC2D7300122D03 /* JSTalk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSTalk.framework; path = ../Code/Shared/ThirdParty/JSTalk/JSTalk.framework; sourceTree = "<group>"; };
@@ -8137,6 +8146,7 @@
 				CEC8B94C13830C8600A7ADBE /* de */,
 				CEAD38901384328100161C8F /* pt_BR */,
 				CEAD38BE1384328500161C8F /* es */,
+				CEAD8BA113CF83A2007C9948 /* ja */,
 			);
 			name = KSBugReporterViews.strings;
 			sourceTree = "<group>";
@@ -8148,6 +8158,7 @@
 				CEC8B95513830C8700A7ADBE /* de */,
 				CEAD38991384328100161C8F /* pt_BR */,
 				CEAD38C71384328500161C8F /* es */,
+				CEAD8BA213CF83A2007C9948 /* ja */,
 			);
 			name = KSCrash.strings;
 			sourceTree = "<group>";
@@ -8159,6 +8170,7 @@
 				CEC8B94713830C8600A7ADBE /* de */,
 				CEAD388B1384328100161C8F /* pt_BR */,
 				CEAD38B91384328500161C8F /* es */,
+				CEAD8BA313CF83A2007C9948 /* ja */,
 			);
 			name = KSException.strings;
 			sourceTree = "<group>";
@@ -8170,6 +8182,7 @@
 				CEC8B94313830C8600A7ADBE /* de */,
 				CEAD38871384328100161C8F /* pt_BR */,
 				CEAD38B51384328500161C8F /* es */,
+				CEAD8BA413CF83A2007C9948 /* ja */,
 			);
 			name = KSFeedback.strings;
 			sourceTree = "<group>";
@@ -8181,6 +8194,7 @@
 				CEC8B94513830C8600A7ADBE /* de */,
 				CEAD38891384328100161C8F /* pt_BR */,
 				CEAD38B71384328500161C8F /* es */,
+				CEAD8BA613CF83A2007C9948 /* ja */,
 			);
 			name = KSJoinList.strings;
 			sourceTree = "<group>";
@@ -8290,6 +8304,7 @@
 				CEC8B96D13830C8800A7ADBE /* de */,
 				CEAD38B11384328200161C8F /* pt_BR */,
 				CEAD38DF1384328700161C8F /* es */,
+				CEE969D913CF77E20088A65E /* ja */,
 			);
 			name = Shared.strings;
 			sourceTree = "<group>";
@@ -8514,6 +8529,7 @@
 				CEC8B94613830C8600A7ADBE /* de */,
 				CEAD388A1384328100161C8F /* pt_BR */,
 				CEAD38B81384328500161C8F /* es */,
+				CEE969BA13CF77E20088A65E /* ja */,
 			);
 			name = Credits.html;
 			sourceTree = "<group>";
@@ -8603,6 +8619,7 @@
 				CEC8B94413830C8600A7ADBE /* de */,
 				CEAD38881384328100161C8F /* pt_BR */,
 				CEAD38B61384328500161C8F /* es */,
+				CEE969C213CF77E20088A65E /* ja */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -8659,6 +8676,7 @@
 				CEC8B94D13830C8600A7ADBE /* de */,
 				CEAD38911384328100161C8F /* pt_BR */,
 				CEAD38BF1384328500161C8F /* es */,
+				CEE969D013CF77E20088A65E /* ja */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
