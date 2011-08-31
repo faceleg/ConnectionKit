@@ -36,7 +36,19 @@
     // Graphic body
     OBASSERT(![_graphic isPagelet]);
     [context beginGraphicContainer:graphic];
-    [context startElement:@"div"]; // <div class="graphic">
+    
+    if ([graphic isExplicitlySized:context])
+    {
+        [context startElement:@"div"]; // <div class="graphic">
+    }
+    else
+    {
+        [context startResizableElement:@"div"
+                                object:graphic
+                               options:SVResizingDisableVertically
+                             sizeDelta:NSZeroSize];
+    }
+    
     {
         [context pushClassName:@"figure-content"];  // identifies for #84956
         [graphic writeHTML:context];

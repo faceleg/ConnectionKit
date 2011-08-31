@@ -323,16 +323,6 @@
             NSString *className = [(SVGraphic *)graphic inlineGraphicClassName];
             if (className) [context pushClassName:className];
             
-            if (![graphic isExplicitlySized:context])
-            {
-                NSNumber *width = [graphic containerWidth];
-                if (width)
-                {
-                    NSString *style = [NSString stringWithFormat:@"width:%upx", [width unsignedIntValue]];
-                    [context pushAttribute:@"style" value:style];
-                }
-            }
-            
             
             [context writeGraphic:graphic];
             

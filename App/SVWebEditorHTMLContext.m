@@ -49,6 +49,7 @@
     [self reset];
     _media = [[NSMutableSet alloc] init];
     _mediaByData = [[NSMutableDictionary alloc] init];
+    _resourceURLStrings = [[NSMutableSet alloc] init];
         
     return self;
 }
@@ -68,6 +69,12 @@
     // Ditch media
     [_media release]; _media = nil;
     [_mediaByData release]; _mediaByData = nil;
+}
+
+- (void)dealloc;
+{
+    [_resourceURLStrings release];
+    [super dealloc];
 }
 
 #pragma mark Page
@@ -101,13 +108,13 @@
     
     
     // Create controller
-    [self willBeginWritingHTMLTextBlock:textBlock];
+    [self beginGraphicContainer:textBlock];
     [textBlock release];
     
     [super writeElement:elementName withTitleOfPage:page asPlainText:plainText attributes:attributes];
 
     
-    [self didEndWritingHTMLTextBlock];
+    [self endGraphicContainer];
 }
 
 - (void)XwillWriteSummaryOfPage:(SVSiteItem *)page;
@@ -123,6 +130,13 @@
 }
 
 #pragma mark Resources
+
+- (NSURL *)addResourceAtURL:(NSURL *)fileURL destination:(NSString *)uploadPath options:(NSUInteger)options
+{
+    [_resourceURLStrings addObject:[fileURL absoluteString]];
+    
+    return [super addResourceAtURL:fileURL destination:uploadPath options:options];
+}
 
 - (NSURL *)addResourceWithData:(NSData *)data
                       MIMEType:(NSString *)mimeType
@@ -143,7 +157,15 @@
     
     // Add to web resources
     SVMedia *media = [[SVMedia alloc] initWithData:data URL:result];
-    return [self addMedia:media];
+    result = [self addMedia:media];
+    
+    [media release];
+    return result;
+}
+
+- (BOOL)containsResourceAtURL:(NSURL *)url;
+{
+    return [_resourceURLStrings containsObject:[url absoluteString]];
 }
 
 #pragma mark Dependencies

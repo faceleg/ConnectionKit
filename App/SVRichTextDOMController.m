@@ -44,11 +44,6 @@
 static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 
 
-@interface DOMElement (SVParagraphedHTMLWriter)
-- (DOMNodeList *)getElementsByClassName:(NSString *)name;
-@end
-
-
 @interface SVRichTextDOMController ()
 - (SVDOMController *)convertImageElement:(DOMHTMLImageElement *)imageElement toGraphic:(SVMediaGraphic *)image;
 @end
@@ -133,6 +128,19 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     }
     
     return result;
+}
+
+#pragma mark Hierarchy
+
+- (void)itemWillMoveToParentWebEditorItem:(WEKWebEditorItem *)item;
+{
+    [super itemWillMoveToParentWebEditorItem:item];
+    
+    // Dirty, dirty HACK. Don't want to be selectable if sitting straight inside something naturally selectable. Makes inline Text Boxes work right
+    if ([item isSelectable])
+    {
+        [self setSelectable:NO];
+    }
 }
 
 #pragma mark Updating
@@ -955,7 +963,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
                 parent = [selection parentWebEditorItem];
             }
             
-            SVGraphic *selectedGraphic = [selection representedObject];
+            SVGraphic *selectedGraphic = [selection graphic];
             [[graphic textAttachment] setPlacement:[selectedGraphic placement]];
             
             result = [[[self HTMLElement] ownerDocument] createRange];

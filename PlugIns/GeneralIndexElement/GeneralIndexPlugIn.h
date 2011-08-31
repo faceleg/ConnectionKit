@@ -71,7 +71,8 @@ typedef enum {
     BOOL _showTitles;			// transient only, for bindings
     BOOL _isTable;				// transient only, for bindings
     BOOL _showComments;
-    BOOL _showArticleInTables;
+    BOOL _showContinueReadingLink;
+	NSString *_continueReadingLinkFormat;
     NSUInteger _maxItemLength;
 }
 
@@ -82,11 +83,12 @@ typedef enum {
 @property (nonatomic) BOOL showTitles;
 @property (nonatomic) BOOL isTable;
 @property (nonatomic) BOOL showTimestamps;
-@property (nonatomic) BOOL showArticleInTables;
+@property (nonatomic) BOOL showContinueReadingLink;
 @property (nonatomic) NSUInteger timestampType;
 @property (nonatomic) BOOL showComments;
 @property (nonatomic) IndexLayoutType indexLayoutType;
 @property (nonatomic) NSUInteger maxItemLength;
+@property (nonatomic, copy) NSString *continueReadingLinkFormat;
 
 
 

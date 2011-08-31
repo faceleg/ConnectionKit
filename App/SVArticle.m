@@ -69,7 +69,7 @@
     
     
     // Tell context that text is due to be written so it sets up DOM Controller. Want that controller in place to contain the early callouts
-    [context willBeginWritingHTMLTextBlock:textBlock];
+    [context beginGraphicContainer:textBlock];
     
     
     // Write any early callouts
@@ -102,7 +102,7 @@
     
     
     // Finish
-    [context didEndWritingHTMLTextBlock];
+    [context endGraphicContainer];
     [textBlock release];
 }
 

@@ -20,6 +20,7 @@
     IBOutlet NSTextField            *oInformativeTextLabel;
     IBOutlet NSProgressIndicator    *oProgressIndicator;
     IBOutlet NSButton               *oFirstButton;
+    IBOutlet NSButton               *oSecondButton;
     IBOutlet NSTableColumn          *oTransferDetailsTableColumn;
 	IBOutlet NSButton				*oExpandButton;
     IBOutlet NSView					*oAccessoryView; // currently the scrollview around the outline
@@ -37,6 +38,7 @@
 }
 
 - (IBAction)firstButtonAction:(NSButton *)sender;
+- (IBAction)secondButtonAction:(NSButton *)sender;
 
 - (id)initWithPublishingEngine:(KTPublishingEngine *)engine;
 @property(nonatomic, retain, readonly) KTPublishingEngine *publishingEngine;

@@ -152,6 +152,28 @@
     [self delete:sender forwardingSelector:_cmd];
 }
 
+#pragma mark Alignment
+
+- (void)alignLeft:(id)sender;
+{
+    [[self firstResponderItem] doCommandBySelector:_cmd];
+}
+
+- (void)alignCenter:(id)sender;
+{
+    [[self firstResponderItem] doCommandBySelector:_cmd];
+}
+
+- (void)alignRight:(id)sender;
+{
+    [[self firstResponderItem] doCommandBySelector:_cmd];
+}
+
+- (void)alignJustified:(id)sender;
+{
+    [[self firstResponderItem] doCommandBySelector:_cmd];
+}
+
 #pragma mark Links
 
 - (void)createLink:(SVLinkManager *)sender;

@@ -445,6 +445,11 @@
     {
         [webView setSelectedDOMRange:selection affinity:affinity];
     }
+    else if (selection && ![webView selectedDOMRange])
+    {
+        // In rare circumstances, WebView loses track of the selection, but DOMRange doesn't. #140927
+        [webView setSelectedDOMRange:selection affinity:affinity];
+    }
 }
 
 - (DOMNode *)replaceDOMElementWithChildNodes:(DOMElement *)element

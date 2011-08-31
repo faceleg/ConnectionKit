@@ -40,7 +40,6 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
     
     // Controllers
     SVContentDOMController  *_contentItem;
-    WEKWebEditorItem        *_firstResponderItem;
 	
     // Updating
     BOOL                    _needsUpdate, _willUpdate, _reload;
@@ -89,7 +88,6 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 // Everything here should be KVO-compliant
 @property(nonatomic, retain, readonly) NSObjectController *pageController;
 @property(nonatomic, retain, readonly) SVWebContentObjectsController *graphicsController;
-@property(nonatomic, retain) WEKWebEditorItem *firstResponderItem;  // like NSWindow.firstResponder
 
 @property(nonatomic, retain, readonly) SVContentDOMController *contentDOMController;
 @property(nonatomic, retain, readonly) SVWebEditorHTMLContext *HTMLContext;

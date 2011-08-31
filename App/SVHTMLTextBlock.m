@@ -283,7 +283,7 @@
  */
 - (void)writeHTML:(SVHTMLContext *)context;
 {
-    [context willBeginWritingHTMLTextBlock:self];
+    [context beginGraphicContainer:self];
     
 	
     
@@ -303,7 +303,7 @@
 	[self endElements:context];
     
     
-    [context didEndWritingHTMLTextBlock];
+    [context endGraphicContainer];
 }
 
 - (void)writeInnerHTML:(SVHTMLContext *)context;

@@ -395,7 +395,7 @@ static void *sPlugInMinWidthObservationContext = &sPlugInMinWidthObservationCont
     }
     else
     {
-        result = NSNotApplicableMarker;
+        result = [super contentHeight];
     }
     
     return result;

@@ -628,20 +628,23 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 #pragma mark Metrics
 
+- (NSString *)startResizableElement:(NSString *)elementName
+                             object:(NSObject *)object
+                            options:(SVResizingOptions)options
+                          sizeDelta:(NSSize)sizeDelta;
+{
+    [self buildAttributesForResizableElement:elementName object:object DOMControllerClass:nil sizeDelta:sizeDelta options:options];
+    
+    [self startElement:elementName];
+}
+
 - (void)buildAttributesForResizableElement:(NSString *)elementName
                                     object:(NSObject *)object
                         DOMControllerClass:(Class)controllerClass
                                  sizeDelta:(NSSize)sizeDelta
                                    options:(SVResizingOptions)options;
 {
-    id graphic = ([object isKindOfClass:[SVGraphic class]] ? object : [object valueForKey:@"container"]);
-    if (![self isWritingPagelet] && ![graphic shouldWriteHTMLInline])
-    {
-        [self pushClassName:@"graphic"];    // so it gets laid out right when a few levels of tags down. #98767
-    }
-    
-    
-	int w = [object integerForKey:@"width"];
+    int w = [object integerForKey:@"width"];
 	int h = [object integerForKey:@"height"];
     NSNumber *width  = (w+sizeDelta.width <= 0) ? nil : [NSNumber numberWithInt:w+sizeDelta.width];
 	NSNumber *height = (h+sizeDelta.height <= 0) ? nil : [NSNumber numberWithInt:h+sizeDelta.height];
@@ -693,16 +696,6 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 }
 
 #pragma mark Text Blocks
-
-- (void)willBeginWritingHTMLTextBlock:(SVHTMLTextBlock *)block;
-{
-    [self beginGraphicContainer:block];
-}
-
-- (void)didEndWritingHTMLTextBlock;
-{
-    [self endGraphicContainer];
-}
 
 - (void)willWriteSummaryOfPage:(SVSiteItem *)page; { }
 

@@ -303,7 +303,7 @@
             if ([ID isEqualToString:[anElement getAttribute:@"id"]])
             {
                 // Search for any following scripts
-                if ([anElement nextSiblingOfClass:[DOMHTMLScriptElement class]]) break;
+                if ([anElement nextElementSibling]) break;
                 
                 // No scripts, so can update directly
                 [self updateWithDOMNode:anElement items:[rootController childWebEditorItems]];
@@ -313,7 +313,7 @@
                 return;
             }
             
-            anElement = [anElement nextSiblingOfClass:[DOMElement class]];
+            anElement = [anElement nextElementSibling];
         }
         
         [rootController release];

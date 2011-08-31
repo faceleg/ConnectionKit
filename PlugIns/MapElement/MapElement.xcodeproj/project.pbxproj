@@ -74,7 +74,6 @@
 				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
 				19C28FB8FE9D52D311CA2CBB /* Products */,
 				3C43BBB013074EE0007ED67D /* Xcode Configurations */,
-				3CD5DD0113BD8E3000AC306C /* AddressBook.framework */,
 			);
 			name = MapElement;
 			sourceTree = "<group>";
@@ -119,6 +118,7 @@
 		1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3CD5DD0113BD8E3000AC306C /* AddressBook.framework */,
 				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
 			);
 			name = "Linked Frameworks";

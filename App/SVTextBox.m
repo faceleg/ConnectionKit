@@ -80,6 +80,8 @@
     }
 }
 
+- (NSUInteger)minWidth; { return 16; }
+
 #pragma mark HTML
 
 - (void)writeHTML:(SVHTMLContext *)context;
