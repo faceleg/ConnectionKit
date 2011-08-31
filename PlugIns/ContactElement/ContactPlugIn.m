@@ -284,10 +284,11 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	NSString *passwordString = [defaults objectForKey:@"mailmePassword"];
 	if (nil == passwordString)
 	{
-		passwordString = CONTACT_PASSWORD;
+		passwordString = CONTACT_PASSWORD_SHORT;		// DES needs a shorter password?
 	}
 	
-	NSData *encryptedAddress = [mailData dataEncryptedWithPassword:passwordString algorithm:kCCAlgorithm3DES options:kCCOptionPKCS7Padding];
+	NSData *encryptedAddress = [mailData dataEncryptedWithPassword:passwordString algorithm:kCCAlgorithmDES options:kCCOptionPKCS7Padding];
+		// use DES, lower key size, so we don't have to deal with reporting strong encryption here.
 	NSString *result = nil;
 	if (encryptedAddress)
 	{
