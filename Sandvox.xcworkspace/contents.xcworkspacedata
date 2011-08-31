@@ -16,4 +16,70 @@
    <FileRef
       location = "group:Code/iMedia/ObjectiveFlickr/ObjectiveFlickr.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:PlugIns/AmazonElement/AmazonElement.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:PlugIns/BadgeElement/BadgeElement.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:PlugIns/CollectionArchiveElement/CollectionArchiveElement.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:PlugIns/ContactElement/ContactElement.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:PlugIns/DeliciousElement/DeliciousElement.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:PlugIns/FacebookElement/FacebookElement.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:PlugIns/FeedElement/FeedElement.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:PlugIns/FlickrElement/FlickrElement.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:PlugIns/GalleryIndexElement/GalleryIndex.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:PlugIns/GeneralIndexElement/GeneralIndex.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:PlugIns/GooglePlusOneElement/GooglePlusOneElement.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:PlugIns/IFrameElement/IFrameElement.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:PlugIns/IMStatusElement/IMStatusElement.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:PlugIns/LinkListElement/LinkListElement.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:PlugIns/MapElement/MapElement.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:PlugIns/PageCounterElement/PageCounterElement.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:PlugIns/PhotoGridIndexElement/PhotoGridIndex.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:PlugIns/RSSBadgeElement/RSSBadgeElement.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:PlugIns/SiteMapElement/SiteMapElement.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:PlugIns/TweetButtonElement/TweetButtonElement.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:PlugIns/TwitterElement/TwitterElement.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:PlugIns/YouTubeElement/YouTubeElement.xcodeproj">
+   </FileRef>
 </Workspace>
