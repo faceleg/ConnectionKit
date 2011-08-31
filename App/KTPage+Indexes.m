@@ -17,7 +17,7 @@
 #import "SVHTMLTemplateParser.h"
 #import "SVMediaGraphic.h"
 #import "SVPagesController.h"
-#import "SVProxyHTMLContext.h"
+#import "SVRSSItemDescriptionHTMLContext.h"
 #import "SVTextAttachment.h"
 #import "SVWebEditorHTMLContext.h"
 
@@ -269,7 +269,7 @@
 	KSEscapedXMLEntitiesWriter *xmlWriter = [[KSEscapedXMLEntitiesWriter alloc]
 											 initWithOutputXMLWriter:feedContext];
 	
-	SVHTMLContext *xmlContext = [[SVProxyHTMLContext alloc] initWithOutputWriter:xmlWriter target:feedContext];
+	SVHTMLContext *xmlContext = [[SVRSSItemDescriptionHTMLContext alloc] initWithOutputWriter:xmlWriter target:feedContext];
 	
 	NSUInteger truncationLength = [self.parentPage.collectionMaxFeedItemLength intValue];
 	
