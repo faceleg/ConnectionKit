@@ -339,7 +339,10 @@
     
     // Add to web resources
     SVMedia *media = [[SVMedia alloc] initWithData:data URL:result];
-    return [self addMedia:media];
+    result = [self addMedia:media];
+    
+    [media release];
+    return result;
 }
 
 #pragma mark Dependencies
