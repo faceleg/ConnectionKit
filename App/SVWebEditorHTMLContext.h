@@ -24,8 +24,9 @@
     NSMutableSet        *_resourceURLStrings;
 }
 
-#pragma mark Media
+#pragma mark Resources
 - (NSSet *)media;
+- (BOOL)containsResourceAtURL:(NSURL *)url;
 
 
 @end

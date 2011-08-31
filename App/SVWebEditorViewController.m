@@ -1308,16 +1308,18 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     // Don't load remote stuff unless requested
     if (![[NSUserDefaults standardUserDefaults] boolForKey:kSVLiveDataFeedsKey])
     {
-        NSString *scheme = [[request URL] scheme];
-        BOOL local = ([scheme isEqualToString:NSURLFileScheme] ||
-                      [scheme isEqualToString:KTImageScalingURLProtocolScheme] ||
-                      [scheme isEqualToString:@"x-image-replacement"] ||
-                      [scheme isEqualToString:@"x-imstatusimage"]);
-        if (!local)
+        if (![[self HTMLContext] containsResourceAtURL:[request URL]])
         {
-            NSMutableURLRequest *result = [[request mutableCopy] autorelease];
-            [result setCachePolicy:NSURLRequestReturnCacheDataDontLoad];
-            request = result;
+            NSString *scheme = [[request URL] scheme];
+            BOOL local = ([scheme isEqualToString:NSURLFileScheme] ||
+                          [scheme isEqualToString:KTImageScalingURLProtocolScheme] ||
+                          [scheme isEqualToString:@"x-image-replacement"]);
+            if (!local)
+            {
+                NSMutableURLRequest *result = [[request mutableCopy] autorelease];
+                [result setCachePolicy:NSURLRequestReturnCacheDataDontLoad];
+                request = result;
+            }
         }
     }
     

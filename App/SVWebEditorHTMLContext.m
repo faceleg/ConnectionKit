@@ -69,7 +69,12 @@
     // Ditch media
     [_media release]; _media = nil;
     [_mediaByData release]; _mediaByData = nil;
-    [_resourceURLStrings release]; _resourceURLStrings = nil;
+}
+
+- (void)dealloc;
+{
+    [_resourceURLStrings release];
+    [super dealloc];
 }
 
 #pragma mark Page
@@ -156,6 +161,11 @@
     
     [media release];
     return result;
+}
+
+- (BOOL)containsResourceAtURL:(NSURL *)url;
+{
+    return [_resourceURLStrings containsObject:[url absoluteString]];
 }
 
 #pragma mark Dependencies
