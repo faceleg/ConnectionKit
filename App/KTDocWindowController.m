@@ -152,11 +152,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	
 	_originalWindowFrame = windowFrameScreen;
 	
-	// windowFrameScreen = NSInsetRect(windowFrameScreen, -11, -12);
-	//NSRect contentFrameScreen = [window frameRectForContentRect:windowFrameScreen];
 	NSRect contentFrame = [[window contentView] frame];
-	//NSRect windowRect = [[window contentView] convertRect:contentFrame toView:nil];
-	// NSRect windowFrame = [window frameRectForContentRect:screenFrame];
 	NSRect contentFrameScreen = [window convertRectToScreen:contentFrame];
 
 	NSRect screenFrameScreen = [[NSScreen mainScreen] frame];
