@@ -58,6 +58,7 @@
     [self setWidth:width];
 }
 
+- (NSNumber *)height; { return nil; }
 - (NSNumber *)contentHeight; { return NSNotApplicableMarker; }
 - (void)setContentHeight:(NSNumber *)height; { }
 
