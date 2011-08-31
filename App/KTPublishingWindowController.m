@@ -168,6 +168,16 @@ static void *sEngineFinishedObservationContext = &sEngineFinishedObservationCont
 
 - (IBAction)firstButtonAction:(NSButton *)sender
 {
+    if ([[self publishingEngine] isFinished])
+    {
+        [[[_modalWindow windowController] document] saveDocument:self];
+    }
+    
+    [self endSheet];
+}
+
+- (void)secondButtonAction:(NSButton *)sender
+{
     [self endSheet];
 }
 
@@ -280,67 +290,15 @@ static void *sEngineFinishedObservationContext = &sEngineFinishedObservationCont
     }
     
     
-    // Keep the sheet open if command-option is held down as a debugging aid. BUGSID:38342
-    unsigned eventModifierFlags = [[NSApp currentEvent] modifierFlags];
-    if ((eventModifierFlags & NSCommandKeyMask) && (eventModifierFlags & NSAlternateKeyMask))
-    {
-        [self setMessageText:NSLocalizedString(@"Publishing finished.", @"Upload message text")];
-        [self setInformativeText:nil];
-        [oFirstButton setTitle:NSLocalizedString(@"Close", @"button title")];
-    }
-    else
-    {
-        if ([self isExporting])
-        {
-            [self endSheet];
-            return;
-        }
-        
-        NSDocument *document = [[_modalWindow windowController] document];
-        if (![document isDocumentEdited])
-        {
-            [self endSheet];
-            return;
-        }
-        
-        
-        // Prompt to save
-        NSAlert *alert = [[NSAlert alloc] init];
-        
-        [alert setMessageText:[NSString stringWithFormat:NSLocalizedString(@"Publishing finished. Do you want to save the changes made in the document “%@”?", "alert title"), [document displayName]]];
-        
-        [alert setInformativeText:NSLocalizedString(@"Saving will ensure Sandvox doesn't upload the same changes again next time you publish.", "alert text")];
-         
-        [alert addButtonWithTitle:NSLocalizedString(@"Save", "button")];
-        [alert addButtonWithTitle:NSLocalizedString(@"Don't Save", "button")];
-        [alert addButtonWithTitle:NSLocalizedString(@"Save As…", "button")];
-        
-        
-        [NSApp endSheet:[self window]];
-        [[self window] orderOut:self];
-        
-        [alert beginSheetModalForWindow:_modalWindow
-                          modalDelegate:self
-                         didEndSelector:@selector(saveAfterPublishingAlertDidEnd:returnCode:contextInfo:)
-                            contextInfo:NULL];
-    }
-}
-
-- (void)saveAfterPublishingAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
-{
-    [[alert window] orderOut:self];
+    // Prompt to save
+    [self setMessageText:NSLocalizedString(@"Publishing finished. Do you want to save the changes?", "alert title")];
+    [self setInformativeText:NSLocalizedString(@"Saving will make the next publish faster.", "alert text")];
     
-    if (returnCode == NSAlertFirstButtonReturn)
-    {
-        [[[_modalWindow windowController] document] saveDocument:self];
-    }
-    else if (returnCode == NSAlertThirdButtonReturn)
-    {
-        [[[_modalWindow windowController] document] saveDocumentAs:self];
-    }
+    [oFirstButton setTitle:NSLocalizedString(@"Save", "button")];
+    [oFirstButton setKeyEquivalent:@"\r"];
     
-    [alert release];
-    [self endSheet];
+    [oSecondButton setTitle:NSLocalizedString(@"Don't Save", "button")];
+    [oSecondButton setHidden:NO];
 }
 
 - (void)publishingEngine:(KTPublishingEngine *)engine didFailWithError:(NSError *)error
