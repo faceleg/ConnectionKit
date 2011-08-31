@@ -17,6 +17,46 @@
 #import "NSColor+Karelia.h"
 #import "NSScanner+Karelia.h"
 
+
+// This file contains code from TextExtras, copyright Mike Ferris.  Permission granted:
+/*
+ From: 	Mike Ferris <mike@lorax.com>
+ Subject: 	Re: Permission to use some of your TextExtras code?
+ Date: 	August 30, 2011 6:42:41 PM PDT
+ To: 	Dan Wood <dwood@karelia.com>
+ 
+ Go for it.  Glad it's of use!
+ 
+ Mike
+ 
+ On Aug 30, 2011, at 4:34 PM, Dan Wood wrote:
+ 
+ > Hey Mike,
+ > 
+ > Thanks again for helping me and Terrence a couple of weeks ago down at the developers' workshop/kitchen thing!
+ > 
+ > 
+ > Anyhow, I wanted to add some code to Sandvox for doing text indentation shifting, and I found your code in TextExtras that does the trick.  I don't see any kind of open-source license, so I thought I would just ask permission to use some of the code and bundle it into Sandvox.
+ > 
+ > Specifically, I have pulled in:
+ > 
+ > -[NSTextView TE_doUserIndentByNumberOfLevels:]
+ > TE_numberOfLeadingSpacesFromRangeInString()
+ > TE_tabbifiedStringWithNumberOfSpaces()
+ > indentParagraphRangeInAttributedString()
+ > TE_attributedStringByIndentingParagraphs()
+ > 
+ > May we have your permission to include that code in Sandvox?
+ > 
+ > 
+ > Thanks,
+ > 
+ > Dan
+ > 
+ 
+ */
+
+
 unsigned TE_numberOfLeadingSpacesFromRangeInString(NSString *string, NSRange *range, unsigned tabWidth) {
     // Returns number of spaces, accounting for expanding tabs.
     NSRange searchRange = (range ? *range : NSMakeRange(0, [string length]));
