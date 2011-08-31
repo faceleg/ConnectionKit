@@ -21,6 +21,7 @@
   @private
     NSMutableSet        *_media;
     NSMutableDictionary *_mediaByData;
+    NSMutableSet        *_resourceURLStrings;
 }
 
 #pragma mark Media

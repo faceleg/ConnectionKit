@@ -49,6 +49,7 @@
     [self reset];
     _media = [[NSMutableSet alloc] init];
     _mediaByData = [[NSMutableDictionary alloc] init];
+    _resourceURLStrings = [[NSMutableSet alloc] init];
         
     return self;
 }
@@ -68,6 +69,7 @@
     // Ditch media
     [_media release]; _media = nil;
     [_mediaByData release]; _mediaByData = nil;
+    [_resourceURLStrings release]; _resourceURLStrings = nil;
 }
 
 #pragma mark Page
@@ -123,6 +125,13 @@
 }
 
 #pragma mark Resources
+
+- (NSURL *)addResourceAtURL:(NSURL *)fileURL destination:(NSString *)uploadPath options:(NSUInteger)options
+{
+    [_resourceURLStrings addObject:[fileURL absoluteString]];
+    
+    return [super addResourceAtURL:fileURL destination:uploadPath options:options];
+}
 
 - (NSURL *)addResourceWithData:(NSData *)data
                       MIMEType:(NSString *)mimeType
