@@ -66,6 +66,20 @@
     }
 }
 
+- (BOOL)validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)anItem;
+{
+    if ([anItem action] == @selector(strikethrough:))
+    {
+        DOMRange *selection = [self selection];
+        DOMDocument *doc = [[selection commonAncestorContainer] ownerDocument];
+        return [doc queryCommandEnabled:@"Strikethrough"];
+    }
+    else
+    {
+        return YES;
+    }
+}
+
 #pragma mark Lists
 
 + (NSSet *)listTagNames;
