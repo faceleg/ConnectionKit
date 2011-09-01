@@ -110,7 +110,9 @@
 - (NSData *)mediaData;
 {
     // Despite being immutable, web resources fail assertion if accessed on background thread. #99174
-    return [[_webResource ks_proxyOnThread:nil] data];
+    NSData *result = [[_webResource ks_proxyOnThread:nil] data];
+	LOG((@"mediaData length = %d", [result length]));
+	return result;
 }
 
 @synthesize preferredFilename = _preferredFilename;
