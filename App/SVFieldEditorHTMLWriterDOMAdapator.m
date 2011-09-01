@@ -660,7 +660,9 @@
                    [tagName isEqualToString:@"SUP"] ||
                    [tagName isEqualToString:@"SUB"] ||
                    [tagName isEqualToString:@"A"] ||
-                   [tagName isEqualToString:@"U"]);
+                   [tagName isEqualToString:@"U"] ||
+                   [tagName isEqualToString:@"DEL"] ||
+                   [tagName isEqualToString:@"S"]);
     
     return result;
 }
