@@ -2186,13 +2186,9 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
                 static NSSet *listTagNames;
                 if (!listTagNames) listTagNames = [[NSSet alloc] initWithObjects:@"UL", @"OL", nil];
                 
-                DOMRange *selection = [self selectedDOMRange];
-                SVWebViewSelectionController *controller = [[SVWebViewSelectionController alloc] init];
-                [controller setSelection:selection];
-                
                 if (action == @selector(indent:))
                 {
-                    NSNumber *shallow = [controller deepestListIndentLevel];
+                    NSNumber *shallow = [_editingController deepestListIndentLevel];
                     if ([shallow isKindOfClass:[NSNumber class]])
                     {
                         result = [shallow unsignedIntegerValue] < 9;
@@ -2200,14 +2196,12 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
                 }
                 else
                 {
-                    NSNumber *shallow = [controller shallowestListIndentLevel];
+                    NSNumber *shallow = [_editingController shallowestListIndentLevel];
                     if ([shallow isKindOfClass:[NSNumber class]])
                     {
                         result = [shallow unsignedIntegerValue] > 1;
                     }
                 }
-                
-                [controller release];
             }
         }
     }
