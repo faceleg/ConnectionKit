@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface SVWebViewSelectionController : NSObject
+@interface SVWebViewSelectionController : NSResponder
 {
   @private
     DOMRange    *_selection;
@@ -26,5 +26,7 @@
 - (NSUInteger)listTypeTagForDOMNode:(DOMNode *)node;
 
 @property(nonatomic, retain) DOMRange *selection;
+
+- (void)insertIntoResponderChainAfterWebView:(WebView *)webView;
 
 @end

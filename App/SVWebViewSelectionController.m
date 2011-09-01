@@ -259,4 +259,12 @@
     }
 }
 
+#pragma mark Responder Chain
+
+- (void)insertIntoResponderChainAfterWebView:(WebView *)webView;
+{
+    [self setNextResponder:[webView nextResponder]];
+    [webView setNextResponder:self];
+}
+
 @end
