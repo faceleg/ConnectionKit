@@ -161,6 +161,11 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [self addSubview:_webView];
     
     
+    // Editing Controller
+    _editingController = [[SVWebViewSelectionController alloc] init];
+    [_editingController insertIntoResponderChainAfterWebView:[self webView]];
+    
+    
     // Behaviour
     [self setLiveEditableAndSelectableLinks:YES];
     
@@ -200,8 +205,9 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     [_webView close];
     [_webView release];
+    [_editingController release];
     [_undoManager release];
-        
+    
     [super dealloc];
 }
 
@@ -2720,6 +2726,9 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 {
     WebView *webView = [self webView];
     OBPRECONDITION([notification object] == webView);
+    
+    
+    [_editingController setSelection:[webView selectedDOMRange]];
     
     
     //  Update Link Manager to match

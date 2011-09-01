@@ -22,7 +22,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 
 
 @protocol WEKWebEditorDataSource, WEKWebEditorDelegate;
-@class WEKWebEditorItem, SVWebEditorTextRange, SVLink;
+@class WEKWebEditorItem, SVWebEditorTextRange, SVWebViewSelectionController, SVLink;
 @class WEKWebView, WEKRootItem;
 
 
@@ -30,10 +30,11 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 {
   @private
     // Content
-    WEKWebView          *_webView;
-    WEKRootItem         *_rootItem;
-    WEKWebEditorItem    *_contentItem;  // weak ref
-    BOOL        _isStartingLoad;
+    WEKWebView                      *_webView;
+    SVWebViewSelectionController    *_editingController;
+    WEKRootItem                     *_rootItem;
+    WEKWebEditorItem                *_contentItem;  // weak ref
+    BOOL                            _isStartingLoad;
     
     // Selection
     WEKWebEditorItem <SVWebEditorText>  *_focusedText;
