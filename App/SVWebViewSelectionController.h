@@ -15,6 +15,12 @@
     DOMRange    *_selection;
 }
 
+#pragma mark Strikethrough
+- (IBAction)strikethrough:(id)sender;   // oddly, WebKit doesn't supply this command
+
+
+#pragma mark Lists
+
 // 0 for non-lists, 1+ for lists, NSMultipleValuesMarker for mixtures
 @property(nonatomic, copy) NSNumber *listIndentLevel;
 @property(nonatomic, readonly) NSNumber *shallowestListIndentLevel;

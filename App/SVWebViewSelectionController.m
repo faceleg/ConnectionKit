@@ -21,6 +21,8 @@
     [super dealloc];
 }
 
+#pragma mark WebView
+
 @synthesize selection = _selection;
 - (void)setSelection:(DOMRange *)selection;
 {
@@ -51,6 +53,20 @@
         return [super keyPathsForValuesAffectingValueForKey:key];
     }
 }
+
+#pragma mark Strikethrough
+
+- (void)strikethrough:(id)sender;
+{
+    DOMRange *selection = [self selection];
+    DOMDocument *doc = [[selection commonAncestorContainer] ownerDocument];
+    if (![doc execCommand:@"Strikethrough"])
+    {
+        [[self nextResponder] doCommandBySelector:_cmd];
+    }
+}
+
+#pragma mark Lists
 
 + (NSSet *)listTagNames;
 {
