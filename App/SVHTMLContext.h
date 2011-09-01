@@ -157,10 +157,10 @@ typedef NSUInteger SVPageImageRepresentationOptions2;
 // These methods take care of generating width, height or style attributes matching the object's size (which depends on the element being written).
 // In addition, when editing, the context will keep the DOM matching the object's size, live
 
-- (NSString *)startResizableElement:(NSString *)elementName
-                             object:(NSObject *)object
-                            options:(SVResizingOptions)options
-                          sizeDelta:(NSSize)sizeDelta;
+- (void)startResizableElement:(NSString *)elementName
+                       object:(NSObject *)object
+                      options:(SVResizingOptions)options
+                    sizeDelta:(NSSize)sizeDelta;
 
 - (void)buildAttributesForResizableElement:(NSString *)elementName object:(NSObject *)object DOMControllerClass:(Class)controllerClass sizeDelta:(NSSize)sizeDelta options:(SVResizingOptions)options;  // support
 
