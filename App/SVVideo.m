@@ -1124,8 +1124,9 @@
 		[info appendAttributedString:
 		 [[[NSAttributedString alloc] initWithString:NSLocalizedString(@"More", @"hyperlink to a page that will tell more details about the warning")
 										  attributes:attribs] autorelease]];
-		[attribs release];
 	}
+	[attribs release];
+
 	return info;
 }
 
