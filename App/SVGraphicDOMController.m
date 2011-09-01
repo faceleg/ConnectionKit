@@ -225,7 +225,9 @@ static NSString *sGraphicSizeObservationContext = @"SVImageSizeObservation";
                 // No scripts, so can update directly
                 [self updateWithDOMNode:anElement items:_offscreenDOMControllers];
                 [_offscreenDOMControllers release]; _offscreenDOMControllers = nil;
-                return;
+                
+				[html release];
+				return;			// EARLY EXIT - MUST RELEASE "html"
             }
             
             anElement = [anElement nextSiblingOfClass:[DOMElement class]];
