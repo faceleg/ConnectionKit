@@ -167,7 +167,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
         //  last resort, try English
         if (!localizedStrings) localizedStrings = [localizations objectForKey:@"en"];
         
-        
+        [localizations release];
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 		
