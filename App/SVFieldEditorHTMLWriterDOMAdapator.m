@@ -353,6 +353,12 @@
         
         [self replaceDOMElement:element withElement:(DOMElement *)result];
     }
+    
+    // Convert <STRIKE> to <S>
+    else if ([tagName isEqualToString:@"STRIKE"])
+    {
+        result = [self replaceDOMElement:element withElementWithTagName:@"S"];
+    }
     else
     {
         // Everything else gets removed, or replaced with a <span> with appropriate styling
