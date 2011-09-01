@@ -19,14 +19,16 @@
     IBOutlet NSPopUpButton      *oListPopUp;
     IBOutlet NSSegmentedControl *oIndentLevelSegmentedControl;
     
-    IBOutlet SVWebViewSelectionController   *oSelectionController;
-    
   @private
+    
+    SVWebViewSelectionController   *_editingController;
 }
 
 - (IBAction)changeAlignment:(NSSegmentedControl *)sender;
 
 - (IBAction)changeIndent:(NSSegmentedControl *)sender;
+
+@property(nonatomic, retain, readonly) SVWebViewSelectionController *editingController;
 
 
 @end

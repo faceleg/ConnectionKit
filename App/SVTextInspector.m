@@ -13,6 +13,14 @@
 #import "WEKWebViewEditing.h"
 
 
+@interface SVTextInspector ()
+@property(nonatomic, retain, readwrite) SVWebViewSelectionController *editingController;
+@end
+
+
+#pragma mark -
+
+
 @implementation SVTextInspector
 
 - (void)dealloc;
@@ -20,6 +28,8 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:WebViewDidChangeSelectionNotification
                                                   object:nil];
+    
+    [_editingController release];
     
     [super dealloc];
 }
@@ -63,10 +73,13 @@
 - (void)refreshList;
 {
     // Bullets
-    id listEditor = [NSApp targetForAction:@selector(selectedDOMRange)];
-    [oSelectionController setSelection:[listEditor selectedDOMRange]];
+    SVWebViewSelectionController *controller = [NSApp targetForAction:@selector(listIndentLevel)];
+    if (controller != [self editingController])
+    {
+        [self setEditingController:controller];
+    }
     
-    NSNumber *tag = [oSelectionController listTypeTag];
+    NSNumber *tag = [controller listTypeTag];
     if ([tag isKindOfClass:[NSNumber class]])
     {
         [oListPopUp selectItemAtIndex:[tag unsignedIntegerValue]];
@@ -77,31 +90,28 @@
     }
         
     
-    BOOL enable = (listEditor != nil);
-    if ([listEditor respondsToSelector:@selector(validateMenuItem:)])
+    BOOL enable = (controller != nil);
+    if ([controller respondsToSelector:@selector(validateMenuItem:)])
     {
-        enable = ([listEditor validateMenuItem:[oListPopUp itemAtIndex:0]] ||
-                  [listEditor validateMenuItem:[oListPopUp itemAtIndex:1]] ||
-                  [listEditor validateMenuItem:[oListPopUp itemAtIndex:2]]);
+        enable = ([controller validateMenuItem:[oListPopUp itemAtIndex:0]] ||
+                  [controller validateMenuItem:[oListPopUp itemAtIndex:1]] ||
+                  [controller validateMenuItem:[oListPopUp itemAtIndex:2]]);
     }
     [oListPopUp setEnabled:enable];
     
         
     
-    if ([listEditor conformsToProtocol:@protocol(NSUserInterfaceValidations)])
-    {
-        SVValidatedUserInterfaceItem *item = [[SVValidatedUserInterfaceItem alloc] init];
-        
-        [item setAction:@selector(outdent:)];
-        enable = [listEditor validateUserInterfaceItem:item];
-        [oIndentLevelSegmentedControl setEnabled:enable forSegment:0];
-        
-        [item setAction:@selector(indent:)];
-        enable = [listEditor validateUserInterfaceItem:item];
-        [oIndentLevelSegmentedControl setEnabled:enable forSegment:1];
-        
-        [item release];
-    }
+    SVValidatedUserInterfaceItem *item = [[SVValidatedUserInterfaceItem alloc] init];
+    
+    [item setAction:@selector(outdent:)];
+    enable = [controller validateUserInterfaceItem:item];
+    [oIndentLevelSegmentedControl setEnabled:enable forSegment:0];
+    
+    [item setAction:@selector(indent:)];
+    enable = [controller validateUserInterfaceItem:item];
+    [oIndentLevelSegmentedControl setEnabled:enable forSegment:1];
+    
+    [item release];
 }
 
 - (IBAction)changeIndent:(NSSegmentedControl *)sender;
@@ -172,5 +182,7 @@
 {
     [self refresh];
 }
+
+@synthesize editingController = _editingController;
 
 @end
