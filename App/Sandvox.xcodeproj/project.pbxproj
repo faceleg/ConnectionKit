@@ -360,6 +360,8 @@
 		2782D1DA1257483F00B7CF1A /* SVSummaryDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2782D1D81257483F00B7CF1A /* SVSummaryDOMController.m */; };
 		2785197F104FD34A009C8558 /* KSWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2785197D104FD34A009C8558 /* KSWebViewController.h */; };
 		27851980104FD34A009C8558 /* KSWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2785197E104FD34A009C8558 /* KSWebViewController.m */; };
+		278856A114113DE700280980 /* CK2SSHCredential.h in Headers */ = {isa = PBXBuildFile; fileRef = 2788569F14113DE700280980 /* CK2SSHCredential.h */; };
+		278856A214113DE700280980 /* CK2SSHCredential.m in Sources */ = {isa = PBXBuildFile; fileRef = 278856A014113DE700280980 /* CK2SSHCredential.m */; };
 		278ACCC8116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 278ACCC6116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.h */; };
 		278ACCC9116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 278ACCC7116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.m */; };
 		278DB99612B6DDAC006C462F /* GraphicPlaceholder.html in Resources */ = {isa = PBXBuildFile; fileRef = 278DB99512B6DDAC006C462F /* GraphicPlaceholder.html */; };
@@ -1307,35 +1309,35 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 79CFD12609F702BE00172CDD /* Connection.framework */;
+			remoteGlobalIDString = 79CFD12609F702BE00172CDD;
 			remoteInfo = Framework;
 		};
 		27E87739140C173E0027A738 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 09D6601D09FD37990000BA00 /* UnitTest.octest */;
+			remoteGlobalIDString = 09D6601D09FD37990000BA00;
 			remoteInfo = UnitTest;
 		};
 		27E8773B140C173E0027A738 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 795FF4F10B0C013200EA9292 /* DropletHelper.app */;
+			remoteGlobalIDString = 795FF4F10B0C013200EA9292;
 			remoteInfo = DropletHelper;
 		};
 		27E8773D140C173E0027A738 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 7983E6D20B0C4DF000F5078E /* DropletLauncher */;
+			remoteGlobalIDString = 7983E6D20B0C4DF000F5078E;
 			remoteInfo = DropletLauncher;
 		};
 		27E8773F140C18890027A738 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 79CFD12509F702BE00172CDD /* Framework */;
+			remoteGlobalIDString = 79CFD12509F702BE00172CDD;
 			remoteInfo = Framework;
 		};
 		3C0049551210CB87006BAD9C /* PBXContainerItemProxy */ = {
@@ -2020,6 +2022,8 @@
 		2785197E104FD34A009C8558 /* KSWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSWebViewController.m; sourceTree = "<group>"; };
 		2786BEE40CAD24980086F9E0 /* KTMediaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaManager.h; sourceTree = "<group>"; };
 		2786BEE50CAD24980086F9E0 /* KTMediaManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaManager.m; sourceTree = "<group>"; };
+		2788569F14113DE700280980 /* CK2SSHCredential.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CK2SSHCredential.h; sourceTree = "<group>"; };
+		278856A014113DE700280980 /* CK2SSHCredential.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CK2SSHCredential.m; sourceTree = "<group>"; };
 		278ACCC6116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVQuickLookPreviewHTMLContext.h; sourceTree = "<group>"; };
 		278ACCC7116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVQuickLookPreviewHTMLContext.m; sourceTree = "<group>"; };
 		278DB99512B6DDAC006C462F /* GraphicPlaceholder.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = GraphicPlaceholder.html; sourceTree = "<group>"; };
@@ -4192,6 +4196,8 @@
 				27FD6A6613C08B7900E9D407 /* CK2SFTPSession.m */,
 				27FD6DE913C1229200E9D407 /* CK2SFTPFileHandle.h */,
 				27FD6DEA13C1229200E9D407 /* CK2SFTPFileHandle.m */,
+				2788569F14113DE700280980 /* CK2SSHCredential.h */,
+				278856A014113DE700280980 /* CK2SSHCredential.m */,
 			);
 			name = SFTP;
 			path = ../Code/SFTP;
@@ -6255,6 +6261,7 @@
 				27FD6DEB13C1229200E9D407 /* CK2SFTPFileHandle.h in Headers */,
 				276BC94713C34DDC00EB2798 /* SVWorkspaceIconProtocol.h in Headers */,
 				2705B1B013EC0514004C678D /* SVWebEditorUpdatesHTMLContext.h in Headers */,
+				278856A114113DE700280980 /* CK2SSHCredential.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7748,6 +7755,7 @@
 				27FD6DEC13C1229200E9D407 /* CK2SFTPFileHandle.m in Sources */,
 				276BC94813C34DDC00EB2798 /* SVWorkspaceIconProtocol.m in Sources */,
 				2705B1B113EC0514004C678D /* SVWebEditorUpdatesHTMLContext.m in Sources */,
+				278856A214113DE700280980 /* CK2SSHCredential.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
