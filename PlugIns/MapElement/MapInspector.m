@@ -13,8 +13,8 @@
 
 
 
-- (void)awakeFromNib
-{
+//- (void)awakeFromNib
+//{
 //    // Lots of work to make a nice colorful logo!
 //	NSString *poweredByString = [oGoogleMapsButton title];
 //	
@@ -64,7 +64,7 @@
 //	}
 //    
 //	[oGoogleMapsButton setAttributedTitle:ms];
-}
+//}
 
 - (IBAction)openGoogleMaps:(id)sender
 {
