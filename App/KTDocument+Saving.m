@@ -694,7 +694,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     @finally
     {
         // Do the save
-        if (!(result = [context save:&error]))
+        if (!(result = [context save:&error]) && saveOp != NSAutosaveOperation)
         {
             // Validation error that we could perhaps recover from?
             NSArray *errors = [[error userInfo] objectForKey:NSDetailedErrorsKey];
