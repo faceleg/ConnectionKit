@@ -873,10 +873,9 @@ typedef enum {  // this copied from WebPreferences+Private.h
         NSResponder *firstResponder = [window firstResponder];
         if ([self ks_followsResponder:firstResponder])
         {
-            WebView *webView = [self webView];
-            SVLink *link = [webView selectedLink];
+            SVLink *link = [_editingController selectedLink];
             if (link) link = [[self delegate] webEditor:self willSelectLink:link];  // search for corresponding page
-            [[SVLinkManager sharedLinkManager] setSelectedLink:link editable:[webView canCreateLink]];;
+            [[SVLinkManager sharedLinkManager] setSelectedLink:link editable:[_editingController canCreateLink]];;
         }
     }
 }

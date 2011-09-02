@@ -50,27 +50,6 @@
     }
 }
 
-- (void)createLink:(SVLinkManager *)sender;
-{
-    // Ask for permisson, both for the action, and then the edit
-    
-    NSObject *delegate = [self editingDelegate];
-    if ([delegate respondsToSelector:@selector(webView:shouldPerformAction:fromSender:)])
-    {
-        if (![delegate webView:self shouldPerformAction:_cmd fromSender:sender]) return;
-    }
-    
-    DOMRange *selection = [self selectedDOMRange];
-    if (selection)
-    {
-        if ([[self webEditor] shouldChangeTextInDOMRange:selection])
-        {
-            SVLink *link = [sender selectedLink];
-            [self createLink:link userInterface:NO];
-        }
-    }
-}
-
 - (void)makeSelectedLinksOpenInNewWindow
 {
     // Need to ask permission before doing so. If not, after the change, web editor may well not know what changed

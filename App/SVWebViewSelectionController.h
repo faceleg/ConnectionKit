@@ -9,11 +9,19 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface SVWebViewSelectionController : NSResponder
+@class SVLink;
+
+
+@interface SVWebViewSelectionController : NSResponder <NSUserInterfaceValidations>
 {
   @private
+    WebView     *_webView;
     DOMRange    *_selection;
 }
+
+
+- (id)initWithWebView:(WebView *)webView;
+
 
 #pragma mark Strikethrough
 - (IBAction)strikethrough:(id)sender;   // oddly, WebKit doesn't supply this command
@@ -34,5 +42,21 @@
 @property(nonatomic, retain) DOMRange *selection;
 
 - (void)insertIntoResponderChainAfterWebView:(WebView *)webView;
+
+
+#pragma mark Links
+
+- (BOOL)canCreateLink;
+- (BOOL)canUnlink;
+
+- (SVLink *)selectedLink;
+- (NSArray *)selectedAnchorElements;
+- (NSString *)linkValue;
+
+- (void)createLink:(SVLink *)link userInterface:(BOOL)userInterface;
+- (void)makeSelectedLinksOpenInNewWindow;   // support method, called by above
+- (IBAction)unlink:(id)sender;
+- (IBAction)selectLink:(id)sender;
+
 
 @end

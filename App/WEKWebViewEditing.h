@@ -9,25 +9,10 @@
 #import <WebKit/WebKit.h>
 
 
-@class SVLink, WEKSelection;
+@class WEKSelection;
 
 
 @interface WebView (WEKWebViewEditing)
-
-#pragma mark Links
-
-- (BOOL)canCreateLink;
-- (BOOL)canUnlink;
-
-- (SVLink *)selectedLink;
-- (NSArray *)selectedAnchorElements;
-- (NSString *)linkValue;
-
-- (void)createLink:(SVLink *)link userInterface:(BOOL)userInterface;
-- (void)makeSelectedLinksOpenInNewWindow;   // support method, called by above
-- (IBAction)unlink:(id)sender;
-- (IBAction)selectLink:(id)sender;
-
 
 #pragma mark Selection
 @property(nonatomic, assign, setter=wek_setSelection:) WEKSelection *wek_selection;
