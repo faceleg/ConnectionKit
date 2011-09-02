@@ -151,7 +151,8 @@
 - (NSString *)writeFlash:(SVHTMLContext *)context
 		  flashSourceURL:(NSURL *)flashSourceURL;
 {
-	NSString *flashSourcePath  = flashSourceURL ? [context relativeStringFromURL:flashSourceURL] : @"";
+	NSString *flashSourcePath  = flashSourceURL ? [flashSourceURL absoluteString] : @"";
+		// case 140379, absolute URL needed for IE8 apparently
 
 	// Don't use these; Firefox gets upset
 //	[context pushAttribute:@"classid" value:@"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"];	// Proper value?
