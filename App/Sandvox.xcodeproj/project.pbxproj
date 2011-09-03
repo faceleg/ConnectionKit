@@ -63,9 +63,11 @@
 				3C7D7D5713B3B04300B58137 /* Script - Copy CFBundleVersion to PlugIns */,
 				3C9B66C60BFA940C007A4871 /* Script - Add PlugIns */,
 				3C9B66CC0BFA94BA007A4871 /* Script - Add Designs */,
+				3C96FBAB1411F79C00DDEDE2 /* Script - Copy CFBundleVersion to Designs */,
 				3C9B66E60BFA95B9007A4871 /* Script - Add png2ico */,
 				3C9B66E80BFA95DD007A4871 /* Script - Add Spotlight Importer */,
 				CE9D3ED20DAAB8450025717A /* Script - Remove Unsupported Languages */,
+				3C96FBAA1411F75B00DDEDE2 /* Script - Thin Binaries */,
 				CEFD3EFC12E9FA0100D3A6CD /* Script - Internationalize XIBs */,
 				3CC092BA134BC490007E2390 /* Script - Code Sign .app */,
 			);
@@ -1307,35 +1309,35 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 79CFD12609F702BE00172CDD /* Connection.framework */;
+			remoteGlobalIDString = 79CFD12609F702BE00172CDD;
 			remoteInfo = Framework;
 		};
 		27E87739140C173E0027A738 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 09D6601D09FD37990000BA00 /* UnitTest.octest */;
+			remoteGlobalIDString = 09D6601D09FD37990000BA00;
 			remoteInfo = UnitTest;
 		};
 		27E8773B140C173E0027A738 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 795FF4F10B0C013200EA9292 /* DropletHelper.app */;
+			remoteGlobalIDString = 795FF4F10B0C013200EA9292;
 			remoteInfo = DropletHelper;
 		};
 		27E8773D140C173E0027A738 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 7983E6D20B0C4DF000F5078E /* DropletLauncher */;
+			remoteGlobalIDString = 7983E6D20B0C4DF000F5078E;
 			remoteInfo = DropletLauncher;
 		};
 		27E8773F140C18890027A738 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 79CFD12509F702BE00172CDD /* Framework */;
+			remoteGlobalIDString = 79CFD12509F702BE00172CDD;
 			remoteInfo = Framework;
 		};
 		3C0049551210CB87006BAD9C /* PBXContainerItemProxy */ = {
@@ -7098,6 +7100,36 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
 			shellScript = "#!/bin/bash\n\nexport APPNAME=\"Sandvox\"\n\n\"${SRCROOT}/../Code/Shared/tools/build_package\"\n\n### this script should NOT have 'Run script only when installing' checked\n";
+			showEnvVarsInLog = 0;
+		};
+		3C96FBAA1411F75B00DDEDE2 /* Script - Thin Binaries */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Script - Thin Binaries";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/bash;
+			shellScript = "Type a script or drag a script file from your workspace";
+			showEnvVarsInLog = 0;
+		};
+		3C96FBAB1411F79C00DDEDE2 /* Script - Copy CFBundleVersion to Designs */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Script - Copy CFBundleVersion to Designs";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "";
 			showEnvVarsInLog = 0;
 		};
 		3C979D8F13BA506000E7CF7C /* ShellScript */ = {
