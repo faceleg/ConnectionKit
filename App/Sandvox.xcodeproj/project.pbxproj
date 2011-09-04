@@ -7114,7 +7114,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/bash;
-			shellScript = "Type a script or drag a script file from your workspace";
+			shellScript = "#\n#\n#\n";
 			showEnvVarsInLog = 0;
 		};
 		3C96FBAB1411F79C00DDEDE2 /* Script - Copy CFBundleVersion to Designs */ = {
@@ -7129,7 +7129,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/bash;
-			shellScript = "\n# read CFBundleVersion\nSANDVOX_PLIST_PATH=${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Info.plist\nSANDVOX_BUILD_NUMBER=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${SANDVOX_PLIST_PATH}\")\nSANDVOX_VERSION=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"${SANDVOX_PLIST_PATH}\")\n\n# update each designs's CFBundleVersion and CFBundleShortVersionString\nDESIGNS_FOLDER_PATH=${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Designs\npushd \"${DESIGNS_FOLDER_PATH}\"\nfor i in *.svxDesign\ndo\n    DESIGN_PLIST_PATH=${PWD}/${i}/Contents/Info.plist\n\n    /usr/libexec/PlistBuddy -c \"Delete CFBundleVersion\" \"${DESIGN_PLIST_PATH}\"\n    /usr/libexec/PlistBuddy -c \"Add CFBundleVersion string ${SANDVOX_BUILD_NUMBER}\" \"${DESIGN_PLIST_PATH}\"\n\n    /usr/libexec/PlistBuddy -c \"Delete CFBundleShortVersionString\" \"${DESIGN_PLIST_PATH}\"\n    /usr/libexec/PlistBuddy -c \"Add CFBundleShortVersionString string ${SANDVOX_VERSION}\" \"${DESIGN_PLIST_PATH}\"\ndone\npopd\n";
+			shellScript = "\n# read CFBundleVersion\nSANDVOX_PLIST_PATH=${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Info.plist\nSANDVOX_BUILD_NUMBER=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${SANDVOX_PLIST_PATH}\")\nSANDVOX_VERSION=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"${SANDVOX_PLIST_PATH}\")\n\n# update each designs's CFBundleVersion and CFBundleShortVersionString\nDESIGNS_FOLDER_PATH=${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Designs\npushd \"${DESIGNS_FOLDER_PATH}\"\nfor i in *.svxDesign\ndo\n    DESIGN_PLIST_PATH=${PWD}/${i}/Info.plist\n\n    /usr/libexec/PlistBuddy -c \"Delete CFBundleVersion\" \"${DESIGN_PLIST_PATH}\"\n    /usr/libexec/PlistBuddy -c \"Add CFBundleVersion string ${SANDVOX_BUILD_NUMBER}\" \"${DESIGN_PLIST_PATH}\"\n\n    /usr/libexec/PlistBuddy -c \"Delete CFBundleShortVersionString\" \"${DESIGN_PLIST_PATH}\"\n    /usr/libexec/PlistBuddy -c \"Add CFBundleShortVersionString string ${SANDVOX_VERSION}\" \"${DESIGN_PLIST_PATH}\"\ndone\npopd\n";
 			showEnvVarsInLog = 0;
 		};
 		3C979D8F13BA506000E7CF7C /* ShellScript */ = {
