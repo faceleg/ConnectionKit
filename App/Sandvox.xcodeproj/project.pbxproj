@@ -7323,7 +7323,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/bash;
-			shellScript = "#\n#\n#\n";
+			shellScript = "#\n# remove ppc/ppc7400 from various binaries\n#\n\nthinBinary()\n{\n    lipo \"${1}\" -verify_arch ppc > /dev/null 2>&1\n    if [ \"$?\" -eq 0 ]\n    then\n        echo \"thinning arch ppc from ${1}...\"\n        lipo \"${1}\" -remove ppc -output \"${TARGET_TEMP_DIR}/thinnedBinary\"\n        mv \"${TARGET_TEMP_DIR}/thinnedBinary\" \"${1}\"\n    fi\n    \n    lipo \"${1}\" -verify_arch ppc7400 > /dev/null 2>&1\n    if [ \"$?\" -eq 0 ]\n    then\n        echo \"removing arch ppc7400 from ${1}\"\n        lipo \"${1}\" -remove ppc7400 -output \"${TARGET_TEMP_DIR}/thinnedBinary\"\n        mv \"${TARGET_TEMP_DIR}/thinnedBinary\" \"${1}\"\n    fi\n}\n\n# offending Frameworks\n\nFRAMEWORKS_PATH=${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks\n\nGrowlPath=${FRAMEWORKS_PATH}/Growl.framework/Versions/A/Growl\nBWToolkitPath=${FRAMEWORKS_PATH}/BWToolkitFramework.framework/Versions/A/BWToolkitFramework\nJSTalkPath=${FRAMEWORKS_PATH}/JSTalk.framework/Versions/A/JSTalk\nlibssh2Path=${FRAMEWORKS_PATH}/libssh2.dylib\n\n# only thin App Store builds\n\nif [ -z \"${APP_STORE_VERSION}\" ]\nthen\n    echo \"NOT thinning binaries in non-App Store builds\"\nelse\n    thinBinary \"${GrowlPath}\"\n    thinBinary \"${BWToolkitPath}\"\n    thinBinary \"${JSTalkPath}\"\n    thinBinary \"${libssh2Path}\"\nfi\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C96FBAB1411F79C00DDEDE2 /* Script - Copy CFBundleVersion to Designs */ = {
