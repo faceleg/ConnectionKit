@@ -12,6 +12,8 @@
 #import "KTHostProperties.h"
 #import "KTURLCredentialStorage.h"
 
+#import "CK2SSHCredential.h"
+
 #import "NSError+Karelia.h"
 
 
@@ -62,9 +64,7 @@
 		
 		if (isSFTPWithPublicKey)
 		{
-			[[challenge sender] useCredential:[NSURLCredential credentialWithUser:user
-                                                                         password:nil
-                                                                      persistence:NSURLCredentialPersistenceNone]
+            [[challenge sender] useCredential:[NSURLCredential ck2_SSHAgentCredentialWithUser:user]
                    forAuthenticationChallenge:challenge];
 		}
 		else
