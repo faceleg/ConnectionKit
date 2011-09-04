@@ -7,6 +7,7 @@ USER_HEADER_SEARCH_PATHS = "$(SYMROOT)/Release/Sandvox.app/Contents/PrivateHeade
 BUNDLE_LOADER = $(SYMROOT)/Release/Sandvox.app/Contents/MacOS/Sandvox
 
 // we're building for Leopard and above
+SDKROOT = macosx10.6
 MACOSX_DEPLOYMENT_TARGET = 10.6
 
 // plugins are Cocoa Bundles
