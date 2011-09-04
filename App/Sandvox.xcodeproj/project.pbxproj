@@ -67,7 +67,6 @@
 				3C9B66E60BFA95B9007A4871 /* Script - Add png2ico */,
 				3C9B66E80BFA95DD007A4871 /* Script - Add Spotlight Importer */,
 				CE9D3ED20DAAB8450025717A /* Script - Remove Unsupported Languages */,
-				3C96FBAA1411F75B00DDEDE2 /* Script - Thin Binaries */,
 				CEFD3EFC12E9FA0100D3A6CD /* Script - Internationalize XIBs */,
 				3CC092BA134BC490007E2390 /* Script - Code Sign .app */,
 			);
@@ -6486,12 +6485,13 @@
 				3C99107209298C4400ED5CBF /* Generate Localizable.strings */,
 				3C202F4D07E0140100DE4994 /* Copy Frameworks */,
 				CEC10DFF0D7793AE00513E70 /* Copy Frameworks ALWAYS */,
+				3CB7531C13CFAAF70033600F /* Copy dylibs */,
 				3CEC87370BF8DB4500CC732B /* Headers */,
 				8D15AC2B0486D014006FF6A4 /* Resources */,
 				3C536FA713BC3058004222D5 /* Generate CFBundleShortVersionString */,
 				3C7D7D5313B3B01D00B58137 /* Generate CFBundleVersion */,
+				3C0097241414257B006AF3BF /* Script - Thin Binaries */,
 				3C6816C813FEC68500EE0D9B /* Add Test Receipt */,
-				3CB7531C13CFAAF70033600F /* Copy dylibs */,
 			);
 			buildRules = (
 			);
@@ -7209,6 +7209,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		3C0097241414257B006AF3BF /* Script - Thin Binaries */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Script - Thin Binaries";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/bash;
+			shellScript = "#\n# remove ppc/ppc7400 from various binaries that Apple complained about\n#\n\nthinBinary()\n{\n    lipo \"${1}\" -verify_arch ppc > /dev/null 2>&1\n    if [ \"$?\" -eq 0 ]\n    then\n        echo \"thinning arch ppc from ${1}...\"\n        lipo \"${1}\" -remove ppc -output \"${TARGET_TEMP_DIR}/thinnedBinary\"\n        mv \"${TARGET_TEMP_DIR}/thinnedBinary\" \"${1}\"\n    fi\n    \n    lipo \"${1}\" -verify_arch ppc7400 > /dev/null 2>&1\n    if [ \"$?\" -eq 0 ]\n    then\n        echo \"removing arch ppc7400 from ${1}\"\n        lipo \"${1}\" -remove ppc7400 -output \"${TARGET_TEMP_DIR}/thinnedBinary\"\n        mv \"${TARGET_TEMP_DIR}/thinnedBinary\" \"${1}\"\n    fi\n}\n\n# Frameworks\n\nFRAMEWORKS_PATH=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/Frameworks\n\nGrowlPath=${FRAMEWORKS_PATH}/Growl.framework/Versions/A/Growl\nBWToolkitPath=${FRAMEWORKS_PATH}/BWToolkitFramework.framework/Versions/A/BWToolkitFramework\nJSTalkPath=${FRAMEWORKS_PATH}/JSTalk.framework/Versions/A/JSTalk\nlibssh2Path=${FRAMEWORKS_PATH}/libssh2.dylib\n\n# only thin App Store builds\n\nif [ -z \"${APP_STORE_VERSION}\" ]\nthen\n    echo \"NOT thinning binaries in non-App Store builds\"\nelse\n    thinBinary \"${GrowlPath}\"\n    thinBinary \"${BWToolkitPath}\"\n    thinBinary \"${JSTalkPath}\"\n    thinBinary \"${libssh2Path}\"\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		3C15B85D0DC790A100DE9957 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 8;
@@ -7263,7 +7278,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "#!/bin/bash\n\nRECEIPT_PATH=${SRCROOT}/receipt\nINSTALLED_RECEIPT_PATH=${CODESIGNING_FOLDER_PATH}/Contents/_MASReceipt\n\nif [ \"${CONFIGURATION}\" == \"Debug\" ]\nthen\n\techo \"Adding test MAS receipt to Debug build...\"\n\techo \"mkdir -p ${INSTALLED_RECEIPT_PATH}\"\n\tmkdir -p \"${INSTALLED_RECEIPT_PATH}\"\n\techo \"cp ${RECEIPT_PATH} ${INSTALLED_RECEIPT_PATH}/receipt\"\n\tcp \"${RECEIPT_PATH}\" \"${INSTALLED_RECEIPT_PATH}/receipt\"\nfi\n\nif [ \"${CONFIGURATION}\" == \"Release\" ]\nthen\n\techo \"NOT Adding test MAS receipt to Receipt build...\"\nfi\n\nexit 0\n\n";
+			shellScript = "#!/bin/bash\n\nRECEIPT_PATH=${SRCROOT}/receipt\nINSTALLED_RECEIPT_PATH=${CODESIGNING_FOLDER_PATH}/Contents/_MASReceipt\n\nif [ -z \"${APP_STORE_VERSION}\" ]\nthen\n    echo \"NOT Adding test MAS receipt to non-MAS build...\"\nelse\n    if [ \"${CONFIGURATION}\" == \"Debug\" ]\n    then\n        echo \"Adding test MAS receipt to Debug build...\"\n        echo \"mkdir -p ${INSTALLED_RECEIPT_PATH}\"\n        mkdir -p \"${INSTALLED_RECEIPT_PATH}\"\n        echo \"cp ${RECEIPT_PATH} ${INSTALLED_RECEIPT_PATH}/receipt\"\n        cp \"${RECEIPT_PATH}\" \"${INSTALLED_RECEIPT_PATH}/receipt\"\n    fi\n\n    if [ \"${CONFIGURATION}\" == \"Release\" ]\n    then\n        echo \"NOT Adding test MAS receipt to Release build...\"\n    fi\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		3C7D7D5313B3B01D00B58137 /* Generate CFBundleVersion */ = {
@@ -7309,21 +7324,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
 			shellScript = "#!/bin/bash\n\nexport APPNAME=\"Sandvox\"\n\n\"${SRCROOT}/../Code/Shared/tools/build_package\"\n\n### this script should NOT have 'Run script only when installing' checked\n";
-			showEnvVarsInLog = 0;
-		};
-		3C96FBAA1411F75B00DDEDE2 /* Script - Thin Binaries */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Script - Thin Binaries";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/bash;
-			shellScript = "#\n# remove ppc/ppc7400 from various binaries\n#\n\nthinBinary()\n{\n    lipo \"${1}\" -verify_arch ppc > /dev/null 2>&1\n    if [ \"$?\" -eq 0 ]\n    then\n        echo \"thinning arch ppc from ${1}...\"\n        lipo \"${1}\" -remove ppc -output \"${TARGET_TEMP_DIR}/thinnedBinary\"\n        mv \"${TARGET_TEMP_DIR}/thinnedBinary\" \"${1}\"\n    fi\n    \n    lipo \"${1}\" -verify_arch ppc7400 > /dev/null 2>&1\n    if [ \"$?\" -eq 0 ]\n    then\n        echo \"removing arch ppc7400 from ${1}\"\n        lipo \"${1}\" -remove ppc7400 -output \"${TARGET_TEMP_DIR}/thinnedBinary\"\n        mv \"${TARGET_TEMP_DIR}/thinnedBinary\" \"${1}\"\n    fi\n}\n\n# offending Frameworks\n\nFRAMEWORKS_PATH=${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks\n\nGrowlPath=${FRAMEWORKS_PATH}/Growl.framework/Versions/A/Growl\nBWToolkitPath=${FRAMEWORKS_PATH}/BWToolkitFramework.framework/Versions/A/BWToolkitFramework\nJSTalkPath=${FRAMEWORKS_PATH}/JSTalk.framework/Versions/A/JSTalk\nlibssh2Path=${FRAMEWORKS_PATH}/libssh2.dylib\n\n# only thin App Store builds\n\nif [ -z \"${APP_STORE_VERSION}\" ]\nthen\n    echo \"NOT thinning binaries in non-App Store builds\"\nelse\n    thinBinary \"${GrowlPath}\"\n    thinBinary \"${BWToolkitPath}\"\n    thinBinary \"${JSTalkPath}\"\n    thinBinary \"${libssh2Path}\"\nfi\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C96FBAB1411F79C00DDEDE2 /* Script - Copy CFBundleVersion to Designs */ = {
@@ -9015,6 +9015,8 @@
 				);
 				OTHER_LDFLAGS = "-lsasl2";
 				PRODUCT_NAME = Sandvox;
+				SDKROOT = macosx10.6;
+				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -9047,6 +9049,8 @@
 				MOMC_NO_WARNINGS = YES;
 				OTHER_LDFLAGS = "-lsasl2";
 				PRODUCT_NAME = Sandvox;
+				SDKROOT = macosx10.6;
+				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
