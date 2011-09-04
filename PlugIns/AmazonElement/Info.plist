@@ -19,11 +19,11 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string></string>
+	<string>REPLACE_ME</string>
 	<key>CFBundleSignature</key>
 	<string>Svox</string>
 	<key>CFBundleVersion</key>
-	<string></string>
+	<string>REPLACE_ME</string>
 	<key>SVMinimumAppVersion</key>
 	<string>2.0</string>
 	<key>SVPlugInCSSFiles</key>
