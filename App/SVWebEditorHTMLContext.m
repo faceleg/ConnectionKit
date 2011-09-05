@@ -339,7 +339,10 @@
     
     // Add to web resources
     SVMedia *media = [[SVMedia alloc] initWithData:data URL:result];
-    return [self addMedia:media];
+    result = [self addMedia:media];
+    
+    [media release];
+    return result;
 }
 
 #pragma mark Dependencies
@@ -406,6 +409,7 @@
         }
         else
         {
+			LOG((@"addMediaWithRequest: about to setObject forKey of data with length of %d, %.1f MB", [data length], (float)[data length] / (1024.0*1024.0)));
             [_mediaByData setObject:media forKey:data];
         }
     }

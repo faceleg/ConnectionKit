@@ -14,7 +14,8 @@
 @interface SVMedia : NSObject <SVMedia, NSCoding>
 {
   @private
-    NSURL       *_fileURL;
+    NSURL       *_URL;
+    NSData      *_data;
     WebResource *_webResource;
     
     NSString    *_preferredFilename;
@@ -29,6 +30,7 @@
 
 @property(nonatomic, copy, readonly) NSURL *fileURL;
 @property(nonatomic, copy, readonly) NSData *mediaData;
+@property(nonatomic, copy, readonly) NSURL *mediaURL;
 @property(nonatomic, copy, readonly) WebResource *webResource;
 
 @property(nonatomic, copy) NSString *preferredFilename;
