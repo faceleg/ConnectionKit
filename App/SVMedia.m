@@ -27,7 +27,7 @@
     OBPRECONDITION(fileURL);
     [self init];
     
-    _fileURL = [fileURL copy];
+    _URL = [fileURL copy];
     [self setPreferredFilename:[fileURL ks_lastPathComponent]];
     
     // Cache the hash since calculating it requires a memory allocation. Use path so file URLs have the correct hash
@@ -44,7 +44,7 @@
     if (data)
     {
         self = [self initWithData:data URL:URL];
-        _fileURL = [URL copy];
+        _URL = [URL copy];
         [data release];
     }
     else
@@ -61,32 +61,33 @@
     [self init];
     
     _webResource = [resource copy];
-    [self setPreferredFilename:[[[resource ks_proxyOnThread:nil] URL] ks_lastPathComponent]];
+    _data = [[resource data] copy]; // so can access background threads
+    _URL = [[resource URL] copy];
+    [self setPreferredFilename:[_URL ks_lastPathComponent]];
     
     return self;
 }
 
 - (id)initWithData:(NSData *)data URL:(NSURL *)url;
 {
+    OBPRECONDITION(data);
     OBPRECONDITION(url);
     
-    NSString *type = [KSWORKSPACE ks_typeForFilenameExtension:[url ks_pathExtension]];
-    NSString *mimeType = ([type length] ? [KSWORKSPACE ks_MIMETypeForType:type] : @"application/octet-stream");
+    if (self = [self init])
+    {
+        _data = [data copy];
+        _URL = [url copy];
+        
+        [self setPreferredFilename:[url lastPathComponent]];
+    }
     
-    WebResource *resource = [[[WebResource alloc] ks_proxyOnThread:nil] initWithData:data   // yes, HACK
-                                                                                 URL:url
-                                                                            MIMEType:mimeType
-                                                                    textEncodingName:nil
-                                                                           frameName:nil];
-    
-    self = [self initWithWebResource:resource];
-    [resource release];
     return self;
 }
 
 - (void)dealloc;
 {
-    [_fileURL release];
+    [_data release];
+    [_URL release];
     [_webResource release];
     [_preferredFilename release];
     
@@ -95,24 +96,25 @@
 
 #pragma mark Properties
 
-@synthesize fileURL = _fileURL;
-@synthesize webResource = _webResource;
-
-- (NSURL *)mediaURL;
+- (NSURL *)fileURL;
 {
-    // Not safe to access web resource from a background thread. #103169
-    NSURL *result = [[[self webResource] ks_proxyOnThread:nil] URL];
-    
-    if (!result) result = [self fileURL];
-    return result;
+    if ([self mediaData]) return nil;
+    return [self mediaURL];
 }
 
-- (NSData *)mediaData;
+@synthesize mediaData = _data;
+@synthesize mediaURL = _URL;
+
+- (WebResource *)webResource;
 {
-    // Despite being immutable, web resources fail assertion if accessed on background thread. #99174
-    NSData *result = [[_webResource ks_proxyOnThread:nil] data];
-	LOG((@"mediaData length = %d", [result length]));
-	return result;
+    if (_webResource) return _webResource;
+    if (!_data) return nil;
+    
+    NSURL *url = [self mediaURL];
+    NSString *type = [KSWORKSPACE ks_typeForFilenameExtension:[url ks_pathExtension]];
+    NSString *mimeType = ([type length] ? [KSWORKSPACE ks_MIMETypeForType:type] : @"application/octet-stream");
+    
+    return [[[WebResource alloc] initWithData:[self mediaData] URL:url MIMEType:mimeType textEncodingName:nil frameName:nil] autorelease];
 }
 
 @synthesize preferredFilename = _preferredFilename;
@@ -267,7 +269,7 @@
 {
     [self init];
     
-    _fileURL = [[aDecoder decodeObjectForKey:@"fileURL"] copy];
+    _URL = [[aDecoder decodeObjectForKey:@"fileURL"] copy];
     _webResource = [[[aDecoder ks_proxyOnThread:nil] decodeObjectForKey:@"webResource"] copy];
     _preferredFilename = [[aDecoder decodeObjectForKey:@"preferredFilename"] copy];
     
