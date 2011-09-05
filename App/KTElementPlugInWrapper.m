@@ -172,10 +172,10 @@
  */
 + (NSSet *)pagePlugins
 {
-	NSDictionary *pluginDict = [KSPlugInWrapper pluginsWithFileExtension:kKTElementExtension];
-	NSMutableSet *buffer = [NSMutableSet setWithCapacity:[pluginDict count]];
+	NSSet *plugins = [KSPlugInWrapper pluginsWithFileExtension:kKTElementExtension];
+	NSMutableSet *buffer = [NSMutableSet setWithCapacity:[plugins count]];
 	
-	NSEnumerator *pluginsEnumerator = [pluginDict objectEnumerator];
+	NSEnumerator *pluginsEnumerator = [plugins objectEnumerator];
 	KSPlugInWrapper *aPlugin;
 	while (aPlugin = [pluginsEnumerator nextObject])
 	{
@@ -195,10 +195,10 @@
  */
 + (NSSet *)pageletPlugins
 {
-	NSDictionary *pluginDict = [KSPlugInWrapper pluginsWithFileExtension:kKTElementExtension];
-	NSMutableSet *buffer = [NSMutableSet setWithCapacity:[pluginDict count]];
+	NSSet *plugins = [KSPlugInWrapper pluginsWithFileExtension:kKTElementExtension];
+	NSMutableSet *buffer = [NSMutableSet setWithCapacity:[plugins count]];
 	
-	NSEnumerator *pluginsEnumerator = [pluginDict objectEnumerator];
+	NSEnumerator *pluginsEnumerator = [plugins objectEnumerator];
 	KSPlugInWrapper *aPlugin;
 	while (aPlugin = [pluginsEnumerator nextObject])
 	{
@@ -220,7 +220,7 @@
 	
     
     // Go through and get the localized names of each bundle, and put into a dict keyed by name
-    NSDictionary *plugins = [KSPlugInWrapper pluginsWithFileExtension:kKTElementExtension];
+    NSSet *plugins = [KSPlugInWrapper pluginsWithFileExtension:kKTElementExtension];
     NSEnumerator *enumerator = [plugins objectEnumerator];	// go through each plugin.
     KTElementPlugInWrapper *plugin;
     
