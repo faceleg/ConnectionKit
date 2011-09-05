@@ -31,7 +31,6 @@ typedef enum {
 }
 
 + (NSSet *)pageletPlugins;
-+ (NSSet *)pagePlugins;
 
 // Inserts one item per known collection preset into aMenu at the specified index.
 + (NSSet *)collectionPresets;
