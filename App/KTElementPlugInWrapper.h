@@ -30,7 +30,7 @@ typedef enum {
     SVPlugInGraphicFactory    *_factory;
 }
 
-+ (NSSet *)pageletPlugins;
++ (NSSet *)elementPlugIns;
 
 // Inserts one item per known collection preset into aMenu at the specified index.
 + (NSSet *)collectionPresets;

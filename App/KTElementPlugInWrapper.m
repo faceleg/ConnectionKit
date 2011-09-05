@@ -91,10 +91,6 @@
 	{
 		return [NSNumber numberWithBool:NO];
 	}
-	else if ([key isEqualToString:@"KTElementSupportsPageletUsage"])
-	{
-		return [NSNumber numberWithBool:YES];
-	}
 	else if ([key isEqualToString:@"KTPageAllowsCallouts"])
 	{
 		return [NSNumber numberWithBool:NO];
@@ -166,27 +162,9 @@
 #pragma mark -
 #pragma mark Plugins List
 
-/*	Returns all registered plugins that are either:
- *		A) Of the svxPagelet plugin type
- *		B) Of the svxElement plugin type and support pagelet usage
- */
-+ (NSSet *)pageletPlugins
++ (NSSet *)elementPlugIns
 {
-	NSSet *plugins = [KSPlugInWrapper pluginsWithFileExtension:kKTElementExtension];
-	NSMutableSet *buffer = [NSMutableSet setWithCapacity:[plugins count]];
-	
-	NSEnumerator *pluginsEnumerator = [plugins objectEnumerator];
-	KSPlugInWrapper *aPlugin;
-	while (aPlugin = [pluginsEnumerator nextObject])
-	{
-		if ([[aPlugin pluginPropertyForKey:@"KTElementSupportsPageletUsage"] boolValue])
-		{
-			[buffer addObject:aPlugin];
-		}
-	}
-	
-	NSSet *result = [NSSet setWithSet:buffer];
-	return result;
+	return [KSPlugInWrapper pluginsWithFileExtension:kKTElementExtension];
 }
 
 #pragma mark Collection Presets
