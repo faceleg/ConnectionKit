@@ -20,10 +20,12 @@
 
 - (id)init;
 {
-    self = [super init];
-    
-    // By default, list installed design plug-ins
-    [self setContent:[KSPlugInWrapper sortedPluginsWithFileExtension:kKTDesignExtension]];
+    // By default, list installed design plug-ins, sorted by name
+    self = [self initWithContent:[KSPlugInWrapper pluginsWithFileExtension:kKTDesignExtension]];
+        
+    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+    [self setSortDescriptors:[NSArray arrayWithObject:sort]];
+    [sort release];
     
     return self;
 }
@@ -32,8 +34,12 @@
 {
     [super initWithCoder:aDecoder];
     
-    // By default, list installed design plug-ins
-    [self setContent:[KSPlugInWrapper sortedPluginsWithFileExtension:kKTDesignExtension]];
+    // By default, list installed design plug-ins, sorted by name
+    [self setContent:[KSPlugInWrapper pluginsWithFileExtension:kKTDesignExtension]];
+    
+    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+    [self setSortDescriptors:[NSArray arrayWithObject:sort]];
+    [sort release];
     
     return self;
 }
