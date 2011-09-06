@@ -1021,6 +1021,7 @@
 		CE1BF76311D2B83500D875AE /* UKDockProgressIndicator_progress.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1BF76011D2B83500D875AE /* UKDockProgressIndicator_progress.png */; };
 		CE1CFB011194DF0100F47941 /* SVDesignsController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE1CFAFF1194DF0100F47941 /* SVDesignsController.h */; };
 		CE1CFB021194DF0100F47941 /* SVDesignsController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1CFB001194DF0100F47941 /* SVDesignsController.m */; };
+		CE1D64751416B0C9009E0CE9 /* ICOFamily.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1D646A1416AF42009E0CE9 /* ICOFamily.m */; };
 		CE1D6D4311B5BA840087AC1B /* NSMenuItem+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE1D6D4111B5BA840087AC1B /* NSMenuItem+Karelia.h */; };
 		CE1D6D4411B5BA840087AC1B /* NSMenuItem+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1D6D4211B5BA840087AC1B /* NSMenuItem+Karelia.m */; };
 		CE214BFA098060CD006DD2B1 /* Languages.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE214BF9098060CD006DD2B1 /* Languages.plist */; };
@@ -2760,6 +2761,8 @@
 		CE1BF76011D2B83500D875AE /* UKDockProgressIndicator_progress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UKDockProgressIndicator_progress.png; sourceTree = "<group>"; };
 		CE1CFAFF1194DF0100F47941 /* SVDesignsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDesignsController.h; sourceTree = "<group>"; };
 		CE1CFB001194DF0100F47941 /* SVDesignsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDesignsController.m; sourceTree = "<group>"; };
+		CE1D64691416AF42009E0CE9 /* ICOFamily.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICOFamily.h; path = ../Code/ICOFamily/ICOFamily.h; sourceTree = SOURCE_ROOT; };
+		CE1D646A1416AF42009E0CE9 /* ICOFamily.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICOFamily.m; path = ../Code/ICOFamily/ICOFamily.m; sourceTree = SOURCE_ROOT; };
 		CE1D6D4111B5BA840087AC1B /* NSMenuItem+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMenuItem+Karelia.h"; sourceTree = "<group>"; };
 		CE1D6D4211B5BA840087AC1B /* NSMenuItem+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMenuItem+Karelia.m"; sourceTree = "<group>"; };
 		CE214BF9098060CD006DD2B1 /* Languages.plist */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 4; path = Languages.plist; sourceTree = "<group>"; };
@@ -5600,6 +5603,16 @@
 			path = WelcomeWindow;
 			sourceTree = "<group>";
 		};
+		CE1D64651416AF30009E0CE9 /* ICOFamily */ = {
+			isa = PBXGroup;
+			children = (
+				CE1D64691416AF42009E0CE9 /* ICOFamily.h */,
+				CE1D646A1416AF42009E0CE9 /* ICOFamily.m */,
+			);
+			name = ICOFamily;
+			path = Imported;
+			sourceTree = "<group>";
+		};
 		CE22E5B80D7C71A10055D8E9 /* Interfaces */ = {
 			isa = PBXGroup;
 			children = (
@@ -5770,6 +5783,7 @@
 				2778D38610AC5DE40027C323 /* QTKit */,
 				2778D34E10AC59440027C323 /* Core Image */,
 				CEC69B02108E6F91000E6E84 /* ThirdParty */,
+				CE1D64651416AF30009E0CE9 /* ICOFamily */,
 				CE01A7050EAFD63600BDF264 /* Imported */,
 				CE788A0F1329936D00CDF0B9 /* Shared.strings */,
 			);
@@ -7788,6 +7802,7 @@
 				276BC94813C34DDC00EB2798 /* SVWorkspaceIconProtocol.m in Sources */,
 				2705B1B113EC0514004C678D /* SVWebEditorUpdatesHTMLContext.m in Sources */,
 				278856A214113DE700280980 /* CK2SSHCredential.m in Sources */,
+				CE1D64751416B0C9009E0CE9 /* ICOFamily.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
