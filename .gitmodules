@@ -16,3 +16,6 @@
 [submodule "Code/ConnectionKit"]
 	path = Code/ConnectionKit
 	url = git@github.com:karelia/ConnectionKit.git
+[submodule "Code/ICOFamily"]
+	path = Code/ICOFamily
+	url = https://github.com/alexzielenski/ICOFamily.git
