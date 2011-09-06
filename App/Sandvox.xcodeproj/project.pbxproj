@@ -64,7 +64,6 @@
 				3C9B66C60BFA940C007A4871 /* Script - Add PlugIns */,
 				3C9B66CC0BFA94BA007A4871 /* Script - Add Designs */,
 				3C96FBAB1411F79C00DDEDE2 /* Script - Copy CFBundleVersion to Designs */,
-				3C9B66E60BFA95B9007A4871 /* Script - Add png2ico */,
 				3C9B66E80BFA95DD007A4871 /* Script - Add Spotlight Importer */,
 				CE9D3ED20DAAB8450025717A /* Script - Remove Unsupported Languages */,
 				3C96FBAA1411F75B00DDEDE2 /* Script - Thin Binaries */,
@@ -7240,21 +7239,6 @@
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/bash;
 			shellScript = "\nPBXCP=${SRCROOT}/../Code/Shared/Tools/pbxcp\n\nDESIGNS_FOLDER_PATH=${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Designs\nmkdir -p \"${DESIGNS_FOLDER_PATH}\"\n\npushd ../../Designs\n\nfor i in *\ndo\n    if [ -e \"${i}/BUNDLED\" ];    # BUNDLE EVERYTHING IN THE APP\n    then\n        # put into application\n        echo \"BUNDLED DESIGN: PBXCp \\\"$i\\\" ${DESIGNS_FOLDER_PATH}\"\n\n        \"${PBXCP}\" \\\n            -exclude .localized -exclude Sources -exclude sources -exclude Testing_Files -exclude .DS_Store -exclude CVS -exclude .svn -exclude BUNDLED -exclude HIDDEN -exclude BONUS -exclude .psd -exclude sources -resolve-src-symlinks \\\n            \"${PWD}/${i}\" \"${DESIGNS_FOLDER_PATH}\"\n\n      # TODO: put correct SANDVOX_VERSION and CFBundleVersion into Info.plist for each copied design\n\n    else\n        echo \"--------------  Not including $i\"\n    fi\ndone\n\npopd\n";
-			showEnvVarsInLog = 0;
-		};
-		3C9B66E60BFA95B9007A4871 /* Script - Add png2ico */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Script - Add png2ico";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/bash;
-			shellScript = "\nPBXCP=${SRCROOT}/../Code/Shared/Tools/pbxcp\n\nEXECUTABLE=${PROJECT_DIR}/../Code/png2ico/png2ico\nEXECUTABLES_DIR=${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/MacOS\n\necho \"png2ico: PBXCp ${EXECUTABLE} ${EXECUTABLES_DIR}\"\n\n\"${PBXCP}\" \"${EXECUTABLE}\" \"${EXECUTABLES_DIR}\"\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66E80BFA95DD007A4871 /* Script - Add Spotlight Importer */ = {
