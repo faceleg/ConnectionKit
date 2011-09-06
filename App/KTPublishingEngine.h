@@ -127,6 +127,8 @@ typedef enum {
 
 - (BOOL)isPublishingToPath:(NSString *)path;
 
+- (SVPublishingRecord *)publishingRecordForPath:(NSString *)path;
+
 // Given a file's digest, where should it be placed? This is likely to be because the file has already been queued for upload; test with -shouldPublishToPath:
 - (NSString *)pathForFileWithSHA1Digest:(NSData *)digest;
 
