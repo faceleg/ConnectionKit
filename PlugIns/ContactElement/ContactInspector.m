@@ -118,4 +118,9 @@
 	[[oLabel window] makeFirstResponder:oLabel];
 }
 
+- (IBAction) unsecureHelp:(id)sender;
+{
+	[NSHelpManager gotoHelpAnchor:@"Contact Form"];	// HELPSTRING
+}
+
 @end

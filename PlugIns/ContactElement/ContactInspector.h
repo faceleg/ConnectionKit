@@ -46,4 +46,6 @@
     IBOutlet NSComboBox             *oAddressComboBox;
 }
 
+- (IBAction) unsecureHelp:(id)sender;
+
 @end
