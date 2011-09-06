@@ -848,7 +848,7 @@ static void *sProgressObservationContext = &sProgressObservationContext;
         if ([self status] <= KTPublishingEngineStatusGatheringMedia)
         {
             // This is new media. Is its preferred filename definitely available? If so, can go ahead and publish immediately. #111549. Otherwise, wait until all media is known to figure out the best available path
-            if ([[[self site] hostProperties] publishingRecordForPath:result])
+            if ([self publishingRecordForPath:result])
             {
                 // but cache the data
                 if (data) [digestStore setData:data forMediaRequest:request];
@@ -1078,6 +1078,23 @@ static void *sProgressObservationContext = &sProgressObservationContext;
 }
 
 #pragma mark Publishing Records
+
+- (SVPublishingRecord *)publishingRecordForPath:(NSString *)path;
+{
+    // Adjust the path so that it matches what Host Properties expects, rather than a path on the local disk
+    KTHostProperties *hostProperties = [[self site] hostProperties];
+    
+    if ([path isAbsolutePath])
+    {
+        path = [path ks_pathRelativeToDirectory:[self baseRemotePath]];
+        
+        path = [[[hostProperties documentRoot]
+                 stringByAppendingPathComponent:[hostProperties subfolder]]
+                stringByAppendingPathComponent:path];
+    }
+    
+    return [hostProperties publishingRecordForPath:path];
+}
 
 - (NSString *)pathForFileWithSHA1Digest:(NSData *)digest;
 {

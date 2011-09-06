@@ -37,7 +37,6 @@
 
 @interface KTLocalPublishingEngine ()
 
-- (SVPublishingRecord *)publishingRecordForPath:(NSString *)path;
 - (SVPublishingRecord *)regularFilePublishingRecordWithPath:(NSString *)path;
 - (SVPublishingRecord *)updatePublishingRecordForPath:(NSString *)path
                                            SHA1Digest:(NSData *)digest
