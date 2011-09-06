@@ -112,8 +112,9 @@ extern NSString *kKTDocumentWillSaveNotification;
 - (NSSet *)missingMedia;
 
 
-#pragma mark Actions
+#pragma mark Publishing
 - (IBAction)setupHost:(id)sender;
+- (IBAction)resetImageRecipes:(id)sender;
 
 
 #pragma mark UI

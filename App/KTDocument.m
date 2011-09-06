@@ -51,6 +51,7 @@
 #import "SVPlugInGraphicFactory.h"
 #import "KTHostProperties.h"
 #import "KTHostSetupController.h"
+#import "SVImageRecipe.h"
 #import "SVInspector.h"
 #import "KTMaster.h"
 #import "SVMediaRecord.h"
@@ -1059,7 +1060,6 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     return result;
 }
 
-#pragma mark -
 #pragma mark UI validation
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
@@ -1079,8 +1079,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	return [super validateMenuItem:menuItem]; 
 }
 
-#pragma mark -
-#pragma mark Actions
+#pragma mark Publishing
 
 - (IBAction)setupHost:(id)sender
 {
@@ -1094,6 +1093,23 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	   didEndSelector:@selector(setupHostSheetDidEnd:returnCode:contextInfo:)
 		  contextInfo:sheetController];
 	[NSApp cancelUserAttentionRequest:NSCriticalRequest];
+}
+
+- (IBAction)resetImageRecipes:(id)sender;
+{
+    NSArray *records = [[self managedObjectContext]
+                        fetchAllObjectsForEntityForName:@"FilePublishingRecord"
+                        predicate:[NSPredicate predicateWithFormat:@"contentHash != nil"]
+                        error:NULL];
+    
+    for (SVPublishingRecord *aRecord in records)
+    {
+        SVImageRecipe *recipe = [[SVImageRecipe alloc] initWithContentHash:[aRecord contentHash]];
+        if (recipe)
+        {
+            [aRecord setValue:nil forKey:@"contentHash"];
+        }
+    }
 }
 
 #pragma mark UI
