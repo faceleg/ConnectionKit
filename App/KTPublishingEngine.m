@@ -1081,6 +1081,8 @@ static void *sProgressObservationContext = &sProgressObservationContext;
 
 - (SVPublishingRecord *)publishingRecordForPath:(NSString *)path;
 {
+    OBPRECONDITION(path);
+    
     // Adjust the path so that it matches what Host Properties expects, rather than a path on the local disk
     KTHostProperties *hostProperties = [[self site] hostProperties];
     
@@ -1091,6 +1093,8 @@ static void *sProgressObservationContext = &sProgressObservationContext;
         path = [[[hostProperties documentRoot]
                  stringByAppendingPathComponent:[hostProperties subfolder]]
                 stringByAppendingPathComponent:path];
+        
+        if (!path) return nil;
     }
     
     return [hostProperties publishingRecordForPath:path];
