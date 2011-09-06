@@ -111,7 +111,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
     }
     else
     {
-        return SVLocalizedString(@"Enter your email address in the Inspector", "");
+        return SVLocalizedString(@"Enter your email address in the Inspector. (This form is not encrypted. It is not intended to be used for the collection of confidential information.)", "");
     }
 }
 
@@ -166,9 +166,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
         
         //  last resort, try English
         if (!localizedStrings) localizedStrings = [localizations objectForKey:@"en"];
-        
-        [localizations release];
-        
+                
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 		
         // Set up default bunch of fields
@@ -207,7 +205,9 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 		[aField release];
 		
 		[self setFields:fields];
-	}
+
+		[localizations release];
+}
 }
 
 @synthesize sendButtonTitle = _sendButtonTitle;
