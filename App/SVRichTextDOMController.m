@@ -991,10 +991,9 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
         
         
         // Create controller for graphic
-        SVGraphicDOMController *controller = [[SVGraphicDOMController alloc] initWithIdName:nil ancestorNode:[self HTMLElement]];
-        [controller loadPlaceholderDOMElement];
-        [controller setRepresentedObject:graphic];
+        SVDOMController *controller = [graphic newDOMControllerWithElementIdName:nil ancestorNode:[self HTMLElement]];
         [controller setHTMLContext:context];
+        [controller loadPlaceholderDOMElement];
         
         
         // Generate & insert DOM node
