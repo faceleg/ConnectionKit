@@ -274,10 +274,6 @@
         {
             result = YES;
         }
-        else if ([propertyName isEqualToString:@"direction"])
-        {
-            result = YES;
-        }
     }
     
     return result;

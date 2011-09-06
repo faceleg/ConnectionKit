@@ -785,7 +785,9 @@
                    [propertyName isEqualToString:@"color"] ||
                    [propertyName isEqualToString:@"background-color"] ||
                    [propertyName isEqualToString:@"text-decoration"] ||
-                   [propertyName isEqualToString:@"text-shadow"]);
+                   [propertyName isEqualToString:@"text-shadow"] ||
+                   [propertyName isEqualToString:@"direction"] ||
+                   [propertyName isEqualToString:@"unicode-bidi"]);
     
     return result;
 }
