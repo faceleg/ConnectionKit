@@ -980,10 +980,9 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 	
 	if (action == @selector(editRawHTMLInSelectedBlock:) || action == @selector(cleanHTML:))
     {
-        id target = [[[self webEditor] firstResponderItem] ks_targetForAction:action];
-        if (!target) target = [[[self webEditor] selectedItem] ks_targetForAction:action];  // HACK
+        NSResponder *target = [[[self webEditor] firstResponderItem] ks_targetForAction:action];
         
-        if (target)
+        if (target && [self ks_followsResponder:target])
         {
             result = YES;
             if ([target respondsToSelector:_cmd]) result = [target validateMenuItem:menuItem];
