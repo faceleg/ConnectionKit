@@ -1489,18 +1489,18 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 
 - (IBAction)showAvailableDesigns:(id)sender;
 {
-	[self showDebugTableForObject:[KSPlugInWrapper pluginsWithFileExtension:kKTDesignExtension]
+	[self showDebugTableForObject:[KSPlugInWrapper pluginsByIdentifierWithFileExtension:kKTDesignExtension]
                            titled:@"Designs"];
 }
 
 
 - (IBAction)showAvailableComponents:(id)sender
 {
-	[self showDebugTableForObject:[KSPlugInWrapper pluginsWithFileExtension:kKTElementExtension]
+	[self showDebugTableForObject:[KSPlugInWrapper pluginsByIdentifierWithFileExtension:kKTElementExtension]
                            titled:@"Available Components: Element Bundles"];
-	[self showDebugTableForObject:[KSPlugInWrapper pluginsWithFileExtension:kKTIndexExtension]
+	[self showDebugTableForObject:[KSPlugInWrapper pluginsByIdentifierWithFileExtension:kKTIndexExtension]
 							titled:@"Available Components: Index Bundles"];
-	[self showDebugTableForObject:[KSPlugInWrapper pluginsWithFileExtension:kKTDesignExtension]
+	[self showDebugTableForObject:[KSPlugInWrapper pluginsByIdentifierWithFileExtension:kKTDesignExtension]
                            titled:@"Available Components: Design Bundles"];
 }
 

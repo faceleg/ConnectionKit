@@ -63,9 +63,11 @@
 				3C7D7D5713B3B04300B58137 /* Script - Copy CFBundleVersion to PlugIns */,
 				3C9B66C60BFA940C007A4871 /* Script - Add PlugIns */,
 				3C9B66CC0BFA94BA007A4871 /* Script - Add Designs */,
+				3C96FBAB1411F79C00DDEDE2 /* Script - Copy CFBundleVersion to Designs */,
 				3C9B66E60BFA95B9007A4871 /* Script - Add png2ico */,
 				3C9B66E80BFA95DD007A4871 /* Script - Add Spotlight Importer */,
 				CE9D3ED20DAAB8450025717A /* Script - Remove Unsupported Languages */,
+				3C96FBAA1411F75B00DDEDE2 /* Script - Thin Binaries */,
 				CEFD3EFC12E9FA0100D3A6CD /* Script - Internationalize XIBs */,
 				3CC092BA134BC490007E2390 /* Script - Code Sign .app */,
 			);
@@ -370,6 +372,8 @@
 		278645B813C62D1C0098C34F /* SVElementInfoGatheringHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 278645B613C62D1C0098C34F /* SVElementInfoGatheringHTMLContext.m */; };
 		278854A4140E97FA00280980 /* SVRSSItemDescriptionHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 278854A2140E97FA00280980 /* SVRSSItemDescriptionHTMLContext.h */; };
 		278854A5140E97FA00280980 /* SVRSSItemDescriptionHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 278854A3140E97FA00280980 /* SVRSSItemDescriptionHTMLContext.m */; };
+		278856A114113DE700280980 /* CK2SSHCredential.h in Headers */ = {isa = PBXBuildFile; fileRef = 2788569F14113DE700280980 /* CK2SSHCredential.h */; };
+		278856A214113DE700280980 /* CK2SSHCredential.m in Sources */ = {isa = PBXBuildFile; fileRef = 278856A014113DE700280980 /* CK2SSHCredential.m */; };
 		278ACCC8116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 278ACCC6116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.h */; };
 		278ACCC9116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 278ACCC7116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.m */; };
 		278DB99612B6DDAC006C462F /* GraphicPlaceholder.html in Resources */ = {isa = PBXBuildFile; fileRef = 278DB99512B6DDAC006C462F /* GraphicPlaceholder.html */; };
@@ -2054,6 +2058,8 @@
 		2786BEE50CAD24980086F9E0 /* KTMediaManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaManager.m; sourceTree = "<group>"; };
 		278854A2140E97FA00280980 /* SVRSSItemDescriptionHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRSSItemDescriptionHTMLContext.h; sourceTree = "<group>"; };
 		278854A3140E97FA00280980 /* SVRSSItemDescriptionHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRSSItemDescriptionHTMLContext.m; sourceTree = "<group>"; };
+		2788569F14113DE700280980 /* CK2SSHCredential.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CK2SSHCredential.h; sourceTree = "<group>"; };
+		278856A014113DE700280980 /* CK2SSHCredential.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CK2SSHCredential.m; sourceTree = "<group>"; };
 		278ACCC6116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVQuickLookPreviewHTMLContext.h; sourceTree = "<group>"; };
 		278ACCC7116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVQuickLookPreviewHTMLContext.m; sourceTree = "<group>"; };
 		278DB99512B6DDAC006C462F /* GraphicPlaceholder.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = GraphicPlaceholder.html; sourceTree = "<group>"; };
@@ -4274,6 +4280,8 @@
 				27FD6A6613C08B7900E9D407 /* CK2SFTPSession.m */,
 				27FD6DE913C1229200E9D407 /* CK2SFTPFileHandle.h */,
 				27FD6DEA13C1229200E9D407 /* CK2SFTPFileHandle.m */,
+				2788569F14113DE700280980 /* CK2SSHCredential.h */,
+				278856A014113DE700280980 /* CK2SSHCredential.m */,
 			);
 			name = SFTP;
 			path = ../Code/SFTP;
@@ -6352,6 +6360,7 @@
 				27139E5513F7EA3F00299254 /* SVWebEditorView.h in Headers */,
 				27DA95731401A557004DE2DA /* SVWebViewSelectionController.h in Headers */,
 				278854A4140E97FA00280980 /* SVRSSItemDescriptionHTMLContext.h in Headers */,
+				278856A114113DE700280980 /* CK2SSHCredential.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7205,6 +7214,36 @@
 			shellScript = "#!/bin/bash\n\nexport APPNAME=\"Sandvox\"\n\n\"${SRCROOT}/../Code/Shared/tools/build_package\"\n\n### this script should NOT have 'Run script only when installing' checked\n";
 			showEnvVarsInLog = 0;
 		};
+		3C96FBAA1411F75B00DDEDE2 /* Script - Thin Binaries */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Script - Thin Binaries";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/bash;
+			shellScript = "#\n# remove ppc/ppc7400 from various binaries\n#\n\nthinBinary()\n{\n    lipo \"${1}\" -verify_arch ppc > /dev/null 2>&1\n    if [ \"$?\" -eq 0 ]\n    then\n        echo \"thinning arch ppc from ${1}...\"\n        lipo \"${1}\" -remove ppc -output \"${TARGET_TEMP_DIR}/thinnedBinary\"\n        mv \"${TARGET_TEMP_DIR}/thinnedBinary\" \"${1}\"\n    fi\n    \n    lipo \"${1}\" -verify_arch ppc7400 > /dev/null 2>&1\n    if [ \"$?\" -eq 0 ]\n    then\n        echo \"removing arch ppc7400 from ${1}\"\n        lipo \"${1}\" -remove ppc7400 -output \"${TARGET_TEMP_DIR}/thinnedBinary\"\n        mv \"${TARGET_TEMP_DIR}/thinnedBinary\" \"${1}\"\n    fi\n}\n\n# offending Frameworks\n\nFRAMEWORKS_PATH=${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks\n\nGrowlPath=${FRAMEWORKS_PATH}/Growl.framework/Versions/A/Growl\nBWToolkitPath=${FRAMEWORKS_PATH}/BWToolkitFramework.framework/Versions/A/BWToolkitFramework\nJSTalkPath=${FRAMEWORKS_PATH}/JSTalk.framework/Versions/A/JSTalk\nlibssh2Path=${FRAMEWORKS_PATH}/libssh2.dylib\n\n# only thin App Store builds\n\nif [ -z \"${APP_STORE_VERSION}\" ]\nthen\n    echo \"NOT thinning binaries in non-App Store builds\"\nelse\n    thinBinary \"${GrowlPath}\"\n    thinBinary \"${BWToolkitPath}\"\n    thinBinary \"${JSTalkPath}\"\n    thinBinary \"${libssh2Path}\"\nfi\n\n";
+			showEnvVarsInLog = 0;
+		};
+		3C96FBAB1411F79C00DDEDE2 /* Script - Copy CFBundleVersion to Designs */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Script - Copy CFBundleVersion to Designs";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/bash;
+			shellScript = "\n# read CFBundleVersion\nSANDVOX_PLIST_PATH=${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Info.plist\nSANDVOX_BUILD_NUMBER=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${SANDVOX_PLIST_PATH}\")\nSANDVOX_VERSION=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"${SANDVOX_PLIST_PATH}\")\n\n# update each designs's CFBundleVersion and CFBundleShortVersionString\nDESIGNS_FOLDER_PATH=${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Designs\npushd \"${DESIGNS_FOLDER_PATH}\"\nfor i in *.svxDesign\ndo\n    DESIGN_PLIST_PATH=${PWD}/${i}/Info.plist\n\n    /usr/libexec/PlistBuddy -c \"Delete CFBundleVersion\" \"${DESIGN_PLIST_PATH}\"\n    /usr/libexec/PlistBuddy -c \"Add CFBundleVersion string ${SANDVOX_BUILD_NUMBER}\" \"${DESIGN_PLIST_PATH}\"\n\n    /usr/libexec/PlistBuddy -c \"Delete CFBundleShortVersionString\" \"${DESIGN_PLIST_PATH}\"\n    /usr/libexec/PlistBuddy -c \"Add CFBundleShortVersionString string ${SANDVOX_VERSION}\" \"${DESIGN_PLIST_PATH}\"\ndone\npopd\n";
+			showEnvVarsInLog = 0;
+		};
 		3C979D8F13BA506000E7CF7C /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -7861,6 +7900,7 @@
 				27139E5613F7EA3F00299254 /* SVWebEditorView.m in Sources */,
 				27DA95741401A557004DE2DA /* SVWebViewSelectionController.m in Sources */,
 				278854A5140E97FA00280980 /* SVRSSItemDescriptionHTMLContext.m in Sources */,
+				278856A214113DE700280980 /* CK2SSHCredential.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

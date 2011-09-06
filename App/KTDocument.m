@@ -41,8 +41,7 @@
 #import "SVRichText.h"
 #import "KT.h"
 #import "KTElementPlugInWrapper.h"
-#import "KTDesign.h"
-#import "SVPagesController.h"
+#import "SVDesignsController.h"
 #import "SVDocumentFileWrapper.h"
 #import "KTDocWindowController.h"
 #import "KTDocumentController.h"
@@ -55,6 +54,7 @@
 #import "SVInspector.h"
 #import "KTMaster.h"
 #import "SVMediaRecord.h"
+#import "SVPagesController.h"
 #import "KTPage+Internal.h"
 #import "SVPageTemplate.h"
 #import "SVPublishingRecord.h"
@@ -293,11 +293,10 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         
         
         // Set the design
-        NSArray *designs = [KSPlugInWrapper sortedPluginsWithFileExtension:kKTDesignExtension];
-		NSArray *newRangesOfGroups;
-		designs = [KTDesign reorganizeDesigns:designs familyRanges:&newRangesOfGroups];
-		
-        [master setDesign:[designs firstObjectKS]];
+        SVDesignsController *designsController = [[SVDesignsController alloc] init];
+        NSArray *designs = [designsController arrangedObjects];
+		[master setDesign:[designs firstObjectKS]];
+        [designsController release];
         
         
         // Set up root properties that used to come from document defaults
