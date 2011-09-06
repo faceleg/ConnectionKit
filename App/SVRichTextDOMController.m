@@ -1154,23 +1154,10 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 
 - (NSArray *)selectedItems;
 {
-    NSArray *objects = [[[self webEditorViewController] graphicsController] selectedObjects];
-    NSMutableArray *result = [NSMutableArray arrayWithCapacity:[objects count]];
-    
-    for (SVGraphic *anObject in objects)
+    NSArray *result = [[self webEditor] selectedItems];
+    for (WEKWebEditorItem *anItem in result)
     {
-        WEKWebEditorItem *item = [self hitTestRepresentedObject:anObject];
-        if (item)
-        {
-            // Search up to find the highest item
-            WEKWebEditorItem *parent = [item parentWebEditorItem];
-            while ([parent representedObject] == anObject)
-            {
-                item = parent; parent = [item parentWebEditorItem];
-            }
-            
-            if (item != self) [result addObject:item];
-        }
+        if (![anItem isDescendantOfWebEditorItem:self]) return nil;
     }
     
     return result;
