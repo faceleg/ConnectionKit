@@ -1017,8 +1017,17 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
         [graphic pageDidChange:page];
         
         // Push it through quickly
-        [controller setNeedsUpdate];
-        [controller updateIfNeeded];	
+        // Callouts are weird. If this is an insert next to an existing callout, need a full reload to get that properly onscreen. It's easiest to assume that should always happen
+        if ([graphic isCallout])
+        {
+            [self setNeedsUpdate];
+            [self updateIfNeeded];
+        }
+        else
+        {
+            [controller setNeedsUpdate];
+            [controller updateIfNeeded];
+        }
     }
     
 }
