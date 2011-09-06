@@ -1081,7 +1081,19 @@ static void *sProgressObservationContext = &sProgressObservationContext;
 
 - (SVPublishingRecord *)publishingRecordForPath:(NSString *)path;
 {
-    return [[[self site] hostProperties] publishingRecordForPath:path];
+    // Adjust the path so that it matches what Host Properties expects, rather than a path on the local disk
+    KTHostProperties *hostProperties = [[self site] hostProperties];
+    
+    if ([path isAbsolutePath])
+    {
+        path = [path ks_pathRelativeToDirectory:[self baseRemotePath]];
+        
+        path = [[[hostProperties documentRoot]
+                 stringByAppendingPathComponent:[hostProperties subfolder]]
+                stringByAppendingPathComponent:path];
+    }
+    
+    return [hostProperties publishingRecordForPath:path];
 }
 
 - (NSString *)pathForFileWithSHA1Digest:(NSData *)digest;

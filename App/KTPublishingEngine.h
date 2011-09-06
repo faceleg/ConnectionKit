@@ -127,6 +127,7 @@ typedef enum {
 
 - (BOOL)isPublishingToPath:(NSString *)path;
 
+// When exporting, this method does the translation from export path to publishing path so that you still get back the correct record
 - (SVPublishingRecord *)publishingRecordForPath:(NSString *)path;
 
 // Given a file's digest, where should it be placed? This is likely to be because the file has already been queued for upload; test with -shouldPublishToPath:
