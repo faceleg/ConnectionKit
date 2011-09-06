@@ -84,9 +84,7 @@
     {
         _designChooser = [[SVDesignPickerController alloc] init];
         
-        NSArray *designs = [KSPlugInWrapper sortedPluginsWithFileExtension:kKTDesignExtension];
-        NSArray *newRangesOfGroups;
-        designs = [KTDesign reorganizeDesigns:designs familyRanges:&newRangesOfGroups];
+        NSArray *designs = [[_designChooser designsController] arrangedObjects];
         [_designChooser setDesign:[designs firstObjectKS]];
         
         SVWelcomeController *welcomeWindow = [SVWelcomeController sharedController];

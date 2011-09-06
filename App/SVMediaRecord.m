@@ -316,7 +316,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     {
         [self removeExtensiblePropertyForKey:@"media"];
     }
-    if ([media webResource])
+    if ([media mediaData])
     {
         [self setExtensibleProperty:media forKey:@"media"];
     }
