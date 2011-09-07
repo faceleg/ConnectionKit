@@ -355,11 +355,8 @@
 
 #pragma mark Media
 
-- (NSInvocationOperation *)startHashingSourceOfMediaRequest:(SVMediaRequest *)request;
+- (NSInvocationOperation *)startHashingMedia:(SVMedia *)media;
 {
-    SVMediaRequest *sourceRequest = [request sourceRequest];
-    SVMedia *media = [sourceRequest media];
-    
     NSInvocationOperation *result = [[NSInvocationOperation alloc]
                                      initWithTarget:media
                                      selector:@selector(SHA1Digest)
@@ -409,7 +406,7 @@
                     }
                     else
                     {
-                        hashingOp = [self startHashingSourceOfMediaRequest:request];
+                        hashingOp = [self startHashingMedia:[request media]];
                     }
                     
                     
