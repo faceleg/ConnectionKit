@@ -276,7 +276,7 @@
     // Write HTML
     NSMutableString *htmlString = [[NSMutableString alloc] init];
     
-    SVWebEditorHTMLContext *context = [[[SVWebEditorHTMLContext class] alloc]
+    SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc]
                                        initWithOutputWriter:htmlString inheritFromContext:[self HTMLContext]];
     
     
