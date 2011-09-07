@@ -923,49 +923,9 @@ static void *sProgressObservationContext = &sProgressObservationContext;
 - (NSData *)threaded_publishMedia:(SVMediaRequest *)request cachedSHA1Digest:(NSData *)digest;
 {
     /*  It is presumed that the call to this method will have been scheduled on an appropriate queue.
+     *  It should be impossible to reach this method with a native media request, but if you do, it'll still get handled, just somewhat inefficiently!
      */
     OBPRECONDITION(request);
-    
-    
-    if ([request isNativeRepresentation])   // great! No messy scaling work to do!
-    {
-        SVMediaRequest *canonical = [[SVMediaRequest alloc] initWithMedia:[request media]
-                                                      preferredUploadPath:[request preferredUploadPath]];
-        OBASSERT([canonical isNativeRepresentation]);
-        
-        // Calculate hash
-        // TODO: Ideally we could look up the canonical request to see if hash has already been generated (e.g. user opted to publish full-size copy of image too)
-        if (!digest)
-        {
-            NSData *data = [[request media] mediaData];
-            if (data)
-            {
-                digest = [data ks_SHA1Digest];
-            }
-            else
-            {
-                NSURL *url = [[request media] mediaURL];
-                digest = [KSSHA1Stream SHA1DigestOfContentsOfURL:url];
-            
-                if (!digest) NSLog(@"Unable to hash file: %@", url);
-            }
-        }
-        
-        if (digest)   // if couldn't be hashed, can't be published
-        {
-            // Publish original image first. Ensures the publishing of real request will be to the same path
-            
-            [[self ks_proxyOnThread:nil]  // wait until done so op isn't reported as finished too early
-             publishMediaWithRequest:canonical cachedData:nil SHA1Digest:digest];
-            
-            [[self ks_proxyOnThread:nil]  // wait until done so op isn't reported as finished too early
-             publishMediaWithRequest:request cachedData:nil SHA1Digest:digest];
-        }
-        
-        [canonical release];
-        return digest;
-    }
-    
     
     
     
