@@ -188,8 +188,6 @@
     //  B) runs scripts for the new controller
     
     
-    [newChildController HTMLElement];   // make sure it's loaded, but I'm not sure it's still needed!
-    
     NSObject *object = [newChildController representedObject];
     
     for (WEKWebEditorItem *anOldController in [self childWebEditorItems])
