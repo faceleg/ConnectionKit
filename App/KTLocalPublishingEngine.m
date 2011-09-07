@@ -237,21 +237,31 @@
 {
     if (![self isPublishingToPath:remotePath])  // if already publishing, let be
     {
-        // Hash if not already known
+        // Hash if not already known. Can easily take advantage of media hasher for this
         if (!digest)
         {
-            NSInvocation *invocation = [NSInvocation
-                                        invocationWithSelector:@selector(threaded_publishContentsOfURL:toPath:object:)
-                                        target:self];
-            [invocation setArgument:&localURL atIndex:2];
-            [invocation setArgument:&remotePath atIndex:3];
-            [invocation setArgument:&object atIndex:4];
+            SVMedia *media = [[SVMedia alloc] initByReferencingURL:localURL];
+            NSOperation *hashingOp = [[self mediaHasher] addMedia:media];
+            BOOL finished = [hashingOp isFinished];
+            digest = [[self mediaHasher] SHA1DigestForMedia:media];
+            [media release];
             
-            NSOperation *operation = [[KSInvocationOperation alloc] initWithInvocation:invocation];
-            [self addOperation:operation queue:[self diskOperationQueue]];
-            [operation release];
-            
-            return;
+            if (!digest && !finished)
+            {
+                // Be nice and assume that a failure to hash (finished==YES, digest==nil) was because the URL is actually a directory, so go ahead and publish
+                NSInvocation *invocation = [NSInvocation invocationWithSelector:_cmd target:self];
+                [invocation setArgument:&localURL atIndex:2];
+                [invocation setArgument:&remotePath atIndex:3];
+                [invocation setArgument:&digest atIndex:4];
+                [invocation setArgument:&object atIndex:5];
+                
+                NSOperation *nextOp = [[NSInvocationOperation alloc] initWithInvocation:invocation];
+                [nextOp addDependency:hashingOp];
+                [self addOperation:nextOp queue:nil];
+                [nextOp release];
+                
+                return;
+            }
         }
         
         
@@ -271,45 +281,6 @@
      
     
     [super publishContentsOfURL:localURL toPath:remotePath cachedSHA1Digest:digest object:object];
-}
-
-- (void)threaded_publishContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath object:object;
-{
-    // Could be done more efficiently by not loading the entire file at once
-    NSError *error;
-    NSData *data = [[NSData alloc] initWithContentsOfURL:localURL
-                                                 options:0
-                                                   error:&error];
-    
-    if (data)
-    {
-        NSData *digest = [data ks_SHA1Digest];
-        [data release];
-        
-        [[self ks_proxyOnThread:nil]    // WANT to wait until done, else might be queued AFTER disconnect
-         publishContentsOfURL:localURL toPath:remotePath cachedSHA1Digest:digest object:object];
-    }
-    else
-    {
-        if ([localURL isFileURL])
-        {
-            // Hopefully the failure is because it's a directory, so we can process normally
-            NSFileManager *fileManager = [[NSFileManager alloc] init];
-            
-            BOOL isDirectory;
-            if ([fileManager fileExistsAtPath:[localURL path] isDirectory:&isDirectory] &&
-                isDirectory)
-            {
-                [[self ks_proxyOnThread:nil]    // WANT to wait until done, else might be queued AFTER disconnect
-                 publishContentsOfURL:localURL
-                 toPath:remotePath
-                 cachedSHA1Digest:[NSData data] // stops us trying to calculate digest again!
-                 object:object];
-            }
-            
-            [fileManager release];
-        }
-    }
 }
 
 /*	Supplement the default behaviour by also deleting any existing file first if the user requests it.
