@@ -194,7 +194,7 @@
     
     for (WEKWebEditorItem *anOldController in [self childWebEditorItems])
     {
-        if ([anOldController representedObject] == object)
+        if ([[anOldController representedObject] isEqual:object])
         {
             DOMNode *oldElement = [anOldController HTMLElement];
             if (oldElement)
