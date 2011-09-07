@@ -143,6 +143,29 @@
 
 #pragma mark Moving
 
+- (void)splitOutItemIntoSeparateCallout:(WEKWebEditorItem *)item insertBeforeRefChild:(DOMNode *)refChild;
+{
+    // Create a placeholder for the new callout first
+    SVCallout *callout = [[SVCallout alloc] init];
+    [callout setPagelets:[NSArray arrayWithObject:[item graphic]]];
+    
+    DOMElement *myElement = [self HTMLElement];
+    SVDOMController *controller = [callout newDOMControllerWithElementIdName:nil ancestorNode:[myElement ownerDocument]];
+    [controller setHTMLContext:[self HTMLContext]];
+    [controller loadPlaceholderDOMElement];
+    [callout release];
+    
+    [[self parentWebEditorItem] addChildWebEditorItem:controller];
+    [[myElement parentNode] insertBefore:[controller HTMLElement] refChild:refChild];
+    
+    
+    // Get the new callout controller to generate its HTML, recycling the existing item
+    [controller addChildWebEditorItem:item];
+    [controller setNeedsUpdate];
+    [controller updateIfNeeded];
+    [controller release];
+}
+
 /*  Normally it's enough to move ourself up or down instead of the item. But if we contain multiple graphics, have to get more cunning
  */
 - (void)moveItemUp:(WEKWebEditorItem *)item;
@@ -219,27 +242,7 @@
     
     
     // Guess not; split the callout in two
-    // Create a placeholder for the new callout first
-    SVCallout *callout = [[SVCallout alloc] init];
-    [callout setPagelets:[NSArray arrayWithObject:[item graphic]]];
-    
-    DOMElement *myElement = [self HTMLElement];
-    SVDOMController *controller = [callout newDOMControllerWithElementIdName:nil ancestorNode:[myElement ownerDocument]];
-    [controller setHTMLContext:[self HTMLContext]];
-    [controller loadPlaceholderDOMElement];
-    [callout release];
-    
-    [[self parentWebEditorItem] addChildWebEditorItem:controller];
-    [[myElement parentNode] insertBefore:[controller HTMLElement] refChild:[myElement nextSibling]];
-    
-    
-    // Get the new callout controller to generate its HTML, recycling the existing item
-    [controller addChildWebEditorItem:item];
-    [controller setNeedsUpdate];
-    [controller updateIfNeeded];
-    [controller release];
-    
-    
+    [self splitOutItemIntoSeparateCallout:item insertBeforeRefChild:[[self HTMLElement] nextSibling]];
     
     // Finally it's time to really move the item down
     [[item parentWebEditorItem] moveItemDown:item];
