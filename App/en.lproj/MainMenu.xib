@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1419"/>
+			<integer value="29"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1698,6 +1698,25 @@
 										<string key="NSTitle">Text</string>
 										<object class="NSMutableArray" key="NSMenuItems">
 											<bool key="EncodedWithXMLCoder">YES</bool>
+											<object class="NSMenuItem" id="932300736">
+												<reference key="NSMenu" ref="479751780"/>
+												<string key="NSTitle">Show Text Inspector</string>
+												<string key="NSKeyEquiv">4</string>
+												<int key="NSKeyEquivModMask">1048576</int>
+												<int key="NSMnemonicLoc">2147483647</int>
+												<reference key="NSOnImage" ref="73959282"/>
+												<reference key="NSMixedImage" ref="49718828"/>
+											</object>
+											<object class="NSMenuItem" id="596368426">
+												<reference key="NSMenu" ref="479751780"/>
+												<bool key="NSIsDisabled">YES</bool>
+												<bool key="NSIsSeparator">YES</bool>
+												<string key="NSTitle"/>
+												<string key="NSKeyEquiv"/>
+												<int key="NSMnemonicLoc">2147483647</int>
+												<reference key="NSOnImage" ref="73959282"/>
+												<reference key="NSMixedImage" ref="49718828"/>
+											</object>
 											<object class="NSMenuItem" id="36024700">
 												<reference key="NSMenu" ref="479751780"/>
 												<string key="NSTitle">Align Left</string>
@@ -5404,6 +5423,8 @@
 							<reference ref="300414812"/>
 							<reference ref="268419629"/>
 							<reference ref="591052324"/>
+							<reference ref="596368426"/>
+							<reference ref="932300736"/>
 						</object>
 						<reference key="parent" ref="924673124"/>
 					</object>
@@ -5782,6 +5803,16 @@
 						<reference key="object" ref="747459656"/>
 						<reference key="parent" ref="992618350"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1423</int>
+						<reference key="object" ref="596368426"/>
+						<reference key="parent" ref="479751780"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1424</int>
+						<reference key="object" ref="932300736"/>
+						<reference key="parent" ref="479751780"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -5951,6 +5982,8 @@
 					<string>1419.IBEditorWindowLastContentRect</string>
 					<string>1419.IBPluginDependency</string>
 					<string>1420.IBPluginDependency</string>
+					<string>1423.IBPluginDependency</string>
+					<string>1424.IBPluginDependency</string>
 					<string>143.IBPluginDependency</string>
 					<string>143.ImportedFromIB2</string>
 					<string>144.IBPluginDependency</string>
@@ -6400,6 +6433,8 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
@@ -6422,7 +6457,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{627, 539}, {248, 163}}</string>
+					<string>{{627, 509}, {251, 193}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6699,7 +6734,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1422</int>
+			<int key="maxID">1424</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
