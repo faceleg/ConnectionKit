@@ -180,7 +180,7 @@
     
     [calloutController loadHTMLElement];  // hopefully -HTMLElement will call this internally one day
     DOMElement *calloutElement = [calloutController HTMLElement];
-    [[myElement parentNode] insertBefore:calloutElement refChild:myElement];
+    [[myElement parentNode] insertBefore:calloutElement refChild:[myElement nextSibling]];
     [[self parentWebEditorItem] addChildWebEditorItem:calloutController];
     
     [[calloutController calloutContentElement] appendChild:[item HTMLElement]];
@@ -219,20 +219,30 @@
     
     
     // Guess not; split the callout in two
+    // Create a placeholder for the new callout first
+    SVCallout *callout = [[SVCallout alloc] init];
+    [callout setPagelets:[NSArray arrayWithObject:[item graphic]]];
+    
     DOMElement *myElement = [self HTMLElement];
-    SVCalloutDOMController *calloutController = [[[self class] alloc] initWithHTMLDocument:
-                                                 (id)[myElement ownerDocument]];
+    SVDOMController *controller = [callout newDOMControllerWithElementIdName:nil ancestorNode:[myElement ownerDocument]];
+    [controller setHTMLContext:[self HTMLContext]];
+    [controller loadPlaceholderDOMElement];
+    [callout release];
     
-    [calloutController loadHTMLElement];  // hopefully -HTMLElement will call this internally one day
-    DOMElement *calloutElement = [calloutController HTMLElement];
-    [[myElement parentNode] insertBefore:calloutElement refChild:[myElement nextSibling]];
-    [[self parentWebEditorItem] addChildWebEditorItem:calloutController];
+    [[self parentWebEditorItem] addChildWebEditorItem:controller];
+    [[myElement parentNode] insertBefore:[controller HTMLElement] refChild:[myElement nextSibling]];
     
-    [[calloutController calloutContentElement] appendChild:[item HTMLElement]];
-    [calloutController addChildWebEditorItem:item];
     
-    [calloutController moveItemDown:item];
-    [calloutController release];
+    // Get the new callout controller to generate its HTML, recycling the existing item
+    [controller addChildWebEditorItem:item];
+    [controller setNeedsUpdate];
+    [controller updateIfNeeded];
+    [controller release];
+    
+    
+    
+    // Finally it's time to really move the item down
+    [[item parentWebEditorItem] moveItemDown:item];
 }
 
 #pragma mark Other
