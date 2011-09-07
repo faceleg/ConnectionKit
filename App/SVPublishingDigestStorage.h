@@ -39,9 +39,8 @@
 
 - (void)removeMediaRequest:(SVMediaRequest *)request;
 
-- (NSInvocationOperation *)hashingOperationForMediaRequest:(SVMediaRequest *)request;
-- (void)setHashingOperation:(NSInvocationOperation *)op
-            forMediaRequest:(SVMediaRequest *)request;
+- (NSInvocationOperation *)hashingOperationForMedia:(SVMedia *)media;
+- (void)setHashingOperation:(NSInvocationOperation *)op forMedia:(SVMedia *)media;
 
 
 #pragma mark Data Cache

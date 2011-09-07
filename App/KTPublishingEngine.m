@@ -741,7 +741,9 @@ static void *sProgressObservationContext = &sProgressObservationContext;
     // Do the calculation on a background thread. Which one depends on the task needed
     if ([request isNativeRepresentation])
     {
-        NSData *data = [[request media] mediaData];
+        SVMedia *media = [request media];
+        NSData *data = [media mediaData];
+        
         if (data)
         {
             // This point shouldn't logically be reached if hash is already known, so it just needs hashing on a CPU-bound queue
@@ -751,7 +753,7 @@ static void *sProgressObservationContext = &sProgressObservationContext;
                                         arguments:NSARRAY(data, request)];
             
             NSInvocationOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
-            [digestStorage setHashingOperation:op forMediaRequest:request];
+            [digestStorage setHashingOperation:op forMedia:media];
             [self addOperation:op queue:[self defaultQueue]];
             [op release];
         }
@@ -764,7 +766,7 @@ static void *sProgressObservationContext = &sProgressObservationContext;
                                         arguments:NSARRAY(request, digest)];
             
             NSInvocationOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
-            [digestStorage setHashingOperation:op forMediaRequest:request];
+            [digestStorage setHashingOperation:op forMedia:media];
             [self addOperation:op queue:_diskQueue];
             [op release];
         }
@@ -797,7 +799,6 @@ static void *sProgressObservationContext = &sProgressObservationContext;
                                         arguments:NSARRAY(request, digest)];
             
             NSInvocationOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
-            [[self digestStorage] setHashingOperation:op forMediaRequest:request];
             [self addOperation:op queue:[KTImageScalingURLProtocol coreImageQueue]];  // most of the work should be Core Image's
             [op release];
         }

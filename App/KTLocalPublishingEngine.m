@@ -366,8 +366,7 @@
                                      object:nil];
     OBASSERT(result);
     
-    [[self digestStorage] setHashingOperation:result
-                                   forMediaRequest:sourceRequest];
+    [[self digestStorage] setHashingOperation:result forMedia:media];
     
     [self addOperation:result queue:([media mediaData] ?
                                      [self defaultQueue] :
@@ -393,8 +392,7 @@
                 
                 if (!sourceDigest)
                 {
-                    NSInvocationOperation *hashingOp = [digestStorage
-                                                        hashingOperationForMediaRequest:sourceRequest];
+                    NSInvocationOperation *hashingOp = [digestStorage hashingOperationForMedia:[request media]];
                     
                     
                     // It might be that hashing failed, so go ahead and try to publish

@@ -57,9 +57,9 @@
     id result = [_publishedMediaDigests objectForKey:request];
     if (result == [NSNull null]) result = nil;
     
-    if (!result)
+    if (!result && [request isNativeRepresentation])
     {
-        NSInvocationOperation *op = [self hashingOperationForMediaRequest:request];
+        NSInvocationOperation *op = [self hashingOperationForMedia:[request media]];
         if (![op isCancelled]) result = [op result];
     }
     
@@ -115,15 +115,14 @@
     [_publishedMediaDigests removeObjectForKey:request];
 }
 
-- (NSInvocationOperation *)hashingOperationForMediaRequest:(SVMediaRequest *)request;
+- (NSInvocationOperation *)hashingOperationForMedia:(SVMedia *)media;
 {
-    return [_hashingOps objectForKey:request];
+    return [_hashingOps objectForKey:media];
 }
 
-- (void)setHashingOperation:(NSInvocationOperation *)op
-            forMediaRequest:(SVMediaRequest *)request;
+- (void)setHashingOperation:(NSInvocationOperation *)op forMedia:(SVMedia *)media;
 {
-    [_hashingOps setObject:op forKey:request];
+    CFDictionarySetValue((CFMutableDictionaryRef)_hashingOps, media, op);
 }
 
 #pragma mark Data Cache
