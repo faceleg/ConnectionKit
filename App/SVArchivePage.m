@@ -76,7 +76,7 @@
 
 - (BOOL)showsTitle; { return YES; }
 
-// Returns YES if truncated.
+- (NSArray *)keywords; { return nil; }
 
 - (void)writeRSSFeedItemDescription { }
 

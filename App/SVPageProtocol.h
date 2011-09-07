@@ -38,7 +38,8 @@ typedef NSUInteger SVPageWritingOptions;
 - (NSString *)title;
 - (BOOL)showsTitle;
 
-- (NSString *)language;             // KVO-compliant
+- (NSString *)language; // KVO-compliant
+- (NSArray *)keywords AVAILABLE_SANDVOX_VERSION_2_2_AND_LATER;  // NOT KVO-compliant
 
 @property(nonatomic, copy, readonly) NSString *fileNameExtension AVAILABLE_SANDVOX_VERSION_2_2_AND_LATER;
 
