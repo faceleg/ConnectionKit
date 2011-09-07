@@ -197,20 +197,10 @@
     
     
     // Guess not; split the callout in two
-    DOMElement *myElement = [self HTMLElement];
-    SVCalloutDOMController *calloutController = [[[self class] alloc] initWithHTMLDocument:
-                                                 (id)[myElement ownerDocument]];
+    [self splitOutItemIntoSeparateCallout:item insertBeforeRefChild:[self HTMLElement]];
     
-    [calloutController loadHTMLElement];  // hopefully -HTMLElement will call this internally one day
-    DOMElement *calloutElement = [calloutController HTMLElement];
-    [[myElement parentNode] insertBefore:calloutElement refChild:[myElement nextSibling]];
-    [[self parentWebEditorItem] addChildWebEditorItem:calloutController];
-    
-    [[calloutController calloutContentElement] appendChild:[item HTMLElement]];
-    [calloutController addChildWebEditorItem:item];
-    
-    [calloutController moveItemUp:item];
-    [calloutController release];
+    // Finally it's time to really move the item down
+    [[item parentWebEditorItem] moveItemUp:item];
 }
 
 - (void)moveItemDown:(WEKWebEditorItem *)item;
