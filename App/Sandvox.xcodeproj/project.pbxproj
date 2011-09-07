@@ -7297,7 +7297,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/bash;
-			shellScript = "echo \"###\"\necho \"Removing Unsupported languages from ${BUILT_PRODUCTS_DIR}/Sandvox.app/...\"\n\n\n# COMMENT ONE OF THESE OUT DEPENDING ON WHAT KIND OF BUILD THIS IS....  USUALLY WE MAKE SPECIAL BUILDS FOR THE LOCALIZERS.\n\n\n# Localization builds only -- Let the languages we are working on localizing through.\n\n#find \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}\" -name '*.lproj' | grep -vE '/en\\.|/fr\\.|/de\\.|/es\\.|/pt_BR\\.' | xargs rm -rf\n\n\n\n# Release builds -- listed here are the languages we are allowed to keep.\n\nfind \"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}\" -name '*.lproj' | grep -vE '/en\\.|/fr\\.|/de\\.|/pt_BR\\.' | xargs rm -rf\n";
+			shellScript = "echo \"###\"\necho \"Removing Unsupported languages from ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents ...\"\n\n\n# COMMENT ONE OF THESE OUT DEPENDING ON WHAT KIND OF BUILD THIS IS....  USUALLY WE MAKE SPECIAL BUILDS FOR THE LOCALIZERS.\n\n\n# Localization builds only -- Let the languages we are working on localizing through.\n\n#find \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/\" -name '*.lproj' | grep -vE '/en\\.|/fr\\.|/de\\.|/es\\.|/pt_BR\\.' | xargs rm -rf\n\n# Release builds -- listed here are the languages we are allowed to keep.\n\nfind \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/\" -name '*.lproj' | grep -vE '/en\\.|/fr\\.|/de\\.|/pt_BR\\.' | xargs rm -rf\n";
 			showEnvVarsInLog = 0;
 		};
 		CEC65E5D0E1AFD170065C3D0 /* Copy Sparkle - Strip Localizations */ = {
