@@ -764,7 +764,7 @@ static void *sProgressObservationContext = &sProgressObservationContext;
         else
         {
             NSInvocation *invocation = [NSInvocation
-                                        invocationWithSelector:@selector(threaded_publishMedia:cachedSHA1Digest:)
+                                        invocationWithSelector:@selector(threaded_publishMediaWithRequest:cachedSHA1Digest:)
                                         target:self
                                         arguments:NSARRAY(request, digest)];
             
@@ -920,7 +920,7 @@ static void *sProgressObservationContext = &sProgressObservationContext;
     return result;
 }
 
-- (NSData *)threaded_publishMedia:(SVMediaRequest *)request cachedSHA1Digest:(NSData *)digest;
+- (NSData *)threaded_publishMediaWithRequest:(SVMediaRequest *)request cachedSHA1Digest:(NSData *)digest;
 {
     /*  It is presumed that the call to this method will have been scheduled on an appropriate queue.
      *  It should be impossible to reach this method with a native media request, but if you do, it'll still get handled, just somewhat inefficiently!
