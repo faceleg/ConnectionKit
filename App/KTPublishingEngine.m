@@ -14,6 +14,7 @@
 #import "SVImageRecipe.h"
 #import "KTSite.h"
 #import "KTMaster.h"
+#import "SVMediaHasher.h"
 #import "SVPublishingDigestStorage.h"
 #import "SVMediaRequest.h"
 #import "KTPage+Internal.h"
@@ -120,19 +121,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         _documentRootPath = [docRoot copy];
         _subfolderPath = [subfolder copy];
         
-        
-        _diskQueue = [[NSOperationQueue alloc] init];
-        [_diskQueue setMaxConcurrentOperationCount:1];
-        
-        _defaultQueue = [[NSOperationQueue alloc] init];
-        [_defaultQueue setMaxConcurrentOperationCount:4];   // the operations placed on here aren't truly CPU-limited yet, because they talk back to the main thread, so set a sane limit. #129819
-        
-        // Name them for debugging
-        if ([NSOperationQueue instancesRespondToSelector:@selector(setName:)])
-        {
-            [_diskQueue setName:@"KTPublishingEngine: Disk Access Queue"];
-            [_defaultQueue setName:@"KTPublishingEngine: Default Queue"];
-        }
+        _mediaHasher = [[SVMediaHasher alloc] init];
+        [[_mediaHasher inMemoryQueue] setMaxConcurrentOperationCount:4];   // the operations placed on here aren't truly CPU-limited yet, because they talk back to the main thread, so set a sane limit. #129819
         
         
         // Page ID cache
@@ -192,11 +182,10 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [_subfolderPath release];
     
     [_digestStorage release];
+    [_mediaHasher release];
     
     [_plugInCSS release];
     
-    [_defaultQueue release];
-    [_diskQueue release];
     [_nextOp release];
     
     [_pagesByID release];
@@ -377,7 +366,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [queue addOperation:operation];
 }
 
-- (NSOperationQueue *)diskOperationQueue; { return _diskQueue; }
+- (NSOperationQueue *)diskOperationQueue; { return [[self mediaHasher] diskQueue]; }
 
 #pragma mark Transfer Records
 
@@ -741,35 +730,16 @@ static void *sProgressObservationContext = &sProgressObservationContext;
     // Do the calculation on a background thread. Which one depends on the task needed
     if ([request isNativeRepresentation])
     {
-        SVMedia *media = [request media];
-        NSData *data = [media mediaData];
+        // Read data from disk for hashing. Once hashed we'll be ready to publish for realz
+        NSOperation *hashingOp = [[self mediaHasher] addMedia:[request media]];
         
-        if (data)
-        {
-            // This point shouldn't logically be reached if hash is already known, so it just needs hashing on a CPU-bound queue
-            NSInvocation *invocation = [NSInvocation
-                                        invocationWithSelector:@selector(threaded_publishData:forMedia:)
-                                        target:self
-                                        arguments:NSARRAY(data, request)];
-            
-            NSInvocationOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
-            [digestStorage setHashingOperation:op forMedia:media];
-            [self addOperation:op queue:[self defaultQueue]];
-            [op release];
-        }
-        else
-        {
-            // Read data from disk for hashing
-            NSInvocation *invocation = [NSInvocation
-                                        invocationWithSelector:@selector(threaded_publishMedia:cachedSHA1Digest:)
-                                        target:self
-                                        arguments:NSARRAY(request, digest)];
-            
-            NSInvocationOperation *op = [[NSInvocationOperation alloc] initWithInvocation:invocation];
-            [digestStorage setHashingOperation:op forMedia:media];
-            [self addOperation:op queue:_diskQueue];
-            [op release];
-        }
+        NSInvocationOperation *op = [[NSInvocationOperation alloc] initWithTarget:self
+                                                                         selector:@selector(publishMediaWithRequest:)
+                                                                           object:request];
+        
+        [op addDependency:hashingOp];
+        [self addOperation:op queue:nil];
+        [op release];
     }
     else
     {
@@ -1170,8 +1140,9 @@ static void *sProgressObservationContext = &sProgressObservationContext;
 
 #pragma mark Util
 
-@synthesize defaultQueue = _defaultQueue;
+- (NSOperationQueue *)defaultQueue { return [[self mediaHasher] inMemoryQueue]; }
 
+@synthesize mediaHasher = _mediaHasher;
 @synthesize sitemapPinger = _sitemapPinger;
 
 #pragma mark Delegate

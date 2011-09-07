@@ -19,7 +19,6 @@
     _pathsByDigest = [[NSMutableDictionary alloc] init];
     _publishedMediaDigests = [[NSMapTable mapTableWithStrongToStrongObjects] retain];
     _scaledImageCache = [[NSMutableDictionary alloc] init];
-    _hashingOps = [[NSMutableDictionary alloc] init];
     
     return self;
 }
@@ -30,7 +29,6 @@
     [_pathsByDigest release];
     [_publishedMediaDigests release];
     [_scaledImageCache release];
-    [_hashingOps release];
     
     [super dealloc];
 }
@@ -56,12 +54,6 @@
 {
     id result = [_publishedMediaDigests objectForKey:request];
     if (result == [NSNull null]) result = nil;
-    
-    if (!result && [request isNativeRepresentation])
-    {
-        NSInvocationOperation *op = [self hashingOperationForMedia:[request media]];
-        if (![op isCancelled]) result = [op result];
-    }
     
     return result;
 }
@@ -113,16 +105,6 @@
 - (void)removeMediaRequest:(SVMediaRequest *)request;
 {
     [_publishedMediaDigests removeObjectForKey:request];
-}
-
-- (NSInvocationOperation *)hashingOperationForMedia:(SVMedia *)media;
-{
-    return [_hashingOps objectForKey:media];
-}
-
-- (void)setHashingOperation:(NSInvocationOperation *)op forMedia:(SVMedia *)media;
-{
-    CFDictionarySetValue((CFMutableDictionaryRef)_hashingOps, media, op);
 }
 
 #pragma mark Data Cache

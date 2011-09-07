@@ -12,6 +12,7 @@
 #import "KTHostProperties.h"
 #import "SVImageRecipe.h"
 #import "KTMaster.h"
+#import "SVMediaHasher.h"
 #import "SVPublishingDigestStorage.h"
 #import "KTPage.h"
 #import "SVDirectoryPublishingRecord.h"
@@ -355,23 +356,6 @@
 
 #pragma mark Media
 
-- (NSInvocationOperation *)startHashingMedia:(SVMedia *)media;
-{
-    NSInvocationOperation *result = [[NSInvocationOperation alloc]
-                                     initWithTarget:media
-                                     selector:@selector(SHA1Digest)
-                                     object:nil];
-    OBASSERT(result);
-    
-    [[self digestStorage] setHashingOperation:result forMedia:media];
-    
-    [self addOperation:result queue:([media mediaData] ?
-                                     [self defaultQueue] :
-                                     [self diskOperationQueue])];
-    
-    return [result autorelease];
-}
-
 - (NSString *)publishMediaWithRequest:(SVMediaRequest *)request;
 {
     if ([self onlyPublishChanges] && [self status] <= KTPublishingEngineStatusGatheringMedia)
@@ -384,44 +368,28 @@
             if (!digest)
             {
                 // Figure out content hash first
-                SVMediaRequest *sourceRequest = [request sourceRequest];
-                NSData *sourceDigest = [digestStorage digestForMediaRequest:sourceRequest];
+                SVMedia *media = [request media];
+                NSOperation *hashingOp = [[self mediaHasher] addMedia:media];
+                BOOL hashed = [hashingOp isFinished];   // must check before result, because of concurrency
+                NSData *sourceDigest = [[self mediaHasher] SHA1DigestForMedia:media];
                 
                 if (!sourceDigest)
                 {
-                    NSInvocationOperation *hashingOp = [digestStorage hashingOperationForMedia:[request media]];
-                    
-                    
-                    // It might be that hashing failed, so go ahead and try to publish
-                    if (hashingOp)
+                    if (!hashed)    // if hashed, and no digest, the source is broken so can't be published
                     {
-                        if ([hashingOp isFinished])
-                        {
-                            sourceDigest = [digestStorage digestForMediaRequest:sourceRequest];
-                            if (!sourceDigest)
-                            {
-                                return [super publishMediaWithRequest:request];
-                            }
-                        }
+                        // Retry once source is hashed
+                        NSOperation *op = [[NSInvocationOperation alloc]
+                                           initWithTarget:self
+                                           selector:@selector(publishMediaWithRequest:)
+                                           object:request];
+                        
+                        [op addDependency:hashingOp];
+                        [self addOperation:op queue:nil];
+                        
+                        [digestStorage addMediaRequest:request cachedDigest:nil];
+                        
+                        [op release];
                     }
-                    else
-                    {
-                        hashingOp = [self startHashingMedia:[request media]];
-                    }
-                    
-                    
-                    // Retry once source is hashed
-                    NSOperation *op = [[NSInvocationOperation alloc]
-                                       initWithTarget:self
-                                       selector:@selector(publishMediaWithRequest:)
-                                       object:request];
-                    
-                    [op addDependency:hashingOp];
-                    [self addOperation:op queue:nil];
-                    
-                    [digestStorage addMediaRequest:request cachedDigest:nil];
-                    
-                    [op release];
                     return nil;
                 }
                 
@@ -440,7 +408,7 @@
                         NSString *result = [record path];
                         OBASSERT(result);
                         
-                        NSData *digest = [record SHA1Digest];
+                        digest = [record SHA1Digest];
                         [[self digestStorage] addMediaRequest:request cachedDigest:digest];
                         
                         [self didEnqueueUpload:nil
