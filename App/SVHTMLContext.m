@@ -560,19 +560,6 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     [_graphicContainers removeLastObject];
 }
 
-- (void)writeCalloutWithGraphics:(NSArray *)pagelets;
-{
-    // register before callout begins
-    for (SVGraphic *aGraphic in pagelets)
-    {
-        [self addDependencyForKeyPath:@"textAttachment.placement" ofObject:aGraphic];
-    }
-    
-    SVCallout *callout = [[SVCallout alloc] init];
-    [callout write:self pagelets:pagelets];
-    [callout release];
-}
-
 #pragma mark Placeholder
 
 - (void)startInvisibleBadge;
@@ -1558,6 +1545,16 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     
     
     return attributedHTMLString;
+}
+
+- (void)writeCalloutWithGraphics:(NSArray *)pagelets;
+{
+    SVCallout *callout = [[SVCallout alloc] init];
+    [callout setPagelets:pagelets];
+    
+    [callout writeHTML:self];
+    
+    [callout release];
 }
 
 - (void)writeAttributedHTMLString:(NSAttributedString *)attributedHTML;

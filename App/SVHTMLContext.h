@@ -140,12 +140,9 @@ typedef NSUInteger SVPageImageRepresentationOptions2;
 
 
 #pragma mark Graphic Containers
-
 - (id <SVComponent>)currentGraphicContainer;
 - (void)beginGraphicContainer:(id <SVComponent>)container;
 - (void)endGraphicContainer;
-
-- (void)writeCalloutWithGraphics:(NSArray *)pagelets;
 
 
 #pragma mark Placeholder

@@ -15,8 +15,27 @@
 
 @implementation SVCallout
 
-- (void)write:(SVHTMLContext *)context pagelets:(NSArray *)pagelets;
+#pragma mark Lifecycle
+
+- (void)dealloc;
 {
+    [_pagelets release];
+    [super dealloc];
+}
+
+@synthesize pagelets = _pagelets;
+
+#pragma mark Writing
+
+- (void)writeHTML:(SVHTMLContext *)context;
+{
+    // register before callout begins
+    for (SVGraphic *aGraphic in [self pagelets])
+    {
+        [context addDependencyForKeyPath:@"textAttachment.placement" ofObject:aGraphic];
+    }
+    
+    
     [context beginGraphicContainer:self];
     
     // Write the opening tags
@@ -26,7 +45,7 @@
     
     
     
-    [context writeGraphics:pagelets];    
+    [context writeGraphics:[self pagelets]];    
     
     
     
@@ -47,7 +66,7 @@
 - (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID ancestorNode:(DOMNode *)node;
 {
     SVDOMController *result = [[SVCalloutDOMController alloc] initWithIdName:elementID
-                                                                           ancestorNode:node];
+                                                                ancestorNode:node];
     
     [result setRepresentedObject:self];
     return result;

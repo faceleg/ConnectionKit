@@ -7,9 +7,17 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "SVComponent.h"
+#import "SVGraphic.h"
 
 
 @interface SVCallout : NSObject <SVComponent>
-- (void)write:(SVHTMLContext *)context pagelets:(NSArray *)pagelets;
+{
+  @private
+    NSArray *_pagelets;
+}
+
+@property(nonatomic, copy) NSArray *pagelets;
+
+- (void)writeHTML:(SVHTMLContext *)context;
+
 @end
