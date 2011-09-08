@@ -40,10 +40,6 @@
 /*! returns whether any parent node if of class aClass */
 - (BOOL)isContainedByElementOfClass:(Class)aClass;
 
-#pragma mark index paths
-- (DOMNode *)descendantNodeAtIndexPath:(NSIndexPath *)indexPath;
-- (NSIndexPath *)indexPathFromNode:(DOMNode *)node;
-
 #pragma mark child elements
 
 /*! recursive method that returns whether node has descendant of aClass */
