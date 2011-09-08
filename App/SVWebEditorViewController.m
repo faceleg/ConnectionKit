@@ -279,7 +279,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     // Go for it. You write that HTML girl!
 	if (page)
     {
-        //[context setBaseURL:[page URL]];
+        [context setBaseURL:[page URL]];
         [context writeDocumentWithPage:page];
     }
     
