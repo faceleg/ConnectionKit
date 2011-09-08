@@ -26,7 +26,7 @@
 - (void)dealloc;
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:WebViewDidChangeSelectionNotification
+                                                    name:WEKEditingControllerDidChangeSelectionNotification
                                                   object:nil];
     
     [_editingController release];
@@ -42,7 +42,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(selectionDidChange:)
-                                                 name:WebViewDidChangeSelectionNotification
+                                                 name:WEKEditingControllerDidChangeSelectionNotification
                                                object:nil];
 }
 
