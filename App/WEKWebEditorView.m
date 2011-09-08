@@ -163,6 +163,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     // Editing Controller
     _editingController = [[SVWebViewSelectionController alloc] init];
+    [_editingController setWebView:[self webView]];
     [_editingController insertIntoResponderChainAfterWebView:[self webView]];
     
     
@@ -2719,9 +2720,6 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 {
     WebView *webView = [self webView];
     OBPRECONDITION([notification object] == webView);
-    
-    
-    [_editingController setSelection:[webView selectedDOMRange]];
     
     
     //  Update Link Manager to match
