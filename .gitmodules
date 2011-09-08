@@ -19,3 +19,6 @@
 [submodule "Code/ICOFamily"]
 	path = Code/ICOFamily
 	url = https://github.com/alexzielenski/ICOFamily.git
+[submodule "Code/WebEditingKit"]
+	path = Code/WebEditingKit
+	url = git@github.com:karelia/WebEditingKit.git

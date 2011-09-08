@@ -467,6 +467,8 @@
 		27B0C35412F07BB400CE0F98 /* SVPageThumbnailHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B0C35212F07BB400CE0F98 /* SVPageThumbnailHTMLContext.m */; };
 		27B1015A1417D9AA002150C0 /* SVMediaHasher.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B101581417D9AA002150C0 /* SVMediaHasher.h */; };
 		27B1015B1417D9AB002150C0 /* SVMediaHasher.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B101591417D9AA002150C0 /* SVMediaHasher.m */; };
+		27B103F91418E99F002150C0 /* WEKEditingController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B103F71418E99F002150C0 /* WEKEditingController.h */; };
+		27B103FA1418E99F002150C0 /* WEKEditingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B103F81418E99F002150C0 /* WEKEditingController.m */; };
 		27B1D5D1124CC87D00851A18 /* SVMediaPlugIn.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B1D5CF124CC87D00851A18 /* SVMediaPlugIn.h */; };
 		27B1D5D2124CC87D00851A18 /* SVMediaPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B1D5D0124CC87D00851A18 /* SVMediaPlugIn.m */; };
 		27B306D60D74266F00903807 /* KTDocument+Saving.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B306D50D74266F00903807 /* KTDocument+Saving.m */; };
@@ -2163,6 +2165,8 @@
 		27B0C35212F07BB400CE0F98 /* SVPageThumbnailHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPageThumbnailHTMLContext.m; sourceTree = "<group>"; };
 		27B101581417D9AA002150C0 /* SVMediaHasher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaHasher.h; sourceTree = "<group>"; };
 		27B101591417D9AA002150C0 /* SVMediaHasher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMediaHasher.m; sourceTree = "<group>"; };
+		27B103F71418E99F002150C0 /* WEKEditingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WEKEditingController.h; path = ../Code/WebEditingKit/WEKEditingController.h; sourceTree = SOURCE_ROOT; };
+		27B103F81418E99F002150C0 /* WEKEditingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WEKEditingController.m; path = ../Code/WebEditingKit/WEKEditingController.m; sourceTree = SOURCE_ROOT; };
 		27B1D5CF124CC87D00851A18 /* SVMediaPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaPlugIn.h; sourceTree = "<group>"; };
 		27B1D5D0124CC87D00851A18 /* SVMediaPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMediaPlugIn.m; sourceTree = "<group>"; };
 		27B306D50D74266F00903807 /* KTDocument+Saving.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocument+Saving.m"; sourceTree = "<group>"; };
@@ -3368,6 +3372,8 @@
 		271B497B105468AA008B698C /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				27DA95711401A557004DE2DA /* SVWebViewSelectionController.h */,
+				27DA95721401A557004DE2DA /* SVWebViewSelectionController.m */,
 				2792197B10BC631D00E590D5 /* WEKDOMController.h */,
 				2792197C10BC631D00E590D5 /* WEKDOMController.m */,
 				27F243B1106BC8B9007FEC56 /* WEKWebEditorItem.h */,
@@ -3385,6 +3391,8 @@
 				27CD0A2A11AD684A0069E5AB /* WEKWebKitPrivate.h */,
 				27B5921211AE85C100E10A1E /* WEKWebViewEditing.h */,
 				27B5921311AE85C100E10A1E /* WEKWebViewEditing.m */,
+				27B103F71418E99F002150C0 /* WEKEditingController.h */,
+				27B103F81418E99F002150C0 /* WEKEditingController.m */,
 			);
 			name = Framework;
 			sourceTree = "<group>";
@@ -3657,8 +3665,6 @@
 				275B0DDA13D8447400CC5D76 /* TextInspector.xib */,
 				2783A89113DA361900F9A702 /* SVTextInspector.h */,
 				2783A89213DA361900F9A702 /* SVTextInspector.m */,
-				27DA95711401A557004DE2DA /* SVWebViewSelectionController.h */,
-				27DA95721401A557004DE2DA /* SVWebViewSelectionController.m */,
 			);
 			name = "Text Inspector";
 			sourceTree = "<group>";
@@ -6378,6 +6384,7 @@
 				278854A4140E97FA00280980 /* SVRSSItemDescriptionHTMLContext.h in Headers */,
 				278856A114113DE700280980 /* CK2SSHCredential.h in Headers */,
 				27B1015A1417D9AA002150C0 /* SVMediaHasher.h in Headers */,
+				27B103F91418E99F002150C0 /* WEKEditingController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7906,6 +7913,7 @@
 				278856A214113DE700280980 /* CK2SSHCredential.m in Sources */,
 				CE1D64751416B0C9009E0CE9 /* ICOFamily.m in Sources */,
 				27B1015B1417D9AB002150C0 /* SVMediaHasher.m in Sources */,
+				27B103FA1418E99F002150C0 /* WEKEditingController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
