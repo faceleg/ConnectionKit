@@ -110,7 +110,14 @@ enum BUTTON_SIZES { SMALL = 0, STANDARD, MEDIUM, TALL};
 
 - (NSString *)placeholderString
 {
-    return SVLocalizedString(@"+1 visible only when loading data from the Internet.", "");
+    if ([[self valueForKeyPath:@"container.pages.site.hostProperties.siteURL"] count])
+    {
+        return SVLocalizedString(@"+1 visible only when loading data from the Internet.", "");
+    }
+    else
+    {
+        return SVLocalizedString(@"+1 visible once site has been setup for publishing", "");
+    }
 }
 
 #pragma mark - Properties
