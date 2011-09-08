@@ -1222,7 +1222,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 - (void)delete:(id)sender forwardingSelector:(SEL)action;
 {
     NSArray *selection = [self selectedItems];
-    if (![selection count])
+    if (![selection count] || [self isSelected])
     {
         return [super delete:sender forwardingSelector:action];
     }
