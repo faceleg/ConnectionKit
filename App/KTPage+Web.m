@@ -124,6 +124,7 @@
     SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithOutputWriter:result];
 
 	[context writeDocumentWithPage:self];
+    [context close];
     [context release];
     
     return result;
