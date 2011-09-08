@@ -9,7 +9,7 @@
 [[if parser.currentPage.windowTitle]]
 		<title>[[=&parser.currentPage.windowTitle]]</title>
 [[else]]
-		<title>[[=&parser.currentPage.comboTitleText]]</title>
+[[if !parser.HTMLContext.isForEditing]]		<title>[[=&parser.currentPage.comboTitleText]]</title>[[endif2]][[comment Leave out while editing otherwise changing the title reloads the page]]
 [[endif]]
 [[if master.author]]
 		<meta name="author" content="[[=&master.author]]" />
