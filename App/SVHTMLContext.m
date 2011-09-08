@@ -1694,6 +1694,8 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 
 - (NSArray *)sitemapChildrenOfPage:(id <SVPage>)page;
 {
+    if (![page isKindOfClass:[KTPage class]]) return nil;
+    
     NSArrayController *controller = [SVPagesController
                                      controllerWithPagesInCollection:page
                                      bind:[self isForEditing]];
