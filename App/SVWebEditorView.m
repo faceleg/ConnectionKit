@@ -14,6 +14,18 @@
 
 @implementation SVWebEditorView
 
+- (id)initWithFrame:(NSRect)frameRect;
+{
+    self = [super initWithFrame:frameRect];
+    
+    // Adjust user agent to feature version number so that Google's +1 badge loads properly!
+    NSString *agent = [[self webView] userAgentForURL:[NSURL URLWithString:@"http://google.com/"]]; 
+    agent = [agent stringByAppendingFormat:@" Version/%@ Sandvox", [NSApplication marketingVersion]];
+    [[self webView] setCustomUserAgent:agent];
+    
+    return self;
+}
+
 - (BOOL)dragSelectionWithEvent:(NSEvent *)event offset:(NSSize)mouseOffset slideBack:(BOOL)slideBack;
 {
     // Try to get a controller to move the selection
