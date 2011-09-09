@@ -290,7 +290,12 @@ static void *sEngineFinishedObservationContext = &sEngineFinishedObservationCont
     }
     
     
-    // Prompt to save
+    // Prompt to save when not exporting
+    if ([self isExporting])
+    {
+        return [self endSheet];
+    }
+    
     [self setMessageText:NSLocalizedString(@"Publishing finished. Do you want to save the changes?", "alert title")];
     [self setInformativeText:NSLocalizedString(@"Saving will make the next publish faster.", "alert text")];
     
