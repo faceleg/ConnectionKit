@@ -5,7 +5,7 @@
       location = "group:App/Sandvox.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:../connection/Connection.xcodeproj">
+      location = "group:Code/ConnectionKit/Connection.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Code/Shared/Code/AmazonSupport/AmazonSupport.xcodeproj">
