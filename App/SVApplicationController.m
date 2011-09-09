@@ -1072,6 +1072,11 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	}
 	
 	[JSTalk listen];
+    
+    
+    // Preload iPhoto parser for later access to keywords. #16297
+    [[IMBLibraryController sharedLibraryControllerWithMediaType:kIMBMediaTypeImage] reload];
+    
 	
 #ifndef VARIANT_RELEASE
 	NSLog(@"BETA: Host order = %ld which means %@",
@@ -1209,6 +1214,10 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 
     KTDocumentController *sharedDocumentController = [KTDocumentController sharedDocumentController];
     [sharedDocumentController setAutosavingDelay:interval];
+    
+    
+    // Prepare iMedia
+    [[IMBParserController sharedParserController] setDelegate:self];
 	
 			 
 	// Try to check immediately so we have right info for initialization
