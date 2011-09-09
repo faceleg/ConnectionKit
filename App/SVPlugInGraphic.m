@@ -310,9 +310,16 @@ static void *sPlugInMinWidthObservationContext = &sPlugInMinWidthObservationCont
                 NSLog(@"Plug-in threw exception: %@ %@", [exception name], [exception reason]);
                 
                 // Correct open elements count if plug-in managed to break this. #88083
-                while ([context openElementsCount] > openElements)
+                if ([context openElementsCount] < openElements)
                 {
-                    [context endElement];
+                    [NSException raise:NSInternalInconsistencyException format:@"Plug-in %@ closed more elements than it opened", [self plugInIdentifier]];
+                }
+                else
+                {
+                    while ([context openElementsCount] > openElements)
+                    {
+                        [context endElement];
+                    }
                 }
             }
         }
