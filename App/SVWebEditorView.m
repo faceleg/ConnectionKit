@@ -54,4 +54,9 @@
     return NO;
 }
 
+- (void)moveToBlockLevel:(id)sender;
+{
+    // Nowt to do if the command's reached this point. Just end the chain before it gets back round to the window controller!
+}
+
 @end
