@@ -70,40 +70,34 @@
     
     // Tell context that text is due to be written so it sets up DOM Controller. Want that controller in place to contain the early callouts
     [context beginGraphicContainer:textBlock];
-    
-    
-    // Write any early callouts
-    NSUInteger writtenTo = 0;//[self writeEarlyCallouts:context];   Turned off because stops -startElements: writing element ID attribute, and so editor can't locate it.
-    
-    
-    // Start Article Content
-    [context startElement:@"div" idName:nil className:@"article-content"];
-    
-    [context startElement:@"div" idName:nil className:@"RichTextElement"];
-    
-    
-    // Open text block
-    [textBlock startElements:context];
-    
-    
-    // Write text minus early callouts
-    NSRange range = NSMakeRange(writtenTo, [[self string] length] - writtenTo);
-    [self writeText:context range:range];
-    
-    
-    // End text block
-    [textBlock endElements:context];
-    
-    
-    // End Article Content
-    [context endElement];
-    [context endElement];
-    [context writeHTMLString:@" <!-- /article-content -->"];
-    
-    
-    // Finish
+    {
+        // Write any early callouts
+        NSUInteger writtenTo = 0;//[self writeEarlyCallouts:context];   Turned off because stops -startElements: writing element ID attribute, and so editor can't locate it.
+        
+        
+        // Start Article Content
+        [context startElement:@"div" idName:nil className:@"article-content"];
+        {
+            [context startElement:@"div" idName:nil className:@"RichTextElement"];
+            {
+                // Open text block
+                [textBlock startElements:context];
+                {
+                    
+                    // Write text minus early callouts
+                    NSRange range = NSMakeRange(writtenTo, [[self string] length] - writtenTo);
+                    [self writeText:context range:range];
+                }
+                [textBlock endElements:context];
+                [textBlock release];
+            }
+            [context endElement];
+        }
+        [context endElement];
+        
+        [context writeHTMLString:@" <!-- /article-content -->"];
+    }
     [context endGraphicContainer];
-    [textBlock release];
 }
 
 - (NSUInteger)writeEarlyCallouts:(SVHTMLContext *)context;
