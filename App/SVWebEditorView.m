@@ -11,6 +11,8 @@
 #import "SVGraphicContainerDOMController.h"
 #import "WEKWebEditorItem.h"
 
+#import "NSApplication+Karelia.h"
+
 
 @implementation SVWebEditorView
 
