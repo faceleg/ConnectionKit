@@ -8,6 +8,9 @@
 
 #import "KSViewController.h"
 
+#if MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_5
+@protocol NSOpenSavePanelDelegate <NSObject> @end
+#endif
 
 @interface KTExportSavePanelController : NSViewController <NSOpenSavePanelDelegate>
 {
