@@ -28,12 +28,6 @@
     return result;
 }
 
-- (BOOL)canUnlink;
-{
-    BOOL result = [[self selectedDOMDocument] queryCommandEnabled:@"unlink"];
-    return result;
-}
-
 - (SVLink *)selectedLink;
 {
     SVLink *result = nil;
@@ -68,72 +62,40 @@
     return result;
 }
 
-- (NSArray *)selectedAnchorElements;
-{
-    return [[self selection] ks_intersectingElementsWithTagName:@"A"];
-}
-
-- (NSString *)linkValue;
-{
-    NSString *result = [[self selectedDOMDocument] queryCommandValue:@"createLink"];
-    return result;
-}
-
 - (void)createLink:(SVLink *)link userInterface:(BOOL)userInterface;
 {
-    DOMRange *selection = [self selection];
-    if ([selection collapsed])
+    [self createLinkWithValue:[link URLString]];
+    if ([link openInNewWindow])
     {
-        // Try to modify existing link
-        [self selectLink:self];
-        selection = [self selection];
-        
-        if ([selection collapsed])
-        {
-            // Fall back to turning the nearest word into a link
-            [self selectWord:self];
-            selection = [self selection];
-        }
+        [self makeSelectedLinksOpenInNewWindow];
+        [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:[self webView]];
     }
+}
+
+- (BOOL)createLinkWithValue:(NSString *)href;
+{
+    if ([super createLinkWithValue:href]) return YES;
     
-    
+    // Create our own link so it has correct text content. #104879
+    SVLink *link = [SVLink linkWithURLString:href openInNewWindow:NO];
     DOMDocument *document = [self selectedDOMDocument];
-    if ([selection collapsed])
+    DOMElement *anchor = [link createDOMElementInDocument:document];
+    
+    // Ask for permission
+    WebView *webView = [self webView];
+    DOMRange *selection = [self selection];
+    
+    if ([[webView editingDelegate] webView:webView shouldInsertNode:anchor replacingDOMRange:selection givenAction:WebViewInsertActionTyped])
     {
-        // Create our own link so it has correct text content. #104879
-        DOMElement *anchor = [link createDOMElementInDocument:document];
+        [selection insertNode:anchor];
         
-        // Ask for permission
-        WebView *webView = [[document webFrame] webView];
+        [selection selectNode:anchor];
+        [webView setSelectedDOMRange:selection affinity:NSSelectionAffinityDownstream];
         
-        if ([[webView editingDelegate] webView:webView shouldInsertNode:anchor replacingDOMRange:selection givenAction:WebViewInsertActionTyped])
-        {
-            [selection insertNode:anchor];
-            
-            [selection selectNode:anchor];
-            [webView setSelectedDOMRange:selection affinity:NSSelectionAffinityDownstream];
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
-        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
     }
-    else
-    {
-        // Let the system take care of turning the current selection into a link
-        if ([document execCommand:@"createLink" userInterface:userInterface value:[link URLString]])
-        {
-            if ([link openInNewWindow])
-            {
-                [self makeSelectedLinksOpenInNewWindow];
-                
-            }
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
-        }
-        else
-        {
-            NSBeep();
-        }
-    }
+    
+    return YES;
 }
 
 - (void)makeSelectedLinksOpenInNewWindow
@@ -144,52 +106,6 @@
         [anAnchor setTarget:@"_blank"];
     }
     
-}
-
-- (void)unlink:(id)sender;
-{
-    DOMRange *selection = [self selection];
-    if ([selection collapsed])
-    {
-        [self selectLink:self];
-        selection = [self selection];
-    }
-    
-    if (!selection) return NSBeep();
-    
-    
-    // Ask for permission. Not sure what the best delegate method to use is :(
-    WebView *webView = [[[self selectedDOMDocument] webFrame] webView];
-    
-    if ([[webView editingDelegate] respondsToSelector:@selector(webView:shouldDeleteDOMRange:)])
-    {
-        if (![[webView editingDelegate] webView:webView shouldDeleteDOMRange:selection])
-        {
-            NSBeep();
-            return;
-        }
-    }
-    
-    
-    if ([[self selectedDOMDocument] execCommand:@"unlink" userInterface:NO value:nil])
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
-    }
-    else
-    {
-        NSBeep();
-    }
-}
-
-- (IBAction)selectLink:(id)sender;
-{
-    DOMRange *selection = [self selection];
-    DOMHTMLAnchorElement *anchor = [selection editableAnchorElement];
-    if (anchor)
-    {
-        [selection selectNode:anchor];
-        [[[[self selectedDOMDocument] webFrame] webView] setSelectedDOMRange:selection affinity:NSSelectionAffinityDownstream];
-    }
 }
 
 - (void)createLink:(SVLinkManager *)sender;

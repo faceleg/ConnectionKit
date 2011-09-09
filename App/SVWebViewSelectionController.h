@@ -14,21 +14,14 @@
 
 @interface SVWebViewSelectionController : WEKEditingController
 
-
-
 #pragma mark Links
 
 - (BOOL)canCreateLink;
-- (BOOL)canUnlink;
 
 - (SVLink *)selectedLink;
-- (NSArray *)selectedAnchorElements;
-- (NSString *)linkValue;
 
 - (void)createLink:(SVLink *)link userInterface:(BOOL)userInterface;
 - (void)makeSelectedLinksOpenInNewWindow;   // support method, called by above
-- (IBAction)unlink:(id)sender;
-- (IBAction)selectLink:(id)sender;
 
 
 @end
