@@ -904,7 +904,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		// This may or may not be needed, depending on what version of Safari/WebKit is installed in 10.5.7.  But this check
 		// will help us to know if we are using an old WebKit.
 		
-		sufficient = [DOMNode instancesRespondToSelector:@selector(intersectsNode:)];
+		sufficient = [DOMRange instancesRespondToSelector:@selector(intersectsNode:)];
 		if (!sufficient)
 		{
 			NSRunCriticalAlertPanel(
