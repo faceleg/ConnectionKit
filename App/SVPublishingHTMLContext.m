@@ -263,9 +263,16 @@
     {
         NSProcessInfo *processInfo = [NSProcessInfo processInfo];
         
-        NSTimeInterval timestamp = ([processInfo respondsToSelector:@selector(systemUptime)] ?
-                                    [processInfo systemUptime] :
-                                    [[NSDate date] timeIntervalSince1970]);
+        NSTimeInterval timestamp = 0;
+		
+		if ([processInfo respondsToSelector:@selector(systemUptime)])
+		{
+			timestamp = (NSTimeInterval) [processInfo systemUptime];	// NOT IN THE 10.5 RUNTIME
+		}
+		else
+		{
+			timestamp = [[NSDate date] timeIntervalSince1970];
+		}
             
         if (timestamp > _lastEventLoopTimestamp + 0.010)
         {
