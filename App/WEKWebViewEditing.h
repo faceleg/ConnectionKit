@@ -14,10 +14,6 @@
 
 @interface WebView (WEKWebViewEditing)
 
-#pragma mark Selection
-@property(nonatomic, assign, setter=wek_setSelection:) WEKDOMRange *wek_selection;
-
-
 #pragma mark Alignment
 - (NSTextAlignment)wek_alignment;
 

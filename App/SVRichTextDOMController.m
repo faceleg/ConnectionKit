@@ -28,6 +28,7 @@
 #import "SVWebContentObjectsController.h"
 #import "WebEditingKit.h"
 #import "SVWebEditorViewController.h"
+#import "WEKDOMRange.h"
 #import "WEKWebViewEditing.h"
 
 #import "NSDictionary+Karelia.h"
@@ -661,7 +662,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 - (void)moveItemUp:(WEKWebEditorItem *)item;
 {
     WEKWebEditorView *webEditor = [self webEditor];
-    WEKDOMRange *selection = [[webEditor webView] wek_selection];
+    WEKDOMRange *selection = [[webEditor webView] selectedWEKDOMRange];
     DOMNode *previousNode = [item previousDOMNode];
     DOMNode *targetNode = [self nodeToMoveItemBefore:(SVDOMController *)item];
     
@@ -684,14 +685,14 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     
     
     [webEditor didChangeText];
-    [[webEditor webView] wek_setSelection:selection];
+    [[webEditor webView] setSelectedWEKDOMRange:selection];
 }
 
 - (void)moveItemDown:(WEKWebEditorItem *)item;
 {
     // Save and then restore selection for if it's inside an item that's getting exchanged
     WEKWebEditorView *webEditor = [item webEditor];
-    WEKDOMRange *selection = [[webEditor webView] wek_selection];
+    WEKDOMRange *selection = [[webEditor webView] selectedWEKDOMRange];
     WEKDOMRange *nextNode = [item nextDOMNode];
     DOMNode *targetNode = [self nodeToMoveItemAfter:(SVDOMController *)item];
     
@@ -714,7 +715,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     
     
     [webEditor didChangeText];
-    [[webEditor webView] wek_setSelection:selection];
+    [[webEditor webView] setSelectedWEKDOMRange:selection];
 }
 
 - (void)tryToMoveController:(SVDOMController *)controller downToPosition:(CGPoint)position;

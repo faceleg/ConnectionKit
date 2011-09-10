@@ -7,7 +7,6 @@
 //
 
 #import "WEKWebViewEditing.h"
-#import "WEKDOMRange.h"
 
 #import "SVWebViewSelectionController.h"
 
@@ -19,37 +18,6 @@
 
 
 @implementation WebView (WEKWebViewEditing)
-
-#pragma mark Selection
-
-- (WEKDOMRange *)wek_selection;
-{
-    DOMRange *selection = [self selectedDOMRange];
-    if (selection)
-    {
-        return [[[WEKDOMRange alloc] initWithDOMRange:selection
-                                              affinity:[self selectionAffinity]] autorelease];
-    }
-    return nil;
-}
-
-- (void)wek_setSelection:(WEKDOMRange *)selection;
-{
-    if (selection)
-    {
-        DOMRange *range = [self selectedDOMRange];
-        if (!range) range = [[[selection startContainer] ownerDocument] createRange];
-        
-        [range setStart:[selection startContainer] offset:[selection startOffset]];
-        [range setEnd:[selection endContainer] offset:[selection endOffset]];
-        
-        [self setSelectedDOMRange:range affinity:[selection affinity]];
-    }
-    else
-    {
-        [self setSelectedDOMRange:nil affinity:0];
-    }
-}
 
 #pragma mark Alignment
 
