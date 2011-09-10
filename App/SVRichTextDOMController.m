@@ -661,7 +661,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 - (void)moveItemUp:(WEKWebEditorItem *)item;
 {
     WEKWebEditorView *webEditor = [self webEditor];
-    WEKSelection *selection = [[webEditor webView] wek_selection];
+    WEKDOMRange *selection = [[webEditor webView] wek_selection];
     DOMNode *previousNode = [item previousDOMNode];
     DOMNode *targetNode = [self nodeToMoveItemBefore:(SVDOMController *)item];
     
@@ -691,8 +691,8 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 {
     // Save and then restore selection for if it's inside an item that's getting exchanged
     WEKWebEditorView *webEditor = [item webEditor];
-    WEKSelection *selection = [[webEditor webView] wek_selection];
-    DOMNode *nextNode = [item nextDOMNode];
+    WEKDOMRange *selection = [[webEditor webView] wek_selection];
+    WEKDOMRange *nextNode = [item nextDOMNode];
     DOMNode *targetNode = [self nodeToMoveItemAfter:(SVDOMController *)item];
     
     while (nextNode && [webEditor shouldChangeTextInDOMRange:[item DOMRange]])

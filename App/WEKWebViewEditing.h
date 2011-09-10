@@ -9,13 +9,13 @@
 #import <WebKit/WebKit.h>
 
 
-@class WEKSelection;
+@class WEKDOMRange;
 
 
 @interface WebView (WEKWebViewEditing)
 
 #pragma mark Selection
-@property(nonatomic, assign, setter=wek_setSelection:) WEKSelection *wek_selection;
+@property(nonatomic, assign, setter=wek_setSelection:) WEKDOMRange *wek_selection;
 
 
 #pragma mark Alignment
@@ -35,28 +35,5 @@
 
 
 #pragma mark -
-
-
-// DOMRange will modify itself to match the selection, which can be undesireable. This class is properly immutable
-@interface WEKSelection : NSObject
-{
-  @private
-    DOMNode *_startContainer;
-    int     _startOffset;
-    DOMNode *_endContainer;
-    int     _endOffset;
-    
-    NSSelectionAffinity _affinity;
-}
-
-- (id)initWithDOMRange:(DOMRange *)range affinity:(NSSelectionAffinity)affinity;
-
-@property(nonatomic, readonly) DOMNode *startContainer;
-@property(nonatomic, readonly) int startOffset;
-@property(nonatomic, readonly) DOMNode *endContainer;
-@property(nonatomic, readonly) int endOffset;
-@property(nonatomic, readonly) NSSelectionAffinity affinity;
-
-@end
 
 
