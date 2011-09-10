@@ -27,6 +27,7 @@
     
     NSWindow                        *_window;
     SVDesignsController             *_designsController;
+    BOOL    _loading;
     SVDesignBrowserViewController   *_browserViewController;
     
     NSString *_genre;
