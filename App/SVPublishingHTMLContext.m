@@ -261,19 +261,14 @@
     // Run event loop to avoid stalling the GUI too long
     if (!_disableRunningEventLoop)
     {
-        NSProcessInfo *processInfo = [NSProcessInfo processInfo];
+        NSTimeInterval timestamp = 
+#if defined MAC_OS_X_VERSION_10_6 && MAC_OS_X_VERSION_MAX_ALLOWED > MAC_OS_X_VERSION_10_6
+        [[NSProcessInfo processInfo] respondsToSelector:@selector(systemUptime)] ?
+        [[NSProcessInfo processInfo] systemUptime] :
+#endif
+        [[NSDate date] timeIntervalSince1970];
         
-        NSTimeInterval timestamp = 0;
-		
-		if ([processInfo respondsToSelector:@selector(systemUptime)])
-		{
-			timestamp = (NSTimeInterval) [processInfo systemUptime];	// NOT IN THE 10.5 RUNTIME
-		}
-		else
-		{
-			timestamp = [[NSDate date] timeIntervalSince1970];
-		}
-            
+        
         if (timestamp > _lastEventLoopTimestamp + 0.010)
         {
             NSEvent *event = [NSApp nextEventMatchingMask:NSAnyEventMask untilDate:[NSDate distantPast] inMode:NSDefaultRunLoopMode dequeue:YES];
