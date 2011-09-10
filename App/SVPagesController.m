@@ -161,7 +161,7 @@ NSString *SVPagesControllerDidInsertObjectNotification = @"SVPagesControllerDidI
 {
     // Figure out the predecessor (which page to inherit properties from)
     NSArray *pagesByDate = [[self arrangedObjects] sortedArrayUsingDescriptors:
-                            [KTPage dateCreatedSortDescriptorsAscending:NO]];
+                            [KTPage sortDescriptorsForCollectionOrder:SVCollectionSortByDateCreated ascending:NO]];
     
     // Search for a KTPage
     KTPage *predecessor = nil;

@@ -139,11 +139,7 @@ typedef enum { kTruncateNone, kTruncateCharacters, kTruncateWords, kTruncateSent
                          inIndex:(BOOL)ignoreDrafts;
 
 - (NSArray *)childItemsSortDescriptors;
-
-+ (NSArray *)unsortedPagesSortDescriptors;
-+ (NSArray *)alphabeticalTitleTextSortDescriptorsAscending:(BOOL)ascending;
-+ (NSArray *)dateCreatedSortDescriptorsAscending:(BOOL)ascending;
-+ (NSArray *)dateModifiedSortDescriptorsAscending:(BOOL)ascending;
++ (NSArray *)sortDescriptorsForCollectionOrder:(SVCollectionSortOrder)sortType ascending:(BOOL)ascending;
 
 
 #pragma mark Hierarchy Queries
