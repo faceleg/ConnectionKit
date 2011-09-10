@@ -127,4 +127,59 @@
     }
 }
 
+#pragma mark Lists
+
+- (IBAction)insertOrderedList:(id)sender;
+{
+    if ([self orderedList]) return;  // nowt to do
+    [super insertOrderedList:sender];
+}
+
+- (IBAction)insertUnorderedList:(id)sender;
+{
+    if ([self unorderedList]) return;  // nowt to do
+    [super insertUnorderedList:sender];
+}
+
+- (IBAction)removeList:(id)sender;
+{
+    id delegate = [[self webView] editingDelegate];
+    if ([delegate respondsToSelector:@selector(webView:doCommandBySelector:)])
+    {
+        if ([delegate webView:[self webView] doCommandBySelector:_cmd]) return;
+    }
+    
+    
+    DOMRange *selection = [self selectedDOMRange];
+    if (!selection)
+    {
+        NSBeep();
+        return;
+    }
+    
+    SVWebViewSelectionController *controller = [[SVWebViewSelectionController alloc] init];
+    [controller setSelectedDOMRange:selection];
+    
+    while ([[controller deepestListIndentLevel] unsignedIntegerValue])
+    {
+        [[self selectedDOMDocument] execCommand:@"Outdent"];
+        
+        selection = [self selectedDOMRange];
+        if (!selection) break;
+        [controller setSelectedDOMRange:[self selectedDOMRange]];
+    }
+    
+    [controller release];
+}
+
+- (BOOL)orderedList;
+{
+    return [[self selectedDOMDocument] queryCommandState:@"InsertOrderedList"];
+}
+
+- (BOOL)unorderedList;
+{
+    return [[self selectedDOMDocument] queryCommandState:@"InsertUnorderedList"];
+}
+
 @end

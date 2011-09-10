@@ -24,4 +24,11 @@
 - (void)makeSelectedLinksOpenInNewWindow;   // support method, called by above
 
 
+#pragma mark Lists
+
+- (IBAction)removeList:(id)sender;
+
+- (BOOL)orderedList;
+- (BOOL)unorderedList;
+
 @end

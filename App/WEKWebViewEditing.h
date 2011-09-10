@@ -18,18 +18,4 @@
 - (NSTextAlignment)wek_alignment;
 
 
-#pragma mark Lists
-
-- (IBAction)insertOrderedList:(id)sender;
-- (IBAction)insertUnorderedList:(id)sender;
-- (IBAction)removeList:(id)sender;
-
-- (BOOL)orderedList;
-- (BOOL)unorderedList;
-
 @end
-
-
-#pragma mark -
-
-
