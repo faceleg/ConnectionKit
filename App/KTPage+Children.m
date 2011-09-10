@@ -391,51 +391,6 @@
 	return result;
 }
 
-/*! returns a suggested ordering value for inserting aProposedChild
-	based on aSortType -- used for intra-app dragging */
-- (int)proposedOrderingForProposedChild:(id)aProposedChild
-							   sortType:(SVCollectionSortOrder)aSortType
-                              ascending:(BOOL)ascending;
-{
-    NSSet *values = [self childItems];
-	
-	if (0 == [values count])
-	{
-		// if there are no other children, stick aProposedChild at the top
-		return 0;
-	}
-	
-	int result = 0;
-	// copy the array
-	NSMutableArray *childArray = [[values allObjects] mutableCopy];
-	// stick aProposedChild in the array
-	[childArray addObject:aProposedChild];
-	// sort it
-	NSArray *descriptors = nil;
-	switch ( aSortType )
-	{
-		case SVCollectionSortAlphabetically:
-			descriptors = [KTPage alphabeticalTitleTextSortDescriptorsAscending:ascending];
-			break;
-		case SVCollectionSortByDateCreated:
-			descriptors = [KTPage dateCreatedSortDescriptorsAscending:ascending];
-			break;
-		case SVCollectionSortByDateModified:
-			descriptors = [KTPage dateModifiedSortDescriptorsAscending:ascending];
-			break;
-		default:
-			descriptors = [KTPage orderingSortDescriptors];	// use the "ordering" values
-			break;
-	}
-	[childArray sortUsingDescriptors:descriptors];
-	// return the index of aProposedChild in the sorted array
-	result = [childArray indexOfObject:aProposedChild];
-	[childArray release];
-	
-	//LOG((@"return proposed child drop index: %i", result));
-	return result;
-}
-
 - (int)proposedOrderingForProposedChildWithTitle:(NSString *)aTitle
 {
 	// we'll add _zzz to the end of the title so that it's hopefully different

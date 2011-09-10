@@ -16,10 +16,6 @@
 @interface KTPage (Internal)
 
 // Hierarchy
-- (int)proposedOrderingForProposedChild:(id)aProposedChild
-							   sortType:(SVCollectionSortOrder)aSortType
-                              ascending:(BOOL)ascending;
-
 - (int)proposedOrderingForProposedChildWithTitle:(NSString *)aTitle;
 
 
