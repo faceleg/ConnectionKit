@@ -143,33 +143,7 @@
 
 - (IBAction)removeList:(id)sender;
 {
-    id delegate = [[self webView] editingDelegate];
-    if ([delegate respondsToSelector:@selector(webView:doCommandBySelector:)])
-    {
-        if ([delegate webView:[self webView] doCommandBySelector:_cmd]) return;
-    }
-    
-    
-    DOMRange *selection = [self selectedDOMRange];
-    if (!selection)
-    {
-        NSBeep();
-        return;
-    }
-    
-    SVWebViewSelectionController *controller = [[SVWebViewSelectionController alloc] init];
-    [controller setSelectedDOMRange:selection];
-    
-    while ([[controller deepestListIndentLevel] unsignedIntegerValue])
-    {
-        [[self selectedDOMDocument] execCommand:@"Outdent"];
-        
-        selection = [self selectedDOMRange];
-        if (!selection) break;
-        [controller setSelectedDOMRange:[self selectedDOMRange]];
-    }
-    
-    [controller release];
+    [self removeIndents:sender];
 }
 
 - (BOOL)orderedList;
