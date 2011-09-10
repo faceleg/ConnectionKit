@@ -19,7 +19,7 @@
 
 - (DOMDocument *)selectedDOMDocument;
 {
-    return [[[self selection] commonAncestorContainer] ownerDocument];
+    return [[[self selectedDOMRange] commonAncestorContainer] ownerDocument];
 }
 
 - (BOOL)canCreateLink;
@@ -83,7 +83,7 @@
     
     // Ask for permission
     WebView *webView = [self webView];
-    DOMRange *selection = [self selection];
+    DOMRange *selection = [self selectedDOMRange];
     
     if ([[webView editingDelegate] webView:webView shouldInsertNode:anchor replacingDOMRange:selection givenAction:WebViewInsertActionTyped])
     {
@@ -119,7 +119,7 @@
         if (![delegate webView:webView shouldPerformAction:_cmd fromSender:sender]) return;
     }
     
-    DOMRange *selection = [self selection];
+    DOMRange *selection = [self selectedDOMRange];
     if (selection)
     {
         SVLink *link = [sender selectedLink];

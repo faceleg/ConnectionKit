@@ -134,7 +134,7 @@
     }
     
     SVWebViewSelectionController *controller = [[SVWebViewSelectionController alloc] init];
-    [controller setSelection:selection];
+    [controller setSelectedDOMRange:selection];
     
     while ([[controller deepestListIndentLevel] unsignedIntegerValue])
     {
@@ -142,7 +142,7 @@
         
         selection = [self selectedDOMRange];
         if (!selection) break;
-        [controller setSelection:[self selectedDOMRange]];
+        [controller setSelectedDOMRange:[self selectedDOMRange]];
     }
     
     [controller release];
