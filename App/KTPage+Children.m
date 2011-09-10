@@ -25,7 +25,13 @@
 
 + (NSPredicate *)includeInIndexAndPublishPredicate;
 + (NSSet *)sortedChildrenDependentChildrenKeys;
+
 - (NSArray *)sortDescriptorsForCollectionSortType:(SVCollectionSortOrder)sortType ascending:(BOOL)ascending;
++ (NSArray *)unsortedPagesSortDescriptors;
++ (NSArray *)alphabeticalTitleTextSortDescriptorsAscending:(BOOL)ascending;
++ (NSArray *)dateCreatedSortDescriptorsAscending:(BOOL)ascending;
++ (NSArray *)dateModifiedSortDescriptorsAscending:(BOOL)ascending;
+
 
 @end
 

@@ -140,11 +140,6 @@ typedef enum { kTruncateNone, kTruncateCharacters, kTruncateWords, kTruncateSent
 
 - (NSArray *)childItemsSortDescriptors;
 
-+ (NSArray *)unsortedPagesSortDescriptors;
-+ (NSArray *)alphabeticalTitleTextSortDescriptorsAscending:(BOOL)ascending;
-+ (NSArray *)dateCreatedSortDescriptorsAscending:(BOOL)ascending;
-+ (NSArray *)dateModifiedSortDescriptorsAscending:(BOOL)ascending;
-
 
 #pragma mark Hierarchy Queries
 - (BOOL)isRootPage; // like NSTreeNode, the root page is defined to be one with no parent. This is just a convenience around that
