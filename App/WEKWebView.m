@@ -78,18 +78,6 @@
         BOOL result = [document queryCommandEnabled:@"removeFormat"];
         return result;
     }
-    else if ([menuItem action] == @selector(insertOrderedList:))
-    {
-        DOMDocument *document = [[self selectedFrame] DOMDocument];
-        BOOL result = [document queryCommandEnabled:@"InsertOrderedList"];
-        return result;
-    }
-    else if ([menuItem action] == @selector(insertUnorderedList:))
-    {
-        DOMDocument *document = [[self selectedFrame] DOMDocument];
-        BOOL result = [document queryCommandEnabled:@"InsertUnorderedList"];
-        return result;
-    }
     else if ([menuItem action] == @selector(removeList:))
     {
         BOOL result = NO;
