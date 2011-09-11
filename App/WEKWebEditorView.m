@@ -31,7 +31,6 @@
 #import "NSResponder+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSWorkspace+Karelia.h"
-#import "WebView+Karelia.h"
 
 #import "KSSortedMutableArray.h"
 

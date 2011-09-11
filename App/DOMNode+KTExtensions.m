@@ -16,7 +16,6 @@
 
 #import <WebKit/WebKit.h>
 #import "WEKDOMOperations.h"
-#import "WebView+Karelia.h"
 #import "NSScanner+Karelia.h"
 
 #import "Debug.h"

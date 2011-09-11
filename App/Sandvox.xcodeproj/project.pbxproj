@@ -968,8 +968,6 @@
 		CE01A8240EAFD63600BDF264 /* DOMNode+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A7220EAFD63600BDF264 /* DOMNode+Karelia.m */; };
 		CE01A8250EAFD63600BDF264 /* KSWebViewWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A7230EAFD63600BDF264 /* KSWebViewWindowController.h */; };
 		CE01A8260EAFD63600BDF264 /* KSWebViewWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A7240EAFD63600BDF264 /* KSWebViewWindowController.m */; };
-		CE01A8270EAFD63600BDF264 /* WebView+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A7250EAFD63600BDF264 /* WebView+Karelia.h */; };
-		CE01A8280EAFD63600BDF264 /* WebView+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A7260EAFD63600BDF264 /* WebView+Karelia.m */; };
 		CE01E6F71208A7F10093565F /* target_set.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE01E6F51208A7F10093565F /* target_set.tiff */; };
 		CE01E6F81208A7F10093565F /* target.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE01E6F61208A7F10093565F /* target.tiff */; };
 		CE01E6FF1208A8090093565F /* metrics_inspector.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE01E6F91208A8090093565F /* metrics_inspector.tiff */; };
@@ -2737,8 +2735,6 @@
 		CE01A7220EAFD63600BDF264 /* DOMNode+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOMNode+Karelia.m"; sourceTree = "<group>"; };
 		CE01A7230EAFD63600BDF264 /* KSWebViewWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSWebViewWindowController.h; sourceTree = "<group>"; };
 		CE01A7240EAFD63600BDF264 /* KSWebViewWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSWebViewWindowController.m; sourceTree = "<group>"; };
-		CE01A7250EAFD63600BDF264 /* WebView+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WebView+Karelia.h"; sourceTree = "<group>"; };
-		CE01A7260EAFD63600BDF264 /* WebView+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WebView+Karelia.m"; sourceTree = "<group>"; };
 		CE01E6F51208A7F10093565F /* target_set.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = target_set.tiff; sourceTree = "<group>"; };
 		CE01E6F61208A7F10093565F /* target.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = target.tiff; sourceTree = "<group>"; };
 		CE01E6F91208A8090093565F /* metrics_inspector.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = metrics_inspector.tiff; sourceTree = "<group>"; };
@@ -5428,8 +5424,6 @@
 				CE01A7220EAFD63600BDF264 /* DOMNode+Karelia.m */,
 				CE01A7230EAFD63600BDF264 /* KSWebViewWindowController.h */,
 				CE01A7240EAFD63600BDF264 /* KSWebViewWindowController.m */,
-				CE01A7250EAFD63600BDF264 /* WebView+Karelia.h */,
-				CE01A7260EAFD63600BDF264 /* WebView+Karelia.m */,
 				27AED2591088C754005EDA77 /* DOMRange+Karelia.h */,
 				27AED25A1088C754005EDA77 /* DOMRange+Karelia.m */,
 				27DB8F7D11204A9400B1895C /* DOMElement+Karelia.h */,
@@ -6134,7 +6128,6 @@
 				CE01A8210EAFD63600BDF264 /* DOM+Debugging.h in Headers */,
 				CE01A8230EAFD63600BDF264 /* DOMNode+Karelia.h in Headers */,
 				CE01A8250EAFD63600BDF264 /* KSWebViewWindowController.h in Headers */,
-				CE01A8270EAFD63600BDF264 /* WebView+Karelia.h in Headers */,
 				CE5E55FC0EAFE98100A3EDDA /* Macros.h in Headers */,
 				3CBDE9120EBA65D20059C56C /* KTLocalPublishingEngine.h in Headers */,
 				27AE74750EEDE6CC00409D80 /* KTPublishingWindowController.h in Headers */,
@@ -7663,7 +7656,6 @@
 				CE01A8220EAFD63600BDF264 /* DOM+Debugging.m in Sources */,
 				CE01A8240EAFD63600BDF264 /* DOMNode+Karelia.m in Sources */,
 				CE01A8260EAFD63600BDF264 /* KSWebViewWindowController.m in Sources */,
-				CE01A8280EAFD63600BDF264 /* WebView+Karelia.m in Sources */,
 				3CBDE9130EBA65D20059C56C /* KTLocalPublishingEngine.m in Sources */,
 				27AE74760EEDE6CC00409D80 /* KTPublishingWindowController.m in Sources */,
 				279FF2BF0EF27699009F6A16 /* KTPublishingEngine.m in Sources */,
