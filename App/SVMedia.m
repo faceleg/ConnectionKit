@@ -233,33 +233,47 @@
 
 - (BOOL)writeToURL:(NSURL *)URL error:(NSError **)outError;
 {
-    // Try writing out data from memory. It'll fail if there was none
+    OBPRECONDITION(URL);
+    
+    // Only copying from one path to another can be done by NSFileManager. All else requires NSData
+    NSURL *fileURL = [self fileURL];
     NSData *data = [self mediaData];
-    BOOL result = [data writeToURL:URL options:0 error:outError];
-    if (!result)
+    
+    if (!data && [URL isFileURL] && [fileURL isFileURL])
     {
-        // Fallback to copying the file
         NSError *error;
-        result = [[NSFileManager defaultManager] copyItemAtPath:[[self fileURL] path]
-                                                         toPath:[URL path]
-                                                          error:&error];
+        BOOL result = [[NSFileManager defaultManager] copyItemAtPath:[fileURL path]
+                                                              toPath:[URL path]
+                                                               error:&error];
         
         // If it failed because the file already exists, we want to overrite it
         while (!result && [[error domain] isEqualToString:NSPOSIXErrorDomain] && [error code] == EEXIST)
         {
             if ((result = [[NSFileManager defaultManager] removeItemAtPath:[URL path] error:&error]))
             {
-                result = [[NSFileManager defaultManager] copyItemAtPath:[[self fileURL] path]
+                result = [[NSFileManager defaultManager] copyItemAtPath:[fileURL path]
                                                                  toPath:[URL path]
                                                                   error:&error];
             }
         }
         
         if (outError) *outError = error;
+        return result;
     }
     
     
+    if (data)
+    {
+        [data retain];
+    }
+    else
+    {
+        data = [[NSData alloc] initWithContentsOfURL:fileURL options:0 error:outError];
+        if (!data) return NO;
+    }
     
+    BOOL result = [data writeToURL:URL options:0 error:outError];
+    [data release];
     return result;
 }
 
