@@ -39,7 +39,7 @@
 [[if !parser.HTMLContext.isForEditing]]
 [[=writeThumbnailRel]][[comment HTML Context will take care of whitespace for thumbnail]]
 [[endif]]
-		<link rel="canonical" href="[[=&parser.currentPage.URL]]" />
+[[if !parser.HTMLContext.isForEditing]]		<link rel="canonical" href="[[=&parser.currentPage.URL]]" />[[endif]]
 [[if parser.includeStyling]]
 [[=writeHierMenuCSS]]
 		[[=writeStylesheetLinks]]
