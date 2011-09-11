@@ -17,7 +17,7 @@
 #import "SVLink.h"
 #import "SVLinkManager.h"
 #import "SVPasteboardItemInternal.h"
-#import "SVWebViewSelectionController.h"
+#import "SVEditingController.h"
 
 #import "KSSelectionBorder.h"
 
@@ -162,7 +162,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     
     // Editing Controller
-    _editingController = [[SVWebViewSelectionController alloc] init];
+    _editingController = [[SVEditingController alloc] init];
     [_editingController setWebView:[self webView]];
     [_editingController insertIntoResponderChainAfterWebView:[self webView]];
     

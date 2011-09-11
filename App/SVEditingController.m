@@ -1,19 +1,19 @@
 //
-//  SVWebViewSelectionController.m
+//  SVEditingController.m
 //  Sandvox
 //
 //  Created by Mike on 21/08/2011.
 //  Copyright 2011 Karelia Software. All rights reserved.
 //
 
-#import "SVWebViewSelectionController.h"
+#import "SVEditingController.h"
 
 #import "SVLinkManager.h"
 
 #import "DOMRange+Karelia.h"
 
 
-@implementation SVWebViewSelectionController
+@implementation SVEditingController
 
 - (DOMDocument *)selectedDOMDocument;
 {

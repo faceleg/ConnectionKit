@@ -1,5 +1,5 @@
 //
-//  SVWebViewSelectionController.h
+//  SVEditingController.h
 //  Sandvox
 //
 //  Created by Mike on 21/08/2011.
@@ -12,7 +12,7 @@
 @class SVLink;
 
 
-@interface SVWebViewSelectionController : WEKEditingController
+@interface SVEditingController : WEKEditingController
 
 #pragma mark Alignment
 - (NSTextAlignment)wek_alignment;

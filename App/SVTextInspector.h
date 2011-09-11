@@ -9,7 +9,7 @@
 #import "KSInspectorViewController.h"
 
 
-@class SVWebViewSelectionController;
+@class SVEditingController;
 
 
 @interface SVTextInspector : KSInspectorViewController
@@ -21,14 +21,14 @@
     
   @private
     
-    SVWebViewSelectionController   *_editingController;
+    SVEditingController   *_editingController;
 }
 
 - (IBAction)changeAlignment:(NSSegmentedControl *)sender;
 
 - (IBAction)changeIndent:(NSSegmentedControl *)sender;
 
-@property(nonatomic, retain, readonly) SVWebViewSelectionController *editingController;
+@property(nonatomic, retain, readonly) SVEditingController *editingController;
 
 
 @end

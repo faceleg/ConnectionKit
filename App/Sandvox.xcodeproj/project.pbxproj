@@ -519,8 +519,8 @@
 		27D9A25A117FB49000049638 /* SVAuxiliaryPageletTextDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D9A258117FB49000049638 /* SVAuxiliaryPageletTextDOMController.m */; };
 		27D9B8DE108CD17500B6F28D /* SVHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 27D9B8DC108CD17500B6F28D /* SVHTMLContext.h */; settings = {ATTRIBUTES = (); }; };
 		27D9B8DF108CD17500B6F28D /* SVHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D9B8DD108CD17500B6F28D /* SVHTMLContext.m */; };
-		27DA95731401A557004DE2DA /* SVWebViewSelectionController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DA95711401A557004DE2DA /* SVWebViewSelectionController.h */; };
-		27DA95741401A557004DE2DA /* SVWebViewSelectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DA95721401A557004DE2DA /* SVWebViewSelectionController.m */; };
+		27DA95731401A557004DE2DA /* SVEditingController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DA95711401A557004DE2DA /* SVEditingController.h */; };
+		27DA95741401A557004DE2DA /* SVEditingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DA95721401A557004DE2DA /* SVEditingController.m */; };
 		27DB8F7F11204A9400B1895C /* DOMElement+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DB8F7D11204A9400B1895C /* DOMElement+Karelia.h */; };
 		27DB8F8011204A9400B1895C /* DOMElement+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB8F7E11204A9400B1895C /* DOMElement+Karelia.m */; };
 		27DB903011209AEA00B1895C /* DOMNamedNodeMap+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DB902E11209AEA00B1895C /* DOMNamedNodeMap+Karelia.h */; };
@@ -2221,8 +2221,8 @@
 		27D9A258117FB49000049638 /* SVAuxiliaryPageletTextDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVAuxiliaryPageletTextDOMController.m; sourceTree = "<group>"; };
 		27D9B8DC108CD17500B6F28D /* SVHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVHTMLContext.h; sourceTree = "<group>"; };
 		27D9B8DD108CD17500B6F28D /* SVHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVHTMLContext.m; sourceTree = "<group>"; };
-		27DA95711401A557004DE2DA /* SVWebViewSelectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebViewSelectionController.h; sourceTree = "<group>"; };
-		27DA95721401A557004DE2DA /* SVWebViewSelectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebViewSelectionController.m; sourceTree = "<group>"; };
+		27DA95711401A557004DE2DA /* SVEditingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVEditingController.h; sourceTree = "<group>"; };
+		27DA95721401A557004DE2DA /* SVEditingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVEditingController.m; sourceTree = "<group>"; };
 		27DB8F7D11204A9400B1895C /* DOMElement+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOMElement+Karelia.h"; sourceTree = "<group>"; };
 		27DB8F7E11204A9400B1895C /* DOMElement+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOMElement+Karelia.m"; sourceTree = "<group>"; };
 		27DB902E11209AEA00B1895C /* DOMNamedNodeMap+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOMNamedNodeMap+Karelia.h"; sourceTree = "<group>"; };
@@ -3377,8 +3377,8 @@
 				2789C743141C209D002B3994 /* WEKDOMRange.m */,
 				27B1051314190915002150C0 /* WEKDOMOperations.h */,
 				27B1051414190915002150C0 /* WEKDOMOperations.m */,
-				27DA95711401A557004DE2DA /* SVWebViewSelectionController.h */,
-				27DA95721401A557004DE2DA /* SVWebViewSelectionController.m */,
+				27DA95711401A557004DE2DA /* SVEditingController.h */,
+				27DA95721401A557004DE2DA /* SVEditingController.m */,
 				2792197B10BC631D00E590D5 /* WEKDOMController.h */,
 				2792197C10BC631D00E590D5 /* WEKDOMController.m */,
 				27F243B1106BC8B9007FEC56 /* WEKWebEditorItem.h */,
@@ -6380,7 +6380,7 @@
 				27AA465213EC1802008470C7 /* KSBufferedWriter.h in Headers */,
 				2705B1B013EC0514004C678D /* SVWebEditorUpdatesHTMLContext.h in Headers */,
 				27139E5513F7EA3F00299254 /* SVWebEditorView.h in Headers */,
-				27DA95731401A557004DE2DA /* SVWebViewSelectionController.h in Headers */,
+				27DA95731401A557004DE2DA /* SVEditingController.h in Headers */,
 				278854A4140E97FA00280980 /* SVRSSItemDescriptionHTMLContext.h in Headers */,
 				278856A114113DE700280980 /* CK2SSHCredential.h in Headers */,
 				27B1015A1417D9AA002150C0 /* SVMediaHasher.h in Headers */,
@@ -7908,7 +7908,7 @@
 				27AA465313EC1802008470C7 /* KSBufferedWriter.m in Sources */,
 				2705B1B113EC0514004C678D /* SVWebEditorUpdatesHTMLContext.m in Sources */,
 				27139E5613F7EA3F00299254 /* SVWebEditorView.m in Sources */,
-				27DA95741401A557004DE2DA /* SVWebViewSelectionController.m in Sources */,
+				27DA95741401A557004DE2DA /* SVEditingController.m in Sources */,
 				278854A5140E97FA00280980 /* SVRSSItemDescriptionHTMLContext.m in Sources */,
 				278856A214113DE700280980 /* CK2SSHCredential.m in Sources */,
 				CE1D64751416B0C9009E0CE9 /* ICOFamily.m in Sources */,

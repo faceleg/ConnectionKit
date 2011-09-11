@@ -8,12 +8,12 @@
 
 #import "SVTextInspector.h"
 
-#import "SVWebViewSelectionController.h"
+#import "SVEditingController.h"
 #import "WEKWebEditorView.h"
 
 
 @interface SVTextInspector ()
-@property(nonatomic, retain, readwrite) SVWebViewSelectionController *editingController;
+@property(nonatomic, retain, readwrite) SVEditingController *editingController;
 @end
 
 
@@ -72,7 +72,7 @@
 - (void)refreshList;
 {
     // Bullets
-    SVWebViewSelectionController *controller = [NSApp targetForAction:@selector(listIndentLevel)];
+    SVEditingController *controller = [NSApp targetForAction:@selector(listIndentLevel)];
     if (controller != [self editingController])
     {
         [self setEditingController:controller];
