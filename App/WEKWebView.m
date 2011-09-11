@@ -50,16 +50,6 @@
     }
 }
 
-- (void)makeSelectedLinksOpenInNewWindow
-{
-    // Need to ask permission before doing so. If not, after the change, web editor may well not know what changed
-    DOMRange *selection = [self selectedDOMRange];
-    if (selection && [[self webEditor] shouldChangeTextInDOMRange:selection])
-    {
-        [super makeSelectedLinksOpenInNewWindow];
-    }
-}
-
 #pragma mark Formatting
 
 - (IBAction)clearStyles:(id)sender
