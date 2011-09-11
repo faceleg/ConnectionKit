@@ -2106,7 +2106,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
             }
         }
         
-        else if (command == @selector(clearStyles:))
+        else if (command == @selector(removeFormat:))
         {
             // Get no other delegate method warning of impending change, so fake one here
             DOMRange *range = [self selectedDOMRange];

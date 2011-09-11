@@ -1163,7 +1163,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     return result;
 }
 
-- (void)clearStyles:(id)sender;
+- (void)removeFormat:(id)sender;
 {
     DOMRange *selection = [self selectedDOMRange];
     

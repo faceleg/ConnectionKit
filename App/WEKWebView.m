@@ -50,45 +50,6 @@
     }
 }
 
-#pragma mark Formatting
-
-- (IBAction)clearStyles:(id)sender
-{
-    // Check delegate does not wish to intercept instead
-    if ([[self editingDelegate] webView:self doCommandBySelector:_cmd]) return;
-    
-    
-    DOMDocument *document = [[self selectedFrame] DOMDocument];
-    if ([document execCommand:@"removeFormat" userInterface:NO value:nil])
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification
-                                                            object:self];
-    }
-    else
-    {
-        NSBeep();
-    }
-}
-
-- (BOOL)validateMenuItem:(NSMenuItem *)menuItem;
-{
-    if ([menuItem action] == @selector(clearStyles:))
-    {
-        DOMDocument *document = [[self selectedFrame] DOMDocument];
-        BOOL result = [document queryCommandEnabled:@"removeFormat"];
-        return result;
-    }
-    else
-    {
-        if ([[self superclass] instancesRespondToSelector:_cmd])
-        {
-            return [super validateMenuItem:menuItem];
-        }
-    }
-    
-    return YES;
-}
-
 #pragma mark Dragging Destination
 
 - (NSDragOperation)willUpdateDrag:(id <NSDraggingInfo>)sender result:(NSDragOperation)result;

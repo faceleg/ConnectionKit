@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="29"/>
+			<integer value="1600"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1912,6 +1912,15 @@
 									<reference key="NSOnImage" ref="73959282"/>
 									<reference key="NSMixedImage" ref="49718828"/>
 								</object>
+								<object class="NSMenuItem" id="78171035">
+									<reference key="NSMenu" ref="141033792"/>
+									<string key="NSTitle">Clear Style</string>
+									<string key="NSKeyEquiv">x</string>
+									<int key="NSKeyEquivModMask">1572864</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="73959282"/>
+									<reference key="NSMixedImage" ref="49718828"/>
+								</object>
 								<object class="NSMenuItem" id="2966">
 									<reference key="NSMenu" ref="141033792"/>
 									<bool key="NSIsDisabled">YES</bool>
@@ -3645,6 +3654,14 @@
 						<reference key="destination" ref="747459656"/>
 					</object>
 					<int key="connectionID">1422</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">removeFormat:</string>
+						<reference key="source" ref="464856506"/>
+						<reference key="destination" ref="78171035"/>
+					</object>
+					<int key="connectionID">1429</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -5388,6 +5405,7 @@
 							<reference ref="454632723"/>
 							<reference ref="2966"/>
 							<reference ref="131711708"/>
+							<reference ref="78171035"/>
 						</object>
 						<reference key="parent" ref="123945377"/>
 					</object>
@@ -5813,6 +5831,11 @@
 						<reference key="object" ref="932300736"/>
 						<reference key="parent" ref="479751780"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1427</int>
+						<reference key="object" ref="78171035"/>
+						<reference key="parent" ref="141033792"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -5984,6 +6007,8 @@
 					<string>1420.IBPluginDependency</string>
 					<string>1423.IBPluginDependency</string>
 					<string>1424.IBPluginDependency</string>
+					<string>1427.IBPluginDependency</string>
+					<string>1427.ImportedFromIB2</string>
 					<string>143.IBPluginDependency</string>
 					<string>143.ImportedFromIB2</string>
 					<string>144.IBPluginDependency</string>
@@ -6451,9 +6476,11 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{466, 599}, {161, 123}}</string>
+					<string>{{466, 579}, {161, 143}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6667,7 +6694,7 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{791, 616}, {204, 303}}</string>
+					<string>{{423, 449}, {204, 273}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6734,7 +6761,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1424</int>
+			<int key="maxID">1429</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -10835,44 +10862,16 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">SVWebViewSelectionController</string>
-					<string key="superclassName">NSResponder</string>
+					<string key="superclassName">WEKEditingController</string>
 					<object class="NSMutableDictionary" key="actions">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>selectLink:</string>
-							<string>strikethrough:</string>
-							<string>unlink:</string>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-						</object>
+						<string key="NS.key.0">clearStyles:</string>
+						<string key="NS.object.0">id</string>
 					</object>
 					<object class="NSMutableDictionary" key="actionInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>selectLink:</string>
-							<string>strikethrough:</string>
-							<string>unlink:</string>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBActionInfo">
-								<string key="name">selectLink:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">strikethrough:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">unlink:</string>
-								<string key="candidateClassName">id</string>
-							</object>
+						<string key="NS.key.0">clearStyles:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">clearStyles:</string>
+							<string key="candidateClassName">id</string>
 						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -11036,6 +11035,120 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
+					<string key="className">WEKEditingController</string>
+					<string key="superclassName">NSResponder</string>
+					<object class="NSMutableDictionary" key="actions">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>createLink:</string>
+							<string>indent:</string>
+							<string>insertOrderedList:</string>
+							<string>insertUnorderedList:</string>
+							<string>outdent:</string>
+							<string>removeFormat:</string>
+							<string>removeIndents:</string>
+							<string>selectLink:</string>
+							<string>strikethrough:</string>
+							<string>takeLinkValueFrom:</string>
+							<string>unlink:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>createLink:</string>
+							<string>indent:</string>
+							<string>insertOrderedList:</string>
+							<string>insertUnorderedList:</string>
+							<string>outdent:</string>
+							<string>removeFormat:</string>
+							<string>removeIndents:</string>
+							<string>selectLink:</string>
+							<string>strikethrough:</string>
+							<string>takeLinkValueFrom:</string>
+							<string>unlink:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBActionInfo">
+								<string key="name">createLink:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">indent:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">insertOrderedList:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">insertUnorderedList:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">outdent:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">removeFormat:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">removeIndents:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">selectLink:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">strikethrough:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">takeLinkValueFrom:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">unlink:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">webView</string>
+						<string key="NS.object.0">WebView</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">webView</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">webView</string>
+							<string key="candidateClassName">WebView</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../Code/WebEditingKit/WEKEditingController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">WEKWebEditorItem</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
@@ -11156,53 +11269,14 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">WebView</string>
-					<reference key="sourceIdentifier" ref="888221964"/>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../Code/WebEditingKit/WEKDOMRange.h</string>
+					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">WebView</string>
-					<object class="NSMutableDictionary" key="actions">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>insertOrderedList:</string>
-							<string>insertUnorderedList:</string>
-							<string>removeList:</string>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>insertOrderedList:</string>
-							<string>insertUnorderedList:</string>
-							<string>removeList:</string>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBActionInfo">
-								<string key="name">insertOrderedList:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">insertUnorderedList:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">removeList:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">WEKWebViewEditing.h</string>
-					</object>
+					<reference key="sourceIdentifier" ref="888221964"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">WebView</string>
