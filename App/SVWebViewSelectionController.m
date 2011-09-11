@@ -15,12 +15,39 @@
 
 @implementation SVWebViewSelectionController
 
-#pragma mark Links
-
 - (DOMDocument *)selectedDOMDocument;
 {
     return [[[self selectedDOMRange] commonAncestorContainer] ownerDocument];
 }
+
+#pragma mark Alignment
+
+- (NSTextAlignment)wek_alignment;
+{
+    NSTextAlignment result = NSNaturalTextAlignment;
+    
+    DOMDocument *doc = [self selectedDOMDocument];
+    if ([doc queryCommandState:@"justifyleft"])
+    {
+        result = NSLeftTextAlignment;
+    }
+    else if ([doc queryCommandState:@"justifycenter"])
+    {
+        result = NSCenterTextAlignment;
+    }
+    else if ([doc queryCommandState:@"justifyright"])
+    {
+        result = NSRightTextAlignment;
+    }
+    else if ([doc queryCommandState:@"justifyfull"])
+    {
+        result = NSJustifiedTextAlignment;
+    }
+    
+    return result;
+}
+
+#pragma mark Links
 
 - (BOOL)canCreateLink;
 {

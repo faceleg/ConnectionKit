@@ -10,7 +10,6 @@
 
 #import "SVWebViewSelectionController.h"
 #import "WEKWebEditorView.h"
-#import "WEKWebViewEditing.h"
 
 
 @interface SVTextInspector ()

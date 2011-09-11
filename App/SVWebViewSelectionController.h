@@ -14,6 +14,10 @@
 
 @interface SVWebViewSelectionController : WEKEditingController
 
+#pragma mark Alignment
+- (NSTextAlignment)wek_alignment;
+
+
 #pragma mark Links
 
 - (BOOL)canCreateLink;

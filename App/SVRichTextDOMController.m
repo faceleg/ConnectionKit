@@ -29,7 +29,6 @@
 #import "WebEditingKit.h"
 #import "SVWebEditorViewController.h"
 #import "WEKDOMRange.h"
-#import "WEKWebViewEditing.h"
 
 #import "NSDictionary+Karelia.h"
 #import "NSString+Karelia.h"

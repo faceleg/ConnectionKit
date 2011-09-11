@@ -16,7 +16,6 @@
 #import "SVSidebarPageletsController.h"
 #import "SVTextAttachment.h"
 #import "SVWebEditorViewController.h"
-#import "WEKWebViewEditing.h"
 
 #import "NSArray+Karelia.h"
 #import "NSColor+Karelia.h"
