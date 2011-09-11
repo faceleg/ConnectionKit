@@ -1230,19 +1230,23 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     WEKWebEditorView *webEditor = [self webEditor];
     if ([webEditor shouldChangeText:self])
     {
-        for (WEKWebEditorItem *anItem in selection)
+        [selection retain]; // hopefully protect against. #143905
         {
-            [webEditor deselectItem:anItem];
-            
-            while ([anItem parentWebEditorItem] != self)
+            for (WEKWebEditorItem *anItem in selection)
             {
-                anItem = [anItem parentWebEditorItem];
+                [webEditor deselectItem:anItem];
+                
+                while ([anItem parentWebEditorItem] != self)
+                {
+                    anItem = [anItem parentWebEditorItem];
+                }
+                
+                DOMRange *range = [anItem DOMRange];
+                [range deleteContents];
+                [range detach];
             }
-            
-            DOMRange *range = [anItem DOMRange];
-            [range deleteContents];
-            [range detach];
         }
+        [selection release];
         
         [webEditor didChangeText];
     }
