@@ -168,11 +168,6 @@
     [super insertUnorderedList:sender];
 }
 
-- (IBAction)removeList:(id)sender;
-{
-    [self removeIndents:sender];
-}
-
 - (BOOL)orderedList;
 {
     return [[self selectedDOMDocument] queryCommandState:@"InsertOrderedList"];

@@ -78,26 +78,6 @@
         BOOL result = [document queryCommandEnabled:@"removeFormat"];
         return result;
     }
-    else if ([menuItem action] == @selector(removeList:))
-    {
-        BOOL result = NO;
-        DOMDocument *document = [[self selectedFrame] DOMDocument];
-        
-        if ([self orderedList])
-        {
-            result = [document queryCommandEnabled:@"InsertOrderedList"];
-        }
-        else if ([self unorderedList])
-        {
-            result = [document queryCommandEnabled:@"InsertUnorderedList"];
-        }
-        else
-        {
-            result = [document queryCommandEnabled:@"InsertParagraph"];
-        }
-        
-        return result;
-    }
     else
     {
         if ([[self superclass] instancesRespondToSelector:_cmd])

@@ -29,9 +29,6 @@
 
 
 #pragma mark Lists
-
-- (IBAction)removeList:(id)sender;
-
 - (BOOL)orderedList;
 - (BOOL)unorderedList;
 
