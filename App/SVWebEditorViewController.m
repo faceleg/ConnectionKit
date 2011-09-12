@@ -982,7 +982,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     {
         NSResponder *target = [[[self webEditor] firstResponderItem] ks_targetForAction:action];
         
-        if (target && [self ks_followsResponder:target])
+        if (target && [[self view] ks_followsResponder:target])
         {
             result = YES;
             if ([target respondsToSelector:_cmd]) result = [target validateMenuItem:menuItem];
