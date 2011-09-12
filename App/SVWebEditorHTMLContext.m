@@ -409,7 +409,6 @@
         }
         else
         {
-			LOG((@"addMediaWithRequest: about to setObject forKey of data with length of %d, %.1f MB", [data length], (float)[data length] / (1024.0*1024.0)));
             [_mediaByData setObject:media forKey:data];
         }
     }
