@@ -268,6 +268,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     {
         // Text can't be focused after the webview loads, so tell it so, hopefully resolving #134847
         [self setFocusedText:nil notification:nil];
+        [self setContentItem:nil];
         [[[self webView] mainFrame] loadHTMLString:string baseURL:URL];
     }
     @finally
