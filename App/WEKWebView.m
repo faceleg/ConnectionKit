@@ -7,7 +7,7 @@
 //
 
 #import "WEKWebView.h"
-#import "WebEditingKit.h"
+#import "WEKWebEditorView.h"
 
 #import "SVLinkManager.h"
 
