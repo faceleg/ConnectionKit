@@ -7,7 +7,7 @@
 //
 
 
-#import "WEKDOMController.h"
+#import "WebEditingKit.h"
 #import "KSSelectionBorder.h"
 
 
