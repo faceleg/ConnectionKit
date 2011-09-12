@@ -1048,20 +1048,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 #endif
 
 	[center addObserver:self selector:@selector(exceptionReporterFinished:) name:kKSExceptionReporterFinishedNotification object:nil];
-	
-	// Copy font collection into user's font directory if it's not there
-	// Check default first -- that will allow user to change name without it being rewritten
-	if (![defaults boolForKey:@"Installed FontCollection 2"])	/// change default key to allow update to happen
-	{
-		NSString * fontCollection = [[NSBundle mainBundle] pathForResource: @"Web-safe Mac:Windows" ofType: @"collection"];
-		NSString* fontCollectionFile = [@"~/Library/FontCollections/Web-safe Mac:Windows.collection" stringByExpandingTildeInPath];
 		
-		// copy into place even if it exists, so we can replace previous version which should not have included Times
-		[fm copyItemAtPath:fontCollection toPath:fontCollectionFile error:NULL];
-		
-		[defaults setBool:YES forKey:@"Installed FontCollection 2"];
-	}
-	
 	[JSTalk listen];
 	
 #ifndef VARIANT_RELEASE
