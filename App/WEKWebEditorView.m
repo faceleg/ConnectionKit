@@ -2299,7 +2299,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 - (BOOL)webView:(WebView *)webView shouldApplyStyle:(DOMCSSStyleDeclaration *)style toElementsInDOMRange:(DOMRange *)range
 {
-    return [self shouldChangeTextInDOMRange:range];
+    return (range ? [self shouldChangeTextInDOMRange:range] : NO);
 }
 
 - (BOOL)webView:(WebView *)webView shouldBeginEditingInDOMRange:(DOMRange *)range
