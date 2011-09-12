@@ -216,13 +216,7 @@ const int kDesignThumbHeight = 65;
     
 	if ((self = [super initWithBundle:bundle variation:variationIndex]) != nil)
 	{
-        // Register alternate IDs too
-        for (NSString *anID in [bundle objectForInfoDictionaryKey:@"SVAlternateIdentifiers"])
-        {
-            [[self class] registerPlugin:self forIdentifier:anID];
-        }
-        
-		;		// do not load local fonts;  we probably won't need them.
+        ;		// do not load local fonts;  we probably won't need them.
 		self.thumbnails = [NSMutableDictionary dictionary];
 	}
 	return self;

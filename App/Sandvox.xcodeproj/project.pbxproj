@@ -212,6 +212,8 @@
 		2736A10A1309606200397D1A /* SVMigrationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2736A1081309606200397D1A /* SVMigrationManager.m */; };
 		273864330D50A6F900A8A209 /* KTPage+Children.m in Sources */ = {isa = PBXBuildFile; fileRef = 273864320D50A6F900A8A209 /* KTPage+Children.m */; };
 		273864660D50BB1D00A8A209 /* KTPage+Indexes.m in Sources */ = {isa = PBXBuildFile; fileRef = 273864650D50BB1D00A8A209 /* KTPage+Indexes.m */; };
+		273B2108141EB8D1008AA7FD /* SVPlugInWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 273B2107141EB8D1008AA7FD /* SVPlugInWrapper.h */; settings = {ATTRIBUTES = (); }; };
+		273B210A141EB8D1008AA7FD /* SVPlugInWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 273B2109141EB8D1008AA7FD /* SVPlugInWrapper.m */; };
 		273B438411786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 273B438211786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.h */; };
 		273B438511786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273B438311786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.m */; };
 		273B443A1179046500A275E6 /* SVDocumentFileWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 273B44381179046500A275E6 /* SVDocumentFileWrapper.h */; };
@@ -1885,6 +1887,8 @@
 		2736A1081309606200397D1A /* SVMigrationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMigrationManager.m; sourceTree = "<group>"; };
 		273864320D50A6F900A8A209 /* KTPage+Children.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTPage+Children.m"; sourceTree = "<group>"; };
 		273864650D50BB1D00A8A209 /* KTPage+Indexes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTPage+Indexes.m"; sourceTree = "<group>"; };
+		273B2107141EB8D1008AA7FD /* SVPlugInWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPlugInWrapper.h; sourceTree = "<group>"; };
+		273B2109141EB8D1008AA7FD /* SVPlugInWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPlugInWrapper.m; sourceTree = "<group>"; };
 		273B43731178676900A275E6 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DocumentSavePanelAccessoryView.xib; sourceTree = "<group>"; };
 		273B438211786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDocumentSavePanelAccessoryViewController.h; sourceTree = "<group>"; };
 		273B438311786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDocumentSavePanelAccessoryViewController.m; sourceTree = "<group>"; };
@@ -4526,6 +4530,8 @@
 				2799832B0DF01BE8003C84B9 /* KTDesignPlaceholder.m */,
 				27CE81161137EEB100EE1A6F /* SVImageReplacementURLProtocol.h */,
 				27CE81171137EEB100EE1A6F /* SVImageReplacementURLProtocol.m */,
+				273B2107141EB8D1008AA7FD /* SVPlugInWrapper.h */,
+				273B2109141EB8D1008AA7FD /* SVPlugInWrapper.m */,
 			);
 			name = Designs;
 			sourceTree = "<group>";
@@ -6380,6 +6386,7 @@
 				27B103F91418E99F002150C0 /* WEKEditingController.h in Headers */,
 				27B1051514190915002150C0 /* WEKDOMOperations.h in Headers */,
 				2789C744141C209D002B3994 /* WEKDOMRange.h in Headers */,
+				273B2108141EB8D1008AA7FD /* SVPlugInWrapper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7908,6 +7915,7 @@
 				27B103FA1418E99F002150C0 /* WEKEditingController.m in Sources */,
 				27B1051614190915002150C0 /* WEKDOMOperations.m in Sources */,
 				2789C745141C209D002B3994 /* WEKDOMRange.m in Sources */,
+				273B210A141EB8D1008AA7FD /* SVPlugInWrapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
