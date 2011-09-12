@@ -215,10 +215,12 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
             
             
             // Insert controllers. They will be hooked up lazily by -hitTestDOMNode:
-            for (WEKWebEditorItem *anItem in [[context rootDOMController] childWebEditorItems])
+            SVContentDOMController *content = [[SVContentDOMController alloc] initWithWebEditorHTMLContext:context node:node];
+            for (WEKWebEditorItem *anItem in [content childWebEditorItems])
             {
                 [self addChildWebEditorItem:anItem];
             }
+            [content release];
         }
         
         [context release];
