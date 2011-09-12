@@ -94,6 +94,8 @@
 
 - (SVLink *)link; { return NSNotApplicableMarker; }
 
+- (NSSet *)pages { return [self valueForKeyPath:@"master.pages"]; }
+
 #pragma mark Metrics
 
 - (CGFloat)maxWidthOnPage:(KTPage *)page;
