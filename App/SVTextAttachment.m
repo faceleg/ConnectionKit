@@ -34,6 +34,8 @@
 
 + (SVTextAttachment *)insertNewTextAttachmentInManagedObjectContext:(NSManagedObjectContext *)context;
 {
+    OBPRECONDITION(context);
+    
     return [NSEntityDescription insertNewObjectForEntityForName:@"TextAttachment"
                                          inManagedObjectContext:context];
 }
