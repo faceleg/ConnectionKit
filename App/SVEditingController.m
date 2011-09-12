@@ -9,7 +9,9 @@
 #import "SVEditingController.h"
 
 #import "SVLinkManager.h"
+#import "SVSiteItem.h"
 
+#import "NSResponder+Karelia.h"
 #import "DOMRange+Karelia.h"
 
 
@@ -152,6 +154,38 @@
         SVLink *link = [sender selectedLink];
         [self createLink:link userInterface:NO];
     }
+}
+
+- (void)updateLinkManager;
+{
+    NSWindow *window = [[self webView] window];
+    if ([window isKeyWindow] || [window isMainWindow])  // will be main window if user tabs around link inspector. #119729
+    {
+        NSResponder *firstResponder = [window firstResponder];
+        if ([self ks_followsResponder:firstResponder])
+        {
+            SVLink *link = [self selectedLink];
+            if (link)
+            {
+                SVSiteItem *siteItem = [SVSiteItem 
+                                        siteItemForPreviewPath:[link URLString]
+                                        inManagedObjectContext:[[[window windowController] document] managedObjectContext]];   // HACK to get hold of MOC
+                
+                if (siteItem)
+                {
+                    link = [SVLink linkWithSiteItem:siteItem openInNewWindow:[link openInNewWindow]];
+                }
+            }
+            
+            [[SVLinkManager sharedLinkManager] setSelectedLink:link editable:[self canCreateLink]];;
+        }
+    }
+}
+
+- (void)webViewDidChangeSelection:(NSNotification *)notification
+{
+    [super webViewDidChangeSelection:notification];
+    [self updateLinkManager];
 }
 
 #pragma mark Lists

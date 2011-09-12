@@ -14,8 +14,6 @@
 
 #import "KTApplication.h"
 #import "SVDocWindow.h"
-#import "SVLink.h"
-#import "SVLinkManager.h"
 #import "SVPasteboardItemInternal.h"
 #import "SVEditingController.h"
 
@@ -223,7 +221,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
                                                    object:[KTApplication sharedApplication]];
         
         [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(updateLinkManager)
+                                                 selector:@selector(windowDidBecomeKey:)
                                                      name:NSWindowDidBecomeKeyNotification
                                                    object:[self window]];
     }
@@ -241,6 +239,11 @@ typedef enum {  // this copied from WebPreferences+Private.h
                                                         name:NSWindowDidBecomeKeyNotification
                                                       object:[self window]];
     }
+}
+
+- (void)windowDidBecomeKey:(NSNotification *)notification;
+{
+    [_editingController updateLinkManager];
 }
 
 #pragma mark Document
@@ -865,21 +868,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
 }
 
 #pragma mark Links
-
-- (void)updateLinkManager;
-{
-    NSWindow *window = [self window];
-    if ([window isKeyWindow] || [window isMainWindow])  // will be main window if user tabs around link inspector. #119729
-    {
-        NSResponder *firstResponder = [window firstResponder];
-        if ([self ks_followsResponder:firstResponder])
-        {
-            SVLink *link = [_editingController selectedLink];
-            if (link) link = [[self delegate] webEditor:self willSelectLink:link];  // search for corresponding page
-            [[SVLinkManager sharedLinkManager] setSelectedLink:link editable:[_editingController canCreateLink]];;
-        }
-    }
-}
 
 #pragma mark Editing
 
@@ -2706,9 +2694,6 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 - (void)webViewDidChange:(NSNotification *)notification;
 {
-    //  Update Link Manager to match
-    [self updateLinkManager];
-    
     // Process change
     [self didChangeText];
     
@@ -2720,10 +2705,6 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 {
     WebView *webView = [self webView];
     OBPRECONDITION([notification object] == webView);
-    
-    
-    //  Update Link Manager to match
-    [self updateLinkManager];
     
     
     // Let focused text know its selection has changed

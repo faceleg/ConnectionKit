@@ -27,6 +27,8 @@
 - (void)createLink:(SVLink *)link userInterface:(BOOL)userInterface;
 - (void)makeSelectedLinksOpenInNewWindow;   // support method, called by above
 
+- (void)updateLinkManager;
+
 
 #pragma mark Lists
 - (BOOL)orderedList;
