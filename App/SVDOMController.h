@@ -11,6 +11,7 @@
 //
 
 
+#import "WEKWebEditorItem.h"
 #import "WebEditingKit.h"
 
 #import "SVContentObject.h"

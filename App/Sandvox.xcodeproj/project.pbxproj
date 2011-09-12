@@ -2081,7 +2081,7 @@
 		279218DC10BC44E900E590D5 /* KSOrderedManagedObjectControllers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSOrderedManagedObjectControllers.m; sourceTree = "<group>"; };
 		2792197B10BC631D00E590D5 /* WEKDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEKDOMController.h; sourceTree = "<group>"; };
 		2792197C10BC631D00E590D5 /* WEKDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEKDOMController.m; sourceTree = "<group>"; };
-		27939A7D1196264E0091B5B4 /* WebEditingKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebEditingKit.h; sourceTree = "<group>"; };
+		27939A7D1196264E0091B5B4 /* WebEditingKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebEditingKit.h; path = ../Code/WebEditingKit/WebEditingKit.h; sourceTree = "<group>"; };
 		2794A45212B235B40077A291 /* SVFaviconPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVFaviconPickerController.h; sourceTree = "<group>"; };
 		2794A45312B235B40077A291 /* SVFaviconPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVFaviconPickerController.m; sourceTree = "<group>"; };
 		2796DF0811733C4D000DD6EC /* SVMediaRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaRequest.h; sourceTree = "<group>"; };

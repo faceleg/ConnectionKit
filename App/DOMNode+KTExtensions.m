@@ -14,8 +14,7 @@
 #import "NSString+Karelia.h"
 #import "KSURLFormatter.h"
 
-#import <WebKit/WebKit.h>
-#import "WEKDOMOperations.h"
+#import "WebEditingKit.h"
 #import "NSScanner+Karelia.h"
 
 #import "Debug.h"

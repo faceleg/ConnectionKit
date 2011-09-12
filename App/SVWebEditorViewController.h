@@ -9,7 +9,7 @@
 #import "KSWebViewController.h"
 
 #import "SVHTMLTemplateParser.h"
-#import "WebEditingKit.h"
+#import "WEKWebEditorView.h"
 #import "SVWebEditorHTMLContext.h"
 #import "SVWebContentObjectsController.h"
 

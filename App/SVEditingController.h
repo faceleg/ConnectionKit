@@ -6,7 +6,7 @@
 //  Copyright 2011 Karelia Software. All rights reserved.
 //
 
-#import "WEKEditingController.h"
+#import "WebEditingKit.h"
 
 
 @class SVLink;
