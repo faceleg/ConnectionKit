@@ -529,7 +529,7 @@
 - (void)delete:(id)sender forwardingSelector:(SEL)action;
 {
     id object = [self representedObject];
-    if ([object respondsToSelector:@selector(setHidden:)])
+    if ([self isSelectable] && [object respondsToSelector:@selector(setHidden:)])
     {
         [object setValue:NSBOOL(YES) forKey:@"hidden"];
     }
