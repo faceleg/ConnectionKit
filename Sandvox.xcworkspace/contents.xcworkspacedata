@@ -82,4 +82,7 @@
    <FileRef
       location = "group:PlugIns/YouTubeElement/YouTubeElement.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:PlugIns/VictualElement/VictualElement.xcodeproj">
+   </FileRef>
 </Workspace>
