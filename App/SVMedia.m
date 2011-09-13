@@ -78,7 +78,7 @@
         _data = [data copy];
         _URL = [url copy];
         
-        [self setPreferredFilename:[url lastPathComponent]];
+        [self setPreferredFilename:[url ks_lastPathComponent]];
     }
     
     return self;

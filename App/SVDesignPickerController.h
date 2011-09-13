@@ -13,6 +13,11 @@
 @class SVDesignBrowserViewController;
 @class SVDesignsController;
 
+#if MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_5
+@protocol NSWindowDelegate <NSObject> @end
+#endif
+
+
 @interface SVDesignPickerController : NSViewController <NSWindowDelegate, MGScopeBarDelegate>
 {
     IBOutlet MGScopeBar             *oScopeBar;

@@ -20,6 +20,10 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 
 @class SVPagesController, SVSiteItem, BWSplitView;
 
+#if MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_5
+@protocol NSOutlineViewDataSource <NSObject> @end
+@protocol NSOutlineViewDelegate <NSObject> @end
+#endif
 
 @interface SVSiteOutlineViewController : NSViewController <NSOutlineViewDataSource, NSOutlineViewDelegate, NSUserInterfaceValidations, SVPageSerializationDelegate>
 {

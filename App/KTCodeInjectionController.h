@@ -13,6 +13,9 @@
 @class SVPagesController, BWSplitView, KSPlaceholderTextView;
 @protocol KSCollectionController;
 
+#if MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_5
+@protocol NSSplitViewDelegate <NSObject> @end
+#endif
 
 @interface KTCodeInjectionController : KSSingletonWindowController <NSSplitViewDelegate>
 {
