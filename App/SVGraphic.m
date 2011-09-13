@@ -582,19 +582,24 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
                     [context pushClassName:@"narrow"];  // fallback for imported images
                     break;
                 case SVGraphicWrapLeft:
-                    [context pushClassName:@"narrow right"];
+                    [context pushClassName:@"narrow"];
+                    [context pushClassName:@"right"];
                     break;
                 case SVGraphicWrapRight:
-                    [context pushClassName:@"narrow left"];
+                    [context pushClassName:@"narrow"];
+                    [context pushClassName:@"left"];
                     break;
                 case SVGraphicWrapLeftSplit:
-                    [context pushClassName:@"wide right"];
+                    [context pushClassName:@"wide"];
+                    [context pushClassName:@"right"];
                     break;
                 case SVGraphicWrapCenterSplit:
-                    [context pushClassName:@"wide center"];
+                    [context pushClassName:@"wide"];
+                    [context pushClassName:@"center"];
                     break;
                 case SVGraphicWrapRightSplit:
-                    [context pushClassName:@"wide left"];
+                    [context pushClassName:@"wide"];
+                    [context pushClassName:@"left"];
                     break;
             }
             [context addDependencyOnObject:self keyPath:@"textAttachment.wrap"];
