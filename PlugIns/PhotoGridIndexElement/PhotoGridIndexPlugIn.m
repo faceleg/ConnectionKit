@@ -131,11 +131,19 @@
 
 - (void)writeThumbnailOfPage:(id <SVPage>)page toContext:(id <SVPlugInContext>)context
 {
+    if (page)
+    {
+        [context startAnchorElementWithPage:page
+                                 attributes:[NSDictionary dictionaryWithObject:@"imageLink" forKey:@"class"]];
+    }
+    
     [context writeImageRepresentationOfPage:page
                                       width:128
                                      height:128
                                  attributes:nil
-                                    options:(SVImageScaleAspectFit | (1 << 5)/*SVPageImageRepresentationLink*/)];
+                                    options:SVImageScaleAspectFit];
+    
+    if (page) [context endElement];
 }
 
 - (void)writePlaceholderHTML:(id <SVPlugInContext>)context;
