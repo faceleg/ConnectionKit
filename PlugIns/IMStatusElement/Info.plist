@@ -9,7 +9,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.karelia.Sandvox.plug-in.${PRODUCT_NAME}</string>
+	<string>com.karelia.Sandvox.plugin.${PRODUCT_NAME}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -26,11 +26,11 @@
 	<array>
 		<dict>
 			<key>livePreviewHTML</key>
-			<string>&lt;img src="#ONLINE#" width="175" height="75" border="0" /&gt;</string>
+			<string>&lt;img src=&quot;#ONLINE#&quot; width=&quot;175&quot; height=&quot;75&quot; border=&quot;0&quot; /&gt;</string>
 			<key>nonLivePreviewHTML</key>
-			<string>&lt;img src="#ONLINE#" width="175" height="75" border="0" /&gt;</string>
+			<string>&lt;img src=&quot;#ONLINE#&quot; width=&quot;175&quot; height=&quot;75&quot; border=&quot;0&quot; /&gt;</string>
 			<key>publishingHTML</key>
-			<string>&lt;a class="imageLink" href="aim:goim?screenname=#USER#"&gt;&lt;img src="http://big.oscar.aol.com/#USER#?on_url=#ONLINE#&amp;amp;off_url=#OFFLINE#" alt="#HEADLINE#" width="175" height="75" border="0" /&gt;&lt;/a&gt;</string>
+			<string>&lt;a class=&quot;imageLink&quot; href=&quot;aim:goim?screenname=#USER#&quot;&gt;&lt;img src=&quot;http://big.oscar.aol.com/#USER#?on_url=#ONLINE#&amp;amp;off_url=#OFFLINE#&quot; alt=&quot;#HEADLINE#&quot; width=&quot;175&quot; height=&quot;75&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;</string>
 			<key>serviceIdentifier</key>
 			<string>aim</string>
 			<key>serviceName</key>
@@ -38,13 +38,13 @@
 		</dict>
 		<dict>
 			<key>livePreviewHTML</key>
-			<string>&lt;div style="padding:2px 0; border:1px solid #CCC; background:white;"&gt;&lt;img src="http://mystatus.skype.com/bigclassic/#USER#" style="border:none;" width="182" height="44" alt="#HEADLINE#" /&gt;&lt;/div&gt;</string>
+			<string>&lt;div style=&quot;padding:2px 0; border:1px solid #CCC; background:white;&quot;&gt;&lt;img src=&quot;http://mystatus.skype.com/bigclassic/#USER#&quot; style=&quot;border:none;&quot; width=&quot;182&quot; height=&quot;44&quot; alt=&quot;#HEADLINE#&quot; /&gt;&lt;/div&gt;</string>
 			<key>nonLivePreviewHTML</key>
-			<string>&lt;div style="padding:2px 0; border:1px solid #CCC; background:white;"&gt;&lt;img src="#ONLINE#" style="border:none;" width="182" height="44" alt="#HEADLINE#" /&gt;&lt;/div&gt;</string>
+			<string>&lt;div style=&quot;padding:2px 0; border:1px solid #CCC; background:white;&quot;&gt;&lt;img src=&quot;#ONLINE#&quot; style=&quot;border:none;&quot; width=&quot;182&quot; height=&quot;44&quot; alt=&quot;#HEADLINE#&quot; /&gt;&lt;/div&gt;</string>
 			<key>onlineImage</key>
 			<string>online_skype.png</string>
 			<key>publishingHTML</key>
-			<string>&lt;div style="padding:2px 0; border:1px solid #CCC; background:white;"&gt;&lt;script type="text/javascript" src="http://download.skype.com/share/skypebuttons/js/skypeCheck.js"&gt;&lt;/script&gt;&lt;a class="imageLink" href="skype:#USER#?call"&gt;&lt;img src="http://mystatus.skype.com/bigclassic/#USER#" style="border:none;" width="182" height="44" alt="#HEADLINE#" /&gt;&lt;/a&gt;&lt;/div&gt;</string>
+			<string>&lt;div style=&quot;padding:2px 0; border:1px solid #CCC; background:white;&quot;&gt;&lt;script type=&quot;text/javascript&quot; src=&quot;http://download.skype.com/share/skypebuttons/js/skypeCheck.js&quot;&gt;&lt;/script&gt;&lt;a class=&quot;imageLink&quot; href=&quot;skype:#USER#?call&quot;&gt;&lt;img src=&quot;http://mystatus.skype.com/bigclassic/#USER#&quot; style=&quot;border:none;&quot; width=&quot;182&quot; height=&quot;44&quot; alt=&quot;#HEADLINE#&quot; /&gt;&lt;/a&gt;&lt;/div&gt;</string>
 			<key>serviceIdentifier</key>
 			<string>skype</string>
 			<key>serviceName</key>
@@ -52,13 +52,13 @@
 		</dict>
 		<dict>
 			<key>livePreviewHTML</key>
-			<string>&lt;img border=0 src="http://opi.yahoo.com/online?u=#USER#&amp;m=g&amp;t=1&amp;l=us"&gt;</string>
+			<string>&lt;img border=0 src=&quot;http://opi.yahoo.com/online?u=#USER#&amp;m=g&amp;t=1&amp;l=us&quot;&gt;</string>
 			<key>nonLivePreviewHTML</key>
-			<string>&lt;img border=0 src="#ONLINE#"&gt;</string>
+			<string>&lt;img border=0 src=&quot;#ONLINE#&quot;&gt;</string>
 			<key>onlineImage</key>
 			<string>online_yahoo.gif</string>
 			<key>publishingHTML</key>
-			<string>&lt;a href="http://edit.yahoo.com/config/send_webmesg?.target=#USER#&amp;.src=pg"&gt;&lt;img border=0 src="http://opi.yahoo.com/online?u=#USER#&amp;m=g&amp;t=1&amp;l=us"&gt;&lt;/a&gt;</string>
+			<string>&lt;a href=&quot;http://edit.yahoo.com/config/send_webmesg?.target=#USER#&amp;.src=pg&quot;&gt;&lt;img border=0 src=&quot;http://opi.yahoo.com/online?u=#USER#&amp;m=g&amp;t=1&amp;l=us&quot;&gt;&lt;/a&gt;</string>
 			<key>serviceIdentifier</key>
 			<string>yahoo</string>
 			<key>serviceName</key>
