@@ -4,18 +4,16 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>Photo Grid</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
-	<key>NSHumanReadableCopyright</key>
-	<string>© 2004-2011 Karelia Software. All Rights Reserved.</string>
 	<key>CFBundleIdentifier</key>
-	<string>sandvox.${PROJECT_NAME}</string>
+	<string>com.karelia.Sandvox.plug-in.${PRODUCT_NAME}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
-	<key>CFBundleDisplayName</key>
-	<string>Photo Grid</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
@@ -24,39 +22,45 @@
 	<string>Svox</string>
 	<key>CFBundleVersion</key>
 	<string>REPLACE_ME</string>
-	<key>SVMinimumAppVersion</key>
-	<string>2.0</string>
-	<key>SVPlugInIsIndex</key>
-	<true/>
 	<key>KTCSSClassName</key>
 	<string>photogrid-index</string>
 	<key>KTPageIconName</key>
 	<string>page_grid_sb.tiff</string>
-	<key>SVPlugInIconPath</key>
-	<string>object_grid.tiff</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>© 2004-2011 Karelia Software. All Rights Reserved.</string>
+	<key>NSPrincipalClass</key>
+	<string>PhotoGridIndex</string>
+	<key>SVAlternateIdentifiers</key>
+	<array>
+		<string>sandvox.${PROJECT_NAME}</string>
+	</array>
 	<key>SVIndexMasters</key>
 	<array>
 		<dict>
-			<key>SVPageProperties</key>
-			<dict>
-				<key>navigationArrowsStyle</key>
-				<integer>1</integer>
-				<key>collectionSortOrder</key>
-				<integer>0</integer>
-				<key>thumbnailType</key>
-				<integer>3</integer>
-				<key>collectionSyndicationType</key>
-				<integer>2</integer>
-			</dict>
 			<key>KTIncludeRSSBadge</key>
 			<false/>
 			<key>SVMasterDisplayName</key>
 			<string>Photo Album</string>
 			<key>SVMasterPageTitle</key>
 			<string>Photo Album</string>
+			<key>SVPageProperties</key>
+			<dict>
+				<key>collectionSortOrder</key>
+				<integer>0</integer>
+				<key>collectionSyndicationType</key>
+				<integer>2</integer>
+				<key>navigationArrowsStyle</key>
+				<integer>1</integer>
+				<key>thumbnailType</key>
+				<integer>3</integer>
+			</dict>
 		</dict>
 	</array>
-	<key>NSPrincipalClass</key>
-	<string>PhotoGridIndex</string>
+	<key>SVMinimumAppVersion</key>
+	<string>2.0</string>
+	<key>SVPlugInIconPath</key>
+	<string>object_grid.tiff</string>
+	<key>SVPlugInIsIndex</key>
+	<true/>
 </dict>
 </plist>
