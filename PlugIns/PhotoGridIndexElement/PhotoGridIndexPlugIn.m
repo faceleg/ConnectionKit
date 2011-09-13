@@ -137,9 +137,14 @@
                                  attributes:[NSDictionary dictionaryWithObject:@"imageLink" forKey:@"class"]];
     }
     
+    // Figure out the thumbnail size from private API
+    id design = [(NSObject *)context valueForKeyPath:@"page.master.design"];
+    NSDictionary *properties = [design performSelector:@selector(imageScalingPropertiesForUse:) withObject:@"thumbnailImage"];
+    NSSize size = [[properties valueForKeyPath:@"scalingBehavior.size"] sizeValue];
+    
     [context writeImageRepresentationOfPage:page
-                                      width:128
-                                     height:128
+                                      width:size.width
+                                     height:size.height
                                  attributes:nil
                                     options:SVImageScaleAspectFit];
     
