@@ -110,6 +110,7 @@ typedef NSUInteger SVPageImageRepresentationOptions;
 - (void)startAnchorElementWithHref:(NSString *)href title:(NSString *)titleString target:(NSString *)targetString rel:(NSString *)relString;
 
 // Takes care of using the right href, title and target for the page
+- (void)startAnchorElementWithPage:(id <SVPage>)page attributes:(NSDictionary *)attributes AVAILABLE_SANDVOX_VERSION_2_2_AND_LATER;
 - (void)startAnchorElementWithPage:(id <SVPage>)page;
 
 // Returns YES to signify success.

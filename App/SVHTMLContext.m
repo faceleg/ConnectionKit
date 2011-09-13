@@ -1821,6 +1821,12 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     return nil;
 }
 
+- (void)startAnchorElementWithPage:(id <SVPage>)page attributes:(NSDictionary *)attributes;
+{
+    [self pushAttributes:attributes];
+    [self startAnchorElementWithPage:page];
+}
+
 - (void)startAnchorElementWithPage:(id <SVPage>)page;
 {
     OBPRECONDITION(page);
