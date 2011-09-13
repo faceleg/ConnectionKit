@@ -15,6 +15,7 @@
 #import "SVIndexDOMController.h"
 #import "SVLogoImage.h"
 #import "SVMediaProtocol.h"
+#import "SVTextAttachment.h"
 #import "KTPage.h"
 
 #import "NSManagedObject+KTExtensions.h"
@@ -349,6 +350,20 @@ static void *sPlugInMinWidthObservationContext = &sPlugInMinWidthObservationCont
     {
         [context decrementHeaderLevel];
     }
+}
+
+- (void)buildClassName:(SVHTMLContext *)context includeWrap:(BOOL)includeWrap;
+{
+    if (![self isCallout])
+    {
+        SVTextAttachment *textAttachment = [self textAttachment];
+        if ([[textAttachment causesWrap] boolValue])
+        {
+            [context pushClassName:@"graphic-container"];
+        }
+    }
+    
+    [super buildClassName:context includeWrap:includeWrap];
 }
 
 - (NSString *)inlineGraphicClassName;

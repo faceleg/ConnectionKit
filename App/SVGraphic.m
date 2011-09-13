@@ -559,7 +559,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
         SVTextAttachment *textAttachment = [self textAttachment];
         if ([[textAttachment causesWrap] boolValue])
         {
-            [context pushClassName:@"graphic-container"];
+            //[context pushClassName:@"graphic-container"];
             
             NSString *type = [self graphicClassName];
             if (type) [context pushClassName:type];

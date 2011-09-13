@@ -44,7 +44,7 @@
     
     if ([self shouldWriteHTMLInline])
     {
-        [context pushClassName:@"graphic-container"];
+        //[context pushClassName:@"graphic-container"];
         [context startElement:@"span"];
     }
     else
