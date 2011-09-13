@@ -129,25 +129,37 @@
 	}
 }
 
+- (void)writeThumbnailOfPage:(id <SVPage>)page toContext:(id <SVPlugInContext>)context
+{
+    [context writeImageRepresentationOfPage:page
+                                      width:128
+                                     height:128
+                                 attributes:nil
+                                    options:(SVImageScaleAspectFit | (1 << 5)/*SVPageImageRepresentationLink*/)];
+}
+
 - (void)writePlaceholderHTML:(id <SVPlugInContext>)context;
 {
     if ( self.indexedCollection )
     {        
         // write thumbnail <DIV> of design's example image
         [context startElement:@"div" className:@"gridItem"];
-        [context writeImageRepresentationOfPage:nil
-                                width:128
-                               height:128
-                           attributes:nil
-                              options:(SVImageScaleAspectFit | (1 << 5)/*SVPageImageRepresentationLink*/)];
-        [context startElement:@"h3"];
-        if ([context page]) [context startAnchorElementWithPage:[context page]];
-        [context startElement:@"span" attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
-        [context writeCharacters:SVLocalizedString(@"Example Photo", "placeholder image name")];
-        [context endElement]; // </span>
-        if ([context page]) [context endElement]; // </a>
-        [context endElement]; // </h3>
-        [context endElement]; // </div>
+        {{
+            [self writeThumbnailOfPage:nil toContext:context];
+            
+            [context startElement:@"h3"];
+            {{
+                if ([context page]) [context startAnchorElementWithPage:[context page]];
+                [context startElement:@"span" attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
+                {{
+                    [context writeCharacters:SVLocalizedString(@"Example Photo", "placeholder image name")];
+                }}
+                [context endElement]; // </span>
+                if ([context page]) [context endElement]; // </a>
+            }}
+            [context endElement];
+        }}
+        [context endElement];
         
         // write (localized) placeholder image
         NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"placeholder" ofType:@"png"];
@@ -188,14 +200,8 @@ height="[[mediainfo info:height media:aPage.thumbnail sizeToFit:thumbnailImageSi
 
 - (void)writeThumbnailImageOfIteratedPage
 {
-    id<SVPlugInContext> context = [self currentContext]; 
-    id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
-    
-    [context writeImageRepresentationOfPage:iteratedPage
-                            width:128
-                           height:128
-                       attributes:nil
-                          options:(SVImageScaleAspectFit | (1 << 5)/*SVPageImageRepresentationLink*/)];
+    id<SVPlugInContext> context = [self currentContext];    
+    [self writeThumbnailOfPage:[context objectForCurrentTemplateIteration] toContext:context];
 }
 
 
