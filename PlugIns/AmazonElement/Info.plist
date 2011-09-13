@@ -4,18 +4,16 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>Amazon List</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
-	<key>NSHumanReadableCopyright</key>
-	<string>© 2004-2011 Karelia Software. All Rights Reserved.</string>
 	<key>CFBundleIdentifier</key>
-	<string>sandvox.${PROJECT_NAME}</string>
+	<string>com.karelia.Sandvox.plug-in.${PRODUCT_NAME}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
-	<key>CFBundleDisplayName</key>
-	<string>Amazon List</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
@@ -24,14 +22,6 @@
 	<string>Svox</string>
 	<key>CFBundleVersion</key>
 	<string>REPLACE_ME</string>
-	<key>SVMinimumAppVersion</key>
-	<string>2.0</string>
-	<key>SVPlugInCSSFiles</key>
-	<array>
-		<string>amazonlist.css</string>
-	</array>
-	<key>SVPlugInIconPath</key>
-	<string>amazon</string>
 	<key>KTPluginInitialProperties</key>
 	<dict>
 		<key>centeredThumbnailWidths</key>
@@ -57,7 +47,21 @@
 		<key>store</key>
 		<integer>1</integer>
 	</dict>
+	<key>NSHumanReadableCopyright</key>
+	<string>© 2004-2011 Karelia Software. All Rights Reserved.</string>
 	<key>NSPrincipalClass</key>
 	<string>AmazonListPlugIn</string>
+	<key>SVAlternateIdentifiers</key>
+	<array>
+		<string>sandvox.${PROJECT_NAME}</string>
+	</array>
+	<key>SVMinimumAppVersion</key>
+	<string>2.0</string>
+	<key>SVPlugInCSSFiles</key>
+	<array>
+		<string>amazonlist.css</string>
+	</array>
+	<key>SVPlugInIconPath</key>
+	<string>amazon</string>
 </dict>
 </plist>
