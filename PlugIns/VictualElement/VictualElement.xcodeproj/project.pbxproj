@@ -35,7 +35,7 @@
 		3C516AA612D5977900F61758 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Inspector.xib; sourceTree = "<group>"; };
 		3C516AE212D6299000F61758 /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C516AE312D6299000F61758 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
-		8D5B49B6048680CD000E48DA /* VictualElement.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VictualElement.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D5B49B6048680CD000E48DA /* Victual.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Victual.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
@@ -121,7 +121,7 @@
 		19C28FB8FE9D52D311CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D5B49B6048680CD000E48DA /* VictualElement.svxElement */,
+				8D5B49B6048680CD000E48DA /* Victual.svxElement */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -162,7 +162,7 @@
 			name = VictualElement;
 			productInstallPath = "$(HOME)/Library/Bundles";
 			productName = VictualElement;
-			productReference = 8D5B49B6048680CD000E48DA /* VictualElement.svxElement */;
+			productReference = 8D5B49B6048680CD000E48DA /* Victual.svxElement */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -271,7 +271,7 @@
 			baseConfigurationReference = 3C516AE212D6299000F61758 /* Debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
-				PRODUCT_NAME = VictualElement;
+				PRODUCT_NAME = Victual;
 				WRAPPER_EXTENSION = svxElement;
 			};
 			name = Debug;
@@ -281,7 +281,7 @@
 			baseConfigurationReference = 3C516AE312D6299000F61758 /* Release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
-				PRODUCT_NAME = VictualElement;
+				PRODUCT_NAME = Victual;
 				WRAPPER_EXTENSION = svxElement;
 			};
 			name = Release;
