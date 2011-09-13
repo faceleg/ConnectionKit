@@ -745,22 +745,6 @@
 #pragma mark -
 
 
-/*  KTDesign is not publicly exposed to plug-ins. So, we have to mirror any methods they need here.
- */
-
-@implementation KTMaster (PluginAPI)
-
-- (NSDictionary *)imageScalingPropertiesForUse:(NSString *)mediaUse
-{
-    return [[self design] imageScalingPropertiesForUse:mediaUse];
-}
-
-@end
-
-
-#pragma mark -
-
-
 @implementation KTMaster (Deprecated)
 
 #pragma mark Site Title
