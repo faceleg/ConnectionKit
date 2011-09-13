@@ -142,7 +142,7 @@
         {
             // Hopefully we've published it before. Figure out content hash
             SVMediaRequest *sourceRequest = [mediaRequest sourceRequest];
-            NSData *sourceDigest = [[self digestStorage] digestForMediaRequest:sourceRequest];
+            NSData *sourceDigest = [self digestForMediaRequest:sourceRequest];
             
             if (sourceDigest)
             {
@@ -333,11 +333,11 @@
     {
         if ([request width] || [request height])
         {
-            SVPublishingDigestStorage *digestStorage = [self digestStorage];
-            NSData *digest = [digestStorage digestForMediaRequest:request];
-            
+            NSData *digest = [self digestForMediaRequest:request];
             if (!digest)
             {
+                SVPublishingDigestStorage *digestStorage = [self digestStorage];
+            
                 // Figure out content hash first
                 SVMedia *media = [request media];
                 NSOperation *hashingOp = [[self mediaHasher] addMedia:media];

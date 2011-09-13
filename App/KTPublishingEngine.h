@@ -92,9 +92,10 @@ typedef enum {
 - (NSString *)documentRootPath;
 - (NSString *)subfolderPath;
 - (NSString *)baseRemotePath;
-@property(nonatomic, readonly) SVPublishingDigestStorage *digestStorage;
 @property(nonatomic, readonly) SVMediaHasher *mediaHasher;
 
+- (NSData *)digestForMediaRequest:(SVMediaRequest *)request;    // use this, not .digestStorage
+@property(nonatomic, readonly) SVPublishingDigestStorage *digestStorage;
 
 // Control
 - (KTPublishingEngineStatus)status;

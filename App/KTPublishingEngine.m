@@ -220,6 +220,16 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     return result;
 }
 
+- (NSData *)digestForMediaRequest:(SVMediaRequest *)request;    // use this, not .digestStorage
+{
+    NSData *result = [[self digestStorage] digestForMediaRequest:request];
+    if (!result && [request isNativeRepresentation])
+    {
+        result = [[self mediaHasher] SHA1DigestForMedia:[request media]];
+    }
+    return result;
+}
+
 @synthesize digestStorage = _digestStorage;
 
 #pragma mark Overall flow control
@@ -791,7 +801,7 @@ static void *sProgressObservationContext = &sProgressObservationContext;
     NSString *result = [self pathForFileWithSHA1Digest:digest];
     if (!result)
     {
-        NSData *sourceDigest = [digestStore digestForMediaRequest:[request sourceRequest]]; 
+        NSData *sourceDigest = [self digestForMediaRequest:[request sourceRequest]]; 
         if (sourceDigest)
         {
             NSData *hash = [request contentHashWithSourceMediaDigest:sourceDigest];
@@ -838,7 +848,7 @@ static void *sProgressObservationContext = &sProgressObservationContext;
         if (data)
         {
             NSData *hash = nil;
-            NSData *sourceDigest = [digestStore digestForMediaRequest:[request sourceRequest]];
+            NSData *sourceDigest = [self digestForMediaRequest:[request sourceRequest]];
             
             if (sourceDigest)
             {
@@ -874,7 +884,7 @@ static void *sProgressObservationContext = &sProgressObservationContext;
                 {
                     // Make sure content hash is carried through
                     NSData *hash = nil;
-                    NSData *sourceDigest = [digestStore digestForMediaRequest:[request sourceRequest]];
+                    NSData *sourceDigest = [self digestForMediaRequest:[request sourceRequest]];
                     
                     if (sourceDigest)
                     {
@@ -905,7 +915,7 @@ static void *sProgressObservationContext = &sProgressObservationContext;
     
     if ([_digestStorage containsMediaRequest:request])
     {
-        NSData *cachedDigest = [_digestStorage digestForMediaRequest:request];
+        NSData *cachedDigest = [self digestForMediaRequest:request];
         if (cachedDigest)  // nothing to do yet while hash is being calculated
         {
             result = [self publishMediaWithRequest:request cachedData:nil SHA1Digest:cachedDigest];
