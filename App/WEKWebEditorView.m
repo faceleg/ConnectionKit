@@ -303,10 +303,25 @@ typedef enum {  // this copied from WebPreferences+Private.h
 {
     // No existing controllers need drawing. #95073
     [_itemsToDisplay removeAllObjects];
+    [self changeSelectionByDeselectingAll:YES orDeselectItem:nil selectItems:nil DOMRange:nil isUIAction:NO];
     
-    [[self contentItem] removeFromParentWebEditorItem];
+    if ([self contentItem])
+    {
+        if (item)
+        {
+            [_rootItem replaceChildWebEditorItem:[self contentItem] with:item];
+        }
+        else
+        {
+            [[self contentItem] removeFromParentWebEditorItem];
+        }
+    }
+    else if (item)
+    {
+        [_rootItem addChildWebEditorItem:item];
+    }
+    
     _contentItem = item;    // _rootItem will retain it for us
-    if (item) [_rootItem addChildWebEditorItem:item];
 }
 
 - (void)willRemoveItem:(WEKWebEditorItem *)item;
