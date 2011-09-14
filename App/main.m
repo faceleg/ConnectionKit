@@ -304,7 +304,10 @@ static inline int locateReceipt(int argc, startup_call_t *theCall, id * pathPtr)
     // 10.6
     if ( *pathPtr == nil )
     {
-        *pathPtr = [[[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent: @"Contents/_MASReceipt/receipt"] stringByStandardizingPath];
+        *pathPtr = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Contents"];
+        *pathPtr = [*pathPtr stringByAppendingPathComponent:@"_MASReceipt"];
+        *pathPtr = [*pathPtr stringByAppendingPathComponent:@"receipt"];
+        *pathPtr = [*pathPtr stringByStandardizingPath];
     }
     struct stat statBuf;
     if ( stat([*pathPtr fileSystemRepresentation], &statBuf) != 0 )
