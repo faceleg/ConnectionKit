@@ -393,6 +393,15 @@ int main(int argc, char *argv[])
     {
         argc = verifyKareliaProduct(argc, &theCall, &obj_arg);
     }
+    if ( argc != 173 )
+    {
+        // set conditions to bypass non-MAS checks
+        gRegistrationString = @"1";
+        gLicenseIsBlacklisted = 0;
+        
+        // set conditions of successful MAS check
+        gConfirmedBundleIdentifier = 1;
+    }
     
     [pool drain];
     
@@ -400,13 +409,6 @@ int main(int argc, char *argv[])
     int rc = theCall(argc, (const char **) argv);
     if ( argc > 50 )
         return ( argc );
-    
-    // set conditions to bypass non-MAS checks
-    gRegistrationString = @"1";
-    gLicenseIsBlacklisted = 0;
-    
-    // set conditions of successful MAS check
-    gConfirmedBundleIdentifier = 1;
     
     return ( rc );
     
