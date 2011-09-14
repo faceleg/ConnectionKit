@@ -612,6 +612,13 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 		return NO;
 	}
 	
+#ifdef MAC_APP_STORE
+    if ( !gPayloadExamined || !gSignatureVerified )
+    {
+        exit(173);
+    }
+#endif
+
 	
 	// For the first save of a document, create the wrapper paths on disk before we do anything else
     BOOL result = YES;

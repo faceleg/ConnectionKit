@@ -208,6 +208,12 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		return nil;
 	}
 	
+#ifdef MAC_APP_STORE
+    if ( !gSignatureVerified || !gVerifiedProduct )
+    {
+        exit(173);
+    }
+#endif
     
     if (self = [super init])
 	{

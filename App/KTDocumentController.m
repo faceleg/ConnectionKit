@@ -128,6 +128,14 @@
 
 - (id)makeUntitledDocumentOfType:(NSString *)typeName error:(NSError **)outError
 {
+    
+#ifdef MAC_APP_STORE
+    if ( !gHasReceipt || !gConfirmedBundleIdentifier )
+    {
+        exit(173);
+    }
+#endif
+
     // Do nothing if the license is invalid
 	if (gLicenseViolation) {
 		NSBeep();
