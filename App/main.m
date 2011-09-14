@@ -171,6 +171,7 @@ static inline int verifySignature( int argc, startup_call_t *theCall, id * recei
         return ( 173 );
     }
     
+    gSignatureVerified = 1;
     return ( argc );
 }
 
@@ -290,6 +291,7 @@ static inline int examinePayload( int argc, startup_call_t *theCall, id * dataPt
         return ( 173 );
     }
     
+    gPayloadExamined = 1;
     return ( argc );
 }
 
@@ -321,6 +323,7 @@ static inline int locateReceipt(int argc, startup_call_t *theCall, id * pathPtr)
     ERR_load_X509_strings();
     OpenSSL_add_all_digests();
     
+    gHasReceipt = 1;
     return ( argc );
 }
 
@@ -342,6 +345,7 @@ static inline int verifyKareliaProduct( int argc, startup_call_t *theCall, id * 
         return ( 173 );
     }
     
+    gVerifiedProduct = 1;
     return ( argc );
 }
 
@@ -396,6 +400,13 @@ int main(int argc, char *argv[])
     int rc = theCall(argc, (const char **) argv);
     if ( argc > 50 )
         return ( argc );
+    
+    // set conditions to bypass non-MAS checks
+    gRegistrationString = @"1";
+    gLicenseIsBlacklisted = 0;
+    
+    // set conditions of successful MAS check
+    gConfirmedBundleIdentifier = 1;
     
     return ( rc );
     
