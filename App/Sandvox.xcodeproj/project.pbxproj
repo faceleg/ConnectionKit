@@ -227,6 +227,8 @@
 		273FA5C01420A1B00051E616 /* DAVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 273FA5BF1420A1B00051E616 /* DAVKit.framework */; };
 		273FA62D1420A7100051E616 /* SVWebDAVPublishingEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 273FA62B1420A7100051E616 /* SVWebDAVPublishingEngine.h */; };
 		273FA62E1420A7100051E616 /* SVWebDAVPublishingEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 273FA62C1420A7100051E616 /* SVWebDAVPublishingEngine.m */; };
+		273FA6BE1420B2790051E616 /* CK2WebDAVConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 273FA6BC1420B2790051E616 /* CK2WebDAVConnection.h */; };
+		273FA6BF1420B2790051E616 /* CK2WebDAVConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 273FA6BD1420B2790051E616 /* CK2WebDAVConnection.m */; };
 		27403DFF130D72D3001006D6 /* SVMigrationDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 27403DFD130D72D3001006D6 /* SVMigrationDocument.h */; };
 		27403E00130D72D3001006D6 /* SVMigrationDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 27403DFE130D72D3001006D6 /* SVMigrationDocument.m */; };
 		27422441106A926E0058C8DA /* WEKWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2742243F106A926E0058C8DA /* WEKWebView.h */; };
@@ -1905,6 +1907,8 @@
 		273FA5BF1420A1B00051E616 /* DAVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DAVKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		273FA62B1420A7100051E616 /* SVWebDAVPublishingEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebDAVPublishingEngine.h; sourceTree = "<group>"; };
 		273FA62C1420A7100051E616 /* SVWebDAVPublishingEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebDAVPublishingEngine.m; sourceTree = "<group>"; };
+		273FA6BC1420B2790051E616 /* CK2WebDAVConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CK2WebDAVConnection.h; sourceTree = "<group>"; };
+		273FA6BD1420B2790051E616 /* CK2WebDAVConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CK2WebDAVConnection.m; sourceTree = "<group>"; };
 		27403DFD130D72D3001006D6 /* SVMigrationDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMigrationDocument.h; sourceTree = "<group>"; };
 		27403DFE130D72D3001006D6 /* SVMigrationDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMigrationDocument.m; sourceTree = "<group>"; };
 		2742243F106A926E0058C8DA /* WEKWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEKWebView.h; sourceTree = "<group>"; };
@@ -3506,6 +3510,8 @@
 			children = (
 				273FA62B1420A7100051E616 /* SVWebDAVPublishingEngine.h */,
 				273FA62C1420A7100051E616 /* SVWebDAVPublishingEngine.m */,
+				273FA6BC1420B2790051E616 /* CK2WebDAVConnection.h */,
+				273FA6BD1420B2790051E616 /* CK2WebDAVConnection.m */,
 			);
 			name = WebDAV;
 			sourceTree = "<group>";
@@ -6325,6 +6331,7 @@
 				2705B1B013EC0514004C678D /* SVWebEditorUpdatesHTMLContext.h in Headers */,
 				278856A114113DE700280980 /* CK2SSHCredential.h in Headers */,
 				273FA62D1420A7100051E616 /* SVWebDAVPublishingEngine.h in Headers */,
+				273FA6BE1420B2790051E616 /* CK2WebDAVConnection.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7856,6 +7863,7 @@
 				278856A214113DE700280980 /* CK2SSHCredential.m in Sources */,
 				CE1D64751416B0C9009E0CE9 /* ICOFamily.m in Sources */,
 				273FA62E1420A7100051E616 /* SVWebDAVPublishingEngine.m in Sources */,
+				273FA6BF1420B2790051E616 /* CK2WebDAVConnection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -935,7 +935,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	OBASSERT(connection);
     if (!connection) return;
     
-	[connection setName:@"Host Setup Test"];
+	//[connection setName:@"Host Setup Test"];
 	[self setTestConnection:connection];
 	[connection setDelegate:self];
 	[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Contacting %@… ", "status message for test connection"), [[self properties] valueForKey:@"hostName"]];
