@@ -322,7 +322,7 @@ static inline int locateReceipt(int argc, startup_call_t *theCall, id * pathPtr)
 }
 
 
-int verifyKareliaProduct( int argc, startup_call_t *theCall, id * obj_arg )
+static inline int verifyKareliaProduct( int argc, startup_call_t *theCall, id * obj_arg )
 {
     SecStaticCodeRef staticCode = NULL;
     if ( SecStaticCodeCreateWithPath((CFURLRef)[[NSBundle mainBundle] bundleURL], kSecCSDefaultFlags, &staticCode) != noErr )
