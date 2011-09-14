@@ -224,6 +224,7 @@
 		273DCFA010CBD5D3003CCE97 /* SVWebContentObjectsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273DCF9E10CBD5D3003CCE97 /* SVWebContentObjectsController.m */; };
 		273DCFF110CBDC10003CCE97 /* KSArrayController.h in Headers */ = {isa = PBXBuildFile; fileRef = 273DCFEF10CBDC10003CCE97 /* KSArrayController.h */; };
 		273DCFF210CBDC10003CCE97 /* KSArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273DCFF010CBDC10003CCE97 /* KSArrayController.m */; };
+		273FA5C01420A1B00051E616 /* DAVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 273FA5BF1420A1B00051E616 /* DAVKit.framework */; };
 		27403DFF130D72D3001006D6 /* SVMigrationDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 27403DFD130D72D3001006D6 /* SVMigrationDocument.h */; };
 		27403E00130D72D3001006D6 /* SVMigrationDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 27403DFE130D72D3001006D6 /* SVMigrationDocument.m */; };
 		27422441106A926E0058C8DA /* WEKWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2742243F106A926E0058C8DA /* WEKWebView.h */; };
@@ -1257,6 +1258,27 @@
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = AmazonElement;
 		};
+		273FA59114209E580051E616 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 273FA58914209E580051E616 /* DAVKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216 /* DAVKit.framework */;
+			remoteInfo = DAVKit;
+		};
+		273FA59314209E580051E616 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 273FA58914209E580051E616 /* DAVKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C9FF77EC121C6F51001250C7 /* Tests.octest */;
+			remoteInfo = Tests;
+		};
+		273FA59514209E9C0051E616 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 273FA58914209E580051E616 /* DAVKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216 /* DAVKit */;
+			remoteInfo = DAVKit;
+		};
 		274E827F0D627180004F89C2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3F147C09D521AE00C01EED /* MetaMarvel.xcodeproj */;
@@ -1877,6 +1899,8 @@
 		273DCFEF10CBDC10003CCE97 /* KSArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSArrayController.h; sourceTree = "<group>"; };
 		273DCFF010CBDC10003CCE97 /* KSArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSArrayController.m; sourceTree = "<group>"; };
 		273DD20710CC74AA003CCE97 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CollectionInspector.xib; sourceTree = "<group>"; };
+		273FA58914209E580051E616 /* DAVKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DAVKit.xcodeproj; path = ../Code/DAVKit/DAVKit.xcodeproj; sourceTree = SOURCE_ROOT; };
+		273FA5BF1420A1B00051E616 /* DAVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DAVKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		27403DFD130D72D3001006D6 /* SVMigrationDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMigrationDocument.h; sourceTree = "<group>"; };
 		27403DFE130D72D3001006D6 /* SVMigrationDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMigrationDocument.m; sourceTree = "<group>"; };
 		2742243F106A926E0058C8DA /* WEKWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEKWebView.h; sourceTree = "<group>"; };
@@ -3154,6 +3178,7 @@
 				CEE1BE67117D2299002AA67D /* Symbolication.framework in Frameworks */,
 				CEF2889F11CC2D7300122D03 /* JSTalk.framework in Frameworks */,
 				3C48038D13FB737A00E9F309 /* libssh2.dylib in Frameworks */,
+				273FA5C01420A1B00051E616 /* DAVKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3462,6 +3487,15 @@
 			name = KSSelectionBorder;
 			path = ../../KSSelectionBorder;
 			sourceTree = SOURCE_ROOT;
+		};
+		273FA58A14209E580051E616 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				273FA59214209E580051E616 /* DAVKit.framework */,
+				273FA59414209E580051E616 /* Tests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
 		};
 		27409DFC0DEC685300C2387E /* Data Migration */ = {
 			isa = PBXGroup;
@@ -4278,6 +4312,7 @@
 				CEC11A2E0D78BE0100513E70 /* Shared */,
 				3C202DF507E00CCC00DE4994 /* Product Dependencies */,
 				19C28FB0FE9D524F11CA2CBB /* Products */,
+				273FA5BF1420A1B00051E616 /* DAVKit.framework */,
 			);
 			name = Marvel;
 			sourceTree = "<group>";
@@ -4476,6 +4511,7 @@
 		3C202DF507E00CCC00DE4994 /* Product Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				273FA58914209E580051E616 /* DAVKit.xcodeproj */,
 				3CA9FD200D63A06A00815310 /* Indexes */,
 				3CA9FD350D63A08000815310 /* Elements */,
 				3CA9FD410D63A0B400815310 /* Frameworks */,
@@ -6318,6 +6354,7 @@
 			dependencies = (
 				3C535FFC13BC247F004222D5 /* PBXTargetDependency */,
 				27E87740140C18890027A738 /* PBXTargetDependency */,
+				273FA59614209E9C0051E616 /* PBXTargetDependency */,
 				CED864B110AA41DC002DF34F /* PBXTargetDependency */,
 				27B4129A13DF7F7F004173E8 /* PBXTargetDependency */,
 				3C1F512711D576D00036B375 /* PBXTargetDependency */,
@@ -6414,6 +6451,10 @@
 				{
 					ProductGroup = 27CFC643123E79A900BF018C /* Products */;
 					ProjectRef = 3C9B66250BFA818B007A4871 /* ContactElement.xcodeproj */;
+				},
+				{
+					ProductGroup = 273FA58A14209E580051E616 /* Products */;
+					ProjectRef = 273FA58914209E580051E616 /* DAVKit.xcodeproj */;
 				},
 				{
 					ProductGroup = 3C7C2B731219E5B7005D75B1 /* Products */;
@@ -6526,6 +6567,20 @@
 			fileType = wrapper.cfbundle;
 			path = Amazon.svxElement;
 			remoteRef = 272757311241468B0043C223 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		273FA59214209E580051E616 /* DAVKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = DAVKit.framework;
+			remoteRef = 273FA59114209E580051E616 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		273FA59414209E580051E616 /* Tests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = Tests.octest;
+			remoteRef = 273FA59314209E580051E616 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		279EDCAD13DDE8B40018EB82 /* AmazonSupport.framework */ = {
@@ -7812,6 +7867,11 @@
 			name = AmazonElement;
 			targetProxy = 27275735124146B20043C223 /* PBXContainerItemProxy */;
 		};
+		273FA59614209E9C0051E616 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = DAVKit;
+			targetProxy = 273FA59514209E9C0051E616 /* PBXContainerItemProxy */;
+		};
 		274E82800D627180004F89C2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = MetaSandvox;
@@ -8795,6 +8855,7 @@
 					"$(inherited)",
 					"\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../../../Developer/Builds/Products/Debug\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = (
@@ -8827,6 +8888,7 @@
 					"$(inherited)",
 					"\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../../../Developer/Builds/Products/Debug\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = (
