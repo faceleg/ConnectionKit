@@ -14,7 +14,7 @@
 #import "KTExportEngine.h"
 #import "KTExportSavePanelController.h"
 #import "KTHostProperties.h"
-#import "KTMobileMePublishingEngine.h"
+#import "SVWebDAVPublishingEngine.h"
 #import "KTPublishingWindowController.h"
 #import "SVSFTPPublishingEngine.h"
 #import "SVSiteOutlineViewController.h"
@@ -230,7 +230,7 @@
 	}
 	else if ([[[[[self document] site] hostProperties] valueForKey:@"protocol"] isEqualToString:@".Mac"])
 	{
-		result = [KTMobileMePublishingEngine class];
+		result = [SVWebDAVPublishingEngine class];
 	}
     else if ([[[[[self document] site] hostProperties] valueForKey:@"protocol"] isEqualToString:@"SFTP"])
     {
