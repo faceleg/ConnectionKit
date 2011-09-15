@@ -427,7 +427,14 @@ to be verified.
 	}
 	else
 	{
-		return [self valueForKey:@"docRoot"];
+		NSString *result = [self valueForKey:@"docRoot"];
+        
+        if ([[self valueForKey:@"protocol"] isEqualToString:@".Mac"])
+        {
+            result = [[self valueForKey:@"userName"] stringByAppendingPathComponent:result];
+        }
+        
+        return result;
 	}
 }
 
