@@ -407,7 +407,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
                 {
                     credential = [NSURLCredential credentialWithUser:user
                                                             password:password
-                                                         persistence:NSURLCredentialPersistenceNone];
+                                                         persistence:NSURLCredentialPersistencePermanent];
                 }
             }
 		}
