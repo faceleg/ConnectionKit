@@ -140,7 +140,8 @@
     // Figure out the thumbnail size from private API
     id design = [(NSObject *)context valueForKeyPath:@"page.master.design"];
     NSDictionary *properties = [design performSelector:@selector(imageScalingPropertiesForUse:) withObject:@"thumbnailImage"];
-    NSSize size = [[properties valueForKeyPath:@"scalingBehavior.size"] sizeValue];
+    NSValue *sizeValue = [properties valueForKeyPath:@"scalingBehavior.size"];
+    NSSize size = (sizeValue ? [sizeValue sizeValue] : NSMakeSize(128, 128));
     
     [context writeImageRepresentationOfPage:page
                                       width:size.width
