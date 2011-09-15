@@ -930,13 +930,8 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 	[self setConnectionData:[NSMutableData data]];	// HACK to start the progress indicator!
 		
-    NSString *protocol = [[self properties] valueForKey:@"protocol"];
-    if ([protocol isEqualToString:@".Mac"]) protocol = @"WebDAV"; // iDisk is just WebDAV under the hood
-    
-	id <CKConnection> connection = [[CKConnectionRegistry sharedConnectionRegistry]
-                                    connectionWithName:protocol
-                                    host:[[self properties] valueForKey:@"hostName"]
-                                    port:[[self properties] valueForKey:@"port"]];
+    id <CKConnection> connection = [[CKConnectionRegistry sharedConnectionRegistry]
+                                    connectionWithRequest:[[self properties] connectionRequest]];
 	OBASSERT(connection);
     if (!connection) return;
     

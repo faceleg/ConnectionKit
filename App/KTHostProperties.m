@@ -24,6 +24,8 @@
 
 #import "KSURLFormatter.h"
 
+#import <Connection/Connection.h>
+
 #import "debug.h"
 
 
@@ -469,6 +471,21 @@ to be verified.
 	NSString *result = [buffer description];
 	[buffer release];
 	return result;
+}
+
+#pragma mark Connection
+
+- (CKConnectionRequest *)connectionRequest;
+{
+    NSString *hostName = [self valueForKey:@"hostName"];
+    NSNumber *port = [self valueForKey:@"port"];
+    
+    NSString *protocol = [self valueForKey:@"protocol"];
+    if ([protocol isEqualToString:@".Mac"]) protocol = @"WebDAV"; // iDisk is just WebDAV under the hood
+    
+    return [[CKConnectionRegistry sharedConnectionRegistry] connectionRequestForName:protocol
+                                                                                host:hostName
+                                                                                port:port];
 }
 
 #pragma mark Publishing Records
