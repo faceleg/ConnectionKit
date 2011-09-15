@@ -491,7 +491,17 @@ static SVGraphicFactory *sRawHTMLFactory;
 {
     OBPRECONDITION(factory);
     [sFactories addPointer:factory];
-    if ([factory identifier]) [sFactoriesByIdentifier setObject:factory forKey:[factory identifier]];
+    
+    NSString *identifier = [factory identifier];
+    if (identifier) [sFactoriesByIdentifier setObject:factory forKey:identifier];
+    
+    if ([factory respondsToSelector:@selector(plugInBundle)])
+    {
+        for (identifier in [[(id)factory plugInBundle] objectForInfoDictionaryKey:@"SVAlternateIdentifiers"])
+        {
+            [sFactoriesByIdentifier setObject:factory forKey:identifier];
+        }
+    }
 }
 
 #pragma mark Shared Objects
