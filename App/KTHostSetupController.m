@@ -1048,7 +1048,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 				//[builtupPath appendFormat:@"%@/", curPath];	/// Old way that resulted in an erroneous trailing slash
 				builtupPath = [builtupPath stringByAppendingPathComponent:curPath];
 				LOG((@"Creating Directory: %@", builtupPath));
-				[myTestConnection createDirectory:[NSString stringWithString:builtupPath]]; //we don't want to go messing with permissions if someone specifies an absolute path liek /User/ghulands/Sites/
+				[myTestConnection createDirectory:[NSString stringWithString:builtupPath]]; //we don't want to go messing with permissions if someone specifies an absolute path like /User/ghulands/Sites/
 			}
 			if ( [[[NSUserDefaults standardUserDefaults] objectForKey:@"ConnectionSetsPermissions"] boolValue] )
 			{
