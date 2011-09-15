@@ -50,6 +50,7 @@ TO DO:
 
 #import <AddressBook/AddressBook.h>
 #import <Connection/Connection.h> // for CKAbstractConnection, ConnectionOpenPanel, EMKeychainItem, and EMKeychainProxy
+#import "CK2WebDAVConnection.h"
 
 #import <Security/Security.h>
 #import <sys/sysctl.h>
@@ -929,9 +930,13 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 	[self setConnectionData:[NSMutableData data]];	// HACK to start the progress indicator!
 		
-	id <CKConnection> connection = [[CKConnectionRegistry sharedConnectionRegistry] connectionWithName:[[self properties] valueForKey:@"protocol"]
-                                                                                                  host:[[self properties] valueForKey:@"hostName"]
-                                                                                                  port:[[self properties] valueForKey:@"port"]];
+    NSString *protocol = [[self properties] valueForKey:@"protocol"];
+    if ([protocol isEqualToString:@".Mac"]) protocol = @"WebDAV"; // iDisk is just WebDAV under the hood
+    
+	id <CKConnection> connection = [[CKConnectionRegistry sharedConnectionRegistry]
+                                    connectionWithName:protocol
+                                    host:[[self properties] valueForKey:@"hostName"]
+                                    port:[[self properties] valueForKey:@"port"]];
 	OBASSERT(connection);
     if (!connection) return;
     
@@ -1027,12 +1032,10 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	if (success)
 	{
 		NSString *subFolder = [[self properties] valueForKey:@"subFolder"];
+        
 		//we need to make sure all paths are created here including the docRoot
-		NSString *path = [[self properties] valueForKey:@"docRoot"];
-		if (subFolder  && ![subFolder isEqualToString:@""])
-		{
-			path = [path stringByAppendingPathComponent:subFolder];
-		}
+		NSString *path = [[self properties] documentRoot];
+		if ([subFolder length]) path = [path stringByAppendingPathComponent:subFolder];
 				
 		if (	(path && ![path isEqualToString:@""])
 				||	(subFolder  && ![subFolder isEqualToString:@""]) )
@@ -2492,7 +2495,9 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 	[NSUserDefaults resetStandardUserDefaults];		// try to get fresh values
 
-	if (![CKDotMacConnection getDotMacAccountName:&iToolsMember password:&iToolsPassword] || [iToolsMember isEqualToString:@""] || [iToolsPassword isEqualToString:@""])
+	if (![CK2WebDAVConnection getDotMacAccountName:&iToolsMember password:&iToolsPassword] ||
+        [iToolsMember isEqualToString:@""] ||
+        [iToolsPassword isEqualToString:@""])
 	{
 		[oDotMacLabel setStringValue:NSLocalizedString(@"This website cannot be published until you have set up your MobileMe account.", @"")];
 		[self setValue:nil forKey:@"userName"];

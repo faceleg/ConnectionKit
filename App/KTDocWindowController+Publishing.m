@@ -230,7 +230,7 @@
 	}
 	else if ([[[[[self document] site] hostProperties] valueForKey:@"protocol"] isEqualToString:@".Mac"])
 	{
-		result = [SVWebDAVPublishingEngine class];
+		//result = [SVWebDAVPublishingEngine class];
 	}
     else if ([[[[[self document] site] hostProperties] valueForKey:@"protocol"] isEqualToString:@"SFTP"])
     {

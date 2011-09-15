@@ -225,8 +225,6 @@
 		273DCFF110CBDC10003CCE97 /* KSArrayController.h in Headers */ = {isa = PBXBuildFile; fileRef = 273DCFEF10CBDC10003CCE97 /* KSArrayController.h */; };
 		273DCFF210CBDC10003CCE97 /* KSArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273DCFF010CBDC10003CCE97 /* KSArrayController.m */; };
 		273FA5C01420A1B00051E616 /* DAVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 273FA5BF1420A1B00051E616 /* DAVKit.framework */; };
-		273FA62D1420A7100051E616 /* SVWebDAVPublishingEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 273FA62B1420A7100051E616 /* SVWebDAVPublishingEngine.h */; };
-		273FA62E1420A7100051E616 /* SVWebDAVPublishingEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 273FA62C1420A7100051E616 /* SVWebDAVPublishingEngine.m */; };
 		273FA6BE1420B2790051E616 /* CK2WebDAVConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 273FA6BC1420B2790051E616 /* CK2WebDAVConnection.h */; };
 		273FA6BF1420B2790051E616 /* CK2WebDAVConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 273FA6BD1420B2790051E616 /* CK2WebDAVConnection.m */; };
 		27403DFF130D72D3001006D6 /* SVMigrationDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 27403DFD130D72D3001006D6 /* SVMigrationDocument.h */; };
@@ -276,8 +274,6 @@
 		2755279C10546D990037524C /* KSSelectionBorder.h in Headers */ = {isa = PBXBuildFile; fileRef = 2755279A10546D990037524C /* KSSelectionBorder.h */; };
 		2755279D10546D990037524C /* KSSelectionBorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 2755279B10546D990037524C /* KSSelectionBorder.m */; };
 		275666510F007B6200878A05 /* KTURLCredentialStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2756662E0F00760800878A05 /* KTURLCredentialStorage.m */; };
-		275666ED0F015E8400878A05 /* KTMobileMePublishingEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 275666EB0F015E8300878A05 /* KTMobileMePublishingEngine.h */; };
-		275666EE0F015E8400878A05 /* KTMobileMePublishingEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 275666EC0F015E8300878A05 /* KTMobileMePublishingEngine.m */; };
 		2756671E0F0167C700878A05 /* KTDocWindowController+Publishing.m in Sources */ = {isa = PBXBuildFile; fileRef = 2756671D0F0167C700878A05 /* KTDocWindowController+Publishing.m */; };
 		27579A31132BAAE00006C605 /* KSMutableDataWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 27579A2F132BAAE00006C605 /* KSMutableDataWriter.h */; };
 		27579A32132BAAE00006C605 /* KSMutableDataWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 27579A30132BAAE00006C605 /* KSMutableDataWriter.m */; };
@@ -1266,21 +1262,21 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 273FA58914209E580051E616 /* DAVKit.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8DC2EF5B0486A6940098B216 /* DAVKit.framework */;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
 			remoteInfo = DAVKit;
 		};
 		273FA59314209E580051E616 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 273FA58914209E580051E616 /* DAVKit.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = C9FF77EC121C6F51001250C7 /* Tests.octest */;
+			remoteGlobalIDString = C9FF77EC121C6F51001250C7;
 			remoteInfo = Tests;
 		};
 		273FA59514209E9C0051E616 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 273FA58914209E580051E616 /* DAVKit.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216 /* DAVKit */;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
 			remoteInfo = DAVKit;
 		};
 		274E827F0D627180004F89C2 /* PBXContainerItemProxy */ = {
@@ -6096,7 +6092,6 @@
 				2797B4BA0EF6E63900F91398 /* KTExportSavePanelController.h in Headers */,
 				2797B4BE0EF6E65E00F91398 /* KSURLFormatter.h in Headers */,
 				2797B71E0EF91E2B00F91398 /* KTExportEngine.h in Headers */,
-				275666ED0F015E8400878A05 /* KTMobileMePublishingEngine.h in Headers */,
 				27BCCCA20F09609E00B06B35 /* KTRemotePublishingEngine.h in Headers */,
 				270B67CE0F10E66900F6E076 /* KTPageDetailsController.h in Headers */,
 				2774DFAB0F16D87C0085A4D8 /* KTImageScalingURLProtocol.h in Headers */,
@@ -6330,7 +6325,6 @@
 				276BC94713C34DDC00EB2798 /* SVWorkspaceIconProtocol.h in Headers */,
 				2705B1B013EC0514004C678D /* SVWebEditorUpdatesHTMLContext.h in Headers */,
 				278856A114113DE700280980 /* CK2SSHCredential.h in Headers */,
-				273FA62D1420A7100051E616 /* SVWebDAVPublishingEngine.h in Headers */,
 				273FA6BE1420B2790051E616 /* CK2WebDAVConnection.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7628,7 +7622,6 @@
 				2797B4BF0EF6E65E00F91398 /* KSURLFormatter.m in Sources */,
 				2797B71F0EF91E2B00F91398 /* KTExportEngine.m in Sources */,
 				275666510F007B6200878A05 /* KTURLCredentialStorage.m in Sources */,
-				275666EE0F015E8400878A05 /* KTMobileMePublishingEngine.m in Sources */,
 				2756671E0F0167C700878A05 /* KTDocWindowController+Publishing.m in Sources */,
 				27BCCCA30F09609E00B06B35 /* KTRemotePublishingEngine.m in Sources */,
 				270B67CF0F10E66900F6E076 /* KTPageDetailsController.m in Sources */,
@@ -7862,7 +7855,6 @@
 				2705B1B113EC0514004C678D /* SVWebEditorUpdatesHTMLContext.m in Sources */,
 				278856A214113DE700280980 /* CK2SSHCredential.m in Sources */,
 				CE1D64751416B0C9009E0CE9 /* ICOFamily.m in Sources */,
-				273FA62E1420A7100051E616 /* SVWebDAVPublishingEngine.m in Sources */,
 				273FA6BF1420B2790051E616 /* CK2WebDAVConnection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
