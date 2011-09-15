@@ -705,35 +705,42 @@
     // <FONT> tags are no longer allowed, but leave this in in case we turn support back on again
     else if ([elementName isEqualToString:@"font"])
     {
-        if ([attributeName isEqualToString:@"face"] || [attributeName isEqualToString:@"size"] || [attributeName isEqualToString:@"color"]) return value;
+        if ([attributeName isEqualToString:@"face"] ||
+            [attributeName isEqualToString:@"size"] ||
+            [attributeName isEqualToString:@"color"])
+        {
+            return value;
+        }
     }
     
-    // Allow style on any element except <BR>.
-    // Used to allow class. #94455
-    if ([elementName isEqualToString:@"br"])
-    {
-        if ([attributeName isEqualToString:@"style"]) value = nil;
-    }
+    // Allow style and class on any element…
+    NSString *result = nil;
     
-    // Dissallow "in" & "Apple-style-span" classes as are unwanted
     if ([attributeName isEqualToString:@"class"])
     {
+        // Dissallow "in" class
         NSMutableArray *components = [[value componentsSeparatedByWhitespace] mutableCopy];
         [components removeObject:@"in"];
         [components removeObject:@"Apple-style-span"];
         
-        value = [components componentsJoinedByString:@" "];
+        result = [components componentsJoinedByString:@" "];
         [components release];
+        
+        // Strip empty style attributes
+        if ([result length] == 0) result = nil;
     }
-    
-    // Strip empty style attributes
-    if ([value length] == 0 &&
-        ([attributeName isEqualToString:@"style"] || [attributeName isEqualToString:@"class"]))
+    // …except <BR> which is only allowed class
+	// Used to allow class. #94455
+    else if ([attributeName isEqualToString:@"style"] && ![elementName isEqualToString:@"br"])
     {
-        value = nil;
+        // Strip empty style attributes
+        if ([value length]) result = value;
     }
     
-    return value;
+    
+    
+    
+    return result;
 }
 
 - (void)buildAttributesForDOMElement:(DOMElement *)element element:(NSString *)elementName
