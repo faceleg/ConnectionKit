@@ -918,12 +918,6 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
                                                                                ancestorNode:node];
     [result setRepresentedObject:self];
     
-    if ([[self placement] intValue] == SVGraphicPlacementInline) 
-    {
-        [result bind:NSWidthBinding toObject:self withKeyPath:@"width" options:nil];
-        [result setHorizontallyResizable:YES];
-    }
-    
     return result;
 }
 

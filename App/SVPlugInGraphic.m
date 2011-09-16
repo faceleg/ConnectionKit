@@ -567,12 +567,6 @@ static void *sPlugInMinWidthObservationContext = &sPlugInMinWidthObservationCont
                                                                              ancestorNode:node];
         [result setRepresentedObject:self];
         
-        if ([self textAttachment])
-        {
-            [result bind:NSWidthBinding toObject:self withKeyPath:@"width" options:nil];
-            [result setHorizontallyResizable:YES];
-        }
-        
         return result;
     }
     
