@@ -29,6 +29,11 @@
 
 #pragma mark DOM
 
+- (BOOL)elementIsPlaceholder:(DOMElement *)element;
+{
+    return (![element hasChildNodes] && ![[element tagName] isEqualToString:@"IMG"]);
+}
+
 - (void)setHTMLElement:(DOMHTMLElement *)element;
 {
     [super setHTMLElement:element];
@@ -43,7 +48,7 @@
         DOMNodeList *contents = [element getElementsByClassName:@"figure-content"];
         if ([contents length]) element = (DOMHTMLElement *)[contents item:0];
         
-        if (![element ks_isVisible])
+        if ([self elementIsPlaceholder:element])
         {
             // Replace with placeholder
             NSString *parsedPlaceholderHTML = [[self representedObject] parsedPlaceholderHTMLFromContext:self.HTMLContext];

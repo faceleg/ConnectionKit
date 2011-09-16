@@ -16,24 +16,6 @@
 
 @implementation SVPlugInDOMController
 
-#pragma mark DOM
-
-- (void)loadHTMLElementFromDocument:(DOMDocument *)document;
-{
-    [super loadHTMLElementFromDocument:document];
-    
-    if ([self isHTMLElementLoaded])
-    {
-        DOMElement *element = [self HTMLElement];
-        if (![element hasChildNodes] && ![[element tagName] isEqualToString:@"IMG"])
-        {
-            // Replace with placeholder
-            NSString *parsedPlaceholderHTML = [[self representedObject] parsedPlaceholderHTMLFromContext:self.HTMLContext];
-            [(DOMHTMLElement *)[self HTMLElement] setInnerHTML:parsedPlaceholderHTML];
-        }
-    }
-}
-
 #pragma mark Selection
 
 - (BOOL)allowsDirectAccessToWebViewWhenSelected;
