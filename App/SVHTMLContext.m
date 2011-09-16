@@ -671,6 +671,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     [self pushAttributes:attributes];
     
     // During editing, placeholders want to recognise this specific content
+    [self pushClassName:@"graphic"];
     if ([self isForEditing]) [self pushClassName:@"svx-size-bound"];
     
     [self buildAttributesForResizableElement:elementName
