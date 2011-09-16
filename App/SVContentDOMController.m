@@ -97,7 +97,9 @@
                 [result setHorizontallyResizable:[self isHorizontallyResizable]];
                 [result setVerticallyResizable:[self isVerticallyResizable]];
                 [result bind:NSWidthBinding toObject:component withKeyPath:@"width" options:nil];
-                [result bind:@"height" toObject:component withKeyPath:@"height" options:nil];
+                
+                // HACK to stop inline graphics being resizable. #144220
+                if ([self isVerticallyResizable]) [result bind:@"height" toObject:component withKeyPath:@"height" options:nil];
                 
                 if ([component respondsToSelector:@selector(aspectRatio)])
                 {

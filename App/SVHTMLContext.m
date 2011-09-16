@@ -636,6 +636,9 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     NSNumber *width  = (w+sizeDelta.width <= 0) ? nil : [NSNumber numberWithInt:w+sizeDelta.width];
 	NSNumber *height = (h+sizeDelta.height <= 0) ? nil : [NSNumber numberWithInt:h+sizeDelta.height];
     
+    // HACK so that heights of inline graphics don't show up
+    if (options & SVResizingDisableVertically) height = nil;
+    
     // Only some elements support directly sizing. Others have to use CSS
     if ([elementName isEqualToString:@"img"] ||
         [elementName isEqualToString:@"video"] ||
