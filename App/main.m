@@ -51,7 +51,7 @@ static inline SecCertificateRef AppleRootCA( void )
     if ( err != noErr )
     {
         CFStringRef errStr = SecCopyErrorMessageString( err, NULL );
-        NSLog( @"Error: %ld (%@)", err, errStr );
+        LOG((@"Error: %ld (%@)", err, errStr));
         CFRelease( errStr );
         return NULL;
     }
@@ -63,7 +63,7 @@ static inline SecCertificateRef AppleRootCA( void )
     if ( err != noErr )
     {
         CFStringRef errStr = SecCopyErrorMessageString( err, NULL );
-        NSLog( @"Error: %ld (%@)", err, errStr );
+        LOG((@"Error: %ld (%@)", err, errStr));
         CFRelease( errStr );
         if ( cfReleaseKeychain )
             CFRelease( roots );
@@ -75,7 +75,7 @@ static inline SecCertificateRef AppleRootCA( void )
     if ( err != noErr )
     {
         CFStringRef errStr = SecCopyErrorMessageString( err, NULL );
-        NSLog( @"Error: %ld (%@)", err, errStr );
+        LOG(( @"Error: %ld (%@)", err, errStr));
         CFRelease( errStr );
         if ( cfReleaseKeychain )
             CFRelease( roots );
@@ -117,7 +117,7 @@ static inline int verifySignature( int argc, startup_call_t *theCall, id * recei
     
     if ( fp == NULL )
     {
-        NSLog( @"No receipt found" );
+        LOG((@"No receipt found"));
         *theCall = (startup_call_t)&exit;
         return ( 173 );
     }
@@ -134,7 +134,7 @@ static inline int verifySignature( int argc, startup_call_t *theCall, id * recei
     SecCertificateRef cert = AppleRootCA();
     if ( cert == NULL )
     {
-        NSLog( @"Failed to load Apple Root CA" );
+        LOG((@"Failed to load Apple Root CA"));
         *theCall = (startup_call_t)&exit;
         return ( 173 );
     }
