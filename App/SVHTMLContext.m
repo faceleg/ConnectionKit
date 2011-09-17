@@ -1847,6 +1847,13 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     
 }
 
+#pragma mark Debugging
+
+- (NSString *)description;
+{
+    return [[super description] stringByAppendingFormat:@"\n%@", [self outputStringWriter]];
+}
+
 @end
 
 
