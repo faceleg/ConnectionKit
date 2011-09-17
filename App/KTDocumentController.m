@@ -133,6 +133,11 @@
     if ( !gHasReceipt || !gConfirmedBundleIdentifier )
     {
         exit(173);
+        if (outError)
+		{
+			*outError = nil;	// otherwise we crash
+		}
+		return nil;
     }
 #endif
 

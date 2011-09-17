@@ -615,7 +615,21 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 #ifdef MAC_APP_STORE
     if ( !gPayloadExamined || !gSignatureVerified )
     {
+        gRegistrationString = nil;
+        gLicenseIsBlacklisted = 1;
         exit(173);
+        
+        NSError *registrationError = [NSError errorWithDomain:NSCocoaErrorDomain
+														 code:134000 // invalid type error, for now
+													 userInfo:[NSDictionary dictionaryWithObject:@"KTErrorDomain"
+																						  forKey:@"KTErrorReason"]];
+		if ( nil != outError )
+		{
+			// we'll pass registrationError back to the document for presentation
+			*outError = registrationError;
+		}
+
+        return NO;
     }
 #endif
 

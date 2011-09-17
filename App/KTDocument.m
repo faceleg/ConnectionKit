@@ -211,7 +211,11 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 #ifdef MAC_APP_STORE
     if ( !gSignatureVerified || !gVerifiedProduct )
     {
+        gRegistrationString = nil;
+        gLicenseIsBlacklisted = 1;
+        [self release];
         exit(173);
+        return nil;
     }
 #endif
     
