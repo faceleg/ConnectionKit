@@ -74,6 +74,17 @@
     }
 }
 
+- (void)loadHTMLElement;
+{
+    [super loadHTMLElement];
+    
+    // In the case of #143323, graphics inside a <NOSCRIPT> tag can't be loaded, so fallback to generating a placeholder
+    if (![self isHTMLElementLoaded])
+    {
+        [self loadPlaceholderDOMElement];
+    }
+}
+
 - (void)itemDidMoveToWebEditor;
 {
     [super itemDidMoveToWebEditor];
