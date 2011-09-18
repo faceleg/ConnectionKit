@@ -226,9 +226,15 @@
                 while (parent != existingElement)
                 {
                     // Move element across to a clone of its parent
+                    WebView *webView = [[[element ownerDocument] webFrame] webView];
+                    DOMRange *selection = [webView selectedDOMRange];
+                    NSSelectionAffinity affinity = [webView selectionAffinity];
+                    
                     DOMNode *clone = [parent cloneNode:NO];
                     [[parent parentNode] insertBefore:clone refChild:[parent nextSibling]];
                     [clone appendChild:element];
+                    
+                    [webView setSelectedDOMRange:selection affinity:affinity];
                     
                     element = (DOMElement *)clone;
                     parent = [element parentNode];
