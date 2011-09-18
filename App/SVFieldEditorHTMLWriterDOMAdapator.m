@@ -229,7 +229,9 @@
                     DOMNode *clone = [parent cloneNode:NO];
                     [[parent parentNode] insertBefore:clone refChild:[parent nextSibling]];
                     [clone appendChild:element];
-                    parent = [parent parentNode];
+                    
+                    element = (DOMElement *)clone;
+                    parent = [element parentNode];
                 }
                 
                 
