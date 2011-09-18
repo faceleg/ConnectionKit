@@ -652,17 +652,11 @@
 
 - (BOOL)validateElement:(NSString *)tagName;
 {
-    BOOL result = [[self class] validateElement:tagName];
+    if (![[self class] validateElement:tagName]) return NO;
     
-    if (![self allowsLinks] && [tagName isEqualToString:@"A"]) result = NO;
+    if (![self allowsLinks] && [tagName isEqualToString:@"A"]) return NO;
     
-    // List items are permitted inside of a list. We don't actually allow lists, but this is handy for subclasses that do implement lists
-    if (!result && [tagName isEqualToString:@"LI"])
-    {
-        if ([(KSHTMLWriter *)[self XMLWriter] topElementIsList]) result = YES;
-    }
-    
-    return result;
+    return [[self XMLWriter] validateElement:[tagName lowercaseString]];
 }
 
 + (BOOL)validateElement:(NSString *)tagName;    // can this sort of element ever be valid?
