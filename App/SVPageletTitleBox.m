@@ -16,6 +16,7 @@
 @implementation SVPageletTitleBox
 
 + (NSString *)alignmentKeyPath; { return @"pagelet.titleAlignment"; }
++ (NSString *)textBaseWritingDirectionKeyPath; { return @"pagelet.titleWritingDirection"; }
 
 @dynamic pagelet;
 

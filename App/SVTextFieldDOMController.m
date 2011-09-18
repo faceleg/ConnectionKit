@@ -40,6 +40,7 @@
     // Bindings don't automatically unbind themselves; have to do it ourself
     [self unbind:NSValueBinding];
     [self unbind:NSAlignmentBinding];
+    [self unbind:@"textBaseWritingDirection"];
     
     [_placeholder release];
     [_uneditedValue release];
@@ -177,7 +178,7 @@
     }
 }
 
-#pragma mark Alignment
+#pragma mark Alignment & Writing Direction
 
 @synthesize alignment = _alignment;
 - (void)setAlignment:(NSTextAlignment)alignment;
@@ -209,10 +210,47 @@
     }
 }
 
-- (IBAction)alignCenter:(id)sender; { [[self representedObject] setAlignment:NSCenterTextAlignment]; }
-- (IBAction)alignJustified:(id)sender; { [[self representedObject] setAlignment:NSJustifiedTextAlignment]; }
-- (IBAction)alignLeft:(id)sender; { [[self representedObject] setAlignment:NSLeftTextAlignment]; }
-- (IBAction)alignRight:(id)sender; { [[self representedObject] setAlignment:NSRightTextAlignment]; }
+- (void)alignCenter:(id)sender; { [[self representedObject] setAlignment:NSCenterTextAlignment]; }
+- (void)alignJustified:(id)sender; { [[self representedObject] setAlignment:NSJustifiedTextAlignment]; }
+- (void)alignLeft:(id)sender; { [[self representedObject] setAlignment:NSLeftTextAlignment]; }
+- (void)alignRight:(id)sender; { [[self representedObject] setAlignment:NSRightTextAlignment]; }
+
+@synthesize textBaseWritingDirection = _textBaseWritingDirection;
+- (void)setTextBaseWritingDirection:(NSWritingDirection)direction;
+{
+    _textBaseWritingDirection = direction;
+    
+    if ([self isHTMLElementLoaded])
+    {
+        DOMCSSStyleDeclaration *style = [[self textHTMLElement] style];
+        
+        switch (direction)
+        {
+            case NSWritingDirectionLeftToRight:
+                [style setDirection:@"ltr"];
+                break;
+            case NSWritingDirectionRightToLeft:
+                [style setDirection:@"rtl"];
+                break;
+            default:
+                [style setDirection:nil];
+                break;
+        }
+    }
+}
+
+- (void)makeBaseWritingDirectionNatural:(id)sender;
+{
+    [[self representedObject] setTextBaseWritingDirection:NSWritingDirectionNatural];
+}
+- (void)makeBaseWritingDirectionLeftToRight:(id)sender;
+{
+    [[self representedObject] setTextBaseWritingDirection:NSWritingDirectionLeftToRight];
+}
+- (void)makeBaseWritingDirectionRightToLeft:(id)sender;
+{
+    [[self representedObject] setTextBaseWritingDirection:NSWritingDirectionRightToLeft];
+}
 
 - (BOOL)validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)anItem;
 {
@@ -227,7 +265,12 @@
     {
         result = [[self representedObject] respondsToSelector:@selector(setAlignment:)];
     }
-    
+    else if (action == @selector(makeBaseWritingDirectionNatural:) ||
+             action == @selector(makeBaseWritingDirectionLeftToRight:) ||
+             action == @selector(makeBaseWritingDirectionRightToLeft:))
+    {
+        result = [[self representedObject] respondsToSelector:@selector(setTextBaseWritingDirection:)];
+    }
     return result;
 }
 
@@ -415,12 +458,18 @@
         {
             [self bind:NSAlignmentBinding toObject:object withKeyPath:@"alignment" options:nil];
         }
+        
+        if (![self infoForBinding:@"textBaseWritingDirection"])
+        {
+            [self bind:@"textBaseWritingDirection" toObject:object withKeyPath:@"textBaseWritingDirection" options:nil];
+        }
     }
 }
 
 - (void)stopObservingDependencies;
 {
     [self unbind:NSAlignmentBinding];
+    [self unbind:@"textBaseWritingDirection"];
     [self unbind:NSValueBinding];
     
     [super stopObservingDependencies];
@@ -461,6 +510,7 @@
     [result setPlaceholderHTMLString:NSLocalizedString(@"Title", "placeholder")];   // do after binding, avoids accidental overwrite
     
     [result bind:NSAlignmentBinding toObject:self withKeyPath:@"alignment" options:nil];
+    [result bind:@"textBaseWritingDirection" toObject:self withKeyPath:@"textBaseWritingDirection" options:nil];
     
     
     return result;

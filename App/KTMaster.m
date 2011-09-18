@@ -716,7 +716,9 @@
         || [key isEqualToString:@"fbNumberOfPosts"] 
         || [key isEqualToString:@"fbColorScheme"]
         || [key isEqualToString:@"siteTitleAlignment"]
-        || [key isEqualToString:@"taglineAlignment"])
+        || [key isEqualToString:@"siteTitleWritingDirection"]
+        || [key isEqualToString:@"taglineAlignment"]
+        || [key isEqualToString:@"taglineWritingDirection"])
     {
         return YES;
     }

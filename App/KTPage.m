@@ -216,7 +216,7 @@
 
 - (BOOL)usesExtensiblePropertiesForUndefinedKey:(NSString *)key;
 {
-    return ([key isEqualToString:@"titleAlignment"] ?
+    return ([key isEqualToString:@"titleAlignment"] || [key isEqualToString:@"titleWritingDirection"] ?
             YES :
             [super usesExtensiblePropertiesForUndefinedKey:key]);
 }
