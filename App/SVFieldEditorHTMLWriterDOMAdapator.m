@@ -661,6 +661,11 @@
     
     if (![self allowsLinks] && [tagName isEqualToString:@"A"]) return NO;
     
+    if ([tagName isEqualToString:@"LI"] && ![(KSHTMLWriter *)[self XMLWriter] topElementIsList])
+    {
+        return NO;
+    }
+    
     return [[self XMLWriter] validateElement:[tagName lowercaseString]];
 }
 
