@@ -224,38 +224,7 @@
         
         if (existingElement)
         {
-            // Is it really a conflict?
-            if ([element tryToPopulateStyleWithValuesInheritedFromElement:existingElement])
-            {
-                // Shuffle up following nodes
-                DOMNode *parent = [element parentNode];
-                [parent flattenNodesAfterChild:element];
-                
-                
-                // Try to flatten the conflict
-                // It make take several moves up the tree till we find the conflicting element
-                while (parent != existingElement)
-                {
-                    // Move element across to a clone of its parent
-                    WebView *webView = [[[element ownerDocument] webFrame] webView];
-                    DOMRange *selection = [webView selectedDOMRange];
-                    NSSelectionAffinity affinity = [webView selectionAffinity];
-                    
-                    DOMNode *clone = [parent cloneNode:NO];
-                    [[parent parentNode] insertBefore:clone refChild:[parent nextSibling]];
-                    [clone appendChild:element];
-                    
-                    [webView setSelectedDOMRange:selection affinity:affinity];
-                    
-                    element = (DOMElement *)clone;
-                    parent = [element parentNode];
-                }
-                
-                
-                // Pretend we wrote the element and are now finished. Recursion will take us back to the element in its new location to write it for real
-                [self moveDOMNodeToAfterParent:element includeFollowingSiblings:NO];
-                result = nil;
-            }
+            result = [self moveDOMElement:element toStopConflictWithAncestor:existingElement];
         }
     }
     
@@ -338,6 +307,46 @@
 
 #pragma mark Cleanup
 
+- (DOMNode *)moveDOMElement:(DOMElement *)element toStopConflictWithAncestor:(DOMElement *)existingElement
+{
+    // Is it really a conflict?
+    DOMNode *result = element;
+    
+    if ([element tryToPopulateStyleWithValuesInheritedFromElement:existingElement])
+    {
+        // Shuffle up following nodes
+        DOMNode *parent = [element parentNode];
+        [parent flattenNodesAfterChild:element];
+        
+        
+        // Try to flatten the conflict
+        // It make take several moves up the tree till we find the conflicting element
+        while (parent != existingElement)
+        {
+            // Move element across to a clone of its parent
+            WebView *webView = [[[element ownerDocument] webFrame] webView];
+            DOMRange *selection = [webView selectedDOMRange];
+            NSSelectionAffinity affinity = [webView selectionAffinity];
+            
+            DOMNode *clone = [parent cloneNode:NO];
+            [[parent parentNode] insertBefore:clone refChild:[parent nextSibling]];
+            [clone appendChild:element];
+            
+            [webView setSelectedDOMRange:selection affinity:affinity];
+            
+            element = (DOMElement *)clone;
+            parent = [element parentNode];
+        }
+        
+        
+        // Pretend we wrote the element and are now finished. Recursion will take us back to the element in its new location to write it for real
+        [self moveDOMNodeToAfterParent:element includeFollowingSiblings:NO];
+        result = nil;
+    }
+    
+    return result;
+}
+
 - (DOMNode *)handleInvalidDOMElement:(DOMElement *)element;
 {
     DOMNode *result;    // not setting the result is a programmer error
@@ -381,21 +390,33 @@
     }
     else
     {
-        // Everything else gets removed, or replaced with a <span> with appropriate styling
-        if ([[element style] length] > 0)
+        // Generally, can't allow nested elements.
+        // e.g. <span><span>foo</span> bar</span>   is wrong and should be simplified.
+        // An exception is if outer element has font: property, and inner element overrides that using longhand. e.g. font-family
+        // Under those circumstances, WebKit doesn't give us enough API to make the merge, so keep both elements.
+        // #100362
+        DOMElement *existingElement = [self openDOMElementConflictingWithDOMElement:element
+                                                                            tagName:tagName];
+        
+        if (existingElement)
         {
-            DOMElement *replacement = [self replaceDOMElement:element withElementWithTagName:@"SPAN"];
-            [replacement tryToPopulateStyleWithValuesInheritedFromElement:element];
-            
-            result = replacement;
+            result = [self moveDOMElement:element toStopConflictWithAncestor:existingElement];
         }
         else
         {
-            result = [self replaceDOMElementWithChildNodes:element];
+            // Everything else gets removed, or replaced with a <span> with appropriate styling
+            if ([[element style] length] > 0)
+            {
+                DOMElement *replacement = [self replaceDOMElement:element withElementWithTagName:@"SPAN"];
+                [replacement tryToPopulateStyleWithValuesInheritedFromElement:element];
+                
+                result = replacement;
+            }
+            else
+            {
+                result = [self replaceDOMElementWithChildNodes:element];
+            }
         }
-        
-        
-        
     }
     
     return [result nodeByStrippingNonParagraphNodes:self];
