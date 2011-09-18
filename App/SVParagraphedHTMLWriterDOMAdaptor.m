@@ -257,6 +257,7 @@
                    [tagName isEqualToString:@"A"] ||
                    [tagName isEqualToString:@"UL"] ||
                    [tagName isEqualToString:@"OL"] ||
+                   [tagName isEqualToString:@"LI"] ||
                    [tagName isEqualToString:@"H3"] ||
                    [tagName isEqualToString:@"H4"] ||
                    [tagName isEqualToString:@"H5"] ||
