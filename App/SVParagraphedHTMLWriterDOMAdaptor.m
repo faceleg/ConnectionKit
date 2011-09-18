@@ -194,6 +194,21 @@
         }
     }
     
+    
+    // Roll nested lists into an existing list item if possible
+    if ([[[self XMLWriter] topElement] isEqualToString:@"li"])
+    {
+        DOMElement *nextElement = [element nextElementSibling];
+        NSString *nextTag = [nextElement tagName];
+        
+        if ([nextTag isEqualToString:@"UL"] || [nextTag isEqualToString:@"OL"])
+        {
+            [element appendChild:nextElement];
+            [self writeDOMElement:nextElement];
+        }
+    }
+    
+    
     return [super endElementWithDOMElement:element];
 }
 
