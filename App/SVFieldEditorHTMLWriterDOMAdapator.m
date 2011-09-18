@@ -121,10 +121,16 @@
 {
     // Nested lists are fine though
     if ([tagName isEqualToString:@"OL"] ||
-        [tagName isEqualToString:@"UL"] ||
-        [tagName isEqualToString:@"LI"])
+        [tagName isEqualToString:@"UL"])
     {
         return nil;
+    }
+    
+    // And nested list items are only a problem if direct
+    if ([tagName isEqualToString:@"LI"])
+    {
+        DOMElement *parent = (DOMElement *)[element parentNode];
+        return ([[parent tagName] isEqualToString:@"LI"] ? parent : nil);
     }
     
     
