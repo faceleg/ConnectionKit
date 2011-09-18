@@ -836,6 +836,10 @@
     OBPRECONDITION(aChild);
     
     
+    // No need if there are no nodes to flatten
+    if (![aChild nextSibling]) return;
+    
+    
     // Make a copy of ourself to flatten into
     DOMNode *clone = [self cloneNode:NO];
     [[self parentNode] insertBefore:clone refChild:[self nextSibling]];
