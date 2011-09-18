@@ -316,7 +316,16 @@
     {
         // Shuffle up following nodes
         DOMNode *parent = [element parentNode];
-        [parent flattenNodesAfterChild:element];
+        
+        if ([[existingElement tagName] isEqualToString:@"LI"])
+        {
+            DOMNode *next = [element nextSibling];
+            if (next) [self moveDOMNodeToAfterParent:next includeFollowingSiblings:YES];
+        }
+        else
+        {
+            [parent flattenNodesAfterChild:element];
+        }
         
         
         // Try to flatten the conflict
