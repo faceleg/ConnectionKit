@@ -119,6 +119,10 @@
 - (DOMElement *)openDOMElementConflictingWithDOMElement:(DOMElement *)element
                                                 tagName:(NSString *)tagName;
 {
+    // Nested lists are fine though
+    if ([tagName isEqualToString:@"OL"] || [tagName isEqualToString:@"UL"]) return nil;
+    
+    
     NSArray *openElements = [[self XMLWriter] openElements];
     
     for (NSString *anElement in [openElements reverseObjectEnumerator])
@@ -201,45 +205,42 @@
         
         // Generally, can't allow nested elements.
         // e.g. <span><span>foo</span> bar</span>   is wrong and should be simplified.
-        // Nested lists are fine though
-        if (![tagName isEqualToString:@"OL"] && ![tagName isEqualToString:@"UL"])
+        // An exception is if outer element has font: property, and inner element overrides that using longhand. e.g. font-family
+        // Under those circumstances, WebKit doesn't give us enough API to make the merge, so keep both elements.
+        // #100362
+        DOMElement *existingElement = [self openDOMElementConflictingWithDOMElement:element
+                                                                            tagName:tagName];
+        
+        if (existingElement)
         {
-            // The other exception is if outer element has font: property, and inner element overrides that using longhand. e.g. font-family
-            // Under those circumstances, WebKit doesn't give us enough API to make the merge, so keep both elements.
-            // #100362
-            DOMElement *existingElement = [self openDOMElementConflictingWithDOMElement:element
-                                                                                tagName:tagName];
-            if (existingElement)
+            // Is it really a conflict?
+            if ([element tryToPopulateStyleWithValuesInheritedFromElement:existingElement])
             {
-                // Is it really a conflict?
-                if ([element tryToPopulateStyleWithValuesInheritedFromElement:existingElement])
+                // Shuffle up following nodes
+                DOMNode *parent = [element parentNode];
+                [parent flattenNodesAfterChild:element];
+                
+                
+                // Try to flatten the conflict
+                // It make take several moves up the tree till we find the conflicting element
+                while (parent != existingElement)
                 {
-                    // Shuffle up following nodes
-                    DOMNode *parent = [element parentNode];
-                    [parent flattenNodesAfterChild:element];
-                    
-                    
-                    // Try to flatten the conflict
-                    // It make take several moves up the tree till we find the conflicting element
-                    while (parent != existingElement)
-                    {
-                        // Move element across to a clone of its parent
-                        DOMNode *clone = [parent cloneNode:NO];
-                        [[parent parentNode] insertBefore:clone refChild:[parent nextSibling]];
-                        [clone appendChild:element];
-                        parent = [parent parentNode];
-                    }
-                    
-                    
-                    // Pretend we wrote the element and are now finished. Recursion will take us back to the element in its new location to write it for real
-                    [self moveDOMNodeToAfterParent:element includeFollowingSiblings:NO];
-                    result = nil;
+                    // Move element across to a clone of its parent
+                    DOMNode *clone = [parent cloneNode:NO];
+                    [[parent parentNode] insertBefore:clone refChild:[parent nextSibling]];
+                    [clone appendChild:element];
+                    parent = [parent parentNode];
                 }
+                
+                
+                // Pretend we wrote the element and are now finished. Recursion will take us back to the element in its new location to write it for real
+                [self moveDOMNodeToAfterParent:element includeFollowingSiblings:NO];
+                result = nil;
             }
         }
     }
-        
-        
+    
+    
     return result;
 }
 
