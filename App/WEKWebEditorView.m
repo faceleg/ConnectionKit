@@ -2186,9 +2186,6 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
             if (action == @selector(indent:) || action == @selector(outdent:))
             {
                 // Seek out the list containing the selection
-                static NSSet *listTagNames;
-                if (!listTagNames) listTagNames = [[NSSet alloc] initWithObjects:@"UL", @"OL", nil];
-                
                 if (action == @selector(indent:))
                 {
                     NSNumber *shallow = [_editingController deepestListIndentLevel];
