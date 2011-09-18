@@ -105,6 +105,17 @@
     }
     
     
+    // Lists which get encapsulated in their own list element
+    else if ([tagName isEqualToString:@"UL"] || [tagName isEqualToString:@"OL"])
+    {
+        DOMElement *listItem = [[element ownerDocument] createElement:@"LI"];
+        [[element parentNode] insertBefore:listItem refChild:element];
+        [listItem appendChild:element];
+        
+        return listItem;
+    }
+    
+    
     // Non-top-level block elements should be converted into paragraphs higher up the tree
     else
     {
@@ -224,11 +235,7 @@
         result = YES;
         if ([[self XMLWriter] openElementsCount] > 0)
         {
-            NSString *topElement = [[self XMLWriter] topElement];
-            if (![topElement isEqualToString:@"ul"] && ![topElement isEqualToString:@"ol"])
-            {
-                result = NO;
-            }
+            result = [super validateElement:tagName];
         }
     }
     
