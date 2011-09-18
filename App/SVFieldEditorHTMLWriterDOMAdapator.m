@@ -120,7 +120,12 @@
                                                 tagName:(NSString *)tagName;
 {
     // Nested lists are fine though
-    if ([tagName isEqualToString:@"OL"] || [tagName isEqualToString:@"UL"]) return nil;
+    if ([tagName isEqualToString:@"OL"] ||
+        [tagName isEqualToString:@"UL"] ||
+        [tagName isEqualToString:@"LI"])
+    {
+        return nil;
+    }
     
     
     NSArray *openElements = [[self XMLWriter] openElements];
