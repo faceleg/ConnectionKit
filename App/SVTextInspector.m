@@ -103,6 +103,7 @@
     SVValidatedUserInterfaceItem *item = [[SVValidatedUserInterfaceItem alloc] init];
     
     [item setAction:@selector(outdent:)];
+    controller = [NSApp targetForAction:@selector(outdent:)];
     enable = [controller validateUserInterfaceItem:item];
     [oIndentLevelSegmentedControl setEnabled:enable forSegment:0];
     
