@@ -333,22 +333,8 @@ static inline int verifyKareliaProduct( int argc, startup_call_t *theCall, id * 
     
     // SHA1 of Karelia's Installer certficiate
     // 80 D0 82 A9 69 D0 14 3E 93 AC 9D AB 66 5A 9F 5D CF 17 33 BD
-    
-    
-    char thea = 'a';
-	char theSpace = ' ';
-	char thec = 'c';
-	char thel = 'l';
-	char theh = 'h';
-	char ther = 'r';
-	char thep = 'p';
-	char theo = 'o';
-	char then = 'n';
-	char thee = 'e';
-
-    NSString *anchorString = [NSString stringWithFormat:@"%5$c%9$c%1$c%8$c%6$c%10$c%3$c%5$c%2$c%2$c%7$c%4$c",
-							  thec, thep, theSpace, thee, thea, theo, thel, theh, then, ther];
-	anchorString = [anchorString stringByAppendingString:@" generic"];
+        
+    NSString *anchorString = @"certificate root = H\"ED18DC1E62AA80F85748871080DDAD01BE3945D8\"";
 
     if ( SecRequirementCreateWithString((CFStringRef)anchorString, kSecCSDefaultFlags, &requirement) != noErr )
     {
