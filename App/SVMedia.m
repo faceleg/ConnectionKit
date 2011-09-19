@@ -299,10 +299,15 @@
     return self;
 }
 
+- (void)encodeWebResourceWithCoder:(NSCoder *)aCoder;
+{
+    [aCoder encodeObject:[self webResource] forKey:@"webResource"];
+}
+
 - (void)encodeWithCoder:(NSCoder *)aCoder;
 {
     [aCoder encodeObject:[self fileURL] forKey:@"fileURL"];
-    [aCoder encodeObject:[self webResource] forKey:@"webResource"];
+    [[self ks_proxyOnThread:nil] encodeWebResourceWithCoder:aCoder];
     [aCoder encodeObject:[self preferredFilename] forKey:@"preferredFilename"];
 }
 
