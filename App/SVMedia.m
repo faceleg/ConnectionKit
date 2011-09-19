@@ -58,12 +58,10 @@
 - (id)initWithWebResource:(WebResource *)resource;
 {
     OBPRECONDITION(resource);
-    [self init];
-    
-    _webResource = [resource copy];
-    _data = [[resource data] copy]; // so can access background threads
-    _URL = [[resource URL] copy];
-    [self setPreferredFilename:[_URL ks_lastPathComponent]];
+    if (self = [self initWithData:[resource data] URL:[resource URL]])
+    {
+        _webResource = [resource copy];
+    }
     
     return self;
 }
