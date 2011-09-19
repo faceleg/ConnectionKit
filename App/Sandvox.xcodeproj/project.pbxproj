@@ -68,7 +68,7 @@
 				3C9B66E80BFA95DD007A4871 /* Script - Add Spotlight Importer */,
 				CE9D3ED20DAAB8450025717A /* Script - Remove Unsupported Languages */,
 				CEFD3EFC12E9FA0100D3A6CD /* Script - Internationalize XIBs */,
-				3C888F741427D1F000CD45A1 /* Code Sign png2ico */,
+				3C888F741427D1F000CD45A1 /* Script - Code Sign png2ico */,
 				3CC092BA134BC490007E2390 /* Script - Code Sign .app */,
 			);
 			dependencies = (
@@ -7334,14 +7334,14 @@
 			shellScript = "#!/bin/bash\n\nexport APPNAME=\"Sandvox\"\n\n\"${SRCROOT}/../Code/Shared/tools/build_package\"\n\n### this script should NOT have 'Run script only when installing' checked\n";
 			showEnvVarsInLog = 0;
 		};
-		3C888F741427D1F000CD45A1 /* Code Sign png2ico */ = {
+		3C888F741427D1F000CD45A1 /* Script - Code Sign png2ico */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Code Sign png2ico";
+			name = "Script - Code Sign png2ico";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
