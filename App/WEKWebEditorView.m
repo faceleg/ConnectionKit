@@ -1880,6 +1880,21 @@ typedef enum {  // this copied from WebPreferences+Private.h
         result = ([[self selectedItems] count] >= 1 || [self selectedDOMRange]);
     }
     
+    else if (action == @selector(alignLeft:) ||
+             action == @selector(alignCenter:) ||
+             action == @selector(alignRight:) ||
+             action == @selector(alignJustified:))
+    {
+        id target = [[self firstResponderItem] ks_targetForAction:action];
+        if (!target || target == self) return NO;
+        
+        result = YES;
+        if ([target respondsToSelector:@selector(validateUserInterfaceItem:)])
+        {
+            result = [target validateUserInterfaceItem:anItem];
+        }
+    }
+    
     else if ([self respondsToSelector:action])
     {
         result = (_forwardedWebViewCommand == NULL);
