@@ -1,11 +1,11 @@
-CPPFLAGS=-W -Wall -O2 -finline-functions -arch i386 -arch ppc -mmacosx-version-min=10.4 -isysroot /Developer/SDKs/MacOSX10.4u.sdk -I/usr/local/include
+CPPFLAGS=-W -Wall -O2 -finline-functions -arch i386 -mmacosx-version-min=10.6 -I/usr/X11/include -L/usr/X11/lib
 #CPPFLAGS=-O0 -W -Wall
 DEBUG=-g
 
 all: png2ico
 
 png2ico: png2ico.cpp
-	g++ $(CPPFLAGS) $(DEBUG) -o $@ $< /usr/local/lib/libpng.a -lz -lm -lc
+	g++ $(CPPFLAGS) $(DEBUG) -o $@ $< -lpng -lz -lm
 
 doc/png2ico.txt: doc/png2ico.1
 	man $< |sed  -e $$'s/.\b\\(.\\)/\\1/g' -e 's/\(.*\)/\1'$$'\r/' >$@
@@ -18,5 +18,5 @@ release: clean png2ico doc/png2ico.txt
 	zip png2ico/png2ico-win-$${version}.zip png2ico/{LICENSE,VERSION,README,doc/png2ico.txt,png2ico.exe} 
 
 clean:
-	rm -f png2ico *~ doc/*~ *.bak png2ico-src-*.tar.gz png2ico-win-*.zip doc/png2ico.txt
+	rm -f png2ico *~ doc/*~ *.bak *.dSYM png2ico-src-*.tar.gz png2ico-win-*.zip doc/png2ico.txt
 
