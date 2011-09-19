@@ -424,9 +424,14 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         else
         {
             // Build a list of all media to copy into the document
-            NSString *requestName = (saveOperation == NSSaveAsOperation) ? @"MediaToCopyIntoDocument" : @"MediaAwaitingCopyIntoDocument";
+            NSString *requestName = @"MediaToCopyIntoDocument";
             NSFetchRequest *request = [[[self class] managedObjectModel] fetchRequestTemplateForName:requestName];
             NSArray *mediaToWriteIntoDocument = [context executeFetchRequest:request error:NULL];
+            
+            if (saveOperation != NSSaveAsOperation)
+            {
+                mediaToWriteIntoDocument = [mediaToWriteIntoDocument filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"filename == nil || mediaWasLocatedByAlias == YES"]];
+            }
             
             [self writeMediaRecords:mediaToWriteIntoDocument
                               toURL:inURL
@@ -862,7 +867,8 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     else
     {
         result = NO;
-        [self unreserveFilename:filename];
+        
+        if (![aMediaRecord filename]) [self unreserveFilename:filename];
     }
     
     
