@@ -17,7 +17,7 @@
 #import "ethernet.h"
 
 
-// MAS validation based on: https://github.com/AlanQuatermain/mac-app-store-validation-sample.git
+// MAS validation based on: https://github.com/AlanQuatermain/mac-app-store-validation-sample
 
 
 static inline SecCertificateRef AppleRootCA( void )
@@ -317,6 +317,7 @@ static inline int locateReceipt(int argc, startup_call_t *theCall, id * pathPtr)
 
 static inline int verifyKareliaProduct( int argc, startup_call_t *theCall, id * obj_arg )
 {
+    // create a SecStaticCode to check binary
     SecStaticCodeRef staticCode = NULL;
     if ( SecStaticCodeCreateWithPath((CFURLRef)[[NSBundle mainBundle] bundleURL], kSecCSDefaultFlags, &staticCode) != noErr )
     {
@@ -324,9 +325,39 @@ static inline int verifyKareliaProduct( int argc, startup_call_t *theCall, id * 
         return ( 173 );
     }
     
-    // the last parameter here could/should be a compiled requirement stating that the code
-    // must be signed by YOUR certificate and no-one else's.
-    if ( SecStaticCodeCheckValidity(staticCode, kSecCSCheckAllArchitectures, NULL) != noErr )
+    // create a SecRequirementRef specifying that the code must be signed by Karelia
+    SecRequirementRef requirement = NULL;
+    
+    // SHA1 of Karelia's Developer certificate
+    // ED 18 DC 1E 62 AA 80 F8 57 48 87 10 80 DD AD 01 BE 39 45 D8
+    
+    // SHA1 of Karelia's Installer certficiate
+    // 80 D0 82 A9 69 D0 14 3E 93 AC 9D AB 66 5A 9F 5D CF 17 33 BD
+    
+    
+    char thea = 'a';
+	char theSpace = ' ';
+	char thec = 'c';
+	char thel = 'l';
+	char theh = 'h';
+	char ther = 'r';
+	char thep = 'p';
+	char theo = 'o';
+	char then = 'n';
+	char thee = 'e';
+
+    NSString *anchorString = [NSString stringWithFormat:@"%5$c%9$c%1$c%8$c%6$c%10$c%3$c%5$c%2$c%2$c%7$c%4$c",
+							  thec, thep, theSpace, thee, thea, theo, thel, theh, then, ther];
+	anchorString = [anchorString stringByAppendingString:@" generic"];
+
+    if ( SecRequirementCreateWithString((CFStringRef)anchorString, kSecCSDefaultFlags, &requirement) != noErr )
+    {
+        *theCall = (startup_call_t)&exit;
+        return ( 173 );
+    }
+    
+    // check that staticCode and requirement agree
+    if ( SecStaticCodeCheckValidity(staticCode, kSecCSCheckAllArchitectures, requirement) != noErr )
     {
         *theCall = (startup_call_t)&exit;
         return ( 173 );
@@ -395,8 +426,10 @@ int main(int argc, char *argv[])
         // set conditions of successful MAS check
         gConfirmedBundleIdentifier = 1;
     }
-    
-    [pool drain];
+    else
+    {
+        pool = (NSAutoreleasePool *)1;
+    }    
     
     // if this is the exit() function, it shouldn't ever return
     int rc = theCall(argc, (const char **) argv);
@@ -404,6 +437,8 @@ int main(int argc, char *argv[])
         return ( argc );
     
     return ( rc );
+    
+    [pool drain];
     
 #else
     
