@@ -376,7 +376,14 @@ static void *sPlugInMinWidthObservationContext = &sPlugInMinWidthObservationCont
     NSMutableString *result = [NSMutableString string];
     SVHTMLContext *context2 = [[SVHTMLContext alloc] initWithOutputWriter:result inheritFromContext:context];
     
-    [[self plugIn] performSelector:@selector(writePlaceholderHTML:) withObject:context2];
+    @try
+    {
+        [[self plugIn] performSelector:@selector(writePlaceholderHTML:) withObject:context2];
+    }
+    @catch (NSException *exception)
+    {
+        NSLog(@"Plug-in threw exception: %@ %@", [exception name], [exception reason]);
+    }
     
     [context2 release];
     return result;
