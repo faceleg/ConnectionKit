@@ -340,6 +340,31 @@ const int kDesignThumbHeight = 65;
 	return [super identifier];	
 }
 
+- (NSString *)alternateIdentifier;		// May return nil if there isn't one.
+{
+	NSString *result = [[[self bundle] objectForInfoDictionaryKey:@"SVAlternateIdentifiers"] lastObject];
+	if (result)
+	{
+		if (!self.isFamilyPrototype)		// don't mess with identifier if it's the family prototype.
+		{
+			NSDictionary *variationDict = [self variationDict];
+			if (variationDict)
+			{
+				NSString *file = [variationDict objectForKey:@"file"];
+				if (file)
+				{
+					result = [NSString stringWithFormat:@"%@.%@", result, file];
+				}
+				else
+				{
+					NSLog(@"Cannot find 'file' key for variation %d in %@", _variationIndex, self);
+				}
+			}
+		}
+	}
+	return result;
+}
+
 - (NSString *)thumbnailPath
 {
 	NSString *thumbnailName = @"thumbnail";
@@ -687,7 +712,7 @@ const int kDesignThumbHeight = 65;
  */
 - (NSString *)remotePath
 {
-    NSString *identifier = [[[self bundle] objectForInfoDictionaryKey:@"SVAlternateIdentifiers"] lastObject];
+    NSString *identifier = [self alternateIdentifier];
     if (!identifier) identifier = [self identifier];
     
 	NSString *result = [[self class] remotePathForDesignWithIdentifier:identifier];
