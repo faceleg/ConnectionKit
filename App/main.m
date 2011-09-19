@@ -390,6 +390,7 @@ int main(int argc, char *argv[])
         // set conditions to bypass non-MAS checks
         gRegistrationString = @"1";
         gLicenseIsBlacklisted = 0;
+        gRegistrationWasChecked = -1;
         
         // set conditions of successful MAS check
         gConfirmedBundleIdentifier = 1;
