@@ -687,7 +687,10 @@ const int kDesignThumbHeight = 65;
  */
 - (NSString *)remotePath
 {
-	NSString *result = [[self class] remotePathForDesignWithIdentifier:[self identifier]];
+    NSString *identifier = [[[self bundle] objectForInfoDictionaryKey:@"SVAlternateIdentifiers"] lastObject];
+    if (!identifier) identifier = [self identifier];
+    
+	NSString *result = [[self class] remotePathForDesignWithIdentifier:identifier];
 	return result;
 }
 

@@ -202,6 +202,48 @@
 				<string>sandvox</string>
 			</dict>
 		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>com.apple.plugin</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>com.karelia.Sandvox.plugin</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<string>svxElement</string>
+				<key>com.apple.ostype</key>
+				<string>svEl</string>
+			</dict>
+			<key>UTTypeDescription</key>
+			<string>Sandvox plug-in</string>
+			<key>UTTypeReferenceURL</key>
+			<string>http://www.karelia.com/sandvox/help/z/Sandvox_Developers_Guide.html</string>
+			<key>UTTypeIconFile</key>
+			<string>pageplugin.icns</string>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>com.apple.plugin</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>com.karelia.Sandvox.design</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<string>svxDesign</string>
+				<key>com.apple.ostype</key>
+				<string>svDz</string>
+			</dict>
+			<key>UTTypeDescription</key>
+			<string>Sandvox design</string>
+			<key>UTTypeReferenceURL</key>
+			<string>http://www.karelia.com/sandvox/help/z/Sandvox_Designers_Guide.html</string>
+			<key>UTTypeIconFile</key>
+			<string>design.icns</string>
+		</dict>
 	</array>
 	<key>UTImportedTypeDeclarations</key>
 	<array>

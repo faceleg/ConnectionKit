@@ -64,6 +64,7 @@
 				3C9B66C60BFA940C007A4871 /* Script - Add PlugIns */,
 				3C9B66CC0BFA94BA007A4871 /* Script - Add Designs */,
 				3C96FBAB1411F79C00DDEDE2 /* Script - Copy CFBundleVersion to Designs */,
+				3C9B66E60BFA95B9007A4871 /* Script - Add png2ico */,
 				3C9B66E80BFA95DD007A4871 /* Script - Add Spotlight Importer */,
 				CE9D3ED20DAAB8450025717A /* Script - Remove Unsupported Languages */,
 				CEFD3EFC12E9FA0100D3A6CD /* Script - Internationalize XIBs */,
@@ -1068,7 +1069,6 @@
 		CE1BF76311D2B83500D875AE /* UKDockProgressIndicator_progress.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1BF76011D2B83500D875AE /* UKDockProgressIndicator_progress.png */; };
 		CE1CFB011194DF0100F47941 /* SVDesignsController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE1CFAFF1194DF0100F47941 /* SVDesignsController.h */; };
 		CE1CFB021194DF0100F47941 /* SVDesignsController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1CFB001194DF0100F47941 /* SVDesignsController.m */; };
-		CE1D64751416B0C9009E0CE9 /* ICOFamily.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1D646A1416AF42009E0CE9 /* ICOFamily.m */; };
 		CE1D6D4311B5BA840087AC1B /* NSMenuItem+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE1D6D4111B5BA840087AC1B /* NSMenuItem+Karelia.h */; };
 		CE1D6D4411B5BA840087AC1B /* NSMenuItem+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1D6D4211B5BA840087AC1B /* NSMenuItem+Karelia.m */; };
 		CE214BFA098060CD006DD2B1 /* Languages.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE214BF9098060CD006DD2B1 /* Languages.plist */; };
@@ -2352,6 +2352,7 @@
 		3C202DB307E00B9300DE4994 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
 		3C202E9307E00F5700DE4994 /* document2.toolbar */ = {isa = PBXFileReference; explicitFileType = text.plist.xml; fileEncoding = 4; path = document2.toolbar; sourceTree = "<group>"; };
 		3C202E9407E00F5700DE4994 /* KTToolbars.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTToolbars.h; sourceTree = "<group>"; };
+		3C202E9607E00F8000DE4994 /* png2ico */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = png2ico; path = ../Code/png2ico/png2ico; sourceTree = "<group>"; };
 		3C202EA307E0101100DE4994 /* Acknowledgments.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Acknowledgments.rtf; sourceTree = "<group>"; };
 		3C26D8010BC5B7DD00FF874D /* KTCodeInjectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTCodeInjectionController.h; sourceTree = "<group>"; };
 		3C26D8020BC5B7DD00FF874D /* KTCodeInjectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTCodeInjectionController.m; sourceTree = "<group>"; };
@@ -2859,8 +2860,6 @@
 		CE1BF76011D2B83500D875AE /* UKDockProgressIndicator_progress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UKDockProgressIndicator_progress.png; sourceTree = "<group>"; };
 		CE1CFAFF1194DF0100F47941 /* SVDesignsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDesignsController.h; sourceTree = "<group>"; };
 		CE1CFB001194DF0100F47941 /* SVDesignsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDesignsController.m; sourceTree = "<group>"; };
-		CE1D64691416AF42009E0CE9 /* ICOFamily.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICOFamily.h; path = ../Code/ICOFamily/ICOFamily.h; sourceTree = SOURCE_ROOT; };
-		CE1D646A1416AF42009E0CE9 /* ICOFamily.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICOFamily.m; path = ../Code/ICOFamily/ICOFamily.m; sourceTree = SOURCE_ROOT; };
 		CE1D6D4111B5BA840087AC1B /* NSMenuItem+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMenuItem+Karelia.h"; sourceTree = "<group>"; };
 		CE1D6D4211B5BA840087AC1B /* NSMenuItem+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMenuItem+Karelia.m"; sourceTree = "<group>"; };
 		CE214BF9098060CD006DD2B1 /* Languages.plist */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 4; path = Languages.plist; sourceTree = "<group>"; };
@@ -4606,6 +4605,7 @@
 			children = (
 				CE318CC3121ECDBD003894EC /* player_mp3_maxi.swf */,
 				CE5A77FD12135D770085C5EE /* player_flv_maxi.swf */,
+				3C202E9607E00F8000DE4994 /* png2ico */,
 			);
 			name = Executables;
 			sourceTree = "<group>";
@@ -5770,16 +5770,6 @@
 			path = WelcomeWindow;
 			sourceTree = "<group>";
 		};
-		CE1D64651416AF30009E0CE9 /* ICOFamily */ = {
-			isa = PBXGroup;
-			children = (
-				CE1D64691416AF42009E0CE9 /* ICOFamily.h */,
-				CE1D646A1416AF42009E0CE9 /* ICOFamily.m */,
-			);
-			name = ICOFamily;
-			path = Imported;
-			sourceTree = "<group>";
-		};
 		CE22E5B80D7C71A10055D8E9 /* Interfaces */ = {
 			isa = PBXGroup;
 			children = (
@@ -5950,7 +5940,6 @@
 				2778D38610AC5DE40027C323 /* QTKit */,
 				2778D34E10AC59440027C323 /* Core Image */,
 				CEC69B02108E6F91000E6E84 /* ThirdParty */,
-				CE1D64651416AF30009E0CE9 /* ICOFamily */,
 				CE01A7050EAFD63600BDF264 /* Imported */,
 				CE788A0F1329936D00CDF0B9 /* Shared.strings */,
 			);
@@ -7450,6 +7439,21 @@
 			shellScript = "\nPBXCP=${SRCROOT}/../Code/Shared/Tools/pbxcp\n\nDESIGNS_FOLDER_PATH=${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Designs\nmkdir -p \"${DESIGNS_FOLDER_PATH}\"\n\npushd ../../Designs\n\nfor i in *\ndo\n    if [ -e \"${i}/BUNDLED\" ];    # BUNDLE EVERYTHING IN THE APP\n    then\n        # put into application\n        echo \"BUNDLED DESIGN: PBXCp \\\"$i\\\" ${DESIGNS_FOLDER_PATH}\"\n\n        \"${PBXCP}\" \\\n            -exclude .localized -exclude Sources -exclude sources -exclude Testing_Files -exclude .DS_Store -exclude CVS -exclude .svn -exclude BUNDLED -exclude HIDDEN -exclude BONUS -exclude .psd -exclude sources -resolve-src-symlinks \\\n            \"${PWD}/${i}\" \"${DESIGNS_FOLDER_PATH}\"\n\n      # TODO: put correct SANDVOX_VERSION and CFBundleVersion into Info.plist for each copied design\n\n    else\n        echo \"--------------  Not including $i\"\n    fi\ndone\n\npopd\n";
 			showEnvVarsInLog = 0;
 		};
+		3C9B66E60BFA95B9007A4871 /* Script - Add png2ico */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Script - Add png2ico";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "\nPBXCP=${SRCROOT}/../Code/Shared/Tools/pbxcp\n\nEXECUTABLE=${PROJECT_DIR}/../Code/png2ico/png2ico\nEXECUTABLES_DIR=${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/MacOS\n\necho \"png2ico: PBXCp ${EXECUTABLE} ${EXECUTABLES_DIR}\"\n\n\"${PBXCP}\" \"${EXECUTABLE}\" \"${EXECUTABLES_DIR}\"\n\n";
+			showEnvVarsInLog = 0;
+		};
 		3C9B66E80BFA95DD007A4871 /* Script - Add Spotlight Importer */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -8001,7 +8005,6 @@
 				3C9A385313E139250010A469 /* xer_support.c in Sources */,
 				2705B1B113EC0514004C678D /* SVWebEditorUpdatesHTMLContext.m in Sources */,
 				278856A214113DE700280980 /* CK2SSHCredential.m in Sources */,
-				CE1D64751416B0C9009E0CE9 /* ICOFamily.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -658,9 +658,7 @@
                           value:(NSString *)attributeValue
                       ofElement:(NSString *)elementName;
 {
-    NSString *result = attributeValue;
-    
-	if ([elementName isEqualToString:@"a"])
+    if ([elementName isEqualToString:@"a"])
     {
         if ([attributeName isEqualToString:@"href"] ||
             [attributeName isEqualToString:@"target"] ||
@@ -672,21 +670,34 @@
             [attributeName isEqualToString:@"rel"] ||
             [attributeName isEqualToString:@"rev"])
         {
-            return result;
+            return attributeValue;
         }
     }
     // <FONT> tags are no longer allowed, but leave this in in case we turn support back on again
     else if ([elementName isEqualToString:@"font"])
     {
-        if ([attributeName isEqualToString:@"face"] || [attributeName isEqualToString:@"size"] || [attributeName isEqualToString:@"color"]) return result;
+        if ([attributeName isEqualToString:@"face"] ||
+            [attributeName isEqualToString:@"size"] ||
+            [attributeName isEqualToString:@"color"])
+        {
+            return attributeValue;
+        }
     }
     
-    // Allow style on any element except <BR>.
-    // Used to allow class. #94455
-    if ([elementName isEqualToString:@"br"])
+    // Allow style and class on any element…
+    NSString *result = nil;
+    
+    if ([attributeName isEqualToString:@"class"])
     {
-        if ([attributeName isEqualToString:@"style"]) result = nil;
+        result = attributeValue;
     }
+    // …except <BR> which is only allowed class
+	// Used to allow class. #94455
+    else if ([attributeName isEqualToString:@"style"] && ![elementName isEqualToString:@"br"])
+    {
+        result = attributeValue;
+    }
+    
     
     // Dissallow "in" class
     if ([attributeName isEqualToString:@"class"])

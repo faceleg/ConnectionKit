@@ -13,7 +13,6 @@
 #import "NSBitmapImageRep+Karelia.h"
 #import "NSString+Karelia.h"
 #import "Debug.h"
-#import "ICOFamily.h"
 
 @implementation NSImage ( KTApplication )
 
@@ -151,6 +150,8 @@
 - (NSData *)faviconRepresentation
 {
 	NSData *result = nil;
+	NSString *path16 = nil;
+	NSString *path32 = nil;
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	float faviconSharpenFactor = [defaults floatForKey:@"KTFaviconSharpeningFactor"];
 	
@@ -174,22 +175,66 @@
 		// Don't sharpen -- it may already be sharpened or optimized
 	}
 	
-	ICOFamily *myFamily = [ICOFamily family]; // Returns an autoreleased instance
-
 	NSBitmapImageRep *bitmap16	= [scaled16 bitmap];
-	if (nil != bitmap16)
+	NSData *pngData16			= [bitmap16 representationUsingType:NSPNGFileType properties:nil];
+	if (nil != pngData16)
 	{
 		// Must have some 16x16 data in order to do anything!
-		[myFamily setBitmapImageRep:bitmap16 forElement:kICOFamily16Element];
+		
+		path16 = [NSTemporaryDirectory() stringByAppendingPathComponent:@"source16.png"];
+		[pngData16 writeToFile:path16 atomically:NO];
+        
         
 		if (nil != scaled32)
 		{
 			NSBitmapImageRep *bitmap32	= [scaled32 bitmap];
-			[myFamily setBitmapImageRep:bitmap32 forElement:kICOFamily32Element];
+			NSData *pngData32			= [bitmap32 representationUsingType:NSPNGFileType properties:nil];
+			if (nil != pngData32)
+			{
+				path32 = [NSTemporaryDirectory() stringByAppendingPathComponent:@"source32.png"];
+				[pngData32 writeToFile:path32 atomically:NO];
+			}
 		}
+		
+		// Now build up the task
+		NSString *png2IcoPath = [[NSBundle mainBundle] pathForAuxiliaryExecutable:@"png2ico"];
+		OBASSERT(png2IcoPath);
+		NSString *outputPath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"favicon.ico"];
+        
+		// Argument array.  If there is no 32-pixel image, then array will end with path to 16.
+		NSArray *arguments = [NSArray arrayWithObjects:outputPath, @"--colors", @"16", path16, path32, nil];
+		
+		NSTask *task // = [NSTask launchedTaskWithLaunchPath:png2IcoPath arguments:arguments];
+		= [[[NSTask alloc] init] autorelease];
+        
+		
+		[task setLaunchPath:png2IcoPath];
+		[task setArguments:arguments];
+		
+		// Don't let this task clutter stderr if we're running the real app
+#ifndef DEBUG
+		[task setStandardError:[NSFileHandle fileHandleForWritingAtPath:@"/dev/null"]];
+#endif
+		[task launch];
+		while ([task isRunning])
+		{
+			[NSThread sleepUntilDate:[NSDate distantPast]];
+		}
+		//[task waitUntilExit];
+		int status = [task terminationStatus];
+		
+		if (0 == status)
+		{
+			result = [NSData dataWithContentsOfFile:outputPath];
+		}
+		
+		// Clean up so we don't leave recovered files.  Ignore errors.
+		NSFileManager *fm = [[NSFileManager alloc] init];
+		if (outputPath) [fm removeItemAtPath:outputPath error:nil];
+		if (path16) [fm removeItemAtPath:path16 error:nil];
+		if (path32) [fm removeItemAtPath:path32 error:nil];
+        [fm release];
 	}
-	result = myFamily.data;
-
 	return result;
 }
 
