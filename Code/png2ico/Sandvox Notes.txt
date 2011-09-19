@@ -1,0 +1,23 @@
+
+TJT rebuilt binary for MAS (i386) on 19 Sept 2011
+
+png2ico requires libpng to build. libpng is included in /usr/X11 in 10.6/10.7 so Makefile was adjusted to use that location for headers and linking.
+
+
+DJW's original notes on building fat:
+
+First build it with this as the CPP flags:
+
+-arch i386
+move to png2ico.i386
+
+then -arch ppc
+move to png2ico.ppc
+
+lipo -create png2ico.i386 png2ico.ppc -output png2ico
+
+png2ico favicon.ico --colors 16 32.png 16.png
+
+See http://photomatt.net/2003/11/13/how-to-create-a-favicon/
+
+
