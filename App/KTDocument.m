@@ -644,7 +644,11 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
                                          filename:path
                             inDocumentWithFileURL:[self fileURL]];
         
-        if (mediaURL) [aMediaRecord forceUpdateFromURL:mediaURL];
+        if (mediaURL)
+        {
+            // If reading fails, the file has likely gone walkabout. Internally, the record falls back 
+            [aMediaRecord readFromURL:mediaURL options:0 error:NULL];
+        }
         
         if (![path hasPrefix:@"Shared/"] && ![path hasPrefix:@"shared/"])
         {

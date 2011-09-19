@@ -825,7 +825,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                 NSURL *fileURL = [dupe fileURL];
                 if (fileURL)
                 {
-                    [aMediaRecord readFromURL:fileURL options:0 error:NULL];
+                    [aMediaRecord readFromURL:fileURL options:SVMediaRecordReadingForce error:NULL];
                     [aMediaRecord setFilename:[fileURL ks_lastPathComponent]];
                 }
                 else

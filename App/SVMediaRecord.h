@@ -16,6 +16,12 @@
 extern NSString *kSVDidDeleteMediaRecordNotification;
 
 
+enum {
+    SVMediaRecordReadingForce = 1 << 10,
+};
+typedef NSUInteger SVMediaRecordReadingOptions;
+
+
 @class BDAlias, SVMedia;
 
 
@@ -37,9 +43,9 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
 
 // Will return nil if an alias can't be created from the URL. It's OK if the file attributes can't be read in.
 + (SVMediaRecord *)mediaByReferencingURL:(NSURL *)URL
-                     entityName:(NSString *)entityName
- insertIntoManagedObjectContext:(NSManagedObjectContext *)context
-                          error:(NSError **)outError;
+                              entityName:(NSString *)entityName
+          insertIntoManagedObjectContext:(NSManagedObjectContext *)context
+                                   error:(NSError **)outError;
 
 + (SVMediaRecord *)mediaRecordWithMedia:(SVMedia *)media
                              entityName:(NSString *)entityName
@@ -76,8 +82,7 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
 
 #pragma mark Updating File Wrappers
 
-// For now: options is ignored, always returns YES
-- (BOOL)readFromURL:(NSURL *)URL options:(NSUInteger)options error:(NSError **)error;
+- (BOOL)readFromURL:(NSURL *)URL options:(SVMediaRecordReadingOptions)options error:(NSError **)error;
 
 
 #pragma mark Accessing Files

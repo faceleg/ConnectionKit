@@ -40,9 +40,9 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 #pragma mark Creating New Media
 
 + (SVMediaRecord *)mediaByReferencingURL:(NSURL *)URL
-                     entityName:(NSString *)entityName
- insertIntoManagedObjectContext:(NSManagedObjectContext *)context
-                          error:(NSError **)outError;
+                              entityName:(NSString *)entityName
+          insertIntoManagedObjectContext:(NSManagedObjectContext *)context
+                                   error:(NSError **)outError;
 {
     OBPRECONDITION(URL);
     OBPRECONDITION(context);
@@ -89,7 +89,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     SVMediaRecord *result = [NSEntityDescription insertNewObjectForEntityForName:entityName
                                                           inManagedObjectContext:context];
     
-    [result readFromURL:URL options:0 error:NULL];
+    [result readFromURL:URL options:SVMediaRecordReadingForce error:NULL];
     [result setFilename:[@"Shared/" stringByAppendingString:[URL ks_lastPathComponent]]];
     [result setPreferredFilename:[URL ks_lastPathComponent]];
     [result setShouldCopyFileIntoDocument:[NSNumber numberWithBool:NO]];
@@ -169,6 +169,14 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     {
         if (![[NSFileManager defaultManager] fileExistsAtPath:[URL path]])
         {
+            if (!(options & SVMediaRecordReadingForce))
+            {
+                if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                                        code:NSFileReadNoSuchFileError
+                                                    userInfo:nil];
+                return NO;                
+            }
+            
             NSLog(@"Read media from %@ failed", [URL path]);
         }
     }
@@ -453,7 +461,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 
 - (void)forceUpdateFromURL:(NSURL *)URL;
 {
-    BOOL result = [self readFromURL:URL options:0 error:NULL];
+    BOOL result = [self readFromURL:URL options:SVMediaRecordReadingForce error:NULL];
 #pragma unused (result)
    OBPOSTCONDITION(result);
 }
