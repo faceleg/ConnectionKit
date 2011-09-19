@@ -6,27 +6,14 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <Foundation/NSDebug.h>
-#import <Carbon/Carbon.h>
-#include <stdlib.h>
-#import <sys/types.h>
-#import <sys/time.h>
-#import <sys/resource.h>
-#include <stdio.h>
-#include <errno.h>
-#include "Debug.h"
 
 #import "Registration.h"
 
 #import <sys/stat.h>
-#import <openssl/bio.h>
 #import <openssl/pkcs7.h>
 #import <openssl/x509.h>
-#import <Security/SecKeychainItem.h>
 #import <Security/CodeSigning.h>
-#import <objc/runtime.h>
 #import "Payload.h"
-#import "ethernet.h"
 
 
 
@@ -364,12 +351,6 @@ int main(int argc, char *argv[])
     startup_call_t theCall = &NSApplicationMain;
     id obj_arg = nil;
     
-    if ( [hardcoded_identifier isEqualToString:[[NSBundle mainBundle] bundleIdentifier]] == NO )
-    {
-        LOG((@"hardcoded CFBundleIdentifier does not match Info.plist!"));
-        theCall = (startup_call_t)&exit;
-        argc = 173;
-	}	
 	if ( [hardcoded_version isEqualToString:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]] == NO )
     {
         LOG((@"hardcoded CFBundleShortVersionString does not match Info.plist!"));
@@ -381,18 +362,29 @@ int main(int argc, char *argv[])
     {
         argc = locateReceipt(argc, &theCall, &obj_arg);
     }
+    
     if ( argc != 173 ) 
     {
         argc = verifySignature(argc, &theCall, &obj_arg);
     }
+    
     if ( argc != 173 )
     {
         argc = examinePayload(argc, &theCall, &obj_arg);
     }
+    
+    if ( [hardcoded_identifier isEqualToString:[[NSBundle mainBundle] bundleIdentifier]] == NO )
+    {
+        LOG((@"hardcoded CFBundleIdentifier does not match Info.plist!"));
+        theCall = (startup_call_t)&exit;
+        argc = 173;
+	}	
+
     if ( argc != 173 )
     {
         argc = verifyKareliaProduct(argc, &theCall, &obj_arg);
     }
+    
     if ( argc != 173 )
     {
         // set conditions to bypass non-MAS checks
