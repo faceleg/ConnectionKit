@@ -14,7 +14,7 @@
 #import <openssl/x509.h>
 #import <Security/CodeSigning.h>
 #import "Payload.h"
-
+#import "ethernet.h"
 
 
 // MAS validation based on: https://github.com/AlanQuatermain/mac-app-store-validation-sample.git
