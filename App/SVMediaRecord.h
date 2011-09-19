@@ -32,6 +32,7 @@ typedef NSUInteger SVMediaRecordReadingOptions;
     
     // Accessing Files
     SVMedia         *_media;
+    BOOL            _mediaWasLocatedByAlias;
     NSDictionary    *_attributes;
     
     // Matching Media
@@ -88,6 +89,7 @@ typedef NSUInteger SVMediaRecordReadingOptions;
 #pragma mark Accessing Files
 
 @property(nonatomic, retain, readonly) SVMedia *media; // KVO-compliant (alias resolution is cached)
+- (BOOL)mediaWasLocatedByAlias;
 
 @property(nonatomic, copy) NSString *filename;  // no-one but the document should have reason to set this
 @property(nonatomic, copy) NSString *preferredFilename;

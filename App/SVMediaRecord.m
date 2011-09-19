@@ -308,6 +308,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
             if (path)
             {
                 _media = [[SVMedia alloc] initByReferencingURL:[NSURL fileURLWithPath:path]];
+                _mediaWasLocatedByAlias = YES;
             }
         }
     }
@@ -328,7 +329,12 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     {
         [self setExtensibleProperty:media forKey:@"media"];
     }
+    
+    _mediaWasLocatedByAlias = NO;
 }
+
+- (BOOL)mediaWasLocatedByAlias; { return _mediaWasLocatedByAlias; }
+
 + (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key;
 {
     return ([key isEqualToString:@"media"] ?
