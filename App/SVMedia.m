@@ -266,6 +266,8 @@
     }
     else
     {
+        if (!fileURL) fileURL = [self mediaURL];    // fallback for #144386
+        
         data = [[NSData alloc] initWithContentsOfURL:fileURL options:0 error:outError];
         if (!data) return NO;
     }
