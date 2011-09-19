@@ -75,4 +75,6 @@ div.text-navigation div { display:inline; margin:0px 0.5em; }
 
 /* Site menus. Don't wrap the top level items, and wrap sub-menu items normaly. */
 #sitemenu-content ul li {white-space: nowrap}
+* html #sitemenu-content ul li {white-space: normal}
+*:first-child+html #sitemenu-content ul li {white-space: normal}
 #sitemenu-content ul ul li {white-space: normal}
