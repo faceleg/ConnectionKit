@@ -283,9 +283,18 @@
 {
     [self init];
     
-    _URL = [[aDecoder decodeObjectForKey:@"fileURL"] copy];
-    _webResource = [[[aDecoder ks_proxyOnThread:nil] decodeObjectForKey:@"webResource"] copy];
-    _preferredFilename = [[aDecoder decodeObjectForKey:@"preferredFilename"] copy];
+    NSURL *url = [aDecoder decodeObjectForKey:@"fileURL"];
+    if (url)
+    {
+        self = [self initByReferencingURL:url];
+    }
+    else
+    {
+        WebResource *resource = [[aDecoder ks_proxyOnThread:nil] decodeObjectForKey:@"webResource"];
+        self = [self initWithWebResource:resource];
+    }
+    
+    [self setPreferredFilename:[aDecoder decodeObjectForKey:@"preferredFilename"]];
     
     return self;
 }
