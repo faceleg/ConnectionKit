@@ -19,4 +19,5 @@ release: clean png2ico doc/png2ico.txt
 
 clean:
 	rm -f png2ico *~ doc/*~ *.bak png2ico-src-*.tar.gz png2ico-win-*.zip doc/png2ico.txt
+	rm -rf png2ico.dSYM
 
