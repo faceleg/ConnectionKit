@@ -33,6 +33,12 @@
 const int kDesignThumbWidth = 100;
 const int kDesignThumbHeight = 65;
 
+
+@interface KTDesign ()
+- (NSDictionary *)variationDict;
+@end
+
+
 @implementation KTDesign
 
 @synthesize thumbnail = _thumbnail;
@@ -217,8 +223,11 @@ const int kDesignThumbHeight = 65;
 	if ((self = [super initWithBundle:bundle variation:variationIndex]) != nil)
 	{
         // Register alternate IDs too
+        NSString *variantSuffix = (self.isFamilyPrototype ? nil : [[self variationDict] objectForKey:@"file"]);
+        
         for (NSString *anID in [bundle objectForInfoDictionaryKey:@"SVAlternateIdentifiers"])
         {
+            if (variantSuffix) anID = [anID stringByAppendingFormat:@".%@", variantSuffix];
             [[self class] registerPlugin:self forIdentifier:anID];
         }
         
