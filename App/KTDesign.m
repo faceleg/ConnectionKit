@@ -33,6 +33,12 @@
 const int kDesignThumbWidth = 100;
 const int kDesignThumbHeight = 65;
 
+
+@interface KTDesign ()
+- (NSDictionary *)variationDict;
+@end
+
+
 @implementation KTDesign
 
 @synthesize thumbnail = _thumbnail;
@@ -216,7 +222,16 @@ const int kDesignThumbHeight = 65;
     
 	if ((self = [super initWithBundle:bundle variation:variationIndex]) != nil)
 	{
-        ;		// do not load local fonts;  we probably won't need them.
+        // Register alternate IDs too
+        NSString *variantSuffix = (self.isFamilyPrototype ? nil : [[self variationDict] objectForKey:@"file"]);
+        
+        for (NSString *anID in [bundle objectForInfoDictionaryKey:@"SVAlternateIdentifiers"])
+        {
+            if (variantSuffix) anID = [anID stringByAppendingFormat:@".%@", variantSuffix];
+            [[self class] registerPlugin:self forIdentifier:anID];
+        }
+        
+		;		// do not load local fonts;  we probably won't need them.
 		self.thumbnails = [NSMutableDictionary dictionary];
 	}
 	return self;
@@ -332,6 +347,31 @@ const int kDesignThumbHeight = 65;
 		}
 	}
 	return [super identifier];	
+}
+
+- (NSString *)alternateIdentifier;		// May return nil if there isn't one.
+{
+	NSString *result = [[[self bundle] objectForInfoDictionaryKey:@"SVAlternateIdentifiers"] lastObject];
+	if (result)
+	{
+		if (!self.isFamilyPrototype)		// don't mess with identifier if it's the family prototype.
+		{
+			NSDictionary *variationDict = [self variationDict];
+			if (variationDict)
+			{
+				NSString *file = [variationDict objectForKey:@"file"];
+				if (file)
+				{
+					result = [NSString stringWithFormat:@"%@.%@", result, file];
+				}
+				else
+				{
+					NSLog(@"Cannot find 'file' key for variation %d in %@", _variationIndex, self);
+				}
+			}
+		}
+	}
+	return result;
 }
 
 - (NSString *)thumbnailPath
@@ -681,7 +721,7 @@ const int kDesignThumbHeight = 65;
  */
 - (NSString *)remotePath
 {
-    NSString *identifier = [[[self bundle] objectForInfoDictionaryKey:@"SVAlternateIdentifiers"] lastObject];
+    NSString *identifier = [self alternateIdentifier];
     if (!identifier) identifier = [self identifier];
     
 	NSString *result = [[self class] remotePathForDesignWithIdentifier:identifier];

@@ -16,9 +16,12 @@
     self = [super initWithBundle:bundle variation:variationIndex];
     
     // Register alternate IDs too
-    for (NSString *anID in [bundle objectForInfoDictionaryKey:@"SVAlternateIdentifiers"])
+    if (variationIndex == NSNotFound)   // KTDesign will take care of variants
     {
-        [[self class] registerPlugin:self forIdentifier:anID];
+        for (NSString *anID in [bundle objectForInfoDictionaryKey:@"SVAlternateIdentifiers"])
+        {
+            [[self class] registerPlugin:self forIdentifier:anID];
+        }
     }
     
     return self;
