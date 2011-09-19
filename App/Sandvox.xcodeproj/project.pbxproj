@@ -68,6 +68,7 @@
 				3C9B66E80BFA95DD007A4871 /* Script - Add Spotlight Importer */,
 				CE9D3ED20DAAB8450025717A /* Script - Remove Unsupported Languages */,
 				CEFD3EFC12E9FA0100D3A6CD /* Script - Internationalize XIBs */,
+				3C888F741427D1F000CD45A1 /* Code Sign png2ico */,
 				3CC092BA134BC490007E2390 /* Script - Code Sign .app */,
 			);
 			dependencies = (
@@ -7333,6 +7334,21 @@
 			shellScript = "#!/bin/bash\n\nexport APPNAME=\"Sandvox\"\n\n\"${SRCROOT}/../Code/Shared/tools/build_package\"\n\n### this script should NOT have 'Run script only when installing' checked\n";
 			showEnvVarsInLog = 0;
 		};
+		3C888F741427D1F000CD45A1 /* Code Sign png2ico */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Code Sign png2ico";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\n### sign png2ico\n\nPATHTOSIGN=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/MacOS/png2ico\n\n# -s <identity> signs path\n# -i <idenitifer> signs with specified identifier\n# -f means force to re-sign even if already signed\n# -vv means verbose\n\n# sign executable\ncodesign -s \"3rd Party Mac Developer Application: Karelia Software\" -i com.karelia.Sandvox -fvv \"${PATHTOSIGN}\"\n\n# display info about executable\ncodesign -d --verbose \"${PATHTOSIGN}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		3C96FBAB1411F79C00DDEDE2 /* Script - Copy CFBundleVersion to Designs */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 8;
@@ -7451,7 +7467,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "\nPBXCP=${SRCROOT}/../Code/Shared/Tools/pbxcp\n\nEXECUTABLE=${PROJECT_DIR}/../Code/png2ico/png2ico\nEXECUTABLES_DIR=${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/MacOS\n\necho \"png2ico: PBXCp ${EXECUTABLE} ${EXECUTABLES_DIR}\"\n\n\"${PBXCP}\" \"${EXECUTABLE}\" \"${EXECUTABLES_DIR}\"\n\n";
+			shellScript = "\nPBXCP=${SRCROOT}/../Code/Shared/Tools/pbxcp\n\nEXECUTABLE=${PROJECT_DIR}/../Code/png2ico/png2ico\nEXECUTABLES_DIR=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/MacOS\n\necho \"png2ico: PBXCp ${EXECUTABLE} ${EXECUTABLES_DIR}\"\n\n\"${PBXCP}\" \"${EXECUTABLE}\" \"${EXECUTABLES_DIR}\"\n\n\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66E80BFA95DD007A4871 /* Script - Add Spotlight Importer */ = {
@@ -7495,7 +7511,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "\n### sign complete build\n\nPATHTOSIGN=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/\n\n# -s <identity> signs path\n# -f means force to re-sign even if already signed\n# -vv means verbose\n\n# sign .app\ncodesign -s \"3rd Party Mac Developer Application: Karelia Software\" -fvv \"${PATHTOSIGN}\"\n\n# display info about app\ncodesign -d \"${PATHTOSIGN}\"\n\n";
+			shellScript = "\n### sign complete build\n\nPATHTOSIGN=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/\n\n# -s <identity> signs path\n# -f means force to re-sign even if already signed\n# -vv means verbose\n\n# sign .app\ncodesign -s \"3rd Party Mac Developer Application: Karelia Software\" -fvv \"${PATHTOSIGN}\"\n\n# display info about app\ncodesign -d --verbose \"${PATHTOSIGN}\"\n\n";
 			showEnvVarsInLog = 0;
 		};
 		CE9D3ED20DAAB8450025717A /* Script - Remove Unsupported Languages */ = {
