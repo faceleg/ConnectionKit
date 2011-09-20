@@ -119,7 +119,7 @@
 		NSURL *URL = [context URLForImageRepresentationOfPage:iteratedPage
 														width:2000
 													   height:1200		// plenty large, but not overwhelming, good for a monitor
-													  options:SVImageScaleAspectFit];
+													  options:SVImageScaleAspectFit|SVImageScaleUpAvoid];
 		if (URL)
 		{
 			NSString *href = [context relativeStringFromURL:URL];
