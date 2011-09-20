@@ -1,0 +1,3 @@
+1. Build and run the app 32bit on Lion
+2. Drag the Drip Test_2_2.JPG file (included in the project) onto the window
+3. It crashes as WebKit tries to use CGImageSource to access the image's properties
