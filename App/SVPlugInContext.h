@@ -24,8 +24,8 @@ enum {
 typedef NSUInteger SVResizingOptions;
 
 enum {
-    SVImageScaleAspectFit = 1 << 0,             // without this, image will be cropped to fill width & height
-                                                // one day, might have option to control if can scale up
+    SVImageScaleAspectFit = 1 << 0, // without this, image will be cropped to fill width & height
+    SVImageScaleUpAvoid = 1 << 1 AVAILABLE_SANDVOX_VERSION_2_2_AND_LATER,  // stops the image being scaled up
 };
 typedef NSUInteger SVPageImageRepresentationOptions;
 
