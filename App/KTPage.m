@@ -223,8 +223,8 @@
 
 - (void)addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context;
 {
-    // Make sure .titleBox is already faulted in before observing title. #108418
-    if ([keyPath isEqualToString:@"title"] && [self isFault])
+    // Make sure self is already faulted in before observing. #108418 & then #144832
+    if ([self isFault])
     {
         [self willAccessValueForKey:nil];
     }
