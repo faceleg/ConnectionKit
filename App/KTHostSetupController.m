@@ -389,6 +389,18 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		if ([[[self properties] valueForKey:@"protocol"] isEqualToString:@".Mac"])
 		{
 			credential = [challenge proposedCredential];
+            if (!credential)
+            {
+                NSString *user, *password;
+                if ([CK2WebDAVConnection getDotMacAccountName:&user password:&password] &&
+                    [user length] &&
+                    [password length])
+                {
+                    credential = [NSURLCredential credentialWithUser:user
+                                                            password:password
+                                                         persistence:NSURLCredentialPersistencePermanent];
+                }
+            }
 		}
 		else
 		{
