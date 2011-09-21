@@ -317,6 +317,17 @@ static inline int locateReceipt(int argc, startup_call_t *theCall, id * pathPtr)
 
 static inline int verifyKareliaProduct( int argc, startup_call_t *theCall, id * obj_arg )
 {
+    // http://developer.apple.com/library/mac/#documentation/Security/Conceptual/CodeSigningGuide/Procedures/Procedures.html
+    // http://developer.apple.com/library/mac/#documentation/Security/Conceptual/CodeSigningGuide/RequirementLang/RequirementLang.html
+    
+    // to describe the requirements of a signed app, $codesign -dvvvv -r- /path/to/application
+    
+    // SHA1 of Karelia's Developer certificate
+    // ED 18 DC 1E 62 AA 80 F8 57 48 87 10 80 DD AD 01 BE 39 45 D8
+    
+    // SHA1 of Karelia's Installer certficiate
+    // 80 D0 82 A9 69 D0 14 3E 93 AC 9D AB 66 5A 9F 5D CF 17 33 BD
+    
     // create a SecStaticCode to check binary
     SecStaticCodeRef staticCode = NULL;
     if ( SecStaticCodeCreateWithPath((CFURLRef)[[NSBundle mainBundle] bundleURL], kSecCSDefaultFlags, &staticCode) != noErr )
@@ -325,19 +336,11 @@ static inline int verifyKareliaProduct( int argc, startup_call_t *theCall, id * 
         return ( 173 );
     }
     
-    // create a SecRequirementRef specifying that the code must be signed by Karelia
+    // create a SecRequirementRef specifying that the code must be signed by Apple or Karelia
     SecRequirementRef requirement = NULL;
-    
-    // SHA1 of Karelia's Developer certificate
-    // ED 18 DC 1E 62 AA 80 F8 57 48 87 10 80 DD AD 01 BE 39 45 D8
-    
-    // SHA1 of Karelia's Installer certficiate
-    // 80 D0 82 A9 69 D0 14 3E 93 AC 9D AB 66 5A 9F 5D CF 17 33 BD
-        
-    NSString *anchorString = @"certificate leaf = H\"ED18DC1E62AA80F85748871080DDAD01BE3945D8\"";
-    //NSString *anchorString = @"anchor apple generic";
-
-    if ( SecRequirementCreateWithString((CFStringRef)anchorString, kSecCSDefaultFlags, &requirement) != noErr )
+    char data[] = "anchor apple generic or certificate leaf = H\"ED18DC1E62AA80F85748871080DDAD01BE3945D8\"";
+    NSString *requirementString = [[[NSString alloc] initWithCString:data encoding:NSUTF8StringEncoding] autorelease];
+    if ( SecRequirementCreateWithString((CFStringRef)requirementString, kSecCSDefaultFlags, &requirement) != noErr )
     {
         *theCall = (startup_call_t)&exit;
         return ( 173 );
