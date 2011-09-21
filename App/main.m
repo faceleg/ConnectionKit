@@ -323,13 +323,7 @@ static inline int verifyKareliaProduct( int argc, startup_call_t *theCall, id * 
     // http://developer.apple.com/library/mac/#documentation/Security/Conceptual/CodeSigningGuide/RequirementLang/RequirementLang.html
     
     // to describe the requirements of a signed app, $codesign -dvvvv -r- /path/to/application
-    
-    // SHA1 of Karelia's Developer certificate
-    // ED 18 DC 1E 62 AA 80 F8 57 48 87 10 80 DD AD 01 BE 39 45 D8
-    
-    // SHA1 of Karelia's Installer certficiate
-    // 80 D0 82 A9 69 D0 14 3E 93 AC 9D AB 66 5A 9F 5D CF 17 33 BD
-    
+        
     // create a SecStaticCode to check binary
     SecStaticCodeRef staticCode = NULL;
     if ( SecStaticCodeCreateWithPath((CFURLRef)[[NSBundle mainBundle] bundleURL], kSecCSDefaultFlags, &staticCode) != noErr )
@@ -338,7 +332,8 @@ static inline int verifyKareliaProduct( int argc, startup_call_t *theCall, id * 
         return ( 173 );
     }
     
-    // create a SecRequirementRef specifying that this app is Sandvox and that the code must be signed by both Apple and Karelia
+    // create a SecRequirementRef specifying that this app is Sandvox and that the code must be signed 
+    // by both Apple's Root CA and Karelia's Mac Developer certificate
     SecRequirementRef requirement = NULL;
     char data[] = "identifier \"com.karelia.Sandvox\" and anchor apple generic and certificate leaf = H\"ED18DC1E62AA80F85748871080DDAD01BE3945D8\"";
     NSString *requirementString = [[[NSString alloc] initWithCString:data encoding:NSUTF8StringEncoding] autorelease];
