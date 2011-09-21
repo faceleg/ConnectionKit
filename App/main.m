@@ -426,9 +426,9 @@ int main(int argc, char *argv[])
     if ( argc > 50 )
         return ( argc );
     
-    return ( rc );
-    
     [pool drain];
+    
+    return ( rc );
     
 #else
     
