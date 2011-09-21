@@ -336,9 +336,9 @@ static inline int verifyKareliaProduct( int argc, startup_call_t *theCall, id * 
         return ( 173 );
     }
     
-    // create a SecRequirementRef specifying that the code must be signed by Apple or Karelia
+    // create a SecRequirementRef specifying that this app is Sandvox and that the code must be signed by both Apple and Karelia
     SecRequirementRef requirement = NULL;
-    char data[] = "anchor apple generic or certificate leaf = H\"ED18DC1E62AA80F85748871080DDAD01BE3945D8\"";
+    char data[] = "identifier \"com.karelia.Sandvox\" and anchor apple generic and certificate leaf = H\"ED18DC1E62AA80F85748871080DDAD01BE3945D8\"";
     NSString *requirementString = [[[NSString alloc] initWithCString:data encoding:NSUTF8StringEncoding] autorelease];
     if ( SecRequirementCreateWithString((CFStringRef)requirementString, kSecCSDefaultFlags, &requirement) != noErr )
     {
