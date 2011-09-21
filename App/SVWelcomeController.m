@@ -573,12 +573,12 @@
 	}
 }
 
-#ifndef MAC_APP_STORE
 - (IBAction) openLicensing:(id)sender
 {
+#ifndef MAC_APP_STORE
 	[[NSApp delegate] performSelector:@selector(showRegistrationWindow:) withObject:sender afterDelay:0.0];
-}
 #endif
+}
 
 - (IBAction) openScreencast:(id)sender;
 {
