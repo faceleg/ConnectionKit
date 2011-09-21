@@ -99,12 +99,11 @@ static inline int verifySignature( int argc, startup_call_t *theCall, id * recei
     X509_STORE *store = X509_STORE_new();
     
     // initialize both BIO variables using BIO_new_mem_buf() with a buffer and its size...
-    //b_p7 = BIO_new_mem_buf((void *)[receiptData bytes], [receiptData length]);
     FILE *fp = fopen( [*receiptPath fileSystemRepresentation], "rb" );
     
     if ( fp == NULL )
     {
-        LOG((@"No receipt found"));
+        LOG((@"no receipt found"));
         *theCall = (startup_call_t)&exit;
         return ( 173 );
     }
@@ -116,12 +115,11 @@ static inline int verifySignature( int argc, startup_call_t *theCall, id * recei
     p7 = d2i_PKCS7_fp( fp, NULL );
     fclose( fp );
     
-    // get the Apple root CA from http://www.apple.com/certificateauthority and load it into b_X509
-    //NSData * root = [NSData dataWithContentsOfURL: [NSURL URLWithString: @"http://www.apple.com/certificateauthority/AppleComputerRootCertificate.cer"]];
+    // get the Apple Root CA
     SecCertificateRef cert = AppleRootCA();
     if ( cert == NULL )
     {
-        LOG((@"Failed to load Apple Root CA"));
+        LOG((@"failed to load Apple Root CA"));
         *theCall = (startup_call_t)&exit;
         return ( 173 );
     }
@@ -129,7 +127,6 @@ static inline int verifySignature( int argc, startup_call_t *theCall, id * recei
     CFDataRef data = SecCertificateCopyData( cert );
     CFRelease( cert );
     
-    //b_x509 = BIO_new_mem_buf( (void *)CFDataGetBytePtr(data), (int)CFDataGetLength(data) );
     const unsigned char * pData = CFDataGetBytePtr(data);
     Apple = d2i_X509( NULL, &pData, (long)CFDataGetLength(data) );
     X509_STORE_add_cert( store, Apple );
@@ -144,8 +141,6 @@ static inline int verifySignature( int argc, startup_call_t *theCall, id * recei
     *receiptPath = [NSData dataWithBytes: pPayload length: len];
     
     // clean up
-    //BIO_free(b_p7);
-    //BIO_free(b_x509);
     BIO_free(b_out);
     PKCS7_free(p7);
     X509_free(Apple);
@@ -332,8 +327,9 @@ static inline int verifyKareliaProduct( int argc, startup_call_t *theCall, id * 
         return ( 173 );
     }
     
-    // create a SecRequirementRef specifying that this app is Sandvox and that the code must be signed 
-    // by both Apple's Root CA and Karelia's Mac Developer certificate
+    // create a SecRequirementRef specifying that this app is com.karelia.Sandvox 
+    // and that it is signed by both Apple's Root CA and Karelia's Mac Developer certificate
+    // (hash is SHA1 of "3rd Party Mac Developer Application: Karelia Software" taken from Keychain Access)
     SecRequirementRef requirement = NULL;
     char data[] = "identifier \"com.karelia.Sandvox\" and anchor apple generic and certificate leaf = H\"ED18DC1E62AA80F85748871080DDAD01BE3945D8\"";
     NSString *requirementString = [[[NSString alloc] initWithCString:data encoding:NSUTF8StringEncoding] autorelease];
