@@ -19,3 +19,6 @@
 [submodule "Code/ICOFamily"]
 	path = Code/ICOFamily
 	url = git@github.com:karelia/ICOFamily.git
+[submodule "Code/DAVKit"]
+	path = Code/DAVKit
+	url = git@github.com:karelia/DAVKit.git
