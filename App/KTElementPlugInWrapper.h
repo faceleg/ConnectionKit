@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KSPlugInWrapper.h"
+#import "SVPlugInWrapper.h"
 
 
 typedef enum {
@@ -24,7 +24,7 @@ typedef enum {
 @class SVPlugInGraphicFactory;
 
 
-@interface KTElementPlugInWrapper : KSPlugInWrapper
+@interface KTElementPlugInWrapper : SVPlugInWrapper
 {
 @private
     SVPlugInGraphicFactory    *_factory;
