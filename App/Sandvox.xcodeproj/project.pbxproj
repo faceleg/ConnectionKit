@@ -775,6 +775,7 @@
 		3CF948BD0D624A1100B1C83D /* getSafariFrontmostFeed.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 3CF941FE0D623F1500B1C83D /* getSafariFrontmostFeed.scpt */; };
 		3CF948BE0D624A1200B1C83D /* getSafariFrontmostPage.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 3CF941FF0D623F1900B1C83D /* getSafariFrontmostPage.scpt */; };
 		3CFACFBE07E899160060E5C4 /* SVApplicationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D1907DFC0AA00DE4994 /* SVApplicationController.m */; };
+		3CFCE7C4142A84F40096CB15 /* DAVKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 273FA59214209E580051E616 /* DAVKit.framework */; };
 		775DFF38067A968500C5B868 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
 		796C9CB909D26DF9003BFA3B /* KTPulsatingOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 796C9CB709D26DF8003BFA3B /* KTPulsatingOverlay.m */; };
 		79D35F9D0974C84000241EDA /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79D35F950974C84000241EDA /* Growl.framework */; };
@@ -1784,6 +1785,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				3CFCE7C4142A84F40096CB15 /* DAVKit.framework in Copy Frameworks */,
 				CED8650910AA45AF002DF34F /* iMedia.framework in Copy Frameworks */,
 				CE22713C12A086B6002E7795 /* ObjectiveFlickr.framework in Copy Frameworks */,
 				3CE2CA510D6D54B300B2D56B /* AmazonSupport.framework in Copy Frameworks */,
