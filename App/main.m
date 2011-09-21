@@ -223,6 +223,7 @@ static inline int examinePayload( int argc, startup_call_t *theCall, id * dataPt
     NSString * bidStr = [[[NSString alloc] initWithBytes: (bundle_id->buf + 2) length: (bundle_id->size - 2) encoding: NSUTF8StringEncoding] autorelease];
     if ( [bidStr isEqualToString: hardcoded_identifier] == NO )
     {
+        LOG((@"hardcoded CFBundleIdentifier does not match signature payload!"));
         free( payload );
         *theCall = (startup_call_t)&exit;
         return ( 173 );
@@ -231,6 +232,7 @@ static inline int examinePayload( int argc, startup_call_t *theCall, id * dataPt
     NSString * dvStr = [[[NSString alloc] initWithBytes: (bundle_version->buf + 2) length: (bundle_version->size - 2) encoding: NSUTF8StringEncoding] autorelease];
     if ( [dvStr isEqualToString: hardcoded_version] == NO )
     {
+        LOG((@"hardcoded CFBundleShortVersionString does not match signature payload!"));
         free( payload );
         *theCall = (startup_call_t)&exit;
         return ( 173 );
