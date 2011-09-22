@@ -36,7 +36,16 @@
 
 #pragma mark Properties
 
-- (NSString *)identifier; { return [[self plugInBundle] bundleIdentifier]; }
+- (NSArray *)identifiers;
+{
+    NSBundle *bundle = [self plugInBundle];
+    
+    // As per Dan's wishes, favour the older, existing ID for maximum compatibility. This should mean sites keep working from 2.1.4 up to whenever the doc format actually changes
+    NSArray *result = [bundle objectForInfoDictionaryKey:@"SVAlternateIdentifiers"];
+    result = (result ? [result arrayByAddingObject:[bundle bundleIdentifier]] : [NSArray arrayWithObject:[bundle bundleIdentifier]]);
+    
+    return result;
+}
 
 - (Class)plugInClass;
 {
@@ -106,7 +115,7 @@
 - (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
 {
     SVGraphic *result = [SVPlugInGraphic
-                         insertNewGraphicWithPlugInIdentifier:[self identifier]
+                         insertNewGraphicWithPlugInIdentifier:[[self identifiers] objectAtIndex:0]
                          inManagedObjectContext:context];
     
     // Guess title

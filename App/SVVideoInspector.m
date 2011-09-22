@@ -35,6 +35,10 @@
         
 		for (id inspectedObject in [self inspectedObjects])
 		{
+			if ([inspectedObject respondsToSelector:@selector(plugIn)])
+			{
+				inspectedObject = [inspectedObject plugIn];
+			}
 			if ([inspectedObject respondsToSelector:@selector(setPosterFrameWithMedia:)])
 			{
                 SVMedia *media = [[SVMedia alloc] initWithContentsOfURL:URL error:NULL];

@@ -10,3 +10,12 @@
 [submodule "Code/KSHTMLWriter"]
 	path = Code/KSHTMLWriter
 	url = git@github.com:karelia/KSHTMLWriter.git
+[submodule "Code/SFTP"]
+	path = Code/SFTP
+	url = git@github.com:karelia/libssh2_sftp-Cocoa-wrapper.git
+[submodule "Code/ConnectionKit"]
+	path = Code/ConnectionKit
+	url = git@github.com:karelia/ConnectionKit.git
+[submodule "Code/ICOFamily"]
+	path = Code/ICOFamily
+	url = git@github.com:karelia/ICOFamily.git

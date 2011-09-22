@@ -41,8 +41,7 @@
 #import "SVRichText.h"
 #import "KT.h"
 #import "KTElementPlugInWrapper.h"
-#import "KTDesign.h"
-#import "SVPagesController.h"
+#import "SVDesignsController.h"
 #import "SVDocumentFileWrapper.h"
 #import "KTDocWindowController.h"
 #import "KTDocumentController.h"
@@ -52,9 +51,11 @@
 #import "SVPlugInGraphicFactory.h"
 #import "KTHostProperties.h"
 #import "KTHostSetupController.h"
+#import "SVImageRecipe.h"
 #import "SVInspector.h"
 #import "KTMaster.h"
 #import "SVMediaRecord.h"
+#import "SVPagesController.h"
 #import "KTPage+Internal.h"
 #import "SVPageTemplate.h"
 #import "SVPublishingRecord.h"
@@ -293,11 +294,10 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         
         
         // Set the design
-        NSArray *designs = [KSPlugInWrapper sortedPluginsWithFileExtension:kKTDesignExtension];
-		NSArray *newRangesOfGroups;
-		designs = [KTDesign reorganizeDesigns:designs familyRanges:&newRangesOfGroups];
-		
-        [master setDesign:[designs firstObjectKS]];
+        SVDesignsController *designsController = [[SVDesignsController alloc] init];
+        NSArray *designs = [designsController arrangedObjects];
+		[master setDesign:[designs firstObjectKS]];
+        [designsController release];
         
         
         // Set up root properties that used to come from document defaults
@@ -1060,7 +1060,6 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     return result;
 }
 
-#pragma mark -
 #pragma mark UI validation
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
@@ -1080,8 +1079,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	return [super validateMenuItem:menuItem]; 
 }
 
-#pragma mark -
-#pragma mark Actions
+#pragma mark Publishing
 
 - (IBAction)setupHost:(id)sender
 {
@@ -1095,6 +1093,23 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	   didEndSelector:@selector(setupHostSheetDidEnd:returnCode:contextInfo:)
 		  contextInfo:sheetController];
 	[NSApp cancelUserAttentionRequest:NSCriticalRequest];
+}
+
+- (IBAction)resetImageRecipes:(id)sender;
+{
+    NSArray *records = [[self managedObjectContext]
+                        fetchAllObjectsForEntityForName:@"FilePublishingRecord"
+                        predicate:[NSPredicate predicateWithFormat:@"contentHash != nil"]
+                        error:NULL];
+    
+    for (SVPublishingRecord *aRecord in records)
+    {
+        SVImageRecipe *recipe = [[SVImageRecipe alloc] initWithContentHash:[aRecord contentHash]];
+        if (recipe)
+        {
+            [aRecord setValue:nil forKey:@"contentHash"];
+        }
+    }
 }
 
 #pragma mark UI

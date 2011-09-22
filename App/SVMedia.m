@@ -27,7 +27,7 @@
     OBPRECONDITION(fileURL);
     [self init];
     
-    _fileURL = [fileURL copy];
+    _URL = [fileURL copy];
     [self setPreferredFilename:[fileURL ks_lastPathComponent]];
     
     // Cache the hash since calculating it requires a memory allocation. Use path so file URLs have the correct hash
@@ -44,7 +44,7 @@
     if (data)
     {
         self = [self initWithData:data URL:URL];
-        _fileURL = [URL copy];
+        _URL = [URL copy];
         [data release];
     }
     else
@@ -58,35 +58,34 @@
 - (id)initWithWebResource:(WebResource *)resource;
 {
     OBPRECONDITION(resource);
-    [self init];
-    
-    _webResource = [resource copy];
-    [self setPreferredFilename:[[[resource ks_proxyOnThread:nil] URL] ks_lastPathComponent]];
+    if (self = [self initWithData:[resource data] URL:[resource URL]])
+    {
+        _webResource = [resource copy];
+    }
     
     return self;
 }
 
 - (id)initWithData:(NSData *)data URL:(NSURL *)url;
 {
+    OBPRECONDITION(data);
     OBPRECONDITION(url);
     
-    NSString *type = [KSWORKSPACE ks_typeForFilenameExtension:[url ks_pathExtension]];
-    NSString *mimeType = ([type length] ? [KSWORKSPACE ks_MIMETypeForType:type] : @"application/octet-stream");
+    if (self = [self init])
+    {
+        _data = [data copy];
+        _URL = [url copy];
+        
+        [self setPreferredFilename:[url ks_lastPathComponent]];
+    }
     
-    WebResource *resource = [[[WebResource alloc] ks_proxyOnThread:nil] initWithData:data   // yes, HACK
-                                                                                 URL:url
-                                                                            MIMEType:mimeType
-                                                                    textEncodingName:nil
-                                                                           frameName:nil];
-    
-    self = [self initWithWebResource:resource];
-    [resource release];
     return self;
 }
 
 - (void)dealloc;
 {
-    [_fileURL release];
+    [_data release];
+    [_URL release];
     [_webResource release];
     [_preferredFilename release];
     
@@ -95,22 +94,25 @@
 
 #pragma mark Properties
 
-@synthesize fileURL = _fileURL;
-@synthesize webResource = _webResource;
-
-- (NSURL *)mediaURL;
+- (NSURL *)fileURL;
 {
-    // Not safe to access web resource from a background thread. #103169
-    NSURL *result = [[[self webResource] ks_proxyOnThread:nil] URL];
-    
-    if (!result) result = [self fileURL];
-    return result;
+    if ([self mediaData]) return nil;
+    return [self mediaURL];
 }
 
-- (NSData *)mediaData;
+@synthesize mediaData = _data;
+@synthesize mediaURL = _URL;
+
+- (WebResource *)webResource;
 {
-    // Despite being immutable, web resources fail assertion if accessed on background thread. #99174
-    return [[_webResource ks_proxyOnThread:nil] data];
+    if (_webResource) return _webResource;
+    if (!_data) return nil;
+    
+    NSURL *url = [self mediaURL];
+    NSString *type = [KSWORKSPACE ks_typeForFilenameExtension:[url ks_pathExtension]];
+    NSString *mimeType = ([type length] ? [KSWORKSPACE ks_MIMETypeForType:type] : @"application/octet-stream");
+    
+    return [[[WebResource alloc] initWithData:[self mediaData] URL:url MIMEType:mimeType textEncodingName:nil frameName:nil] autorelease];
 }
 
 @synthesize preferredFilename = _preferredFilename;
@@ -229,33 +231,49 @@
 
 - (BOOL)writeToURL:(NSURL *)URL error:(NSError **)outError;
 {
-    // Try writing out data from memory. It'll fail if there was none
+    OBPRECONDITION(URL);
+    
+    // Only copying from one path to another can be done by NSFileManager. All else requires NSData
+    NSURL *fileURL = [self fileURL];
     NSData *data = [self mediaData];
-    BOOL result = [data writeToURL:URL options:0 error:outError];
-    if (!result)
+    
+    if (!data && [URL isFileURL] && [fileURL isFileURL])
     {
-        // Fallback to copying the file
         NSError *error;
-        result = [[NSFileManager defaultManager] copyItemAtPath:[[self fileURL] path]
-                                                         toPath:[URL path]
-                                                          error:&error];
+        BOOL result = [[NSFileManager defaultManager] copyItemAtPath:[fileURL path]
+                                                              toPath:[URL path]
+                                                               error:&error];
         
         // If it failed because the file already exists, we want to overrite it
         while (!result && [[error domain] isEqualToString:NSPOSIXErrorDomain] && [error code] == EEXIST)
         {
             if ((result = [[NSFileManager defaultManager] removeItemAtPath:[URL path] error:&error]))
             {
-                result = [[NSFileManager defaultManager] copyItemAtPath:[[self fileURL] path]
+                result = [[NSFileManager defaultManager] copyItemAtPath:[fileURL path]
                                                                  toPath:[URL path]
                                                                   error:&error];
             }
         }
         
         if (outError) *outError = error;
+        return result;
     }
     
     
+    if (data)
+    {
+        [data retain];
+    }
+    else
+    {
+        if (!fileURL) fileURL = [self mediaURL];    // fallback for #144386
+        
+        data = [[NSData alloc] initWithContentsOfURL:fileURL options:0 error:outError];
+        if (!data) return NO;
+    }
     
+    BOOL result = [data writeToURL:URL options:0 error:outError];
+    [data release];
     return result;
 }
 
@@ -265,17 +283,31 @@
 {
     [self init];
     
-    _fileURL = [[aDecoder decodeObjectForKey:@"fileURL"] copy];
-    _webResource = [[[aDecoder ks_proxyOnThread:nil] decodeObjectForKey:@"webResource"] copy];
-    _preferredFilename = [[aDecoder decodeObjectForKey:@"preferredFilename"] copy];
+    NSURL *url = [aDecoder decodeObjectForKey:@"fileURL"];
+    if (url)
+    {
+        self = [self initByReferencingURL:url];
+    }
+    else
+    {
+        WebResource *resource = [[aDecoder ks_proxyOnThread:nil] decodeObjectForKey:@"webResource"];
+        self = [self initWithWebResource:resource];
+    }
+    
+    [self setPreferredFilename:[aDecoder decodeObjectForKey:@"preferredFilename"]];
     
     return self;
+}
+
+- (void)encodeWebResourceWithCoder:(NSCoder *)aCoder;
+{
+    [aCoder encodeObject:[self webResource] forKey:@"webResource"];
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder;
 {
     [aCoder encodeObject:[self fileURL] forKey:@"fileURL"];
-    [aCoder encodeObject:[self webResource] forKey:@"webResource"];
+    [[self ks_proxyOnThread:nil] encodeWebResourceWithCoder:aCoder];
     [aCoder encodeObject:[self preferredFilename] forKey:@"preferredFilename"];
 }
 

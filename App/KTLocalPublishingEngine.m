@@ -37,7 +37,6 @@
 
 @interface KTLocalPublishingEngine ()
 
-- (SVPublishingRecord *)publishingRecordForPath:(NSString *)path;
 - (SVPublishingRecord *)regularFilePublishingRecordWithPath:(NSString *)path;
 - (SVPublishingRecord *)updatePublishingRecordForPath:(NSString *)path
                                            SHA1Digest:(NSData *)digest
@@ -509,7 +508,7 @@
 
 /*  Once publishing is fully complete, without any errors, ping google if there is a sitemap
  */
-- (void)engineDidPublish:(BOOL)didPublish error:(NSError *)error
+- (void)finishPublishing:(BOOL)didPublish error:(NSError *)error
 {
     if (didPublish)
     {
@@ -540,7 +539,7 @@
     }
     
     
-    [super engineDidPublish:didPublish error:error];
+    [super finishPublishing:didPublish error:error];
     
     
     // Case 37891: Wipe the undo stack as we don't want the user to undo back past the publishing changes

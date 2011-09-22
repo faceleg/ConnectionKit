@@ -109,7 +109,7 @@
 - (NSArray *)childItemsSortDescriptors;
 {
     // Always sort chronologically
-    return [KTPage dateCreatedSortDescriptorsAscending:NO];
+    return [KTPage sortDescriptorsForCollectionOrder:SVCollectionSortByDateCreated ascending:NO];
 }
 
 #pragma mark Location

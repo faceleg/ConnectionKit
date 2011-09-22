@@ -12,6 +12,8 @@
 #import "KTHostProperties.h"
 #import "KTURLCredentialStorage.h"
 
+#import "CK2SSHCredential.h"
+
 #import "NSError+Karelia.h"
 
 
@@ -62,9 +64,7 @@
 		
 		if (isSFTPWithPublicKey)
 		{
-			[[challenge sender] useCredential:[NSURLCredential credentialWithUser:user
-                                                                         password:nil
-                                                                      persistence:NSURLCredentialPersistenceNone]
+            [[challenge sender] useCredential:[NSURLCredential ck2_SSHAgentCredentialWithUser:user]
                    forAuthenticationChallenge:challenge];
 		}
 		else
@@ -78,29 +78,29 @@
             }
             else
             {
-                [[challenge sender] cancelAuthenticationChallenge:challenge];
-                
                 NSError *error = [KSError errorWithDomain:KTPublishingEngineErrorDomain
                                                      code:KTPublishingEngineErrorNoCredentialForAuthentication
                                      localizedDescription:NSLocalizedString(@"Username or password could not be found.", @"Publishing engine authentication error")
                               localizedRecoverySuggestion:NSLocalizedString(@"Please run the Host Setup Assistant and re-enter your host's login credentials.", @"Publishing engine authentication error")
                                           underlyingError:[challenge error]];
                 
-                [self engineDidPublish:NO error:error];
+                [[challenge sender] cancelAuthenticationChallenge:challenge]; // might dealloc challenge
+                
+                [self finishPublishing:NO error:error];
             }
         }
 	}
 	else
     {
-        [[challenge sender] cancelAuthenticationChallenge:challenge];
-        
         NSError *error = [KSError errorWithDomain:KTPublishingEngineErrorDomain
 											 code:KTPublishingEngineErrorAuthenticationFailed
 							 localizedDescription:NSLocalizedString(@"Authentication failed.", @"Publishing engine authentication error")
 					  localizedRecoverySuggestion:NSLocalizedString(@"Please run the Host Setup Assistant again to test your host setup.", @"Publishing engine authentication error")
 								  underlyingError:[challenge error]];
         
-		[self engineDidPublish:NO error:error];
+		[[challenge sender] cancelAuthenticationChallenge:challenge]; // might dealloc challenge
+        
+        [self finishPublishing:NO error:error];
     }
 }
 

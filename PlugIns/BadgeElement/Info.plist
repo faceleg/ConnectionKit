@@ -4,31 +4,35 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>Badge</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
-	<key>NSHumanReadableCopyright</key>
-	<string>© 2004-2011 Karelia Software. All Rights Reserved.</string>
 	<key>CFBundleIdentifier</key>
-	<string>sandvox.${PROJECT_NAME}</string>
+	<string>com.karelia.Sandvox.plugin.${PRODUCT_NAME}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
-	<key>CFBundleDisplayName</key>
-	<string>Badge</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string></string>
+	<string>REPLACE_ME</string>
 	<key>CFBundleSignature</key>
 	<string>Svox</string>
 	<key>CFBundleVersion</key>
-	<string></string>
+	<string>REPLACE_ME</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>© 2004-2011 Karelia Software. All Rights Reserved.</string>
+	<key>NSPrincipalClass</key>
+	<string>BadgePlugIn</string>
+	<key>SVAlternateIdentifiers</key>
+	<array>
+		<string>sandvox.${PROJECT_NAME}</string>
+	</array>
 	<key>SVMinimumAppVersion</key>
 	<string>2.0</string>
 	<key>SVPlugInIconPath</key>
 	<string>toolbar_badge.tiff</string>
-	<key>NSPrincipalClass</key>
-	<string>BadgePlugIn</string>
 </dict>
 </plist>

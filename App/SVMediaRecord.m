@@ -169,7 +169,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     {
         if (![[NSFileManager defaultManager] fileExistsAtPath:[URL path]])
         {
-            NSLog(@"Media not located");
+            NSLog(@"Read media from %@ failed", [URL path]);
         }
     }
     
@@ -316,7 +316,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     {
         [self removeExtensiblePropertyForKey:@"media"];
     }
-    if ([media webResource])
+    if ([media mediaData])
     {
         [self setExtensibleProperty:media forKey:@"media"];
     }

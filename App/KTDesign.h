@@ -5,7 +5,7 @@
 //  Copyright 2004-2011 Karelia Software. All rights reserved.
 //
 
-#import "KSPlugInWrapper.h"
+#import "SVPlugInWrapper.h"
 
 
 typedef enum { HIER_MENU_NONE, HIER_MENU_HORIZONTAL, HIER_MENU_VERTICAL, HIER_MENU_VERTICAL_IF_SIDEBAR } HierMenuType;
@@ -20,7 +20,7 @@ extern const int kDesignThumbWidth;
 extern const int kDesignThumbHeight;
 
 
-@interface KTDesign : KSPlugInWrapper <IKImageBrowserItem>
+@interface KTDesign : SVPlugInWrapper <IKImageBrowserItem>
 {
     @protected
     NSImage *_thumbnail;

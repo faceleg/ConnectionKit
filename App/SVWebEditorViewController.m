@@ -1318,6 +1318,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     {
         NSString *scheme = [[request URL] scheme];
         BOOL local = ([scheme isEqualToString:NSURLFileScheme] ||
+                      [scheme isEqualToString:@"about"] ||
                       [scheme isEqualToString:KTImageScalingURLProtocolScheme] ||
                       [scheme isEqualToString:@"x-image-replacement"] ||
                       [scheme isEqualToString:@"x-imstatusimage"]);

@@ -49,6 +49,7 @@
 
 @property(nonatomic, retain) SVDirectoryPublishingRecord *rootPublishingRecord;
 
+// Publishing engine has its own methods to do this, you should generally call those
 - (SVPublishingRecord *)publishingRecordForPath:(NSString *)path;
 - (SVPublishingRecord *)regularFilePublishingRecordWithPath:(NSString *)path;
 

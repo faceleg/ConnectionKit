@@ -25,7 +25,7 @@
 
 @implementation SVTextBox 
 
-- (NSString *)plugInIdentifier; { return [[SVGraphicFactory textBoxFactory] identifier]; }
+- (NSString *)plugInIdentifier; { return [[[SVGraphicFactory textBoxFactory] identifiers] objectAtIndex:0]; }
 
 #pragma mark Body Text
 

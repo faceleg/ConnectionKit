@@ -65,7 +65,7 @@
 	return result;
 }
 
-- (NSString *)identifier { return @"com.karelia.sandvox.TextBox"; }
+- (NSArray *)identifiers { return [NSArray arrayWithObject:@"com.karelia.sandvox.TextBox"]; }
 
 - (NSString *)name { return TOOLBAR_INSERT_TEXT_BOX; }	// from a localized string macro
 
@@ -90,7 +90,7 @@
 
 @implementation SVBlockQuoteFactory
 
-- (NSString *)identifier { return @"com.karelia.sandvox.BlockQuote"; }
+- (NSArray *)identifiers { return [NSArray arrayWithObject:@"com.karelia.sandvox.BlockQuote"]; }
 - (NSString *)name { return NSLocalizedString(@"Block Quote", @"Graphic name"); }
 
 - (NSString *)graphicDescription { return NSLocalizedString(@"A text box designed for quotes", @"graphic description"); }
@@ -140,7 +140,7 @@
     return [NSImage imageNamed:@"toolbar_image"];
 }
 
-- (NSString *)identifier { return @"sandvox.ImageElement"; }
+- (NSArray *)identifiers { return [NSArray arrayWithObject:@"sandvox.ImageElement"]; }
 
 - (Class)plugInClass { return [SVImage class]; }
 
@@ -211,7 +211,7 @@
     return [NSImage imageNamed:@"toolbar_video"];
 }
 
-- (NSString *)identifier { return @"sandvox.VideoElement"; }
+- (NSArray *)identifiers { return [NSArray arrayWithObject:@"sandvox.VideoElement"]; }
 
 - (Class)plugInClass { return [SVVideo class]; }
 
@@ -243,7 +243,7 @@
     return [NSImage imageNamed:@"toolbar_audio"];
 }
 
-- (NSString *)identifier { return @"com.karelia.sandvox.SVAudio"; }
+- (NSArray *)identifiers { return [NSArray arrayWithObject:@"com.karelia.sandvox.SVAudio"]; }
 
 - (Class)plugInClass { return [SVAudio class]; }
 
@@ -274,7 +274,7 @@
     return [NSImage imageNamed:@"toolbar_flash"];
 }
 
-- (NSString *)identifier { return @"com.karelia.sandvox.SVFlash"; }
+- (NSArray *)identifiers { return [NSArray arrayWithObject:@"com.karelia.sandvox.SVFlash"]; }
 
 - (Class)plugInClass { return [SVFlash class]; }
 
@@ -310,7 +310,7 @@
     return [NSImage imageNamed:@"toolbar_html_element"];
 }
 
-- (NSString *)identifier { return @"com.karelia.sandvox.RawHTML"; }
+- (NSArray *)identifiers { return [NSArray arrayWithObject:@"com.karelia.sandvox.RawHTML"]; }
 
 @end
 
@@ -416,7 +416,7 @@ static SVGraphicFactory *sRawHTMLFactory;
         sMoreFactories = [[KSSortedMutableArray alloc] initWithSortDescriptors:sortDescriptors];
         
         
-        for (KTElementPlugInWrapper *aWrapper in [KTElementPlugInWrapper pageletPlugins])
+        for (KTElementPlugInWrapper *aWrapper in [KTElementPlugInWrapper elementPlugIns])
         {
             /*
             switch ([aWrapper category])
@@ -491,7 +491,11 @@ static SVGraphicFactory *sRawHTMLFactory;
 {
     OBPRECONDITION(factory);
     [sFactories addPointer:factory];
-    if ([factory identifier]) [sFactoriesByIdentifier setObject:factory forKey:[factory identifier]];
+    
+    for (NSString *identifier in [factory identifiers])
+    {
+        [sFactoriesByIdentifier setObject:factory forKey:identifier];
+    }
 }
 
 #pragma mark Shared Objects
@@ -753,7 +757,7 @@ static SVGraphicFactory *sRawHTMLFactory;
 
 - (BOOL)isIndex; { return NO; }
 
-- (NSString *)identifier { return nil; }
+- (NSArray *)identifiers { return nil; }
 - (Class)plugInClass; { return nil; }
 
 #pragma mark Pasteboard
@@ -786,7 +790,7 @@ static SVGraphicFactory *sRawHTMLFactory;
     [aCoder encodeObject:[self icon] forKey:@"icon"];
     [aCoder encodeInteger:[self priority] forKey:@"priority"];
     [aCoder encodeBool:[self isIndex] forKey:@"isIndex"];
-    [aCoder encodeObject:[self identifier] forKey:@"identifier"];
+    [aCoder encodeObject:[self identifiers] forKey:@"identifier"];
     [aCoder encodeObject:NSStringFromClass([self class]) forKey:@"plugInClass"];
 }
 

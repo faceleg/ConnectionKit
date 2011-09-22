@@ -667,6 +667,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                                               modelConfiguration:nil
                                                     storeOptions:nil
                                                            error:&error];
+        
         store = [self persistentStore];
     }
     else if (saveOp != NSSaveOperation)
@@ -674,14 +675,18 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         // Fake a placeholder file ready for the store to save over
         result = [[NSData data] writeToURL:URL options:0 error:&error];
     }
-    if (result) [coordinator setURL:URL forPersistentStore:store];
+    
+    if (!result) return NO;
+    
+    
+    [coordinator setURL:URL forPersistentStore:store];
     
     
     // Now we're sure store is available, can give it some metadata.
     // If this fails, it's not critical, so carry on, but do report exceptions after the save. #134115
     @try
     {
-        if (result && saveOp != NSAutosaveOperation)
+        if (saveOp != NSAutosaveOperation)
         {
             [self setMetadataForPersistentStore:store error:&error];
         }
@@ -689,22 +694,33 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     @finally
     {
         // Do the save
-        if (result) result = [context save:&error];
-        
-        
-        // For regular docs, overwrite the version hashes so it looks like an original Sandvox 2.0 document
-        if (saveOp != NSAutosaveOperation)
+        if (!(result = [context save:&error]) && saveOp != NSAutosaveOperation)
         {
-            NSString *hashesPath = [[NSBundle mainBundle] pathForResource:@"VersionHashes2_0" ofType:@"plist"];
-            NSDictionary *hashes_2_0 = [NSDictionary dictionaryWithContentsOfFile:hashesPath];
-            if (hashes_2_0)
+            // Validation error that we could perhaps recover from?
+            NSArray *errors = [[error userInfo] objectForKey:NSDetailedErrorsKey];
+            for (NSError *anError in errors)
             {
-                NSDictionary *metadata = [coordinator metadataForPersistentStore:store];
-                
-                metadata = [metadata ks_dictionaryBySettingObject:hashes_2_0 forKey:NSStoreModelVersionHashesKey];
-                
-                [NSPersistentStoreCoordinator setMetadata:metadata forPersistentStoreOfType:NSBinaryStoreType URL:URL error:NULL];
+                if ([[anError domain] isEqualToString:NSCocoaErrorDomain] &&
+                    [anError code] == NSValidationMissingMandatoryPropertyError)
+                {
+                    NSManagedObject *object = [[anError userInfo] objectForKey:NSValidationObjectErrorKey];
+                    NSString *key = [[anError userInfo] objectForKey:NSValidationKeyErrorKey];
+                    
+                    if (key && [object isKindOfClass:[NSManagedObject class]])
+                    {
+                        NSRelationshipDescription *relationship = [[[object entity] relationshipsByName] objectForKey:key];
+                        if ([[relationship inverseRelationship] deleteRule] == NSCascadeDeleteRule)
+                        {
+                            // The object has been orphaned from its owner, so should be deletable. e.g. TextBoxBody in #142241
+                            NSManagedObjectContext *context = [object managedObjectContext];
+                            [context deleteObject:object];
+                            [context processPendingChanges];
+                        }
+                    }
+                }
             }
+            
+            result = [context save:&error];
         }
     }
     

@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KSPlugInWrapper.h"
+#import "SVPlugInWrapper.h"
 
 
 typedef enum {
@@ -24,14 +24,13 @@ typedef enum {
 @class SVPlugInGraphicFactory;
 
 
-@interface KTElementPlugInWrapper : KSPlugInWrapper
+@interface KTElementPlugInWrapper : SVPlugInWrapper
 {
 @private
     SVPlugInGraphicFactory    *_factory;
 }
 
-+ (NSSet *)pageletPlugins;
-+ (NSSet *)pagePlugins;
++ (NSSet *)elementPlugIns;
 
 // Inserts one item per known collection preset into aMenu at the specified index.
 + (NSSet *)collectionPresets;

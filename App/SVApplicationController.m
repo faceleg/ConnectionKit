@@ -888,13 +888,30 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		
 		
 		BOOL sufficient = (NSFoundationVersionNumber > 677.22 /* NSFoundationVersionNumber10_5_6 is 677.22 so we want higher. */);
-		
-		
+				
 		if (!sufficient)
 		{
 			NSRunCriticalAlertPanel(
 									@"",
 									NSLocalizedString(@"You will need to update Mac OS X 10.5.7 \\U201CLeopard\\U201D (or higher) for this version of Sandvox to function.", @""), 
+									NSLocalizedString(@"Quit", @"Quit button"),
+									nil,
+									nil
+									);
+			[NSApp terminate:nil];
+		}
+		
+		// This may or may not be needed, depending on what version of Safari/WebKit is installed in 10.5.7.  But this check
+		// will help us to know if we are using an old WebKit.
+		//
+		// (FWIW, 10.5.7 seems to come with WebKit version 5525.28.3 whatever that means!)
+		
+		sufficient = [DOMRange instancesRespondToSelector:@selector(intersectsNode:)];
+		if (!sufficient)
+		{
+			NSRunCriticalAlertPanel(
+									@"",
+									NSLocalizedString(@"You will need to update to a newer version of Safari for this version of Sandvox to function.", @""), 
 									NSLocalizedString(@"Quit", @"Quit button"),
 									nil,
 									nil
@@ -1489,18 +1506,18 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 
 - (IBAction)showAvailableDesigns:(id)sender;
 {
-	[self showDebugTableForObject:[KSPlugInWrapper pluginsWithFileExtension:kKTDesignExtension]
+	[self showDebugTableForObject:[KSPlugInWrapper pluginsByIdentifierWithFileExtension:kKTDesignExtension]
                            titled:@"Designs"];
 }
 
 
 - (IBAction)showAvailableComponents:(id)sender
 {
-	[self showDebugTableForObject:[KSPlugInWrapper pluginsWithFileExtension:kKTElementExtension]
+	[self showDebugTableForObject:[KSPlugInWrapper pluginsByIdentifierWithFileExtension:kKTElementExtension]
                            titled:@"Available Components: Element Bundles"];
-	[self showDebugTableForObject:[KSPlugInWrapper pluginsWithFileExtension:kKTIndexExtension]
+	[self showDebugTableForObject:[KSPlugInWrapper pluginsByIdentifierWithFileExtension:kKTIndexExtension]
 							titled:@"Available Components: Index Bundles"];
-	[self showDebugTableForObject:[KSPlugInWrapper pluginsWithFileExtension:kKTDesignExtension]
+	[self showDebugTableForObject:[KSPlugInWrapper pluginsByIdentifierWithFileExtension:kKTDesignExtension]
                            titled:@"Available Components: Design Bundles"];
 }
 

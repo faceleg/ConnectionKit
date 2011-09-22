@@ -91,10 +91,6 @@
 	{
 		return [NSNumber numberWithBool:NO];
 	}
-	else if ([key isEqualToString:@"KTElementSupportsPageletUsage"])
-	{
-		return [NSNumber numberWithBool:YES];
-	}
 	else if ([key isEqualToString:@"KTPageAllowsCallouts"])
 	{
 		return [NSNumber numberWithBool:NO];
@@ -166,50 +162,9 @@
 #pragma mark -
 #pragma mark Plugins List
 
-/*	Returns all registered plugins that are either:
- *		A) Of the svxPage plugin type
- *		B) Of the svxElement plugin type and support page usage
- */
-+ (NSSet *)pagePlugins
++ (NSSet *)elementPlugIns
 {
-	NSDictionary *pluginDict = [KSPlugInWrapper pluginsWithFileExtension:kKTElementExtension];
-	NSMutableSet *buffer = [NSMutableSet setWithCapacity:[pluginDict count]];
-	
-	NSEnumerator *pluginsEnumerator = [pluginDict objectEnumerator];
-	KSPlugInWrapper *aPlugin;
-	while (aPlugin = [pluginsEnumerator nextObject])
-	{
-		if ([[aPlugin pluginPropertyForKey:@"KTElementSupportsPageUsage"] boolValue])
-		{
-			[buffer addObject:aPlugin];
-		}
-	}
-	
-	NSSet *result = [NSSet setWithSet:buffer];
-	return result;
-}
-
-/*	Returns all registered plugins that are either:
- *		A) Of the svxPagelet plugin type
- *		B) Of the svxElement plugin type and support pagelet usage
- */
-+ (NSSet *)pageletPlugins
-{
-	NSDictionary *pluginDict = [KSPlugInWrapper pluginsWithFileExtension:kKTElementExtension];
-	NSMutableSet *buffer = [NSMutableSet setWithCapacity:[pluginDict count]];
-	
-	NSEnumerator *pluginsEnumerator = [pluginDict objectEnumerator];
-	KSPlugInWrapper *aPlugin;
-	while (aPlugin = [pluginsEnumerator nextObject])
-	{
-		if ([[aPlugin pluginPropertyForKey:@"KTElementSupportsPageletUsage"] boolValue])
-		{
-			[buffer addObject:aPlugin];
-		}
-	}
-	
-	NSSet *result = [NSSet setWithSet:buffer];
-	return result;
+	return [KSPlugInWrapper pluginsWithFileExtension:kKTElementExtension];
 }
 
 #pragma mark Collection Presets
@@ -220,7 +175,7 @@
 	
     
     // Go through and get the localized names of each bundle, and put into a dict keyed by name
-    NSDictionary *plugins = [KSPlugInWrapper pluginsWithFileExtension:kKTElementExtension];
+    NSSet *plugins = [KSPlugInWrapper pluginsWithFileExtension:kKTElementExtension];
     NSEnumerator *enumerator = [plugins objectEnumerator];	// go through each plugin.
     KTElementPlugInWrapper *plugin;
     

@@ -25,7 +25,13 @@
 
 + (NSPredicate *)includeInIndexAndPublishPredicate;
 + (NSSet *)sortedChildrenDependentChildrenKeys;
+
 - (NSArray *)sortDescriptorsForCollectionSortType:(SVCollectionSortOrder)sortType ascending:(BOOL)ascending;
++ (NSArray *)unsortedPagesSortDescriptors;
++ (NSArray *)alphabeticalTitleTextSortDescriptorsAscending:(BOOL)ascending;
++ (NSArray *)dateCreatedSortDescriptorsAscending:(BOOL)ascending;
++ (NSArray *)dateModifiedSortDescriptorsAscending:(BOOL)ascending;
+
 
 @end
 
@@ -245,13 +251,19 @@
  */
 - (NSArray *)sortDescriptorsForCollectionSortType:(SVCollectionSortOrder)sortType ascending:(BOOL)ascending;
 {
-	NSArray *result;
+	if (sortType == SVCollectionSortOrderUnspecified)
+    {
+        sortType = [[self collectionSortOrder] integerValue];
+    }
+    
+    return [[self class] sortDescriptorsForCollectionOrder:sortType ascending:ascending];
+}
+
++ (NSArray *)sortDescriptorsForCollectionOrder:(SVCollectionSortOrder)sortType ascending:(BOOL)ascending;
+{
+    NSArray *result;
 	switch (sortType)
 	{
-		case SVCollectionSortOrderUnspecified:	// Use whatever is currently selected for this collection
-			result = [self sortDescriptorsForCollectionSortType:[[self collectionSortOrder] integerValue]
-                                                      ascending:ascending];
-			break;
 		case SVCollectionSortAlphabetically:
 			result = [KTPage alphabeticalTitleTextSortDescriptorsAscending:ascending];
 			break;
@@ -262,11 +274,13 @@
 			result = [KTPage dateModifiedSortDescriptorsAscending:ascending];
 			break;
 		default:
-			result = [KTPage unsortedPagesSortDescriptors];	// use the "childIndex" values
+			result = [NSArray array];
 			break;
 	}
 	
-	return result;
+    // Fallback to sorting by custom order, and then ID. #139630
+	result = [result arrayByAddingObjectsFromArray:[KTPage unsortedPagesSortDescriptors]];  // use the "childIndex" values
+    return result;
 }
 
 + (NSArray *)unsortedPagesSortDescriptors;
@@ -276,7 +290,9 @@
 	if (!result)
 	{
 		NSSortDescriptor *orderingDescriptor = [[NSSortDescriptor alloc] initWithKey:@"childIndex" ascending:YES];
-		result = [[NSArray alloc] initWithObjects:orderingDescriptor, nil];
+        NSSortDescriptor *fallbackDescriptor = [[NSSortDescriptor alloc] initWithKey:@"identifier" ascending:YES];
+		result = [[NSArray alloc] initWithObjects:orderingDescriptor, fallbackDescriptor, nil];
+        [fallbackDescriptor release];
 		[orderingDescriptor release];
 	}
 	
@@ -388,51 +404,6 @@
 		[orderingDescriptor release];
 	}
 	
-	return result;
-}
-
-/*! returns a suggested ordering value for inserting aProposedChild
-	based on aSortType -- used for intra-app dragging */
-- (int)proposedOrderingForProposedChild:(id)aProposedChild
-							   sortType:(SVCollectionSortOrder)aSortType
-                              ascending:(BOOL)ascending;
-{
-    NSSet *values = [self childItems];
-	
-	if (0 == [values count])
-	{
-		// if there are no other children, stick aProposedChild at the top
-		return 0;
-	}
-	
-	int result = 0;
-	// copy the array
-	NSMutableArray *childArray = [[values allObjects] mutableCopy];
-	// stick aProposedChild in the array
-	[childArray addObject:aProposedChild];
-	// sort it
-	NSArray *descriptors = nil;
-	switch ( aSortType )
-	{
-		case SVCollectionSortAlphabetically:
-			descriptors = [KTPage alphabeticalTitleTextSortDescriptorsAscending:ascending];
-			break;
-		case SVCollectionSortByDateCreated:
-			descriptors = [KTPage dateCreatedSortDescriptorsAscending:ascending];
-			break;
-		case SVCollectionSortByDateModified:
-			descriptors = [KTPage dateModifiedSortDescriptorsAscending:ascending];
-			break;
-		default:
-			descriptors = [KTPage orderingSortDescriptors];	// use the "ordering" values
-			break;
-	}
-	[childArray sortUsingDescriptors:descriptors];
-	// return the index of aProposedChild in the sorted array
-	result = [childArray indexOfObject:aProposedChild];
-	[childArray release];
-	
-	//LOG((@"return proposed child drop index: %i", result));
 	return result;
 }
 

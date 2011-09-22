@@ -111,7 +111,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
     }
     else
     {
-        return SVLocalizedString(@"Enter your email address in the Inspector", "");
+        return SVLocalizedString(@"Enter your email address in the Inspector. (This form is not encrypted. It is not intended to be used for the collection of confidential information.)", "");
     }
 }
 
@@ -166,9 +166,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
         
         //  last resort, try English
         if (!localizedStrings) localizedStrings = [localizations objectForKey:@"en"];
-        
-        
-        
+                
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 		
         // Set up default bunch of fields
@@ -207,7 +205,9 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 		[aField release];
 		
 		[self setFields:fields];
-	}
+
+		[localizations release];
+}
 }
 
 @synthesize sendButtonTitle = _sendButtonTitle;
@@ -284,10 +284,11 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	NSString *passwordString = [defaults objectForKey:@"mailmePassword"];
 	if (nil == passwordString)
 	{
-		passwordString = CONTACT_PASSWORD;
+		passwordString = CONTACT_PASSWORD_SHORT;		// DES needs a shorter password?
 	}
 	
-	NSData *encryptedAddress = [mailData dataEncryptedWithPassword:passwordString algorithm:kCCAlgorithm3DES options:kCCOptionPKCS7Padding];
+	NSData *encryptedAddress = [mailData dataEncryptedWithPassword:passwordString algorithm:kCCAlgorithmDES options:kCCOptionPKCS7Padding];
+		// use DES, lower key size, so we don't have to deal with reporting strong encryption here.
 	NSString *result = nil;
 	if (encryptedAddress)
 	{
