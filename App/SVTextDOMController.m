@@ -392,7 +392,7 @@
         [[[self HTMLElement] documentView] insertLineBreak:self];
 		result = YES;
 	}
-    else
+    else if (selector != @selector(delete:) && selector != @selector(deleteForward:))
     {
         // Generally don't want to pass up the responder chain. #94455
         result = [self respondsToSelector:selector];
