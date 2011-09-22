@@ -1,8 +1,9 @@
 
+///// NOTE: always build png2icon on Snow Leopard, rather than Lion for libpng compatibility
 TJT rebuilt binary for MAS (i386) on 19 Sept 2011
 
 png2ico requires libpng to build. libpng is included in /usr/X11 in 10.6/10.7 so Makefile was adjusted to use that location for headers and linking.
-
+all you need to do is 'make clean; make' in this directory
 
 DJW's original notes on building fat:
 
