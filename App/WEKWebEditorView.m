@@ -2182,8 +2182,8 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     SEL action = [item action];
     
     
-    id target = [(WEKWebEditorItem *)_focusedText ks_targetForAction:action];
-    if (target)
+    id target = [[self firstResponderItem] ks_targetForAction:action];
+    if (target && target != self)
     {
         if ([target conformsToProtocol:@protocol(NSUserInterfaceValidations)])
         {
