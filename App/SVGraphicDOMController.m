@@ -31,7 +31,7 @@
 
 - (BOOL)elementIsPlaceholder:(DOMElement *)element;
 {
-    return (![element hasChildNodes] && ![[element tagName] isEqualToString:@"IMG"]);
+    return (![element firstElementChild] && ![[element tagName] isEqualToString:@"IMG"]);
 }
 
 - (void)setHTMLElement:(DOMHTMLElement *)element;
