@@ -9,7 +9,7 @@
 	<key>NSHumanReadableCopyright</key>
 	<string>© 2004-2011 Karelia Software. All Rights Reserved.</string>
 	<key>CFBundleIdentifier</key>
-	<string>sandvox.${PROJECT_NAME}</string>
+	<string>com.karelia.Sandvox.plugin.${PRODUCT_NAME}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -26,6 +26,10 @@
 	<string>REPLACE_ME</string>
 	<key>SVMinimumAppVersion</key>
 	<string>2.0</string>
+	<key>SVAlternateIdentifiers</key>
+	<array>
+		<string>sandvox.${PROJECT_NAME}</string>
+	</array>
 	<key>KTCSSClassName</key>
 	<string>Movie</string>
 	<key>SVPlugInIconPath</key>

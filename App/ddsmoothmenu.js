@@ -61,8 +61,12 @@ buildmenu:function($, setting){
 		/* 2010-08-01, ssp:
 			Use really high z-index, so we are sure to exceed z-indices used in all designs.
 		*/
-		var $curobj=$(this).css({zIndex: 6000-i}) //reference current LI header
-		var $subul=$(this).find('ul:eq(0)').css({display:'block'})
+		var $curobj = $(this);
+		/* 2011-09-22, ssp:
+			Opera doesn’t render the submenu items when the z-index line has run, so omit it there.
+		*/
+		if (!$.browser.opera) $curobj.css({'zIndex': 6000-i}); //reference current LI header
+		var $subul=$curobj.find('ul:eq(0)').css({display:'block'});
 		$subul.data('timers', {})
 		this._dimensions={w:this.offsetWidth, h:this.offsetHeight, subulw:$subul.outerWidth(), subulh:$subul.outerHeight()}
 		this.istopheader=$curobj.parents("ul").length==1? true : false //is top level header?

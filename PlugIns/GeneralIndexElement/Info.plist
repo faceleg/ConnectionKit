@@ -6,10 +6,8 @@
 	<string>en</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
-	<key>NSHumanReadableCopyright</key>
-	<string>© 2004-2011 Karelia Software. All Rights Reserved.</string>
 	<key>CFBundleIdentifier</key>
-	<string>sandvox.${PROJECT_NAME}</string>
+	<string>com.karelia.Sandvox.plugin.${PRODUCT_NAME}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -22,31 +20,33 @@
 	<string>Svox</string>
 	<key>CFBundleVersion</key>
 	<string>REPLACE_ME</string>
-	<key>SVMinimumAppVersion</key>
-	<string>2.0</string>
-	<key>SVPlugInIsIndex</key>
-	<true/>
 	<key>KTPageIconName</key>
 	<string>page_blog_sb.tiff</string>
-	<key>SVPlugInIconPath</key>
-	<string>object_summaries.tiff</string>
-	<key>KTPluginName</key>
-	<string>Tiles &amp; Summaries</string>
-	<key>KTPluginPriority</key>
-	<integer>1</integer>
 	<key>KTPluginInitialProperties</key>
 	<dict>
 		<key>hyperlinkTitles</key>
 		<true/>
+		<key>indexLayoutType</key>
+		<integer>275</integer>
+		<key>maxItemLength</key>
+		<integer>999999</integer>
 		<key>showPermaLinks</key>
 		<true/>
 		<key>showTimestamps</key>
 		<true/>
-		<key>maxItemLength</key>
-		<integer>999999</integer>
-		<key>indexLayoutType</key>
-		<integer>275</integer>
 	</dict>
+	<key>KTPluginName</key>
+	<string>Tiles &amp; Summaries</string>
+	<key>KTPluginPriority</key>
+	<integer>1</integer>
+	<key>NSHumanReadableCopyright</key>
+	<string>© 2004-2011 Karelia Software. All Rights Reserved.</string>
+	<key>NSPrincipalClass</key>
+	<string>${PROJECT_NAME}</string>
+	<key>SVAlternateIdentifiers</key>
+	<array>
+		<string>sandvox.${PROJECT_NAME}</string>
+	</array>
 	<key>SVIndexMasters</key>
 	<array>
 		<dict>
@@ -63,24 +63,28 @@
 				<key>title</key>
 				<string>First Post</string>
 			</dict>
-			<key>SVPageProperties</key>
-			<dict>
-				<key>navigationArrowsStyle</key>
-				<integer>2</integer>
-				<key>collectionSortOrder</key>
-				<integer>2</integer>
-				<key>collectionSortAscending</key>
-				<false/>
-				<key>collectionSyndicationType</key>
-				<true/>
-			</dict>
 			<key>SVMasterDisplayName</key>
 			<string>Blog</string>
 			<key>SVMasterPageTitle</key>
 			<string>Blog</string>
+			<key>SVPageProperties</key>
+			<dict>
+				<key>collectionSortAscending</key>
+				<false/>
+				<key>collectionSortOrder</key>
+				<integer>2</integer>
+				<key>collectionSyndicationType</key>
+				<true/>
+				<key>navigationArrowsStyle</key>
+				<integer>2</integer>
+			</dict>
 		</dict>
 	</array>
-	<key>NSPrincipalClass</key>
-	<string>${PROJECT_NAME}</string>
+	<key>SVMinimumAppVersion</key>
+	<string>2.0</string>
+	<key>SVPlugInIconPath</key>
+	<string>object_summaries.tiff</string>
+	<key>SVPlugInIsIndex</key>
+	<true/>
 </dict>
 </plist>
