@@ -67,7 +67,7 @@ typedef NSUInteger SVPlugInPasteboardReadingOptions;
 - (BOOL)isIndex;
 
 // Plug-ins
-@property(nonatomic, retain, readonly) NSString *identifier;
+@property(nonatomic, retain, readonly) NSArray *identifiers;
 @property(nonatomic, retain, readonly) Class plugInClass;
 
 

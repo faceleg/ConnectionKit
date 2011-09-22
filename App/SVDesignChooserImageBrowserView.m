@@ -84,7 +84,14 @@
 	}
 	[self setCellsStyleMask:IKCellsStyleShadowed|IKCellsStyleTitled|IKCellsStyleSubtitled];
 	[self setConstrainsToOriginalSize:YES];	// Nothing seems to happen here
-	[self setCellSize:NSMakeSize(120,100)];	// a bit wider to allow for 4 columns.  EMPIRICAL - not too small to shrink, not to big to allow > 100x65 sizes
+	if (NSAppKitVersionNumber <= 1038 + 1)		// 1038.36=10.6.8.   10_6 is not defined in that SDK.  Note: 1138 = 10.7.1
+	{
+		[self setCellSize:NSMakeSize(120,100)];	// EMPIRICAL - not too small to shrink, not to big to allow > 100x65 sizes
+	}
+	else	// Lion behaves differently...
+	{
+		[self setCellSize:NSMakeSize(120, 65)];	// Unfortunately it's too crowded vertically.
+	}
 }
 
 

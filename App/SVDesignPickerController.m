@@ -116,9 +116,7 @@
 {
     if (!_loading)
     {
-        _loading = YES;
         [self view];    // make sure it's loaded
-        _loading = NO;
     }
     
     return _designsController;
@@ -330,7 +328,9 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 
 - (void)loadView;
 {
+    _loading = YES;
     [super loadView];
+    _loading = NO;
     
     [[[self browserViewController] imageBrowser] reloadData];
     if (_design) [[self designsController] setSelectedObjects:[NSArray arrayWithObject:_design]];
