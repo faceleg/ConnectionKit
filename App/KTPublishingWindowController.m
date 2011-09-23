@@ -369,53 +369,56 @@ static void *sEngineFinishedObservationContext = &sEngineFinishedObservationCont
  */
 - (void)publishingEngine:(KTPublishingEngine *)engine didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge;
 {
-    if ([challenge previousFailureCount] == 0)
+    // In the event of giving up on auth, cancel the engine *NOT* the challenge, since for protocols WebDAV, cancelling the challenge might just cause it to move onto the next file, rather than stopping the entire connection
+    
+    if ([challenge previousFailureCount] > 0)
 	{
-		KTHostProperties *hostProperties = [[engine site] hostProperties];
-		
-		NSString *user = [hostProperties valueForKey:@"userName"];
-		BOOL isSFTPWithPublicKey = ([[[challenge protectionSpace] protocol] isEqualToString:@"ssh"] &&
-									[[hostProperties valueForKey:@"usePublicKey"] intValue] == NSOnState);
-		
-		if (isSFTPWithPublicKey)
-		{
-            [[challenge sender] useCredential:[NSURLCredential ck2_SSHAgentCredentialWithUser:user]
-                   forAuthenticationChallenge:challenge];
-		}
-		else
-		{
-			NSURLCredential *credential = [[KTURLCredentialStorage sharedCredentialStorage] credentialForUser:user
-                                                                                              protectionSpace:[challenge protectionSpace]];
-            
-            if (credential && [credential password])
-            {
-                [[challenge sender] useCredential:credential forAuthenticationChallenge:challenge];
-            }
-            else
-            {
-                NSError *error = [KSError errorWithDomain:KTPublishingEngineErrorDomain
-                                                     code:KTPublishingEngineErrorNoCredentialForAuthentication
-                                     localizedDescription:NSLocalizedString(@"Username or password could not be found.", @"Publishing engine authentication error")
-                              localizedRecoverySuggestion:NSLocalizedString(@"Please run the Host Setup Assistant and re-enter your host's login credentials.", @"Publishing engine authentication error")
-                                          underlyingError:[challenge error]];
-                
-                [[challenge sender] cancelAuthenticationChallenge:challenge]; // might dealloc challenge
-                
-                [self publishingEngine:engine didFailWithError:error];
-            }
-        }
-	}
-	else
-    {
         NSError *error = [KSError errorWithDomain:KTPublishingEngineErrorDomain
 											 code:KTPublishingEngineErrorAuthenticationFailed
 							 localizedDescription:NSLocalizedString(@"Authentication failed.", @"Publishing engine authentication error")
 					  localizedRecoverySuggestion:NSLocalizedString(@"Please run the Host Setup Assistant again to test your host setup.", @"Publishing engine authentication error")
 								  underlyingError:[challenge error]];
         
-		[[challenge sender] cancelAuthenticationChallenge:challenge]; // might dealloc challenge
+        [engine cancel];
         
         [self publishingEngine:engine didFailWithError:error];
+        return;
+    }
+    
+    
+    KTHostProperties *hostProperties = [[engine site] hostProperties];
+    
+    NSString *user = [hostProperties valueForKey:@"userName"];
+    BOOL isSFTPWithPublicKey = ([[[challenge protectionSpace] protocol] isEqualToString:@"ssh"] &&
+                                [[hostProperties valueForKey:@"usePublicKey"] intValue] == NSOnState);
+    
+    if (isSFTPWithPublicKey)
+    {
+        [[challenge sender] useCredential:[NSURLCredential ck2_SSHAgentCredentialWithUser:user]
+               forAuthenticationChallenge:challenge];
+    }
+    else
+    {
+        NSURLCredential *credential = [[KTURLCredentialStorage sharedCredentialStorage] credentialForUser:user
+                                                                                          protectionSpace:[challenge protectionSpace]];
+        
+        if (credential && [credential password])
+        {
+            [[challenge sender] useCredential:credential forAuthenticationChallenge:challenge];
+        }
+        else
+        {
+            NSError *error = [KSError errorWithDomain:KTPublishingEngineErrorDomain
+                                                 code:KTPublishingEngineErrorNoCredentialForAuthentication
+                                 localizedDescription:NSLocalizedString(@"Username or password could not be found.", @"Publishing engine authentication error")
+                          localizedRecoverySuggestion:NSLocalizedString(@"Please run the Host Setup Assistant and re-enter your host's login credentials.", @"Publishing engine authentication error")
+                                      underlyingError:[challenge error]];
+            
+            
+            [engine cancel];
+            
+            [self publishingEngine:engine didFailWithError:error];
+        }
     }
 }
 
