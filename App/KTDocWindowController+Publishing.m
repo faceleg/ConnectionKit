@@ -295,8 +295,11 @@
     
     NSString *exportDirectoryPath = [[[self document] lastExportDirectory] path];
     
+    NSString *filename = [exportDirectoryPath lastPathComponent];
+    if (!filename) filename = [[[[self document] fileURL] ks_lastPathComponent] stringByDeletingPathExtension];
+    
     [savePanel beginSheetForDirectory:[exportDirectoryPath stringByDeletingLastPathComponent]
-                                 file:[exportDirectoryPath lastPathComponent]
+                                 file:filename
                        modalForWindow:[self window]
                         modalDelegate:self
                        didEndSelector:@selector(exportSiteSavePanelDidEnd:returnCode:contextInfo:)
