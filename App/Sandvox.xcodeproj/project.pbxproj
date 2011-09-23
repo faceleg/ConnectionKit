@@ -1903,8 +1903,6 @@
 		273DD20710CC74AA003CCE97 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CollectionInspector.xib; sourceTree = "<group>"; };
 		273FA58914209E580051E616 /* DAVKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DAVKit.xcodeproj; path = ../Code/DAVKit/DAVKit.xcodeproj; sourceTree = SOURCE_ROOT; };
 		273FA5BF1420A1B00051E616 /* DAVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DAVKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		273FA62B1420A7100051E616 /* SVWebDAVPublishingEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebDAVPublishingEngine.h; sourceTree = "<group>"; };
-		273FA62C1420A7100051E616 /* SVWebDAVPublishingEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebDAVPublishingEngine.m; sourceTree = "<group>"; };
 		273FA6BC1420B2790051E616 /* CK2WebDAVConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CK2WebDAVConnection.h; sourceTree = "<group>"; };
 		273FA6BD1420B2790051E616 /* CK2WebDAVConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CK2WebDAVConnection.m; sourceTree = "<group>"; };
 		27403DFD130D72D3001006D6 /* SVMigrationDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMigrationDocument.h; sourceTree = "<group>"; };
@@ -1955,8 +1953,6 @@
 		2755279B10546D990037524C /* KSSelectionBorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSSelectionBorder.m; sourceTree = "<group>"; };
 		2756662D0F00760800878A05 /* KTURLCredentialStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTURLCredentialStorage.h; sourceTree = "<group>"; };
 		2756662E0F00760800878A05 /* KTURLCredentialStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTURLCredentialStorage.m; sourceTree = "<group>"; };
-		275666EB0F015E8300878A05 /* KTMobileMePublishingEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMobileMePublishingEngine.h; sourceTree = "<group>"; };
-		275666EC0F015E8300878A05 /* KTMobileMePublishingEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMobileMePublishingEngine.m; sourceTree = "<group>"; };
 		2756671D0F0167C700878A05 /* KTDocWindowController+Publishing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+Publishing.m"; sourceTree = "<group>"; };
 		27579A2F132BAAE00006C605 /* KSMutableDataWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMutableDataWriter.h; sourceTree = "<group>"; };
 		27579A30132BAAE00006C605 /* KSMutableDataWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMutableDataWriter.m; sourceTree = "<group>"; };
@@ -3505,8 +3501,6 @@
 		273FA62A1420A6EE0051E616 /* WebDAV */ = {
 			isa = PBXGroup;
 			children = (
-				273FA62B1420A7100051E616 /* SVWebDAVPublishingEngine.h */,
-				273FA62C1420A7100051E616 /* SVWebDAVPublishingEngine.m */,
 				273FA6BC1420B2790051E616 /* CK2WebDAVConnection.h */,
 				273FA6BD1420B2790051E616 /* CK2WebDAVConnection.m */,
 			);
@@ -3932,8 +3926,6 @@
 				279FF2BD0EF27699009F6A16 /* KTPublishingEngine.m */,
 				2797B71C0EF91E2B00F91398 /* KTExportEngine.h */,
 				2797B71D0EF91E2B00F91398 /* KTExportEngine.m */,
-				275666EB0F015E8300878A05 /* KTMobileMePublishingEngine.h */,
-				275666EC0F015E8300878A05 /* KTMobileMePublishingEngine.m */,
 				27BCCCA00F09609E00B06B35 /* KTRemotePublishingEngine.h */,
 				27BCCCA10F09609E00B06B35 /* KTRemotePublishingEngine.m */,
 				277FDC3711CD3F810083F1BF /* SVPublishDataWriter.h */,
