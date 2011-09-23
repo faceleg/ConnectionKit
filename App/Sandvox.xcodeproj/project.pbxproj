@@ -229,6 +229,9 @@
 		273DCFA010CBD5D3003CCE97 /* SVWebContentObjectsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273DCF9E10CBD5D3003CCE97 /* SVWebContentObjectsController.m */; };
 		273DCFF110CBDC10003CCE97 /* KSArrayController.h in Headers */ = {isa = PBXBuildFile; fileRef = 273DCFEF10CBDC10003CCE97 /* KSArrayController.h */; };
 		273DCFF210CBDC10003CCE97 /* KSArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273DCFF010CBDC10003CCE97 /* KSArrayController.m */; };
+		273FA5C01420A1B00051E616 /* DAVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 273FA5BF1420A1B00051E616 /* DAVKit.framework */; };
+		273FA6BE1420B2790051E616 /* CK2WebDAVConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 273FA6BC1420B2790051E616 /* CK2WebDAVConnection.h */; };
+		273FA6BF1420B2790051E616 /* CK2WebDAVConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 273FA6BD1420B2790051E616 /* CK2WebDAVConnection.m */; };
 		27403DFF130D72D3001006D6 /* SVMigrationDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 27403DFD130D72D3001006D6 /* SVMigrationDocument.h */; };
 		27403E00130D72D3001006D6 /* SVMigrationDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 27403DFE130D72D3001006D6 /* SVMigrationDocument.m */; };
 		27422441106A926E0058C8DA /* WEKWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2742243F106A926E0058C8DA /* WEKWebView.h */; };
@@ -276,8 +279,6 @@
 		2755279C10546D990037524C /* KSSelectionBorder.h in Headers */ = {isa = PBXBuildFile; fileRef = 2755279A10546D990037524C /* KSSelectionBorder.h */; };
 		2755279D10546D990037524C /* KSSelectionBorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 2755279B10546D990037524C /* KSSelectionBorder.m */; };
 		275666510F007B6200878A05 /* KTURLCredentialStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2756662E0F00760800878A05 /* KTURLCredentialStorage.m */; };
-		275666ED0F015E8400878A05 /* KTMobileMePublishingEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 275666EB0F015E8300878A05 /* KTMobileMePublishingEngine.h */; };
-		275666EE0F015E8400878A05 /* KTMobileMePublishingEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 275666EC0F015E8300878A05 /* KTMobileMePublishingEngine.m */; };
 		2756671E0F0167C700878A05 /* KTDocWindowController+Publishing.m in Sources */ = {isa = PBXBuildFile; fileRef = 2756671D0F0167C700878A05 /* KTDocWindowController+Publishing.m */; };
 		27579A31132BAAE00006C605 /* KSMutableDataWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 27579A2F132BAAE00006C605 /* KSMutableDataWriter.h */; };
 		27579A32132BAAE00006C605 /* KSMutableDataWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 27579A30132BAAE00006C605 /* KSMutableDataWriter.m */; };
@@ -749,6 +750,7 @@
 		3CF948BD0D624A1100B1C83D /* getSafariFrontmostFeed.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 3CF941FE0D623F1500B1C83D /* getSafariFrontmostFeed.scpt */; };
 		3CF948BE0D624A1200B1C83D /* getSafariFrontmostPage.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 3CF941FF0D623F1900B1C83D /* getSafariFrontmostPage.scpt */; };
 		3CFACFBE07E899160060E5C4 /* SVApplicationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D1907DFC0AA00DE4994 /* SVApplicationController.m */; };
+		3CFCE7C4142A84F40096CB15 /* DAVKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 273FA59214209E580051E616 /* DAVKit.framework */; };
 		775DFF38067A968500C5B868 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
 		796C9CB909D26DF9003BFA3B /* KTPulsatingOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 796C9CB709D26DF8003BFA3B /* KTPulsatingOverlay.m */; };
 		79D35F9D0974C84000241EDA /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79D35F950974C84000241EDA /* Growl.framework */; };
@@ -1289,6 +1291,27 @@
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = AmazonElement;
 		};
+		273FA59114209E580051E616 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 273FA58914209E580051E616 /* DAVKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = DAVKit;
+		};
+		273FA59314209E580051E616 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 273FA58914209E580051E616 /* DAVKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C9FF77EC121C6F51001250C7;
+			remoteInfo = Tests;
+		};
+		273FA59514209E9C0051E616 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 273FA58914209E580051E616 /* DAVKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteInfo = DAVKit;
+		};
 		274E827F0D627180004F89C2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3F147C09D521AE00C01EED /* MetaMarvel.xcodeproj */;
@@ -1746,6 +1769,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				3CFCE7C4142A84F40096CB15 /* DAVKit.framework in Copy Frameworks */,
 				CED8650910AA45AF002DF34F /* iMedia.framework in Copy Frameworks */,
 				CE22713C12A086B6002E7795 /* ObjectiveFlickr.framework in Copy Frameworks */,
 				3CE2CA510D6D54B300B2D56B /* AmazonSupport.framework in Copy Frameworks */,
@@ -1912,6 +1936,12 @@
 		273DCFEF10CBDC10003CCE97 /* KSArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSArrayController.h; sourceTree = "<group>"; };
 		273DCFF010CBDC10003CCE97 /* KSArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSArrayController.m; sourceTree = "<group>"; };
 		273DD20710CC74AA003CCE97 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CollectionInspector.xib; sourceTree = "<group>"; };
+		273FA58914209E580051E616 /* DAVKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DAVKit.xcodeproj; path = ../Code/DAVKit/DAVKit.xcodeproj; sourceTree = SOURCE_ROOT; };
+		273FA5BF1420A1B00051E616 /* DAVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DAVKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		273FA62B1420A7100051E616 /* SVWebDAVPublishingEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebDAVPublishingEngine.h; sourceTree = "<group>"; };
+		273FA62C1420A7100051E616 /* SVWebDAVPublishingEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebDAVPublishingEngine.m; sourceTree = "<group>"; };
+		273FA6BC1420B2790051E616 /* CK2WebDAVConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CK2WebDAVConnection.h; sourceTree = "<group>"; };
+		273FA6BD1420B2790051E616 /* CK2WebDAVConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CK2WebDAVConnection.m; sourceTree = "<group>"; };
 		27403DFD130D72D3001006D6 /* SVMigrationDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMigrationDocument.h; sourceTree = "<group>"; };
 		27403DFE130D72D3001006D6 /* SVMigrationDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMigrationDocument.m; sourceTree = "<group>"; };
 		2742243F106A926E0058C8DA /* WEKWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEKWebView.h; sourceTree = "<group>"; };
@@ -3225,6 +3255,7 @@
 				CEE1BE67117D2299002AA67D /* Symbolication.framework in Frameworks */,
 				CEF2889F11CC2D7300122D03 /* JSTalk.framework in Frameworks */,
 				3C48038D13FB737A00E9F309 /* libssh2.dylib in Frameworks */,
+				273FA5C01420A1B00051E616 /* DAVKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3542,6 +3573,26 @@
 			name = KSSelectionBorder;
 			path = ../../KSSelectionBorder;
 			sourceTree = SOURCE_ROOT;
+		};
+		273FA58A14209E580051E616 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				273FA59214209E580051E616 /* DAVKit.framework */,
+				273FA59414209E580051E616 /* Tests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		273FA62A1420A6EE0051E616 /* WebDAV */ = {
+			isa = PBXGroup;
+			children = (
+				273FA62B1420A7100051E616 /* SVWebDAVPublishingEngine.h */,
+				273FA62C1420A7100051E616 /* SVWebDAVPublishingEngine.m */,
+				273FA6BC1420B2790051E616 /* CK2WebDAVConnection.h */,
+				273FA6BD1420B2790051E616 /* CK2WebDAVConnection.m */,
+			);
+			name = WebDAV;
+			sourceTree = "<group>";
 		};
 		27409DFC0DEC685300C2387E /* Data Migration */ = {
 			isa = PBXGroup;
@@ -4383,6 +4434,7 @@
 				CEC11A2E0D78BE0100513E70 /* Shared */,
 				3C202DF507E00CCC00DE4994 /* Product Dependencies */,
 				19C28FB0FE9D524F11CA2CBB /* Products */,
+				273FA5BF1420A1B00051E616 /* DAVKit.framework */,
 			);
 			name = Marvel;
 			sourceTree = "<group>";
@@ -4519,6 +4571,7 @@
 				27AE74720EEDE6AD00409D80 /* Publishing Engine */,
 				275666F10F015E9900878A05 /* Publishing UI */,
 				27AE74710EEDE68600409D80 /* Host Properties */,
+				273FA62A1420A6EE0051E616 /* WebDAV */,
 				27FD6A6413C08AFD00E9D407 /* SFTP */,
 				27FD6A6313C08AD600E9D407 /* libssh2 */,
 			);
@@ -4583,6 +4636,7 @@
 		3C202DF507E00CCC00DE4994 /* Product Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				273FA58914209E580051E616 /* DAVKit.xcodeproj */,
 				3CA9FD200D63A06A00815310 /* Indexes */,
 				3CA9FD350D63A08000815310 /* Elements */,
 				3CA9FD410D63A0B400815310 /* Frameworks */,
@@ -6139,7 +6193,6 @@
 				2797B4BA0EF6E63900F91398 /* KTExportSavePanelController.h in Headers */,
 				2797B4BE0EF6E65E00F91398 /* KSURLFormatter.h in Headers */,
 				2797B71E0EF91E2B00F91398 /* KTExportEngine.h in Headers */,
-				275666ED0F015E8400878A05 /* KTMobileMePublishingEngine.h in Headers */,
 				27BCCCA20F09609E00B06B35 /* KTRemotePublishingEngine.h in Headers */,
 				270B67CE0F10E66900F6E076 /* KTPageDetailsController.h in Headers */,
 				2774DFAB0F16D87C0085A4D8 /* KTImageScalingURLProtocol.h in Headers */,
@@ -6386,6 +6439,7 @@
 				2789C744141C209D002B3994 /* WEKDOMRange.h in Headers */,
 				273B2108141EB8D1008AA7FD /* SVPlugInWrapper.h in Headers */,
 				27DD407D142C948400686D96 /* SVLoginWindowController.h in Headers */,
+				273FA6BE1420B2790051E616 /* CK2WebDAVConnection.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6430,6 +6484,7 @@
 			dependencies = (
 				3C535FFC13BC247F004222D5 /* PBXTargetDependency */,
 				27E87740140C18890027A738 /* PBXTargetDependency */,
+				273FA59614209E9C0051E616 /* PBXTargetDependency */,
 				CED864B110AA41DC002DF34F /* PBXTargetDependency */,
 				27B4129A13DF7F7F004173E8 /* PBXTargetDependency */,
 				3C1F512711D576D00036B375 /* PBXTargetDependency */,
@@ -6526,6 +6581,10 @@
 				{
 					ProductGroup = 27CFC643123E79A900BF018C /* Products */;
 					ProjectRef = 3C9B66250BFA818B007A4871 /* ContactElement.xcodeproj */;
+				},
+				{
+					ProductGroup = 273FA58A14209E580051E616 /* Products */;
+					ProjectRef = 273FA58914209E580051E616 /* DAVKit.xcodeproj */;
 				},
 				{
 					ProductGroup = 3C7C2B731219E5B7005D75B1 /* Products */;
@@ -6638,6 +6697,20 @@
 			fileType = wrapper.cfbundle;
 			path = Amazon.svxElement;
 			remoteRef = 272757311241468B0043C223 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		273FA59214209E580051E616 /* DAVKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = DAVKit.framework;
+			remoteRef = 273FA59114209E580051E616 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		273FA59414209E580051E616 /* Tests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = Tests.octest;
+			remoteRef = 273FA59314209E580051E616 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		279EDCAD13DDE8B40018EB82 /* AmazonSupport.framework */ = {
@@ -7685,7 +7758,6 @@
 				2797B4BF0EF6E65E00F91398 /* KSURLFormatter.m in Sources */,
 				2797B71F0EF91E2B00F91398 /* KTExportEngine.m in Sources */,
 				275666510F007B6200878A05 /* KTURLCredentialStorage.m in Sources */,
-				275666EE0F015E8400878A05 /* KTMobileMePublishingEngine.m in Sources */,
 				2756671E0F0167C700878A05 /* KTDocWindowController+Publishing.m in Sources */,
 				27BCCCA30F09609E00B06B35 /* KTRemotePublishingEngine.m in Sources */,
 				270B67CF0F10E66900F6E076 /* KTPageDetailsController.m in Sources */,
@@ -7931,6 +8003,7 @@
 				2789C745141C209D002B3994 /* WEKDOMRange.m in Sources */,
 				273B210A141EB8D1008AA7FD /* SVPlugInWrapper.m in Sources */,
 				27DD407E142C948400686D96 /* SVLoginWindowController.m in Sources */,
+				273FA6BF1420B2790051E616 /* CK2WebDAVConnection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7957,6 +8030,11 @@
 			isa = PBXTargetDependency;
 			name = AmazonElement;
 			targetProxy = 27275735124146B20043C223 /* PBXContainerItemProxy */;
+		};
+		273FA59614209E9C0051E616 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = DAVKit;
+			targetProxy = 273FA59514209E9C0051E616 /* PBXContainerItemProxy */;
 		};
 		274E82800D627180004F89C2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -8950,6 +9028,7 @@
 					"$(inherited)",
 					"\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../../../Developer/Builds/Products/Debug\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = (
@@ -8982,6 +9061,7 @@
 					"$(inherited)",
 					"\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../../../Developer/Builds/Products/Debug\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = (

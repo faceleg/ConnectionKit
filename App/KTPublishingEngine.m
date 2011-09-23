@@ -1153,7 +1153,7 @@ static void *sProgressObservationContext = &sProgressObservationContext;
     
     
     // In the event of failure, end page parsing and media URL connections
-    if (!didPublish)
+    if (!didPublish || [self isCancelled])
     {
         [NSObject cancelPreviousPerformRequestsWithTarget:self];
         

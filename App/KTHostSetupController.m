@@ -50,6 +50,7 @@ TO DO:
 
 #import <AddressBook/AddressBook.h>
 #import <Connection/Connection.h> // for CKAbstractConnection, ConnectionOpenPanel, EMKeychainItem, and EMKeychainProxy
+#import "CK2WebDAVConnection.h"
 
 #import <Security/Security.h>
 #import <sys/sysctl.h>
@@ -388,6 +389,18 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		if ([[[self properties] valueForKey:@"protocol"] isEqualToString:@".Mac"])
 		{
 			credential = [challenge proposedCredential];
+            if (!credential)
+            {
+                NSString *user, *password;
+                if ([CK2WebDAVConnection getDotMacAccountName:&user password:&password] &&
+                    [user length] &&
+                    [password length])
+                {
+                    credential = [NSURLCredential credentialWithUser:user
+                                                            password:password
+                                                         persistence:NSURLCredentialPersistencePermanent];
+                }
+            }
 		}
 		else
 		{
@@ -407,7 +420,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
                 {
                     credential = [NSURLCredential credentialWithUser:user
                                                             password:password
-                                                         persistence:NSURLCredentialPersistenceNone];
+                                                         persistence:NSURLCredentialPersistencePermanent];
                 }
             }
 		}
@@ -929,13 +942,12 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 	[self setConnectionData:[NSMutableData data]];	// HACK to start the progress indicator!
 		
-	id <CKConnection> connection = [[CKConnectionRegistry sharedConnectionRegistry] connectionWithName:[[self properties] valueForKey:@"protocol"]
-                                                                                                  host:[[self properties] valueForKey:@"hostName"]
-                                                                                                  port:[[self properties] valueForKey:@"port"]];
+    id <CKConnection> connection = [[CKConnectionRegistry sharedConnectionRegistry]
+                                    connectionWithRequest:[[self properties] connectionRequest]];
 	OBASSERT(connection);
     if (!connection) return;
     
-	[connection setName:@"Host Setup Test"];
+	//[connection setName:@"Host Setup Test"];
 	[self setTestConnection:connection];
 	[connection setDelegate:self];
 	[self appendConnectionProgressLine:YES format:NSLocalizedString(@"Contacting %@… ", "status message for test connection"), [[self properties] valueForKey:@"hostName"]];
@@ -1027,12 +1039,10 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	if (success)
 	{
 		NSString *subFolder = [[self properties] valueForKey:@"subFolder"];
+        
 		//we need to make sure all paths are created here including the docRoot
-		NSString *path = [[self properties] valueForKey:@"docRoot"];
-		if (subFolder  && ![subFolder isEqualToString:@""])
-		{
-			path = [path stringByAppendingPathComponent:subFolder];
-		}
+		NSString *path = [[self properties] documentRoot];
+		if ([subFolder length]) path = [path stringByAppendingPathComponent:subFolder];
 				
 		if (	(path && ![path isEqualToString:@""])
 				||	(subFolder  && ![subFolder isEqualToString:@""]) )
@@ -1048,7 +1058,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 				//[builtupPath appendFormat:@"%@/", curPath];	/// Old way that resulted in an erroneous trailing slash
 				builtupPath = [builtupPath stringByAppendingPathComponent:curPath];
 				LOG((@"Creating Directory: %@", builtupPath));
-				[myTestConnection createDirectory:[NSString stringWithString:builtupPath]]; //we don't want to go messing with permissions if someone specifies an absolute path liek /User/ghulands/Sites/
+				[myTestConnection createDirectory:[NSString stringWithString:builtupPath]]; //we don't want to go messing with permissions if someone specifies an absolute path like /User/ghulands/Sites/
 			}
 			if ( [[[NSUserDefaults standardUserDefaults] objectForKey:@"ConnectionSetsPermissions"] boolValue] )
 			{
@@ -2492,7 +2502,9 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 	[NSUserDefaults resetStandardUserDefaults];		// try to get fresh values
 
-	if (![CKDotMacConnection getDotMacAccountName:&iToolsMember password:&iToolsPassword] || [iToolsMember isEqualToString:@""] || [iToolsPassword isEqualToString:@""])
+	if (![CK2WebDAVConnection getDotMacAccountName:&iToolsMember password:&iToolsPassword] ||
+        [iToolsMember isEqualToString:@""] ||
+        [iToolsPassword isEqualToString:@""])
 	{
 		[oDotMacLabel setStringValue:NSLocalizedString(@"This website cannot be published until you have set up your MobileMe account.", @"")];
 		[self setValue:nil forKey:@"userName"];

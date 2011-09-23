@@ -26,15 +26,7 @@
 {
     // Build the request object
     KTHostProperties *hostProperties = [[self site] hostProperties];
-    
-    NSString *hostName = [hostProperties valueForKey:@"hostName"];
-    NSString *protocol = [hostProperties valueForKey:@"protocol"];
-    
-    NSNumber *port = [hostProperties valueForKey:@"port"];
-    
-    CKMutableConnectionRequest *request = [[[CKConnectionRegistry sharedConnectionRegistry] connectionRequestForName:protocol
-                                                                                                                host:hostName 
-                                                                                                                port:port] mutableCopy];
+    CKMutableConnectionRequest *request = [[hostProperties connectionRequest] mutableCopy];
     
     [request setFTPDataConnectionType:[[NSUserDefaults standardUserDefaults] stringForKey:@"FTPDataConnectionType"]];   // Nil by default
     //[request setSFTPLoggingLevel:1];
