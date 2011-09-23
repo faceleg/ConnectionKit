@@ -537,6 +537,9 @@
 		27DD0A581202FC120083C7C1 /* SVWebEditingURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DD0A561202FC120083C7C1 /* SVWebEditingURL.m */; };
 		27DD0B58120329A80083C7C1 /* SVURLFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DD0B56120329A80083C7C1 /* SVURLFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27DD0B59120329A80083C7C1 /* SVURLFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DD0B57120329A80083C7C1 /* SVURLFormatter.m */; };
+		27DD4043142C916E00686D96 /* Login.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27DD4042142C916E00686D96 /* Login.xib */; };
+		27DD407D142C948400686D96 /* SVLoginWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DD407B142C948400686D96 /* SVLoginWindowController.h */; };
+		27DD407E142C948400686D96 /* SVLoginWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DD407C142C948400686D96 /* SVLoginWindowController.m */; };
 		27DDFDBE11FDB2040083C7C1 /* KSStringWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DDFDBC11FDB2040083C7C1 /* KSStringWriter.h */; };
 		27DDFDBF11FDB2040083C7C1 /* KSStringWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DDFDBD11FDB2040083C7C1 /* KSStringWriter.m */; };
 		27E040BA130AC71D00FEA059 /* Media 1.5.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 27E040B9130AC71D00FEA059 /* Media 1.5.xcdatamodel */; };
@@ -2237,6 +2240,9 @@
 		27DD0A561202FC120083C7C1 /* SVWebEditingURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebEditingURL.m; sourceTree = "<group>"; };
 		27DD0B56120329A80083C7C1 /* SVURLFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVURLFormatter.h; sourceTree = "<group>"; };
 		27DD0B57120329A80083C7C1 /* SVURLFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVURLFormatter.m; sourceTree = "<group>"; };
+		27DD4042142C916E00686D96 /* Login.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Login.xib; sourceTree = "<group>"; };
+		27DD407B142C948400686D96 /* SVLoginWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVLoginWindowController.h; sourceTree = "<group>"; };
+		27DD407C142C948400686D96 /* SVLoginWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVLoginWindowController.m; sourceTree = "<group>"; };
 		27DDFDBC11FDB2040083C7C1 /* KSStringWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSStringWriter.h; sourceTree = "<group>"; };
 		27DDFDBD11FDB2040083C7C1 /* KSStringWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSStringWriter.m; sourceTree = "<group>"; };
 		27DE6C5810A4F6EE00D71710 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/WrapInspector.xib; sourceTree = "<group>"; };
@@ -3610,6 +3616,7 @@
 		275666F10F015E9900878A05 /* Publishing UI */ = {
 			isa = PBXGroup;
 			children = (
+				27DD4042142C916E00686D96 /* Login.xib */,
 				27AE75C60EEEB12D00409D80 /* error.png */,
 				27AE75C70EEEB12D00409D80 /* finished.png */,
 				2797B4B80EF6E63900F91398 /* KTExportSavePanelController.h */,
@@ -3617,6 +3624,8 @@
 				27AE74730EEDE6CC00409D80 /* KTPublishingWindowController.h */,
 				27AE74740EEDE6CC00409D80 /* KTPublishingWindowController.m */,
 				CE6EDFF311F1274F00F00AAC /* Publishing.xib */,
+				27DD407B142C948400686D96 /* SVLoginWindowController.h */,
+				27DD407C142C948400686D96 /* SVLoginWindowController.m */,
 			);
 			name = "Publishing UI";
 			sourceTree = "<group>";
@@ -6376,6 +6385,7 @@
 				27B1051514190915002150C0 /* WEKDOMOperations.h in Headers */,
 				2789C744141C209D002B3994 /* WEKDOMRange.h in Headers */,
 				273B2108141EB8D1008AA7FD /* SVPlugInWrapper.h in Headers */,
+				27DD407D142C948400686D96 /* SVLoginWindowController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7122,6 +7132,7 @@
 				CE0142C613E9D9A400BBA6F1 /* rightjustified_inspector.tif in Resources */,
 				CE0142CA13E9D9D300BBA6F1 /* indent_left.tiff in Resources */,
 				CE0142CB13E9D9D300BBA6F1 /* indent_right.tiff in Resources */,
+				27DD4043142C916E00686D96 /* Login.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7919,6 +7930,7 @@
 				27B1051614190915002150C0 /* WEKDOMOperations.m in Sources */,
 				2789C745141C209D002B3994 /* WEKDOMRange.m in Sources */,
 				273B210A141EB8D1008AA7FD /* SVPlugInWrapper.m in Sources */,
+				27DD407E142C948400686D96 /* SVLoginWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
