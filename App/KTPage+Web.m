@@ -331,7 +331,8 @@
 	{
 		NSString *ieFile = [conditionalCommentsForIE objectForKey:predicate];
 		NSURL *ieURL = [context URLOfDesignFile:ieFile];
-		
+		if (!ieURL) continue;
+        
 		[context openComment];
 		[context writeString:[NSString stringWithFormat:@"[if %@]>", predicate]];		// Do not escape XML
 		[context writeLinkToStylesheet:[context relativeStringFromURL:ieURL]
