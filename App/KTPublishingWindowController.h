@@ -10,7 +10,7 @@
 #import "KTLocalPublishingEngine.h"
 
 
-@class KTPublishingEngine, CKTransferRecord, UKDockProgressIndicator;
+@class KTPublishingEngine, CKTransferRecord, UKDockProgressIndicator, SVLoginWindowController;
 
 
 
@@ -25,7 +25,7 @@
 	IBOutlet NSButton				*oExpandButton;
     IBOutlet NSView					*oAccessoryView; // currently the scrollview around the outline
     
-    @private
+  @private
     KTPublishingEngine      *_publishingEngine;
     BOOL                    _didFail;
     
@@ -35,6 +35,8 @@
 	// KSAlert
 	NSString	*_messageText;
 	NSString	*_informativeText;
+    
+    SVLoginWindowController  *_loginWindowController;
 }
 
 - (IBAction)firstButtonAction:(NSButton *)sender;
