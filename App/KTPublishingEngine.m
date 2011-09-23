@@ -1214,13 +1214,6 @@ static void *sProgressObservationContext = &sProgressObservationContext;
 	[result release];
 }
 
-/*  Exporting shouldn't require any authentication
- */
-- (void)connection:(id <CKConnection>)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge;
-{
-    [[challenge sender] continueWithoutCredentialForAuthenticationChallenge:challenge];
-}
-
 /*	Just pass on a simplified version of these 2 messages to our delegate
  */
 - (void)connection:(id <CKConnection>)con uploadDidBegin:(NSString *)remotePath;
@@ -1306,6 +1299,15 @@ static void *sProgressObservationContext = &sProgressObservationContext;
     
 	NSAttributedString *attributedString = [connectionClass attributedStringForString:string transcript:transcript];
 	[[[KTTranscriptController sharedControllerWithoutLoading] textStorage] appendAttributedString:attributedString];
+}
+
+#pragma mark Auth
+
+- (void)connection:(id <CKConnection>)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge;
+{
+    // Hand off to the delegate for auth
+    OBASSERT([self delegate]);
+    [[self delegate] publishingEngine:self didReceiveAuthenticationChallenge:challenge];
 }
 
 #pragma mark Pages

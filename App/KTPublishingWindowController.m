@@ -12,11 +12,14 @@
 #import "KTDocWindowController.h"
 #import "KTHostProperties.h"
 #import "KTExportEngine.h"
+#import "KTURLCredentialStorage.h"
 
 #import "NSApplication+Karelia.h"
 #import "NSWorkspace+Karelia.h"
+#import "KSError.h"
 
 #import <Connection/Connection.h>
+#import "CK2SSHCredential.h"
 #import <Growl/Growl.h>
 #import "UKDockProgressIndicator.h"
 
@@ -357,6 +360,62 @@ static void *sEngineFinishedObservationContext = &sEngineFinishedObservationCont
 
         
         [oFirstButton setTitle:NSLocalizedString(@"Close", @"button title")];
+    }
+}
+
+/*  Use the password we have stored in the keychain corresponding to the challenge's protection space
+ *  and the host properties' username.
+ *  If the password cannot be retrieved, fail with an error saying why
+ */
+- (void)publishingEngine:(KTPublishingEngine *)engine didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge;
+{
+    if ([challenge previousFailureCount] == 0)
+	{
+		KTHostProperties *hostProperties = [[engine site] hostProperties];
+		
+		NSString *user = [hostProperties valueForKey:@"userName"];
+		BOOL isSFTPWithPublicKey = ([[[challenge protectionSpace] protocol] isEqualToString:@"ssh"] &&
+									[[hostProperties valueForKey:@"usePublicKey"] intValue] == NSOnState);
+		
+		if (isSFTPWithPublicKey)
+		{
+            [[challenge sender] useCredential:[NSURLCredential ck2_SSHAgentCredentialWithUser:user]
+                   forAuthenticationChallenge:challenge];
+		}
+		else
+		{
+			NSURLCredential *credential = [[KTURLCredentialStorage sharedCredentialStorage] credentialForUser:user
+                                                                                              protectionSpace:[challenge protectionSpace]];
+            
+            if (credential && [credential password])
+            {
+                [[challenge sender] useCredential:credential forAuthenticationChallenge:challenge];
+            }
+            else
+            {
+                NSError *error = [KSError errorWithDomain:KTPublishingEngineErrorDomain
+                                                     code:KTPublishingEngineErrorNoCredentialForAuthentication
+                                     localizedDescription:NSLocalizedString(@"Username or password could not be found.", @"Publishing engine authentication error")
+                              localizedRecoverySuggestion:NSLocalizedString(@"Please run the Host Setup Assistant and re-enter your host's login credentials.", @"Publishing engine authentication error")
+                                          underlyingError:[challenge error]];
+                
+                [[challenge sender] cancelAuthenticationChallenge:challenge]; // might dealloc challenge
+                
+                [self publishingEngine:engine didFailWithError:error];
+            }
+        }
+	}
+	else
+    {
+        NSError *error = [KSError errorWithDomain:KTPublishingEngineErrorDomain
+											 code:KTPublishingEngineErrorAuthenticationFailed
+							 localizedDescription:NSLocalizedString(@"Authentication failed.", @"Publishing engine authentication error")
+					  localizedRecoverySuggestion:NSLocalizedString(@"Please run the Host Setup Assistant again to test your host setup.", @"Publishing engine authentication error")
+								  underlyingError:[challenge error]];
+        
+		[[challenge sender] cancelAuthenticationChallenge:challenge]; // might dealloc challenge
+        
+        [self publishingEngine:engine didFailWithError:error];
     }
 }
 

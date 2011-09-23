@@ -146,11 +146,14 @@ typedef enum {
 
 
 @protocol KTPublishingEngineDelegate
+
 - (void)publishingEngine:(KTPublishingEngine *)engine didBeginUploadToPath:(NSString *)remotePath;
 - (void)publishingEngineDidFinishGeneratingContent:(KTPublishingEngine *)engine;
 - (void)publishingEngineDidUpdateProgress:(KTPublishingEngine *)engine;
 
 - (void)publishingEngine:(KTPublishingEngine *)engine didFailWithError:(NSError *)error;
+- (void)publishingEngine:(KTPublishingEngine *)engine didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge;
+
 @end
 
 
