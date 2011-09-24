@@ -345,6 +345,7 @@
     // Actually write the image
     NSString *alt = [self alternateText];
     if (!alt) alt = @"";
+    [context addDependencyOnObject:self keyPath:@"alternateText"];
     
     if ([[self container] shouldWriteHTMLInline]) [[self container] buildClassName:context includeWrap:NO];
 

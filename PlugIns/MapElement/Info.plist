@@ -2,14 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleDisplayName</key>
-	<string>Map</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>Map</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>
-	<string>sandvox.${PROJECT_NAME}</string>
+	<string>com.karelia.Sandvox.plugin.${PRODUCT_NAME}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -22,15 +22,19 @@
 	<string>Svox</string>
 	<key>CFBundleVersion</key>
 	<string>REPLACE_ME</string>
-	<key>NSPrincipalClass</key>
-	<string>MapPlugIn</string>
-	<key>SVPlugInIconPath</key>
-	<string>toolbar_map.tiff</string>
-	<key>SVPlugInDescription</key>
-	<string>Embed a Google Map on your site</string>
-	<key>SVMinimumAppVersion</key>
-	<string>2.1</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>© 2011 Karelia Software. All Rights Reserved.</string>
+	<key>NSPrincipalClass</key>
+	<string>MapPlugIn</string>
+	<key>SVAlternateIdentifiers</key>
+	<array>
+		<string>sandvox.${PROJECT_NAME}</string>
+	</array>
+	<key>SVMinimumAppVersion</key>
+	<string>2.1</string>
+	<key>SVPlugInDescription</key>
+	<string>Embed a Google Map on your site</string>
+	<key>SVPlugInIconPath</key>
+	<string>toolbar_map.tiff</string>
 </dict>
 </plist>
