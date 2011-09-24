@@ -17,7 +17,11 @@
     IBOutlet NSSegmentedControl *oAlignmentSegmentedControl;
     
     IBOutlet NSPopUpButton      *oListPopUp;
+    IBOutlet NSTabView          *oListTabView;
+    
     IBOutlet NSSegmentedControl *oIndentLevelSegmentedControl;
+    
+    IBOutlet NSSegmentedControl *oBulletsIndentLevelControl;
     
   @private
     

@@ -82,10 +82,12 @@
     if ([tag isKindOfClass:[NSNumber class]])
     {
         [oListPopUp selectItemAtIndex:[tag unsignedIntegerValue]];
+        [oListTabView selectTabViewItemAtIndex:[tag unsignedIntegerValue]];
     }
     else
     {
         [oListPopUp selectItem:nil];
+        [oListTabView selectTabViewItemAtIndex:0];
     }
         
     
@@ -106,10 +108,12 @@
     controller = [NSApp targetForAction:@selector(outdent:)];
     enable = [controller validateUserInterfaceItem:item];
     [oIndentLevelSegmentedControl setEnabled:enable forSegment:0];
+    [oBulletsIndentLevelControl setEnabled:enable forSegment:0];
     
     [item setAction:@selector(indent:)];
     enable = [controller validateUserInterfaceItem:item];
     [oIndentLevelSegmentedControl setEnabled:enable forSegment:1];
+    [oBulletsIndentLevelControl setEnabled:enable forSegment:1];
     
     [item release];
 }
