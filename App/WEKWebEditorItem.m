@@ -984,7 +984,7 @@
     if ([self isSelectable])
     {
         DOMElement *element = [self HTMLElement];
-        result = [element boundingBox];
+        result = [element totalBoundingBox];
         
         // Take into account padding and border
         DOMCSSStyleDeclaration *style = [[element ownerDocument] getComputedStyle:element

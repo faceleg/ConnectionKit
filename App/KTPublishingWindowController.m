@@ -12,11 +12,15 @@
 #import "KTDocWindowController.h"
 #import "KTHostProperties.h"
 #import "KTExportEngine.h"
+#import "SVLoginWindowController.h"
+#import "KTURLCredentialStorage.h"
 
 #import "NSApplication+Karelia.h"
 #import "NSWorkspace+Karelia.h"
+#import "KSError.h"
 
 #import <Connection/Connection.h>
+#import "CK2SSHCredential.h"
 #import <Growl/Growl.h>
 #import "UKDockProgressIndicator.h"
 
@@ -105,6 +109,7 @@ static void *sEngineFinishedObservationContext = &sEngineFinishedObservationCont
     [_publishingEngine setDelegate:nil];
     
     [_publishingEngine release];
+    [_loginWindowController release];
 	[_dockProgress release];
 	
 	[_messageText release];
@@ -357,6 +362,70 @@ static void *sEngineFinishedObservationContext = &sEngineFinishedObservationCont
 
         
         [oFirstButton setTitle:NSLocalizedString(@"Close", @"button title")];
+    }
+}
+
+/*  Use the password we have stored in the keychain corresponding to the challenge's protection space
+ *  and the host properties' username.
+ *  If the password cannot be retrieved, fail with an error saying why
+ */
+- (void)publishingEngine:(KTPublishingEngine *)engine didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge;
+{
+    if ([challenge previousFailureCount] == 0)
+	{
+        KTHostProperties *hostProperties = [[engine site] hostProperties];
+        
+        NSString *user = [hostProperties valueForKey:@"userName"];
+        BOOL isSFTPWithPublicKey = ([[[challenge protectionSpace] protocol] isEqualToString:@"ssh"] &&
+                                    [[hostProperties valueForKey:@"usePublicKey"] intValue] == NSOnState);
+        
+        if (isSFTPWithPublicKey)
+        {
+            [[challenge sender] useCredential:[NSURLCredential ck2_SSHAgentCredentialWithUser:user]
+                   forAuthenticationChallenge:challenge];
+            return;
+        }
+        else
+        {
+            NSURLCredential *credential = [challenge proposedCredential];
+            
+            if (![credential password])
+            {
+                credential = [[KTURLCredentialStorage sharedCredentialStorage] credentialForUser:user
+                                                                                protectionSpace:[challenge protectionSpace]];
+            }
+            
+            if ([credential password])
+            {
+                [[challenge sender] useCredential:credential forAuthenticationChallenge:challenge];
+                return;
+            }
+        }
+    }
+    
+    
+    // Don't know the password, time to ask!
+    if (!_loginWindowController) _loginWindowController = [[SVLoginWindowController alloc] init];
+    [_loginWindowController setAuthenticationChallenge:challenge];
+    
+    [NSApp beginSheet:[_loginWindowController window]
+       modalForWindow:[self window]
+        modalDelegate:self
+       didEndSelector:@selector(loginSheetDidEnd:returnCode:contextInfo:)
+          contextInfo:NULL];
+}
+
+- (void)loginSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+{
+    if (returnCode == NSOKButton)
+    {
+        NSURLAuthenticationChallenge *challenge = [_loginWindowController authenticationChallenge];
+        [[challenge sender] useCredential:[_loginWindowController credential] forAuthenticationChallenge:challenge];
+    }
+    else
+    {
+        // In the event of giving up on auth, cancel the engine *NOT* the challenge, since for protocols WebDAV, cancelling the challenge might just cause it to move onto the next file, rather than stopping the entire connection
+        [self endSheet];
     }
 }
 

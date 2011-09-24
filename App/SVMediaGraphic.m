@@ -463,35 +463,43 @@
     SVMedia *media = (id)[[self plugIn] thumbnailMedia];
     if (media)
     {
-        KSImageScalingMode scaling = KSImageScalingModeCropCenter;
-        
         if (options & SVImageScaleAspectFit)
         {
-            scaling = KSImageScalingModeFill;
-            
             // Calculate dimensions
             NSNumber *aspectRatioNumber = [self constrainedAspectRatio];
             [context addDependencyOnObject:self keyPath:@"constrainedAspectRatio"];
             
-            CGFloat aspectRatio;
-            if (aspectRatioNumber)
+            if (options & SVImageScaleUpAvoid &&
+                width > [self.naturalWidth unsignedIntegerValue] &&
+                height > [self.naturalHeight unsignedIntegerValue])
             {
-                aspectRatio = [aspectRatioNumber floatValue];
+                width = [self.naturalWidth unsignedIntegerValue];
+                height = [self.naturalHeight unsignedIntegerValue];
+                
+                options -= SVImageScaleUpAvoid;
             }
             else
             {
-                aspectRatio = [[self width] floatValue] / [[self height] floatValue];
-                [context addDependencyOnObject:self keyPath:@"width"];
-                [context addDependencyOnObject:self keyPath:@"height"];
-            }
-            
-            if (aspectRatio > (width / height))
-            {
-                height = width / aspectRatio;
-            }
-            else
-            {
-                width = height * aspectRatio;
+                CGFloat aspectRatio;
+                if (aspectRatioNumber)
+                {
+                    aspectRatio = [aspectRatioNumber floatValue];
+                }
+                else
+                {
+                    aspectRatio = [self.width floatValue] / [self.height floatValue];
+                    [context addDependencyOnObject:self keyPath:@"width"];
+                    [context addDependencyOnObject:self keyPath:@"height"];
+                }
+                
+                if (aspectRatio > (width / height))
+                {
+                    height = width / aspectRatio;
+                }
+                else
+                {
+                    width = height * aspectRatio;
+                }
             }
             
             options -= SVImageScaleAspectFit;

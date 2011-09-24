@@ -98,6 +98,7 @@
     {
         [self makeSelectedLinksOpenInNewWindow];
         [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:[self webView]];
+        [self updateLinkManager];
     }
 }
 
