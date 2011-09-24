@@ -1038,9 +1038,13 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     SVTextAttachment *textAttachment = [SVTextAttachment textAttachmentWithGraphic:graphic];
     
     [textAttachment setPlacement:[NSNumber numberWithInteger:SVGraphicPlacementInline]];
-    
     [textAttachment setCausesWrap:[NSNumber numberWithBool:!placeInline]];
-    [textAttachment setBody:[self richTextStorage]];
+    
+    _isUpdating = YES;  // so the change in attachments doesn't trigger an update
+    {
+        [textAttachment setBody:[self richTextStorage]];
+    }
+    _isUpdating = NO;
     
     
     // Insert, selecting it
