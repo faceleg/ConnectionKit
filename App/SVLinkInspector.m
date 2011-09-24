@@ -22,6 +22,8 @@
 
 @implementation SVLinkInspector
 
+#pragma mark Lifecycle
+
 - (void)awakeFromNib
 {
 	[oLinkSourceView bind:NSEnabledBinding
@@ -37,7 +39,14 @@
 	[super dealloc];
 }
 
+#pragma mark View
 
+- (void)loadView;
+{
+    [super loadView];
+    
+    [[self view] registerForDraggedTypes:[SVPlugIn readableURLTypesForPasteboard:nil]];
+}
 
 #pragma mark Link
 
