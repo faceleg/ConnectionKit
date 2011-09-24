@@ -162,6 +162,8 @@
 		2713C05510780FFD000864C2 /* SVLoadingPlaceholderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2713C05310780FFD000864C2 /* SVLoadingPlaceholderViewController.m */; };
 		2713C0691078177A000864C2 /* SVLayoutView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2713C0671078177A000864C2 /* SVLayoutView.h */; };
 		2713C06A1078177A000864C2 /* SVLayoutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2713C0681078177A000864C2 /* SVLayoutView.m */; };
+		27161BAE142E93AF00711EE0 /* SVLinkInspectorView.h in Headers */ = {isa = PBXBuildFile; fileRef = 27161BAC142E93AF00711EE0 /* SVLinkInspectorView.h */; };
+		27161BAF142E93AF00711EE0 /* SVLinkInspectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27161BAD142E93AF00711EE0 /* SVLinkInspectorView.m */; };
 		271884431296A28000139C89 /* KSXMLAttributes.h in Headers */ = {isa = PBXBuildFile; fileRef = 271884411296A28000139C89 /* KSXMLAttributes.h */; };
 		271884441296A28000139C89 /* KSXMLAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 271884421296A28000139C89 /* KSXMLAttributes.m */; };
 		27196F631090A9D40096B612 /* SVInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = 27196F611090A9D40096B612 /* SVInspector.h */; settings = {ATTRIBUTES = (); }; };
@@ -1856,6 +1858,8 @@
 		27156A800D5CA1C700A91E58 /* SVHTMLTemplateParser+Index.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SVHTMLTemplateParser+Index.m"; sourceTree = "<group>"; };
 		271575180D605CD900A91E58 /* KTStalenessHTMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTStalenessHTMLParser.h; sourceTree = "<group>"; };
 		271575190D605CD900A91E58 /* KTStalenessHTMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTStalenessHTMLParser.m; sourceTree = "<group>"; };
+		27161BAC142E93AF00711EE0 /* SVLinkInspectorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVLinkInspectorView.h; sourceTree = "<group>"; };
+		27161BAD142E93AF00711EE0 /* SVLinkInspectorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVLinkInspectorView.m; sourceTree = "<group>"; };
 		27168E610DAA45D200BBC2C6 /* KTMediaManager+MediaFiles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTMediaManager+MediaFiles.m"; sourceTree = "<group>"; };
 		2716F2D20CE61A8000DE635E /* KTMissingMediaArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMissingMediaArrayController.h; sourceTree = "<group>"; };
 		2716F2D30CE61A8000DE635E /* KTMissingMediaArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMissingMediaArrayController.m; sourceTree = "<group>"; };
@@ -4244,6 +4248,8 @@
 				CEFD1D5012E9F85300D3A6CD /* LinkInspector.xib */,
 				270E4B1410FA4DF500EF1FA0 /* SVLinkInspector.h */,
 				270E4B1510FA4DF500EF1FA0 /* SVLinkInspector.m */,
+				27161BAC142E93AF00711EE0 /* SVLinkInspectorView.h */,
+				27161BAD142E93AF00711EE0 /* SVLinkInspectorView.m */,
 			);
 			name = "Link Inspector";
 			sourceTree = "<group>";
@@ -6432,6 +6438,7 @@
 				273B2108141EB8D1008AA7FD /* SVPlugInWrapper.h in Headers */,
 				27DD407D142C948400686D96 /* SVLoginWindowController.h in Headers */,
 				273FA6BE1420B2790051E616 /* CK2WebDAVConnection.h in Headers */,
+				27161BAE142E93AF00711EE0 /* SVLinkInspectorView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7996,6 +8003,7 @@
 				273B210A141EB8D1008AA7FD /* SVPlugInWrapper.m in Sources */,
 				27DD407E142C948400686D96 /* SVLoginWindowController.m in Sources */,
 				273FA6BF1420B2790051E616 /* CK2WebDAVConnection.m in Sources */,
+				27161BAF142E93AF00711EE0 /* SVLinkInspectorView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
