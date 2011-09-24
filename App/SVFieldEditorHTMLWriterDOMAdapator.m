@@ -736,6 +736,9 @@
                           value:(NSString *)value
                       ofElement:(NSString *)elementName;
 {
+    NSString *result = [[self XMLWriter] validateAttribute:attributeName value:value ofElement:elementName];
+    if (!result) return result;
+    
     if ([elementName isEqualToString:@"a"])
     {
         if ([attributeName isEqualToString:@"href"] ||
@@ -763,7 +766,7 @@
     }
     
     // Allow style and class on any element…
-    NSString *result = nil;
+    result = nil;
     
     if ([attributeName isEqualToString:@"class"])
     {
@@ -784,6 +787,10 @@
     {
         // Strip empty style attributes
         if ([value length]) result = value;
+    }
+    else if ([attributeName isEqualToString:@"value"] && [elementName isEqualToString:@"li"])
+    {
+        result = value;
     }
     
     
