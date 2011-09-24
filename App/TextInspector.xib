@@ -800,67 +800,67 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
         </object>
         <object class="IBConnectionRecord">
           <object class="IBBindingConnection" key="connection">
-            <string key="label">enabled: selection.value</string>
+            <string key="label">enabled: editingController.listItemValue</string>
             <reference key="source" ref="491938258"/>
-            <reference key="destination" ref="458458558"/>
+            <reference key="destination" ref="1001"/>
             <object class="NSNibBindingConnector" key="connector">
               <reference key="NSSource" ref="491938258"/>
-              <reference key="NSDestination" ref="458458558"/>
-              <string key="NSLabel">enabled: selection.value</string>
+              <reference key="NSDestination" ref="1001"/>
+              <string key="NSLabel">enabled: editingController.listItemValue</string>
               <string key="NSBinding">enabled</string>
-              <string key="NSKeyPath">selection.value</string>
+              <string key="NSKeyPath">editingController.listItemValue</string>
               <int key="NSNibBindingConnectorVersion">2</int>
             </object>
           </object>
-          <int key="connectionID">105</int>
+          <int key="connectionID">123</int>
         </object>
         <object class="IBConnectionRecord">
           <object class="IBBindingConnection" key="connection">
-            <string key="label">value: selection.value</string>
+            <string key="label">value: editingController.listItemValue</string>
             <reference key="source" ref="491938258"/>
-            <reference key="destination" ref="458458558"/>
+            <reference key="destination" ref="1001"/>
             <object class="NSNibBindingConnector" key="connector">
               <reference key="NSSource" ref="491938258"/>
-              <reference key="NSDestination" ref="458458558"/>
-              <string key="NSLabel">value: selection.value</string>
+              <reference key="NSDestination" ref="1001"/>
+              <string key="NSLabel">value: editingController.listItemValue</string>
               <string key="NSBinding">value</string>
-              <string key="NSKeyPath">selection.value</string>
+              <string key="NSKeyPath">editingController.listItemValue</string>
               <int key="NSNibBindingConnectorVersion">2</int>
             </object>
           </object>
-          <int key="connectionID">108</int>
+          <int key="connectionID">125</int>
         </object>
         <object class="IBConnectionRecord">
           <object class="IBBindingConnection" key="connection">
-            <string key="label">value: selection.value</string>
+            <string key="label">value: editingController.listItemValue</string>
             <reference key="source" ref="96063191"/>
-            <reference key="destination" ref="458458558"/>
+            <reference key="destination" ref="1001"/>
             <object class="NSNibBindingConnector" key="connector">
               <reference key="NSSource" ref="96063191"/>
-              <reference key="NSDestination" ref="458458558"/>
-              <string key="NSLabel">value: selection.value</string>
+              <reference key="NSDestination" ref="1001"/>
+              <string key="NSLabel">value: editingController.listItemValue</string>
               <string key="NSBinding">value</string>
-              <string key="NSKeyPath">selection.value</string>
+              <string key="NSKeyPath">editingController.listItemValue</string>
               <int key="NSNibBindingConnectorVersion">2</int>
             </object>
           </object>
-          <int key="connectionID">110</int>
+          <int key="connectionID">127</int>
         </object>
         <object class="IBConnectionRecord">
           <object class="IBBindingConnection" key="connection">
-            <string key="label">enabled: selection.value</string>
+            <string key="label">enabled: editingController.listItemValue</string>
             <reference key="source" ref="96063191"/>
-            <reference key="destination" ref="458458558"/>
+            <reference key="destination" ref="1001"/>
             <object class="NSNibBindingConnector" key="connector">
               <reference key="NSSource" ref="96063191"/>
-              <reference key="NSDestination" ref="458458558"/>
-              <string key="NSLabel">enabled: selection.value</string>
+              <reference key="NSDestination" ref="1001"/>
+              <string key="NSLabel">enabled: editingController.listItemValue</string>
               <string key="NSBinding">enabled</string>
-              <string key="NSKeyPath">selection.value</string>
+              <string key="NSKeyPath">editingController.listItemValue</string>
               <int key="NSNibBindingConnectorVersion">2</int>
             </object>
           </object>
-          <int key="connectionID">111</int>
+          <int key="connectionID">129</int>
         </object>
         <object class="IBConnectionRecord">
           <object class="IBBindingConnection" key="connection">
@@ -880,7 +880,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
               <int key="NSNibBindingConnectorVersion">2</int>
             </object>
           </object>
-          <int key="connectionID">120</int>
+          <int key="connectionID">130</int>
         </object>
       </object>
       <object class="IBMutableOrderedSet" key="objectRecords">
@@ -1253,7 +1253,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
         </object>
       </object>
       <nil key="sourceID"/>
-      <int key="maxID">120</int>
+      <int key="maxID">130</int>
     </object>
     <object class="IBClassDescriber" key="IBDocument.Classes">
       <object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1859,7 +1859,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
         </object>
         <object class="IBPartialClassDescription">
           <string key="className">NSApplication</string>
-          <object class="IBClassDescriptionSource" key="sourceIdentifier" id="229565137">
+          <object class="IBClassDescriptionSource" key="sourceIdentifier" id="916238613">
             <string key="majorKey">IBFrameworkSource</string>
             <string key="minorKey">AppKit.framework/Headers/NSWindowRestoration.h</string>
           </object>
@@ -1920,7 +1920,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
         </object>
         <object class="IBPartialClassDescription">
           <string key="className">NSControl</string>
-          <object class="IBClassDescriptionSource" key="sourceIdentifier" id="164900368">
+          <object class="IBClassDescriptionSource" key="sourceIdentifier" id="763645358">
             <string key="majorKey">IBFrameworkSource</string>
             <string key="minorKey">AppKit.framework/Headers/NSLayoutConstraint.h</string>
           </object>
@@ -2589,7 +2589,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
         </object>
         <object class="IBPartialClassDescription">
           <string key="className">NSResponder</string>
-          <reference key="sourceIdentifier" ref="229565137"/>
+          <reference key="sourceIdentifier" ref="916238613"/>
         </object>
         <object class="IBPartialClassDescription">
           <string key="className">NSSegmentedCell</string>
@@ -2663,7 +2663,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
         </object>
         <object class="IBPartialClassDescription">
           <string key="className">NSView</string>
-          <reference key="sourceIdentifier" ref="164900368"/>
+          <reference key="sourceIdentifier" ref="763645358"/>
         </object>
         <object class="IBPartialClassDescription">
           <string key="className">NSView</string>
