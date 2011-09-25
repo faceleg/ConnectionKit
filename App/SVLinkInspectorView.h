@@ -12,7 +12,10 @@
 @interface SVLinkInspectorView : NSView
 {
   @private
-    BOOL _dropping;
+    BOOL        _dropping;
+    NSObject    *_delegate;
 }
+
+@property(nonatomic, assign) NSObject *draggingDestinationDelegate;
 
 @end

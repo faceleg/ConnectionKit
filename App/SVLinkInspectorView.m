@@ -21,6 +21,8 @@
     return self;
 }
 
+@synthesize draggingDestinationDelegate = _delegate;
+
 - (void)drawRect:(NSRect)dirtyRect
 {
     [super drawRect:dirtyRect];
@@ -34,20 +36,48 @@
 
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender;
 {
-    _dropping = YES;
-    [self setNeedsDisplay:YES];
+    NSDragOperation result = [[self draggingDestinationDelegate] draggingEntered:sender];
     
-    return NSDragOperationLink;
+    if (result)
+    {
+        _dropping = YES;
+        [self setNeedsDisplay:YES];
+    }
+    
+    return result;
 }
 
 - (void)draggingExited:(id <NSDraggingInfo>)sender;
 {
+    NSObject *delegate = [self draggingDestinationDelegate];
+    if ([delegate respondsToSelector:_cmd])
+    {
+        [delegate performSelector:_cmd withObject:sender];
+    }
+    
     _dropping = NO;
     [self setNeedsDisplay:YES];
 }
 
+- (BOOL)performDragOperation:(id <NSDraggingInfo>)sender;
+{
+    NSObject *delegate = [self draggingDestinationDelegate];
+    if ([delegate respondsToSelector:_cmd])
+    {
+        return [delegate performDragOperation:sender];
+    }
+    
+    return NO;
+}
+
 - (void)draggingEnded:(id <NSDraggingInfo>)sender;
 {
+    NSObject *delegate = [self draggingDestinationDelegate];
+    if ([delegate respondsToSelector:_cmd])
+    {
+        [delegate performSelector:_cmd withObject:sender];
+    }
+    
     _dropping = NO;
     [self setNeedsDisplay:YES];
 }
