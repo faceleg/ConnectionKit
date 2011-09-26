@@ -38,7 +38,7 @@ static inline SecCertificateRef AppleRootCA( void )
     if ( err != noErr )
     {
         CFStringRef errStr = SecCopyErrorMessageString( err, NULL );
-        LOG((@"Error: %ld (%@)", err, errStr));
+        NSLog(@"Error: %ld (%@)", err, errStr);
         CFRelease( errStr );
         return NULL;
     }
@@ -50,7 +50,7 @@ static inline SecCertificateRef AppleRootCA( void )
     if ( err != noErr )
     {
         CFStringRef errStr = SecCopyErrorMessageString( err, NULL );
-        LOG((@"Error: %ld (%@)", err, errStr));
+        NSLog(@"Error: %ld (%@)", err, errStr);
         CFRelease( errStr );
         if ( cfReleaseKeychain )
             CFRelease( roots );
@@ -62,7 +62,7 @@ static inline SecCertificateRef AppleRootCA( void )
     if ( err != noErr )
     {
         CFStringRef errStr = SecCopyErrorMessageString( err, NULL );
-        LOG(( @"Error: %ld (%@)", err, errStr));
+        NSLog( @"Error: %ld (%@)", err, errStr);
         CFRelease( errStr );
         if ( cfReleaseKeychain )
             CFRelease( roots );
@@ -103,7 +103,7 @@ static inline int verifySignature( int argc, startup_call_t *theCall, id * recei
     
     if ( fp == NULL )
     {
-        LOG((@"no receipt found"));
+        NSLog(@"no receipt found");
         *theCall = (startup_call_t)&exit;
         return ( 173 );
     }
@@ -119,7 +119,7 @@ static inline int verifySignature( int argc, startup_call_t *theCall, id * recei
     SecCertificateRef cert = AppleRootCA();
     if ( cert == NULL )
     {
-        LOG((@"failed to load Apple Root CA"));
+        NSLog(@"failed to load Apple Root CA");
         *theCall = (startup_call_t)&exit;
         return ( 173 );
     }
@@ -149,6 +149,7 @@ static inline int verifySignature( int argc, startup_call_t *theCall, id * recei
     
     if ( rc != 1 )
     {
+        NSLog(@"could not verify signature");
         *theCall = (startup_call_t)&exit;
         return ( 173 );
     }
@@ -175,6 +176,7 @@ static inline int examinePayload( int argc, startup_call_t *theCall, id * dataPt
     
     if ( rval.code == RC_FAIL )
     {
+        NSLog(@"could not parse payload");
         *theCall = (startup_call_t)&exit;
         return ( 173 );
     }
@@ -211,6 +213,7 @@ static inline int examinePayload( int argc, startup_call_t *theCall, id * dataPt
     if ( bundle_id == NULL || bundle_version == NULL || opaque == NULL || hash == NULL )
     {
         free( payload );
+        NSLog(@"payload missing expected info");
         *theCall = (startup_call_t)&exit;
         return ( 173 );
     }
@@ -218,7 +221,7 @@ static inline int examinePayload( int argc, startup_call_t *theCall, id * dataPt
     NSString * bidStr = [[[NSString alloc] initWithBytes: (bundle_id->buf + 2) length: (bundle_id->size - 2) encoding: NSUTF8StringEncoding] autorelease];
     if ( [bidStr isEqualToString: hardcoded_identifier] == NO )
     {
-        LOG((@"hardcoded CFBundleIdentifier does not match signature payload!"));
+        NSLog(@"hardcoded CFBundleIdentifier does not match signature payload!");
         free( payload );
         *theCall = (startup_call_t)&exit;
         return ( 173 );
@@ -227,7 +230,7 @@ static inline int examinePayload( int argc, startup_call_t *theCall, id * dataPt
     NSString * dvStr = [[[NSString alloc] initWithBytes: (bundle_version->buf + 2) length: (bundle_version->size - 2) encoding: NSUTF8StringEncoding] autorelease];
     if ( [dvStr isEqualToString: hardcoded_version] == NO )
     {
-        LOG((@"hardcoded CFBundleShortVersionString does not match signature payload!"));
+        NSLog(@"hardcoded CFBundleShortVersionString does not match signature payload!");
         free( payload );
         *theCall = (startup_call_t)&exit;
         return ( 173 );
@@ -236,6 +239,7 @@ static inline int examinePayload( int argc, startup_call_t *theCall, id * dataPt
     CFDataRef macAddress = CopyMACAddressData();
     if ( macAddress == NULL )
     {
+        NSLog(@"failed to find MAC address");
         free( payload );
         *theCall = (startup_call_t)&exit;
         return ( 173 );
@@ -271,6 +275,7 @@ static inline int examinePayload( int argc, startup_call_t *theCall, id * dataPt
     free( payload );
     if ( match != 0 )
     {
+        NSLog(@"failed to match hash of digest");
         *theCall = (startup_call_t)&exit;
         return ( 173 );
     }
@@ -298,7 +303,7 @@ static inline int locateReceipt(int argc, startup_call_t *theCall, id * pathPtr)
     struct stat statBuf;
     if ( stat([*pathPtr fileSystemRepresentation], &statBuf) != 0 )
     {
-        LOG((@"no receipt found in .app, we really shouldn't even continue"));
+        NSLog(@"no receipt found in .app, we really shouldn't even continue");
         *theCall = (startup_call_t)&exit;
         return ( 173 );
     }
@@ -323,6 +328,7 @@ static inline int verifyKareliaProduct( int argc, startup_call_t *theCall, id * 
     SecStaticCodeRef staticCode = NULL;
     if ( SecStaticCodeCreateWithPath((CFURLRef)[[NSBundle mainBundle] bundleURL], kSecCSDefaultFlags, &staticCode) != noErr )
     {
+        NSLog(@"failed to create static code ref");
         *theCall = (startup_call_t)&exit;
         return ( 173 );
     }
@@ -335,6 +341,7 @@ static inline int verifyKareliaProduct( int argc, startup_call_t *theCall, id * 
     NSString *requirementString = [[[NSString alloc] initWithCString:data encoding:NSUTF8StringEncoding] autorelease];
     if ( SecRequirementCreateWithString((CFStringRef)requirementString, kSecCSDefaultFlags, &requirement) != noErr )
     {
+        NSLog(@"failed to create proper security requirement");
         *theCall = (startup_call_t)&exit;
         return ( 173 );
     }
@@ -342,6 +349,7 @@ static inline int verifyKareliaProduct( int argc, startup_call_t *theCall, id * 
     // check that staticCode and requirement agree
     if ( SecStaticCodeCheckValidity(staticCode, kSecCSCheckAllArchitectures, requirement) != noErr )
     {
+        NSLog(@"static code check vailidity failed");
         *theCall = (startup_call_t)&exit;
         return ( 173 );
     }
@@ -367,7 +375,7 @@ int main(int argc, char *argv[])
     
 	if ( [hardcoded_version isEqualToString:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]] == NO )
     {
-        LOG((@"hardcoded CFBundleShortVersionString does not match Info.plist!"));
+        NSLog(@"hardcoded CFBundleShortVersionString does not match Info.plist!");
         theCall = (startup_call_t)&exit;
         argc = 173;
 	}	
@@ -389,7 +397,7 @@ int main(int argc, char *argv[])
     
     if ( [hardcoded_identifier isEqualToString:[[NSBundle mainBundle] bundleIdentifier]] == NO )
     {
-        LOG((@"hardcoded CFBundleIdentifier does not match Info.plist!"));
+        NSLog(@"hardcoded CFBundleIdentifier does not match Info.plist!");
         theCall = (startup_call_t)&exit;
         argc = 173;
 	}	
@@ -411,6 +419,7 @@ int main(int argc, char *argv[])
     }
     else
     {
+        NSLog(@"failed final verification as Karelia product");
         pool = (NSAutoreleasePool *)1;
     }    
     
