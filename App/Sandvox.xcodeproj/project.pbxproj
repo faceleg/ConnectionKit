@@ -1228,7 +1228,6 @@
 		CEDE1DC50A5C6B8C0055352C /* NonStandardURL.html in Resources */ = {isa = PBXBuildFile; fileRef = CEC4DB2F0935179500D75C23 /* NonStandardURL.html */; };
 		CEE09ADB09ED90A8004850FB /* Acknowledgments.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C202EA307E0101100DE4994 /* Acknowledgments.rtf */; };
 		CEE09F7209ED9514004850FB /* License Agreement.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C27FDA8096EFE6E00702991 /* License Agreement.rtf */; };
-		CEE1BE67117D2299002AA67D /* Symbolication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CECCED7C0E646B6800BE9016 /* Symbolication.framework */; };
 		CEE2C64F120B25E7000E3C0E /* plugin_inspector.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CEE2C64E120B25E7000E3C0E /* plugin_inspector.tiff */; };
 		CEE77B8012528930001F74FC /* SVAudioVisualPlugIn.h in Headers */ = {isa = PBXBuildFile; fileRef = CEE77B7E12528930001F74FC /* SVAudioVisualPlugIn.h */; };
 		CEE77B8112528930001F74FC /* SVAudioVisualPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = CEE77B7F12528930001F74FC /* SVAudioVisualPlugIn.m */; };
@@ -3285,7 +3284,6 @@
 				3C0B1D6910479ABB002EE098 /* BWToolkitFramework.framework in Frameworks */,
 				CEB721BC108FCEA500511E74 /* QuickLook.framework in Frameworks */,
 				CEBEB32D10AA7B07006E7D8A /* iMedia.framework in Frameworks */,
-				CEE1BE67117D2299002AA67D /* Symbolication.framework in Frameworks */,
 				CEF2889F11CC2D7300122D03 /* JSTalk.framework in Frameworks */,
 				3C48399113F5D5C700F961C2 /* libcrypto.dylib in Frameworks */,
 				3C48038D13FB737A00E9F309 /* libssh2.dylib in Frameworks */,
