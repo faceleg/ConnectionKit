@@ -492,19 +492,22 @@
 	[context writeParamElementWithName:@"type" value:@"video/quicktime"];
 	[context writeParamElementWithName:@"pluginspage" value:@"http://www.apple.com/quicktime/download/"];	
 
-	// Now for the next nested object tag
+	// Now for the next nested object tag ... see above
+	if (![defaults boolForKey:@"DisableNestedQuickTimeObject"])	// Workaround for case 143922
+	{
+		[context pushAttribute:@"type" value:@"video/quicktime"];	// Proper value?
+		[context buildAttributesForResizableElement:@"object" object:self DOMControllerClass:nil  sizeDelta:NSMakeSize(0,barHeight) options:0];
+		
+		// Don't put in the poster frame and href in the Firefox code.  Doesn't work!
+		[context pushAttribute:@"data" value:movieSourcePath];
+		[context startElement:@"object"];
+		
+		[context writeParamElementWithName:@"autoplay" value:self.autoplay ? @"true" : @"false"];
+		[context writeParamElementWithName:@"controller" value:self.controller ? @"true" : @"false"];
+		[context writeParamElementWithName:@"loop" value:self.loop ? @"true" : @"false"];
+		[context writeParamElementWithName:@"scale" value:@"tofit"];
+	}
 	
-	[context pushAttribute:@"type" value:@"video/quicktime"];	// Proper value?
-	[context buildAttributesForResizableElement:@"object" object:self DOMControllerClass:nil  sizeDelta:NSMakeSize(0,barHeight) options:0];
-	
-	// Don't put in the poster frame and href in the Firefox code.  Doesn't work!
-	[context pushAttribute:@"data" value:movieSourcePath];
-	[context startElement:@"object"];
-	
-	[context writeParamElementWithName:@"autoplay" value:self.autoplay ? @"true" : @"false"];
-	[context writeParamElementWithName:@"controller" value:self.controller ? @"true" : @"false"];
-	[context writeParamElementWithName:@"loop" value:self.loop ? @"true" : @"false"];
-	[context writeParamElementWithName:@"scale" value:@"tofit"];
 	
 	return elementID;
 }
@@ -952,8 +955,12 @@
 
 	if (quicktimeTag)		// double nested object tags
 	{
-		OBASSERT([@"object" isEqualToString:[context topElement]]);
-		[context endElement];	//  </object>
+		// Now for the next nested object tag ... see above
+		if (![defaults boolForKey:@"DisableNestedQuickTimeObject"])
+		{
+			OBASSERT([@"object" isEqualToString:[context topElement]]);
+			[context endElement];	//  </object>
+		}
 	}
 	
 	if (flashTag || quicktimeTag || microsoftTag)
