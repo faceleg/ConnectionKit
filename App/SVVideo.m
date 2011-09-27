@@ -493,6 +493,7 @@
 	[context writeParamElementWithName:@"pluginspage" value:@"http://www.apple.com/quicktime/download/"];	
 
 	// Now for the next nested object tag ... see above
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	if (![defaults boolForKey:@"DisableNestedQuickTimeObject"])	// Workaround for case 143922
 	{
 		[context pushAttribute:@"type" value:@"video/quicktime"];	// Proper value?
