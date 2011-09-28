@@ -409,7 +409,10 @@
 	{
 		case kPosterTypeChoose:
 			// Switching to choose from automatic? Clear out the image.
-			[self setPosterFrameWithMedia:nil];
+			if (old == kPosterFrameTypeAutomatic)
+			{
+				[self setPosterFrameWithMedia:nil];
+			}
 			break;
 		case kPosterFrameTypeAutomatic:
 			if (kPosterFrameTypeUndefined != old)	// possibly get new frame only if we already had some other value.
