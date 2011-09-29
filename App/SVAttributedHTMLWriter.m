@@ -50,6 +50,7 @@
 {
     // Write the graphic
     SVGraphic *graphic = [controller graphic];
+    if (!graphic) return;   // #146221
     
     NSAttributedString *attributedString =
     [[NSAttributedString alloc] initWithString:[NSString stringWithUnichar:NSAttachmentCharacter]
