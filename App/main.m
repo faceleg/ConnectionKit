@@ -333,11 +333,9 @@ static inline int verifyKareliaProduct( int argc, startup_call_t *theCall, id * 
         return ( 173 );
     }
     
-    // create a SecRequirementRef specifying that this app is com.karelia.Sandvox 
-    // and that it is signed by both Apple's Root CA and Karelia's Mac Developer certificate
-    // (hash is SHA1 of "3rd Party Mac Developer Application: Karelia Software" taken from Keychain Access)
+    // create a SecRequirementRef specifying that this app is com.karelia.Sandvox and that it is signed by Apple's Root CA
     SecRequirementRef requirement = NULL;
-    char data[] = "identifier \"com.karelia.Sandvox\" and anchor apple generic and certificate leaf = H\"ED18DC1E62AA80F85748871080DDAD01BE3945D8\"";
+    char data[] = "identifier \"com.karelia.Sandvox\" and anchor apple generic";
     NSString *requirementString = [[[NSString alloc] initWithCString:data encoding:NSUTF8StringEncoding] autorelease];
     if ( SecRequirementCreateWithString((CFStringRef)requirementString, kSecCSDefaultFlags, &requirement) != noErr )
     {
