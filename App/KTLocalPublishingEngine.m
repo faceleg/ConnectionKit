@@ -30,7 +30,6 @@
 #import "KSPathUtilities.h"
 #import "KSURLUtilities.h"
 
-#import "KSInvocationOperation.h"
 #import "KSThreadProxy.h"
 #import "KSUtilities.h"
 
@@ -154,7 +153,7 @@
                                             target:self
                                             arguments:NSARRAY(data, remotePath, mediaRequest, digest)];
                 
-                NSOperation *operation = [[KSInvocationOperation alloc] initWithInvocation:invocation];
+                NSOperation *operation = [[NSInvocationOperation alloc] initWithInvocation:invocation];
                 [self addOperation:operation queue:[self diskOperationQueue]];
                 [operation release];
                 
@@ -246,7 +245,7 @@
             [invocation setArgument:&remotePath atIndex:3];
             [invocation setArgument:&object atIndex:4];
             
-            NSOperation *operation = [[KSInvocationOperation alloc] initWithInvocation:invocation];
+            NSOperation *operation = [[NSInvocationOperation alloc] initWithInvocation:invocation];
             [self addOperation:operation queue:[self diskOperationQueue]];
             [operation release];
             

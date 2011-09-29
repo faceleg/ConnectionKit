@@ -113,8 +113,12 @@ static KTPluginInstaller *sSharedPluginInstaller = nil;
 			NSFileManager *fm = [NSFileManager defaultManager];
 			if ([fm fileExistsAtPath:destPath] && ![sourcePath isEqualToString:destPath])
 			{
-				
-				(void) [fm removeItemAtPath:destPath error:nil];
+				// Move file we are replacing to the trash, not deleting.
+				(void) [[NSWorkspace sharedWorkspace] performFileOperation:NSWorkspaceRecycleOperation 
+															 source:[destPath stringByDeletingLastPathComponent]
+														destination:@"" 
+															  files:[NSArray arrayWithObject:[destPath lastPathComponent]]
+																tag:nil];
 			}
 			
 			// Move if we can delete the source file, and if the source path is not within the application path

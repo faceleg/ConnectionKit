@@ -811,15 +811,15 @@ const int kDesignThumbHeight = 65;
 			for (NSUInteger i = 0 ; i < [variations count] ; i++)
 			{
 				NSDictionary *variation = [variations objectAtIndex:i];
-				NSString *file = [variation objectForKey:@"file"];
+				NSString *fileNameForVariationFromPlist = [variation objectForKey:@"file"];
 				if (i != _variationIndex)
 				{
 					// ignore var. folder name except for var we're using
-					[variationNamesToIgnore addObject:file];
+					[variationNamesToIgnore addObject:fileNameForVariationFromPlist];
 				}
 				// Ignore all variation CSS files
-				OBASSERT(![file isEqualToString:@""]);
-                [variationNamesToIgnore addObject:[file stringByAppendingPathExtension:@"css"]];
+				OBASSERT(![fileNameForVariationFromPlist isEqualToString:@""]);
+                [variationNamesToIgnore addObject:[fileNameForVariationFromPlist stringByAppendingPathExtension:@"css"]];
 				// Note: all thumbnails are ignored below.
 			}
 		}
