@@ -171,6 +171,21 @@
         }
         
         
+        // Generally, can't allow nested elements.
+        // e.g. <span><span>foo</span> bar</span>   is wrong and should be simplified.
+        // An exception is if outer element has font: property, and inner element overrides that using longhand. e.g. font-family
+        // Under those circumstances, WebKit doesn't give us enough API to make the merge, so keep both elements.
+        // Test this quite early before any attributes get pushed, avoiding an attribute getting repeated as in #146554
+        // #100362
+        DOMElement *existingElement = [self openDOMElementConflictingWithDOMElement:element
+                                                                            tagName:tagName];
+        
+        if (existingElement)
+        {
+            return [self handleInvalidDOMElement:element];
+        }
+        
+        
         // Build attributes earlier than superclass would so they get validated. Don't worry, won't get added twice as we check for that in -startElement:withDOMElement:
         [self buildAttributesForDOMElement:element element:[tagName lowercaseString]];
         
@@ -213,19 +228,9 @@
         }
         
         
-        
-        // Generally, can't allow nested elements.
-        // e.g. <span><span>foo</span> bar</span>   is wrong and should be simplified.
-        // An exception is if outer element has font: property, and inner element overrides that using longhand. e.g. font-family
-        // Under those circumstances, WebKit doesn't give us enough API to make the merge, so keep both elements.
-        // #100362
-        DOMElement *existingElement = [self openDOMElementConflictingWithDOMElement:element
-                                                                            tagName:tagName];
-        
-        if (existingElement)
-        {
-            result = [self moveDOMElement:element toStopConflictWithAncestor:existingElement];
-        }
+        // The logic for handling this moved up to near the start, so shouldn't hit this point any more
+        OBASSERTSTRING(![self openDOMElementConflictingWithDOMElement:element tagName:tagName],
+                       @"Conflicting elements should already have been taken care of");
     }
     
     
