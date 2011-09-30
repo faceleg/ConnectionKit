@@ -118,7 +118,26 @@
 	self.preload = kPreloadNone;
 	self.autoplay = NO;
 	self.loop = NO;
-	self.posterFrameType = kPosterFrameTypeAutomatic;
+	
+	NSString *type = [self typeToPublish];
+	BOOL microsoftTag = [type conformsToUTI:@"public.avi"] || [type conformsToUTI:@"com.microsoft.windows-media-wmv"];
+	
+	// quicktime fallback, but not for mp4.  We may want to be more selective of mpeg-4 types though.
+	// Also show quicktime when there is no media at all
+	BOOL quicktimeTag = ([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie] || [type conformsToUTI:(NSString *)kUTTypeMPEG])
+	&& ![type conformsToUTI:@"public.mpeg-4"]
+	&& ![type conformsToUTI:@"com.apple.protected-mpeg-4-video"]
+	&& ![type conformsToUTI:@"public.3gpp"];
+	
+	if (microsoftTag || quicktimeTag)
+	{
+		self.posterFrameType = kPosterFrameTypeNone;
+
+	}
+	else
+	{
+		self.posterFrameType = kPosterFrameTypeAutomatic;
+	}
 		
     // Show caption
     if ([[[self.container textAttachment] placement] intValue] != SVGraphicPlacementInline)
