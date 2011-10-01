@@ -389,7 +389,7 @@ static void *sEngineFinishedObservationContext = &sEngineFinishedObservationCont
         {
             NSURLCredential *credential = [challenge proposedCredential];
             
-            if (![credential password])
+            if (![[credential user] isEqualToString:user] || ![credential password])
             {
                 credential = [[KTURLCredentialStorage sharedCredentialStorage] credentialForUser:user
                                                                                 protectionSpace:[challenge protectionSpace]];
