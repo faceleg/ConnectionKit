@@ -15,8 +15,8 @@
 {
     self = [super initWithBundle:bundle variation:variationIndex];
     
-    // Register alternate IDs too
-    if (variationIndex == NSNotFound)   // KTDesign will take care of variants
+    // Register alternate IDs too, but not for variations, as design takes care of that
+    if (variationIndex == NSNotFound)
     {
         for (NSString *anID in [bundle objectForInfoDictionaryKey:@"SVAlternateIdentifiers"])
         {
