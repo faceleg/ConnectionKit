@@ -20,7 +20,7 @@
 #import "KSExtensibleManagedObject.h"
 
 
-@class SVDirectoryPublishingRecord, SVPublishingRecord;
+@class SVDirectoryPublishingRecord, SVPublishingRecord, CKConnectionRequest;
 
 
 @interface KTHostProperties : KSExtensibleManagedObject
@@ -43,6 +43,10 @@
 - (NSString *)subfolder;
 
 - (NSString *)hostPropertiesReport;
+
+
+#pragma mark Connection
+- (CKConnectionRequest *)connectionRequest;
 
 
 #pragma mark Publishing Records
