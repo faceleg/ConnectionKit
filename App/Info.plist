@@ -123,7 +123,7 @@
 	<key>KSFeedType</key>
 	<string>${PRODUCT_VARIANT}</string>
 	<key>LSApplicationCategoryType</key>
-	<string>public.app-category.graphics-design</string>
+	<string>public.app-category.productivity</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>10.6.6</string>
 	<key>NSAppleScriptEnabled</key>
@@ -207,42 +207,42 @@
 			<array>
 				<string>com.apple.plugin</string>
 			</array>
-			<key>UTTypeIdentifier</key>
-			<string>com.karelia.Sandvox.plugin</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<string>svxElement</string>
-				<key>com.apple.ostype</key>
-				<string>svEl</string>
-			</dict>
 			<key>UTTypeDescription</key>
 			<string>Sandvox plug-in</string>
-			<key>UTTypeReferenceURL</key>
-			<string>http://www.karelia.com/sandvox/help/z/Sandvox_Developers_Guide.html</string>
 			<key>UTTypeIconFile</key>
 			<string>pageplugin.icns</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.karelia.Sandvox.plugin</string>
+			<key>UTTypeReferenceURL</key>
+			<string>http://www.karelia.com/sandvox/help/z/Sandvox_Developers_Guide.html</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>com.apple.ostype</key>
+				<string>svEl</string>
+				<key>public.filename-extension</key>
+				<string>svxElement</string>
+			</dict>
 		</dict>
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>com.apple.plugin</string>
 			</array>
-			<key>UTTypeIdentifier</key>
-			<string>com.karelia.Sandvox.design</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<string>svxDesign</string>
-				<key>com.apple.ostype</key>
-				<string>svDz</string>
-			</dict>
 			<key>UTTypeDescription</key>
 			<string>Sandvox design</string>
-			<key>UTTypeReferenceURL</key>
-			<string>http://www.karelia.com/sandvox/help/z/Sandvox_Designers_Guide.html</string>
 			<key>UTTypeIconFile</key>
 			<string>design.icns</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.karelia.Sandvox.design</string>
+			<key>UTTypeReferenceURL</key>
+			<string>http://www.karelia.com/sandvox/help/z/Sandvox_Designers_Guide.html</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>com.apple.ostype</key>
+				<string>svDz</string>
+				<key>public.filename-extension</key>
+				<string>svxDesign</string>
+			</dict>
 		</dict>
 	</array>
 	<key>UTImportedTypeDeclarations</key>
