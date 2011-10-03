@@ -101,9 +101,11 @@
     BOOL result = [super isSelectable];
     if (result)
     {
-        for (WEKWebEditorItem *anItem in [self childWebEditorItems])
+        if ([[self childWebEditorItems] count] == 1 &&
+            [[[self childWebEditorItems] objectAtIndex:0] isSelectable] &&
+            ![[self parentWebEditorItem] isKindOfClass:[SVGraphicDOMController class]])
         {
-            if ([anItem isSelectable]) result = NO;
+            result = NO;
         }
     }
     
@@ -139,18 +141,10 @@
     if (!result && [node ks_isDescendantOfElement:[self HTMLElement]]) result = self;
     
     
-    // Pretend we're not here if only child element is selectable
-    if (result == self &&
-        [[self childWebEditorItems] count] == 1 &&
-        [[[self childWebEditorItems] objectAtIndex:0] isSelectable])
+    // Pretend we're not here if not selectable, since child takes over that responsibility
+    if (result == self && ![self isSelectable])
     {
-        // Seek out a better matching child which has no siblings. #93557
-        DOMTreeWalker *walker = [[node ownerDocument] createTreeWalker:node
-                                                            whatToShow:DOM_SHOW_ELEMENT
-                                                                filter:nil
-                                                expandEntityReferences:NO];
-        
-        if ([walker currentNode] && ![walker nextSibling]) result = nil;
+        result = nil;
     }
     
     return result;
