@@ -27,6 +27,7 @@
 #import "NSURL+Karelia.h"
 
 #import "KSCSSWriter.h"
+#import "KSURLUtilities.h"
 
 #import "Debug.h"
 #import "Macros.h"
@@ -177,13 +178,13 @@
     return result;
 }
 
-- (NSString *)graphicalTextStyleWithImageURL:(NSURL *)url
+- (NSString *)graphicalTextStyleWithImageURLString:(NSString *)url
                                        width:(unsigned)width
                                       height:(unsigned)height;
 {
     NSString *result = [NSString stringWithFormat:
                         @"text-align:left; text-indent:-9999px; background:url(\"%@\") top left no-repeat !important; width:%upx; height:%upx;",
-                        [url absoluteString],   // quotes are needed around the URL in case it contains an apostrophe. #120419
+                        url,   // quotes are needed around the URL in case it contains an apostrophe. #120419
                         width,
                         height];
     
@@ -246,6 +247,7 @@
                         [[text dataUsingEncoding:NSUTF8StringEncoding] ks_SHA1DigestString]];
         
         url = [context addGraphicalTextData:data idName:ID];
+        NSString *urlString = [url ks_stringRelativeToURL:[context mainCSSURL]];
         
         
         // Build proper CSS rule
@@ -256,7 +258,7 @@
         
         [cssWriter writeIDSelector:ID];
         
-        [cssWriter writeDeclarationBlock:[self graphicalTextStyleWithImageURL:url
+        [cssWriter writeDeclarationBlock:[self graphicalTextStyleWithImageURLString:urlString
                                                                         width:width
                                                                        height:height]];
         
@@ -266,7 +268,7 @@
     }
     else
     {
-        NSString *cssText = [self graphicalTextStyleWithImageURL:url width:width height:height];
+        NSString *cssText = [self graphicalTextStyleWithImageURLString:[url absoluteString] width:width height:height];
         [context pushAttribute:@"style" value:cssText];
     }
     
