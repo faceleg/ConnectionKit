@@ -19,3 +19,6 @@
 [submodule "Code/ICOFamily"]
 	path = Code/ICOFamily
 	url = git@github.com:karelia/ICOFamily.git
+[submodule "Code/KSFileUtilities"]
+	path = Code/KSFileUtilities
+	url = git@github.com:karelia/KSFileUtilities.git
