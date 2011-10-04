@@ -248,6 +248,11 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSURL *jQueryURL = nil;
 	NSString *minimizationSuffix = @".min";
+	if ([defaults boolForKey:@"jQueryDebug"])
+	{
+		minimizationSuffix = @"";	// Empty suffix means we'll bring in the non minimized version.
+	}
+	
 
 	NSString *scheme = [self.baseURL scheme];
 	if (!scheme) scheme = @"http";		// for instance, when newly set up. Better to show something for page source.

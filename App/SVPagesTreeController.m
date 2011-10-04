@@ -86,6 +86,18 @@
     return self;
 }
 
+- (id)initWithContent:(id)content;
+{
+    if (self = [super initWithContent:content])
+    {
+        [self setParentKeyPath:@"parentPage"];
+        
+        
+    }
+    
+    return self;
+}
+
 - (void)dealloc;
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSUndoManagerDidOpenUndoGroupNotification object:nil];
