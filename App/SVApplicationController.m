@@ -278,12 +278,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
     NSMutableDictionary *defaultsBase = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 		
 								 // General defaults ... app behavior. NOTE: THESE ARE CAPITALIZED
-#ifdef DEBUG
-		[NSNumber numberWithBool:YES],			@"IncludeDebugMenu",
-#else
-		[NSNumber numberWithBool:NO],			@"IncludeDebugMenu",
-#endif
-										 
 // For now, we want 
 		@"all",									@"metaRobots",
 #ifdef APPLE_DESIGN_AWARDS_KEY
