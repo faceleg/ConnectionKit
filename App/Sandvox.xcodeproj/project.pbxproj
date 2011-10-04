@@ -7,17 +7,6 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
-		3C15B85E0DC790A100DE9957 /* UpdateDesigns */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 3C15B8670DC790A500DE9957 /* Build configuration list for PBXAggregateTarget "UpdateDesigns" */;
-			buildPhases = (
-				3C15B85D0DC790A100DE9957 /* ShellScript */,
-			);
-			dependencies = (
-			);
-			name = UpdateDesigns;
-			productName = UpdateDesigns;
-		};
 		3C3E75FA0F1C5F42002E3A9A /* UpdateInvalidLicenses */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 3C3E75FE0F1C5F6E002E3A9A /* Build configuration list for PBXAggregateTarget "UpdateInvalidLicenses" */;
@@ -96,7 +85,6 @@
 				3C9CF9B0121201D8005CFDD4 /* PBXTargetDependency */,
 				3C85B31C13023F8A00690048 /* PBXTargetDependency */,
 				274E82800D627180004F89C2 /* PBXTargetDependency */,
-				3C15B86A0DC7917B00DE9957 /* PBXTargetDependency */,
 			);
 			name = "Sandvox-CompleteApplication";
 			productName = Sandvox;
@@ -1400,13 +1388,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = PageCounterElement;
-		};
-		3C15B8690DC7917B00DE9957 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3C15B85E0DC790A100DE9957;
-			remoteInfo = UpdateDesigns;
 		};
 		3C1F512611D576D00036B375 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -6559,7 +6540,6 @@
 				3CA0FEE40D7614AB0093562D /* DeployRelease */,
 				3C979D9013BA506000E7CF7C /* Preflight Build */,
 				3C3E75FA0F1C5F42002E3A9A /* UpdateInvalidLicenses */,
-				3C15B85E0DC790A100DE9957 /* UpdateDesigns */,
 				CEF9D0AE0D862B5100BD9895 /* ImageWebKitPlugin */,
 				CE16DC580D8711790077C779 /* MovieWebKitPlugin */,
 				3C1F510911D575510036B375 /* xibLocalizationPostprocessor */,
@@ -7106,20 +7086,6 @@
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/bash;
 			shellScript = "#\n# remove ppc/ppc7400 from various binaries that Apple complained about\n#\n\nthinBinary()\n{\n    lipo \"${1}\" -verify_arch ppc > /dev/null 2>&1\n    if [ \"$?\" -eq 0 ]\n    then\n        echo \"thinning arch ppc from ${1}...\"\n        lipo \"${1}\" -remove ppc -output \"${TARGET_TEMP_DIR}/thinnedBinary\"\n        mv \"${TARGET_TEMP_DIR}/thinnedBinary\" \"${1}\"\n    fi\n    \n    lipo \"${1}\" -verify_arch ppc7400 > /dev/null 2>&1\n    if [ \"$?\" -eq 0 ]\n    then\n        echo \"removing arch ppc7400 from ${1}\"\n        lipo \"${1}\" -remove ppc7400 -output \"${TARGET_TEMP_DIR}/thinnedBinary\"\n        mv \"${TARGET_TEMP_DIR}/thinnedBinary\" \"${1}\"\n    fi\n}\n\n# Frameworks\n\nFRAMEWORKS_PATH=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/Frameworks\n\nGrowlPath=${FRAMEWORKS_PATH}/Growl.framework/Versions/A/Growl\nBWToolkitPath=${FRAMEWORKS_PATH}/BWToolkitFramework.framework/Versions/A/BWToolkitFramework\nJSTalkPath=${FRAMEWORKS_PATH}/JSTalk.framework/Versions/A/JSTalk\nlibssh2Path=${FRAMEWORKS_PATH}/libssh2.dylib\n\n# only thin App Store builds\n\nif [ -z \"${APP_STORE_VERSION}\" ]\nthen\n    echo \"NOT thinning binaries in non-App Store builds\"\nelse\n    thinBinary \"${GrowlPath}\"\n    thinBinary \"${BWToolkitPath}\"\n    thinBinary \"${JSTalkPath}\"\n    thinBinary \"${libssh2Path}\"\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		3C15B85D0DC790A100DE9957 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### UPDATE Designs ToT FOR RELEASE BUILDS\n###\n\nDESIGNS_PATH=${SRCROOT}/../../Designs\n\n# for some reason using which to find svn works on Leopard, not on Tiger\n# SVN_PATH=`which svn`\n\n# so we do this instead and hope for the best\nif [ -e /usr/local/bin/svn ]\nthen\n\tSVN_PATH=/usr/local/bin/svn\nelif [ -e /usr/bin/svn ]\nthen\n\tSVN_PATH=/usr/bin/svn\nelif [ -e /opt/local/bin/svn ]\nthen\n\tSVN_PATH=/opt/local/bin/svn\nelse\n\techo \"ERROR - CANT FIND SVN\"\n\texit 1\nfi\n\npushd \"${SRCROOT}\"\n\necho \"syncing Designs with ToT ...\"\ncd \"${DESIGNS_PATH}\"\n\"${SVN_PATH}\" update\necho \"... finished syncing Designs\"\n\npopd\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
 		3C3E75F90F1C5F42002E3A9A /* ShellScript */ = {
@@ -7922,11 +7888,6 @@
 			isa = PBXTargetDependency;
 			name = VictualElement;
 			targetProxy = 3C042AC41307167D00D9F2A7 /* PBXContainerItemProxy */;
-		};
-		3C15B86A0DC7917B00DE9957 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3C15B85E0DC790A100DE9957 /* UpdateDesigns */;
-			targetProxy = 3C15B8690DC7917B00DE9957 /* PBXContainerItemProxy */;
 		};
 		3C1F512711D576D00036B375 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -8935,22 +8896,6 @@
 			};
 			name = Debug;
 		};
-		3C15B85F0DC790A200DE9957 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
-			buildSettings = {
-				DEPLOYMENT_POSTPROCESSING = YES;
-				PRODUCT_NAME = UpdateDesigns;
-			};
-			name = Release;
-		};
-		3C15B8600DC790A200DE9957 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = UpdateDesigns;
-			};
-			name = Debug;
-		};
 		3C1F510C11D575510036B375 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
@@ -9187,15 +9132,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3C15B8670DC790A500DE9957 /* Build configuration list for PBXAggregateTarget "UpdateDesigns" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3C15B8600DC790A200DE9957 /* Debug */,
-				3C15B85F0DC790A200DE9957 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		3C1F511011D575700036B375 /* Build configuration list for PBXNativeTarget "xibLocalizationPostprocessor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
