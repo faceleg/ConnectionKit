@@ -1,33 +1,51 @@
-[submodule "Code/JSONKit"]
-	path = Code/JSONKit
-	url = git://github.com/johnezang/JSONKit.git
-[submodule "Code/iMedia"]
-	path = Code/iMedia
-	url = git@github.com:karelia/iMedia.git
+[submodule "Designs"]
+	path = Designs
+	url = git@github.com:karelia/Sandvox-Designs.git
+[submodule "Code/WebEditingKit"]
+	path = Code/WebEditingKit
+	url = git@github.com:karelia/WebEditingKit.git
 [submodule "Code/Shared"]
 	path = Code/Shared
 	url = git@github.com:karelia/Shared.git
+[submodule "Code/bdalias"]
+	path = Code/bdalias
+	url = git@github.com:karelia/bdalias.git
+[submodule "Code/ConnectionKit"]
+	path = Code/ConnectionKit
+	url = git@github.com:karelia/ConnectionKit.git
+[submodule "Code/SFTP"]
+	path = Code/SFTP
+	url = git@github.com:karelia/libssh2_sftp-Cocoa-wrapper.git
+[submodule "Code/iMedia"]
+	path = Code/iMedia
+	url = git@github.com:karelia/iMedia.git
+[submodule "Code/JSONKit"]
+	path = Code/JSONKit
+	url = git://github.com/johnezang/JSONKit.git
+[submodule "Code/ICOFamily"]
+	path = Code/ICOFamily
+	url = git@github.com:karelia/ICOFamily.git
+[submodule "Code/DAVKit"]
+	path = Code/DAVKit
+	url = git@github.com:karelia/DAVKit.git
+[submodule "Code/KSError"]
+	path = Code/KSError
+	url = git@github.com:karelia/KSError.git
+[submodule "Code/KSExtensibleManagedObject"]
+	path = Code/KSExtensibleManagedObject
+	url = git@github.com:karelia/KSExtensibleManagedObject
 [submodule "Code/KSFileUtilities"]
 	path = Code/KSFileUtilities
 	url = git@github.com:karelia/KSFileUtilities.git
 [submodule "Code/KSHTMLWriter"]
 	path = Code/KSHTMLWriter
 	url = git@github.com:karelia/KSHTMLWriter.git
-[submodule "Code/SFTP"]
-	path = Code/SFTP
-	url = git@github.com:karelia/libssh2_sftp-Cocoa-wrapper.git
-[submodule "Code/ConnectionKit"]
-	path = Code/ConnectionKit
-	url = git@github.com:karelia/ConnectionKit.git
-[submodule "Code/ICOFamily"]
-	path = Code/ICOFamily
-	url = git@github.com:karelia/ICOFamily.git
-[submodule "Code/WebEditingKit"]
-	path = Code/WebEditingKit
-	url = git@github.com:karelia/WebEditingKit.git
-[submodule "Code/DAVKit"]
-	path = Code/DAVKit
-	url = git@github.com:karelia/DAVKit.git
-[submodule "Designs"]
-	path = Designs
-	url = git@github.com:karelia/Sandvox-Designs.git
+[submodule "Code/KSSelectionBorder"]
+	path = Code/KSSelectionBorder
+	url = git@github.com:karelia/KSSelectionBorder
+[submodule "Code/KSThreadProxy"]
+	path = Code/KSThreadProxy
+	url = git@github.com:karelia/KSThreadProxy
+[submodule "Code/yrk-spinning-progress-indicator"]
+	path = Code/yrk-spinning-progress-indicator
+	url = git@github.com:karelia/yrk-spinning-progress-indicator

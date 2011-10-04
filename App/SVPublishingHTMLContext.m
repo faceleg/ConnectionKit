@@ -14,6 +14,7 @@
 #import "SVMedia.h"
 #import "SVMediaRequest.h"
 #import "KTPage+Paths.h"
+#import "SVPagesTreeController.h"
 #import "SVPublisher.h"
 #import "KTPublishingEngine.h"
 #import "KTSite.h"
@@ -26,6 +27,8 @@
 #import "KSStringWriter.h"
 #import "KSURLUtilities.h"
 #import "KSPathUtilities.h"
+
+#import "Registration.h"
 
 
 @implementation SVPublishingHTMLContext
@@ -187,6 +190,32 @@
     }
     
     return result;
+}
+
+- (NSURL *)URLForImageRepresentationOfPage:(SVSiteItem *)page width:(NSUInteger)width height:(NSUInteger)height options:(SVPageImageRepresentationOptions)options;
+{
+    if (!gRegistrationString || gLicenseIsBlacklisted)
+    {
+        // Can publish up to N pages
+        SVPagesTreeController *controller = [[SVPagesTreeController alloc] initWithContent:[page rootPage]];
+        [controller setChildrenKeyPath:@"childItems"];
+        //[controller setLeafKeyPath:@"isLeaf"];
+        
+        NSIndexPath *nthPagePath = [controller indexPathOfObjectAtIndex:(kMaxNumberOfFreePublishedPages-1)];
+        
+        if (nthPagePath)
+        {
+            NSIndexPath *path = [controller indexPathOfObject:page];
+            if ([path isGreaterThan:nthPagePath]) return nil;
+        }
+        
+        [controller release];
+    }
+    
+    return [super URLForImageRepresentationOfPage:page
+                                            width:width
+                                           height:height
+                                          options:options];
 }
 
 - (void)addJavascriptResourceWithTemplateAtURL:(NSURL *)templateURL
