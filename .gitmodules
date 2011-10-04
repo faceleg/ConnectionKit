@@ -43,3 +43,6 @@
 [submodule "Code/KSThreadProxy"]
 	path = Code/KSThreadProxy
 	url = git@github.com:karelia/KSThreadProxy
+[submodule "Code/yrk-spinning-progress-indicator"]
+	path = Code/yrk-spinning-progress-indicator
+	url = git@github.com:karelia/yrk-spinning-progress-indicator

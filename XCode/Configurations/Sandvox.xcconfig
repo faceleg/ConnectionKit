@@ -8,10 +8,6 @@ PRODUCT_VARIANT = BETA
 // expiry for beta
 EXPIRY_TIMESTAMP = '@\"2011-10-10 11:59:59 -0800\"'
 
-// pull specific tags from dependent repositories
-
-YRKSPINNINGPROGRESSINDICATOR_COMMIT = fe71a17098f56e62e65b36da0d2ba639481e4899
-
 
 // Building -- common settings across all configurations
 
