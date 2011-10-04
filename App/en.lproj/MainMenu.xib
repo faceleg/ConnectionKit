@@ -2358,11 +2358,19 @@
 									<reference key="NSOnImage" ref="73959282"/>
 									<reference key="NSMixedImage" ref="49718828"/>
 								</object>
+								<object class="NSMenuItem" id="834651288">
+									<reference key="NSMenu" ref="186851815"/>
+									<string key="NSTitle">Show Web Inspector</string>
+									<string key="NSKeyEquiv">I</string>
+									<int key="NSKeyEquivModMask">1572864</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="73959282"/>
+									<reference key="NSMixedImage" ref="49718828"/>
+								</object>
 								<object class="NSMenuItem" id="817124704">
 									<reference key="NSMenu" ref="186851815"/>
 									<bool key="NSIsDisabled">YES</bool>
 									<bool key="NSIsSeparator">YES</bool>
-									<bool key="NSIsHidden">YES</bool>
 									<string key="NSTitle"/>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
@@ -2716,11 +2724,6 @@
 				<string key="NSClassName">SVApplicationController</string>
 			</object>
 			<object class="NSUserDefaultsController" id="490316627">
-				<object class="NSMutableArray" key="NSDeclaredKeys">
-					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>IncludeDebugMenu</string>
-					<string>LogJavaScript</string>
-				</object>
 				<bool key="NSSharedInstance">YES</bool>
 			</object>
 			<object class="NSCustomObject" id="75866659">
@@ -3941,6 +3944,14 @@
 						</object>
 					</object>
 					<int key="connectionID">1459</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showWebInspector:</string>
+						<reference key="source" ref="464856506"/>
+						<reference key="destination" ref="834651288"/>
+					</object>
+					<int key="connectionID">1461</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -6150,6 +6161,7 @@
 							<reference ref="817124704"/>
 							<reference ref="265872979"/>
 							<reference ref="127582652"/>
+							<reference ref="834651288"/>
 						</object>
 						<reference key="parent" ref="209497045"/>
 						<string key="objectName">Debug</string>
@@ -6252,6 +6264,11 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">1453</int>
 						<reference key="object" ref="127582652"/>
+						<reference key="parent" ref="186851815"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1460</int>
+						<reference key="object" ref="834651288"/>
 						<reference key="parent" ref="186851815"/>
 					</object>
 				</object>
@@ -6475,6 +6492,7 @@
 					<string>1452.ImportedFromIB2</string>
 					<string>1453.IBPluginDependency</string>
 					<string>1453.ImportedFromIB2</string>
+					<string>1460.IBPluginDependency</string>
 					<string>149.IBPluginDependency</string>
 					<string>149.ImportedFromIB2</string>
 					<string>150.IBPluginDependency</string>
@@ -6924,7 +6942,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{923, 734}, {261, 353}}</string>
+					<string>{{923, 714}, {293, 373}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6970,7 +6988,6 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -6980,9 +6997,11 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{466, 579}, {161, 143}}</string>
+					<string>{{739, 944}, {161, 143}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -7263,7 +7282,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1459</int>
+			<int key="maxID">1461</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -8989,6 +9008,7 @@
 							<string>showChooseDesignSheet:</string>
 							<string>showPageCodeInjection:</string>
 							<string>showSiteCodeInjection:</string>
+							<string>showWebInspector:</string>
 							<string>submitSiteToDirectory:</string>
 							<string>toggleSmallPageIcons:</string>
 							<string>visitPublishedPage:</string>
@@ -9007,6 +9027,7 @@
 							<string>id</string>
 							<string>id</string>
 							<string>NSToolbarItem</string>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -9036,6 +9057,7 @@
 							<string>showChooseDesignSheet:</string>
 							<string>showPageCodeInjection:</string>
 							<string>showSiteCodeInjection:</string>
+							<string>showWebInspector:</string>
 							<string>submitSiteToDirectory:</string>
 							<string>toggleSmallPageIcons:</string>
 							<string>visitPublishedPage:</string>
@@ -9098,6 +9120,10 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">showSiteCodeInjection:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">showWebInspector:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -10315,7 +10341,6 @@
 							<string>oDOMViewMenuItem</string>
 							<string>oDebugMediaPanel</string>
 							<string>oDebugTable</string>
-							<string>oDevelopMenu</string>
 							<string>oEditRawHTMLMenuItem</string>
 							<string>oFindSeparator</string>
 							<string>oFindSubmenu</string>
@@ -10353,7 +10378,6 @@
 							<string>NSMenuItem</string>
 							<string>NSMenuItem</string>
 							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
 							<string>NSMenu</string>
 							<string>NSMenuItem</string>
 							<string>NSMenuItem</string>
@@ -10388,7 +10412,6 @@
 							<string>oDOMViewMenuItem</string>
 							<string>oDebugMediaPanel</string>
 							<string>oDebugTable</string>
-							<string>oDevelopMenu</string>
 							<string>oEditRawHTMLMenuItem</string>
 							<string>oFindSeparator</string>
 							<string>oFindSubmenu</string>
@@ -10461,10 +10484,6 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">oDebugTable</string>
 								<string key="candidateClassName">NSTableView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">oDevelopMenu</string>
-								<string key="candidateClassName">NSMenuItem</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">oEditRawHTMLMenuItem</string>

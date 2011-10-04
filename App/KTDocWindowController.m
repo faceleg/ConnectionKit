@@ -648,6 +648,33 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     [[self siteOutlineViewController] toggleIsCollection:sender];
 }
 
+#pragma mark Develop Menu
+
+- (NSObject *)webInspector
+{
+    NSViewController *controller = [[self webContentAreaController] selectedViewControllerWhenReady];
+    if ([controller respondsToSelector:@selector(webView)])
+    {
+        WebView *webView = [controller performSelector:@selector(webView)];
+        if ([webView respondsToSelector:@selector(inspector)])
+        {
+            NSObject *result = [webView performSelector:@selector(inspector)];
+            return result;
+        }
+    }
+    
+    return nil;
+}
+
+- (IBAction)showWebInspector:(id)sender;
+{
+    NSObject *inspector = [self webInspector];
+    if ([inspector respondsToSelector:@selector(show:)])
+    {
+        [inspector performSelector:@selector(show:) withObject:sender];
+    }
+}
+
 #pragma mark Action Validation
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
