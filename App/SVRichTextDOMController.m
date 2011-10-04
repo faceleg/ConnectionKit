@@ -995,6 +995,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
         SVDOMController *controller = [graphic newDOMControllerWithElementIdName:nil ancestorNode:[self HTMLElement]];
         [controller setHTMLContext:context];
         [controller loadPlaceholderDOMElement];
+        [controller setSelectable:YES]; // -newDOMController… doesn't do this by default
         
         
         // Generate & insert DOM node
