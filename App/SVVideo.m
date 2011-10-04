@@ -118,7 +118,26 @@
 	self.preload = kPreloadNone;
 	self.autoplay = NO;
 	self.loop = NO;
-	self.posterFrameType = kPosterFrameTypeAutomatic;
+	
+	NSString *type = [self typeToPublish];
+	BOOL microsoftTag = [type conformsToUTI:@"public.avi"] || [type conformsToUTI:@"com.microsoft.windows-media-wmv"];
+	
+	// quicktime fallback, but not for mp4.  We may want to be more selective of mpeg-4 types though.
+	// Also show quicktime when there is no media at all
+	BOOL quicktimeTag = ([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie] || [type conformsToUTI:(NSString *)kUTTypeMPEG])
+	&& ![type conformsToUTI:@"public.mpeg-4"]
+	&& ![type conformsToUTI:@"com.apple.protected-mpeg-4-video"]
+	&& ![type conformsToUTI:@"public.3gpp"];
+	
+	if (microsoftTag || quicktimeTag)
+	{
+		self.posterFrameType = kPosterFrameTypeNone;
+
+	}
+	else
+	{
+		self.posterFrameType = kPosterFrameTypeAutomatic;
+	}
 		
     // Show caption
     if ([[[self.container textAttachment] placement] intValue] != SVGraphicPlacementInline)
@@ -467,8 +486,9 @@
 
 	NSUInteger barHeight = self.controller ? 16 : 0;
 	
-	[context pushAttribute:@"classid" value:@"clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"];	// Proper value?
-	[context pushAttribute:@"codebase" value:@"http://www.apple.com/qtactivex/qtplugin.cab"];
+	NSString *mimeType = [KSWORKSPACE ks_MIMETypeForType:self.codecType];
+	[context pushAttribute:@"type" value:mimeType];
+	
 	
 	[context buildAttributesForResizableElement:@"object" object:self DOMControllerClass:nil  sizeDelta:NSMakeSize(0,barHeight) options:0];
 
@@ -492,25 +512,8 @@
 	[context writeParamElementWithName:@"controller" value:self.controller ? @"true" : @"false"];
 	[context writeParamElementWithName:@"loop" value:self.loop ? @"true" : @"false"];
 	[context writeParamElementWithName:@"scale" value:@"tofit"];
-	[context writeParamElementWithName:@"type" value:@"video/quicktime"];
+	[context writeParamElementWithName:@"type" value:mimeType];
 	[context writeParamElementWithName:@"pluginspage" value:@"http://www.apple.com/quicktime/download/"];	
-
-	// Now for the next nested object tag ... see above
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	if (![defaults boolForKey:@"DisableNestedQuickTimeObject"])	// Workaround for case 143922
-	{
-		[context pushAttribute:@"type" value:@"video/quicktime"];	// Proper value?
-		[context buildAttributesForResizableElement:@"object" object:self DOMControllerClass:nil  sizeDelta:NSMakeSize(0,barHeight) options:0];
-		
-		// Don't put in the poster frame and href in the Firefox code.  Doesn't work!
-		[context pushAttribute:@"data" value:movieSourcePath];
-		[context startElement:@"object"];
-		
-		[context writeParamElementWithName:@"autoplay" value:self.autoplay ? @"true" : @"false"];
-		[context writeParamElementWithName:@"controller" value:self.controller ? @"true" : @"false"];
-		[context writeParamElementWithName:@"loop" value:self.loop ? @"true" : @"false"];
-		[context writeParamElementWithName:@"scale" value:@"tofit"];
-	}
 	
 	
 	return elementID;
@@ -955,16 +958,6 @@
 	{
 		OBASSERT([@"div" isEqualToString:[context topElement]]);
 		[context endElement];
-	}
-
-	if (quicktimeTag)		// double nested object tags
-	{
-		// Now for the next nested object tag ... see above
-		if (![defaults boolForKey:@"DisableNestedQuickTimeObject"])
-		{
-			OBASSERT([@"object" isEqualToString:[context topElement]]);
-			[context endElement];	//  </object>
-		}
 	}
 	
 	if (flashTag || quicktimeTag || microsoftTag)

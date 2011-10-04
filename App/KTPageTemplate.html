@@ -1,6 +1,6 @@
 <html [[if parser.HTMLContext.isXHTML]]xmlns="http://www.w3.org/1999/xhtml" xml:lang="[[=&parser.outputWriter.language]]" [[endif]]lang="[[=&parser.outputWriter.language]]">
 	<head>
-[[if parser.HTMLContext.docType=4]]
+[[if parser.HTMLContext.docType='html']]
 		<meta charset="[[=&master.charset]]" />
 [[else]]
 		<meta http-equiv="content-type" content="text/html; charset=[[=&master.charset]]" />

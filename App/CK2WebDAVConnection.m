@@ -319,6 +319,12 @@
     [self webDAVRequest:aRequest didFinishWithResult:nil error:error];
 }
 
+- (void)webDAVRequest:(DAVRequest *)request didSendDataOfLength:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
+{
+    CKTransferRecord *record = [_transferRecordsByRequest objectForKey:request];
+    [record transfer:record transferredDataOfLength:bytesWritten];
+}
+
 - commandQueue { return nil; }
 - (void)cleanupConnection { }
 

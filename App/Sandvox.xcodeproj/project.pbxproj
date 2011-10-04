@@ -7,17 +7,6 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
-		3C15B85E0DC790A100DE9957 /* UpdateDesigns */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 3C15B8670DC790A500DE9957 /* Build configuration list for PBXAggregateTarget "UpdateDesigns" */;
-			buildPhases = (
-				3C15B85D0DC790A100DE9957 /* ShellScript */,
-			);
-			dependencies = (
-			);
-			name = UpdateDesigns;
-			productName = UpdateDesigns;
-		};
 		3C3E75FA0F1C5F42002E3A9A /* UpdateInvalidLicenses */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 3C3E75FE0F1C5F6E002E3A9A /* Build configuration list for PBXAggregateTarget "UpdateInvalidLicenses" */;
@@ -97,7 +86,6 @@
 				3C9CF9B0121201D8005CFDD4 /* PBXTargetDependency */,
 				3C85B31C13023F8A00690048 /* PBXTargetDependency */,
 				274E82800D627180004F89C2 /* PBXTargetDependency */,
-				3C15B86A0DC7917B00DE9957 /* PBXTargetDependency */,
 			);
 			name = "Sandvox-CompleteApplication";
 			productName = Sandvox;
@@ -1448,13 +1436,6 @@
 			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = PageCounterElement;
 		};
-		3C15B8690DC7917B00DE9957 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3C15B85E0DC790A100DE9957;
-			remoteInfo = UpdateDesigns;
-		};
 		3C1F512611D576D00036B375 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
@@ -1954,8 +1935,6 @@
 		273DD20710CC74AA003CCE97 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CollectionInspector.xib; sourceTree = "<group>"; };
 		273FA58914209E580051E616 /* DAVKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DAVKit.xcodeproj; path = ../Code/DAVKit/DAVKit.xcodeproj; sourceTree = SOURCE_ROOT; };
 		273FA5BF1420A1B00051E616 /* DAVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DAVKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		273FA62B1420A7100051E616 /* SVWebDAVPublishingEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebDAVPublishingEngine.h; sourceTree = "<group>"; };
-		273FA62C1420A7100051E616 /* SVWebDAVPublishingEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebDAVPublishingEngine.m; sourceTree = "<group>"; };
 		273FA6BC1420B2790051E616 /* CK2WebDAVConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CK2WebDAVConnection.h; sourceTree = "<group>"; };
 		273FA6BD1420B2790051E616 /* CK2WebDAVConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CK2WebDAVConnection.m; sourceTree = "<group>"; };
 		27403DFD130D72D3001006D6 /* SVMigrationDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMigrationDocument.h; sourceTree = "<group>"; };
@@ -2006,8 +1985,6 @@
 		2755279B10546D990037524C /* KSSelectionBorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSSelectionBorder.m; sourceTree = "<group>"; };
 		2756662D0F00760800878A05 /* KTURLCredentialStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTURLCredentialStorage.h; sourceTree = "<group>"; };
 		2756662E0F00760800878A05 /* KTURLCredentialStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTURLCredentialStorage.m; sourceTree = "<group>"; };
-		275666EB0F015E8300878A05 /* KTMobileMePublishingEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMobileMePublishingEngine.h; sourceTree = "<group>"; };
-		275666EC0F015E8300878A05 /* KTMobileMePublishingEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMobileMePublishingEngine.m; sourceTree = "<group>"; };
 		2756671D0F0167C700878A05 /* KTDocWindowController+Publishing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+Publishing.m"; sourceTree = "<group>"; };
 		27579A2F132BAAE00006C605 /* KSMutableDataWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMutableDataWriter.h; sourceTree = "<group>"; };
 		27579A30132BAAE00006C605 /* KSMutableDataWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMutableDataWriter.m; sourceTree = "<group>"; };
@@ -2897,7 +2874,7 @@
 		CE1D6D4111B5BA840087AC1B /* NSMenuItem+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMenuItem+Karelia.h"; sourceTree = "<group>"; };
 		CE1D6D4211B5BA840087AC1B /* NSMenuItem+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMenuItem+Karelia.m"; sourceTree = "<group>"; };
 		CE214BF9098060CD006DD2B1 /* Languages.plist */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 4; path = Languages.plist; sourceTree = "<group>"; };
-		CE23C54511E6829D00E43369 /* Designs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Designs; path = ../../Designs; sourceTree = SOURCE_ROOT; };
+		CE23C54511E6829D00E43369 /* Designs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Designs; path = ../Designs; sourceTree = SOURCE_ROOT; };
 		CE23D96A11E6E65900E43369 /* KSPlainClipTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSPlainClipTextView.h; sourceTree = "<group>"; };
 		CE23D96B11E6E65900E43369 /* KSPlainClipTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSPlainClipTextView.m; sourceTree = "<group>"; };
 		CE250ADB08204B120061BE9B /* imageReplacementHeader.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = imageReplacementHeader.txt; sourceTree = "<group>"; };
@@ -3609,8 +3586,6 @@
 		273FA62A1420A6EE0051E616 /* WebDAV */ = {
 			isa = PBXGroup;
 			children = (
-				273FA62B1420A7100051E616 /* SVWebDAVPublishingEngine.h */,
-				273FA62C1420A7100051E616 /* SVWebDAVPublishingEngine.m */,
 				273FA6BC1420B2790051E616 /* CK2WebDAVConnection.h */,
 				273FA6BD1420B2790051E616 /* CK2WebDAVConnection.m */,
 			);
@@ -4036,8 +4011,6 @@
 				279FF2BD0EF27699009F6A16 /* KTPublishingEngine.m */,
 				2797B71C0EF91E2B00F91398 /* KTExportEngine.h */,
 				2797B71D0EF91E2B00F91398 /* KTExportEngine.m */,
-				275666EB0F015E8300878A05 /* KTMobileMePublishingEngine.h */,
-				275666EC0F015E8300878A05 /* KTMobileMePublishingEngine.m */,
 				27BCCCA00F09609E00B06B35 /* KTRemotePublishingEngine.h */,
 				27BCCCA10F09609E00B06B35 /* KTRemotePublishingEngine.m */,
 				277FDC3711CD3F810083F1BF /* SVPublishDataWriter.h */,
@@ -4378,8 +4351,8 @@
 				27A3ACBF1369C1C7007D774D /* KSWorkspaceUtilities.m */,
 			);
 			name = KSFileUtilities;
-			path = ../../KSFileUtilities;
-			sourceTree = SOURCE_ROOT;
+			path = ../KSFileUtilities;
+			sourceTree = "<group>";
 		};
 		27FDEF10111B4C84001F4E60 /* Core Data */ = {
 			isa = PBXGroup;
@@ -6764,7 +6737,6 @@
 				3CA0FEE40D7614AB0093562D /* DeployRelease */,
 				3C979D9013BA506000E7CF7C /* Preflight Build */,
 				3C3E75FA0F1C5F42002E3A9A /* UpdateInvalidLicenses */,
-				3C15B85E0DC790A100DE9957 /* UpdateDesigns */,
 				CEF9D0AE0D862B5100BD9895 /* ImageWebKitPlugin */,
 				CE16DC580D8711790077C779 /* MovieWebKitPlugin */,
 				3C1F510911D575510036B375 /* xibLocalizationPostprocessor */,
@@ -7310,20 +7282,6 @@
 			shellScript = "#\n# remove ppc/ppc7400 from various binaries that Apple complained about\n#\n\nthinBinary()\n{\n    lipo \"${1}\" -verify_arch ppc > /dev/null 2>&1\n    if [ \"$?\" -eq 0 ]\n    then\n        echo \"thinning arch ppc from ${1}...\"\n        lipo \"${1}\" -remove ppc -output \"${TARGET_TEMP_DIR}/thinnedBinary\"\n        mv \"${TARGET_TEMP_DIR}/thinnedBinary\" \"${1}\"\n    fi\n    \n    lipo \"${1}\" -verify_arch ppc7400 > /dev/null 2>&1\n    if [ \"$?\" -eq 0 ]\n    then\n        echo \"removing arch ppc7400 from ${1}\"\n        lipo \"${1}\" -remove ppc7400 -output \"${TARGET_TEMP_DIR}/thinnedBinary\"\n        mv \"${TARGET_TEMP_DIR}/thinnedBinary\" \"${1}\"\n    fi\n}\n\n# Frameworks\n\nFRAMEWORKS_PATH=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/Frameworks\n\nGrowlPath=${FRAMEWORKS_PATH}/Growl.framework/Versions/A/Growl\nBWToolkitPath=${FRAMEWORKS_PATH}/BWToolkitFramework.framework/Versions/A/BWToolkitFramework\nJSTalkPath=${FRAMEWORKS_PATH}/JSTalk.framework/Versions/A/JSTalk\nlibssh2Path=${FRAMEWORKS_PATH}/libssh2.dylib\n\n# only thin App Store builds\n\nif [ -z \"${APP_STORE_VERSION}\" ]\nthen\n    echo \"NOT thinning binaries in non-App Store builds\"\nelse\n    thinBinary \"${GrowlPath}\"\n    thinBinary \"${BWToolkitPath}\"\n    thinBinary \"${JSTalkPath}\"\n    thinBinary \"${libssh2Path}\"\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		3C15B85D0DC790A100DE9957 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### UPDATE Designs ToT FOR RELEASE BUILDS\n###\n\nDESIGNS_PATH=${SRCROOT}/../../Designs\n\n# for some reason using which to find svn works on Leopard, not on Tiger\n# SVN_PATH=`which svn`\n\n# so we do this instead and hope for the best\nif [ -e /usr/local/bin/svn ]\nthen\n\tSVN_PATH=/usr/local/bin/svn\nelif [ -e /usr/bin/svn ]\nthen\n\tSVN_PATH=/usr/bin/svn\nelif [ -e /opt/local/bin/svn ]\nthen\n\tSVN_PATH=/opt/local/bin/svn\nelse\n\techo \"ERROR - CANT FIND SVN\"\n\texit 1\nfi\n\npushd \"${SRCROOT}\"\n\necho \"syncing Designs with ToT ...\"\ncd \"${DESIGNS_PATH}\"\n\"${SVN_PATH}\" update\necho \"... finished syncing Designs\"\n\npopd\n\nexit 0\n";
-			showEnvVarsInLog = 0;
-		};
 		3C3E75F90F1C5F42002E3A9A /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 8;
@@ -7453,7 +7411,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "#!/bin/bash\n\n### this script should NOT have 'Run script only when installing' checked\n\n### we could do this externally, but we'd have to export everything we need\n### e.g.,\n# export APPNAME=\\\"Sandvox\\\"\n# ${SRCROOT}/../Tools/preflight-build\n\n###\n### peform any necessary checks before commencing build\n###\n\n# find git on local machine\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\n## Update Submodules \npushd \"${SRCROOT}/..\"\n${GIT_PATH} submodule update --init --recursive\npopd\n\n## UpdateBDAlias\npushd \"${SRCROOT}/../../bdalias\"\n${GIT_PATH} checkout ${BDALIAS_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching BDAlias from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${BDALIAS_COMMIT}\n\techo \"... finished fetching BDAlias\"\nfi\npopd\n\n## UpdateKSError\npushd \"${SRCROOT}/../../KSError\"\n${GIT_PATH} checkout ${KSERROR_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSError from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSERROR_COMMIT}\n\techo \"... finished fetching KSError\"\nfi\npopd\n\n## UpdateKSExtensibleManagedObject\npushd \"${SRCROOT}/../../KSExtensibleManagedObject\"\n${GIT_PATH} checkout ${KSEXTENSIBLEMANAGEDOBJECT_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSExtensibleManagedObject from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSEXTENSIBLEMANAGEDOBJECT_COMMIT}\n\techo \"... finished fetching KSExtensibleManagedObject\"\nfi\npopd\n\n## UpdateKSFileUtilities\npushd \"${SRCROOT}/../../KSFileUtilities\"\n${GIT_PATH} checkout ${KSFILEUTILS_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSFileUtilities from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSFILEUTILS_COMMIT}\n\techo \"... finished fetching KSFileUtilities\"\nfi\npopd\n\n## UpdateKSSelectionBorder\npushd \"${SRCROOT}/../../KSSelectionBorder\"\n${GIT_PATH} checkout ${KSSELECTIONBORDER_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSSelectionBorder from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSSELECTIONBORDER_COMMIT}\n\techo \"... finished fetching KSSelectionBorder\"\nfi\npopd\n\n## UpdateKSThreadProxy\npushd \"${SRCROOT}/../../KSThreadProxy\"\n${GIT_PATH} checkout ${KSTHREADPROXY_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSThreadProxy from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSTHREADPROXY_COMMIT}\n\techo \"... finished fetching KSThreadProxy\"\nfi\npopd\n\n## UpdateYRKSpinningProgressIndicator\npushd \"${SRCROOT}/../../yrk-spinning-progress-indicator\"\n${GIT_PATH} checkout ${YRKSPINNINGPROGRESSINDICATOR_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching yrk-spinning-progress-indicator from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${YRKSPINNINGPROGRESSINDICATOR_COMMIT}\n\techo \"... finished fetching yrk-spinning-progress-indicator\"\nfi\npopd\n\n###\n### further preflight based on type of build\n###\n\nif [ \"${CONFIGURATION}\" == \"Debug\" ]\nthen\n\techo \"Preflighting Debug build...\"\n\t# we could do something here before doing Debug builds\nfi\n\nif [ \"${CONFIGURATION}\" == \"Release\" ]\nthen\n\techo \"Preflighting Release build...\"\n\t# we could do something here before doing Debug builds\n\t# some magic git incantation that returns exit 1 if we have unstaged changes / unpushed changes?\nfi\n\nexit 0\n";
+			shellScript = "#!/bin/bash\n\n### this script should NOT have 'Run script only when installing' checked\n\n### we could do this externally, but we'd have to export everything we need\n### e.g.,\n# export APPNAME=\\\"Sandvox\\\"\n# ${SRCROOT}/../Tools/preflight-build\n\n###\n### peform any necessary checks before commencing build\n###\n\n# find git on local machine\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\n## Update Submodules \npushd \"${SRCROOT}/..\"\n${GIT_PATH} submodule update --init --recursive\npopd\n\n## UpdateBDAlias\npushd \"${SRCROOT}/../../bdalias\"\n${GIT_PATH} checkout ${BDALIAS_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching BDAlias from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${BDALIAS_COMMIT}\n\techo \"... finished fetching BDAlias\"\nfi\npopd\n\n## UpdateKSError\npushd \"${SRCROOT}/../../KSError\"\n${GIT_PATH} checkout ${KSERROR_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSError from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSERROR_COMMIT}\n\techo \"... finished fetching KSError\"\nfi\npopd\n\n## UpdateKSExtensibleManagedObject\npushd \"${SRCROOT}/../../KSExtensibleManagedObject\"\n${GIT_PATH} checkout ${KSEXTENSIBLEMANAGEDOBJECT_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSExtensibleManagedObject from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSEXTENSIBLEMANAGEDOBJECT_COMMIT}\n\techo \"... finished fetching KSExtensibleManagedObject\"\nfi\npopd\n\n## UpdateKSSelectionBorder\npushd \"${SRCROOT}/../../KSSelectionBorder\"\n${GIT_PATH} checkout ${KSSELECTIONBORDER_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSSelectionBorder from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSSELECTIONBORDER_COMMIT}\n\techo \"... finished fetching KSSelectionBorder\"\nfi\npopd\n\n## UpdateKSThreadProxy\npushd \"${SRCROOT}/../../KSThreadProxy\"\n${GIT_PATH} checkout ${KSTHREADPROXY_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSThreadProxy from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSTHREADPROXY_COMMIT}\n\techo \"... finished fetching KSThreadProxy\"\nfi\npopd\n\n## UpdateYRKSpinningProgressIndicator\npushd \"${SRCROOT}/../../yrk-spinning-progress-indicator\"\n${GIT_PATH} checkout ${YRKSPINNINGPROGRESSINDICATOR_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching yrk-spinning-progress-indicator from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${YRKSPINNINGPROGRESSINDICATOR_COMMIT}\n\techo \"... finished fetching yrk-spinning-progress-indicator\"\nfi\npopd\n\n###\n### further preflight based on type of build\n###\n\nif [ \"${CONFIGURATION}\" == \"Debug\" ]\nthen\n\techo \"Preflighting Debug build...\"\n\t# we could do something here before doing Debug builds\nfi\n\nif [ \"${CONFIGURATION}\" == \"Release\" ]\nthen\n\techo \"Preflighting Release build...\"\n\t# we could do something here before doing Debug builds\n\t# some magic git incantation that returns exit 1 if we have unstaged changes / unpushed changes?\nfi\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
 		3C99107209298C4400ED5CBF /* Generate Localizable.strings */ = {
@@ -7530,7 +7488,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/bash;
-			shellScript = "\nPBXCP=${SRCROOT}/../Code/Shared/Tools/pbxcp\n\nDESIGNS_FOLDER_PATH=${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Designs\nmkdir -p \"${DESIGNS_FOLDER_PATH}\"\n\npushd ../../Designs\n\nfor i in *\ndo\n    if [ -e \"${i}/BUNDLED\" ];    # BUNDLE EVERYTHING IN THE APP\n    then\n        # put into application\n        echo \"BUNDLED DESIGN: PBXCp \\\"$i\\\" ${DESIGNS_FOLDER_PATH}\"\n\n        \"${PBXCP}\" \\\n            -exclude .localized -exclude Sources -exclude sources -exclude Testing_Files -exclude .DS_Store -exclude CVS -exclude .svn -exclude BUNDLED -exclude HIDDEN -exclude BONUS -exclude .psd -exclude sources -resolve-src-symlinks \\\n            \"${PWD}/${i}\" \"${DESIGNS_FOLDER_PATH}\"\n\n      # TODO: put correct SANDVOX_VERSION and CFBundleVersion into Info.plist for each copied design\n\n    else\n        echo \"--------------  Not including $i\"\n    fi\ndone\n\npopd\n";
+			shellScript = "\nPBXCP=${SRCROOT}/../Code/Shared/Tools/pbxcp\n\nDESIGNS_FOLDER_PATH=${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Designs\nmkdir -p \"${DESIGNS_FOLDER_PATH}\"\n\npushd ${SRCROOT}/../Designs\n\nfor i in *\ndo\n    if [ -e \"${i}/BUNDLED\" ];    # BUNDLE EVERYTHING IN THE APP\n    then\n        # put into application\n        echo \"BUNDLED DESIGN: PBXCp \\\"$i\\\" ${DESIGNS_FOLDER_PATH}\"\n\n        \"${PBXCP}\" \\\n            -exclude .localized -exclude Sources -exclude sources -exclude Testing_Files -exclude .DS_Store -exclude CVS -exclude .svn -exclude BUNDLED -exclude HIDDEN -exclude BONUS -exclude .psd -exclude sources -exclude .less -resolve-src-symlinks \\\n            \"${PWD}/${i}\" \"${DESIGNS_FOLDER_PATH}\"\n\n      # TODO: put correct SANDVOX_VERSION and CFBundleVersion into Info.plist for each copied design\n\n    else\n        echo \"--------------  Not including $i\"\n    fi\ndone\n\npopd\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66E60BFA95B9007A4871 /* Script - Add png2ico */ = {
@@ -8161,11 +8119,6 @@
 			isa = PBXTargetDependency;
 			name = VictualElement;
 			targetProxy = 3C042AC41307167D00D9F2A7 /* PBXContainerItemProxy */;
-		};
-		3C15B86A0DC7917B00DE9957 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3C15B85E0DC790A100DE9957 /* UpdateDesigns */;
-			targetProxy = 3C15B8690DC7917B00DE9957 /* PBXContainerItemProxy */;
 		};
 		3C1F512711D576D00036B375 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -9174,22 +9127,6 @@
 			};
 			name = Debug;
 		};
-		3C15B85F0DC790A200DE9957 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
-			buildSettings = {
-				DEPLOYMENT_POSTPROCESSING = YES;
-				PRODUCT_NAME = UpdateDesigns;
-			};
-			name = Release;
-		};
-		3C15B8600DC790A200DE9957 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = UpdateDesigns;
-			};
-			name = Debug;
-		};
 		3C1F510C11D575510036B375 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
@@ -9428,15 +9365,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3C15B8670DC790A500DE9957 /* Build configuration list for PBXAggregateTarget "UpdateDesigns" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3C15B8600DC790A200DE9957 /* Debug */,
-				3C15B85F0DC790A200DE9957 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		3C1F511011D575700036B375 /* Build configuration list for PBXNativeTarget "xibLocalizationPostprocessor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

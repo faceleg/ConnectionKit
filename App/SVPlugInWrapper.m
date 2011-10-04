@@ -15,10 +15,13 @@
 {
     self = [super initWithBundle:bundle variation:variationIndex];
     
-    // Register alternate IDs too
-    for (NSString *anID in [bundle objectForInfoDictionaryKey:@"SVAlternateIdentifiers"])
+    // Register alternate IDs too, but not for variations, as design takes care of that
+    if (variationIndex == NSNotFound)
     {
-        [[self class] registerPlugin:self forIdentifier:anID];
+        for (NSString *anID in [bundle objectForInfoDictionaryKey:@"SVAlternateIdentifiers"])
+        {
+            [[self class] registerPlugin:self forIdentifier:anID];
+        }
     }
     
     return self;
