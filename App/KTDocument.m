@@ -911,14 +911,11 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
                             predicate:predicate
                             error:NULL];
     
-    KTMaster *master = [[[self site] rootPage] master];
-    
     for (SVMediaRecord *aMediaRecord in sharedMedia)
     {
-        // Replace with a new record
-        SVMediaRecord *media = [master makePlaceholdImageMediaWithEntityName:@"GraphicMedia"];
+        // Remove the existing record. Calling -pageDidChange: on the graphic in the next step rebuilds using fresh placeholders
         SVGraphic *graphic = [aMediaRecord valueForKey:@"graphic"];
-        [graphic replaceMedia:media forKeyPath:@"media"];
+        [graphic replaceMedia:nil forKeyPath:@"media"];
     }
     
     
