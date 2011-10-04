@@ -58,6 +58,7 @@
     NSString *protocol = [hostProperties valueForKey:@"protocol"];
     
     NSNumber *port = [hostProperties valueForKey:@"port"];
+    if (port && ![port unsignedIntegerValue]) port = nil;   // somehow some sites have 0 stored as port
     
     CKConnectionRequest *request = [[CKConnectionRegistry sharedConnectionRegistry] connectionRequestForName:protocol
                                                                                                         host:hostName 
