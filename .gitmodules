@@ -28,3 +28,6 @@
 [submodule "Designs"]
 	path = Designs
 	url = git@github.com:karelia/Sandvox-Designs.git
+[submodule "Code/bdalias"]
+	path = Code/bdalias
+	url = git@github.com:karelia/bdalias.git
