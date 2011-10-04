@@ -37,3 +37,6 @@
 [submodule "Code/KSExtensibleManagedObject"]
 	path = Code/KSExtensibleManagedObject
 	url = git@github.com:karelia/KSExtensibleManagedObject
+[submodule "Code/KSSelectionBorder"]
+	path = Code/KSSelectionBorder
+	url = git@github.com:karelia/KSSelectionBorder
