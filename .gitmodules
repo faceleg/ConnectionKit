@@ -28,3 +28,6 @@
 [submodule "Code/DAVKit"]
 	path = Code/DAVKit
 	url = git@github.com:karelia/DAVKit.git
+[submodule "Designs"]
+	path = Designs
+	url = git@github.com:karelia/Sandvox-Designs.git
