@@ -1,5 +1,9 @@
 
 // this need to match version in iTunes Connect
+// NB: if you change this number, you need to 
+// run an Archive build against the Test account
+// to obtain a new test receipt, even for running
+// Debug builds
 APP_STORE_VERSION='@\"2.1.10\"'
 
 // App Store builds have no SLA variant
