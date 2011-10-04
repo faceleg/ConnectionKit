@@ -34,3 +34,6 @@
 [submodule "Code/KSError"]
 	path = Code/KSError
 	url = git@github.com:karelia/KSError.git
+[submodule "Code/KSExtensibleManagedObject"]
+	path = Code/KSExtensibleManagedObject
+	url = git@github.com:karelia/KSExtensibleManagedObject
