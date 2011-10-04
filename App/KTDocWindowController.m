@@ -675,6 +675,15 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     }
 }
 
+- (IBAction)showErrorConsole:(id)sender;
+{
+    NSObject *inspector = [self webInspector];
+    if ([inspector respondsToSelector:@selector(showConsole:)])
+    {
+        [inspector performSelector:@selector(showConsole:) withObject:sender];
+    }
+}
+
 #pragma mark Action Validation
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem

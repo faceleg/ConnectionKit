@@ -140,7 +140,7 @@ extern NSString *gInfoWindowAutoSaveName;
 - (IBAction)reload:(id)sender;
 
 - (IBAction)showWebInspector:(id)sender;
-
+- (IBAction)showErrorConsole:(id)sender;
 
 @end
 
