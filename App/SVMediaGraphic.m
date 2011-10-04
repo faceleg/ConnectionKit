@@ -228,6 +228,7 @@
     
     
     // Reset poster frame
+    // TODO: I think only the later call is needed, since -replace… deletes the object for us
     [[[self posterFrame] managedObjectContext] deleteObject:[self posterFrame]];
     [self replaceMedia:nil forKeyPath:@"posterFrame"];
     

@@ -7,6 +7,9 @@
 [submodule "Code/Shared"]
 	path = Code/Shared
 	url = git@github.com:karelia/Shared.git
+[submodule "Code/KSFileUtilities"]
+	path = Code/KSFileUtilities
+	url = git@github.com:karelia/KSFileUtilities.git
 [submodule "Code/KSHTMLWriter"]
 	path = Code/KSHTMLWriter
 	url = git@github.com:karelia/KSHTMLWriter.git
@@ -19,3 +22,9 @@
 [submodule "Code/ICOFamily"]
 	path = Code/ICOFamily
 	url = git@github.com:karelia/ICOFamily.git
+[submodule "Code/DAVKit"]
+	path = Code/DAVKit
+	url = git@github.com:karelia/DAVKit.git
+[submodule "Designs"]
+	path = Designs
+	url = git@github.com:karelia/Sandvox-Designs.git

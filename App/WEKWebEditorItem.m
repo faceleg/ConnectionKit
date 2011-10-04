@@ -523,7 +523,7 @@
     
     if ([self isSelectable])
     {
-        result = [[self HTMLElement] boundingBox];
+        result = [[self HTMLElement] totalBoundingBox];
     }
     
     return result;
