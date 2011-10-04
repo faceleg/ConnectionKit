@@ -31,3 +31,6 @@
 [submodule "Code/bdalias"]
 	path = Code/bdalias
 	url = git@github.com:karelia/bdalias.git
+[submodule "Code/KSError"]
+	path = Code/KSError
+	url = git@github.com:karelia/KSError.git
