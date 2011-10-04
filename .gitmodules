@@ -40,3 +40,6 @@
 [submodule "Code/KSSelectionBorder"]
 	path = Code/KSSelectionBorder
 	url = git@github.com:karelia/KSSelectionBorder
+[submodule "Code/KSThreadProxy"]
+	path = Code/KSThreadProxy
+	url = git@github.com:karelia/KSThreadProxy
