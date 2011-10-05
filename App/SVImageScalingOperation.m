@@ -18,6 +18,8 @@
 #import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
+
+#import "KSError.h"
 #import "KSURLUtilities.h"
 
 #import <QuartzCore/CoreImage.h>
@@ -230,8 +232,15 @@
         }
     }
     
-    
-    OBASSERT(finalImage);
+    if (!finalImage)
+    {
+        CFRelease(destination);
+        [image release];
+        if (error) *error = [KSError errorWithDomain:NSURLErrorDomain
+                                                code:NSURLErrorResourceUnavailable
+                          localizedDescriptionFormat:@"createCGImage:… failed"];
+        return nil;
+    }
     
     
     // Convert to data
