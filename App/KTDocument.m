@@ -1105,6 +1105,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         if (recipe)
         {
             [aRecord setValue:nil forKey:@"contentHash"];
+            [recipe release];
         }
     }
 }
