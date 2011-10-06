@@ -302,7 +302,25 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     {
         pageURL = nil;
     }
-    
+	
+	static int sWebKitVersion = 0;
+	
+	if (0 == sWebKitVersion)	// only need to set this once per run
+	{
+		// Also, make the base URL be nil if we are running a version of WebKit lower than the one in Safari 5.0.6/5.1,
+		// when the security checks for mixing file and http URLs went away.
+		NSBundle *webkitBundle = [NSBundle bundleForClass:[WebView class]];
+		NSString *webkitVersionString = [[webkitBundle infoDictionary] objectForKey:@"CFBundleVersion"];
+		int versionAndOS = [webkitVersionString intValue];
+		sWebKitVersion = versionAndOS % 1000;	// Strip thousands place: http://lists.apple.com/archives/webkitsdk-dev/2008/Nov/msg00005.html
+	}
+	
+	// http://en.wikipedia.org/wiki/Safari_version_history
+	// 534 and up is Safari 5.0.6/5.1; below is 5.0.x (e.g. 5.0.5 = 533.21.1)
+	if (sWebKitVersion <  534)
+	{
+		pageURL = nil;
+	}
     
     // Load the HTML into the webview
     if (pageURL) [WebView registerURLSchemeAsLocal:[pageURL scheme]];
