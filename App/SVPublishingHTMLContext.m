@@ -206,10 +206,14 @@
         if (nthPagePath)
         {
             NSIndexPath *path = [controller indexPathOfObject:page];
+            [controller release];
+            
             if ([path isGreaterThan:nthPagePath]) return nil;
         }
-        
-        [controller release];
+        else
+        {
+            [controller release];
+        }
     }
     
     return [super URLForImageRepresentationOfPage:page
