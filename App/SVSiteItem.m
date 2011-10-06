@@ -221,21 +221,6 @@
 
 @dynamic includeInIndex;
 
-- (BOOL) isPagePublishableInDemo
-{
-	NSIndexPath *indexPath = [self indexPath];
-	static NSIndexPath *sComparisonIndexPath = nil;
-	if (!sComparisonIndexPath)
-	{
-		NSUInteger indexes[] = { 0, kMaxNumberOfFreePublishedPages - 1 };
-		sComparisonIndexPath = [[NSIndexPath alloc] initWithIndexes:indexes length:2];
-	}
-	
-	BOOL result = [indexPath length] <= 2
-		&& NSOrderedAscending == [indexPath compare:sComparisonIndexPath];
-	return result;
-}
-
 #pragma mark URL
 
 @dynamic URL;
