@@ -84,19 +84,19 @@ enum BUTTON_SIZES { SMALL = 0, STANDARD, MEDIUM, TALL};
         switch ( self.buttonSize )
         {
             case SMALL:
-                sizeString = @" size=\"small\"";
+                sizeString = @" data-size=\"small\"";
                 break;
             case MEDIUM:
-                sizeString = @" size=\"medium\"";
+                sizeString = @" data-size=\"medium\"";
                 break;
             case TALL:
-                sizeString = @" size=\"tall\"";
+                sizeString = @" data-size=\"tall\"";
                 break;
             default:
             case STANDARD:
                 break;
         }
-        [context writeHTMLString:[NSString stringWithFormat:@"<g:plusone%@></g:plusone>", sizeString]];
+        [context writeHTMLString:[NSString stringWithFormat:@"<div class=\"g-plusone\"%@></div>", sizeString]];
         
         // add plusone JavaScript
         NSString *language = [[context page] language];
