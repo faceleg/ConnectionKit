@@ -1386,11 +1386,18 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     {
         NSString *docPath = [[self fileURL] path];
         
-        [KSWORKSPACE performFileOperation:NSWorkspaceRecycleOperation
-                                   source:docPath
-                              destination:nil
-                                    files:unusedFiles
-                                      tag:NULL];
+        NSLog(@"Reduce file size: Removing files:\n%@\nfrom document at %@",
+              unusedFiles,
+              docPath);
+        
+        if (![KSWORKSPACE performFileOperation:NSWorkspaceRecycleOperation
+                                        source:docPath
+                                   destination:nil
+                                         files:unusedFiles
+                                           tag:NULL])
+        {
+            NSLog(@"Reduce file size: failed");
+        }
         
         
         // Update doc modification date so doesn't complain on next save
