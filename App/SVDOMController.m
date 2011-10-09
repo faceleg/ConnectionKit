@@ -114,19 +114,7 @@
 
 - (void)loadNode
 {
-    if ([self elementIdName])
-    {
-        [super loadNode];
-        
-        // I've found that occasionally, loading fails because the <BODY> element hasn't been created yet. Wait for that to happen
-        while (![self isNodeLoaded])
-        {
-            [[NSRunLoop currentRunLoop] runUntilDate:[NSDate distantPast]];
-            [super loadNode];
-        }
-        
-        return;
-    }
+    if ([self elementIdName]) return [super loadNode];
     
     // Gather the HTML
     NSMutableString *htmlString = [[NSMutableString alloc] init];
