@@ -134,7 +134,7 @@
     SVDOMController *controller = [container newDOMControllerWithElementIdName:nil ancestorNode:nil];
     [container release];
     
-    [controller setHTMLElement:(DOMHTMLElement *)element];
+    [controller setNode:element];
     [controller awakeFromHTMLContext:[[self textDOMController] HTMLContext]];
     
     [[self textDOMController] addChildWebEditorItem:controller];
@@ -143,7 +143,7 @@
     
     
     // Generate new DOM node to match what model would normally generate
-    DOMNode *result = [[controller HTMLElement] nextSibling];    // get in before update, in case it's synchronous!
+    DOMNode *result = [[controller node] nextSibling];    // get in before update, in case it's synchronous!
     [controller setNeedsUpdate];
     [controller updateIfNeeded];
     

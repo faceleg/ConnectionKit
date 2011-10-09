@@ -54,7 +54,7 @@
     
     // Locate body element too
     SVGraphic *graphic = [[self representedObject] graphic];
-    if ([self isHTMLElementLoaded])
+    if ([self isNodeLoaded])
     {
         if ([graphic isPagelet])
         {
@@ -63,7 +63,7 @@
         }
         else
         {
-            if ([self isHTMLElementLoaded]) [self setBodyHTMLElement:[self HTMLElement]];
+            if ([self isNodeLoaded]) [self setBodyHTMLElement:[self HTMLElement]];
         }
     }
 }

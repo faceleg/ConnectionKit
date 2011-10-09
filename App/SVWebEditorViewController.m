@@ -389,7 +389,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
         if ([[[self view] window] makeFirstResponder:[self webEditor]])
         {
             SVRichTextDOMController *articleController = (id)[self articleDOMController];
-            DOMDocument *document = [[articleController HTMLElement] ownerDocument];
+            DOMDocument *document = [[articleController node] ownerDocument];
             
             DOMRange *range = [document createRange];
             [range setStart:[articleController textHTMLElement] offset:0];
@@ -659,7 +659,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
         id newItem = [[self webEditor] selectableItemForRepresentedObject:anObject];
         if (!newItem) newItem =  [[[self webEditor] contentItem] hitTestRepresentedObject:anObject];
         
-        if ([[newItem HTMLElement] ks_isDescendantOfDOMNode:[[newItem HTMLElement] ownerDocument]])
+        if ([[newItem node] ks_isDescendantOfDOMNode:[[newItem node] ownerDocument]])
         {
             [newSelection addObject:newItem];
             
@@ -1186,7 +1186,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
                 case 1:
                 {
                     WEKWebEditorItem *item = [proposedSelectedItems objectAtIndex:0];
-                    if (![proposedRange ks_selectsNode:[item HTMLElement]]) proposedSelectedItems = nil;
+                    if (![proposedRange ks_selectsNode:[item node]]) proposedSelectedItems = nil;
                     break;
                 }
                     
@@ -1525,7 +1525,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
         
         // Fallback to article. #82408
         WEKWebEditorItem *articleController = [self articleDOMController];
-        result = [articleController hitTestDOMNode:[articleController HTMLElement]
+        result = [articleController hitTestDOMNode:[articleController node]
                                 draggingPasteboard:[dragInfo draggingPasteboard]];
         
         if (result == [self webView])
@@ -1652,7 +1652,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     
     // Node might be in a different frame. #112424
     DOMNode *nodeToTest = node;
-    DOMElement *myElement = [self HTMLElement];
+    DOMNode *myElement = [self node];
     if (myElement)
     {
         while ([nodeToTest ownerDocument] != [myElement ownerDocument])
@@ -1662,7 +1662,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     }
     
     
-    if (!myElement || [nodeToTest ks_isDescendantOfElement:myElement])
+    if (!myElement || [nodeToTest ks_isDescendantOfNode:myElement])
     {
         for (WEKWebEditorItem *anItem in [self childWebEditorItems])
         {

@@ -58,19 +58,26 @@
 
 #pragma mark DOM
 
-- (void)setHTMLElement:(DOMHTMLElement *)element;
+- (void)setNode:(DOMNode *)node;
 {
-    [super setHTMLElement:element];
+    [super setNode:node];
     
     NSNumber *width = nil;
-    NSString *widthString = [element getAttribute:@"width"];
+    NSString *widthString = [node getAttribute:@"width"];
     if ([widthString length]) width = [NSNumber numberWithInteger:[widthString integerValue]];
     [_width release]; _width = [width copy];
     
     NSNumber *height = nil;
-    NSString *heightString = [element getAttribute:@"height"];
+    NSString *heightString = [node getAttribute:@"height"];
     if ([heightString length]) height = [NSNumber numberWithInteger:[heightString integerValue]];
     [_height release]; _height = [height copy];
+}
+
+- (DOMElement *)HTMLElement;
+{
+    id result = [self node];
+    if (![result isKindOfClass:[DOMElement class]]) result = nil;
+    return result;
 }
 
 - (void)setAncestorNode:(DOMNode *)node recursive:(BOOL)recurse;

@@ -34,9 +34,9 @@
     return (![element firstElementChild] && ![[element tagName] isEqualToString:@"IMG"]);
 }
 
-- (void)setHTMLElement:(DOMHTMLElement *)element;
+- (void)setNode:(DOMHTMLElement *)element;
 {
-    [super setHTMLElement:element];
+    [super setNode:element];
     
     if ([[self registeredDraggedTypes] count])
     {
@@ -74,12 +74,12 @@
     }
 }
 
-- (void)loadHTMLElement;
+- (void)loadNode;
 {
-    [super loadHTMLElement];
+    [super loadNode];
     
     // In the case of #143323, graphics inside a <NOSCRIPT> tag can't be loaded, so fallback to generating a placeholder
-    if (![self isHTMLElementLoaded])
+    if (![self isNodeLoaded])
     {
         [self loadPlaceholderDOMElement];
     }

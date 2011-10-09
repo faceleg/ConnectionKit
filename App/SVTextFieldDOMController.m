@@ -185,7 +185,7 @@
 {
     _alignment = alignment;
     
-    if ([self isHTMLElementLoaded])
+    if ([self isNodeLoaded])
     {
         DOMCSSStyleDeclaration *style = [[self textHTMLElement] style];
         
@@ -220,7 +220,7 @@
 {
     _textBaseWritingDirection = direction;
     
-    if ([self isHTMLElementLoaded])
+    if ([self isNodeLoaded])
     {
         DOMCSSStyleDeclaration *style = [[self textHTMLElement] style];
         
@@ -339,9 +339,9 @@
     }
 }
 
-- (void)setHTMLElement:(DOMHTMLElement *)element
+- (void)setNode:(DOMHTMLElement *)element
 {
-    [super setHTMLElement:element];
+    [super setNode:element];
     [self setTextHTMLElement:element];
 }
 
@@ -479,7 +479,7 @@
 
 - (NSString *)blurb
 {
-    if ([self isHTMLElementLoaded]) return [[self textHTMLElement] innerText];
+    if ([self isNodeLoaded]) return [[self textHTMLElement] innerText];
     return [super blurb];
 }
 
