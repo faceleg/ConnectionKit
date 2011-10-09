@@ -20,14 +20,15 @@
 #import "KSDependenciesTracker.h"
 
 
-@class SVWebEditorHTMLContext, KSObjectKeyPathPair, SVWebEditorViewController, SVGraphic, SVPlugInDOMController;
+@class SVWebEditorHTMLContext, KSObjectKeyPathPair, SVWebEditorViewController, SVGraphic, SVPlugInDOMController, SVElementInfo;
 
 
 @interface SVDOMController : WEKWebEditorItem <KSDependenciesTrackerDelegate>
 {
   @private
     // Loading
-    BOOL        _shouldPublishElementID;
+    BOOL            _shouldPublishElementID;
+    SVElementInfo   *_elementInfo;
     
     // Updating
     NSMutableSet            *_updateSelectors;
@@ -52,6 +53,7 @@
 
 #pragma mark DOM Element Loading
 
+@property(nonatomic, retain) SVElementInfo *elementInfo;
 @property(nonatomic) BOOL shouldIncludeElementIdNameWhenPublishing;
 
 - (void)loadPlaceholderDOMElement;

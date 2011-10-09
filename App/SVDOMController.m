@@ -49,6 +49,7 @@
     [_dragTypes release];
     
     [_moc release];
+    [_elementInfo release];
     
     [super dealloc];
 }
@@ -160,6 +161,7 @@
     return result;
 }
 
+@synthesize elementInfo = _elementInfo;
 @synthesize shouldIncludeElementIdNameWhenPublishing = _shouldPublishElementID;
 
 @synthesize HTMLContext = _context;
