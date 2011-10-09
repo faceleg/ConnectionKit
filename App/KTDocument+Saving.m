@@ -1396,7 +1396,20 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                                          files:unusedFiles
                                            tag:NULL])
         {
-            NSLog(@"Reduce file size: failed");
+            NSLog(@"Reduce file size: Bulk move to trash failed");
+            
+            // For some reason, couldn't remove the whole lot, so try individually
+            for (NSString *aFilename in unusedFiles)
+            {
+                if (![KSWORKSPACE performFileOperation:NSWorkspaceRecycleOperation
+                                                source:docPath
+                                           destination:nil
+                                                 files:[NSArray arrayWithObject:aFilename]
+                                                   tag:NULL])
+                {
+                    NSLog(@"Reduce file size: Moving %@ to trash failed", aFilename);
+                }
+            }
         }
         
         
