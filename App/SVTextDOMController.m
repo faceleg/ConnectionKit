@@ -76,46 +76,46 @@
     return NO;
 }
 
-- (void)updateContentEditableAttribute;
-{
-    if (_awaitingTextReadyToEdit)
-    {
-        _awaitingTextReadyToEdit = NO;
-        [[self ancestorNode] removeEventListener:@"DOMNodeInserted" listener:[self eventsListener] useCapture:NO];
-    }
-    
-    // Annoyingly, calling -setContentEditable:nil or similar does not remove the attribute
-    DOMHTMLElement *element = [self textHTMLElement];
-    if ([self isEditable])
-    {
-        [element setContentEditable:@"true"];
-    }
-    else
-    {
-        [element removeAttribute:@"contenteditable"];
-    }
-}
-
 - (void)updateContentEditableAttributeWhenReady
 {
-    // If already ready, can perform straight away
+    // Only want a safety delay if turning on editing, and not ready yet!
     if (![self isEditable] || [self isTextReadyToEdit])
     {
-        [self updateContentEditableAttribute];
+        if (_awaitingTextReadyToEdit)
+        {
+            _awaitingTextReadyToEdit = NO;
+            [[self ancestorNode] removeEventListener:@"DOMNodeInserted" listener:[self eventsListener] useCapture:NO];
+        }
+        
+        
+        // Annoyingly, calling -setContentEditable:nil or similar does not remove the attribute
+        DOMHTMLElement *element = [self textHTMLElement];
+        if ([self isEditable])
+        {
+            [element setContentEditable:@"true"];
+        }
+        else
+        {
+            [element removeAttribute:@"contenteditable"];
+        }
+        
         return;
     }
     
     
     // Otherwise, wait until ready
-    _awaitingTextReadyToEdit = YES;
-    [[self ancestorNode] addEventListener:@"DOMNodeInserted" listener:[self eventsListener] useCapture:NO];
+    if (!_awaitingTextReadyToEdit)
+    {
+        _awaitingTextReadyToEdit = YES;
+        [[self ancestorNode] addEventListener:@"DOMNodeInserted" listener:[self eventsListener] useCapture:NO];
+    }
 }
 
 - (void)handleEvent:(DOMEvent *)evt;
 {
     if (_awaitingTextReadyToEdit && [self isTextReadyToEdit])
     {
-        [self updateContentEditableAttribute];
+        [self updateContentEditableAttributeWhenReady];
     }
 }
 
