@@ -48,11 +48,11 @@
 
 @synthesize calloutContentElement = _calloutContent;
 
-- (void)loadHTMLElement;
+- (void)loadNode;
 {
     if ([self elementIdName])
     {
-        [super loadHTMLElement];
+        [super loadNode];
         
         DOMNodeList *nodes = [[self HTMLElement] getElementsByClassName:@"callout-content"];
         [self setCalloutContentElement:(DOMElement *)[nodes item:0]];
@@ -77,7 +77,7 @@
     [callout appendChild:calloutContent];
     
     
-    [self setHTMLElement:(DOMHTMLElement *)calloutContainer];
+    [self setNode:calloutContainer];
     [self setCalloutContentElement:calloutContent];
 }
 

@@ -91,9 +91,9 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 
 #pragma mark DOM Node
 
-- (void)setHTMLElement:(DOMHTMLElement *)element
+- (void)setNode:(DOMHTMLElement *)element
 {
-    [super setHTMLElement:element];
+    [super setNode:element];
     [self setTextHTMLElement:element];
 }
 
@@ -240,7 +240,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
         if ([[anItem HTMLElement] ks_isOrphanedFromDocument])
         {
             [anItem stopObservingDependencies];
-            [anItem setHTMLElement:nil];
+            [anItem setNode:nil];
             [anItem removeFromParentWebEditorItem];
         }
     }
@@ -461,7 +461,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
     // Create controller for graphic and hook up to imported node
     SVDOMController *result = [image newDOMControllerWithElementIdName:nil ancestorNode:nil];
     [result awakeFromHTMLContext:[self HTMLContext]];
-    [result setHTMLElement:imageElement];
+    [result setNode:imageElement];
     
     
     // Does this controller replace a first pass?

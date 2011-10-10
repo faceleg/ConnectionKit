@@ -49,6 +49,7 @@
     [_dragTypes release];
     
     [_moc release];
+    [_elementInfo release];
     
     [super dealloc];
 }
@@ -78,21 +79,21 @@
 
 // No point observing if there's no DOM to affect
 // At least that's the theory, I found in practice it broke dragging onto media placeholders
-- (void)XsetHTMLElement:(DOMHTMLElement *)element;
+/*- (void)XsetHTMLElement:(DOMHTMLElement *)element;
 {
     if (element)
     {
-        [super setHTMLElement:element];
+        [super setNode:element];
         [self startObservingDependencies];
     }
     else
     {
         [self stopObservingDependencies];
-        [super setHTMLElement:element];
+        [super setNode:element];
     }
-}
+}*/
 
-- (void)setHTMLElement:(DOMHTMLElement *)element;
+- (void)setNode:(DOMNode *)element
 {
     if (element)
     {
@@ -108,12 +109,12 @@
         }
     }
     
-    [super setHTMLElement:element];
+    [super setNode:element];
 }
 
-- (void)loadHTMLElement
+- (void)loadNode
 {
-    if ([self elementIdName]) return [super loadHTMLElement];
+    if ([self elementIdName]) return [super loadNode];
     
     // Gather the HTML
     NSMutableString *htmlString = [[NSMutableString alloc] init];
@@ -132,7 +133,7 @@
     [htmlString release];
     
     DOMHTMLElement *element = [fragment firstChildOfClass:[DOMHTMLElement class]];  OBASSERT(element);
-    [self setHTMLElement:element];
+    [self setNode:element];
     
     
     // Insert controllers
@@ -149,7 +150,7 @@
 {
     DOMElement *element = [[[self ancestorNode] ownerDocument] createElement:@"DIV"];
     [[element style] setDisplay:@"none"];
-    [self setHTMLElement:(DOMHTMLElement *)element];
+    [self setNode:(DOMHTMLElement *)element];
 }
 
 - (DOMHTMLDocument *)HTMLDocument;
@@ -160,6 +161,7 @@
     return result;
 }
 
+@synthesize elementInfo = _elementInfo;
 @synthesize shouldIncludeElementIdNameWhenPublishing = _shouldPublishElementID;
 
 @synthesize HTMLContext = _context;
@@ -229,7 +231,7 @@
     {
         // Reset element, ready to reload
         [parent setElementIdName:[[[[[context rootElement] subelements] lastObject] attributesAsDictionary] objectForKey:@"id"]];
-        [parent setHTMLElement:nil];
+        [parent setNode:nil];
         
         parent = [parent parentWebEditorItem];
     }
@@ -406,7 +408,7 @@
     
     
     // Ignore such preposterous claims if not even attached to an element yet
-    if (![self isHTMLElementLoaded] && [self elementIdName])
+    if (![self isNodeLoaded] && [self elementIdName])
     {
         // But this could be because the Web Editor is mid reload. If so, do a full update (nasty, but best option available right now I think). #93345
         [viewController setNeedsUpdate];
@@ -949,15 +951,15 @@
 
 @implementation WEKDOMController (SVDOMController)
 
-- (DOMNode *)previousDOMNode; { return [[self HTMLElement] previousSibling]; }
+- (DOMNode *)previousDOMNode; { return [[self node] previousSibling]; }
 
-- (DOMNode *)nextDOMNode; { return [[self HTMLElement] nextSibling]; }
+- (DOMNode *)nextDOMNode; { return [[self node] nextSibling]; }
 
 #pragma mark Moving
 
 - (void)exchangeWithPreviousDOMNode;     // swaps with previous sibling node
 {
-    DOMElement *element = [self HTMLElement];
+    DOMNode *element = [self node];
     
     [[element parentNode] insertBefore:[element previousSibling]
                               refChild:[element nextSibling]];
@@ -965,7 +967,7 @@
 
 - (void)exchangeWithNextDOMNode;   // swaps with next sibling node
 {
-    DOMElement *element = [self HTMLElement];
+    DOMNode *element = [self node];
     
     [[element parentNode] insertBefore:[element nextSibling]
                               refChild:element];

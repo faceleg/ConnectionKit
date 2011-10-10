@@ -113,12 +113,12 @@
         result = [self orphanedWebEditorItemForImageDOMElement:(DOMHTMLImageElement *)node];
         if (result)
         {
-            [result setHTMLElement:(DOMHTMLElement *)node]; // already checked the class
+            [result setNode:node];
         }
         else
         {
             result = [[SVPlugInDOMController alloc] init];
-            [result setHTMLElement:(DOMHTMLElement *)node];
+            [result setNode:node];
             
             [self addChildWebEditorItem:result];
             

@@ -37,6 +37,7 @@
 }
 
 #pragma mark DOM
+- (DOMElement *)HTMLElement;    // mostly for compatibility
 - (void)setAncestorNode:(DOMNode *)node recursive:(BOOL)recurse;
 
 
