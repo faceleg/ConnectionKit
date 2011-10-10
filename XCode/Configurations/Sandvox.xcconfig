@@ -6,7 +6,7 @@
 PRODUCT_VARIANT = BETA
 
 // expiry for beta
-EXPIRY_TIMESTAMP = '@\"2011-10-10 11:59:59 -0800\"'
+EXPIRY_TIMESTAMP = '@\"2011-10-30 11:59:59 -0800\"'
 
 
 // Building -- common settings across all configurations
