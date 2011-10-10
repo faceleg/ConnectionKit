@@ -24,6 +24,7 @@
 {
   @private
     DOMHTMLElement  *_textElement;
+    SEL             _readySelector;
     
     SVHTMLTextBlock *_textBlock;
     
