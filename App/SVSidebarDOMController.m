@@ -91,9 +91,9 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     return _contentElement;
 }
 
-- (void)loadNode;
+- (void)nodeDidLoad;
 {
-    [super loadNode];
+    [super nodeDidLoad];
     
     // Also seek out sidebar divs
     [self setSidebarDivElement:[[self HTMLDocument] getElementById:@"sidebar"]];

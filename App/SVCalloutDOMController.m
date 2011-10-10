@@ -52,12 +52,7 @@
 {
     if ([self elementIdName])
     {
-        [super loadNode];
-        
-        DOMNodeList *nodes = [[self HTMLElement] getElementsByClassName:@"callout-content"];
-        [self setCalloutContentElement:(DOMElement *)[nodes item:0]];
-        
-        return;
+        return [super loadNode];
     }
     
     
@@ -79,6 +74,14 @@
     
     [self setNode:calloutContainer];
     [self setCalloutContentElement:calloutContent];
+}
+
+- (void)nodeDidLoad
+{
+    [super nodeDidLoad];
+    
+    DOMNodeList *nodes = [[self HTMLElement] getElementsByClassName:@"callout-content"];
+    [self setCalloutContentElement:(DOMElement *)[nodes item:0]];
 }
 
 #pragma mark Attributed HTML

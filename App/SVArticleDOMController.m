@@ -69,9 +69,9 @@
     [super dealloc];
 }
 
-- (void)loadNode;
+- (void)nodeDidLoad;
 {
-    [super loadNode];
+    [super nodeDidLoad];
     
     
     // Text element is the kBlock
