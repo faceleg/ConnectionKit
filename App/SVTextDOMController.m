@@ -59,12 +59,27 @@
     [super dealloc];
 }
 
+#pragma mark Node
+
+- (BOOL)canLoadNode;
+{
+    return NO;
+}
+
 #pragma mark Text Element
 
 - (BOOL)isTextReadyToEdit;
 {
     // It's theoretically possible to catch the DOM midway through loading a script that's embedded in the text. Enabling editing at that point could cause the loss of text content beyond the script, so want to report that as not ready.
     // Easiest way to detect that for now: If there is a script still running, there'll be no nodes created yet to follow it.
+    
+    if (![self isNodeLoaded])
+    {
+        // Try to load the node without calling -node, since that might throw if loading fails
+        [self loadNode];
+        if (![self isNodeLoaded]) return NO;
+        [self nodeDidLoad];
+    }
     
     DOMNode *aNode = [self textHTMLElement];
     while (aNode)
