@@ -68,11 +68,8 @@
 
 #pragma mark Text Element
 
-- (BOOL)isTextReadyToEdit;
+- (BOOL)tryNode;
 {
-    // It's theoretically possible to catch the DOM midway through loading a script that's embedded in the text. Enabling editing at that point could cause the loss of text content beyond the script, so want to report that as not ready.
-    // Easiest way to detect that for now: If there is a script still running, there'll be no nodes created yet to follow it.
-    
     if (![self isNodeLoaded])
     {
         // Try to load the node without calling -node, since that might throw if loading fails
@@ -80,6 +77,15 @@
         if (![self isNodeLoaded]) return NO;
         [self nodeDidLoad];
     }
+    
+    return YES;
+}
+
+- (BOOL)isTextReadyToEdit;
+{
+    // It's theoretically possible to catch the DOM midway through loading a script that's embedded in the text. Enabling editing at that point could cause the loss of text content beyond the script, so want to report that as not ready.
+    // Easiest way to detect that for now: If there is a script still running, there'll be no nodes created yet to follow it.
+    if (![self tryNode]) return NO;
     
     DOMNode *aNode = [self textHTMLElement];
     while (aNode)
@@ -94,7 +100,7 @@
 - (void)updateContentEditableAttributeWhenReady
 {
     // Only want a safety delay if turning on editing, and not ready yet!
-    if (![self isEditable] || [self isTextReadyToEdit])
+    if ((![self isEditable] && [self tryNode]) || [self isTextReadyToEdit])
     {
         if (_awaitingTextReadyToEdit)
         {
