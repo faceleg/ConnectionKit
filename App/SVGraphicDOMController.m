@@ -85,11 +85,12 @@
     }
 }
 
-- (void)itemDidMoveToWebEditor;
+- (void)XitemDidMoveToWebEditor;
 {
     [super itemDidMoveToWebEditor];
     
     // Try to load it, since in an update this may be the only chance available.
+    // Why did I do this? Try turning off for now
     if ([self webEditor]) [self HTMLElement];
 }
 
