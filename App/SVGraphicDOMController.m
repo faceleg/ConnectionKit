@@ -74,7 +74,7 @@
     }
 }
 
-- (void)loadNode;
+- (void)XloadNode;
 {
     [super loadNode];
     
