@@ -29,10 +29,6 @@
 @property(nonatomic, copy, readonly) DOMRange *undoCoalescingSelectedDOMRange;
 - (void)setUndoCoalescingActionIdentifier:(NSUInteger)identifer selectedDOMRange:(DOMRange *)selection;
 
-// TODO: Transition this to use a block for 10.6
-// If a selector's already been queued, cancels that
-- (void)performSelectorWhenTextIsReadyToEdit:(SEL)selector;
-
 @end
 
 
@@ -63,10 +59,31 @@
     [super dealloc];
 }
 
-#pragma mark DOM Node
+#pragma mark Text Element
+
+- (BOOL)isTextReadyToEdit;
+{
+    // It's theoretically possible to catch the DOM midway through loading a script that's embedded in the text. Enabling editing at that point could cause the loss of text content beyond the script, so want to report that as not ready.
+    // Easiest way to detect that for now: If there is a script still running, there'll be no nodes created yet to follow it.
+    
+    DOMNode *aNode = [self textHTMLElement];
+    while (aNode)
+    {
+        if ([aNode nextSibling]) return YES;
+        aNode = [aNode parentNode];
+    }
+    
+    return NO;
+}
 
 - (void)updateContentEditableAttribute;
 {
+    if (_awaitingTextReadyToEdit)
+    {
+        _awaitingTextReadyToEdit = NO;
+        [[self ancestorNode] removeEventListener:@"DOMNodeInserted" listener:[self eventsListener] useCapture:NO];
+    }
+    
     // Annoyingly, calling -setContentEditable:nil or similar does not remove the attribute
     DOMHTMLElement *element = [self textHTMLElement];
     if ([self isEditable])
@@ -76,6 +93,44 @@
     else
     {
         [element removeAttribute:@"contenteditable"];
+    }
+}
+
+- (void)updateContentEditableAttributeWhenReady
+{
+    // If already ready, can perform straight away
+    if (![self isEditable] || [self isTextReadyToEdit])
+    {
+        [self updateContentEditableAttribute];
+        return;
+    }
+    
+    
+    // Otherwise, wait until ready
+    _awaitingTextReadyToEdit = YES;
+    [[self ancestorNode] addEventListener:@"DOMNodeInserted" listener:[self eventsListener] useCapture:NO];
+}
+
+- (void)handleEvent:(DOMEvent *)evt;
+{
+    if (_awaitingTextReadyToEdit && [self isTextReadyToEdit])
+    {
+        [self updateContentEditableAttribute];
+    }
+}
+
+- (void)setAncestorNode:(DOMNode *)node;
+{
+    if (_awaitingTextReadyToEdit)
+    {
+        [[self ancestorNode] removeEventListener:@"DOMNodeInserted" listener:[self eventsListener] useCapture:NO];
+    }
+    
+    [super setAncestorNode:node];
+    
+    if (_awaitingTextReadyToEdit)
+    {
+        [[self ancestorNode] addEventListener:@"DOMNodeInserted" listener:[self eventsListener] useCapture:NO];
     }
 }
 
@@ -98,69 +153,13 @@
     // Turn the element editable when ready
     if (element)
     {
-        [self performSelectorWhenTextIsReadyToEdit:@selector(updateContentEditableAttribute)];
+        [self updateContentEditableAttributeWhenReady];
     }
 }
 
 - (BOOL)isTextHTMLElementLoaded; { return _textElement != nil; }
 
 - (DOMHTMLElement *)innerTextHTMLElement; { return [self textHTMLElement]; }
-
-- (BOOL)isTextReadyToEdit;
-{
-    // It's theoretically possible to catch the DOM midway through loading a script that's embedded in the text. Enabling editing at that point could cause the loss of text content beyond the script, so want to report that as not ready.
-    // Easiest way to detect that for now: If there is a script still running, there'll be no nodes created yet to follow it.
-    
-    DOMNode *aNode = [self textHTMLElement];
-    while (aNode)
-    {
-        if ([aNode nextSibling]) return YES;
-        aNode = [aNode parentNode];
-    }
-    
-    return NO;
-}
-
-- (void)performSelectorWhenTextIsReadyToEdit:(SEL)selector;
-{
-    // If already ready, can perform straight away
-    if ([self isTextReadyToEdit])
-    {
-        [self performSelector:selector];
-        return;
-    }
-    
-    
-    // Otherwise, wait until ready
-    _readySelector = selector;
-    [[self ancestorNode] addEventListener:@"DOMNodeInserted" listener:[self eventsListener] useCapture:NO];
-}
-
-- (void)setAncestorNode:(DOMNode *)node;
-{
-    if (_readySelector)
-    {
-        [[self ancestorNode] removeEventListener:@"DOMNodeInserted" listener:[self eventsListener] useCapture:NO];
-    }
-    
-    [super setAncestorNode:node];
-    
-    if (_readySelector)
-    {
-        [[self ancestorNode] addEventListener:@"DOMNodeInserted" listener:[self eventsListener] useCapture:NO];
-    }
-}
-
-- (void)handleEvent:(DOMEvent *)evt;
-{
-    if (_readySelector && [self isTextReadyToEdit])
-    {
-        [self performSelector:_readySelector];
-        
-        _readySelector = NULL;
-        [[self ancestorNode] removeEventListener:@"DOMNodeInserted" listener:[self eventsListener] useCapture:NO];
-    }
-}
 
 #pragma mark Hierarchy
 
@@ -214,7 +213,7 @@
 - (void)setEditable:(BOOL)flag
 {
     _editable = flag;
-    [self performSelectorWhenTextIsReadyToEdit:@selector(updateContentEditableAttribute)];
+    [self updateContentEditableAttributeWhenReady];
 }
 
 // Note that it's only a property for controlling editing by the user, it does not affect the existing HTML or stop programmatic editing of the HTML.
