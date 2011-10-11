@@ -603,14 +603,18 @@
 {
     if (type == SVThumbnailTypeCustom && [self customThumbnail])
     {
-		NSURL *result = [context addThumbnailMedia:[[self customThumbnail] media]
-                                             width:width
-                                            height:height
-                                              type:nil
-                                     scalingSuffix:nil
-                                           options:options];
-
-        return result;
+        SVMedia *media = [[self customThumbnail] media];
+        if (media)  // nil in rare cases. #148903
+        {
+            NSURL *result = [context addThumbnailMedia:media
+                                                 width:width
+                                                height:height
+                                                  type:nil
+                                         scalingSuffix:nil
+                                               options:options];
+            
+            return result;
+        }
     }
     
     return nil;
