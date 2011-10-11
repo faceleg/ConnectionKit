@@ -333,7 +333,7 @@
     [_placeholder release]; _placeholder = placeholder;
     
     // Display new placeholder if appropriate
-    if ([[self HTMLString] length] == 0)
+    if ([[self HTMLString] length] == 0 && [self isTextHTMLElementLoaded])
     {
         [[self textHTMLElement] setInnerHTML:placeholder];  // placeholder is HTML
     }
