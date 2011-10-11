@@ -374,10 +374,6 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     [[self graphicsController] setSelectedObjects:selection];    // restore selection
     
     
-    // Enable the controllers to find their nodes
-    [[self contentDOMController] setAncestorNode:domDoc recursive:YES];
-    
-    
     // Restore scroll point
     [[self webEditor] scrollToPoint:_visibleRect.origin];
     

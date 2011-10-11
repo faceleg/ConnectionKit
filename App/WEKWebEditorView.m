@@ -1914,11 +1914,12 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 #pragma mark WebFrameLoadDelegate
 
-- (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
+- (void)webView:(WebView *)sender didCommitLoadForFrame:(WebFrame *)frame
 {
     if (frame == [sender mainFrame])
     {
-        [[self delegate] webEditorViewDidFinishLoading:self];
+        // The document has been created, DOM controllers can begin to be hooked up
+        [[self contentItem] setAncestorNode:[frame DOMDocument] recursive:YES];
     }
 }
 
@@ -1927,6 +1928,14 @@ typedef enum {  // this copied from WebPreferences+Private.h
     if (frame == [sender mainFrame])
     {
         [[self delegate] webEditor:self didReceiveTitle:title];
+    }
+}
+
+- (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
+{
+    if (frame == [sender mainFrame])
+    {
+        [[self delegate] webEditorViewDidFinishLoading:self];
     }
 }
 
