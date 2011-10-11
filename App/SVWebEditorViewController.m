@@ -330,6 +330,13 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     [writer release];
     
     
+    // Context holds the controllers. We need to send them over to the Web Editor.
+    // Doing so will populate .graphicsController, so need to clear out its content & remember the selection first
+    
+    NSArray *selection = [[self graphicsController] selectedObjects];
+    [[self graphicsController] setContent:nil];
+    
+    
     // Populate web editor items
     SVContentDOMController *contentController = [[SVContentDOMController alloc]
                                                  initWithWebEditorHTMLContext:[self HTMLContext]
@@ -338,6 +345,8 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     [self setContentDOMController:contentController];
     [webEditor setContentItem:contentController];
     [contentController release];
+    
+    [[self graphicsController] setSelectedObjects:selection];    // restore selection
     
     
     // Tidy up. Web Editor HTML Contexts create a retain cycle until -close is called. Yes, I should fix this at some point, but it's part of the design for now. We call -close once the webview has loaded, but sometimes that point is never reached! As far as I can tell it's not a problem to close the context after starting a load. Researched into this prompted by #
@@ -362,16 +371,9 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     OBASSERT(domDoc);
     
     
-    // Context holds the controllers. We need to send them over to the Web Editor.
-    // Doing so will populate .graphicsController, so need to clear out its content & remember the selection first
-    
-    NSArray *selection = [[self graphicsController] selectedObjects];
-    [[self graphicsController] setContent:nil];
-    
+    // Store loaded page
     SVWebEditorHTMLContext *context = [self HTMLContext];
     [_loadedPage release]; _loadedPage = [[context page] retain];
-    
-    [[self graphicsController] setSelectedObjects:selection];    // restore selection
     
     
     // Restore scroll point
