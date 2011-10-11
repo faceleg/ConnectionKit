@@ -329,6 +329,17 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     [webEditor loadHTMLString:[writer string] baseURL:pageURL];
     [writer release];
     
+    
+    // Populate web editor items
+    SVContentDOMController *contentController = [[SVContentDOMController alloc]
+                                                 initWithWebEditorHTMLContext:[self HTMLContext]
+                                                 node:nil];
+    
+    [self setContentDOMController:contentController];
+    [webEditor setContentItem:contentController];
+    [contentController release];
+    
+    
     // Tidy up. Web Editor HTML Contexts create a retain cycle until -close is called. Yes, I should fix this at some point, but it's part of the design for now. We call -close once the webview has loaded, but sometimes that point is never reached! As far as I can tell it's not a problem to close the context after starting a load. Researched into this prompted by #
     [context close];
     [context release];
@@ -360,15 +371,11 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     SVWebEditorHTMLContext *context = [self HTMLContext];
     [_loadedPage release]; _loadedPage = [[context page] retain];
     
-    SVContentDOMController *contentController = [[SVContentDOMController alloc]
-                                                 initWithWebEditorHTMLContext:[self HTMLContext]
-                                                 node:[[self webEditor] HTMLDocument]];
-    
-    [self setContentDOMController:contentController];
-    [webEditor setContentItem:contentController];
-    [contentController release];
-    
     [[self graphicsController] setSelectedObjects:selection];    // restore selection
+    
+    
+    // Enable the controllers to find their nodes
+    [[self contentDOMController] setAncestorNode:domDoc recursive:YES];
     
     
     // Restore scroll point

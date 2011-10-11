@@ -53,7 +53,7 @@
 - (id)initWithWebEditorHTMLContext:(SVWebEditorHTMLContext *)context node:(DOMNode *)node;
 {
     OBPRECONDITION(context);
-    OBPRECONDITION(node);
+    //OBPRECONDITION(node);
     
     self = [self init];
     
