@@ -302,6 +302,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
 #pragma mark Loading
 
 - (void)webEditorViewDidFirstLayout:(WEKWebEditorView *)sender;
+- (void)webEditorViewDidFinishDocumentLoad:(WEKWebEditorView *)frame;
 - (void)webEditorViewDidFinishLoading:(WEKWebEditorView *)sender;
 
 // Much like -webView:didReceiveTitle:forFrame:

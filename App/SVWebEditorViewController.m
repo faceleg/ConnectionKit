@@ -1151,6 +1151,8 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 
 #pragma mark SVWebEditorViewDelegate
 
+- (void)webEditorViewDidFinishDocumentLoad:(WEKWebEditorView *)frame; { }
+
 - (void)webEditorViewDidFirstLayout:(WEKWebEditorView *)sender;
 {
     OBPRECONDITION(sender == [self webEditor]);

@@ -1990,6 +1990,16 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
 }
 
+- (void)webView:(WebView *)sender didFinishDocumentLoadForFrame:(WebFrame *)frame;
+{
+    OBPRECONDITION(sender == [self webView]);
+    
+    if (frame == [sender mainFrame])
+    {
+        [[self delegate] webEditorViewDidFinishDocumentLoad:self];
+    }
+}
+
 #pragma mark WebPolicyDelegate
 
 /*	We don't want to allow navigation within Sandvox! Open in web browser instead
