@@ -259,7 +259,7 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSURL *jQueryURL = nil;
 	NSString *minimizationSuffix = @".min";
-	if ([defaults boolForKey:@"jQueryDebug"])
+	if ([self isForEditing] || [defaults boolForKey:@"jQueryDebug"])	// Special default, OR if we are editing, use non-minimized.
 	{
 		minimizationSuffix = @"";	// Empty suffix means we'll bring in the non minimized version.
 	}

@@ -782,21 +782,10 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		// Enable if published, and this is only one item selected
 		result = (published && !NSIsControllerMarker(published));
 
-		// Check if page *can* be published
-		BOOL canBePublished = (nil != gRegistrationString);
-		if (!canBePublished)
-		{
-			NSNumber *isPublishableNumber = [content valueForKeyPath:@"selection.isPagePublishableInDemo"];
-			if (!NSIsControllerMarker(isPublishableNumber))
-			{
-				canBePublished = [isPublishableNumber boolValue];
-			}
-		}
 		NSArray *selectedItems = [[[self siteOutlineViewController] content] selectedObjects];
 
 		NSString *title = NSLocalizedString(@"Visit Published Page", @"Menu item");
 		if ((nil == published) && (1==[selectedItems count])) title = NSLocalizedString(@"Visit Published Page (Not Yet Published)", @"Menu item");
-		if (!canBePublished) title = NSLocalizedString(@"License Required to Publish Page", @"Menu item");
 		[menuItem setTitle:title];
 	}
 

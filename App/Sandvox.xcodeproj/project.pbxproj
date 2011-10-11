@@ -2536,8 +2536,8 @@
 		3C9BC213103DF9DF00D2CF47 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/HTMLEditor.xib; sourceTree = "<group>"; };
 		3CA17FC7122DB2C700331125 /* SVIndexInspectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndexInspectorViewController.h; sourceTree = "<group>"; };
 		3CA17FC8122DB2C700331125 /* SVIndexInspectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndexInspectorViewController.m; sourceTree = "<group>"; };
-		3CA6B98B11F9130B004A4794 /* YRKSpinningProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YRKSpinningProgressIndicator.h; path = "../../yrk-spinning-progress-indicator/Code/YRKSpinningProgressIndicator.h"; sourceTree = SOURCE_ROOT; };
-		3CA6B98C11F9130B004A4794 /* YRKSpinningProgressIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YRKSpinningProgressIndicator.m; path = "../../yrk-spinning-progress-indicator/Code/YRKSpinningProgressIndicator.m"; sourceTree = SOURCE_ROOT; };
+		3CA6B98B11F9130B004A4794 /* YRKSpinningProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YRKSpinningProgressIndicator.h; path = Code/YRKSpinningProgressIndicator.h; sourceTree = "<group>"; };
+		3CA6B98C11F9130B004A4794 /* YRKSpinningProgressIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YRKSpinningProgressIndicator.m; path = Code/YRKSpinningProgressIndicator.m; sourceTree = "<group>"; };
 		3CA900670D63C76100815310 /* IFrameElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IFrameElement.xcodeproj; path = ../PlugIns/IFrameElement/IFrameElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3CA901A20D63D45B00815310 /* LinkListElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LinkListElement.xcodeproj; path = ../PlugIns/LinkListElement/LinkListElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3CA9B30D0804643200C3053B /* KTDocument+Properties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocument+Properties.m"; sourceTree = "<group>"; };
@@ -2775,8 +2775,8 @@
 		CE01A7020EAFD63600BDF264 /* TrimFirstLineTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrimFirstLineTransformer.m; sourceTree = "<group>"; };
 		CE01A7030EAFD63600BDF264 /* TrimTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrimTransformer.h; sourceTree = "<group>"; };
 		CE01A7040EAFD63600BDF264 /* TrimTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrimTransformer.m; sourceTree = "<group>"; };
-		CE01A70C0EAFD63600BDF264 /* BDAlias.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BDAlias.h; path = ../../../../bdalias/BDAlias.h; sourceTree = "<group>"; };
-		CE01A70D0EAFD63600BDF264 /* BDAlias.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BDAlias.m; path = ../../../../bdalias/BDAlias.m; sourceTree = "<group>"; };
+		CE01A70C0EAFD63600BDF264 /* BDAlias.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BDAlias.h; path = ../../bdalias/BDAlias.h; sourceTree = "<group>"; };
+		CE01A70D0EAFD63600BDF264 /* BDAlias.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BDAlias.m; path = ../../bdalias/BDAlias.m; sourceTree = "<group>"; };
 		CE01A70E0EAFD63600BDF264 /* DNDArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNDArrayController.h; sourceTree = "<group>"; };
 		CE01A70F0EAFD63600BDF264 /* DNDArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNDArrayController.m; sourceTree = "<group>"; };
 		CE01A7100EAFD63600BDF264 /* NSBezierPath_AMAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSBezierPath_AMAdditions.h; sourceTree = "<group>"; };
@@ -3571,7 +3571,7 @@
 				2755279B10546D990037524C /* KSSelectionBorder.m */,
 			);
 			name = KSSelectionBorder;
-			path = ../../KSSelectionBorder;
+			path = ../Code/KSSelectionBorder;
 			sourceTree = SOURCE_ROOT;
 		};
 		273FA58A14209E580051E616 /* Products */ = {
@@ -4048,7 +4048,7 @@
 				27B5DA34133E4AA6002AAEA2 /* KSError.m */,
 			);
 			name = KSError;
-			path = ../../KSError;
+			path = ../Code/KSError;
 			sourceTree = SOURCE_ROOT;
 		};
 		27BDA73E10C5E410008C8199 /* Products */ = {
@@ -4104,7 +4104,7 @@
 				CE01A6390EAFD63600BDF264 /* KSExtensibleManagedObject.m */,
 			);
 			name = KSExtensibleManagedObject;
-			path = ../../KSExtensibleManagedObject;
+			path = ../Code/KSExtensibleManagedObject;
 			sourceTree = SOURCE_ROOT;
 		};
 		27CC248211F07277007FB3FE /* KSHTMLWriter */ = {
@@ -4145,7 +4145,7 @@
 				27F503E713BF3E1300F0FFD7 /* KSPerformOnThreadOperation.m */,
 			);
 			name = KSThreadProxy;
-			path = ../../KSThreadProxy;
+			path = ../Code/KSThreadProxy;
 			sourceTree = SOURCE_ROOT;
 		};
 		27DF88CE0D85785D00AEF4B5 /* Main Document Window */ = {
@@ -5107,13 +5107,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3CA6B99111F91322004A4794 /* YRKSpinningProgressIndicator */ = {
+		3CA6B99111F91322004A4794 /* yrk-spinning-progress-indicator */ = {
 			isa = PBXGroup;
 			children = (
 				3CA6B98B11F9130B004A4794 /* YRKSpinningProgressIndicator.h */,
 				3CA6B98C11F9130B004A4794 /* YRKSpinningProgressIndicator.m */,
 			);
-			name = YRKSpinningProgressIndicator;
+			name = "yrk-spinning-progress-indicator";
+			path = "../../yrk-spinning-progress-indicator";
 			sourceTree = "<group>";
 		};
 		3CA8985F13F9EF9C0098BA5D /* MAC APP STORE */ = {
@@ -5900,7 +5901,7 @@
 				CE75EA93111A550600474753 /* ESCursors.m */,
 			);
 			name = ESCursors;
-			path = ../../../../KSSelectionBorder/ESCursors;
+			path = ../../KSSelectionBorder/ESCursors;
 			sourceTree = "<group>";
 		};
 		CE89FE3011F7B92D00B180EB /* Localization */ = {
@@ -5996,7 +5997,7 @@
 				CEC69AF8108E6F7D000E6E84 /* MAAttachedWindow */,
 				3C2DA6E0104C7A790037D270 /* MGScopeBar */,
 				CE2D42E41188BD910051E238 /* LIFlipEffect */,
-				3CA6B99111F91322004A4794 /* YRKSpinningProgressIndicator */,
+				3CA6B99111F91322004A4794 /* yrk-spinning-progress-indicator */,
 			);
 			path = ThirdParty;
 			sourceTree = "<group>";
@@ -7411,7 +7412,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "#!/bin/bash\n\n### this script should NOT have 'Run script only when installing' checked\n\n### we could do this externally, but we'd have to export everything we need\n### e.g.,\n# export APPNAME=\\\"Sandvox\\\"\n# ${SRCROOT}/../Tools/preflight-build\n\n###\n### peform any necessary checks before commencing build\n###\n\n# find git on local machine\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\n## Update Submodules \npushd \"${SRCROOT}/..\"\n${GIT_PATH} submodule update --init --recursive\npopd\n\n## UpdateBDAlias\npushd \"${SRCROOT}/../../bdalias\"\n${GIT_PATH} checkout ${BDALIAS_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching BDAlias from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${BDALIAS_COMMIT}\n\techo \"... finished fetching BDAlias\"\nfi\npopd\n\n## UpdateKSError\npushd \"${SRCROOT}/../../KSError\"\n${GIT_PATH} checkout ${KSERROR_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSError from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSERROR_COMMIT}\n\techo \"... finished fetching KSError\"\nfi\npopd\n\n## UpdateKSExtensibleManagedObject\npushd \"${SRCROOT}/../../KSExtensibleManagedObject\"\n${GIT_PATH} checkout ${KSEXTENSIBLEMANAGEDOBJECT_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSExtensibleManagedObject from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSEXTENSIBLEMANAGEDOBJECT_COMMIT}\n\techo \"... finished fetching KSExtensibleManagedObject\"\nfi\npopd\n\n## UpdateKSSelectionBorder\npushd \"${SRCROOT}/../../KSSelectionBorder\"\n${GIT_PATH} checkout ${KSSELECTIONBORDER_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSSelectionBorder from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSSELECTIONBORDER_COMMIT}\n\techo \"... finished fetching KSSelectionBorder\"\nfi\npopd\n\n## UpdateKSThreadProxy\npushd \"${SRCROOT}/../../KSThreadProxy\"\n${GIT_PATH} checkout ${KSTHREADPROXY_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching KSThreadProxy from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${KSTHREADPROXY_COMMIT}\n\techo \"... finished fetching KSThreadProxy\"\nfi\npopd\n\n## UpdateYRKSpinningProgressIndicator\npushd \"${SRCROOT}/../../yrk-spinning-progress-indicator\"\n${GIT_PATH} checkout ${YRKSPINNINGPROGRESSINDICATOR_COMMIT}\nif (($? != 0))\nthen\n\techo \"fetching yrk-spinning-progress-indicator from GitHub ...\"\n\t${GIT_PATH} fetch\n\t${GIT_PATH} checkout ${YRKSPINNINGPROGRESSINDICATOR_COMMIT}\n\techo \"... finished fetching yrk-spinning-progress-indicator\"\nfi\npopd\n\n###\n### further preflight based on type of build\n###\n\nif [ \"${CONFIGURATION}\" == \"Debug\" ]\nthen\n\techo \"Preflighting Debug build...\"\n\t# we could do something here before doing Debug builds\nfi\n\nif [ \"${CONFIGURATION}\" == \"Release\" ]\nthen\n\techo \"Preflighting Release build...\"\n\t# we could do something here before doing Debug builds\n\t# some magic git incantation that returns exit 1 if we have unstaged changes / unpushed changes?\nfi\n\nexit 0\n";
+			shellScript = "#!/bin/bash\n\n### this script should NOT have 'Run script only when installing' checked\n\n### we could do this externally, but we'd have to export everything we need\n### e.g.,\n# export APPNAME=\\\"Sandvox\\\"\n# ${SRCROOT}/../Tools/preflight-build\n\n###\n### peform any necessary checks before commencing build\n###\n\n# find git on local machine\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/local/git/bin/git ]\nthen\n\tGIT_PATH=/usr/local/git/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\n## Update Submodules \npushd \"${SRCROOT}/..\"\n${GIT_PATH} submodule update --init --recursive\npopd\n\n###\n### further preflight based on type of build\n###\n\nif [ \"${CONFIGURATION}\" == \"Debug\" ]\nthen\n\techo \"Preflighting Debug build...\"\n\t# we could do something here before doing Debug builds\nfi\n\nif [ \"${CONFIGURATION}\" == \"Release\" ]\nthen\n\techo \"Preflighting Release build...\"\n\t# we could do something here before doing Debug builds\n\t# some magic git incantation that returns exit 1 if we have unstaged changes / unpushed changes?\nfi\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
 		3C99107209298C4400ED5CBF /* Generate Localizable.strings */ = {

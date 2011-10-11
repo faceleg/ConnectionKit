@@ -1407,11 +1407,31 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     {
         NSString *docPath = [[self fileURL] path];
         
-        [KSWORKSPACE performFileOperation:NSWorkspaceRecycleOperation
-                                   source:docPath
-                              destination:nil
-                                    files:unusedFiles
-                                      tag:NULL];
+        NSLog(@"Reduce file size: Removing files:\n%@\nfrom document at %@",
+              unusedFiles,
+              docPath);
+        
+        if (![KSWORKSPACE performFileOperation:NSWorkspaceRecycleOperation
+                                        source:docPath
+                                   destination:nil
+                                         files:unusedFiles
+                                           tag:NULL])
+        {
+            NSLog(@"Reduce file size: Bulk move to trash failed");
+            
+            // For some reason, couldn't remove the whole lot, so try individually
+            for (NSString *aFilename in unusedFiles)
+            {
+                if (![KSWORKSPACE performFileOperation:NSWorkspaceRecycleOperation
+                                                source:docPath
+                                           destination:nil
+                                                 files:[NSArray arrayWithObject:aFilename]
+                                                   tag:NULL])
+                {
+                    NSLog(@"Reduce file size: Moving %@ to trash failed", aFilename);
+                }
+            }
+        }
         
         
         // Update doc modification date so doesn't complain on next save
