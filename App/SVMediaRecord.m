@@ -293,7 +293,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
         {
             // Get best path we can out of the alias
             NSString *path = [[self autosaveAlias] fullPath];
-            if (!path) path = [[self alias] fullPath];
+            if (!path) path = [[self alias] fullPathRelativeToPath:nil mountVolumes:NO];
             if (!path) path = [[self autosaveAlias] lastKnownPath];
             if (!path) path = [[self alias] lastKnownPath];
             
