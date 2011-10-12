@@ -95,6 +95,8 @@
         _publishingRecordsByPath = [[NSDictionary alloc]
                                     initWithObjects:records
                                     forKeys:[records valueForKeyPath:@"path.lowercaseString"]];
+        
+        _pathsBeingHashed = [[NSMutableSet alloc] init];
 	}
 	
 	return self;
@@ -106,6 +108,7 @@
     
     [_publishingRecordsBySHA1Digest release];
     [_publishingRecordsByPath release];
+    [_pathsBeingHashed release];
     
     [super dealloc];
 }
@@ -123,7 +126,9 @@
        mediaRequest:(SVMediaRequest *)mediaRequest  // if there was one behind all this
              object:(id <SVPublishedObject>)object;
 {
-    if ([self isPublishingToPath:remotePath]) // if already publishing, let be
+    // If already publishing, let be
+    // Call to super is deliberate, as want to bypass our check of _pathsBeingHashed
+    if (!data || [super isPublishingToPath:remotePath])
     {
         return [super publishData:data
                            toPath:remotePath
@@ -149,6 +154,9 @@
             }
             else
             {
+                // Mark as being published so nothing else overwrites it
+                [_pathsBeingHashed addObject:remotePath];
+                
                 NSInvocation *invocation = [NSInvocation
                                             invocationWithSelector:@selector(threaded_publishMediaData:toPath:request:cachedSHA1Digest:)
                                             target:self
@@ -161,6 +169,8 @@
                 return;
             }
         }
+        
+        [_pathsBeingHashed removeObject:remotePath];
         
     
         // Background hashing failed?
@@ -234,52 +244,67 @@
             cachedSHA1Digest:(NSData *)digest  // save engine the trouble of calculating itself
                       object:(id <SVPublishedObject>)object;
 {
-    if (![self isPublishingToPath:remotePath])  // if already publishing, let be
+    // If already publishing, let be
+    // Call to super is deliberate, as want to bypass our check of _pathsBeingHashed
+    if ([super isPublishingToPath:remotePath])
     {
-        // Hash if not already known. Can easily take advantage of media hasher for this
-        if (!digest)
-        {
-            SVMedia *media = [[SVMedia alloc] initByReferencingURL:localURL];
-            NSOperation *hashingOp = [[self mediaHasher] addMedia:media];
-            BOOL finished = [hashingOp isFinished];
-            digest = [[self mediaHasher] SHA1DigestForMedia:media];
-            [media release];
-            
-            if (!digest && !finished)
-            {
-                // Be nice and assume that a failure to hash (finished==YES, digest==nil) was because the URL is actually a directory, so go ahead and publish
-                NSInvocation *invocation = [NSInvocation invocationWithSelector:_cmd target:self];
-                [invocation setArgument:&localURL atIndex:2];
-                [invocation setArgument:&remotePath atIndex:3];
-                [invocation setArgument:&digest atIndex:4];
-                [invocation setArgument:&object atIndex:5];
-                
-                NSOperation *nextOp = [[NSInvocationOperation alloc] initWithInvocation:invocation];
-                [nextOp addDependency:hashingOp];
-                [self addOperation:nextOp queue:nil];
-                [nextOp release];
-                
-                return;
-            }
-        }
-        
-        
-        // Compare digests to know if it's worth publishing. Look up remote hash first to save us reading in the local file if possible
-        if ([self onlyPublishChanges])
-        {
-            SVPublishingRecord *record = [self publishingRecordForPath:remotePath];
-            NSData *publishedDigest = [record SHA1Digest];
-            if ([digest isEqualToData:publishedDigest])
-            {
-                // Pretend we uploaded so the engine still tracks path/digest etc.
-                [self didEnqueueUpload:nil toPath:remotePath cachedSHA1Digest:digest contentHash:nil object:object];
-                return;
-            }
-        }
+        return [super publishContentsOfURL:localURL toPath:remotePath cachedSHA1Digest:digest object:object];
     }
-     
+    
+    
+    // Hash if not already known. Can easily take advantage of media hasher for this
+    if (!digest)
+    {
+        SVMedia *media = [[SVMedia alloc] initByReferencingURL:localURL];
+        NSOperation *hashingOp = [[self mediaHasher] addMedia:media];
+        BOOL finished = [hashingOp isFinished];
+        digest = [[self mediaHasher] SHA1DigestForMedia:media];
+        [media release];
+        
+        if (!digest && !finished)
+        {
+            // Mark as being published so nothing else overwrites it
+            [_pathsBeingHashed addObject:remotePath];
+            
+            // Be nice and assume that a failure to hash (finished==YES, digest==nil) was because the URL is actually a directory, so go ahead and publish
+            NSInvocation *invocation = [NSInvocation invocationWithSelector:_cmd target:self];
+            [invocation setArgument:&localURL atIndex:2];
+            [invocation setArgument:&remotePath atIndex:3];
+            [invocation setArgument:&digest atIndex:4];
+            [invocation setArgument:&object atIndex:5];
+            
+            NSOperation *nextOp = [[NSInvocationOperation alloc] initWithInvocation:invocation];
+            [nextOp addDependency:hashingOp];
+            [self addOperation:nextOp queue:nil];
+            [nextOp release];
+            
+            return;
+        }
+        
+        [_pathsBeingHashed removeObject:remotePath];
+    }
+    
+    
+    // Compare digests to know if it's worth publishing. Look up remote hash first to save us reading in the local file if possible
+    if ([self onlyPublishChanges])
+    {
+        SVPublishingRecord *record = [self publishingRecordForPath:remotePath];
+        NSData *publishedDigest = [record SHA1Digest];
+        if ([digest isEqualToData:publishedDigest])
+        {
+            // Pretend we uploaded so the engine still tracks path/digest etc.
+            [self didEnqueueUpload:nil toPath:remotePath cachedSHA1Digest:digest contentHash:nil object:object];
+            return;
+        }
+    }        
+    
     
     [super publishContentsOfURL:localURL toPath:remotePath cachedSHA1Digest:digest object:object];
+}
+
+- (BOOL)isPublishingToPath:(NSString *)path;
+{
+    return ([super isPublishingToPath:path] || [_pathsBeingHashed containsObject:path]);
 }
 
 /*	Supplement the default behaviour by also deleting any existing file first if the user requests it.
