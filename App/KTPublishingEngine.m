@@ -772,7 +772,7 @@ static void *sProgressObservationContext = &sProgressObservationContext;
     else
     {
         // Already been cached?
-        NSData *data = [digestStorage dataForMediaRequest:request];
+        NSData *data = [[digestStorage dataForMediaRequest:request] retain];
         if (data)
         {
             [digestStorage removeDataForMediaRequest:request];
@@ -781,13 +781,17 @@ static void *sProgressObservationContext = &sProgressObservationContext;
         {
             NSURL *URL = [NSURL sandvoxImageURLWithMediaRequest:request];
             data = [[[NSURLCache sharedURLCache] cachedResponseForRequest:[NSURLRequest requestWithURL:URL]] data];
+            [data retain];
         }
         
         if (data)
         {
             // It's cached! Just need to calculate the hash which is pretty speedy            
             if (!digest) digest = [data ks_SHA1Digest];
-            return [self publishMediaWithRequest:request cachedData:data SHA1Digest:digest];
+            NSString *result = [self publishMediaWithRequest:request cachedData:data SHA1Digest:digest];
+            
+            [data release];
+            return result;
         }
         else
         {
