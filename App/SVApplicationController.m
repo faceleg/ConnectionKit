@@ -1533,6 +1533,14 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 #pragma mark -
 #pragma mark Support
 
+- (NSString *)appRegCode		// for use by JoinListController
+{
+#ifdef MAC_APP_STORE
+	return @"MAS";
+#else
+	return (nil != gRegistrationString ) ? @"licensed" : @"demo";
+#endif
+}
 
 /*! log undo-related notifications */
 - (void)logUndoNotification: (NSNotification *) notification
