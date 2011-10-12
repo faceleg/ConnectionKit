@@ -70,7 +70,7 @@
 }
 
 // Never want to be hooked up
-- (DOMElement *)HTMLElement { return nil; }
+- (DOMNode *)node { return nil; }
 - (NSString *)elementIdName; { return nil; }
 
 @end
