@@ -125,4 +125,6 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 
 - (IBAction)showPluginWindow:(id)sender;
 
+- (NSString *)appRegCode;		// for use by JoinListController
+
 @end
