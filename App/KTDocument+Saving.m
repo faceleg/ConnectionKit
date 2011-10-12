@@ -1317,7 +1317,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     [wrapper release];
 }
 
-#pragma mark Reduce File Size
+#pragma mark File Management
 
 - (IBAction)reduceFileSize:(id)sender;
 {
@@ -1434,6 +1434,71 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     }
     
     [unusedFiles release];
+}
+
+- (IBAction)copyFilesIntoDocument:(id)sender;
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"shouldCopyFileIntoDocument == NO && !(filename beginswith[c] 'Shared/')"];
+    
+    NSError *error;
+    NSArray *mediaNotForCopying = [[self managedObjectContext] fetchAllObjectsForEntityForName:@"MediaRecord" predicate:predicate error:&error];
+    
+    if (!mediaNotForCopying)
+    {
+        [self presentError:error modalForWindow:[self windowForSheet] delegate:nil didPresentSelector:nil contextInfo:NULL];
+        return;
+    }
+    
+    
+    // Bail if nothing is suitable for copying
+    if (![mediaNotForCopying count])
+    {
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert setMessageText:NSLocalizedString(@"All media files are already set to be copied into this document.", "alert message")];
+        
+        [alert beginSheetModalForWindow:[self windowForSheet] modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
+        
+        [alert release];
+        return;
+    }
+    
+    
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert setMessageText:NSLocalizedString(@"Externally located media files will be copied into the document by saving it.", "alert message")];
+    
+    [alert setInformativeText:NSLocalizedString(@"If you're not ready to save the document just yet, the files can still be marked for copying, the next time you save.", "alert message")];
+    
+    [alert addButtonWithTitle:NSLocalizedString(@"Save and Copy Files", "button")];
+    [alert addButtonWithTitle:NSLocalizedString(@"Cancel", "button")];
+    [alert addButtonWithTitle:NSLocalizedString(@"Mark Files for Copying", "button")];
+    
+    [alert beginSheetModalForWindow:[self windowForSheet]
+                      modalDelegate:self
+                     didEndSelector:@selector(copyFilesAlertDidEnd:returnCode:contextInfo:)
+                        contextInfo:[mediaNotForCopying retain]];
+    
+    [alert release];
+}
+
+- (void)copyFilesAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+{
+    NSArray *files = contextInfo;
+    
+    switch (returnCode)
+    {
+        case NSAlertFirstButtonReturn:
+            [files setValue:NSBOOL(YES) forKey:@"shouldCopyFileIntoDocument"];
+            
+            [[alert window] orderOut:self]; // just in case saving presents a sheet
+            [self saveDocument:self];
+             
+            break;
+            
+        case NSAlertThirdButtonReturn:
+            [files setValue:NSBOOL(YES) forKey:@"shouldCopyFileIntoDocument"];
+    }
+    
+    [files release];
 }
 
 @end

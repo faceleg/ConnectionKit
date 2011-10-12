@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1433"/>
+			<integer value="81"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -379,6 +379,14 @@
 								<object class="NSMenuItem" id="459687519">
 									<reference key="NSMenu" ref="686301075"/>
 									<string key="NSTitle">Reduce File Size…</string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="73959282"/>
+									<reference key="NSMixedImage" ref="49718828"/>
+								</object>
+								<object class="NSMenuItem" id="971011745">
+									<reference key="NSMenu" ref="686301075"/>
+									<string key="NSTitle">Copy Files into Document…</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="73959282"/>
@@ -3972,6 +3980,14 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
+						<string key="label">copyFilesIntoDocument:</string>
+						<reference key="source" ref="464856506"/>
+						<reference key="destination" ref="971011745"/>
+					</object>
+					<int key="connectionID">1466</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
 						<string key="label">addFontTrait:</string>
 						<reference key="source" ref="838031862"/>
 						<reference key="destination" ref="769414889"/>
@@ -4515,6 +4531,7 @@
 							<reference ref="892799029"/>
 							<reference ref="259643522"/>
 							<reference ref="459687519"/>
+							<reference ref="971011745"/>
 						</object>
 						<reference key="parent" ref="801306927"/>
 					</object>
@@ -6294,6 +6311,11 @@
 						<reference key="object" ref="1031513182"/>
 						<reference key="parent" ref="186851815"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1465</int>
+						<reference key="object" ref="971011745"/>
+						<reference key="parent" ref="686301075"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -6517,6 +6539,7 @@
 					<string>1453.ImportedFromIB2</string>
 					<string>1460.IBPluginDependency</string>
 					<string>1462.IBPluginDependency</string>
+					<string>1465.IBPluginDependency</string>
 					<string>149.IBPluginDependency</string>
 					<string>149.ImportedFromIB2</string>
 					<string>150.IBPluginDependency</string>
@@ -6899,7 +6922,7 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{358, 782}, {228, 153}}</string>
+					<string>{{639, 934}, {228, 153}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -7014,6 +7037,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
@@ -7085,7 +7109,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{845, 359}, {269, 483}}</string>
+					<string>{{595, 604}, {269, 483}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -7136,7 +7160,7 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{949, 717}, {278, 203}}</string>
+					<string>{{855, 884}, {278, 203}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -7169,7 +7193,7 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{569, 586}, {253, 333}}</string>
+					<string>{{474, 754}, {253, 333}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -7223,7 +7247,7 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{280, 419}, {294, 303}}</string>
+					<string>{{553, 764}, {294, 323}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -7240,7 +7264,7 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{423, 449}, {204, 273}}</string>
+					<string>{{696, 814}, {204, 273}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -7307,7 +7331,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1464</int>
+			<int key="maxID">1466</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -9429,12 +9453,14 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>copyFilesIntoDocument:</string>
 							<string>reduceFileSize:</string>
 							<string>resetImageRecipes:</string>
 							<string>setupHost:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -9444,12 +9470,17 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>copyFilesIntoDocument:</string>
 							<string>reduceFileSize:</string>
 							<string>resetImageRecipes:</string>
 							<string>setupHost:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBActionInfo">
+								<string key="name">copyFilesIntoDocument:</string>
+								<string key="candidateClassName">id</string>
+							</object>
 							<object class="IBActionInfo">
 								<string key="name">reduceFileSize:</string>
 								<string key="candidateClassName">id</string>
@@ -9827,7 +9858,7 @@
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../KSThreadProxy/KSThreadProxy.h</string>
+						<string key="minorKey">../Code/KSThreadProxy/KSThreadProxy.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
