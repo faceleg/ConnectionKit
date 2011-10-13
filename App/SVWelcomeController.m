@@ -110,7 +110,11 @@
 - (BOOL) reopenPreviouslyOpenedDocumentsUsingProgressPanel:(KSProgressPanel *)progressPanel
 {
 	BOOL result = NO;		// set to yes if we want welcome window to be shown
-	
+	if ([NSDocumentController respondsToSelector:@selector(restoreWindowWithIdentifier:state:completionHandler:)])
+    {
+        return result;
+    }
+    
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSFileManager *fm = [NSFileManager defaultManager];
 	
