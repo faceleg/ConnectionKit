@@ -130,7 +130,8 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 {	
     [super windowDidLoad];
 	
-    
+	[window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];;
+	
     // Finish setting up controllers
     [[self pagesController] setManagedObjectContext:[[self document] managedObjectContext]];
     [self siteOutlineViewController].displaySmallPageIcons = [[self document] displaySmallPageIcons];
