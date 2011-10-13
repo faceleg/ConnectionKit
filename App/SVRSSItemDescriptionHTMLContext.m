@@ -19,6 +19,11 @@
     }
     else
     {
+        if ([tagName isEqualToString:@"script"])
+        {
+            _writingScript = YES;
+        }
+        
         [super startElement:tagName];
     }
 }
@@ -29,10 +34,20 @@
     {
         _noScriptLevel = 0;
     }
+    else if (_writingScript && [[self topElement] isEqualToString:@"script"])
+    {
+        [super endElement];
+        _writingScript = NO;
+    }
     else
     {
         [super endElement];
     }
+}
+
+- (void)writeString:(NSString *)string;
+{
+    if (!_writingScript) [super writeString:string];
 }
 
 @end

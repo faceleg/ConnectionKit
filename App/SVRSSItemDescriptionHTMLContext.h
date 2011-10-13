@@ -12,7 +12,8 @@
 @interface SVRSSItemDescriptionHTMLContext : SVProxyHTMLContext
 {
   @private
-    NSUInteger _noScriptLevel;
+    BOOL        _writingScript;
+    NSUInteger  _noScriptLevel;
 }
 
 @end
