@@ -307,15 +307,17 @@
 	return [result autorelease];
 }
 
-#pragma mark Delegate (NSWindow)
+#if MAC_OS_X_VERSION_MAX_ALLOWED > MAC_OS_X_VERSION_10_6
 
-// Delegate is called only on 10.7
+#pragma mark Delegate (NSWindow)
 
 - (NSApplicationPresentationOptions)window:(NSWindow *)window willUseFullScreenPresentationOptions:(NSApplicationPresentationOptions)proposedOptions;
 {
 	// Tell AppKit to show/hide Toolbar together with Menu Bar.
 	return (proposedOptions | NSApplicationPresentationAutoHideToolbar);
 }
+
+#endif
 
 #pragma mark Delegate (NSToolbar)
 

@@ -126,6 +126,9 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 }
 
 #pragma mark Window
+
+#if MAC_OS_X_VERSION_MAX_ALLOWED > MAC_OS_X_VERSION_10_6
+
 - (NSArray *)customWindowsToEnterFullScreenForWindow:(NSWindow *)window;
 {
 	return [NSArray arrayWithObject:[self window]];	
@@ -142,7 +145,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 //	
 //	
 //}
-
 
 - (void)window:(NSWindow *)window startCustomAnimationToEnterFullScreenWithDuration:(NSTimeInterval)duration;
 {
@@ -199,14 +201,16 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     }];
 }
 
-
+#endif
 
 - (void)windowDidLoad
 {	
     [super windowDidLoad];
 	
+#if MAC_OS_X_VERSION_MAX_ALLOWED > MAC_OS_X_VERSION_10_6
 	[[self window] setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];;
-		
+#endif
+	
     // Finish setting up controllers
     [[self pagesController] setManagedObjectContext:[[self document] managedObjectContext]];
     [self siteOutlineViewController].displaySmallPageIcons = [[self document] displaySmallPageIcons];
