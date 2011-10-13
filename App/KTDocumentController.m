@@ -324,6 +324,8 @@
 
 - (void)synchronizeOpenDocumentsUserDefault
 {
+    if ([NSDocumentController respondsToSelector:@selector(restoreWindowWithIdentifier:state:completionHandler:)]) return;
+    
     NSMutableArray *aliases = [NSMutableArray array];
     NSEnumerator *enumerator = [[[NSDocumentController sharedDocumentController] documents] objectEnumerator];
     KTDocument *document;
