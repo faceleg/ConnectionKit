@@ -124,10 +124,15 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 
 - (void)writeUniqueElement
 {
-    self.uniqueID = [[self currentContext] startElement:@"div"
-                                        preferredIdName:@"contactform"
-                                              className:nil
-                                             attributes:nil];
+    NSString *uniqueID = [[self currentContext] startElement:@"div"
+											 preferredIdName:@"contactform"
+												   className:nil
+												  attributes:nil];
+	// uniqueID cannot contain - because it's used in function names.  Replace - with _
+	uniqueID = [uniqueID stringByReplacingOccurrencesOfString:@"-" withString:@"_"];
+	
+	self.uniqueID = uniqueID;
+	
 }
 
 - (void)endUniqueElement
