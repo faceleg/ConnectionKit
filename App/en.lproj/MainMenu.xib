@@ -2104,7 +2104,8 @@
 								<object class="NSMenuItem" id="272946116">
 									<reference key="NSMenu" ref="220650628"/>
 									<string key="NSTitle">Enter Full Screen</string>
-									<string key="NSKeyEquiv"/>
+									<string key="NSKeyEquiv">f</string>
+									<int key="NSKeyEquivModMask">1310720</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="73959282"/>
 									<reference key="NSMixedImage" ref="49718828"/>
