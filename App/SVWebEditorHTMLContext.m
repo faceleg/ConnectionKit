@@ -117,18 +117,6 @@
     [self endGraphicContainer];
 }
 
-- (void)XwillWriteSummaryOfPage:(SVSiteItem *)page;
-{
-    // Generate DOM controller for it
-    SVSummaryDOMController *controller = [[SVSummaryDOMController alloc] init];
-    [controller setItemToSummarize:page];
-    
-    [self startDOMController:controller];
-    [controller release];
-    
-    [super willWriteSummaryOfPage:page];
-}
-
 #pragma mark Resources
 
 - (NSURL *)addResourceAtURL:(NSURL *)fileURL destination:(NSString *)uploadPath options:(NSUInteger)options

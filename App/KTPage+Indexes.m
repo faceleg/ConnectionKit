@@ -427,7 +427,6 @@ NSUInteger kTwoThirdsTruncation;
         SVTruncationType truncationType = [[self class] chooseTruncTypeFromMaxItemLength:maxItemLength];
         BOOL result = NO;
         
-        [context willWriteSummaryOfPage:self];
         [context startElement:@"div" className:@"article-summary"];
 
         // do we have a custom summary? if so just write it
