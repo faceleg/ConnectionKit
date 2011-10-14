@@ -344,6 +344,15 @@
 
 - (void)SFTPSession:(CK2SFTPSession *)session didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge;
 {
+    if ([challenge previousFailureCount] == 0)
+    {
+        NSData *fingerprint = [session hostkeyHashForType:LIBSSH2_HOSTKEY_HASH_SHA1];
+        
+        [self SFTPSession:session appendStringToTranscript:[NSString stringWithFormat:
+                                                            @"Fingerprint: %@",
+                                                            fingerprint]];
+    }
+    
     [[self ks_proxyOnThread:nil waitUntilDone:NO] connection:nil
                            didReceiveAuthenticationChallenge:challenge];
 }
