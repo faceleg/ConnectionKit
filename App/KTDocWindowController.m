@@ -63,6 +63,28 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 - (void)changeDesignTo:(KTDesign *)aDesign;
 @end
 
+#if MAC_OS_X_VERSION_MAX_ALLOWED == MAC_OS_X_VERSION_10_6
+
+enum {
+    NSFullScreenWindowMask      = 1 << 14
+};
+
+/* You may specify at most one of NSWindowCollectionBehaviorFullScreenPrimary or NSWindowCollectionBehaviorFullScreenAuxiliary. */
+enum {
+    NSWindowCollectionBehaviorFullScreenPrimary = 1 << 7,   // the frontmost window with this collection behavior will be the fullscreen window.  
+    NSWindowCollectionBehaviorFullScreenAuxiliary = 1 << 8	  // windows with this collection behavior can be shown with the fullscreen window.  
+};
+
+@interface NSWindow ( FakeLionDeclaration )
+- (NSRect)convertRectToScreen:(NSRect)aRect;
+@end
+
+
+@interface NSAnimationContext ( FakeLionDeclaration )
++ (void)runAnimationGroup:(void (^)(NSAnimationContext *context))changes completionHandler:(void (^)(void))completionHandler;
+@end
+
+#endif
 
 #pragma mark -
 
@@ -127,8 +149,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 #pragma mark Window
 
-#if MAC_OS_X_VERSION_MAX_ALLOWED > MAC_OS_X_VERSION_10_6
-
+// 10.7 ONLY; WILL ONLY BE INVOKED WHEN RUNNING 10.7
 - (NSArray *)customWindowsToEnterFullScreenForWindow:(NSWindow *)window;
 {
 	return [NSArray arrayWithObject:[self window]];	
@@ -201,15 +222,15 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     }];
 }
 
-#endif
-
 - (void)windowDidLoad
 {	
     [super windowDidLoad];
 	
-#if MAC_OS_X_VERSION_MAX_ALLOWED > MAC_OS_X_VERSION_10_6
-	[[self window] setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];;
-#endif
+	// 10.7 ONLY; CHECK IF CODE CAN BE EXECUTED
+	if ([[self window] respondsToSelector:@selector(setCollectionBehavior:)])
+	{
+		[[self window] setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];;
+	}
 	
     // Finish setting up controllers
     [[self pagesController] setManagedObjectContext:[[self document] managedObjectContext]];
