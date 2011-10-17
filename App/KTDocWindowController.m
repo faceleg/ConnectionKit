@@ -63,6 +63,28 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 - (void)changeDesignTo:(KTDesign *)aDesign;
 @end
 
+#if MAC_OS_X_VERSION_MAX_ALLOWED == MAC_OS_X_VERSION_10_6
+
+enum {
+    NSFullScreenWindowMask      = 1 << 14
+};
+
+/* You may specify at most one of NSWindowCollectionBehaviorFullScreenPrimary or NSWindowCollectionBehaviorFullScreenAuxiliary. */
+enum {
+    NSWindowCollectionBehaviorFullScreenPrimary = 1 << 7,   // the frontmost window with this collection behavior will be the fullscreen window.  
+    NSWindowCollectionBehaviorFullScreenAuxiliary = 1 << 8	  // windows with this collection behavior can be shown with the fullscreen window.  
+};
+
+@interface NSWindow ( FakeLionDeclaration )
+- (NSRect)convertRectToScreen:(NSRect)aRect;
+@end
+
+
+@interface NSAnimationContext ( FakeLionDeclaration )
++ (void)runAnimationGroup:(void (^)(NSAnimationContext *context))changes completionHandler:(void (^)(void))completionHandler;
+@end
+
+#endif
 
 #pragma mark -
 
@@ -126,10 +148,18 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 }
 
 #pragma mark Window
+
+// 10.7 ONLY; WILL ONLY BE INVOKED WHEN RUNNING 10.7
 - (NSArray *)customWindowsToEnterFullScreenForWindow:(NSWindow *)window;
 {
 	return [NSArray arrayWithObject:[self window]];	
 }
+
+- (NSArray *)customWindowsToExitFullScreenForWindow:(NSWindow *)window;
+{
+	return [NSArray arrayWithObject:[self window]];	
+}
+
 
 //- (NSTimeInterval)animationResizeTime:(NSRect)newFrame;
 //{
@@ -137,18 +167,15 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 //	
 //}
 
-
 - (void)window:(NSWindow *)window startCustomAnimationToEnterFullScreenWithDuration:(NSTimeInterval)duration;
 {
-	NSLog(@"Duration = %.2f", duration);	// NSWindow has a method to override for duration
 	// NSFullScreenSlowMotion default ... if set, shift key honored to slow down animation.  DOESN'T ACTUALLY WORK
 	
 	NSRect windowFrameScreen = [window frame];
-	// windowFrameScreen = NSInsetRect(windowFrameScreen, -11, -12);
-	//NSRect contentFrameScreen = [window frameRectForContentRect:windowFrameScreen];
+	
+	_originalWindowFrame = windowFrameScreen;
+	
 	NSRect contentFrame = [[window contentView] frame];
-	//NSRect windowRect = [[window contentView] convertRect:contentFrame toView:nil];
-	// NSRect windowFrame = [window frameRectForContentRect:screenFrame];
 	NSRect contentFrameScreen = [window convertRectToScreen:contentFrame];
 
 	NSRect screenFrameScreen = [[NSScreen mainScreen] frame];
@@ -163,26 +190,48 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[(SVDocWindow *)window setConstrainingToScreenSuspended:YES];
 	[window setFrame:screenWindowFrameScreen display:YES animate:YES];
 	[(SVDocWindow *)window setConstrainingToScreenSuspended:NO];
+		
+	NSDisableScreenUpdates();
+
+	//NSLog(@"%@", [[window contentView] _subtreeDescription]);
+	
+	NSRect afterResizeContentFrame = [[window contentView] frame];
+	[window setStyleMask:[window styleMask] | NSFullScreenWindowMask];
+	[window setFrame:afterResizeContentFrame display:YES];
+		
+	NSEnableScreenUpdates();
+	
+	// dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1ull * NSEC_PER_SEC), dispatch_get_current_queue(), ^{			});
 }
 
-/*
- 
- GOING FROM FULLSCREEN BACK TO NORMAL
- 
- CAN WE GET THE BOUNDS OF THE WINDOW THAT WE ARE GOING TO ANIMATE TO? OR SHOULD WE HAVE SAVED A COPY OF THOSE BOUNDS ABOVE?
  
 - (void)window:(NSWindow *)window startCustomAnimationToExitFullScreenWithDuration:(NSTimeInterval)duration;
 {
+	[(SVDocWindow *)window setConstrainingToScreenSuspended:YES];	
+	[window setStyleMask:[window styleMask] & ~NSFullScreenWindowMask];
+
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
+        
+        [context setDuration:duration];
+        [[window animator] setFrame:_originalWindowFrame display:YES];
+        
+    } completionHandler:^{
+ 
+		[(SVDocWindow *)window setConstrainingToScreenSuspended:NO];	
 	
+    }];
 }
- */
 
 - (void)windowDidLoad
 {	
     [super windowDidLoad];
 	
-	[[self window] setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];;
-		
+	// 10.7 ONLY; CHECK IF CODE CAN BE EXECUTED
+	if ([[self window] respondsToSelector:@selector(setCollectionBehavior:)])
+	{
+		[[self window] setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];;
+	}
+	
     // Finish setting up controllers
     [[self pagesController] setManagedObjectContext:[[self document] managedObjectContext]];
     [self siteOutlineViewController].displaySmallPageIcons = [[self document] displaySmallPageIcons];

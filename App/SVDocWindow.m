@@ -13,6 +13,8 @@
 
 @synthesize constrainingToScreenSuspended = _constrainingToScreenSuspended;
 
+// 10.7 ONLY; WILL ONLY BE INVOKED WHEN RUNNING 10.7
+
 // This window has its usual -constrainFrameRect:toScreen: behavior temporarily suppressed.
 // This enables our window's custom Full Screen Exit animations to avoid being constrained by the
 // top edge of the screen and the menu bar.
