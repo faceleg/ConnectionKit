@@ -38,6 +38,9 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
     SVWebContentObjectsController   *_graphicsController;
     BOOL                            _isChangingSelection;
     
+    // Actions
+    SEL _forwardedAction;
+    
     // Controllers
     SVContentDOMController  *_contentItem;
 	

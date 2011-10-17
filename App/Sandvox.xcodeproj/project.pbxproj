@@ -8997,7 +8997,11 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/../Code/SFTP\"",
 				);
-				OTHER_LDFLAGS = "-lsasl2";
+				OTHER_LDFLAGS = (
+					"-weak_library",
+					/usr/lib/libSystem.B.dylib,
+					"-lsasl2",
+				);
 				PRODUCT_NAME = Sandvox;
 				SDKROOT = macosx10.6;
 				VALIDATE_PRODUCT = YES;

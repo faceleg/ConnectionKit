@@ -103,6 +103,9 @@
 
 - (void)delete:(id)sender forwardingSelector:(SEL)action;
 {
+    if (_forwardedWebViewCommand) return;   // already in progress. #150432
+    
+    
     // First let the webview have a crack at the delete. Best way I can think to see if it does is to watch out for the change notification
     SVWebViewChangeWatcher *watcher = [[SVWebViewChangeWatcher alloc]
                                            initWithWebView:[self webView]];
@@ -119,7 +122,12 @@
     
     
     // WebView didn't handle the delete so go ahead and do it with the controllers
-    [[self firstResponderItem] doCommandBySelector:action];
+    _forwardedWebViewCommand = action;
+    {{
+        [[self firstResponderItem] doCommandBySelector:action];
+    }}
+    _forwardedWebViewCommand = NULL;
+    
     return;
     
     

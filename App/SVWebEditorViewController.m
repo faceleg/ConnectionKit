@@ -749,7 +749,15 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 
 - (IBAction)insertPagelet:(id)sender;
 {
-    if (![[[self webEditor] firstResponderItem] tryToPerform:_cmd with:sender])
+    BOOL doYourself = (_forwardedAction == _cmd);
+    if (!doYourself)
+    {
+        _forwardedAction = _cmd;
+        doYourself = ![[[self webEditor] firstResponderItem] tryToPerform:_cmd with:sender];
+        _forwardedAction = NULL;
+    }
+    
+    if (doYourself)
     {
         WEKWebEditorItem *articleController = [self articleDOMController];
         if (![articleController tryToPerform:_cmd with:sender])
