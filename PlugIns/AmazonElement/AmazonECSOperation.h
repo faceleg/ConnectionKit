@@ -14,11 +14,6 @@
 #import "AmazonOperation.h"
 
 
-#ifndef LocalizedStringInThisBundle
-	#define LocalizedStringInThisBundle(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
-#endif
-
-
 typedef enum {
 	AmazonStoreUS = 1,
 	AmazonStoreUK = 2,
