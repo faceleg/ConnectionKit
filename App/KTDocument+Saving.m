@@ -663,8 +663,6 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         
     
     BOOL result = YES;
-    NSError *error = nil;
-	
     
     // Setup persistent store appropriately
 	NSPersistentStore *store = [self persistentStore];
@@ -674,14 +672,14 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                                                           ofType:typeName
                                               modelConfiguration:nil
                                                     storeOptions:nil
-                                                           error:&error];
+                                                           error:outError];
         
         store = [self persistentStore];
     }
     else if (saveOp != NSSaveOperation)
     {
         // Fake a placeholder file ready for the store to save over
-        result = [[NSData data] writeToURL:URL options:0 error:&error];
+        result = [[NSData data] writeToURL:URL options:0 error:outError];
     }
     
     if (!result) return NO;
@@ -692,7 +690,8 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     // Now we're sure store is available, can give it some metadata.
     // If this fails, it's not critical, so carry on, but do report exceptions after the save. #134115
-    @try
+    NSError *error = nil;
+	@try
     {
         if (saveOp != NSAutosaveOperation)
         {
