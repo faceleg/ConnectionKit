@@ -93,11 +93,14 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 
 	//[AmazonOperation setAssociateID:@"karelsofwa-20"];
     
-    // Amazon defaults originally registered in SVApplicationController
-    // register these under com.karelia.Sandvox.plugin.Amazon ?
-    // update docs?
-    // [AmazonECSOperation associateKeyDefaults], @"AmazonAssociateIDs",
-    // [NSNumber numberWithBool:NO], @"DebugAmazonListService",
+    // register defaults
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *amazonDefaults = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    [AmazonECSOperation associateKeyDefaults], @"AmazonAssociateIDs",
+                                    [NSNumber numberWithBool:NO], @"DebugAmazonListService",
+                                    nil];
+    [defaults registerDefaults:amazonDefaults];
+    [defaults synchronize];
 }
 
 - (id)init;
