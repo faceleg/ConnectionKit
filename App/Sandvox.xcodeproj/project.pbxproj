@@ -1309,20 +1309,6 @@
 			remoteGlobalIDString = 8D57630D048677EA00EA77CD;
 			remoteInfo = MetaSandvox;
 		};
-		279EDCAC13DDE8B40018EB82 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
-			remoteInfo = AmazonSupport;
-		};
-		27B4129913DF7F7F004173E8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
-			remoteInfo = AmazonSupport;
-		};
 		27BDA74310C5E410008C8199 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CED864E510AA435C002DF34F /* ObjectiveFlickr.xcodeproj */;
@@ -2420,7 +2406,6 @@
 		3C5A71440BF7ADE100776464 /* NSManagedObjectModel+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectModel+KTExtensions.m"; sourceTree = "<group>"; };
 		3C5A714F0BF7ADE100776464 /* NSPersistentStoreCoordinator+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSPersistentStoreCoordinator+KTExtensions.h"; sourceTree = "<group>"; };
 		3C5A71500BF7ADE100776464 /* NSPersistentStoreCoordinator+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSPersistentStoreCoordinator+KTExtensions.m"; sourceTree = "<group>"; };
-		3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AmazonSupport.xcodeproj; path = ../Code/Shared/Code/AmazonSupport/AmazonSupport.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C5C0DB10BF820EA003594F8 /* libbz2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbz2.dylib; path = /usr/lib/libbz2.dylib; sourceTree = "<absolute>"; };
 		3C5C0DB30BF8213E003594F8 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
 		3C68250E0D622DEB00B4D485 /* Sandvox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sandvox.h; sourceTree = "<group>"; };
@@ -3959,14 +3944,6 @@
 			name = "URL Preview";
 			sourceTree = "<group>";
 		};
-		279EDCA913DDE8B40018EB82 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				279EDCAD13DDE8B40018EB82 /* AmazonSupport.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		27A6186E1123471900004FED /* Text Blocks */ = {
 			isa = PBXGroup;
 			children = (
@@ -5103,7 +5080,6 @@
 		3CA9FD410D63A0B400815310 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */,
 				3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */,
 				CEC0F93D10852CED002CE02E /* iMedia.xcodeproj */,
 				CED864E510AA435C002DF34F /* ObjectiveFlickr.xcodeproj */,
@@ -6467,7 +6443,6 @@
 				27E87740140C18890027A738 /* PBXTargetDependency */,
 				273FA59614209E9C0051E616 /* PBXTargetDependency */,
 				CED864B110AA41DC002DF34F /* PBXTargetDependency */,
-				27B4129A13DF7F7F004173E8 /* PBXTargetDependency */,
 				3C1F512711D576D00036B375 /* PBXTargetDependency */,
 			);
 			name = "Sandvox-ExecutableOnly";
@@ -6542,10 +6517,6 @@
 				{
 					ProductGroup = 2727572E1241468B0043C223 /* Products */;
 					ProjectRef = 3C4C6AA90D64136C00398BDA /* AmazonElement.xcodeproj */;
-				},
-				{
-					ProductGroup = 279EDCA913DDE8B40018EB82 /* Products */;
-					ProjectRef = 3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */;
 				},
 				{
 					ProductGroup = 3CBC719611F02EB800716937 /* Products */;
@@ -6691,13 +6662,6 @@
 			fileType = wrapper.cfbundle;
 			path = Tests.octest;
 			remoteRef = 273FA59314209E580051E616 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		279EDCAD13DDE8B40018EB82 /* AmazonSupport.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = AmazonSupport.framework;
-			remoteRef = 279EDCAC13DDE8B40018EB82 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		27BDA74410C5E410008C8199 /* ObjectiveFlickr.framework */ = {
@@ -8007,11 +7971,6 @@
 			isa = PBXTargetDependency;
 			name = MetaSandvox;
 			targetProxy = 274E827F0D627180004F89C2 /* PBXContainerItemProxy */;
-		};
-		27B4129A13DF7F7F004173E8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = AmazonSupport;
-			targetProxy = 27B4129913DF7F7F004173E8 /* PBXContainerItemProxy */;
 		};
 		27CFC649123E79C300BF018C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
