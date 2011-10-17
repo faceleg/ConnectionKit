@@ -8,7 +8,7 @@
 
 #import "AmazonListProduct.h"
 
-#import <AmazonSupport/AmazonSupport.h>
+#import "AmazonSupport.h"
 
 #import "AmazonItem+APExtensions.h"
 

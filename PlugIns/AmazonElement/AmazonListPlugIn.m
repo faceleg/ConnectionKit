@@ -12,7 +12,7 @@
 #import "AmazonListInspector.h"
 #import "NSURL+AmazonPagelet.h"
 
-#import <AmazonSupport/AmazonSupport.h>
+#import "AmazonSupport.h"
 #import "KSIsEqualValueTransformer.h"
 
 
