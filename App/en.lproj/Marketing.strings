@@ -1,0 +1,70 @@
+/* 
+   Marketing.strings
+   Sandvox
+
+   Created by Dan Wood on 10/17/11.
+   Copyright 2011 Karelia Software. All rights reserved.
+   
+   These strings are not actually included in the final release versions of Sandvox.
+   
+ */
+
+"Mac App Store Caption 1" = "Build the website you want, choosing from dozens of designs";
+"Mac App Store Caption 2" = "Create conent with ease. Point and click. Type. Drag and Drop.";
+"Mac App Store Caption 3" = "Compose your website using a wide variety of objects";
+"Mac App Store Caption 4" = "Showcase your photos with slideshow galleries";
+"Mac App Store Caption 5" = "View your website on a wide variety of browsers";
+
+/* Keywords, separate by commas. NO MORE THAN 100 CHARACTERS. Try to match these words as much as possible. Note that a stem like 'make' will match a longer word like 'maker' but 'create' doesn't match 'creator' nor does 'galleries' match 'gallery' in English, so that's why we have both here in English. */ 
+"Mac App Store Keywords" =
+"website,page,site,builder,create,creator,maker,blog,gallery,galleries,design,html,SEO,template";
+
+/* This is the multi-line description for the Mac App store. Try to keep special characters like stars, and paragraph breaks, matching. */
+"Mac App Store Description" =
+"Sandvox 2 empowers anybody, even non-experts, to create a website with a contemporary look and modern features, in minutes.
+
+Only Sandvox — winner of an Apple Design Award — features a user experience that lets you combine and spotlight your own drag-and-drop content while automatically creating a modern, feature-rich, standards-compliant website as you go. See your website come alive before your eyes! When ready, just upload your site to your favorite host directly from within Sandvox. It’s that easy.
+
+“Those who want to quickly create template-based sites packed with features, should give Sandvox 2 a look.  ★ ★ ★ ★” — Macworld UK
+
+TOP FEATURES 
+
+• Express yourself by choosing from among dozens of stylish site designs
+• Over 20 different, customizable content objects help you build the site of your dreams
+• Easily add text, images, or movies 
+• Super easy blogging, with built-in archiving
+• Instantly add connections to Facebook, Twitter and more
+• Showcase your images with Photo Grids and lightbox-style Galleries 
+• Syndicate your blog or podcast and offer easy-to-grab RSS feeds 
+• Incorporate content from other websites such as weather and news headlines 
+• Show selected products from Amazon.com
+• Feature YouTube videos
+• Include a Contact Form for feedback
+• Automatically generate a sitemap
+• Comment support via Disqus, IntenseDebate and Facebook Comments 
+• Insert custom features with Raw HTML 
+
+“ ★ ★ ★ ★ ” — MacNN · “ ❤ ❤ ❤ ❤ ½ ” — SVMMac 
+
+EVEN MORE POWER 
+
+• iMedia Browser — Effortlessly browse your Pictures folder, iPhoto, Aperture, Lightroom, and Flickr. Grab movies from iPhoto and iTunes. Build a podcast. The iMedia Browser puts your resources at your fingertips. 
+
+• Raw HTML Objects — Directly place HTML, JavaScript, PHP, or other inserted web code, such as embed codes provided by other sites. 
+
+• Advanced Customization — Code injection, custom CSS, built-in jQuery support and a brand new Cocoa plug-in API are available to experienced users and offer even more ways to customize your site.
+
+• Publishing Options — Publish via FTP, SFTP, WebDAV
+
+• Search Engine Optimization — SEO-friendly site structure plus integration with Google Webmaster Tools and Google Analytics 
+
+For more information or to watch a video introduction, please visit our website!
+
+SUPPORT 
+
+We’re always here to help and we’d love to hear from you! If you have feedback or questions, you can reach us by email at support@karelia.com or visit our community forum at karelia.com/forum.
+
+Read our FAQ at karelia.com/faq.
+
+Familiar with iWeb? See our iWeb Transition Guide at karelia.com/iweb.
+";

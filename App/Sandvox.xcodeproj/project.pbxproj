@@ -57,6 +57,7 @@
 				3C9B66E80BFA95DD007A4871 /* Script - Add Spotlight Importer */,
 				CE9D3ED20DAAB8450025717A /* Script - Remove Unsupported Languages */,
 				CEFD3EFC12E9FA0100D3A6CD /* Script - Internationalize XIBs */,
+				CE241C9F144CC7440025C8D6 /* Script - Remove Marketing Strings */,
 				3CC092BA134BC490007E2390 /* Script - Code Sign .app */,
 			);
 			dependencies = (
@@ -1051,6 +1052,7 @@
 		CE23D84D11E69AD800E43369 /* SVOffscreenWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2E80E30DB534930034E7B8 /* SVOffscreenWebViewController.m */; };
 		CE23D96C11E6E65900E43369 /* KSPlainClipTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = CE23D96A11E6E65900E43369 /* KSPlainClipTextView.h */; };
 		CE23D96D11E6E65900E43369 /* KSPlainClipTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE23D96B11E6E65900E43369 /* KSPlainClipTextView.m */; };
+		CE241C52144CBC260025C8D6 /* Marketing.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE241C50144CBC260025C8D6 /* Marketing.strings */; };
 		CE250ADC08204B120061BE9B /* imageReplacementHeader.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE250ADB08204B120061BE9B /* imageReplacementHeader.txt */; };
 		CE26237F0A360332009467ED /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE26237E0A360332009467ED /* QTKit.framework */; };
 		CE26FA1408C4D9C500C9604B /* design-time.css in Resources */ = {isa = PBXBuildFile; fileRef = CE26FA1308C4D9C500C9604B /* design-time.css */; };
@@ -2839,6 +2841,10 @@
 		CE23C54511E6829D00E43369 /* Designs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Designs; path = ../Designs; sourceTree = SOURCE_ROOT; };
 		CE23D96A11E6E65900E43369 /* KSPlainClipTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSPlainClipTextView.h; sourceTree = "<group>"; };
 		CE23D96B11E6E65900E43369 /* KSPlainClipTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSPlainClipTextView.m; sourceTree = "<group>"; };
+		CE241C51144CBC260025C8D6 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Marketing.strings; sourceTree = "<group>"; };
+		CE241C55144CC2110025C8D6 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Marketing.strings; sourceTree = "<group>"; };
+		CE241C56144CC2130025C8D6 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Marketing.strings; sourceTree = "<group>"; };
+		CE241C57144CC2150025C8D6 /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/Marketing.strings; sourceTree = "<group>"; };
 		CE250ADB08204B120061BE9B /* imageReplacementHeader.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = imageReplacementHeader.txt; sourceTree = "<group>"; };
 		CE26237E0A360332009467ED /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		CE26FA1308C4D9C500C9604B /* design-time.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "design-time.css"; sourceTree = "<group>"; };
@@ -5849,6 +5855,7 @@
 			isa = PBXGroup;
 			children = (
 				3C1F511111D5757F0036B375 /* xibLocalizationPostprocessor.m */,
+				CE241C50144CBC260025C8D6 /* Marketing.strings */,
 			);
 			name = Localization;
 			sourceTree = "<group>";
@@ -7186,6 +7193,7 @@
 				CE0142CA13E9D9D300BBA6F1 /* indent_left.tiff in Resources */,
 				CE0142CB13E9D9D300BBA6F1 /* indent_right.tiff in Resources */,
 				27DD4043142C916E00686D96 /* Login.xib in Resources */,
+				CE241C52144CBC260025C8D6 /* Marketing.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7459,6 +7467,20 @@
 			shellPath = /bin/bash;
 			shellScript = "\n### sign complete build\n\nPATHTOSIGN=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/\n\n# -s <identity> signs path\n# -f means force to re-sign even if already signed\n# -vv means verbose\n\n# sign .app\ncodesign -s \"3rd Party Mac Developer Application: Karelia Software\" -fvv \"${PATHTOSIGN}\"\n\n# display info about app\ncodesign -d \"${PATHTOSIGN}\"\n\n";
 			showEnvVarsInLog = 0;
+		};
+		CE241C9F144CC7440025C8D6 /* Script - Remove Marketing Strings */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Script - Remove Marketing Strings";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/zsh;
+			shellScript = "                                                                                                                                                             \n\nif [[ $PRODUCT_VARIANT == 'RELEASE' ]]; then\n\techo \"Removing marketing strings for release build\"\n\tfind \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/\" -name 'Marketing.strings'\n\tfind \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/\" -name 'Marketing.strings' -delete\nfi;\n\n";
 		};
 		CE9D3ED20DAAB8450025717A /* Script - Remove Unsupported Languages */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -8247,6 +8269,17 @@
 				3CACE2CC127FC21100983DF2 /* en */,
 			);
 			name = SVGoogleSheet.xib;
+			sourceTree = "<group>";
+		};
+		CE241C50144CBC260025C8D6 /* Marketing.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE241C51144CBC260025C8D6 /* en */,
+				CE241C55144CC2110025C8D6 /* fr */,
+				CE241C56144CC2130025C8D6 /* de */,
+				CE241C57144CC2150025C8D6 /* pt_BR */,
+			);
+			name = Marketing.strings;
 			sourceTree = "<group>";
 		};
 		CE44C86B130216C600015A24 /* KSBugReporterViews.strings */ = {
