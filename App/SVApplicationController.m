@@ -72,7 +72,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "SVPageTemplate.h"
 #import "KSURLUtilities.h"
 
-#import <AmazonSupport/AmazonSupport.h>
 #import <Connection/Connection.h>
 #import <ExceptionHandling/NSExceptionHandler.h>
 #import <iMedia/iMedia.h>
@@ -451,13 +450,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		[NSNumber numberWithBool:NO], @"deletePagesWhenPublishing",
 		
 		@"NSHost", @"hostResolver",
-		
-		
-		// Amazon
-		[AmazonECSOperation associateKeyDefaults], @"AmazonAssociateIDs",
-		[NSNumber numberWithBool:NO], @"DebugAmazonListService",
-		
-		
 		
 		
 		/// Whether or not to include original images (instead of images as found on the pages) in image RSS feeds.
