@@ -17,7 +17,7 @@
 
 /* Keywords, separate by commas. NO MORE THAN 100 CHARACTERS. Try to match these words as much as possible. Note that a stem like 'make' will match a longer word like 'maker' but 'create' doesn't match 'creator' nor does 'galleries' match 'gallery' in English, so that's why we have both here in English. */ 
 "Mac App Store Keywords" =
-"website,page,site,builder,create,creator,maker,blog,gallery,galleries,design,html,SEO,template";
+"website,page,site,builder,create,creator,maker,blog,gallery,galleries,design,html,SEO,layout,CSS";
 
 /* This is the multi-line description for the Mac App store. Try to keep special characters like stars, and paragraph breaks, matching. */
 "Mac App Store Description" =
