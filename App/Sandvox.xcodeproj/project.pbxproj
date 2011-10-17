@@ -633,7 +633,6 @@
 		3C39822D0D2C3EC800432A0C /* SVPagesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C39822B0D2C3EC800432A0C /* SVPagesController.m */; };
 		3C3F54540D6258AA004885E7 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3F54530D6258AA004885E7 /* Sparkle.framework */; };
 		3C3F547D0D625919004885E7 /* Connection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3F547C0D625919004885E7 /* Connection.framework */; };
-		3C3F54A20D625983004885E7 /* AmazonSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3F54A10D625983004885E7 /* AmazonSupport.framework */; };
 		3C4328CA07F7D7F600DD0D92 /* KTHostSetupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D7B07DFC30800DE4994 /* KTHostSetupController.m */; };
 		3C4328E207F7DCA600DD0D92 /* KTDocWindowController+Toolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D3C07DFC0F000DE4994 /* KTDocWindowController+Toolbar.m */; };
 		3C48038D13FB737A00E9F309 /* libssh2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C48038C13FB737A00E9F309 /* libssh2.dylib */; };
@@ -713,7 +712,6 @@
 		3CC9AC860D1B64B10016A60E /* KTDesign+ScaledImages.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CC9AC850D1B64B10016A60E /* KTDesign+ScaledImages.m */; };
 		3CD6B0EF0BFA380600B9287E /* ThirdParty.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CD6B0EE0BFA380600B9287E /* ThirdParty.h */; settings = {ATTRIBUTES = (); }; };
 		3CE2CA4C0D6D51F500B2D56B /* NSString+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682BB60D62348400B4D485 /* NSString+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
-		3CE2CA510D6D54B300B2D56B /* AmazonSupport.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3F54A10D625983004885E7 /* AmazonSupport.framework */; };
 		3CE2CA6B0D6D54CD00B2D56B /* Connection.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3F547C0D625919004885E7 /* Connection.framework */; };
 		3CE79DB90D6261B300FCEE6D /* NSOutlineView+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CE79DB70D6261B300FCEE6D /* NSOutlineView+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
 		3CE79DBA0D6261B300FCEE6D /* NSOutlineView+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE79DB80D6261B300FCEE6D /* NSOutlineView+KTExtensions.m */; };
@@ -1311,20 +1309,6 @@
 			remoteGlobalIDString = 8D57630D048677EA00EA77CD;
 			remoteInfo = MetaSandvox;
 		};
-		279EDCAC13DDE8B40018EB82 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
-			remoteInfo = AmazonSupport;
-		};
-		27B4129913DF7F7F004173E8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
-			remoteInfo = AmazonSupport;
-		};
 		27BDA74310C5E410008C8199 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CED864E510AA435C002DF34F /* ObjectiveFlickr.xcodeproj */;
@@ -1757,7 +1741,6 @@
 				3CFCE7C4142A84F40096CB15 /* DAVKit.framework in Copy Frameworks */,
 				CED8650910AA45AF002DF34F /* iMedia.framework in Copy Frameworks */,
 				CE22713C12A086B6002E7795 /* ObjectiveFlickr.framework in Copy Frameworks */,
-				3CE2CA510D6D54B300B2D56B /* AmazonSupport.framework in Copy Frameworks */,
 				3CE2CA6B0D6D54CD00B2D56B /* Connection.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
@@ -2399,7 +2382,6 @@
 		3C3F147C09D521AE00C01EED /* MetaMarvel.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MetaMarvel.xcodeproj; path = ../Code/MetaMarvel/MetaMarvel.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C3F54530D6258AA004885E7 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = ../Code/Shared/ThirdParty/Sparkle/Sparkle.framework; sourceTree = SOURCE_ROOT; };
 		3C3F547C0D625919004885E7 /* Connection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Connection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3C3F54A10D625983004885E7 /* AmazonSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AmazonSupport.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C42DDA60D64C8B3004F35FD /* SiteMapElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SiteMapElement.xcodeproj; path = ../PlugIns/SiteMapElement/SiteMapElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C42DE160D64CCC7004F35FD /* RSSBadgeElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RSSBadgeElement.xcodeproj; path = ../PlugIns/RSSBadgeElement/RSSBadgeElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C42E2990D64D253004F35FD /* PageCounterElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PageCounterElement.xcodeproj; path = ../PlugIns/PageCounterElement/PageCounterElement.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -2422,7 +2404,6 @@
 		3C5A71440BF7ADE100776464 /* NSManagedObjectModel+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectModel+KTExtensions.m"; sourceTree = "<group>"; };
 		3C5A714F0BF7ADE100776464 /* NSPersistentStoreCoordinator+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSPersistentStoreCoordinator+KTExtensions.h"; sourceTree = "<group>"; };
 		3C5A71500BF7ADE100776464 /* NSPersistentStoreCoordinator+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSPersistentStoreCoordinator+KTExtensions.m"; sourceTree = "<group>"; };
-		3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AmazonSupport.xcodeproj; path = ../Code/Shared/Code/AmazonSupport/AmazonSupport.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C5C0DB10BF820EA003594F8 /* libbz2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbz2.dylib; path = /usr/lib/libbz2.dylib; sourceTree = "<absolute>"; };
 		3C5C0DB30BF8213E003594F8 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
 		3C68250E0D622DEB00B4D485 /* Sandvox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sandvox.h; sourceTree = "<group>"; };
@@ -3235,7 +3216,6 @@
 				3C5C0DB20BF820EA003594F8 /* libbz2.dylib in Frameworks */,
 				3C3F54540D6258AA004885E7 /* Sparkle.framework in Frameworks */,
 				3C3F547D0D625919004885E7 /* Connection.framework in Frameworks */,
-				3C3F54A20D625983004885E7 /* AmazonSupport.framework in Frameworks */,
 				3C0B1D6910479ABB002EE098 /* BWToolkitFramework.framework in Frameworks */,
 				CEB721BC108FCEA500511E74 /* QuickLook.framework in Frameworks */,
 				CEBEB32D10AA7B07006E7D8A /* iMedia.framework in Frameworks */,
@@ -3965,14 +3945,6 @@
 			name = "URL Preview";
 			sourceTree = "<group>";
 		};
-		279EDCA913DDE8B40018EB82 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				279EDCAD13DDE8B40018EB82 /* AmazonSupport.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		27A6186E1123471900004FED /* Text Blocks */ = {
 			isa = PBXGroup;
 			children = (
@@ -4455,7 +4427,6 @@
 			isa = PBXGroup;
 			children = (
 				CEBEB32C10AA7B07006E7D8A /* iMedia.framework */,
-				3C3F54A10D625983004885E7 /* AmazonSupport.framework */,
 				3CED77980AEEFBDE00D0538C /* Cocoa Frameworks */,
 				1058C7A6FEA54F5311CA2CBB /* System Frameworks */,
 				3C0C021E0905883E00CFFE3E /* Testing Frameworks */,
@@ -5109,7 +5080,6 @@
 		3CA9FD410D63A0B400815310 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */,
 				3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */,
 				CEC0F93D10852CED002CE02E /* iMedia.xcodeproj */,
 				CED864E510AA435C002DF34F /* ObjectiveFlickr.xcodeproj */,
@@ -6474,7 +6444,6 @@
 				27E87740140C18890027A738 /* PBXTargetDependency */,
 				273FA59614209E9C0051E616 /* PBXTargetDependency */,
 				CED864B110AA41DC002DF34F /* PBXTargetDependency */,
-				27B4129A13DF7F7F004173E8 /* PBXTargetDependency */,
 				3C1F512711D576D00036B375 /* PBXTargetDependency */,
 			);
 			name = "Sandvox-ExecutableOnly";
@@ -6549,10 +6518,6 @@
 				{
 					ProductGroup = 2727572E1241468B0043C223 /* Products */;
 					ProjectRef = 3C4C6AA90D64136C00398BDA /* AmazonElement.xcodeproj */;
-				},
-				{
-					ProductGroup = 279EDCA913DDE8B40018EB82 /* Products */;
-					ProjectRef = 3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */;
 				},
 				{
 					ProductGroup = 3CBC719611F02EB800716937 /* Products */;
@@ -6698,13 +6663,6 @@
 			fileType = wrapper.cfbundle;
 			path = Tests.octest;
 			remoteRef = 273FA59314209E580051E616 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		279EDCAD13DDE8B40018EB82 /* AmazonSupport.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = AmazonSupport.framework;
-			remoteRef = 279EDCAC13DDE8B40018EB82 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		27BDA74410C5E410008C8199 /* ObjectiveFlickr.framework */ = {
@@ -7360,7 +7318,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/bash;
-			shellScript = "\necho \"Removing Private Headers from frameworks ...\"\n\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/Versions/A/PrivateHeaders\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/Versions/A/PrivateHeaders\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/Versions/A/PrivateHeaders\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/Versions/A/PrivateHeaders\"\n\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/PrivateHeaders\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/PrivateHeaders\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/PrivateHeaders\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/PrivateHeaders\"\n\n\necho \"Removing Headers from frameworks ...\"\n\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/Versions/A/Headers\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/BWToolkitFramework.framework/Versions/A/Headers\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Versions/A/Headers\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/Versions/A/Headers\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/Versions/A/Headers\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/Versions/A/Headers\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/Growl.framework/Versions/A/Headers\"\n\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/AmazonSupport.framework/Headers\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/BWToolkitFramework.framework/Headers\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Headers\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/Headers\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/Headers\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/Headers\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/Growl.framework/Headers\"\n\n\necho BUILT_PRODUCTS_DIR ${BUILT_PRODUCTS_DIR}\n";
+			shellScript = "\necho \"Removing Private Headers from frameworks ...\"\n\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/Versions/A/PrivateHeaders\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/Versions/A/PrivateHeaders\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/Versions/A/PrivateHeaders\"\n\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/PrivateHeaders\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/PrivateHeaders\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/PrivateHeaders\"\n\n\necho \"Removing Headers from frameworks ...\"\n\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/BWToolkitFramework.framework/Versions/A/Headers\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Versions/A/Headers\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/Versions/A/Headers\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/Versions/A/Headers\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/Versions/A/Headers\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/Growl.framework/Versions/A/Headers\"\n\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/BWToolkitFramework.framework/Headers\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/Connection.framework/Headers\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/iMedia.framework/Headers\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/JSTalk.framework/Headers\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/ObjectiveFlickr.framework/Headers\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/Sandvox.app/Contents/Frameworks/Growl.framework/Headers\"\n\n\necho BUILT_PRODUCTS_DIR ${BUILT_PRODUCTS_DIR}\n";
 			showEnvVarsInLog = 0;
 		};
 		3C9B66B20BFA8423007A4871 /* Script - Remove PrivateHeaders */ = {
@@ -8029,11 +7987,6 @@
 			isa = PBXTargetDependency;
 			name = MetaSandvox;
 			targetProxy = 274E827F0D627180004F89C2 /* PBXContainerItemProxy */;
-		};
-		27B4129A13DF7F7F004173E8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = AmazonSupport;
-			targetProxy = 27B4129913DF7F7F004173E8 /* PBXContainerItemProxy */;
 		};
 		27CFC649123E79C300BF018C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
