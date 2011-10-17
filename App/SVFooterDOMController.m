@@ -20,7 +20,7 @@
     
     if ([[[master extensibleProperties] valueForKey:@"migrateRawHTMLOnNextEdit"] boolValue])
     {
-        SVMigrationHTMLWriterDOMAdaptor *result = [[SVMigrationHTMLWriterDOMAdaptor alloc] initWithOutputWriter:stringWriter];
+        SVMigrationHTMLWriterDOMAdaptor *result = [[SVMigrationHTMLWriterDOMAdaptor alloc] initWithOutputStringWriter:stringWriter];
         
         [result setTextDOMController:self];
         
