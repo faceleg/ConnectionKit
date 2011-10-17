@@ -40,6 +40,7 @@
     // Bindings don't automatically unbind themselves; have to do it ourself
     [self unbind:NSValueBinding];
     [self unbind:NSAlignmentBinding];
+    [self unbind:@"textBaseWritingDirection"];
     
     [_placeholder release];
     [_uneditedValue release];
@@ -63,7 +64,7 @@
     [_HTMLString release]; _HTMLString = html;
     
     // Update DOM to match
-    if (updateDOM && [self textHTMLElement]) [self setNeedsUpdate];
+    if (updateDOM && [self isTextHTMLElementLoaded]) [self setNeedsUpdate];
 }
 
 - (NSString *)string
@@ -77,42 +78,22 @@
     [[self innerTextHTMLElement] setInnerText:string];
 }
 
-#pragma mark Web Editor Item
-
-/*      turned off for #75052
-- (BOOL)isSelectable
-{
-    BOOL result = ([self representedObject] && [[self selectableAncestors] count] == 0);
-    
-    if ([self textBlock] && [[self textBlock] hyperlinkString]) result = NO;
-    
-    return result;
-}*/
-
-// TODO: This logic is the same as aux text
-- (BOOL)isSelectable;
-{
-    return ([self representedObject] && [self enclosingGraphicDOMController]);
-}
-
 #pragma mark Updating
 
 - (void)updateStyle
 {
     // Regenerate style
-      SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc]
+    SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc]
                                        initWithOutputWriter:nil
                                        inheritFromContext:[self HTMLContext]];
     [[self textBlock] buildGraphicalText:context];
     
     
     // Copy across dependencies. #117522
-    for (KSObjectKeyPathPair *aDependency in [[context rootDOMController] dependencies])
-    {
-        [self addDependency:aDependency];
-    }
+    [[self mutableSetValueForKey:@"dependencies"] unionSet:[[context rootElement] dependencies]];
+
     
-    NSString *style = [[[context currentElementInfo] attributesAsDictionary] objectForKey:@"style"];
+    NSString *style = [[[context currentAttributes] attributesAsDictionary] objectForKey:@"style"];
     [[[self textHTMLElement] style] setCssText:style];
     [self setAlignment:[self alignment]];   // repair alignemnt #113613
     
@@ -172,7 +153,7 @@
     NSString *text = [self string];
     if (![text length] || [text isEqualToString:@"\n"])
     {
-        [self delete];
+        [self deleteForward:self];
     }
     
     // Restore graphical text
@@ -197,14 +178,14 @@
     }
 }
 
-#pragma mark Alignment
+#pragma mark Alignment & Writing Direction
 
 @synthesize alignment = _alignment;
 - (void)setAlignment:(NSTextAlignment)alignment;
 {
     _alignment = alignment;
     
-    if ([self isHTMLElementCreated])
+    if ([self isNodeLoaded])
     {
         DOMCSSStyleDeclaration *style = [[self textHTMLElement] style];
         
@@ -229,10 +210,47 @@
     }
 }
 
-- (IBAction)alignCenter:(id)sender; { [[self representedObject] setAlignment:NSCenterTextAlignment]; }
-- (IBAction)alignJustified:(id)sender; { [[self representedObject] setAlignment:NSJustifiedTextAlignment]; }
-- (IBAction)alignLeft:(id)sender; { [[self representedObject] setAlignment:NSLeftTextAlignment]; }
-- (IBAction)alignRight:(id)sender; { [[self representedObject] setAlignment:NSRightTextAlignment]; }
+- (void)alignCenter:(id)sender; { [[self representedObject] setAlignment:NSCenterTextAlignment]; }
+- (void)alignJustified:(id)sender; { [[self representedObject] setAlignment:NSJustifiedTextAlignment]; }
+- (void)alignLeft:(id)sender; { [[self representedObject] setAlignment:NSLeftTextAlignment]; }
+- (void)alignRight:(id)sender; { [[self representedObject] setAlignment:NSRightTextAlignment]; }
+
+@synthesize textBaseWritingDirection = _textBaseWritingDirection;
+- (void)setTextBaseWritingDirection:(NSWritingDirection)direction;
+{
+    _textBaseWritingDirection = direction;
+    
+    if ([self isNodeLoaded])
+    {
+        DOMCSSStyleDeclaration *style = [[self textHTMLElement] style];
+        
+        switch (direction)
+        {
+            case NSWritingDirectionLeftToRight:
+                [style setDirection:@"ltr"];
+                break;
+            case NSWritingDirectionRightToLeft:
+                [style setDirection:@"rtl"];
+                break;
+            default:
+                [style setDirection:nil];
+                break;
+        }
+    }
+}
+
+- (void)makeBaseWritingDirectionNatural:(id)sender;
+{
+    [[self representedObject] setTextBaseWritingDirection:NSWritingDirectionNatural];
+}
+- (void)makeBaseWritingDirectionLeftToRight:(id)sender;
+{
+    [[self representedObject] setTextBaseWritingDirection:NSWritingDirectionLeftToRight];
+}
+- (void)makeBaseWritingDirectionRightToLeft:(id)sender;
+{
+    [[self representedObject] setTextBaseWritingDirection:NSWritingDirectionRightToLeft];
+}
 
 - (BOOL)validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)anItem;
 {
@@ -247,7 +265,12 @@
     {
         result = [[self representedObject] respondsToSelector:@selector(setAlignment:)];
     }
-    
+    else if (action == @selector(makeBaseWritingDirectionNatural:) ||
+             action == @selector(makeBaseWritingDirectionLeftToRight:) ||
+             action == @selector(makeBaseWritingDirectionRightToLeft:))
+    {
+        result = [[self representedObject] respondsToSelector:@selector(setTextBaseWritingDirection:)];
+    }
     return result;
 }
 
@@ -310,15 +333,15 @@
     [_placeholder release]; _placeholder = placeholder;
     
     // Display new placeholder if appropriate
-    if ([[self HTMLString] length] == 0)
+    if ([[self HTMLString] length] == 0 && [self isTextHTMLElementLoaded])
     {
-        [[self textHTMLElement] setInnerText:placeholder];
+        [[self textHTMLElement] setInnerHTML:placeholder];  // placeholder is HTML
     }
 }
 
-- (void)setHTMLElement:(DOMHTMLElement *)element
+- (void)setNode:(DOMHTMLElement *)element
 {
-    [super setHTMLElement:element];
+    [super setNode:element];
     [self setTextHTMLElement:element];
 }
 
@@ -435,12 +458,18 @@
         {
             [self bind:NSAlignmentBinding toObject:object withKeyPath:@"alignment" options:nil];
         }
+        
+        if (![self infoForBinding:@"textBaseWritingDirection"])
+        {
+            [self bind:@"textBaseWritingDirection" toObject:object withKeyPath:@"textBaseWritingDirection" options:nil];
+        }
     }
 }
 
 - (void)stopObservingDependencies;
 {
     [self unbind:NSAlignmentBinding];
+    [self unbind:@"textBaseWritingDirection"];
     [self unbind:NSValueBinding];
     
     [super stopObservingDependencies];
@@ -450,7 +479,7 @@
 
 - (NSString *)blurb
 {
-    if ([self isHTMLElementCreated]) return [[self textHTMLElement] innerText];
+    if ([self isNodeLoaded]) return [[self textHTMLElement] innerText];
     return [super blurb];
 }
 
@@ -465,9 +494,10 @@
 
 @implementation SVTitleBox (SVDOMController)
 
-- (SVTextDOMController *)newTextDOMController;
+- (SVTextDOMController *)newTextDOMControllerWithIdName:(NSString *)elementID ancestorNode:(DOMNode *)node;
 {
-    SVTextFieldDOMController *result = [[SVTextFieldDOMController alloc] initWithRepresentedObject:self];
+    SVTextFieldDOMController *result = [[SVTextFieldDOMController alloc] initWithIdName:elementID ancestorNode:node];
+    [result setRepresentedObject:self];
     [result setRichText:YES];
     [result setFieldEditor:YES];
     
@@ -477,7 +507,10 @@
      withKeyPath:@"textHTMLString"
          options:nil];
     
+    [result setPlaceholderHTMLString:NSLocalizedString(@"Title", "placeholder")];   // do after binding, avoids accidental overwrite
+    
     [result bind:NSAlignmentBinding toObject:self withKeyPath:@"alignment" options:nil];
+    [result bind:@"textBaseWritingDirection" toObject:self withKeyPath:@"textBaseWritingDirection" options:nil];
     
     
     return result;

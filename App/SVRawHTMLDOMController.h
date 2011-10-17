@@ -6,7 +6,7 @@
 //  Copyright 2011 Karelia Software. All rights reserved.
 //
 
-#import "SVGraphicDOMController.h"
+#import "SVGraphicContainerDOMController.h"
 #import "SVRawHTMLGraphic.h"
 
 

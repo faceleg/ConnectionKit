@@ -42,6 +42,7 @@
 
 @implementation PhotoGridIndexPlugIn
 
+@synthesize hideTitles = _hideTitles;
 
 
 
@@ -51,9 +52,18 @@
 {
     [super awakeFromNew];
 	self.useColorBox = NO;		// Initially don't turn this on
+	self.hideTitles = NO;
 
     self.enableMaxItems = NO;
     self.maxItems = 10;
+}
+
++ (NSArray *)plugInKeys
+{ 
+    NSArray *plugInKeys = [NSArray arrayWithObjects:
+						   @"hideTitles",
+                           nil];    
+    return [[super plugInKeys] arrayByAddingObjectsFromArray:plugInKeys];
 }
 
 
@@ -61,6 +71,8 @@
 
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
+	[context addDependencyForKeyPath:@"hideTitles"				ofObject:self];
+
     // Extra CSS to handle caption functionality new to 2.0
     [context addCSSString:@".photogrid-index-bottom { clear:left; }"];
     
@@ -107,7 +119,7 @@
 		NSURL *URL = [context URLForImageRepresentationOfPage:iteratedPage
 														width:2000
 													   height:1200		// plenty large, but not overwhelming, good for a monitor
-													  options:SVImageScaleAspectFit];
+													  options:SVImageScaleAspectFit|SVImageScaleUpAvoid];
 		if (URL)
 		{
 			NSString *href = [context relativeStringFromURL:URL];
@@ -117,25 +129,51 @@
 	}
 }
 
+- (void)writeThumbnailOfPage:(id <SVPage>)page toContext:(id <SVPlugInContext>)context
+{
+    if (page)
+    {
+        [context startAnchorElementWithPage:page
+                                 attributes:[NSDictionary dictionaryWithObject:@"imageLink" forKey:@"class"]];
+    }
+    
+    // Figure out the thumbnail size from private API
+    id design = [(NSObject *)context valueForKeyPath:@"page.master.design"];
+    NSDictionary *properties = [design performSelector:@selector(imageScalingPropertiesForUse:) withObject:@"thumbnailImage"];
+    NSValue *sizeValue = [properties valueForKeyPath:@"scalingBehavior.size"];
+    NSSize size = (sizeValue ? [sizeValue sizeValue] : NSMakeSize(128, 128));
+    
+    [context writeImageRepresentationOfPage:page
+                                      width:size.width
+                                     height:size.height
+                                 attributes:nil
+                                    options:SVImageScaleAspectFit];
+    
+    if (page) [context endElement];
+}
+
 - (void)writePlaceholderHTML:(id <SVPlugInContext>)context;
 {
     if ( self.indexedCollection )
     {        
         // write thumbnail <DIV> of design's example image
         [context startElement:@"div" className:@"gridItem"];
-        [context writeImageRepresentationOfPage:nil
-                                width:128
-                               height:128
-                           attributes:nil
-                              options:(SVImageScaleAspectFit | (1 << 5)/*SVPageImageRepresentationLink*/)];
-        [context startElement:@"h3"];
-        if ([context page]) [context startAnchorElementWithPage:[context page]];
-        [context startElement:@"span" attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
-        [context writeCharacters:SVLocalizedString(@"Example Photo", "placeholder image name")];
-        [context endElement]; // </span>
-        if ([context page]) [context endElement]; // </a>
-        [context endElement]; // </h3>
-        [context endElement]; // </div>
+        {{
+            [self writeThumbnailOfPage:nil toContext:context];
+            
+            [context startElement:@"h3"];
+            {{
+                if ([context page]) [context startAnchorElementWithPage:[context page]];
+                [context startElement:@"span" attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
+                {{
+                    [context writeCharacters:SVLocalizedString(@"Example Photo", "placeholder image name")];
+                }}
+                [context endElement]; // </span>
+                if ([context page]) [context endElement]; // </a>
+            }}
+            [context endElement];
+        }}
+        [context endElement];
         
         // write (localized) placeholder image
         NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"placeholder" ofType:@"png"];
@@ -176,14 +214,8 @@ height="[[mediainfo info:height media:aPage.thumbnail sizeToFit:thumbnailImageSi
 
 - (void)writeThumbnailImageOfIteratedPage
 {
-    id<SVPlugInContext> context = [self currentContext]; 
-    id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
-    
-    [context writeImageRepresentationOfPage:iteratedPage
-                            width:128
-                           height:128
-                       attributes:nil
-                          options:(SVImageScaleAspectFit | (1 << 5)/*SVPageImageRepresentationLink*/)];
+    id<SVPlugInContext> context = [self currentContext];    
+    [self writeThumbnailOfPage:[context objectForCurrentTemplateIteration] toContext:context];
 }
 
 
@@ -194,19 +226,22 @@ height="[[mediainfo info:height media:aPage.thumbnail sizeToFit:thumbnailImageSi
 
 - (void)writeTitleOfIteratedPage
 {
-    id<SVPlugInContext> context = [self currentContext]; 
-    id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
-	
-	if ([iteratedPage showsTitle])		// Do not show title if it is hidden!
+	if (!self.hideTitles)
 	{
-        [context startElement:@"h3"];
-        [context startAnchorElementWithPage:iteratedPage];
-		[context writeElement:@"span"
-			  withTitleOfPage:iteratedPage
-				  asPlainText:YES 
-				   attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
-        [context endElement]; // </a>
-        [context endElement]; // </h3>
+		id<SVPlugInContext> context = [self currentContext]; 
+		id<SVPage> iteratedPage = [context objectForCurrentTemplateIteration];
+		
+		if ([iteratedPage showsTitle])		// Do not show title if it is hidden!
+		{
+			[context startElement:@"h3"];
+			[context startAnchorElementWithPage:iteratedPage];
+			[context writeElement:@"span"
+				  withTitleOfPage:iteratedPage
+					  asPlainText:YES 
+					   attributes:[NSDictionary dictionaryWithObject:@"in" forKey:@"class"]];
+			[context endElement]; // </a>
+			[context endElement]; // </h3>
+		}
 	}
 }
 

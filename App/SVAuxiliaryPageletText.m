@@ -28,7 +28,7 @@
 
 #pragma mark HTML
 
-- (void)writeBody:(SVHTMLContext *)context;
+- (void)writeHTML:(SVHTMLContext *)context;
 {
     SVHTMLTextBlock *textBlock = [[SVHTMLTextBlock alloc] init];
     [textBlock setHTMLSourceObject:[self pagelet]];
@@ -58,6 +58,7 @@
     [self setWidth:width];
 }
 
+- (NSNumber *)height; { return nil; }
 - (NSNumber *)contentHeight; { return NSNotApplicableMarker; }
 - (void)setContentHeight:(NSNumber *)height; { }
 

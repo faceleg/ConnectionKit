@@ -44,9 +44,10 @@
 
 @implementation SVFooter
 
-- (SVTextDOMController *)newTextDOMController;
+- (SVTextDOMController *)newTextDOMControllerWithIdName:(NSString *)elementID ancestorNode:(DOMNode *)node;
 {
-    SVTextDOMController *result = [[SVFooterDOMController alloc] initWithRepresentedObject:self];
+    SVTextDOMController *result = [[SVFooterDOMController alloc] initWithIdName:elementID ancestorNode:node textStorage:self];
+    [result setRepresentedObject:self];
     [result setRichText:YES];
     [result setFieldEditor:YES];
     [(id)result setImportsGraphics:YES];

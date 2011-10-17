@@ -94,6 +94,8 @@
 
 - (SVLink *)link; { return NSNotApplicableMarker; }
 
+- (NSSet *)pages { return [self valueForKeyPath:@"master.pages"]; }
+
 #pragma mark Metrics
 
 - (CGFloat)maxWidthOnPage:(KTPage *)page;
@@ -116,10 +118,10 @@
 
 - (BOOL)shouldWriteHTMLInline; { return YES; }  // we're not a pagelet
 
-- (void)writeBody:(SVHTMLContext *)context;
+- (void)writeHTML:(SVHTMLContext *)context;
 {
     [context pushClassName:@"logo"];
-    [super writeBody:context];
+    [super writeHTML:context];
 }
 
 #pragma mark Serialization

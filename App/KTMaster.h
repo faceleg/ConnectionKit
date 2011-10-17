@@ -114,8 +114,3 @@
 - (KTCodeInjection *)codeInjection;
 
 @end
-
-
-@interface KTMaster (PluginAPI)
-- (NSDictionary *)imageScalingPropertiesForUse:(NSString *)mediaUse;
-@end

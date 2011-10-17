@@ -37,14 +37,14 @@
 
 #pragma mark HTML
 
-- (void)writeBody:(SVHTMLContext *)context;
+- (void)writeHTML:(SVHTMLContext *)context;
 {
     [context pushClassName:@"HTMLElement"];
     [context addCSSString:@".HTMLElement { overflow:hidden; }"];
     
     if ([self shouldWriteHTMLInline])
     {
-        [context pushClassName:@"graphic-container"];
+        //[context pushClassName:@"graphic-container"];
         [context startElement:@"span"];
     }
     else

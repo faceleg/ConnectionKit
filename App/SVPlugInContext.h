@@ -24,8 +24,8 @@ enum {
 typedef NSUInteger SVResizingOptions;
 
 enum {
-    SVImageScaleAspectFit = 1 << 0,             // without this, image will be cropped to fill width & height
-                                                // one day, might have option to control if can scale up
+    SVImageScaleAspectFit = 1 << 0, // without this, image will be cropped to fill width & height
+    SVImageScaleUpAvoid = 1 << 1 AVAILABLE_SANDVOX_VERSION_2_2_AND_LATER,  // stops the image being scaled up
 };
 typedef NSUInteger SVPageImageRepresentationOptions;
 
@@ -44,7 +44,6 @@ typedef NSUInteger SVPageImageRepresentationOptions;
 
 #pragma mark Properties
 @property(nonatomic, copy, readonly) NSURL *baseURL;    // where the HTML is destined for. -relativeStringFromURL: figures its result by comparing a URL to -baseURL.
-- (id <SVPage>)page;    // the page whose HTML is being built
 
 
 #pragma mark Purpose
@@ -111,6 +110,7 @@ typedef NSUInteger SVPageImageRepresentationOptions;
 - (void)startAnchorElementWithHref:(NSString *)href title:(NSString *)titleString target:(NSString *)targetString rel:(NSString *)relString;
 
 // Takes care of using the right href, title and target for the page
+- (void)startAnchorElementWithPage:(id <SVPage>)page attributes:(NSDictionary *)attributes AVAILABLE_SANDVOX_VERSION_2_2_AND_LATER;
 - (void)startAnchorElementWithPage:(id <SVPage>)page;
 
 // Returns YES to signify success.
@@ -198,6 +198,9 @@ typedef NSUInteger SVPageImageRepresentationOptions;
 
 #pragma mark Extra markup
 
+// Adds the markup before the <HTML> tag, after any Code Injection
+- (void)addMarkupBeforeHTML:(NSString *)markup AVAILABLE_SANDVOX_VERSION_2_2_AND_LATER;
+
 // Adds the markup inside the <HEAD> tag. If same code has already been added, goes ignored
 - (void)addMarkupToHead:(NSString *)markup AVAILABLE_SANDVOX_VERSION_2_1_AND_LATER;
 
@@ -209,6 +212,16 @@ typedef NSUInteger SVPageImageRepresentationOptions;
 // When generating HTML using a template, Sandvox automatically registers each keypath it encounters in the template as a dependency. If you need to register any additonal paths — perhaps because you are not using a template or it doesn't appear in the template — do so with this method.
 // When a change of the path is detected, Sandvox will take care of reloading the needed bit of the webview.
 - (void)addDependencyForKeyPath:(NSString *)keyPath ofObject:(NSObject *)object;
+
+
+#pragma mark Pages
+
+- (id <SVPage>)page;    // the page whose HTML is being built
+
+// These methods fetch the children of a page, registering required dependencies for you, and applying filter as requested
+- (NSArray *)childrenOfPage:(id <SVPage>)page AVAILABLE_SANDVOX_VERSION_2_2_AND_LATER;  
+- (NSArray *)indexChildrenOfPage:(id <SVPage>)page AVAILABLE_SANDVOX_VERSION_2_2_AND_LATER;
+- (NSArray *)sitemapChildrenOfPage:(id <SVPage>)page AVAILABLE_SANDVOX_VERSION_2_2_AND_LATER;
 
 
 @end

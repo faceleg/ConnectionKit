@@ -23,7 +23,7 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
 {
     // Stop observation
     [self setRepresentedObject:nil];
-    [self setHTMLElement:nil];
+    [self setNode:nil];
     
     OBASSERT(!_webView);
     
@@ -32,7 +32,7 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
 
 #pragma mark DOM
 
-- (void)setHTMLElement:(DOMHTMLElement *)element
+- (void)setNode:(DOMHTMLElement *)element
 {
     // Stop & reset old observation
     if ([self isHTMLElementCreated])
@@ -44,7 +44,7 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
     _editTimestamp = 0; // otherwise webview changes may still try to commit us
     
     // Store element and WebView
-    [super setHTMLElement:element];
+    [super setNode:element];
     [self setWebView:[[[element ownerDocument] webFrame] webView]];
     
     // Observe our bit of the DOM
@@ -71,7 +71,7 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
     [htmlElement setInnerHTML:markupString];
     [markupString release];
     
-    [self setHTMLElement:htmlElement];
+    [self setNode:htmlElement];
 }
 
 #pragma mark Model Changes

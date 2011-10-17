@@ -4,7 +4,7 @@
 // run an Archive build against the Test account
 // to obtain a new test receipt, even for running
 // Debug builds
-APP_STORE_VERSION='@\"2.1.11\"'
+APP_STORE_VERSION='@\"2.2\"'
 
 // App Store builds have no SLA variant
 // this should never be changed from RELEASE for a Mac App Store build

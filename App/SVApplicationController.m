@@ -72,7 +72,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "SVPageTemplate.h"
 #import "KSURLUtilities.h"
 
-#import <AmazonSupport/AmazonSupport.h>
 #import <Connection/Connection.h>
 #import <ExceptionHandling/NSExceptionHandler.h>
 #import <iMedia/iMedia.h>
@@ -276,12 +275,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
     NSMutableDictionary *defaultsBase = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 		
 								 // General defaults ... app behavior. NOTE: THESE ARE CAPITALIZED
-#ifdef DEBUG
-		[NSNumber numberWithBool:YES],			@"IncludeDebugMenu",
-#else
-		[NSNumber numberWithBool:NO],			@"IncludeDebugMenu",
-#endif
-										 
 // For now, we want 
 		@"all",									@"metaRobots",
 #ifdef APPLE_DESIGN_AWARDS_KEY
@@ -455,13 +448,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		[NSNumber numberWithBool:NO], @"deletePagesWhenPublishing",
 		
 		@"NSHost", @"hostResolver",
-		
-		
-		// Amazon
-		[AmazonECSOperation associateKeyDefaults], @"AmazonAssociateIDs",
-		[NSNumber numberWithBool:NO], @"DebugAmazonListService",
-		
-		
 		
 		
 		/// Whether or not to include original images (instead of images as found on the pages) in image RSS feeds.
@@ -1067,6 +1053,11 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	[center addObserver:self selector:@selector(exceptionReporterFinished:) name:kKSExceptionReporterFinishedNotification object:nil];
 		
 	[JSTalk listen];
+    
+    
+    // Preload iPhoto parser for later access to keywords. #16297
+    [[IMBLibraryController sharedLibraryControllerWithMediaType:kIMBMediaTypeImage] reload];
+    
 	
 #ifndef VARIANT_RELEASE
 	NSLog(@"BETA: Host order = %ld which means %@",
@@ -1191,10 +1182,15 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 
     KTDocumentController *sharedDocumentController = [KTDocumentController sharedDocumentController];
     [sharedDocumentController setAutosavingDelay:interval];
-
-#ifndef MAC_APP_STORE
+    
+    
+    // Prepare iMedia
+    [[IMBParserController sharedParserController] setDelegate:self];
+	
+			 
 	// Try to check immediately so we have right info for initialization
 	//[self performSelector:@selector(checkRegistrationString:) withObject:nil afterDelay:0.0];
+#ifndef MAC_APP_STORE
 #ifdef APPLE_DESIGN_AWARDS_KEY
 #warning -- pre-configuring with registration code for Apple: Apple Design Awards Galilee Cadi Hop
 	[self checkRegistrationString:APPLE_DESIGN_AWARDS_KEY];

@@ -5,10 +5,7 @@
       location = "group:App/Sandvox.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:../connection/Connection.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Code/Shared/Code/AmazonSupport/AmazonSupport.xcodeproj">
+      location = "group:Code/ConnectionKit/Connection.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Code/iMedia/iMedia.xcodeproj">
@@ -90,5 +87,8 @@
    </FileRef>
    <FileRef
       location = "group:Code/MetaMarvel/MetaMarvel.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:PlugIns/VictualElement/VictualElement.xcodeproj">
    </FileRef>
 </Workspace>

@@ -46,7 +46,7 @@ typedef enum {
 } KTPublishingEngineStatus;
 
 
-@class KTSite, KTPage, SVPublishingDigestStorage, SVPublishingRecord, SVImageRecipe;
+@class KTSite, KTPage, SVPublishingDigestStorage, SVMediaHasher, SVPublishingRecord, SVImageRecipe;
 @protocol KTPublishingEngineDelegate;
 
 
@@ -70,14 +70,11 @@ typedef enum {
     CKTransferRecord    *_baseTransferRecord;
     
     SVPublishingDigestStorage   *_digestStorage;
+    SVMediaHasher               *_mediaHasher;
     NSDictionary                *_pagesByID;
     NSMutableDictionary         *_publishingRecordsByImageRecipe;
     
     NSMutableArray      *_plugInCSS;    // mixture of string CSS snippets, and CSS URLs
-    
-    // Worker queues
-    NSOperationQueue    *_defaultQueue;
-    NSOperationQueue    *_diskQueue;
     
     id<SVPublishedObject> _sitemapPinger;
 }
@@ -95,8 +92,10 @@ typedef enum {
 - (NSString *)documentRootPath;
 - (NSString *)subfolderPath;
 - (NSString *)baseRemotePath;
-@property(nonatomic, readonly) SVPublishingDigestStorage *digestStorage;
+@property(nonatomic, readonly) SVMediaHasher *mediaHasher;
 
+- (NSData *)digestForMediaRequest:(SVMediaRequest *)request;    // use this, not .digestStorage
+@property(nonatomic, readonly) SVPublishingDigestStorage *digestStorage;
 
 // Control
 - (KTPublishingEngineStatus)status;
@@ -147,11 +146,14 @@ typedef enum {
 
 
 @protocol KTPublishingEngineDelegate
+
 - (void)publishingEngine:(KTPublishingEngine *)engine didBeginUploadToPath:(NSString *)remotePath;
 - (void)publishingEngineDidFinishGeneratingContent:(KTPublishingEngine *)engine;
 - (void)publishingEngineDidUpdateProgress:(KTPublishingEngine *)engine;
 
 - (void)publishingEngine:(KTPublishingEngine *)engine didFailWithError:(NSError *)error;
+- (void)publishingEngine:(KTPublishingEngine *)engine didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge;
+
 @end
 
 

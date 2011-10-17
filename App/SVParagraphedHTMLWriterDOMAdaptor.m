@@ -9,6 +9,7 @@
 #import "SVParagraphedHTMLWriterDOMAdaptor.h"
 
 #import "DOMNode+Karelia.h"
+#import "DOMRange+Karelia.h"
 #import "NSString+Karelia.h"
 
 
@@ -31,21 +32,6 @@
 @synthesize allowsPagelets = _allowsBlockGraphics;
 
 #pragma mark Cleanup
-
-- (DOMNode *)handleInvalidBlockElement:(DOMElement *)element;
-{
-    // Move the element and its next siblings up a level. Next stage of recursion will find them there
-    
-    
-    DOMNode *parent = [element parentNode];
-    DOMNode *newParent = [parent parentNode];
-    NSArray *nodes = [parent childDOMNodesAfterChild:[element previousSibling]];
-    
-    [newParent insertDOMNodes:nodes beforeChild:[parent nextSibling]];
-    
-    
-    return nil;
-}
 
 - (NSDictionary *)dictionaryWithCSSStyle:(DOMCSSStyleDeclaration *)style
                                  element:(NSString *)element;
@@ -119,6 +105,17 @@
     }
     
     
+    // Lists which get encapsulated in their own list element
+    else if ([tagName isEqualToString:@"UL"] || [tagName isEqualToString:@"OL"])
+    {
+        DOMElement *listItem = [[element ownerDocument] createElement:@"LI"];
+        [[element parentNode] insertBefore:listItem refChild:element];
+        [listItem appendChild:element];
+        
+        return listItem;
+    }
+    
+    
     // Non-top-level block elements should be converted into paragraphs higher up the tree
     else
     {
@@ -128,7 +125,8 @@
         {
             if ([[self class] validateElement:tagName])
             {
-                return [self handleInvalidBlockElement:element];
+                [self moveDOMNodeToAfterParent:element includeFollowingSiblings:YES];
+                return nil;
             }
             else
             {
@@ -196,6 +194,21 @@
         }
     }
     
+    
+    // Roll nested lists into an existing list item if possible
+    if ([[[self XMLWriter] topElement] isEqualToString:@"li"])
+    {
+        DOMElement *nextElement = [element nextElementSibling];
+        NSString *nextTag = [nextElement tagName];
+        
+        if ([nextTag isEqualToString:@"UL"] || [nextTag isEqualToString:@"OL"])
+        {
+            [element appendChild:nextElement];
+            [self writeDOMElement:nextElement];
+        }
+    }
+    
+    
     return [super endElementWithDOMElement:element];
 }
 
@@ -222,8 +235,6 @@
     
     // Only a handful of block-level elements are supported. They can only appear at the top-level, or directly inside a list item
     if ([tagName isEqualToString:@"P"] ||
-        [tagName isEqualToString:@"UL"] ||
-        [tagName isEqualToString:@"OL"] ||
         [tagName isEqualToString:@"H3"] ||
         [tagName isEqualToString:@"H4"] ||
         [tagName isEqualToString:@"H5"] ||
@@ -232,6 +243,17 @@
         result = ([[self XMLWriter] openElementsCount] == 0 ||
                   [[[self XMLWriter] topElement] isEqualToString:@"li"]);
     }
+    
+    // Lists must be top-level or directly inside another list
+    else if ([tagName isEqualToString:@"UL"] || [tagName isEqualToString:@"OL"])
+    {
+        result = YES;
+        if ([[self XMLWriter] openElementsCount] > 0)
+        {
+            result = [super validateElement:tagName];
+        }
+    }
+    
     else
     {
         // Super allows standard inline elements. We only support them once inside a paragraph or similar
@@ -257,6 +279,7 @@
                    [tagName isEqualToString:@"A"] ||
                    [tagName isEqualToString:@"UL"] ||
                    [tagName isEqualToString:@"OL"] ||
+                   [tagName isEqualToString:@"LI"] ||
                    [tagName isEqualToString:@"H3"] ||
                    [tagName isEqualToString:@"H4"] ||
                    [tagName isEqualToString:@"H5"] ||
@@ -271,10 +294,6 @@
     if (!result)
     {
         if ([propertyName isEqualToString:@"text-align"] && [element isEqualToString:@"p"])
-        {
-            result = YES;
-        }
-        else if ([propertyName isEqualToString:@"direction"])
         {
             result = YES;
         }
@@ -352,14 +371,26 @@
         // Create a paragraph to contain the text
         DOMDocument *doc = [self ownerDocument];
         DOMElement *paragraph = [doc createElement:@"P"];
-        [[self parentNode] appendChild:paragraph];
+        [[self parentNode] insertBefore:paragraph refChild:self];
+        
+        // Will selection be affected?
+        WebView *webView = [[[self ownerDocument] webFrame] webView];
+        DOMRange *selection = [webView selectedDOMRange];
+        NSSelectionAffinity affinity = [webView selectionAffinity];
+        
+        NSIndexPath *startPath = [selection ks_startIndexPathFromNode:self];
+        NSIndexPath *endPath = [selection ks_endIndexPathFromNode:self];
         
         // Move content into the paragraph
-        DOMNode *aNode;
-        DOMNode *previousNode = [self previousSibling];
-        while ((aNode = [paragraph previousSibling]) != previousNode)
+        [paragraph appendChild:self];
+        
+        // Restore selection
+        if (startPath) [selection ks_setStartWithIndexPath:startPath fromNode:self];
+        if (endPath) [selection ks_setEndWithIndexPath:endPath fromNode:self];
+        
+        if (startPath || endPath)
         {
-            [paragraph insertBefore:aNode refChild:[paragraph firstChild]];
+            [webView setSelectedDOMRange:selection affinity:affinity];
         }
         
         return paragraph;

@@ -149,12 +149,12 @@
          feedIconURL = [context addResourceAtURL:[NSURL fileURLWithPath:path] destination:SVDestinationResourcesDirectory options:0];
     }
     
-    NSURL *cssURL = nil;
+    // css
     path = [[NSBundle bundleForClass:[self class]] pathForResource:@"rssbadge" ofType:@"css"];
     if (path && ![path isEqualToString:@""]) 
     {
-        cssURL = [context addResourceAtURL:[NSURL fileURLWithPath:path] destination:SVDestinationMainCSS options:0];
-    } 
+        (void)[context addResourceAtURL:[NSURL fileURLWithPath:path] destination:SVDestinationMainCSS options:0];
+    }
 
     // write HTML
     if ( self.indexedCollection )

@@ -87,10 +87,29 @@
 + (NSSet *)keyPathsForValuesAffectingAlignment;
 {
     NSString *keyPath = [self alignmentKeyPath];
-    return (keyPath ? [NSSet setWithObject:[self alignmentKeyPath]] : nil);
+    return (keyPath ? [NSSet setWithObject:keyPath] : nil);
 }
 
 + (NSString *)alignmentKeyPath; { return nil; }
+
+- (NSWritingDirection)textBaseWritingDirection;
+{
+    NSString *keyPath = [[self class] textBaseWritingDirectionKeyPath];
+    NSNumber *result = (keyPath ? [self valueForKeyPath:keyPath] : nil);
+    return (result ? [result intValue] : NSWritingDirectionNatural);
+}
+- (void)setTextBaseWritingDirection:(NSWritingDirection)writingDirection;
+{
+    [self setValue:[NSNumber numberWithInt:writingDirection]
+        forKeyPath:[[self class] textBaseWritingDirectionKeyPath]];
+}
++ (NSSet *)keyPathsForValuesAffectingTextBaseWritingDirection;
+{
+    NSString *keyPath = [self textBaseWritingDirectionKeyPath];
+    return (keyPath ? [NSSet setWithObject:keyPath] : nil);
+}
+
++ (NSString *)textBaseWritingDirectionKeyPath { return nil; }
 
 #pragma mark Graphical Text
 
@@ -113,6 +132,7 @@
 @implementation SVSiteTitle 
 
 + (NSString *)alignmentKeyPath; { return @"master.siteTitleAlignment"; }
++ (NSString *)textBaseWritingDirectionKeyPath; { return @"master.siteTitleWritingDirection"; }
 
 - (NSString *)graphicalTextCode:(SVHTMLContext *)context;
 {
@@ -128,5 +148,6 @@
 @implementation SVSiteSubtitle 
 
 + (NSString *)alignmentKeyPath; { return @"master.taglineAlignment"; }
++ (NSString *)textBaseWritingDirectionKeyPath; { return @"master.taglineWritingDirection"; }
 
 @end

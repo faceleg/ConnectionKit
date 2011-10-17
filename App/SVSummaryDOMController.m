@@ -73,4 +73,10 @@
     [self setNeedsUpdate];
 }
 
+- (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node;
+{
+    // Stop anything making it through to sub-controllers, since they're supposed to be non-selectable
+    return ([super hitTestDOMNode:node] ? self : nil);
+}
+
 @end

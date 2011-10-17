@@ -407,7 +407,7 @@
 
 #pragma mark HTML
 
-- (void)writeBody:(SVHTMLContext *)context
+- (void)writeHTML:(SVHTMLContext *)context
 {
     [context addDependencyOnObject:self keyPath:@"media"];
     if (![self media]) [context addDependencyOnObject:self keyPath:@"externalSourceURL"];
@@ -423,14 +423,14 @@
         [context startElement:@"div" className:elementClass];
         [context startElement:@"div" className:contentClass];
         
-        [super writeBody:context];
+        [super writeHTML:context];
         
         [context endElement];
         [context endElement];
     }
     else
     {
-        [super writeBody:context];
+        [super writeHTML:context];
     }
 }
 
@@ -464,35 +464,43 @@
     SVMedia *media = (id)[[self plugIn] thumbnailMedia];
     if (media)
     {
-        KSImageScalingMode scaling = KSImageScalingModeCropCenter;
-        
         if (options & SVImageScaleAspectFit)
         {
-            scaling = KSImageScalingModeFill;
-            
             // Calculate dimensions
             NSNumber *aspectRatioNumber = [self constrainedAspectRatio];
             [context addDependencyOnObject:self keyPath:@"constrainedAspectRatio"];
             
-            CGFloat aspectRatio;
-            if (aspectRatioNumber)
+            if (options & SVImageScaleUpAvoid &&
+                width > [self.naturalWidth unsignedIntegerValue] &&
+                height > [self.naturalHeight unsignedIntegerValue])
             {
-                aspectRatio = [aspectRatioNumber floatValue];
+                width = [self.naturalWidth unsignedIntegerValue];
+                height = [self.naturalHeight unsignedIntegerValue];
+                
+                options -= SVImageScaleUpAvoid;
             }
             else
             {
-                aspectRatio = [[self width] floatValue] / [[self height] floatValue];
-                [context addDependencyOnObject:self keyPath:@"width"];
-                [context addDependencyOnObject:self keyPath:@"height"];
-            }
-            
-            if (aspectRatio > (width / height))
-            {
-                height = width / aspectRatio;
-            }
-            else
-            {
-                width = height * aspectRatio;
+                CGFloat aspectRatio;
+                if (aspectRatioNumber)
+                {
+                    aspectRatio = [aspectRatioNumber floatValue];
+                }
+                else
+                {
+                    aspectRatio = [self.width floatValue] / [self.height floatValue];
+                    [context addDependencyOnObject:self keyPath:@"width"];
+                    [context addDependencyOnObject:self keyPath:@"height"];
+                }
+                
+                if (aspectRatio > (width / height))
+                {
+                    height = width / aspectRatio;
+                }
+                else
+                {
+                    width = height * aspectRatio;
+                }
             }
             
             options -= SVImageScaleAspectFit;
@@ -604,6 +612,12 @@
 - (KTPage *)indexedCollection; { return nil; }
 
 #pragma mark Pasteboard
+
+- (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
+{
+    if ([self shouldWriteHTMLInline]) return nil;
+    return [super readableTypesForPasteboard:pasteboard];
+}
 
 - (BOOL)awakeFromPasteboardItems:(NSArray *)items;
 {

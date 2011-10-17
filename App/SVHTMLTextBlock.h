@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "SVComponent.h"
 
 #import "KTDocument.h"
 
@@ -14,7 +15,7 @@
 @class SVHTMLContext, SVDOMController, SVTextDOMController;
 
 
-@interface SVHTMLTextBlock : NSObject
+@interface SVHTMLTextBlock : NSObject <SVComponent>
 {
 //@private
 	BOOL			myIsEditable;
@@ -82,14 +83,10 @@
 - (NSString *)processHTML:(NSString *)originalHTML context:(SVHTMLContext *)context;
 
 
-#pragma mark DOM Controller
-- (SVDOMController *)newDOMController;
-
-
 @end
 
 
 @interface NSObject (SVHTMLTextBlock)
-- (SVTextDOMController *)newTextDOMController;
+- (SVTextDOMController *)newTextDOMControllerWithIdName:(NSString *)elementID ancestorNode:(DOMNode *)document;
 @end
 

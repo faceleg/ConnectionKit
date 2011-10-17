@@ -17,7 +17,7 @@
 #import "SVHTMLTemplateParser.h"
 #import "SVMediaGraphic.h"
 #import "SVPagesController.h"
-#import "SVProxyHTMLContext.h"
+#import "SVRSSItemDescriptionHTMLContext.h"
 #import "SVTextAttachment.h"
 #import "SVWebEditorHTMLContext.h"
 
@@ -269,7 +269,7 @@
 	KSEscapedXMLEntitiesWriter *xmlWriter = [[KSEscapedXMLEntitiesWriter alloc]
 											 initWithOutputXMLWriter:feedContext];
 	
-	SVHTMLContext *xmlContext = [[SVProxyHTMLContext alloc] initWithOutputWriter:xmlWriter target:feedContext];
+	SVHTMLContext *xmlContext = [[SVRSSItemDescriptionHTMLContext alloc] initWithOutputWriter:xmlWriter target:feedContext];
 	
 	NSUInteger truncationLength = [self.parentPage.collectionMaxFeedItemLength intValue];
 	
@@ -427,7 +427,6 @@ NSUInteger kTwoThirdsTruncation;
         SVTruncationType truncationType = [[self class] chooseTruncTypeFromMaxItemLength:maxItemLength];
         BOOL result = NO;
         
-        [context willWriteSummaryOfPage:self];
         [context startElement:@"div" className:@"article-summary"];
 
         // do we have a custom summary? if so just write it
@@ -732,3 +731,20 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 }
 
 @end
+
+
+#pragma mark -
+
+#import "SVSummaryDOMController.h"
+
+@implementation SVArticle (SummaryDOMController)
+
+- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID ancestorNode:(DOMNode *)node;
+{
+    SVSummaryDOMController *result = [[SVSummaryDOMController alloc] initWithIdName:elementID ancestorNode:node];
+    [result setItemToSummarize:[self page]];
+    return result;
+}
+
+@end
+

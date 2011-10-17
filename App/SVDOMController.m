@@ -8,12 +8,14 @@
 
 #import "SVDOMController.h"
 
+#import "SVContentDOMController.h"
 #import "SVSidebarDOMController.h"
-#import "SVResizableDOMController.h"
+#import "SVPlugInDOMController.h"
 #import "SVTextDOMController.h"
 #import "SVWebEditorViewController.h"
 
 #import "DOMNode+Karelia.h"
+#import "NSResponder+Karelia.h"
 
 
 @implementation SVDOMController
@@ -24,21 +26,13 @@
 {
     [super init];
     
+    _anchorPoint = CGPointMake(0.5, 0.5);
+    
     _dependenciesTracker = [[KSDependenciesTracker alloc] initWithObservingOptions:NSKeyValueObservingOptionPrior];
     [_dependenciesTracker stopObservingDependencies];   // little dance so that subclasses start...
     [_dependenciesTracker setDelegate:self];
-    [self startObservingDependencies];                  // ...observing extra dependencies
+    //[self startObservingDependencies];                  // ...observing extra dependencies
     
-    return self;
-}
-
-- (id)initWithRepresentedObject:(id <SVDOMControllerRepresentedObject>)content;
-{
-    // Use the object's own ID if it has one. Otherwise make up our own
-    if (self = [self init])
-    {
-        [self setRepresentedObject:content];
-    }
     return self;
 }
 
@@ -50,12 +44,12 @@
     [_dependenciesTracker release];
     
     [_updateSelectors release];
-    [_elementID release];
     [_context release];
     
     [_dragTypes release];
     
     [_moc release];
+    [_elementInfo release];
     
     [super dealloc];
 }
@@ -83,45 +77,45 @@
 
 #pragma mark DOM Element Loading
 
-- (DOMHTMLElement *)HTMLElement;
-{
-    DOMHTMLElement *result = [super HTMLElement];
-    if (!result)
-    {
-        DOMDocument *document = [[[self parentWebEditorItem] HTMLElement] ownerDocument];
-        if (!document)
-        {
-            document = [[self webEditor] HTMLDocument];
-        }
-        
-        if (document)
-        {
-            [self loadHTMLElementFromDocument:document];
-            if ([self isHTMLElementCreated]) result = [self HTMLElement];
-        }
-    }
-    
-    return result;
-}
-
 // No point observing if there's no DOM to affect
 // At least that's the theory, I found in practice it broke dragging onto media placeholders
-- (void)XsetHTMLElement:(DOMHTMLElement *)element;
+/*- (void)XsetHTMLElement:(DOMHTMLElement *)element;
 {
     if (element)
     {
-        [super setHTMLElement:element];
+        [super setNode:element];
         [self startObservingDependencies];
     }
     else
     {
         [self stopObservingDependencies];
-        [super setHTMLElement:element];
+        [super setNode:element];
     }
+}*/
+
+- (void)setNode:(DOMNode *)element
+{
+    if (element)
+    {
+        // Load descendants since they might share the same element
+        [[self childWebEditorItems] makeObjectsPerformSelector:@selector(HTMLElement)];
+        
+        
+        if (!_shouldPublishElementID)
+        {
+            // Ideally, as we're clearing out value from the DOM, should also stop referencing it ourselves. If an update occurs, the id should be regenerated. This isn't quite working yet though.
+            //[_elementID release]; _elementID = nil;
+            [element setIdName:nil];
+        }
+    }
+    
+    [super setNode:element];
 }
 
-- (void)createHTMLElement
+- (void)loadNode
 {
+    if ([self elementIdName]) return [super loadNode];
+    
     // Gather the HTML
     NSMutableString *htmlString = [[NSMutableString alloc] init];
     
@@ -139,7 +133,7 @@
     [htmlString release];
     
     DOMHTMLElement *element = [fragment firstChildOfClass:[DOMHTMLElement class]];  OBASSERT(element);
-    [self setHTMLElement:element];
+    [self setNode:element];
     
     
     // Insert controllers
@@ -152,63 +146,23 @@
     [context release];
 }
 
-- (void)loadHTMLElementFromDocument:(DOMDocument *)document;
+- (void)loadPlaceholderDOMElement;
 {
-    if ([self hasElementIdName])
-    {
-        // Load the element
-        NSString *idName = [self elementIdName];
-        DOMHTMLElement *element = (DOMHTMLElement *)[document getElementById:idName];
-        
-        
-        if (element)
-        {
-            // Load descendants since they might share the same element
-            [[self childWebEditorItems] makeObjectsPerformSelector:_cmd withObject:document];
-            
-            
-            if (!_shouldPublishElementID)
-            {
-                // Ideally, as we're clearing out value from the DOM, should also stop referencing it ourselves. If an update occurs, the id should be regenerated. This isn't quite working yet though.
-                [_elementID release]; _elementID = nil;
-                [element setIdName:nil];
-            }
-        }
-        
-        [self setHTMLElement:element];
-    }
+    DOMElement *element = [[[self ancestorNode] ownerDocument] createElement:@"DIV"];
+    [[element style] setDisplay:@"none"];
+    [self setNode:(DOMHTMLElement *)element];
 }
 
-- (NSString *)elementIdName;
+- (DOMHTMLDocument *)HTMLDocument;
 {
-    if (!_elementID)
-    {
-        // No ID has been specified by HTML writer, so generate our own
-        _elementID = [[NSString alloc] initWithFormat:
-                      @"%@-%p",
-                      [self className],
-                      self];
-        
-        // Are we sharing the same HTML element as parent? If so, assign same ID to it
-        SVDOMController *parent = (id)[self parentWebEditorItem];
-        if (![parent hasElementIdName])
-        {
-            [parent setElementIdName:[self elementIdName] includeWhenPublishing:NO];
-        }
-    }
-    
-    return _elementID;
+    DOMHTMLDocument *result = [super HTMLDocument];
+    if (!result) result = [[[self parentWebEditorItem] HTMLElement] ownerDocument];
+    if (!result) result = [[self webEditor] HTMLDocument];
+    return result;
 }
 
-- (BOOL)hasElementIdName; { return _elementID != nil; }
-
-- (void)setElementIdName:(NSString *)ID includeWhenPublishing:(BOOL)shouldPublish;
-{
-    ID = [ID copy];
-    [_elementID release]; _elementID = ID;
-    
-    _shouldPublishElementID = shouldPublish;
-}
+@synthesize elementInfo = _elementInfo;
+@synthesize shouldIncludeElementIdNameWhenPublishing = _shouldPublishElementID;
 
 @synthesize HTMLContext = _context;
 
@@ -229,9 +183,152 @@
 
 #pragma mark Updating
 
+- (void)willUpdateWithNewChildController:(WEKWebEditorItem *)newChildController;
+{
+    // Helper method that:
+    //  A) swaps the new controller out for an existing one if possible
+    //  B) runs scripts for the new controller
+    
+    
+    NSObject *object = [newChildController representedObject];
+    
+    for (WEKWebEditorItem *anOldController in [self childWebEditorItems])
+    {
+        if ([[anOldController representedObject] isEqual:object])
+        {
+            DOMNode *oldElement = [anOldController HTMLElement];
+            if (oldElement)
+            {
+                // Bring back the old element!
+                DOMElement *element = [newChildController HTMLElement];
+                [[element parentNode] replaceChild:oldElement oldChild:element];
+                
+                // Bring back the old controller!
+                [[newChildController parentWebEditorItem] replaceChildWebEditorItem:newChildController
+                                                                               with:anOldController];
+                return;
+            }
+        }
+    }
+    
+    
+    // Force update the controller to run scripts etc. #99997
+    [newChildController setNeedsUpdate]; [newChildController updateIfNeeded];
+}
+
+- (void)updateWithHTMLString:(NSString *)html context:(SVWebEditorHTMLContext *)context
+{
+    //[[context rootDOMController] setWebEditorViewController:[self webEditorViewController]];
+    
+    
+    // Update DOM
+    DOMElement *oldElement = [self HTMLElement];
+    DOMDocument *doc = [oldElement ownerDocument];
+    WEKWebEditorItem *parent = [self parentWebEditorItem];
+    [(DOMHTMLElement *)[self HTMLElement] setOuterHTML:html];
+    
+    while ([parent HTMLElement] == oldElement)  // ancestors may be referencing the same node
+    {
+        // Reset element, ready to reload
+        [parent setElementIdName:[[[[[context rootElement] subelements] lastObject] attributesAsDictionary] objectForKey:@"id"]];
+        [parent setNode:nil];
+        
+        parent = [parent parentWebEditorItem];
+    }
+    
+    
+    // Create controllers
+    SVContentDOMController *contentController = [[SVContentDOMController alloc] initWithWebEditorHTMLContext:context
+                                                                                                        node:doc];
+    
+    
+    // Copy across extra dependencies, but I'm not sure why. Mike
+    [[self mutableSetValueForKeyPath:@"parentWebEditorItem.dependencies"] unionSet:[contentController dependencies]];
+    
+    
+    // Re-use any existing graphic controllers when possible
+    for (WEKWebEditorItem *aController in [contentController childWebEditorItems])
+    {
+        for (WEKWebEditorItem *newChildController in [aController childWebEditorItems])
+        {
+            [self willUpdateWithNewChildController:newChildController];
+        }
+    }
+    
+    
+    
+    // Hook up new DOM Controllers
+    [self stopObservingDependencies];
+    [self didUpdateWithSelector:@selector(update)]; // must inform now, before are removed from the tree
+    
+    [[self retain] autorelease];    // since the replacement could easily dealloc us otherwise!
+    [[self parentWebEditorItem] replaceChildWebEditorItem:self withItems:[contentController childWebEditorItems]];
+    
+    [contentController release];
+}
+
+- (void)update;
+{
+    // Tear down dependencies etc.
+    [self removeAllDependencies];
+    
+    
+    // Write HTML
+    NSMutableString *htmlString = [[NSMutableString alloc] init];
+    
+    SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc]
+                                       initWithOutputWriter:htmlString inheritFromContext:[self HTMLContext]];
+    
+    
+    WEKWebEditorItem *parent = [self parentWebEditorItem];
+    id <SVComponent> parentComponent = [parent representedObject];
+    while (parent && !parentComponent)
+    {
+        parent = [parent parentWebEditorItem];
+        parentComponent = [parent representedObject];
+    }
+    
+    if (parentComponent)
+    {
+        [context beginGraphicContainer:parentComponent];
+        [self writeUpdateHTML:context];
+        [context endGraphicContainer];
+    }
+    else
+    {
+        [self writeUpdateHTML:context];
+    }
+    
+    
+    // Copy top-level dependencies across to parent. #79396
+    [context flush];    // you never know!
+    
+    
+    // Turn observation back on. #92124
+    //[self startObservingDependencies];
+    
+    
+    // Bring end body code into the html
+    [context writeEndBodyString];
+    
+    
+    [context close];
+    [self updateWithHTMLString:htmlString context:context];
+    
+    
+    // Tidy
+    [htmlString release];
+    [context release];
+}
+
+- (void)writeUpdateHTML:(SVHTMLContext *)context;
+{
+    [[self representedObject] writeHTML:context];
+}
+
 - (BOOL)canUpdate;
 {
-    return [self respondsToSelector:@selector(update)];
+    return [[self representedObject] conformsToProtocol:@protocol(SVComponent)];
 }
 
 - (void)didUpdateWithSelector:(SEL)selector;
@@ -292,7 +389,7 @@
         // Once we're marked for update, no point continuing to observe
         if ([self needsUpdate])
         {
-            // Articles update by re-using their child controllers where possible (this strategy may well be extended to other controllers one day). Thus we want children to continue observing dependencies while they're still in the tree.
+            // Rich Text updates by re-using their child controllers where possible (this strategy may well be extended to other controllers one day). Thus we want children to continue observing dependencies while they're still in the tree.
             // For example this meant that article would stop child items from detecting a change in caption. #98794
             [self removeAllDependencies];//[self stopObservingDependencies];
         }
@@ -311,7 +408,7 @@
     
     
     // Ignore such preposterous claims if not even attached to an element yet
-    if (![self HTMLElement] && [self hasElementIdName])
+    if (![self isNodeLoaded] && [self elementIdName])
     {
         // But this could be because the Web Editor is mid reload. If so, do a full update (nasty, but best option available right now I think). #93345
         [viewController setNeedsUpdate];
@@ -348,8 +445,8 @@
     {
         SVWebEditorViewController *controller = [self webEditorViewController];
         //OBASSERT(controller); // actually, may well be nil due to an update elsewhere in the hierarchy. #97474
-        [controller performSelector:@selector(willUpdate)];
         
+        [controller willUpdate];
         [self performSelector:NSSelectorFromString(aSelectorString)];
     }
     [selectorStrings release];
@@ -361,22 +458,14 @@
     [self release];
 }
 
-#pragma mark Size Binding
-
-@synthesize width = _width;
-- (void)setWidth:(NSNumber *)width;
-{
-    width = [width copy];
-    [_width release]; _width = width;
-    
-    
-}
-
 #pragma mark Generic Dependencies
 
 - (NSSet *)dependencies { return [_dependenciesTracker dependencies]; }
 
-- (void)addDependency:(KSObjectKeyPathPair *)pair; { [_dependenciesTracker addDependency:pair]; }
+- (void)addDependenciesObject:(KSObjectKeyPathPair *)pair; { [_dependenciesTracker addDependency:pair]; }
+- (void)addDependency:(KSObjectKeyPathPair *)pair; { [self addDependenciesObject:pair]; }
+
+- (void)removeDependenciesObject:(KSObjectKeyPathPair *)pair { OBASSERT_NOT_REACHED("shouldn't remove"); }
 
 - (void)removeAllDependencies; { [_dependenciesTracker removeAllDependencies]; }
 
@@ -437,233 +526,72 @@
     return result;
 }
 
-#pragma mark Editing
+#pragma mark Delete
 
-- (void)delete;
+- (void)delete:(id)sender forwardingSelector:(SEL)action;
 {
-    BOOL result = YES;
-    
-    DOMHTMLElement *element = [self HTMLElement];
-    WEKWebEditorView *webEditor = [self webEditor];
-    
-    // Check WebEditor is OK with the change
-    DOMRange *range = [self DOMRange];
-    
-    result = [webEditor shouldChangeTextInDOMRange:range];
-    if (result)
+    id object = [self representedObject];
+    if ([self isSelectable] && [object respondsToSelector:@selector(setHidden:)])
     {
-        [element ks_removeFromParentNode];
-        [self removeFromParentWebEditorItem];
+        [object setValue:NSBOOL(YES) forKey:@"hidden"];
     }
-    
-    [range detach];
+    else
+    {
+        [self makeNextResponderDoCommandBySelector:action];
+    }
 }
+
+- (void)delete:(id)sender;
+{
+    [self delete:sender forwardingSelector:_cmd];
+}
+
+- (void)deleteForward:(id)sender;
+{
+    [self delete:sender forwardingSelector:_cmd];
+}
+
+- (void)deleteBackward:(id)sender;
+{
+    [self delete:sender forwardingSelector:_cmd];
+}
+
+#pragma mark Editing
 
 - (BOOL)shouldHighlightWhileEditing; { return NO; }
 
 #pragma mark Resizing
 
-- (NSSize)minSize; { return NSMakeSize(200.0f, 16.0f); }
-
-- (CGFloat)maxWidth;
+- (void)updateSize;
 {
-    // Whew, what a lot of questions! Now, should this drag be disallowed on account of making the DOM element bigger than its container? #84958
-    DOMNode *parent = [[self HTMLElement] parentNode];
-    DOMCSSStyleDeclaration *style = [[[self HTMLElement] ownerDocument] 
-                                     getComputedStyle:(DOMElement *)parent
-                                     pseudoElement:@""];
+    // Workaround for #94381. Make sure any selectable parent redraws
+    [[[self selectableAncestors] lastObject] setNeedsDisplay];
     
-    CGFloat result = [[style width] floatValue];
-    
-    
-    // Bring back down to take into account margin/border/padding. #94079
-    DOMElement *graphic = [self HTMLElement];
-        
-    style = [[[self HTMLElement] ownerDocument] getComputedStyle:graphic
-                                                   pseudoElement:@""];
-    
-    result -= ([[style borderLeftWidth] integerValue] + [[style paddingLeft] integerValue] +
-               [[style borderRightWidth] integerValue] + [[style paddingRight] integerValue]);
+    // Call super so we don't get in a loop of marking for update
+    [super updateWidth];
+    [super updateHeight];
     
     
-    return result;
+    // Finish
+    [self didUpdateWithSelector:_cmd];
 }
 
-- (unsigned int)resizingMaskForDOMElement:(DOMElement *)element;
-{
-    unsigned int result = kCALayerRightEdge; // default to adjustment from right-hand edge
-    
-    
-    DOMCSSStyleDeclaration *style = [[element ownerDocument] getComputedStyle:element pseudoElement:@""];
-    
-    
-    // Is the aligned/floated left/center/right?
-    if ([[style getPropertyValue:@"float"] isEqualToString:@"right"] ||  // -cssFloat returns empty string for some reason
-        [[style textAlign] isEqualToString:@"right"])
-    {
-        result = kCALayerLeftEdge;
-        return result;
-    }
-    else if ([[style textAlign] isEqualToString:@"center"])
-    {
-        result = result | kCALayerLeftEdge;
-        return result;
-    }
-    
-    
-    // Couldn't tell from float/alignment. For inline elements, maybe parent is more helpful?
-    if ([[style display] isEqualToString:@"inline"])
-    {
-        return [self resizingMaskForDOMElement:(DOMElement *)[element parentNode]];
-    }
-    
-        
-    // Fall back to guessing from block margins
-    DOMCSSRuleList *rules = [[element ownerDocument] getMatchedCSSRules:element pseudoElement:@""];
-    
-    for (int i = 0; i < [rules length]; i++)
-    {
-        DOMCSSRule *aRule = [rules item:i];
-        DOMCSSStyleDeclaration *ruleStyle = [(DOMElement *)aRule style];  // not published in our version of WebKit
-        
-        if ([[ruleStyle marginLeft] isEqualToString:@"auto"])
-        {
-            result = kCALayerLeftEdge;
-            if ([[ruleStyle marginRight] isEqualToString:@"auto"]) result = result | kCALayerRightEdge;
-            return result;
-        }
-    }
-    
-    
-    // Finish up
-    return result;
-}
+- (void)updateWidth; { [self setNeedsUpdateWithSelector:@selector(updateSize)]; }
+- (void)updateHeight; { [self setNeedsUpdateWithSelector:@selector(updateSize)]; }
 
 - (unsigned int)resizingMask
 {
-    return [[self enclosingGraphicDOMController] resizingMask];
+    unsigned int result = [super resizingMask];
+    if (!result) result = [[self enclosingGraphicDOMController] resizingMask];
+    return result;
 }
 
-- (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle; { }
-
-- (SVGraphicHandle)resizeUsingHandle:(SVGraphicHandle)handle event:(NSEvent *)event;
+- (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
 {
-    NSPoint point = NSZeroPoint;
+    [super resizeToSize:size byMovingHandle:handle];
     
-    BOOL resizeInline = [self shouldResizeInline];
-    if (!resizeInline)
-    {
-        NSView *docView = [[self HTMLElement] documentView];
-        point = [docView convertPoint:[event locationInWindow] fromView:nil];
-    }
-    
-    
-    
-    // Start with the original bounds.
-    NSRect bounds = [self selectionFrame];
-    
-    // Is the user changing the width of the graphic?
-    if (handle == kSVGraphicUpperLeftHandle ||
-        handle == kSVGraphicMiddleLeftHandle ||
-        handle == kSVGraphicLowerLeftHandle)
-    {
-        // Change the left edge of the graphic
-        if (resizeInline)
-        {
-            bounds.size.width -= [event deltaX];
-            bounds.origin.x -= [event deltaX];
-        }
-        else
-        {
-            bounds.size.width = NSMaxX(bounds) - point.x;
-            bounds.origin.x = point.x;
-        }
-    }
-    else if (handle == kSVGraphicUpperRightHandle ||
-             handle == kSVGraphicMiddleRightHandle ||
-             handle == kSVGraphicLowerRightHandle)
-    {
-        // Change the right edge of the graphic
-        if (resizeInline)
-        {
-            bounds.size.width += [event deltaX];
-        }
-        else
-        {
-            bounds.size.width = point.x - bounds.origin.x;
-        }
-    }
-    
-    // Did the user actually flip the graphic over?   OR RESIZE TO TOO SMALL?
-    NSSize minSize = [self minSize];
-    if (bounds.size.width <= minSize.width) bounds.size.width = minSize.width;
-    
-    
-    
-    // Is the user changing the height of the graphic?
-    if (handle == kSVGraphicUpperLeftHandle ||
-        handle == kSVGraphicUpperMiddleHandle ||
-        handle == kSVGraphicUpperRightHandle) 
-    {
-        // Change the top edge of the graphic
-        if (resizeInline)
-        {
-            bounds.size.height -= [event deltaY];
-            bounds.origin.y -= [event deltaY];
-        }
-        else
-        {
-            bounds.size.height = NSMaxY(bounds) - point.y;
-            bounds.origin.y = point.y;
-        }
-    }
-    else if (handle == kSVGraphicLowerLeftHandle ||
-             handle == kSVGraphicLowerMiddleHandle ||
-             handle == kSVGraphicLowerRightHandle)
-    {
-        // Change the bottom edge of the graphic
-        if (resizeInline)
-        {
-            bounds.size.height += [event deltaY];
-        }
-        else
-        {
-            bounds.size.height = point.y - bounds.origin.y;
-        }
-    }
-    
-    // Did the user actually flip the graphic upside down?   OR RESIZE TO TOO SMALL?
-    if (bounds.size.height<=minSize.height) bounds.size.height = minSize.height;
-    
-    
-    // Apply constraints. Snap to guides UNLESS the command key is held down. Why not use current NSEvent? - Mike
-    NSSize size = [self constrainSize:bounds.size
-                               handle:handle
-                            snapToFit:((GetCurrentKeyModifiers() & cmdKey) == 0)];
-    
-    
-    // Finally, we can go ahead and resize
-    [self resizeToSize:size byMovingHandle:handle];
-    
-    
-    return handle;
-}
-
-- (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;
-{
-    if (snapToFit)
-    {
-        // Whew, what a lot of questions! Now, should this drag be disallowed on account of making the DOM element bigger than its container? #84958
-        DOMNode *parent = [[self HTMLElement] parentNode];
-        DOMCSSStyleDeclaration *style = [[[self HTMLElement] ownerDocument] 
-                                         getComputedStyle:(DOMElement *)parent
-                                         pseudoElement:@""];
-        
-        CGFloat maxWidth = [[style width] floatValue];
-        if (size.width > maxWidth) size.width = maxWidth;
-    }
-    
-    return size;
+    // Force immediate update
+    [self updateIfNeeded];
 }
 
 #pragma mark Moving
@@ -673,17 +601,53 @@
 
 - (BOOL)moveToPosition:(CGPoint)position event:(NSEvent *)event;
 {
-    return [[self enclosingGraphicDOMController] moveToPosition:position event:event];
+    // See if super fancies a crack
+    if ([super moveToPosition:position event:event]) return YES;
+    
+    
+    WEKWebEditorItem <SVGraphicContainerDOMController> *dragController = [self graphicContainerDOMController];
+    if ([dragController graphicContainerDOMController]) dragController = [dragController graphicContainerDOMController];
+    
+    [dragController moveGraphicWithDOMController:self toPosition:position event:event];
+    
+    
+    // Starting a move turns off selection handles so needs display
+    if (dragController && ![self hasRelativePosition])
+    {
+        [self setNeedsDisplay];
+        //_moving = YES;
+    }
+    
+    return (dragController != nil);
 }
 
 - (void)moveEnded;
 {
-    return [[self enclosingGraphicDOMController] moveEnded];
+    [super moveEnded];
+    [self removeRelativePosition:YES];
 }
 
-- (CGPoint)position;    // center point (for moving) in doc view coordinates
+- (CGPoint)position;
 {
-    return [[self enclosingGraphicDOMController] position];
+    NSRect frame = [self frame];
+    CGPoint anchor = [self anchorPoint];
+    
+    CGPoint result = CGPointMake(frame.origin.x + (anchor.x * frame.size.width),
+                                 frame.origin.y + (anchor.y * frame.size.height));
+                                 
+    return result;
+}
+
+@synthesize anchorPoint = _anchorPoint;
+
+- (CGPoint)anchorPointToGivePosition:(CGPoint)position;
+{
+    NSRect frame = [self frame];
+    
+    CGPoint result = CGPointMake((position.x - frame.origin.x) / frame.size.width,
+                                 (position.y - frame.origin.y) / frame.size.height);
+    
+    return result;
 }
 
 #pragma mark Relative Position
@@ -696,7 +660,7 @@
     return [NSArray arrayWithObject:result];
 }
 
-- (void)moveToRelativePosition:(CGPoint)position;
+- (void)setRelativePosition:(CGPoint)position;
 {
     // Display space currently occupied…
     [self setNeedsDisplay];
@@ -729,12 +693,12 @@
 - (void)moveToPosition:(CGPoint)position;
 {
     // Take existing offset into account
-    CGPoint currentPosition = [self positionIgnoringRelativePosition];
+    CGPoint currentPosition = [self position];
     
-    CGPoint relativePosition = CGPointMake(position.x - currentPosition.x,
-                                           position.y - currentPosition.y);
+    CGPoint relativePosition = CGPointMake(_relativePosition.x + (position.x - currentPosition.x),
+                                           _relativePosition.y + (position.y - currentPosition.y));
     
-    [self moveToRelativePosition:relativePosition];
+    [self setRelativePosition:relativePosition];
 }
 
 - (void)removeRelativePosition:(BOOL)animated;
@@ -914,24 +878,7 @@
 #pragma mark -
 
 
-@implementation SVContentObject (SVDOMController)
-
-- (SVDOMController *)newDOMController;
-{
-    return [[SVDOMController alloc] initWithRepresentedObject:self];
-}
-
-@end
-
-
-#pragma mark -
-
-
 @implementation WEKWebEditorItem (SVDOMController)
-
-#pragma mark Content
-
-- (void)loadHTMLElementFromDocument:(DOMDocument *)document; { }
 
 #pragma mark Updating
 
@@ -974,17 +921,17 @@
     [[self childWebEditorItems] makeObjectsPerformSelector:_cmd];
 }
 
-#pragma mark Moving in Article
+#pragma mark Moving
 
 - (void)moveItemUp:(SVDOMController *)item;
 {
-    // By default have no idea how to move, so get parent to do it
+    // By default have no idea how to move, so get parent to move us instead
     [[self parentWebEditorItem] moveItemUp:self];
 }
 
 - (void)moveItemDown:(SVDOMController *)item;
 {
-    // By default have no idea how to move, so get parent to do it
+    // By default have no idea how to move, so get parent to move us instead
     [[self parentWebEditorItem] moveItemDown:self];
 }
 
@@ -1004,15 +951,15 @@
 
 @implementation WEKDOMController (SVDOMController)
 
-- (DOMNode *)previousDOMNode; { return [[self HTMLElement] previousSibling]; }
+- (DOMNode *)previousDOMNode; { return [[self node] previousSibling]; }
 
-- (DOMNode *)nextDOMNode; { return [[self HTMLElement] nextSibling]; }
+- (DOMNode *)nextDOMNode; { return [[self node] nextSibling]; }
 
 #pragma mark Moving
 
 - (void)exchangeWithPreviousDOMNode;     // swaps with previous sibling node
 {
-    DOMElement *element = [self HTMLElement];
+    DOMNode *element = [self node];
     
     [[element parentNode] insertBefore:[element previousSibling]
                               refChild:[element nextSibling]];
@@ -1020,7 +967,7 @@
 
 - (void)exchangeWithNextDOMNode;   // swaps with next sibling node
 {
-    DOMElement *element = [self HTMLElement];
+    DOMNode *element = [self node];
     
     [[element parentNode] insertBefore:[element nextSibling]
                               refChild:element];

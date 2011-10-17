@@ -76,7 +76,7 @@
 
 - (BOOL)showsTitle; { return YES; }
 
-// Returns YES if truncated.
+- (NSArray *)keywords; { return nil; }
 
 - (void)writeRSSFeedItemDescription { }
 
@@ -120,6 +120,8 @@
                            relativeToURL:[[self collection] URL]];
     return result;
 }
+
+- (NSString *)fileNameExtension; { return [[self filename] pathExtension]; }
 
 - (SVLink *)link;
 {

@@ -716,7 +716,9 @@
         || [key isEqualToString:@"fbNumberOfPosts"] 
         || [key isEqualToString:@"fbColorScheme"]
         || [key isEqualToString:@"siteTitleAlignment"]
-        || [key isEqualToString:@"taglineAlignment"])
+        || [key isEqualToString:@"siteTitleWritingDirection"]
+        || [key isEqualToString:@"taglineAlignment"]
+        || [key isEqualToString:@"taglineWritingDirection"])
     {
         return YES;
     }
@@ -737,22 +739,6 @@
     return [SVMediaRecord mediaWithBundledURL:URL
                                        entityName:entityName
                    insertIntoManagedObjectContext:[self managedObjectContext]];
-}
-
-@end
-
-
-#pragma mark -
-
-
-/*  KTDesign is not publicly exposed to plug-ins. So, we have to mirror any methods they need here.
- */
-
-@implementation KTMaster (PluginAPI)
-
-- (NSDictionary *)imageScalingPropertiesForUse:(NSString *)mediaUse
-{
-    return [[self design] imageScalingPropertiesForUse:mediaUse];
 }
 
 @end

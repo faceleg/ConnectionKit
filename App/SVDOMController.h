@@ -8,10 +8,10 @@
 
 //  
 //  Sandvox's general class for other controllers to subclass.
-//  Supports NSWidthBinding.
 //
 
 
+#import "WEKWebEditorItem.h"
 #import "WebEditingKit.h"
 
 #import "SVContentObject.h"
@@ -20,20 +20,18 @@
 #import "KSDependenciesTracker.h"
 
 
-@class SVWebEditorHTMLContext, KSObjectKeyPathPair, SVWebEditorViewController, SVGraphic, SVResizableDOMController;
-@protocol SVDOMControllerRepresentedObject;
+@class SVWebEditorHTMLContext, KSObjectKeyPathPair, SVWebEditorViewController, SVGraphic, SVPlugInDOMController, SVElementInfo;
 
 
 @interface SVDOMController : WEKWebEditorItem <KSDependenciesTrackerDelegate>
 {
   @private
     // Loading
-    NSString    *_elementID;
-    BOOL        _shouldPublishElementID;
+    BOOL            _shouldPublishElementID;
+    SVElementInfo   *_elementInfo;
     
     // Updating
     NSMutableSet            *_updateSelectors;
-    NSNumber                *_width;
     KSDependenciesTracker   *_dependenciesTracker;
     SVWebEditorHTMLContext  *_context;
     
@@ -41,6 +39,7 @@
     NSManagedObjectContext  *_moc;
     
     // Moving
+    CGPoint _anchorPoint;
     BOOL    _moving;
     CGPoint _relativePosition;
     
@@ -48,31 +47,26 @@
     NSArray *_dragTypes;
 }
 
-#pragma mark Creating a DOM Controller
-
-//  1.  -init
-//  2.  Set elementIdName to a string based off of self and the content object. The context will correct this if a different ID actually gets written
-//  3.  Set content as .representedObject
-- (id)initWithRepresentedObject:(id <SVDOMControllerRepresentedObject>)content;
-
-
 #pragma mark Hierarchy
 - (WEKWebEditorItem *)itemForDOMNode:(DOMNode *)node;
 
 
 #pragma mark DOM Element Loading
 
-//  Asks content object to locate node in the DOM, then stores it as receiver's .HTMLElement. Removes the element's ID attribute from the DOM if it's only there for editing support (so as to keep the Web Inspector tidy)
-- (void)loadHTMLElementFromDocument:(DOMDocument *)document;
+@property(nonatomic, retain) SVElementInfo *elementInfo;
+@property(nonatomic) BOOL shouldIncludeElementIdNameWhenPublishing;
 
-@property(nonatomic, copy, readonly) NSString *elementIdName;
-- (BOOL)hasElementIdName;   // NO if no ID has been set or generated yet
-- (void)setElementIdName:(NSString *)ID includeWhenPublishing:(BOOL)shouldPublish;
+- (void)loadPlaceholderDOMElement;
 
 @property(nonatomic, retain, readwrite) SVWebEditorHTMLContext *HTMLContext;
 
 
 #pragma mark Updating
+
+- (void)update;
+- (void)writeUpdateHTML:(SVHTMLContext *)context;
+- (void)willUpdateWithNewChildController:(WEKWebEditorItem *)newChildController;
+
 - (BOOL)canUpdate;  // default is [self respondsToSelector:@selector(update)]
 - (void)didUpdateWithSelector:(SEL)selector;    // you MUST call this after updating
 
@@ -92,11 +86,6 @@
 - (void)updateIfNeeded; // recurses down the tree
 
 
-#pragma mark Size Binding
-// Width value is stored in an ivar, NOT read from the DOM. You can bind it with NSWidthBinding
-@property(nonatomic, copy) NSNumber *width;
-
-
 #pragma mark Generic Dependencies
 @property(nonatomic, copy, readonly) NSSet *dependencies;
 - (void)addDependency:(KSObjectKeyPathPair *)pair;
@@ -111,27 +100,29 @@
 @property(nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 
 
+#pragma mark Delete
+// Attempts to hide the corresponding object, else passes action onto next responder
+- (void)delete:(id)sender forwardingSelector:(SEL)action;
+
+
 #pragma mark Editing
-- (void)delete;
 - (BOOL)shouldHighlightWhileEditing;
 
 
-#pragma mark Resizing
-- (NSSize)minSize;
-- (CGFloat)maxWidth;
-- (void)resizeToSize:(NSSize)size byMovingHandle:(SVGraphicHandle)handle;
-- (NSSize)constrainSize:(NSSize)size handle:(SVGraphicHandle)handle snapToFit:(BOOL)snapToFit;
-- (unsigned int)resizingMaskForDOMElement:(DOMElement *)element;    // support
-
-
 #pragma mark Moving
-- (void)moveToRelativePosition:(CGPoint)position;
+
 - (void)moveToPosition:(CGPoint)position;   // takes existing relative position into account
-- (void)removeRelativePosition:(BOOL)animated;
+
 - (BOOL)hasRelativePosition;
+- (void)setRelativePosition:(CGPoint)position;
+- (void)removeRelativePosition:(BOOL)animated;
+
 - (CGPoint)positionIgnoringRelativePosition;
 - (NSRect)rectIgnoringRelativePosition;
 - (NSArray *)relativePositionDOMElements;
+
+@property(nonatomic) CGPoint anchorPoint;   // somewhat like Core Animation
+- (CGPoint)anchorPointToGivePosition:(CGPoint)position;
 
 
 #pragma mark Dragging
@@ -140,23 +131,6 @@
 - (NSArray *)registeredDraggedTypes;
 
 
-@end
-
-
-#pragma mark -
-
-
-@protocol SVDOMControllerRepresentedObject <NSObject>
-
-//  A subclass of SVDOMController that the WebEditor will create and maintain in order to edit the object. The default is a vanilla SVDOMController.
-//  I appreciate this slightly crosses the MVC divide, but the important thing is that the receiver never knows about any _specific_ controller, just the class involved.
-- (SVDOMController *)newDOMController;
-
-@end
-
-
-// And provide a base implementation of the protocol:
-@interface SVContentObject (SVDOMController) <SVDOMControllerRepresentedObject>
 @end
 
 

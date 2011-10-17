@@ -10,12 +10,14 @@
 #import "SVRichText.h"
 
 
-@class SVRichText, SVGraphic, SVWebEditorHTMLContext, SVParagraphedHTMLWriterDOMAdaptor;
+@class SVRichText, SVGraphic, SVWebEditorHTMLContext, SVParagraphedHTMLWriterDOMAdaptor, SVElementInfo;
 
 
 @interface SVRichTextDOMController : SVTextDOMController 
 {
   @private
+    SVRichText  *_storage;
+    
     BOOL    _importsGraphics;
     
     BOOL    _isUpdating;
@@ -25,6 +27,14 @@
     DOMHTMLAnchorElement    *_selectedLink;
 }
 
+
+#pragma mark Lifecycle
+// The text is set as .representedObject but you can change after
+- (id)initWithIdName:(NSString *)elementID ancestorNode:(DOMNode *)node textStorage:(SVRichText *)text;
+
+
+#pragma mark Properties
+@property(nonatomic, retain, readonly) SVRichText *richTextStorage;
 @property(nonatomic) BOOL importsGraphics;
 
 
@@ -42,19 +52,11 @@
 
 - (Class)attachmentsControllerClass;    // default is NSArrayController
 
-- (void)writeUpdateHTML:(SVHTMLContext *)context;
-- (void)updateWithHTMLString:(NSString *)html items:(NSArray *)items;
-- (void)willUpdateWithNewChildController:(WEKWebEditorItem *)newChildController;
-
 
 #pragma mark Responding to Changes
 - (DOMNode *)write:(SVParagraphedHTMLWriterDOMAdaptor *)writer
         DOMElement:(DOMElement *)element
               item:(WEKWebEditorItem *)controller;
-
-
-#pragma mark Edit
-- (void)deleteObjects:(id)sender;
 
 
 #pragma mark Selection

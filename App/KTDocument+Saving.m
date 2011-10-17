@@ -410,6 +410,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
 	
 	SVHTMLContext *previewContext = nil;
+    NSMutableString *previewHTML = nil;
     NSMutableArray *filesToDelete = [[NSMutableArray alloc] init];
     
     if (result)
@@ -423,9 +424,14 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         else
         {
             // Build a list of all media to copy into the document
-            NSString *requestName = (saveOperation == NSSaveAsOperation) ? @"MediaToCopyIntoDocument" : @"MediaAwaitingCopyIntoDocument";
+            NSString *requestName = @"MediaToCopyIntoDocument";
             NSFetchRequest *request = [[[self class] managedObjectModel] fetchRequestTemplateForName:requestName];
             NSArray *mediaToWriteIntoDocument = [context executeFetchRequest:request error:NULL];
+            
+            if (saveOperation != NSSaveAsOperation)
+            {
+                mediaToWriteIntoDocument = [mediaToWriteIntoDocument filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"filename == nil || mediaWasLocatedByAlias == YES"]];
+            }
             
             [self writeMediaRecords:mediaToWriteIntoDocument
                               toURL:inURL
@@ -435,14 +441,16 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
          
             
             
-            
         if (saveOperation != NSAutosaveOperation)
         {
             // Generate Quick Look preview HTML. Do this AFTER processing media so their URLs now point to a file inside the doc
-            previewContext = [[SVQuickLookPreviewHTMLContext alloc] init];
+            previewHTML = [[NSMutableString alloc] init];
+            previewContext = [[SVQuickLookPreviewHTMLContext alloc] initWithOutputWriter:previewHTML];
+            
             [previewContext setBaseURL:[KTDocument quickLookPreviewURLForDocumentURL:inURL]];
+            
             [self writePreviewHTML:previewContext];
-            [previewContext flush];
+            [previewContext close];
         }
     }
     
@@ -561,11 +569,11 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 		// Write out Quick Look preview
         if (previewContext)
         {
-            [self writePreviewHTMLString:[[previewContext outputStringWriter] string]
-                                   toURL:[previewContext baseURL]];
-            
+            [self writePreviewHTMLString:previewHTML toURL:[previewContext baseURL]];
             [previewContext release];
         }
+        
+        [previewHTML release];
         [_previewResourcesFileWrapper release]; _previewResourcesFileWrapper = nil;
     }
     
@@ -676,8 +684,6 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         
     
     BOOL result = YES;
-    NSError *error = nil;
-	
     
     // Setup persistent store appropriately
 	NSPersistentStore *store = [self persistentStore];
@@ -687,14 +693,14 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                                                           ofType:typeName
                                               modelConfiguration:nil
                                                     storeOptions:nil
-                                                           error:&error];
+                                                           error:outError];
         
         store = [self persistentStore];
     }
     else if (saveOp != NSSaveOperation)
     {
         // Fake a placeholder file ready for the store to save over
-        result = [[NSData data] writeToURL:URL options:0 error:&error];
+        result = [[NSData data] writeToURL:URL options:0 error:outError];
     }
     
     if (!result) return NO;
@@ -705,7 +711,8 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     // Now we're sure store is available, can give it some metadata.
     // If this fails, it's not critical, so carry on, but do report exceptions after the save. #134115
-    @try
+    NSError *error = nil;
+	@try
     {
         if (saveOp != NSAutosaveOperation)
         {
@@ -843,7 +850,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                 NSURL *fileURL = [dupe fileURL];
                 if (fileURL)
                 {
-                    [aMediaRecord readFromURL:fileURL options:0 error:NULL];
+                    [aMediaRecord readFromURL:fileURL options:SVMediaRecordReadingForce error:NULL];
                     [aMediaRecord setFilename:[fileURL ks_lastPathComponent]];
                 }
                 else
@@ -880,7 +887,8 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     else
     {
         result = NO;
-        [self unreserveFilename:filename];
+        
+        if (![aMediaRecord filename]) [self unreserveFilename:filename];
     }
     
     
@@ -1064,19 +1072,22 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	OBASSERT([NSThread currentThread] == [self thread]);
     
     // Put together the HTML for the thumbnail
-    SVHTMLContext *context = [[SVWebEditorHTMLContext alloc] init];
+    KSStringWriter *writer = [[KSStringWriter alloc] init];
+    SVHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithOutputWriter:writer];
+
     [context setLiveDataFeeds:NO];
     
     [context writeDocumentWithPage:[[self site] rootPage]];
-	
-    NSString *thumbnailHTML = [[context outputStringWriter] string];
+    [context close];
     [context release];
     
 	
     // Load into webview
     [self performSelectorOnMainThread:@selector(_startGeneratingQuickLookThumbnailWithHTML:)
-                           withObject:thumbnailHTML
+                           withObject:[writer string]
                         waitUntilDone:YES];
+    
+    [writer release];
 }
 
 - (void)_startGeneratingQuickLookThumbnailWithHTML:(NSString *)thumbnailHTML
@@ -1086,7 +1097,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     
 	// Create the webview's offscreen window
-	unsigned designViewport = [[[[[self site] rootPage] master] design] viewport];	// Ensures we don't clip anything important
+	unsigned designViewport = [[[[[self site] rootPage] master] design] viewportWidth];	// Ensures we don't clip anything important
 	NSRect frame = NSMakeRect(0.0, 0.0, designViewport+20, designViewport+20);	// The 20 keeps scrollbars out the way
 	
 	_quickLookThumbnailWebViewWindow = [[NSWindow alloc]
@@ -1326,7 +1337,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     [wrapper release];
 }
 
-#pragma mark Reduce File Size
+#pragma mark File Management
 
 - (IBAction)reduceFileSize:(id)sender;
 {
@@ -1405,44 +1416,136 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     if (returnCode == NSAlertFirstButtonReturn)
     {
-        NSString *docPath = [[self fileURL] path];
+        NSURL *docURL = [self fileURL];
         
         NSLog(@"Reduce file size: Removing files:\n%@\nfrom document at %@",
               unusedFiles,
-              docPath);
+              docURL);
         
-        if (![KSWORKSPACE performFileOperation:NSWorkspaceRecycleOperation
-                                        source:docPath
-                                   destination:nil
-                                         files:unusedFiles
-                                           tag:NULL])
+        
+#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_6
+        // Have to use old API on Leopard
+        if (![KSWORKSPACE respondsToSelector:@selector(recycleURLs:completionHandler:)])
         {
-            NSLog(@"Reduce file size: Bulk move to trash failed");
-            
-            // For some reason, couldn't remove the whole lot, so try individually
-            for (NSString *aFilename in unusedFiles)
+            NSString *docPath = [docURL path];
+            if (![KSWORKSPACE performFileOperation:NSWorkspaceRecycleOperation
+                                            source:docPath
+                                       destination:nil
+                                             files:unusedFiles
+                                               tag:NULL])
             {
-                if (![KSWORKSPACE performFileOperation:NSWorkspaceRecycleOperation
-                                                source:docPath
-                                           destination:nil
-                                                 files:[NSArray arrayWithObject:aFilename]
-                                                   tag:NULL])
+                NSLog(@"Reduce file size: Bulk move to trash failed");
+                
+                // For some reason, couldn't remove the whole lot, so try individually
+                for (NSString *aFilename in unusedFiles)
                 {
-                    NSLog(@"Reduce file size: Moving %@ to trash failed", aFilename);
+                    if (![KSWORKSPACE performFileOperation:NSWorkspaceRecycleOperation
+                                                    source:docPath
+                                               destination:nil
+                                                     files:[NSArray arrayWithObject:aFilename]
+                                                       tag:NULL])
+                    {
+                        NSLog(@"Reduce file size: Moving %@ to trash failed", aFilename);
+                    }
                 }
             }
+            
+            
+            // Update doc modification date so doesn't complain on next save
+            NSDate *date = [[[NSFileManager defaultManager] attributesOfItemAtPath:docPath error:NULL] fileModificationDate];
+            if (date)
+            {
+                [self setFileModificationDate:date];
+            }
+            
+            [unusedFiles release];
+            return;
         }
+#endif
         
         
-        // Update doc modification date so doesn't complain on next save
-        NSDate *date = [[[NSFileManager defaultManager] attributesOfItemAtPath:docPath error:NULL] fileModificationDate];
-        if (date)
+        // Modern API!
+        NSMutableArray *urls = [NSMutableArray arrayWithCapacity:[unusedFiles count]];
+        for (NSString *aFile in unusedFiles)
         {
-            [self setFileModificationDate:date];
+            [urls addObject:[docURL ks_URLByAppendingPathComponent:aFile isDirectory:NO]];
         }
+        
+        [KSWORKSPACE recycleURLs:urls completionHandler:^(NSDictionary *newURLs, NSError *error)
+         {
+             if (error)
+             {
+                 [self presentError:error modalForWindow:[self windowForSheet] delegate:nil didPresentSelector:NULL contextInfo:NULL];
+             }
+         }];
     }
     
     [unusedFiles release];
+}
+
+- (IBAction)copyFilesIntoDocument:(id)sender;
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"shouldCopyFileIntoDocument == NO && !(filename beginswith[c] 'Shared/')"];
+    
+    NSError *error;
+    NSArray *mediaNotForCopying = [[self managedObjectContext] fetchAllObjectsForEntityForName:@"MediaRecord" predicate:predicate error:&error];
+    
+    if (!mediaNotForCopying)
+    {
+        [self presentError:error modalForWindow:[self windowForSheet] delegate:nil didPresentSelector:nil contextInfo:NULL];
+        return;
+    }
+    
+    
+    // Bail if nothing is suitable for copying
+    if (![mediaNotForCopying count])
+    {
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert setMessageText:NSLocalizedString(@"All media files are already set to be copied into this document.", "alert message")];
+        
+        [alert beginSheetModalForWindow:[self windowForSheet] modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
+        
+        [alert release];
+        return;
+    }
+    
+    
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert setMessageText:NSLocalizedString(@"Externally located media files will be copied into the document by saving it.", "alert message")];
+    
+    [alert setInformativeText:NSLocalizedString(@"If you're not ready to save the document just yet, the files can still be marked for copying, the next time you save.", "alert message")];
+    
+    [alert addButtonWithTitle:NSLocalizedString(@"Save and Copy Files", "button")];
+    [alert addButtonWithTitle:NSLocalizedString(@"Cancel", "button")];
+    [alert addButtonWithTitle:NSLocalizedString(@"Mark Files for Copying", "button")];
+    
+    [alert beginSheetModalForWindow:[self windowForSheet]
+                      modalDelegate:self
+                     didEndSelector:@selector(copyFilesAlertDidEnd:returnCode:contextInfo:)
+                        contextInfo:[mediaNotForCopying retain]];
+    
+    [alert release];
+}
+
+- (void)copyFilesAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+{
+    NSArray *files = contextInfo;
+    
+    switch (returnCode)
+    {
+        case NSAlertFirstButtonReturn:
+            [files setValue:NSBOOL(YES) forKey:@"shouldCopyFileIntoDocument"];
+            
+            [[alert window] orderOut:self]; // just in case saving presents a sheet
+            [self saveDocument:self];
+             
+            break;
+            
+        case NSAlertThirdButtonReturn:
+            [files setValue:NSBOOL(YES) forKey:@"shouldCopyFileIntoDocument"];
+    }
+    
+    [files release];
 }
 
 @end

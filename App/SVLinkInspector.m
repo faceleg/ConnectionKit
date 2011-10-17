@@ -7,12 +7,15 @@
 //
 
 #import "SVLinkInspector.h"
+
+#import "SVLinkInspectorView.h"
 #import "SVLinkManager.h"
 #import "SVLink.h"
 
 #import "KTDocument.h"
 #import "KTDocWindowController.h"
 #import "KTPage.h"
+#import "SVPasteboardItemInternal.h"
 
 #import "KSURLFormatter.h"
 #import "KSURLUtilities.h"
@@ -21,6 +24,8 @@
 
 
 @implementation SVLinkInspector
+
+#pragma mark Lifecycle
 
 - (void)awakeFromNib
 {
@@ -37,7 +42,15 @@
 	[super dealloc];
 }
 
+#pragma mark View
 
+- (void)loadView;
+{
+    [super loadView];
+    
+    [oLinkInspectorView setDraggingDestinationDelegate:self];
+    [oLinkInspectorView registerForDraggedTypes:[SVPlugIn readableURLTypesForPasteboard:nil]];
+}
 
 #pragma mark Link
 
@@ -199,6 +212,26 @@
 	//[oLinkView setConnected:NO];
     
     [[SVLinkManager sharedLinkManager] modifyLinkTo:nil];
+}
+
+#pragma mark Drag and Drop
+
+- (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender;
+{
+    return ([[self linkManager] isEditable] ? NSDragOperationLink : NSDragOperationNone);
+}
+
+- (BOOL)performDragOperation:(id <NSDraggingInfo>)sender;
+{
+    NSURL *URL = [[sender draggingPasteboard] URL];
+    if (!URL) return NO;
+    
+    SVLinkManager *manager = [self linkManager];
+    
+    [manager modifyLinkTo:[SVLink linkWithURLString:[URL absoluteString]
+                                    openInNewWindow:[[manager selectedLink] openInNewWindow]]];
+    
+    return YES;
 }
 
 @end

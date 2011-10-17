@@ -9,12 +9,6 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface StrikeThroughOn : NSObject
-@end
-
-@interface StrikeThroughOff : NSObject
-@end
-
 @interface TypewriterOn : NSObject
 @end
 

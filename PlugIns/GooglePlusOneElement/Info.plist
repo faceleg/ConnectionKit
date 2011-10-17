@@ -4,18 +4,12 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
-	<key>CFBundleExecutable</key>
-	<string>${EXECUTABLE_NAME}</string>
-	<key>NSHumanReadableCopyright</key>
-	<string>© 2011 Karelia Software. All Rights Reserved.</string>
-	<key>CFBundleIconFile</key>
-	<string></string>
-	<key>CFBundleIdentifier</key>
-	<string>sandvox.${PRODUCT_NAME:rfc1034Identifier}</string>
 	<key>CFBundleDisplayName</key>
 	<string>+1 button</string>
-	<key>SVMinimumAppVersion</key>
-	<string>2.1</string>
+	<key>CFBundleExecutable</key>
+	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.karelia.Sandvox.plugin.${PRODUCT_NAME}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -28,8 +22,16 @@
 	<string>Svox</string>
 	<key>CFBundleVersion</key>
 	<string>REPLACE_ME</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>© 2011 Karelia Software. All Rights Reserved.</string>
 	<key>NSPrincipalClass</key>
 	<string>GooglePlusOnePlugIn</string>
+	<key>SVAlternateIdentifiers</key>
+	<array>
+		<string>sandvox.${PROJECT_NAME}</string>
+	</array>
+	<key>SVMinimumAppVersion</key>
+	<string>2.2</string>
 	<key>SVPlugInIconPath</key>
 	<string>toolbar_plusone.tiff</string>
 </dict>

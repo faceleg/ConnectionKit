@@ -6,10 +6,9 @@
 //  Copyright 2010-2011 Karelia Software. All rights reserved.
 //
 
-#import <CoreData/CoreData.h>
 #import "SVGraphic.h"
+#import "SVRichText.h"
 
-@class SVRichText;
 
 @interface SVTextBox :  SVGraphic  
 
@@ -21,6 +20,13 @@
 @property(nonatomic, copy) NSNumber *isBlockQuote;
 
 
+@end
+
+
+#pragma mark -
+
+
+@interface SVTextBoxBody : SVRichText
 @end
 
 

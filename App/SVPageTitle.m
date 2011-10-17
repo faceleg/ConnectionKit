@@ -18,6 +18,7 @@
 @implementation SVPageTitle
 
 + (NSString *)alignmentKeyPath; { return @"page.titleAlignment"; }
++ (NSString *)textBaseWritingDirectionKeyPath; { return @"page.titleWritingDirection"; }
 
 @dynamic page;
 
