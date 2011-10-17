@@ -14,7 +14,7 @@
 #import "NSURL+Amazon.h"
 #import "NSXMLElement+Amazon.h"
 
-#import "assertions.h"
+#import "Sandvox.h"
 //#include <openssl/sha.h>
 #import <CommonCrypto/CommonHMAC.h>
 // usr/include/CommonCrypto/CommonHMAC.h
@@ -133,31 +133,31 @@
 	switch (store)
 	{
 		case AmazonStoreUS:
-			result = LocalizedStringInThisBundle(@"US","name of *country*, NOT THEIR LANGUAGE, as in the translated sentence 'Change to the %@ Amazon store?'");
+			result = SVLocalizedString(@"US","name of *country*, NOT THEIR LANGUAGE, as in the translated sentence 'Change to the %@ Amazon store?'");
 			break;
 		case AmazonStoreUK:
-			result = LocalizedStringInThisBundle(@"UK","name of *country*, NOT THEIR LANGUAGE, as in the translated sentence 'Change to the %@ Amazon store?'");
+			result = SVLocalizedString(@"UK","name of *country*, NOT THEIR LANGUAGE, as in the translated sentence 'Change to the %@ Amazon store?'");
 			break;
 		case AmazonStoreGermany:
-			result = LocalizedStringInThisBundle(@"German","name of *country*, NOT THEIR LANGUAGE, as in the translated sentence 'Change to the %@ Amazon store?'");
+			result = SVLocalizedString(@"German","name of *country*, NOT THEIR LANGUAGE, as in the translated sentence 'Change to the %@ Amazon store?'");
 			break;
 		case AmazonStoreJapan:
-			result = LocalizedStringInThisBundle(@"Japanese","name of *country*, NOT THEIR LANGUAGE, as in the translated sentence 'Change to the %@ Amazon store?'");
+			result = SVLocalizedString(@"Japanese","name of *country*, NOT THEIR LANGUAGE, as in the translated sentence 'Change to the %@ Amazon store?'");
 			break;
 		case AmazonStoreFrance:
-			result = LocalizedStringInThisBundle(@"French","name of *country*, NOT THEIR LANGUAGE, as in the translated sentence 'Change to the %@ Amazon store?'");
+			result = SVLocalizedString(@"French","name of *country*, NOT THEIR LANGUAGE, as in the translated sentence 'Change to the %@ Amazon store?'");
 			break;
 		case AmazonStoreCanada:
-			result = LocalizedStringInThisBundle(@"Canadian","name of *country*, NOT THEIR LANGUAGE, as in the translated sentence 'Change to the %@ Amazon store?'");
+			result = SVLocalizedString(@"Canadian","name of *country*, NOT THEIR LANGUAGE, as in the translated sentence 'Change to the %@ Amazon store?'");
 			break;
 		case AmazonStoreChina:
-			result = LocalizedStringInThisBundle(@"Chinese","name of *country*, NOT THEIR LANGUAGE, as in the translated sentence 'Change to the %@ Amazon store?'");
+			result = SVLocalizedString(@"Chinese","name of *country*, NOT THEIR LANGUAGE, as in the translated sentence 'Change to the %@ Amazon store?'");
 			break;
 		case AmazonStoreSpain:
-			result = LocalizedStringInThisBundle(@"Spanish","name of *country*, NOT THEIR LANGUAGE, as in the translated sentence 'Change to the %@ Amazon store?'");
+			result = SVLocalizedString(@"Spanish","name of *country*, NOT THEIR LANGUAGE, as in the translated sentence 'Change to the %@ Amazon store?'");
 			break;
 		case AmazonStoreItaly:
-			result = LocalizedStringInThisBundle(@"Italian","name of *country*, NOT THEIR LANGUAGE, as in the translated sentence 'Change to the %@ Amazon store?'");
+			result = SVLocalizedString(@"Italian","name of *country*, NOT THEIR LANGUAGE, as in the translated sentence 'Change to the %@ Amazon store?'");
 			break;
 		default:
 			result = nil;

@@ -10,8 +10,6 @@
 
 #import "AmazonECSOperation.h"
 
-#import "assertions.h"
-
 
 @interface NSImage ( KTComponentsHack )
 + (NSImage *)imageInBundle:(NSBundle *)bundle named:(NSString *)imageName;
