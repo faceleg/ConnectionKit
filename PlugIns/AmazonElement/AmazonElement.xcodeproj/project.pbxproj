@@ -37,6 +37,15 @@
 		3C4A17470D5E75AC009476BF /* Template.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A17430D5E75AC009476BF /* Template.html */; };
 		3C4A17480D5E75AC009476BF /* Thumbnail placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A17440D5E75AC009476BF /* Thumbnail placeholder.png */; };
 		3C4A17580D5E7701009476BF /* AmazonSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C4A17570D5E7701009476BF /* AmazonSupport.framework */; };
+		3C89A74C144BCE5E0028C88A /* canada_flag.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C89A743144BCE5E0028C88A /* canada_flag.png */; };
+		3C89A74D144BCE5E0028C88A /* spain_flag.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C89A744144BCE5E0028C88A /* spain_flag.png */; };
+		3C89A74E144BCE5E0028C88A /* us_flag.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C89A745144BCE5E0028C88A /* us_flag.png */; };
+		3C89A74F144BCE5E0028C88A /* japan_flag.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C89A746144BCE5E0028C88A /* japan_flag.png */; };
+		3C89A750144BCE5E0028C88A /* france_flag.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C89A747144BCE5E0028C88A /* france_flag.png */; };
+		3C89A751144BCE5E0028C88A /* italy_flag.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C89A748144BCE5E0028C88A /* italy_flag.png */; };
+		3C89A752144BCE5E0028C88A /* german_flag.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C89A749144BCE5E0028C88A /* german_flag.png */; };
+		3C89A753144BCE5E0028C88A /* china_flag.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C89A74A144BCE5E0028C88A /* china_flag.png */; };
+		3C89A754144BCE5E0028C88A /* uk_flag.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C89A74B144BCE5E0028C88A /* uk_flag.png */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		CE722FA40D85CE9A00E9C592 /* amazon.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE722FA30D85CE9A00E9C592 /* amazon.icns */; };
 		CEC1F0231141A69D00D8D0B9 /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC1F0211141A69D00D8D0B9 /* Inspector.xib */; };
@@ -105,6 +114,15 @@
 		3C4A17430D5E75AC009476BF /* Template.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Template.html; sourceTree = "<group>"; };
 		3C4A17440D5E75AC009476BF /* Thumbnail placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Thumbnail placeholder.png"; sourceTree = "<group>"; };
 		3C4A17570D5E7701009476BF /* AmazonSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AmazonSupport.framework; path = ../../../../../Builds/Products/Debug/AmazonSupport.framework; sourceTree = SOURCE_ROOT; };
+		3C89A743144BCE5E0028C88A /* canada_flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = canada_flag.png; sourceTree = "<group>"; };
+		3C89A744144BCE5E0028C88A /* spain_flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spain_flag.png; sourceTree = "<group>"; };
+		3C89A745144BCE5E0028C88A /* us_flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = us_flag.png; sourceTree = "<group>"; };
+		3C89A746144BCE5E0028C88A /* japan_flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = japan_flag.png; sourceTree = "<group>"; };
+		3C89A747144BCE5E0028C88A /* france_flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = france_flag.png; sourceTree = "<group>"; };
+		3C89A748144BCE5E0028C88A /* italy_flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = italy_flag.png; sourceTree = "<group>"; };
+		3C89A749144BCE5E0028C88A /* german_flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = german_flag.png; sourceTree = "<group>"; };
+		3C89A74A144BCE5E0028C88A /* china_flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = china_flag.png; sourceTree = "<group>"; };
+		3C89A74B144BCE5E0028C88A /* uk_flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uk_flag.png; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* Amazon.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Amazon.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE722FA30D85CE9A00E9C592 /* amazon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = amazon.icns; sourceTree = "<group>"; };
@@ -158,6 +176,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3C89A756144BCE6A0028C88A /* Amazon Support */,
 				3C30016B1312FB120022E49A /* BUNDLED */,
 				CEDA1DF11302086A00DC6FE7 /* Inspector.strings */,
 				CEC1F0211141A69D00D8D0B9 /* Inspector.xib */,
@@ -305,6 +324,22 @@
 			name = Other;
 			sourceTree = "<group>";
 		};
+		3C89A756144BCE6A0028C88A /* Amazon Support */ = {
+			isa = PBXGroup;
+			children = (
+				3C89A743144BCE5E0028C88A /* canada_flag.png */,
+				3C89A744144BCE5E0028C88A /* spain_flag.png */,
+				3C89A745144BCE5E0028C88A /* us_flag.png */,
+				3C89A746144BCE5E0028C88A /* japan_flag.png */,
+				3C89A747144BCE5E0028C88A /* france_flag.png */,
+				3C89A748144BCE5E0028C88A /* italy_flag.png */,
+				3C89A749144BCE5E0028C88A /* german_flag.png */,
+				3C89A74A144BCE5E0028C88A /* china_flag.png */,
+				3C89A74B144BCE5E0028C88A /* uk_flag.png */,
+			);
+			name = "Amazon Support";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -382,6 +417,15 @@
 				CEDA1DF31302086A00DC6FE7 /* Inspector.strings in Resources */,
 				3C30016C1312FB120022E49A /* BUNDLED in Resources */,
 				27C45A3B136E0BE10040FDAF /* design-time.css in Resources */,
+				3C89A74C144BCE5E0028C88A /* canada_flag.png in Resources */,
+				3C89A74D144BCE5E0028C88A /* spain_flag.png in Resources */,
+				3C89A74E144BCE5E0028C88A /* us_flag.png in Resources */,
+				3C89A74F144BCE5E0028C88A /* japan_flag.png in Resources */,
+				3C89A750144BCE5E0028C88A /* france_flag.png in Resources */,
+				3C89A751144BCE5E0028C88A /* italy_flag.png in Resources */,
+				3C89A752144BCE5E0028C88A /* german_flag.png in Resources */,
+				3C89A753144BCE5E0028C88A /* china_flag.png in Resources */,
+				3C89A754144BCE5E0028C88A /* uk_flag.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
