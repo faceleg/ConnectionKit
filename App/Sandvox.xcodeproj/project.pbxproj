@@ -2380,7 +2380,6 @@
 		3C3F147C09D521AE00C01EED /* MetaMarvel.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MetaMarvel.xcodeproj; path = ../Code/MetaMarvel/MetaMarvel.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C3F54530D6258AA004885E7 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = ../Code/Shared/ThirdParty/Sparkle/Sparkle.framework; sourceTree = SOURCE_ROOT; };
 		3C3F547C0D625919004885E7 /* Connection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Connection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3C3F54A10D625983004885E7 /* AmazonSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AmazonSupport.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C42DDA60D64C8B3004F35FD /* SiteMapElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SiteMapElement.xcodeproj; path = ../PlugIns/SiteMapElement/SiteMapElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C42DE160D64CCC7004F35FD /* RSSBadgeElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RSSBadgeElement.xcodeproj; path = ../PlugIns/RSSBadgeElement/RSSBadgeElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C42E2990D64D253004F35FD /* PageCounterElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PageCounterElement.xcodeproj; path = ../PlugIns/PageCounterElement/PageCounterElement.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -4422,7 +4421,6 @@
 			isa = PBXGroup;
 			children = (
 				CEBEB32C10AA7B07006E7D8A /* iMedia.framework */,
-				3C3F54A10D625983004885E7 /* AmazonSupport.framework */,
 				3CED77980AEEFBDE00D0538C /* Cocoa Frameworks */,
 				1058C7A6FEA54F5311CA2CBB /* System Frameworks */,
 				3C0C021E0905883E00CFFE3E /* Testing Frameworks */,
