@@ -8,9 +8,6 @@
       location = "group:Code/ConnectionKit/Connection.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Code/Shared/Code/AmazonSupport/AmazonSupport.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:Code/iMedia/iMedia.xcodeproj">
    </FileRef>
    <FileRef

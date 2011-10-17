@@ -8,7 +8,7 @@
 
 #import "APManualListProduct.h"
 
-#import <AmazonSupport/AmazonSupport.h>
+#import "AmazonSupport.h"
 #import "Sandvox.h"
 
 #import "NSURL+AmazonPagelet.h"

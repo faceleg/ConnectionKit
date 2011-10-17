@@ -1,0 +1,70 @@
+/* 
+   Marketing.strings
+   Sandvox
+
+   Created by Dan Wood on 10/17/11.
+   Copyright 2011 Karelia Software. All rights reserved.
+   
+   These strings are not actually included in the final release versions of Sandvox.
+   
+ */
+
+"Mac App Store Caption 1" = "Build the website you want, choosing from dozens of designs";
+"Mac App Store Caption 2" = "Create conent with ease. Point and click. Type. Drag and Drop.";
+"Mac App Store Caption 3" = "Compose your website using a wide variety of objects";
+"Mac App Store Caption 4" = "Showcase your photos with slideshow galleries";
+"Mac App Store Caption 5" = "View your website on a wide variety of browsers";
+
+/* Keywords, separate by commas. NO MORE THAN 100 CHARACTERS. Try to match these words as much as possible. Note that a stem like 'make' will match a longer word like 'maker' but 'create' doesn't match 'creator' nor does 'galleries' match 'gallery' in English, so that's why we have both here in English. */ 
+"Mac App Store Keywords" =
+"website,page,site,builder,create,creator,maker,blog,gallery,galleries,design,html,SEO,template";
+
+/* This is the multi-line description for the Mac App store. Try to keep special characters like stars, and paragraph breaks, matching. */
+"Mac App Store Description" =
+"Sandvox 2 donne la possibilité à quiconque, même une personne non experte, de créer en quelques minutes un site web d'apparence contemporaine avec des fonctionnalités modernes.
+
+Remportant un « Apple Design Award », Sandvox est le seul à donner à l'utilisateur une expérience qui le laisse combiner et choisir son propre contenu à glisser-déposer tout en créant automatiquement à la volée un site web riche en fonctionnalités, répondant aux standards. Voyez votre site web prendre vie sous vos yeux ! Quand vous êtes prêt, envoyez simplement votre site sur votre hôte favori directement depuis Sandvox. C'est aussi simple que ça.
+
+“Ceux qui veulent créer rapidement des sites basés sur des modèles remplis de fonctionnalités devraient jeter un coup d'œil sur Sandvov 2.  ★ ★ ★ ★” — Macworld UK
+
+PRINCIPALES FONCTIONNALITÉS 
+
+• Exprimez-vous en choisissant parmi des douzaines de modèles de sites ayant du style
+• Plus de 20 objets au contenu personnalisable vous aident à construire le site de vos rêves
+• Ajoutez facilement du texte, des images, ou des vidéos 
+• Blogues super faciles à alimenter, avec archivage incorporé
+• Ajoutez des connexions instantanées vers Facebook, Twitter et plus encore
+• Exposez vos images avec des grilles de photos et des galeries de style lightbox 
+• Mutualisez vos blogues ou podcasts et offrez des flux RSS faciles pour s'abonner
+• Incorporez du contenu provenant d'autres sites web tels que la météo et les titres des nouvelles 
+• Affichez des produits sélectionnés sur Amazon.com
+• Présentez les vidéos YouTube
+• Mettez à disposition un formulaire de contact pour les commentaires
+• Générez automatiquement un plan du site
+• Rendez les commentaires possibles via Disqus, IntenseDebate et les commentaires de Facebook 
+• Insérez des fonctions personnalisées avec du HTML brut 
+
+“ ★ ★ ★ ★ ” — MacNN · “ ❤ ❤ ❤ ❤ ½ ” — SVMMac 
+
+ENCORE PLUS PUISSANT 
+
+• iMedia Browser — Naviguez sans effort dans vos dossiers Images, iPhoto, Aperture, Lightroom, et Flickr. Prenez des vidéos d'iPhoto et iTunes. Créez un podcast. iMedia Browser met vos ressources au bout de vos doigts. 
+
+• Objets en HTML brut — Placez directement le HTML, JavaScript, PHP, ou un autre code web inséré, tel que des codes d'imbrication fournis par d'autres sites. 
+
+• Personnalisation avancée — Injection de code, CSS personnalisée, Aide au jQuery incorporée et un tout nouveau module Cocoa API sont disponible pour les utilisateurs expérimentés et offrent même davantage de moyens pour personnaliser votre site.
+
+• Options de publication — Publiez via FTP, SFTP, WebDAV
+
+• Optimisation des moteurs de recherche — Structure de site SEO-friendly plus intégration avec les outils Google pour Webmestre et Google Analytics 
+
+Pour plus d'information ou pour regarder une vidéo d'initiation, veuillez visiter notre site web !
+
+ASSISTANCE 
+
+Nous sommes à votre disposition pour vous aider et aimerions beaucoup avoir vos réactions ! Si vous avez des commentaires ou des questions, vous pouvez nous joindre par courriel à support@karelia.com ou visiter notre forum communautaire à karelia.com/forum.
+
+Lisez notre FAQ à karelia.com/faq.
+
+Familier d'iWeb ? Voyez notre guide de transition iWeb Transition Guide à karelia.com/iweb.
+";
