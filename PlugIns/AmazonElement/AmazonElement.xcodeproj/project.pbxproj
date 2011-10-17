@@ -36,7 +36,6 @@
 		3C4A17460D5E75AC009476BF /* amazonlist.css in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A17420D5E75AC009476BF /* amazonlist.css */; };
 		3C4A17470D5E75AC009476BF /* Template.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A17430D5E75AC009476BF /* Template.html */; };
 		3C4A17480D5E75AC009476BF /* Thumbnail placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A17440D5E75AC009476BF /* Thumbnail placeholder.png */; };
-		3C4A17580D5E7701009476BF /* AmazonSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C4A17570D5E7701009476BF /* AmazonSupport.framework */; };
 		3C89A74C144BCE5E0028C88A /* canada_flag.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C89A743144BCE5E0028C88A /* canada_flag.png */; };
 		3C89A74D144BCE5E0028C88A /* spain_flag.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C89A744144BCE5E0028C88A /* spain_flag.png */; };
 		3C89A74E144BCE5E0028C88A /* us_flag.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C89A745144BCE5E0028C88A /* us_flag.png */; };
@@ -113,7 +112,6 @@
 		3C4A17420D5E75AC009476BF /* amazonlist.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = amazonlist.css; sourceTree = "<group>"; };
 		3C4A17430D5E75AC009476BF /* Template.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Template.html; sourceTree = "<group>"; };
 		3C4A17440D5E75AC009476BF /* Thumbnail placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Thumbnail placeholder.png"; sourceTree = "<group>"; };
-		3C4A17570D5E7701009476BF /* AmazonSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AmazonSupport.framework; path = ../../../../../Builds/Products/Debug/AmazonSupport.framework; sourceTree = SOURCE_ROOT; };
 		3C89A743144BCE5E0028C88A /* canada_flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = canada_flag.png; sourceTree = "<group>"; };
 		3C89A744144BCE5E0028C88A /* spain_flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spain_flag.png; sourceTree = "<group>"; };
 		3C89A745144BCE5E0028C88A /* us_flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = us_flag.png; sourceTree = "<group>"; };
@@ -144,7 +142,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */,
-				3C4A17580D5E7701009476BF /* AmazonSupport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,7 +201,6 @@
 		1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				3C4A17570D5E7701009476BF /* AmazonSupport.framework */,
 				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
 			);
 			name = "Linked Frameworks";
