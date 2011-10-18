@@ -317,7 +317,7 @@
 			result = @"it";
 			break;
 		case AmazonStoreUnknown:
-			OBASSERT_NOT_REACHED("You can't ask for the country code of an unknown country, dir!");
+			NSLog("You can't ask for the country code of an unknown country, dir!");
 			break;
 	}
 	
@@ -363,7 +363,7 @@
 			break;
 
 		case AmazonStoreUnknown:
-			OBASSERT_NOT_REACHED("You can't ask for the rcm server of an unknown store.");
+			NSLog("You can't ask for the rcm server of an unknown store.");
 			break;
 	}
 	
@@ -406,7 +406,7 @@
 			break;
 
 		case AmazonStoreUnknown:
-			OBASSERT_NOT_REACHED("You can't ask for the rcm number of an unknown store.");
+			NSLog("You can't ask for the rcm number of an unknown store.");
 			break;
 	}
 	
@@ -628,7 +628,6 @@
 	
 #define SHA256_DIGEST_SIZE 32
 	char const* key = (char const*)[[AmazonOperation secretKeyID] UTF8String];	// amazon_nomoney@karelia.com secret key, no monetary accounts hooked up to this account!
-	OBASSERT(key);
 	char const* data = (char const*) [strToSign UTF8String];
 	
 	//char const* data = "what do ya want for nothing?";
