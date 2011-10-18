@@ -9060,6 +9060,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = xibLocalizationPostprocessor;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -9083,6 +9084,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = xibLocalizationPostprocessor;
+				SDKROOT = macosx;
 				ZERO_LINK = NO;
 			};
 			name = Release;
