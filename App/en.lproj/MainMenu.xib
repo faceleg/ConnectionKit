@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="81"/>
+			<integer value="57"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -160,6 +160,25 @@
 									<reference key="NSOnImage" ref="73959282"/>
 									<reference key="NSMixedImage" ref="49718828"/>
 								</object>
+								<object class="NSMenuItem" id="985662420">
+									<reference key="NSMenu" ref="846920252"/>
+									<string key="NSTitle">Empty Cache…</string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="73959282"/>
+									<reference key="NSMixedImage" ref="49718828"/>
+								</object>
+								<object class="NSMenuItem" id="315275538">
+									<reference key="NSMenu" ref="846920252"/>
+									<bool key="NSIsDisabled">YES</bool>
+									<bool key="NSIsSeparator">YES</bool>
+									<string key="NSTitle"/>
+									<string key="NSKeyEquiv"/>
+									<int key="NSKeyEquivModMask">1048576</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="73959282"/>
+									<reference key="NSMixedImage" ref="49718828"/>
+								</object>
 								<object class="NSMenuItem" id="595281111">
 									<reference key="NSMenu" ref="846920252"/>
 									<string key="NSTitle">Services</string>
@@ -180,25 +199,6 @@
 									</object>
 								</object>
 								<object class="NSMenuItem" id="179692585">
-									<reference key="NSMenu" ref="846920252"/>
-									<bool key="NSIsDisabled">YES</bool>
-									<bool key="NSIsSeparator">YES</bool>
-									<string key="NSTitle"/>
-									<string key="NSKeyEquiv"/>
-									<int key="NSKeyEquivModMask">1048576</int>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="73959282"/>
-									<reference key="NSMixedImage" ref="49718828"/>
-								</object>
-								<object class="NSMenuItem" id="985662420">
-									<reference key="NSMenu" ref="846920252"/>
-									<string key="NSTitle">Empty Cache…</string>
-									<string key="NSKeyEquiv"/>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="73959282"/>
-									<reference key="NSMixedImage" ref="49718828"/>
-								</object>
-								<object class="NSMenuItem" id="315275538">
 									<reference key="NSMenu" ref="846920252"/>
 									<bool key="NSIsDisabled">YES</bool>
 									<bool key="NSIsSeparator">YES</bool>
@@ -4378,7 +4378,6 @@
 							<reference ref="1040745038"/>
 							<reference ref="639243739"/>
 							<reference ref="389279755"/>
-							<reference ref="315275538"/>
 							<reference ref="338200845"/>
 							<reference ref="734583812"/>
 							<reference ref="113795092"/>
@@ -4391,8 +4390,9 @@
 							<reference ref="423077466"/>
 							<reference ref="724561500"/>
 							<reference ref="286766393"/>
-							<reference ref="985662420"/>
 							<reference ref="179692585"/>
+							<reference ref="985662420"/>
+							<reference ref="315275538"/>
 						</object>
 						<reference key="parent" ref="480769980"/>
 					</object>
