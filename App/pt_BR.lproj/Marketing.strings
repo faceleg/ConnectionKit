@@ -9,15 +9,15 @@
    
  */
 
-"Mac App Store Caption 1" = "Build the website you want, choosing from dozens of designs";
-"Mac App Store Caption 2" = "Create conent with ease. Point and click. Type. Drag and Drop.";
-"Mac App Store Caption 3" = "Compose your website using a wide variety of objects";
-"Mac App Store Caption 4" = "Showcase your photos with slideshow galleries";
-"Mac App Store Caption 5" = "View your website on a wide variety of browsers";
+"Mac App Store Caption 1" = "Construir o site que você deseja, escolhendo entre dezenas de projetos";
+"Mac App Store Caption 2" = "Criar conteúdo com facilidade. Apontar e clicar. Digitar. Arrastar e Soltar.";
+"Mac App Store Caption 3" = "Componha seu site usando uma ampla variedade de objetos";
+"Mac App Store Caption 4" = "Exibir suas fotos com galerias de apresentação";
+"Mac App Store Caption 5" = "Visualizar o seu site em uma grande variedade de navegadores";
 
 /* Keywords, separate by commas. NO MORE THAN 100 CHARACTERS. Try to match these words as much as possible. Note that a stem like 'make' will match a longer word like 'maker' but 'create' doesn't match 'creator' nor does 'galleries' match 'gallery' in English, so that's why we have both here in English. */ 
 "Mac App Store Keywords" =
-"website,page,site,builder,create,creator,maker,blog,gallery,galleries,design,html,SEO,layout,CSS";
+"website,página,site,construir,criar,criador,gerar,blog,galeria,galerias,design,html,SEO,modelo";
 
 /* This is the multi-line description for the Mac App store. Try to keep special characters like stars, and paragraph breaks, matching. */
 "Mac App Store Description" =
