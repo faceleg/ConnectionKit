@@ -270,7 +270,7 @@
 	OBPRECONDITION(markup);
 	NSString *result = [markup stringByTrimmingWhitespace];
 	BOOL removedAnything = NO;
-	if (![result isEqualToString:@""]
+	if ( ([result length] > 1)
 		&& (kTruncateNone != truncationType)
 		&& maxItemLength)	// only do something if we want to actually truncate something
 	{
