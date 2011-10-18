@@ -583,6 +583,15 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     }
     
     
+    // If have already read, then this is a revert-type affair
+    if ([self persistentStore])
+    {
+        [self setURLForPersistentStoreUsingFileURL:absoluteURL];
+        [[self managedObjectContext] reset];
+        return YES;
+    }
+    
+    
 	// Should only be called the once
     NSURL *newStoreURL = [[self class] datastoreURLForDocumentURL:absoluteURL type:nil];
     
