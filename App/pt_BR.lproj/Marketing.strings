@@ -1,0 +1,71 @@
+/* 
+   Marketing.strings
+   Sandvox
+
+   Created by Dan Wood on 10/17/11.
+   Copyright 2011 Karelia Software. All rights reserved.
+   
+   These strings are not actually included in the final release versions of Sandvox.
+   
+ */
+
+"Mac App Store Caption 1" = "Build the website you want, choosing from dozens of designs";
+"Mac App Store Caption 2" = "Create conent with ease. Point and click. Type. Drag and Drop.";
+"Mac App Store Caption 3" = "Compose your website using a wide variety of objects";
+"Mac App Store Caption 4" = "Showcase your photos with slideshow galleries";
+"Mac App Store Caption 5" = "View your website on a wide variety of browsers";
+
+/* Keywords, separate by commas. NO MORE THAN 100 CHARACTERS. Try to match these words as much as possible. Note that a stem like 'make' will match a longer word like 'maker' but 'create' doesn't match 'creator' nor does 'galleries' match 'gallery' in English, so that's why we have both here in English. */ 
+"Mac App Store Keywords" =
+"website,page,site,builder,create,creator,maker,blog,gallery,galleries,design,html,SEO,layout,CSS";
+
+/* This is the multi-line description for the Mac App store. Try to keep special characters like stars, and paragraph breaks, matching. */
+"Mac App Store Description" =
+"O Sandvox 2 capacita qualquer pessoa, mesmo os não-especialistas, a criar um site com um visual contemporâneo e características modernas, em minutos.
+
+Somente o Sandvox — vencedor de um Prêmio de Design da Apple — apresenta características ao usuário que permite combinar e aponta seu próprio conteúdo arrastando e soltando, criando automaticamente um conteúdo rico, moderno e compatível com os padrões Web existentes. Veja o seu site ganhar vida diante de seus olhos! Quando estiver pronto, basta carregar o seu site para o seu domínio diretamente de dentro do Sandvox. É muito fácil.
+
+“Aqueles que querem criar modelos de sites rapidamente baseados em um pacote com diversas características, deve dar uma olhado no Sandvox 2.  ★ ★ ★ ★” — Macworld UK
+
+CARACTERíSTICAS PRINCIPAIS 
+
+• Expresse-se, escolhendo entre dezenas de projetos de desenho de sites
+• Mais de 20 diferentes objetos de conteúdo personalizáveis que vão ajudá-lo a construir o site dos seus sonhos
+• Acrescente textos, imagens, ou filmes 
+• Blogs super fáceis com arquivamento interno
+• Adicione conexões instantâneas para o Facebook, Twitter e outros
+• Exibir suas imagens com Grades de Foto e Galerias de estilo lightbox 
+• Distribuir o seu blog ou podcast e oferecer RSS feeds de fácil acesso 
+• Incorporar o conteúdo de outros sites tais como manchetes de notícias e previsão do tempo 
+• Exibe produtos selecionados da Amazon.com
+• Características de vídeo do YouTube videos
+• Inclui um Formulário de Contato para seus comentários
+• Gera automaticamente um mapa do site
+• Suporte a comentários via Disqus, IntenseDebate e Facebook Comments 
+• Insere características personalizáveis com Raw HTML 
+
+“ ★ ★ ★ ★ ” — MacNN · “ ❤ ❤ ❤ ❤ ½ ” — SVMMac 
+
+MAIS PODEROSO AINDA 
+
+• iMedia Browser — Navegue facilmente em sua pasta Imagens, iPhoto, Aperture, Lightroom e Flickr. Pegue filmes do iPhoto e iTunes. Construa um podcast. O iMedia Browser coloca seus recursos em suas mãos. 
+
+• Objetos Raw HTML — Coloque diretamente HTML, JavaScript, PHP ou outro código da web inserido, tais como incorporar códigos fornecidos por outros sites. 
+
+• Personalização Avançada — Injeção de código, CSS personalizado, suporte interno de jQuery e um novo plug-in API Cocoa estão disponíveis para usuários experientes e oferecem ainda mais maneiras de personalizar o seu site.
+
+• Opções de Publicação — Publicação via FTP, SFTP, WebDAV
+
+• Otimização do Mecanismo de Busca — Estrutura de site SEO amigável mais integração com o Google Webmaster Tools e Google Analytics 
+ 
+
+Para mais informações ou assistir um vídeo introdutório, por favor visite nosso website!
+
+SUPORTE 
+
+Estamos sempre aqui para ajudar e nós adoraríamos ouvi-lo! Se você tiver comentários ou perguntas, você pode entrar em contato conosco pelo e-mail support@karelia.com ou visitar nossa comunidade em karelia.com/forum.
+
+Leia nosso FAQ em karelia.com/faq.
+
+É familiarizado com o iWeb? Veja nosso Guia de Transição do iWeb em karelia.com/iweb.
+";

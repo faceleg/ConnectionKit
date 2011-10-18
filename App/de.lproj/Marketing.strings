@@ -1,0 +1,70 @@
+/* 
+   Marketing.strings
+   Sandvox
+
+   Created by Dan Wood on 10/17/11.
+   Copyright 2011 Karelia Software. All rights reserved.
+   
+   These strings are not actually included in the final release versions of Sandvox.
+   
+ */
+
+"Mac App Store Caption 1" = "Build the website you want, choosing from dozens of designs";
+"Mac App Store Caption 2" = "Create conent with ease. Point and click. Type. Drag and Drop.";
+"Mac App Store Caption 3" = "Compose your website using a wide variety of objects";
+"Mac App Store Caption 4" = "Showcase your photos with slideshow galleries";
+"Mac App Store Caption 5" = "View your website on a wide variety of browsers";
+
+/* Keywords, separate by commas. NO MORE THAN 100 CHARACTERS. Try to match these words as much as possible. Note that a stem like 'make' will match a longer word like 'maker' but 'create' doesn't match 'creator' nor does 'galleries' match 'gallery' in English, so that's why we have both here in English. */ 
+"Mac App Store Keywords" =
+"website,page,site,builder,create,creator,maker,blog,gallery,galleries,design,html,SEO,layout,CSS";
+
+/* This is the multi-line description for the Mac App store. Try to keep special characters like stars, and paragraph breaks, matching. */
+"Mac App Store Description" =
+"Sandvox 2 ermöglicht es jedem, auch Nicht-Experten, eine Website mit einem aktuellen Aussehen und modernen Features zu erstellen, in Minuten.
+
+Nur Sandvox — Gewinner eines Apple Design Awards — verfügt über eine 
+Benutzererlebnis, welches es Ihnen ermöglicht Ihre eigenen Drag-and-Drop Inhalt zu kombinieren und hervorzuheben, während Sie nebenbei eine moderne, Feature-reiche und Standardkonforme Website erstellen. Sehen Sie Ihre Website vor Ihren Augen zum Leben erwachen! Wenn sie fertig ist, laden Sie Ihre Site direkt aus Sandvox zur Ihrem Lieblingsprovider hoch. Es ist so einfach.
+
+“Diejenigen, die schnelle Vorlagen-basierte Websites vollgepackt mit Features erstellen wollen, sollten Sandvox 2 ausprobieren.  ★ ★ ★ ★” — Macworld UK
+
+TOP FEATURES 
+
+• Drücken Sie sich selbst aus, durch Auswählen aus den vielen Dutzend stilvollen Designvorlagen
+• Über 20 verschiedene, anpassbaren Inhaltsobjekten helfen Ihnen die Site Ihrer Träume zu erstellen
+• Fügen Sie einfach Text, Bilder oder Videos hinzu
+• Super einfaches Bloggen, mit eingebauter Archivierung
+• Augenblicklich Verbindungen zu Facebook, Twitter und mehr hinzufügen
+• Zeigen Sie Ihre Bilder mit Fotorastern und Galerien im Lightbox Stil
+• Syndizieren Sie Ihren Blog oder Podcast und bieten Sie einfach zu erreichende RSS Feeds an 
+• Binden Sie Inhalte von anderen Websites, wie Wetter und Nachrichtenschlagzeilen ein
+• Zeigen Sie ausgewählte Produkte von Amazon.de
+• Präsentieren Sie YouTube Videos
+• Fügen Sie ein Kontaktformular für Feedback ein
+• Generieren Sie automatisch eine Sitemap
+• Kommentarfunktion über Disqus, IntenseDebate und Facebook Kommentare 
+• Fügen Sie eigene Features mit eigenem HTML Quelltext ein
+
+“ ★ ★ ★ ★ ” — MacNN · “ ❤ ❤ ❤ ❤ ½ ” — SVMMac 
+
+UND NOCH MEHR LEISTUNGEN
+
+• iMedia Browser — Müheloses Durchstöbern Ihrers Bilder Ordners, iPhoto, Aperture, Lightroom, und Flickr. Einfügen von Videos aus iPhoto und iTunes. Erstellen Sie einen Podcast. Der iMedia Browser stellt Ihre Resourcen an Ihre Fingerspitzen.
+
+• HTML Quelltext Objekte — Direktes Einfügen von HTML, JavaScript, PHP, oder anderem Web Code, wie Einbettungscode von anderen Sites.
+
+• Erweiterte Anpassung — Code Injektion, eigene CSS, eingebauter jQuery Support und ein brandneuer Cocoa Plugin API sind für erfahrene Benutzer vorhanden, um noch weiter Wege zur Anpassung Ihrer Site zu eröffnen.
+
+• Veröffentlichungs Optionen— Veröffentlichen via FTP, SFTP, WebDAV
+
+• Search Engine Optimierung — SEO-freundliche Site Struktur plus Integration mit Google Webmaster Tools und Google Analytics
+
+Für weitere Information oder um sich eine Video Einführunge anzusehen, besuchen Sie bitte unsere Website!
+
+UNTERSTÜTZUNG
+
+Wir sind immer hier um zu helfen und wir freuen uns drauf, von Ihen zu hören! Wenn Sie Feedback oder Fragen haben, können Sie uns per E-Mail unter support@karelia.com erreichen oder Sie besuchen unser Forum unter karelia.com/forum.
+Lesen Sie unsere FAQ auf karelia.com/faq.
+
+Vertraut mit iWeb? Schauen Sie sich unsern iWeb Umstiegsleitfaden auf karelia.com/iweb an.
+";

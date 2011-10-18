@@ -691,10 +691,6 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     return preferredID;
 }
 
-#pragma mark Text Blocks
-
-- (void)willWriteSummaryOfPage:(SVSiteItem *)page; { }
-
 #pragma mark Sidebar
 
 @synthesize sidebarPageletsController = _sidebarPageletsController;

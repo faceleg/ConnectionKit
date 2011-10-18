@@ -162,10 +162,6 @@ typedef NSUInteger SVPageImageRepresentationOptions2;
 - (void)buildAttributesForResizableElement:(NSString *)elementName object:(NSObject *)object DOMControllerClass:(Class)controllerClass sizeDelta:(NSSize)sizeDelta options:(SVResizingOptions)options;  // support
 
 
-#pragma mark Text Blocks
-- (void)willWriteSummaryOfPage:(SVSiteItem *)page;
-
-
 #pragma mark Sidebar
 // The context will provide a single controller for sidebar pagelets (pre-sorted etc.)
 @property(nonatomic, retain) SVSidebarPageletsController *sidebarPageletsController;

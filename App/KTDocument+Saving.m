@@ -663,8 +663,6 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         
     
     BOOL result = YES;
-    NSError *error = nil;
-	
     
     // Setup persistent store appropriately
 	NSPersistentStore *store = [self persistentStore];
@@ -674,14 +672,14 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                                                           ofType:typeName
                                               modelConfiguration:nil
                                                     storeOptions:nil
-                                                           error:&error];
+                                                           error:outError];
         
         store = [self persistentStore];
     }
     else if (saveOp != NSSaveOperation)
     {
         // Fake a placeholder file ready for the store to save over
-        result = [[NSData data] writeToURL:URL options:0 error:&error];
+        result = [[NSData data] writeToURL:URL options:0 error:outError];
     }
     
     if (!result) return NO;
@@ -692,7 +690,8 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     // Now we're sure store is available, can give it some metadata.
     // If this fails, it's not critical, so carry on, but do report exceptions after the save. #134115
-    @try
+    NSError *error = nil;
+	@try
     {
         if (saveOp != NSAutosaveOperation)
         {
@@ -1396,41 +1395,68 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     if (returnCode == NSAlertFirstButtonReturn)
     {
-        NSString *docPath = [[self fileURL] path];
+        NSURL *docURL = [self fileURL];
         
         NSLog(@"Reduce file size: Removing files:\n%@\nfrom document at %@",
               unusedFiles,
-              docPath);
+              docURL);
         
-        if (![KSWORKSPACE performFileOperation:NSWorkspaceRecycleOperation
-                                        source:docPath
-                                   destination:nil
-                                         files:unusedFiles
-                                           tag:NULL])
+        
+#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_6
+        // Have to use old API on Leopard
+        if (![KSWORKSPACE respondsToSelector:@selector(recycleURLs:completionHandler:)])
         {
-            NSLog(@"Reduce file size: Bulk move to trash failed");
-            
-            // For some reason, couldn't remove the whole lot, so try individually
-            for (NSString *aFilename in unusedFiles)
+            NSString *docPath = [docURL path];
+            if (![KSWORKSPACE performFileOperation:NSWorkspaceRecycleOperation
+                                            source:docPath
+                                       destination:nil
+                                             files:unusedFiles
+                                               tag:NULL])
             {
-                if (![KSWORKSPACE performFileOperation:NSWorkspaceRecycleOperation
-                                                source:docPath
-                                           destination:nil
-                                                 files:[NSArray arrayWithObject:aFilename]
-                                                   tag:NULL])
+                NSLog(@"Reduce file size: Bulk move to trash failed");
+                
+                // For some reason, couldn't remove the whole lot, so try individually
+                for (NSString *aFilename in unusedFiles)
                 {
-                    NSLog(@"Reduce file size: Moving %@ to trash failed", aFilename);
+                    if (![KSWORKSPACE performFileOperation:NSWorkspaceRecycleOperation
+                                                    source:docPath
+                                               destination:nil
+                                                     files:[NSArray arrayWithObject:aFilename]
+                                                       tag:NULL])
+                    {
+                        NSLog(@"Reduce file size: Moving %@ to trash failed", aFilename);
+                    }
                 }
             }
+            
+            
+            // Update doc modification date so doesn't complain on next save
+            NSDate *date = [[[NSFileManager defaultManager] attributesOfItemAtPath:docPath error:NULL] fileModificationDate];
+            if (date)
+            {
+                [self setFileModificationDate:date];
+            }
+            
+            [unusedFiles release];
+            return;
         }
+#endif
         
         
-        // Update doc modification date so doesn't complain on next save
-        NSDate *date = [[[NSFileManager defaultManager] attributesOfItemAtPath:docPath error:NULL] fileModificationDate];
-        if (date)
+        // Modern API!
+        NSMutableArray *urls = [NSMutableArray arrayWithCapacity:[unusedFiles count]];
+        for (NSString *aFile in unusedFiles)
         {
-            [self setFileModificationDate:date];
+            [urls addObject:[docURL ks_URLByAppendingPathComponent:aFile isDirectory:NO]];
         }
+        
+        [KSWORKSPACE recycleURLs:urls completionHandler:^(NSDictionary *newURLs, NSError *error)
+         {
+             if (error)
+             {
+                 [self presentError:error modalForWindow:[self windowForSheet] delegate:nil didPresentSelector:NULL contextInfo:NULL];
+             }
+         }];
     }
     
     [unusedFiles release];

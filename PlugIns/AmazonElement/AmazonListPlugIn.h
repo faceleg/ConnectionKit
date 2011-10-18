@@ -11,7 +11,7 @@
 
 #import "Sandvox.h"
 
-#import <AmazonSupport/AmazonSupport.h>
+#import "AmazonSupport.h"
 
 
 extern NSString * const APDisplayTabIdentifier;
