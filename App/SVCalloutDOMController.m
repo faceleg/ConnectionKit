@@ -11,6 +11,7 @@
 #import "SVHTMLContext.h"
 #import "KTPage.h"
 #import "SVRichTextDOMController.h"
+#import "SVWebEditorView.h"
 
 #import "DOMNode+Karelia.h"
 
