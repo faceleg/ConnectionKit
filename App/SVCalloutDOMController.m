@@ -8,7 +8,10 @@
 
 #import "SVCalloutDOMController.h"
 
+#import "KTDesign.h"
 #import "SVHTMLContext.h"
+#import "KTImageScalingSettings.h"
+#import "KTMaster.h"
 #import "KTPage.h"
 #import "SVRichTextDOMController.h"
 #import "SVWebEditorView.h"
@@ -138,11 +141,10 @@
 - (CGFloat)maxWidthForChild:(WEKWebEditorItem *)aChild;
 {
     // Base limit on design rather than the DOM
-    SVGraphic *graphic = [aChild representedObject];
-    OBASSERT(graphic);
-    
-    KTPage *page = [[self HTMLContext] page];
-    return [graphic maxWidthOnPage:page];
+    KTDesign *design = [[(KTPage *)[[self HTMLContext] page] master] design];
+    KTImageScalingSettings *settings = [design imageScalingSettingsForUse:@"KTPageletMedia"];
+    CGFloat result = [settings size].width;
+    return result;
 }
 
 #pragma mark Moving
