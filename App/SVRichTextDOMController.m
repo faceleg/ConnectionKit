@@ -570,12 +570,7 @@ static void *sBodyTextObservationContext = &sBodyTextObservationContext;
 
 - (CGFloat)maxWidthForChild:(WEKWebEditorItem *)aChild;
 {
-    // Base limit on design rather than the DOM
-    SVGraphic *graphic = [aChild representedObject];
-    OBASSERT(graphic);
-    
-    KTPage *page = [[self HTMLContext] page];
-    return [graphic maxWidthOnPage:page];
+    return [[self richTextStorage] maxGraphicWidth];
 }
 
 #pragma mark Moving

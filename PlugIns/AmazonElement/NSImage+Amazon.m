@@ -53,7 +53,7 @@
 			filename = @"china_flag.png";
 			break;
 		case AmazonStoreUnknown:
-			OBASSERT_NOT_REACHED("No flag for unknown store.");
+			NSLog(@"No flag for unknown store.");
 			break;
 	}
 	

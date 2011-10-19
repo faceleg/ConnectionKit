@@ -9,6 +9,7 @@
 #import "SVPublishingRecord.h"
 
 #import "SVDirectoryPublishingRecord.h"
+#import "KTHostProperties.h"
 
 #import "NSError+Karelia.h"
 #import "NSString+Karelia.h"
@@ -51,6 +52,17 @@
 - (NSString *)path; // relative to the root record
 {
     NSString *result = [[[self parentDirectoryRecord] path] stringByAppendingPathComponent:[self filename]];
+    
+    // Correct old MobileMe/iDisk paths
+    if ([result isEqualToString:@"/"])
+    {
+        KTHostProperties *hostProperties = [self valueForKeyPath:@"parentDirectoryRecord.hostProperties"];
+        if ([[hostProperties valueForKey:@"protocol"] isEqualToString:@".Mac"])
+        {
+            result = [hostProperties valueForKey:@"userName"];
+        }
+    }
+    
     return result;
 }
 

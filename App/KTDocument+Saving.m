@@ -1477,6 +1477,19 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
              {
                  [self presentError:error modalForWindow:[self windowForSheet] delegate:nil didPresentSelector:NULL contextInfo:NULL];
              }
+             else
+             {
+                 NSAlert *alert = [[NSAlert alloc] init];
+                 
+                 NSString *format = ([newURLs count] == 1 ?
+                                     NSLocalizedString(@"1 file was moved to the trash.", "alert message") :
+                                     NSLocalizedString(@"%u files were moved to the trash.", "alert message"));
+                 [alert setMessageText:[NSString stringWithFormat:format, [newURLs count]]];
+                 
+                 [alert beginSheetModalForWindow:[self windowForSheet] modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
+                 
+                 [alert release];
+             }
          }];
     }
     
