@@ -714,6 +714,30 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     [undoManager enableUndoRegistration];
 }
 
+- (BOOL)revertToContentsOfURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError;
+{
+    // Tear down old windows
+    for (NSWindowController *aController in [self windowControllers])
+    {
+        [aController retain];
+        [self removeWindowController:aController];
+        [aController close];
+        [aController release];
+    }
+    
+    @try
+    {
+        return [super revertToContentsOfURL:absoluteURL ofType:typeName error:outError];
+    }
+    @finally
+    {
+        [self makeWindowControllers];
+        [self showWindows];
+    }
+    
+    return YES; // I don't see how this would ever happen!
+}
+
 - (void)setFileURL:(NSURL *)absoluteURL
 {
     // Mark persistent store as moved
