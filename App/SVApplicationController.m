@@ -1207,7 +1207,9 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	OBASSERT([NSApp isKindOfClass:[KTApplication class]]);	// make sure we instantiated the right kind of NSApplication subclass
 	
 	// Create a KTDocumentController instance that will become the "sharedInstance".  Do this early.
-	[[[KTDocumentController alloc] init] release];
+	KTDocumentController *docController = [[KTDocumentController alloc] init];
+    OBASSERT([KTDocumentController sharedDocumentController] == docController); // #151021
+    [docController release];    // docController should be retained as is now the shared controller
     
     
 	// Autosave frequency
@@ -1215,8 +1217,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
     if (interval < 5)       interval = 60.0;        // if the number is wildly out of range, go back to our default of 60
     if (interval > 5 * 60)  interval = 60.0;
 
-    KTDocumentController *sharedDocumentController = [KTDocumentController sharedDocumentController];
-    [sharedDocumentController setAutosavingDelay:interval];
+    [docController setAutosavingDelay:interval];
     
     
     // Prepare iMedia
