@@ -60,6 +60,17 @@
 		// Open recent documents, maybe show welcome window.
 		[[SVWelcomeController sharedController] showWindowAndBringToFront:NO initial:firstTimeSoReopenSavedDocuments];
     }
+	
+	// Running Lion? If so, document re-opening is done asynchrously
+	if ([NSDocumentController respondsToSelector:@selector(restoreWindowWithIdentifier:state:completionHandler:)])
+	{
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1ull * NSEC_PER_SEC),dispatch_get_current_queue(), ^{
+			if (0 == [[[NSDocumentController sharedDocumentController] documents] count])
+			{
+				[[SVWelcomeController sharedController] showWindowAndBringToFront:NO initial:NO];
+			}
+		});
+	}
 }
 
 #pragma mark -
