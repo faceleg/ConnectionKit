@@ -292,7 +292,7 @@
 
 - (CGFloat)maxWidthForChild:(WEKWebEditorItem *)aChild;
 {
-    if ([[aChild graphic] isPagelet])
+    if ([aChild calloutDOMController])
     {
         KTDesign *design = [[[[self HTMLContext] page] master] design];
         KTImageScalingSettings *settings = [design imageScalingSettingsForUse:@"KTPageletMedia"];
