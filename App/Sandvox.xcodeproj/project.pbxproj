@@ -4391,7 +4391,6 @@
 				CEC11A2E0D78BE0100513E70 /* Shared */,
 				3C202DF507E00CCC00DE4994 /* Product Dependencies */,
 				19C28FB0FE9D524F11CA2CBB /* Products */,
-				273FA5BF1420A1B00051E616 /* DAVKit.framework */,
 			);
 			name = Marvel;
 			sourceTree = "<group>";
@@ -4426,7 +4425,6 @@
 		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				CEBEB32C10AA7B07006E7D8A /* iMedia.framework */,
 				3CED77980AEEFBDE00D0538C /* Cocoa Frameworks */,
 				1058C7A6FEA54F5311CA2CBB /* System Frameworks */,
 				3C0C021E0905883E00CFFE3E /* Testing Frameworks */,
@@ -4580,11 +4578,13 @@
 		3C202DC907E00BCC00DE4994 /* Third Party Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				CEF2889E11CC2D7300122D03 /* JSTalk.framework */,
 				3C0B1D6810479ABB002EE098 /* BWToolkitFramework.framework */,
 				3C3F547C0D625919004885E7 /* Connection.framework */,
+				273FA5BF1420A1B00051E616 /* DAVKit.framework */,
 				79D35F950974C84000241EDA /* Growl.framework */,
 				3C3F54530D6258AA004885E7 /* Sparkle.framework */,
+				CEBEB32C10AA7B07006E7D8A /* iMedia.framework */,
+				CEF2889E11CC2D7300122D03 /* JSTalk.framework */,
 			);
 			name = "Third Party Frameworks";
 			sourceTree = SOURCE_ROOT;

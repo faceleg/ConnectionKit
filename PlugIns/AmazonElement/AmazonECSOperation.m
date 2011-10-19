@@ -317,7 +317,7 @@
 			result = @"it";
 			break;
 		case AmazonStoreUnknown:
-			NSLog("You can't ask for the country code of an unknown country, dir!");
+			NSLog(@"You can't ask for the country code of an unknown country, dir!");
 			break;
 	}
 	
@@ -363,7 +363,7 @@
 			break;
 
 		case AmazonStoreUnknown:
-			NSLog("You can't ask for the rcm server of an unknown store.");
+			NSLog(@"You can't ask for the rcm server of an unknown store.");
 			break;
 	}
 	
@@ -406,7 +406,7 @@
 			break;
 
 		case AmazonStoreUnknown:
-			NSLog("You can't ask for the rcm number of an unknown store.");
+			NSLog(@"You can't ask for the rcm number of an unknown store.");
 			break;
 	}
 	
