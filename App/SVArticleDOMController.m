@@ -10,9 +10,12 @@
 
 #import "SVAttributedHTML.h"
 #import "SVCalloutDOMController.h"
+#import "KTDesign.h"
 #import "SVGraphicFactory.h"
+#import "KTMaster.h"
 #import "SVMigrationHTMLWriterDOMAdaptor.h"
 #import "KTPage.h"
+#import "KTImageScalingSettings.h"
 #import "SVSidebarPageletsController.h"
 #import "SVTextAttachment.h"
 #import "SVWebEditorViewController.h"
@@ -283,6 +286,23 @@
     
     BOOL result = [super webEditorTextShouldInsertNode:node replacingDOMRange:range givenAction:action];
     return result;
+}
+
+#pragma mark Metrics
+
+- (CGFloat)maxWidthForChild:(WEKWebEditorItem *)aChild;
+{
+    if ([[aChild graphic] isPagelet])
+    {
+        KTDesign *design = [[[[self HTMLContext] page] master] design];
+        KTImageScalingSettings *settings = [design imageScalingSettingsForUse:@"KTPageletMedia"];
+        CGFloat result = [settings size].width;
+        return result;
+    }
+    else
+    {
+        return [super maxWidthForChild:aChild];
+    }
 }
 
 #pragma mark Placement
