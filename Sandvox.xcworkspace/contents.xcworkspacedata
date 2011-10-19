@@ -8,6 +8,9 @@
       location = "group:Code/ConnectionKit/Connection.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:Code/DAVKit/DAVKit.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Code/iMedia/iMedia.xcodeproj">
    </FileRef>
    <FileRef
