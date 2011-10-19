@@ -244,6 +244,9 @@
             cachedSHA1Digest:(NSData *)digest  // save engine the trouble of calculating itself
                       object:(id <SVPublishedObject>)object;
 {
+    OBPRECONDITION(localURL);
+    
+    
     // If already publishing, let be
     // Call to super is deliberate, as want to bypass our check of _pathsBeingHashed
     if ([super isPublishingToPath:remotePath])

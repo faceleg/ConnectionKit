@@ -11,7 +11,10 @@
 #import "SVArticleDOMController.h"
 #import "SVAttributedHTML.h"
 #import "SVContentDOMController.h"
+#import "KTDesign.h"
 #import "SVGraphicContainerDOMController.h"
+#import "KTImageScalingSettings.h"
+#import "KTMaster.h"
 #import "KTPage.h"
 #import "SVPagelet.h"
 #import "SVTextAttachment.h"
@@ -256,11 +259,10 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 - (CGFloat)maxWidthForChild:(WEKWebEditorItem *)aChild;
 {
     // Base limit on design rather than the DOM
-    SVGraphic *graphic = [aChild representedObject];
-    OBASSERT(graphic);
-    
-    KTPage *page = [[self HTMLContext] page];
-    return [graphic maxWidthOnPage:page];
+    KTDesign *design = [[(KTPage *)[[self HTMLContext] page] master] design];
+    KTImageScalingSettings *settings = [design imageScalingSettingsForUse:@"sidebarImage"];
+    CGFloat result = [settings size].width;
+    return result;
 }
 
 #pragma mark Placement Actions

@@ -656,7 +656,7 @@
 {
     DOMElement *result = [self HTMLElement];
     
-    OBPOSTCONDITION(result);
+    if (!result) return nil;
     return [NSArray arrayWithObject:result];
 }
 
