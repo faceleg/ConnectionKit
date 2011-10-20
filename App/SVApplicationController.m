@@ -144,8 +144,10 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 
 @implementation SVApplicationController
 
+#ifndef MAC_APP_STORE
 // Override outlet-based version in KSAppDelegate
 @synthesize sparkleUpdater = _sparkleUpdater;
+#endif
 
 - (NSDate *)referenceTimestamp
 {
