@@ -43,6 +43,7 @@
 }
 
 + (SVPageProxy *)proxyForTargetPage:(SVSiteItem *)page;
+- (void)close;
 
 - (void)setManagedObjectContext:(NSManagedObjectContext *)context;
 
@@ -1116,16 +1117,20 @@
     return result;
 }
 
-- (void)dealloc;
+- (void)close;
 {
     [_childPagesController removeObserver:self forKeyPath:@"arrangedObjects"];
     
     _page->_proxy = nil;
-    [_page release];
+    [_page release]; _page = nil;
     
-    [_childNodes release];
-    [_childPagesController release];
-    
+    [_childNodes release]; _childNodes = nil;
+    [_childPagesController release]; _childPagesController = nil;
+}
+
+- (void)dealloc;
+{
+    [self close];
     [super dealloc];
 }
 
