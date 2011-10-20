@@ -1131,7 +1131,7 @@
     return result;
 }
 
-- (void)invalidate;
+- (void)invalidateRecursively:(BOOL)recursive;
 {
     if (_page)
     {
@@ -1152,14 +1152,17 @@
         }}
         [self didChangeValueForKey:@"representedObject"];
         
+        if (recursive) [_childNodes makeObjectsPerformSelector:@selector(invalidate)];
         [_childNodes release]; _childNodes = nil;
         [_childPagesController release]; _childPagesController = nil;
     }
 }
 
+- (void)invalidate; { [self invalidateRecursively:YES]; }
+
 - (void)dealloc;
 {
-    [self invalidate];
+    [self invalidateRecursively:NO];
     [super dealloc];
 }
 
