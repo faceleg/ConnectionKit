@@ -84,6 +84,8 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 
 - (NSString *)appRegCode;		// for use by JoinListController
 
+#ifndef MAC_APP_STORE
 @property (retain) SUUpdater *sparkleUpdater;
+#endif
 
 @end
