@@ -38,55 +38,14 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 @class KTDocument, KSProgressPanel, KSPluginInstallerController;
 
 @interface SVApplicationController : KSLicensedAppDelegate <IMBParserControllerDelegate>
-{
-    // IBOutlets
-    IBOutlet NSMenuItem     *oToggleInfoMenuItem; // DOESN'T APPEAR TO BE HOOKED UP, OR NEEDED.
-    IBOutlet NSMenuItem     *oToggleMediaMenuItem; // DOESN'T APPEAR TO BE HOOKED UP, OR NEEDED.
+{	
+	IBOutlet NSMenuItem		*oInsertRawHTMLMenuItem;		// put other graphics after this item		
+	IBOutlet NSMenuItem		*oInsertExternalLinkMenuItem;	// put page submenu after this
+	IBOutlet NSMenuItem		*oAboutSandvoxMenuItem;			// put Sparkle Item after this
+	IBOutlet NSMenuItem		*oPreferencesMenuItem;			// put Separator, then Buy/Register Sandvox after this
+	IBOutlet NSMenuItem		*oToggleFullScreenMenuItem;		// Remove this, and the separator after it
 	
-	// Pro menu items
-	IBOutlet NSMenuItem		*oPasteAsMarkupMenuItem;
-	IBOutlet NSMenuItem		*oEditRawHTMLMenuItem;
-	IBOutlet NSMenuItem		*oInsertRawHTMLMenuItem;
-	IBOutlet NSMenuItem		*oInsertHTMLTextMenuItem;
-	IBOutlet NSMenuItem		*oFindSeparator;
-	IBOutlet NSMenuItem		*oFindSubmenu;
-	
-	IBOutlet NSMenuItem		*oCodeInjectionMenuItem;
-	IBOutlet NSMenuItem		*oCodeInjectionLevelMenuItem;
-	IBOutlet NSMenuItem		*oCodeInjectionSeparator;
-	
-	
-	IBOutlet NSMenuItem		*oAdvancedMenu;		// the main submenu
-
-	// below are outlets of items on that menu
-	
-	IBOutlet NSMenuItem		*oStandardViewMenuItem;
-	IBOutlet NSMenuItem		*oStandardViewWithoutStylesMenuItem;
-	IBOutlet NSMenuItem		*oSourceViewMenuItem;
-	IBOutlet NSMenuItem		*oDOMViewMenuItem;
-	IBOutlet NSMenuItem		*oRSSViewMenuItem;
-	IBOutlet NSMenuItem		*oConfigureGoogleMenuItem;
-	
-	IBOutlet NSMenuItem		*oValidateSourceViewMenuItem;
-	
-	// Separators AFTER these pro menus that we can hide/show
-	IBOutlet NSMenuItem		*oAfterValidateSourceViewMenuItem;
-	IBOutlet NSMenuItem		*oAfterEditRawHTMLMenuItem;
-	IBOutlet NSMenuItem		*oAfterConfigureGoogleMenuItem;
-	
-	IBOutlet NSMenuItem		*oInsertExternalLinkMenuItem;
-	
-    // we have pages and collections (summary pages)
-    IBOutlet NSMenu			*oAddPageMenu;
-    IBOutlet NSMenu			*oNewPageMenu;
-    
-    IBOutlet NSMenu			*oBadgesMenu;
-	IBOutlet NSMenu         *oIndexesMenu;
-    IBOutlet NSMenu         *oSocialMediaMenu;
-    IBOutlet NSMenu         *oMoreGraphicsMenu;
-    
-	IBOutlet NSTableView	*oDebugTable;
-	IBOutlet NSPanel		*oDebugMediaPanel;
+	SUUpdater *_sparkleUpdater;
 	
     // ivars	
     BOOL _applicationIsLaunching;
@@ -110,21 +69,19 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 - (IBAction)emptyCache:(id)sender;
 - (IBAction)saveWindowSize:(id)sender;
 
-- (IBAction)showAvailableComponents:(id)sender;
 - (IBAction)showAcknowledgments:(id)sender;
 - (IBAction)showReleaseNotes:(id)sender;
 - (IBAction)showTranscriptWindow:(id)sender;
-- (IBAction)showAvailableDesigns:(id)sender;
 - (IBAction) showWelcomeWindow:(id)sender;
 
 - (IBAction)showProductPage:(id)sender;
 
 - (IBAction)toggleMediaBrowserShown:(id)sender;
 
-- (IBAction)reloadDebugTable:(id)sender;
-
 - (IBAction)showPluginWindow:(id)sender;
 
 - (NSString *)appRegCode;		// for use by JoinListController
+
+@property (retain) SUUpdater *sparkleUpdater;
 
 @end
