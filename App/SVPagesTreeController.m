@@ -45,7 +45,7 @@
 }
 
 + (SVPageProxy *)proxyForTargetPage:(SVSiteItem *)page;
-- (void)close;
+- (void)invalidate;
 
 - (void)setManagedObjectContext:(NSManagedObjectContext *)context;
 
@@ -1121,7 +1121,7 @@
     return result;
 }
 
-- (void)close;
+- (void)invalidate;
 {
     if (_page)
     {
@@ -1145,7 +1145,7 @@
 
 - (void)dealloc;
 {
-    [self close];
+    [self invalidate];
     [super dealloc];
 }
 
