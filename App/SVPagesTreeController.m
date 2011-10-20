@@ -27,6 +27,7 @@
 #import "NSIndexPath+Karelia.h"
 #import "NSObject+Karelia.h"
 #import "NSSortDescriptor+Karelia.h"
+#import "KSObjectKeyPathPair.h"
 
 #import "KSStringXMLEntityEscaping.h"
 #import "KSURLUtilities.h"
@@ -35,7 +36,8 @@
 @interface SVPageProxy : NSObject
 {
 @private
-    SVSiteItem  *_page;
+    SVSiteItem      *_page;
+    NSCountedSet    *_observedKeyPaths;
     
     NSMutableArray      *_childNodes;
     SVPagesController   *_childPagesController;
@@ -1104,6 +1106,8 @@
     _page = [page retain];
     _page->_proxy = self;
     
+    _observedKeyPaths = [[NSCountedSet alloc] init];
+    
     return self;
 }
 
@@ -1119,13 +1123,24 @@
 
 - (void)close;
 {
-    [_childPagesController removeObserver:self forKeyPath:@"arrangedObjects"];
-    
-    _page->_proxy = nil;
-    [_page release]; _page = nil;
-    
-    [_childNodes release]; _childNodes = nil;
-    [_childPagesController release]; _childPagesController = nil;
+    if (_page)
+    {
+        [_childPagesController removeObserver:self forKeyPath:@"arrangedObjects"];
+        
+        while ([_observedKeyPaths count])   // unorthodox loop, to remove dupes properly
+        {
+            KSObjectKeyPathPair *aPair = [_observedKeyPaths anyObject];
+            [_page removeObserver:[aPair object] forKeyPath:[aPair keyPath]];
+            [_observedKeyPaths removeObject:aPair];
+        }
+        [_observedKeyPaths release]; _observedKeyPaths = nil;
+        
+        _page->_proxy = nil;
+        [_page release]; _page = nil;
+        
+        [_childNodes release]; _childNodes = nil;
+        [_childPagesController release]; _childPagesController = nil;
+    }
 }
 
 - (void)dealloc;
@@ -1331,6 +1346,10 @@
     else
     {
         [_page addObserver:observer forKeyPath:keyPath options:options context:context];
+        
+        KSObjectKeyPathPair *pair = [[KSObjectKeyPathPair alloc] initWithObject:observer keyPath:keyPath];
+        [_observedKeyPaths addObject:pair];
+        [pair release];
     }
 }
 
@@ -1342,6 +1361,10 @@
     }
     else
     {
+        KSObjectKeyPathPair *pair = [[KSObjectKeyPathPair alloc] initWithObject:observer keyPath:keyPath];
+        [_observedKeyPaths removeObject:pair];
+        [pair release];
+        
         [_page removeObserver:observer forKeyPath:keyPath];
     }
 }
