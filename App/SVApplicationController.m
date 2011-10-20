@@ -144,6 +144,8 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 
 @implementation SVApplicationController
 
+// Override outlet-based version in KSAppDelegate
+@synthesize sparkleUpdater = _sparkleUpdater;
 
 - (NSDate *)referenceTimestamp
 {
@@ -939,6 +941,8 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 			
  			// Insert Sparkle & Store code for non-MAS versions
 #ifndef MAS
+			self.sparkleUpdater = [[[SUUpdater alloc] init] autorelease];
+			[self.sparkleUpdater setDelegate:self];
 			NSMenu *appMenu = [oAboutSandvoxMenuItem menu];
 			NSUInteger aboutIndex = [appMenu indexOfItem:oAboutSandvoxMenuItem];
 			NSMenuItem *sparkleItem = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Check for Updates…", "menu item")
@@ -958,10 +962,8 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 			
 			// Remove Full Screen Menu if not running Lion.
 			if (
-				NO		// Until we have merged full screen into master, ALWAYS remove this menu item.
-				
-				//![NSWindow instancesRespondToSelector:@selector(convertRectToScreen:)]
-				)	// just a way of knowing it's not Lion
+				YES || // Until we have merged full screen into master, ALWAYS remove this menu item.
+				![NSWindow instancesRespondToSelector:@selector(convertRectToScreen:)] )	// just a way of knowing it's not Lion
 			{
 				NSMenu *viewMenu = [oToggleFullScreenMenuItem menu];
 				NSUInteger fullScreenIndex = [viewMenu indexOfItem:oToggleFullScreenMenuItem];

@@ -45,6 +45,8 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 	IBOutlet NSMenuItem		*oPreferencesMenuItem;			// put Separator, then Buy/Register Sandvox after this
 	IBOutlet NSMenuItem		*oToggleFullScreenMenuItem;		// Remove this, and the separator after it
 	
+	SUUpdater *_sparkleUpdater;
+	
     // ivars	
     BOOL _applicationIsLaunching;
 	BOOL _appIsTerminating;
@@ -79,5 +81,7 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 - (IBAction)showPluginWindow:(id)sender;
 
 - (NSString *)appRegCode;		// for use by JoinListController
+
+@property (retain) SUUpdater *sparkleUpdater;
 
 @end
