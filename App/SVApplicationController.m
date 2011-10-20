@@ -129,7 +129,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 @interface SVApplicationController ()
 
 - (BOOL) appIsExpired;
-- (void)showDebugTableForObject:(id)inObject titled:(NSString *)inTitle;	// a table or array
 
 #if !defined(VARIANT_RELEASE) && defined(EXPIRY_TIMESTAMP)
 - (void)warnExpiring:(id)bogus;
@@ -145,6 +144,8 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 
 @implementation SVApplicationController
 
+// Override outlet-based version in KSAppDelegate
+@synthesize sparkleUpdater = _sparkleUpdater;
 
 - (NSDate *)referenceTimestamp
 {
@@ -938,12 +939,44 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 			[_progressPanel setInformativeText:nil];
 			[_progressPanel makeKeyAndOrderFront:self];*/
 			
-            
+ 			// Insert Sparkle & Store code for non-MAS versions
+#ifndef MAS
+			self.sparkleUpdater = [[[SUUpdater alloc] init] autorelease];
+			[self.sparkleUpdater setDelegate:self];
+			NSMenu *appMenu = [oAboutSandvoxMenuItem menu];
+			NSUInteger aboutIndex = [appMenu indexOfItem:oAboutSandvoxMenuItem];
+			NSMenuItem *sparkleItem = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Check for Updates…", "menu item")
+																  action:@selector(checkForUpdates:)
+														   keyEquivalent:@""] autorelease];
+			[sparkleItem setTarget:self];
+			[appMenu insertItem:sparkleItem atIndex:aboutIndex+1];
+			
+			NSUInteger prefIndex = [appMenu indexOfItem:oPreferencesMenuItem];
+			NSMenuItem *buyItem = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Buy/Register Sandvox…", "menu item")
+															  action:@selector(showRegistrationWindow:)
+													   keyEquivalent:@""] autorelease];
+			[buyItem setTarget:self];
+			[appMenu insertItem:buyItem atIndex:prefIndex+1];
+			[appMenu insertItem:[NSMenuItem separatorItem] atIndex:prefIndex+1];	// insert separator before
+#endif
+			
+			// Remove Full Screen Menu if not running Lion.
+			if (
+				YES || // Until we have merged full screen into master, ALWAYS remove this menu item.
+				![NSWindow instancesRespondToSelector:@selector(convertRectToScreen:)] )	// just a way of knowing it's not Lion
+			{
+				NSMenu *viewMenu = [oToggleFullScreenMenuItem menu];
+				NSUInteger fullScreenIndex = [viewMenu indexOfItem:oToggleFullScreenMenuItem];
+				[viewMenu removeItemAtIndex:fullScreenIndex+1];		// separator after
+				[viewMenu removeItemAtIndex:fullScreenIndex];
+			}
+				
+				
             // Populate the Insert menu
             NSMenuItem *item = nil;
             SVGraphicFactory *factory = nil;
             NSMenu *insertMenu = [oInsertRawHTMLMenuItem menu];
-            NSUInteger index = [insertMenu indexOfItem:oInsertRawHTMLMenuItem];
+            NSUInteger insertIndex = [insertMenu indexOfItem:oInsertRawHTMLMenuItem];
             
             // Raw HTML
             SVGraphicFactory *rawHTMLFactory = [SVGraphicFactory rawHTMLFactory];
@@ -956,7 +989,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 												  withDescription:NO];
             [[[item submenu] itemArray] makeObjectsPerformSelector:@selector(setImage:)
                                                         withObject:nil];
-            [insertMenu insertItem:item atIndex:(index+1)];
+            [insertMenu insertItem:item atIndex:(insertIndex+1)];
             
             // Indexes
             item = [SVGraphicFactory menuItemWithGraphicFactories:[SVGraphicFactory indexFactories]
@@ -964,13 +997,13 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 												  withDescription:NO];
             [[[item submenu] itemArray] makeObjectsPerformSelector:@selector(setImage:)
                                                         withObject:nil];
-            [insertMenu insertItem:item atIndex:index]; 
-            
+            [insertMenu insertItem:item atIndex:insertIndex];
+			            
             // Media Placeholder
             factory = [SVGraphicFactory mediaPlaceholderFactory];
             item = [factory makeMenuItemWithDescription:NO];
             [item setImage:nil];
-            [insertMenu insertItem:item atIndex:index];
+            [insertMenu insertItem:item atIndex:insertIndex];
             
             
 			// Presets. First needs shortcut
@@ -987,23 +1020,8 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
             factory = [SVGraphicFactory textBoxFactory];
             item = [factory makeMenuItemWithDescription:NO];
             [item setImage:nil];
-            [insertMenu insertItem:item atIndex:index];
-            
-            
-            
-            
-            
-            
-			[SVGraphicFactory insertItemsWithGraphicFactories:[SVGraphicFactory moreGraphicFactories]
-                                                       inMenu:oMoreGraphicsMenu
-                                                      atIndex:0
-											  withDescription:NO];
-            [SVGraphicFactory insertItemsWithGraphicFactories:[SVGraphicFactory indexFactories]
-                                                 inMenu:oIndexesMenu
-                                                      atIndex:0
-											  withDescription:NO];
-				
-            
+            [insertMenu insertItem:item atIndex:insertIndex];
+
 			BOOL firstRun = [defaults boolForKey:@"FirstRun"];
 			
 			// If there's no docs open, want to see the placeholder window
@@ -1466,56 +1484,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 
 
 
-- (void)showDebugTableForObject:(id)inObject titled:(NSString *)inTitle	// a table or array
-{
-	OBPRECONDITION(inObject);
-	OBPRECONDITION([inTitle length]);
-	[NSBundle loadNibNamed:@"DebugTable" owner:self];
-	NSTableView *debugTable = oDebugTable;
-	oDebugTable = nil;	// clear out, not using any more.
 
-	[debugTable setDataSource: inObject];
-	[debugTable setDelegate: inObject];
-
-	[[debugTable window] setTitle:inTitle];
-
-	// cascade the window.
-	_cascadePoint = [[debugTable window] cascadeTopLeftFromPoint:_cascadePoint];
-
-	[[debugTable window] orderFront:nil];
-}
-
-- (IBAction)reloadDebugTable:(id)sender;
-{
-	// HACK below!
-	NSTableView *table = [[[[[[sender superview] superview] subviews] objectAtIndex:0] subviews] objectAtIndex:0];
-	if ([table respondsToSelector:@selector(reloadData)])
-	{
-		[table reloadData];
-	}
-	else
-	{
-		NSBeep();
-		NSLog(@"reloadDebugTable can't reload data");
-	}
-}
-
-- (IBAction)showAvailableDesigns:(id)sender;
-{
-	[self showDebugTableForObject:[KSPlugInWrapper pluginsByIdentifierWithFileExtension:kKTDesignExtension]
-                           titled:@"Designs"];
-}
-
-
-- (IBAction)showAvailableComponents:(id)sender
-{
-	[self showDebugTableForObject:[KSPlugInWrapper pluginsByIdentifierWithFileExtension:kKTElementExtension]
-                           titled:@"Available Components: Element Bundles"];
-	[self showDebugTableForObject:[KSPlugInWrapper pluginsByIdentifierWithFileExtension:kKTIndexExtension]
-							titled:@"Available Components: Index Bundles"];
-	[self showDebugTableForObject:[KSPlugInWrapper pluginsByIdentifierWithFileExtension:kKTDesignExtension]
-                           titled:@"Available Components: Design Bundles"];
-}
 
 #pragma mark -
 #pragma mark Support
