@@ -729,6 +729,9 @@
 
 - (void)setContent:(id)content;
 {
+    NSArray *pageProxies = [[[self arrangedObjects] childNodes] valueForKey:@"representedObject"];
+    
+    
     // Replace content with proxies
     if ([content isKindOfClass:[NSArray class]])
     {
@@ -747,6 +750,13 @@
     }
     
     [super setContent:content];
+    
+    
+    // It's teardown time, force proxies to do their teardown
+    if (![content count])
+    {
+        [pageProxies makeObjectsPerformSelector:@selector(invalidate)];
+    }
 }
 
 #pragma mark Removing Objects
