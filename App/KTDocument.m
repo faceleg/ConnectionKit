@@ -587,22 +587,25 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     BOOL result = YES;
     if ([self persistentStore])
     {
-        [self setURLForPersistentStoreUsingFileURL:absoluteURL];
-        [[self managedObjectContext] reset];
+        if (![[[self managedObjectContext] persistentStoreCoordinator] removePersistentStore:[self persistentStore] error:outError])
+        {
+            return NO;
+        }
+        
+        [self setPersistentStore:nil];
         
         [_filenameReservations removeAllObjects];
     }
-    else
-    {
-        // Should only be called the once
-        NSURL *newStoreURL = [[self class] datastoreURLForDocumentURL:absoluteURL type:nil];
-        
-        result = [self configurePersistentStoreCoordinatorForURL:newStoreURL
-                                                          ofType:typeName
-                                              modelConfiguration:nil
-                                                    storeOptions:nil
-                                                           error:outError];
-    }
+    
+    
+    // Setup the store
+    NSURL *newStoreURL = [[self class] datastoreURLForDocumentURL:absoluteURL type:nil];
+    
+    result = [self configurePersistentStoreCoordinatorForURL:newStoreURL
+                                                      ofType:typeName
+                                          modelConfiguration:nil
+                                                storeOptions:nil
+                                                       error:outError];
     
     
     // Grab the site object
