@@ -988,22 +988,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
             item = [factory makeMenuItemWithDescription:NO];
             [item setImage:nil];
             [insertMenu insertItem:item atIndex:index];
-            
-            
-            
-            
-            
-            
-			[SVGraphicFactory insertItemsWithGraphicFactories:[SVGraphicFactory moreGraphicFactories]
-                                                       inMenu:oMoreGraphicsMenu
-                                                      atIndex:0
-											  withDescription:NO];
-            [SVGraphicFactory insertItemsWithGraphicFactories:[SVGraphicFactory indexFactories]
-                                                 inMenu:oIndexesMenu
-                                                      atIndex:0
-											  withDescription:NO];
-				
-            
+
 			BOOL firstRun = [defaults boolForKey:@"FirstRun"];
 			
 			// If there's no docs open, want to see the placeholder window
@@ -1465,40 +1450,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 #pragma mark Debug Methods
 
 
-
-- (void)showDebugTableForObject:(id)inObject titled:(NSString *)inTitle	// a table or array
-{
-	OBPRECONDITION(inObject);
-	OBPRECONDITION([inTitle length]);
-	[NSBundle loadNibNamed:@"DebugTable" owner:self];
-	NSTableView *debugTable = oDebugTable;
-	oDebugTable = nil;	// clear out, not using any more.
-
-	[debugTable setDataSource: inObject];
-	[debugTable setDelegate: inObject];
-
-	[[debugTable window] setTitle:inTitle];
-
-	// cascade the window.
-	_cascadePoint = [[debugTable window] cascadeTopLeftFromPoint:_cascadePoint];
-
-	[[debugTable window] orderFront:nil];
-}
-
-- (IBAction)reloadDebugTable:(id)sender;
-{
-	// HACK below!
-	NSTableView *table = [[[[[[sender superview] superview] subviews] objectAtIndex:0] subviews] objectAtIndex:0];
-	if ([table respondsToSelector:@selector(reloadData)])
-	{
-		[table reloadData];
-	}
-	else
-	{
-		NSBeep();
-		NSLog(@"reloadDebugTable can't reload data");
-	}
-}
 
 - (IBAction)showAvailableDesigns:(id)sender;
 {
