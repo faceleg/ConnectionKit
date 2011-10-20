@@ -44,8 +44,10 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 	IBOutlet NSMenuItem		*oAboutSandvoxMenuItem;			// put Sparkle Item after this
 	IBOutlet NSMenuItem		*oPreferencesMenuItem;			// put Separator, then Buy/Register Sandvox after this
 	IBOutlet NSMenuItem		*oToggleFullScreenMenuItem;		// Remove this, and the separator after it
-	
+    
+#ifndef MAC_APP_STORE
 	SUUpdater *_sparkleUpdater;
+#endif
 	
     // ivars	
     BOOL _applicationIsLaunching;

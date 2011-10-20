@@ -940,7 +940,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 			[_progressPanel makeKeyAndOrderFront:self];*/
 			
  			// Insert Sparkle & Store code for non-MAS versions
-#ifndef MAS
+#ifndef MAC_APP_STORE
 			self.sparkleUpdater = [[[SUUpdater alloc] init] autorelease];
 			[self.sparkleUpdater setDelegate:self];
 			NSMenu *appMenu = [oAboutSandvoxMenuItem menu];
