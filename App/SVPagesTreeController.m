@@ -27,6 +27,7 @@
 #import "NSIndexPath+Karelia.h"
 #import "NSObject+Karelia.h"
 #import "NSSortDescriptor+Karelia.h"
+#import "KSObjectKeyPathPair.h"
 
 #import "KSStringXMLEntityEscaping.h"
 #import "KSURLUtilities.h"
@@ -35,7 +36,8 @@
 @interface SVPageProxy : NSObject
 {
 @private
-    SVSiteItem  *_page;
+    SVSiteItem      *_page;
+    NSCountedSet    *_observedKeyPaths;
     
     NSMutableArray      *_childNodes;
     SVPagesController   *_childPagesController;
@@ -43,6 +45,7 @@
 }
 
 + (SVPageProxy *)proxyForTargetPage:(SVSiteItem *)page;
+- (void)invalidate;
 
 - (void)setManagedObjectContext:(NSManagedObjectContext *)context;
 
@@ -726,6 +729,9 @@
 
 - (void)setContent:(id)content;
 {
+    NSArray *pageProxies = [[[self arrangedObjects] childNodes] valueForKey:@"representedObject"];
+    
+    
     // Replace content with proxies
     if ([content isKindOfClass:[NSArray class]])
     {
@@ -744,6 +750,13 @@
     }
     
     [super setContent:content];
+    
+    
+    // It's teardown time, force proxies to do their teardown
+    if (![content count])
+    {
+        [pageProxies makeObjectsPerformSelector:@selector(invalidate)];
+    }
 }
 
 #pragma mark Removing Objects
@@ -1103,6 +1116,8 @@
     _page = [page retain];
     _page->_proxy = self;
     
+    _observedKeyPaths = [[NSCountedSet alloc] init];
+    
     return self;
 }
 
@@ -1116,16 +1131,38 @@
     return result;
 }
 
+- (void)invalidateRecursively:(BOOL)recursive;
+{
+    if (_page)
+    {
+        [_childPagesController removeObserver:self forKeyPath:@"arrangedObjects"];
+        
+        while ([_observedKeyPaths count])   // unorthodox loop, to remove dupes properly
+        {
+            KSObjectKeyPathPair *aPair = [_observedKeyPaths anyObject];
+            [_page removeObserver:[aPair object] forKeyPath:[aPair keyPath]];
+            [_observedKeyPaths removeObject:aPair];
+        }
+        [_observedKeyPaths release]; _observedKeyPaths = nil;
+        
+        [self willChangeValueForKey:@"representedObject"];
+        {{
+            _page->_proxy = nil;
+            [_page release]; _page = nil;
+        }}
+        [self didChangeValueForKey:@"representedObject"];
+        
+        if (recursive) [_childNodes makeObjectsPerformSelector:@selector(invalidate)];
+        [_childNodes release]; _childNodes = nil;
+        [_childPagesController release]; _childPagesController = nil;
+    }
+}
+
+- (void)invalidate; { [self invalidateRecursively:YES]; }
+
 - (void)dealloc;
 {
-    [_childPagesController removeObserver:self forKeyPath:@"arrangedObjects"];
-    
-    _page->_proxy = nil;
-    [_page release];
-    
-    [_childNodes release];
-    [_childPagesController release];
-    
+    [self invalidateRecursively:NO];
     [super dealloc];
 }
 
@@ -1326,6 +1363,10 @@
     else
     {
         [_page addObserver:observer forKeyPath:keyPath options:options context:context];
+        
+        KSObjectKeyPathPair *pair = [[KSObjectKeyPathPair alloc] initWithObject:observer keyPath:keyPath];
+        [_observedKeyPaths addObject:pair];
+        [pair release];
     }
 }
 
@@ -1337,6 +1378,10 @@
     }
     else
     {
+        KSObjectKeyPathPair *pair = [[KSObjectKeyPathPair alloc] initWithObject:observer keyPath:keyPath];
+        [_observedKeyPaths removeObject:pair];
+        [pair release];
+        
         [_page removeObserver:observer forKeyPath:keyPath];
     }
 }

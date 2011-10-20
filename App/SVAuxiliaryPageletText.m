@@ -49,14 +49,9 @@
 #pragma mark Metrics
 
 @dynamic width;
-- (NSNumber *)contentWidth;
-{
-    return [self width];
-}
-- (void)setContentWidth:(NSNumber *)width;
-{
-    [self setWidth:width];
-}
+- (NSNumber *)contentWidth; { return [self width]; }
+- (void)setContentWidth:(NSNumber *)width; { [self setWidth:width]; }
++ (NSSet *)keyPathsForValuesAffectingContentWidth; { return [NSSet setWithObject:@"width"]; }
 
 - (NSNumber *)height; { return nil; }
 - (NSNumber *)contentHeight; { return NSNotApplicableMarker; }

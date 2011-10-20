@@ -102,7 +102,7 @@
 			break;
 		
 		default:
-			NSLog("Unknown list type should never be passed to Amazon");
+			NSLog(@"Unknown list type should never be passed to Amazon");
 			break;
 	}
 
