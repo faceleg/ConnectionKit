@@ -1135,8 +1135,12 @@
         }
         [_observedKeyPaths release]; _observedKeyPaths = nil;
         
-        _page->_proxy = nil;
-        [_page release]; _page = nil;
+        [self willChangeValueForKey:@"representedObject"];
+        {{
+            _page->_proxy = nil;
+            [_page release]; _page = nil;
+        }}
+        [self didChangeValueForKey:@"representedObject"];
         
         [_childNodes release]; _childNodes = nil;
         [_childPagesController release]; _childPagesController = nil;
