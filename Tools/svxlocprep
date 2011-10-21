@@ -46,9 +46,6 @@ cp -R$VERBOSE ./Contents/Frameworks/iMedia.framework/Versions/A/Resources/$1.lpr
 mkdir -p$VERBOSE $WD/Subversion/Sandvox/Code/ConnectionKit
 cp -R$VERBOSE ./Contents/Frameworks/Connection.framework/Versions/A/Resources/$1.lproj $WD/Subversion/Sandvox/Code/ConnectionKit
 
-mkdir -p$VERBOSE $WD/Subversion/Sandvox/Code/Shared/Code/AmazonSupport
-cp -R$VERBOSE ./Contents/Frameworks/AmazonSupport.framework/Versions/A/Resources/$1.lproj $WD/Subversion/Sandvox/Code/Shared/Code/AmazonSupport
-
 # App & Spotlight
 
 echo "MetaMarvel..."
@@ -123,6 +120,8 @@ find Subversion -name '*.jpg' -delete
 find Subversion -name '*.jpeg' -delete
 find Subversion -name '*.tif' -delete
 find Subversion -name '*.tiff' -delete
+find Subversion -name '*.acorn' -delete
+find Subversion -name '*.opacity' -delete
 
 mv Subversion $FILENAME
 
