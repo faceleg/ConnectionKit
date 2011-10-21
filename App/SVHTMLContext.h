@@ -129,8 +129,8 @@ typedef NSUInteger SVPageImageRepresentationOptions2;
 
 #pragma mark Header Tags
 @property (nonatomic) NSUInteger currentHeaderLevel;    // if you need to write a header tag, use this level
-- (void)incrementHeaderLevel;
-- (void)decrementHeaderLevel;
+- (void)incrementHeadingLevel;
+- (void)decrementHeadingLevel;
 
 
 #pragma mark Graphics

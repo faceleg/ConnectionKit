@@ -286,7 +286,7 @@ static void *sPlugInMinWidthObservationContext = &sPlugInMinWidthObservationCont
 
 - (void)writeHTML:(SVHTMLContext *)context
 {
-    [context incrementHeaderLevel];
+    [context incrementHeadingLevel];
     @try
     {
         NSUInteger openElements = [context openElementsCount];
@@ -348,7 +348,7 @@ static void *sPlugInMinWidthObservationContext = &sPlugInMinWidthObservationCont
     }
     @finally
     {
-        [context decrementHeaderLevel];
+        [context decrementHeadingLevel];
     }
 }
 

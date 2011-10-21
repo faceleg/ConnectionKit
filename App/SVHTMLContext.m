@@ -433,12 +433,12 @@ NSString * const SVDestinationMainCSS = @"_Design/main.css";
     return result;
 }
 
-- (void)incrementHeaderLevel;
+- (void)incrementHeadingLevel;
 {
     [self setCurrentHeaderLevel:[self currentHeaderLevel] + 1];
 }
 
-- (void)decrementHeaderLevel;
+- (void)decrementHeadingLevel;
 {
     [self setCurrentHeaderLevel:[self currentHeaderLevel] - 1];
 }
