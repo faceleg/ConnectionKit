@@ -62,13 +62,8 @@
     return result;
 }
 
-+ (NSString *)HTMLStringWithFragment:(NSString *)fragment docType:(NSString *)docType;
++ (NSString *)DTDfromDocType:(NSString *)docType;
 {
-    OBPRECONDITION(fragment);
-    
-    NSString *title			= @"<title>This is a piece of HTML, wrapped in some markup to help the validator</title>";
-	NSString *commentStart	= @"<!-- BELOW IS THE HTML THAT YOU SUBMITTED TO THE VALIDATOR -->";
-	
 	NSString *localDTD  = [KTPage stringFromDocType:docType local:YES];
     
 	// Special adjustments for local validation on HTML4.
@@ -79,6 +74,19 @@
 	{
 		localDTD = @"";
 	}
+	return localDTD;
+}
+
++ (NSString *)HTMLStringWithFragment:(NSString *)fragment docType:(NSString *)docType includeComments:(BOOL)comments;
+{
+    OBPRECONDITION(fragment);
+    
+    NSString *title			= comments
+	? @"<title>This is a piece of HTML, wrapped in some markup to help the validator</title>"
+	: @"<title></title>";
+	NSString *commentStart	= comments ? @"<!-- BELOW IS THE HTML THAT YOU SUBMITTED TO THE VALIDATOR -->\n" : @"";
+	
+	NSString *DTD = [self DTDfromDocType:docType];
 	// NOTE: If we change the line count of the prelude, we will have to adjust the start= value in -[SVValidatorWindowController validateSource:...]
     
 	NSString *metaCharset = nil;
@@ -104,8 +112,8 @@
 	}
 	
 	NSMutableString *result = [NSMutableString stringWithFormat:
-                                            @"%@\n%@\n<head>\n%@\n%@\n</head>\n<body>\n%@\n",
-                                            localDTD,
+                                            @"%@\n%@\n<head>\n%@\n%@\n</head>\n<body>\n%@",
+                                            DTD,
                                             htmlStart,
                                             metaCharset,
                                             title,
@@ -114,7 +122,8 @@
     
     
 	[result appendString:fragment];
-	[result appendString:@"\n<!-- ABOVE IS THE HTML THAT YOU SUBMITTED TO THE VALIDATOR -->\n</body>\n</html>\n"];
+	if (comments) [result appendString:@"\n<!-- ABOVE IS THE HTML THAT YOU SUBMITTED TO THE VALIDATOR -->"];
+	[result appendString:@"\n</body>\n</html>\n"];
 	return result;
 }
 
@@ -126,49 +135,10 @@
 
 @implementation SVRemoteHTMLValidator
 
-+ (NSString *)HTMLStringWithFragment:(NSString *)fragment docType:(NSString *)docType;
++ (NSString *)DTDfromDocType:(NSString *)docType;
 {
-    NSString *title			= @"<title>This is a piece of HTML, wrapped in some markup to help the validator</title>";
-	NSString *commentStart	= @"<!-- BELOW IS THE HTML THAT YOU SUBMITTED TO THE VALIDATOR -->";
-	
 	NSString *remoteDTD = [KTPage stringFromDocType:docType local:NO];
-    
-	// NOTE: If we change the line count of the prelude, we will have to adjust the start= value in -[SVValidatorWindowController validateSource:...]
-    
-	NSString *metaCharset = nil;
-	NSString *htmlStart = nil;
-	
-    if (![KSHTMLWriter isDocTypeXHTML:docType])
-	{
-        htmlStart	= @"<html lang=\"en\">";
-        metaCharset = @"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">";
-    }
-    else
-    {
-		if ([docType isEqualToString:KSHTMLWriterDocTypeHTML_5])
-        {
-			htmlStart	= @"<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">";	// same as XHTML ?
-			metaCharset = @"<meta charset=\"UTF-8\" />";
-		}
-		else
-        {
-			htmlStart	= @"<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">";
-			metaCharset = @"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\" />";
-		}
-	}
-	
-	NSMutableString *result = [NSMutableString stringWithFormat:
-                                @"%@\n%@\n<head>\n%@\n%@\n</head>\n<body>\n%@\n",
-                                remoteDTD,
-                                htmlStart,
-                                metaCharset,
-                                title,
-                                commentStart];
-    
-    
-    [result appendString:fragment];
-	[result appendString:@"\n<!-- ABOVE IS THE HTML THAT YOU SUBMITTED TO THE VALIDATOR -->\n</body>\n</html>\n"];
-	return result;
+	return remoteDTD;
 }
 
 @end
