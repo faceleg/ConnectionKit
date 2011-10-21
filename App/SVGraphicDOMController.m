@@ -263,12 +263,21 @@
     //[[context rootDOMController] setWebEditorViewController:[self webEditorViewController]];
     
     
-    // Write HTML
-    id <SVComponent> container = [[self parentWebEditorItem] representedObject];   // rarely nil, but sometimes is. #116816
-    
-    if (container) [context beginGraphicContainer:container];
-    [context writeGraphic:[self representedObject]];
-    if (container) [context endGraphicContainer];
+    // Encase the graphic in all its usual parent components so headings etc. are correct
+    NSArray *ancestors = [self ancestorItems];
+    for (WEKWebEditorItem *anItem in [ancestors reverseObjectEnumerator])
+    {
+        id <SVComponent> container = [anItem representedObject];   // rarely nil, but sometimes is. #116816
+        if (container) [context beginGraphicContainer:container];
+    }
+    {{
+        [context writeGraphic:[self representedObject]];
+    }}
+    for (WEKWebEditorItem *anItem in [ancestors reverseObjectEnumerator])
+    {
+        id <SVComponent> container = [anItem representedObject];   // rarely nil, but sometimes is. #116816
+        if (container) [context endGraphicContainer];
+    }
     
     
     // Copy out controllers
