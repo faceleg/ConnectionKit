@@ -583,14 +583,29 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     }
     
     
-	// Should only be called the once
+    // If have already read, then this is a revert-type affair
+    BOOL result = YES;
+    if ([self persistentStore])
+    {
+        if (![[[self managedObjectContext] persistentStoreCoordinator] removePersistentStore:[self persistentStore] error:outError])
+        {
+            return NO;
+        }
+        
+        [self setPersistentStore:nil];
+        
+        [_filenameReservations removeAllObjects];
+    }
+    
+    
+    // Setup the store
     NSURL *newStoreURL = [[self class] datastoreURLForDocumentURL:absoluteURL type:nil];
     
-    BOOL result = [self configurePersistentStoreCoordinatorForURL:newStoreURL
-                                                           ofType:typeName
-                                               modelConfiguration:nil
-                                                     storeOptions:nil
-                                                            error:outError];
+    result = [self configurePersistentStoreCoordinatorForURL:newStoreURL
+                                                      ofType:typeName
+                                          modelConfiguration:nil
+                                                storeOptions:nil
+                                                       error:outError];
     
     
     // Grab the site object
@@ -703,6 +718,30 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     [[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerCheckpointNotification
                                                         object:undoManager];
     [undoManager enableUndoRegistration];
+}
+
+- (BOOL)revertToContentsOfURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError;
+{
+    // Tear down old windows
+    for (NSWindowController *aController in [self windowControllers])
+    {
+        [aController retain];
+        [self removeWindowController:aController];
+        [aController close];
+        [aController release];
+    }
+    
+    @try
+    {
+        return [super revertToContentsOfURL:absoluteURL ofType:typeName error:outError];
+    }
+    @finally
+    {
+        [self makeWindowControllers];
+        [self showWindows];
+    }
+    
+    return YES; // I don't see how this would ever happen!
 }
 
 - (void)setFileURL:(NSURL *)absoluteURL
