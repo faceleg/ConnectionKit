@@ -880,6 +880,22 @@
 
 @implementation WEKWebEditorItem (SVDOMController)
 
+#pragma mark Tree
+
+- (NSArray *)ancestorItems; // sorted with nearest ancestor first
+{
+    NSMutableArray *result = [NSMutableArray array];
+    WEKWebEditorItem *anItem = [self parentWebEditorItem];
+    
+    while (anItem)
+    {
+        [result addObject:anItem];
+        anItem = [anItem parentWebEditorItem];
+    }
+    
+    return result;
+}
+
 #pragma mark Updating
 
 - (SVWebEditorViewController *)webEditorViewController;

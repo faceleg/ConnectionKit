@@ -146,6 +146,10 @@
 - (void)loadHTMLElementFromDocument:(DOMDocument *)document;    // does nothing
 
 
+#pragma mark Tree
+- (NSArray *)ancestorItems; // sorted with nearest ancestor first
+
+
 #pragma mark Updating
 - (SVWebEditorViewController *)webEditorViewController;
 - (void)setNeedsUpdate; // pass up to parent
