@@ -512,8 +512,9 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                 // Move undeleted media back into the doc. #97429
                 if (![[mediaURL path] ks_isSubpathOfPath:[inOriginalContentsURL path]])
                 {
-                    NSURL *undeletionURL = [inURL ks_URLByAppendingPathComponent:[record filename]
-                                                                     isDirectory:NO];
+                    // It appears that in some cases, [record filename] is nil, so use aKey instead which is guaranteed not to be. #150709
+                    NSURL *undeletionURL = [self URLForMediaRecord:record filename:aKey inDocumentWithFileURL:inURL];
+                    
                     [(SVMediaRecord *)record writeToURL:undeletionURL
                                           updateFileURL:YES
                                                   error:NULL];
