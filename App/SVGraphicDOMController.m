@@ -31,6 +31,7 @@
 
 - (BOOL)elementIsPlaceholder:(DOMElement *)element;
 {
+    return ![element ks_isVisible];
     return (![element firstElementChild] && ![[element tagName] isEqualToString:@"IMG"]);
 }
 
