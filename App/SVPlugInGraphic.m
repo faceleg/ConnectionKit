@@ -289,14 +289,14 @@ static void *sPlugInMinWidthObservationContext = &sPlugInMinWidthObservationCont
     [context incrementHeadingLevel];
     @try
     {
-        NSUInteger openElements = [context openElementsCount];
-            
         NSString *identifier = [self plugInIdentifier];
         if (![self shouldWriteHTMLInline])
         {
             [context startElement:@"div"];
             [context writeComment:[NSString stringWithFormat:@" %@ ", identifier]];
         }
+        
+        NSUInteger openElements = [context openElementsCount];
         
         
         SVPlugIn *plugIn = [self plugIn];
