@@ -65,49 +65,7 @@
 	[super dealloc];
 }
 
-- (NSError *)makeErrorLookLikeErrorFromDoubleClickingDocument:(NSError *)anError;
-{
-    OBPRECONDITION(anError);
-    
-	NSDictionary *userInfo = [anError userInfo];
-	NSString *path = [userInfo objectForKey:NSFilePathErrorKey];
-	if (nil == path)
-	{
-		NSURL *url = [userInfo objectForKey:NSURLErrorKey];
-		path = [url path];
-	}
-	NSString *prevTitle = [anError localizedDescription];
-	NSString *desc = nil;
-	if (path)
-	{
-		NSFileManager *fm = [NSFileManager defaultManager];
-		desc = [NSString stringWithFormat:NSLocalizedString(@"The document “%@” could not be opened. %@", @"brief description of error."), [fm displayNameAtPath:path], prevTitle];
-	}
-	else
-	{
-		desc = [NSString stringWithFormat:NSLocalizedString(@"The document could not be opened. %@", @"brief description of error."), prevTitle];
-	}
-	NSString *secondary = [anError localizedRecoverySuggestion]; 
-	if (!secondary)
-	{
-		secondary = [anError localizedFailureReason];
-	}
-	if (!secondary)	// Note:  above returns nil!
-	{
-		secondary = [[anError userInfo] objectForKey:@"reason"];
-		// I'm not sure why but emperically the "reason" key has been set.
-
-	}
-								 
-	NSError *result = [KSError errorWithDomain:[anError domain] code:[anError code]
-						  localizedDescription:desc
-			 localizedRecoverySuggestion:secondary		// we want to show the reason on the alert
-						 underlyingError:anError];
-	
-	return result;
-}
-
-- (BOOL) reopenPreviouslyOpenedDocumentsUsingProgressPanel:(KSProgressPanel *)progressPanel
+- (BOOL)reopenPreviouslyOpenedDocumentsUsingProgressPanel:(KSProgressPanel *)progressPanel
 {
 	BOOL result = NO;		// set to yes if we want welcome window to be shown
 	if ([NSDocumentController respondsToSelector:@selector(restoreWindowWithIdentifier:state:completionHandler:)])
@@ -115,158 +73,30 @@
         return result;
     }
     
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	NSFileManager *fm = [NSFileManager defaultManager];
-	
 	[progressPanel setMessageText:NSLocalizedString(@"Searching for previously opened documents…",
 													"Message while checking documents.")];
 	
-	// figure out if we should create or open document(s)
-	BOOL openLastOpened = ([defaults boolForKey:@"AutoOpenLastOpenedOnLaunch"] &&
-						   !(GetCurrentEventKeyModifiers() & optionKey));   // Case 39352
-	
-	NSArray *lastOpenedPaths = [defaults arrayForKey:kSVOpenDocumentsKey];
-	
-	NSMutableArray *filesFound = [NSMutableArray array];
-	NSMutableArray *filesNotFound = [NSMutableArray array];
-	NSMutableArray *filesInTrash = [NSMutableArray array];
-	NSMutableArray *errorsToPresent = [NSMutableArray array];
-	BOOL atLeastOneDocumentOpened = NO;
-	
-	// figure out what documents, if any, we can and can't find
-	if ( openLastOpened && (nil != lastOpenedPaths) && ([lastOpenedPaths count] > 0) )
-	{
-		id aliasData;
-		for ( aliasData in lastOpenedPaths )
-		{
-			BDAlias *alias = [BDAlias aliasWithData:aliasData];
-			NSString *path = [alias fullPath];
-			if (nil == path)
-			{
-				NSString *lastKnownPath = [alias lastKnownPath];
-				[filesNotFound addObject:lastKnownPath];
-				LOG((@"Can't find '%@'", [lastKnownPath stringByAbbreviatingWithTildeInPath]));
-			}
-			
-			// is it in the Trash? ([KSWORKSPACE userTrashDirectory])
-			else if ( NSNotFound != [path rangeOfString:@".Trash"].location )
-			{
-				// path contains localized .Trash, let's skip it
-				[filesInTrash addObject:alias];
-				LOG((@"Not opening '%@'; it is in the trash", [path stringByAbbreviatingWithTildeInPath]));
-			}
-			else
-			{
-				LOG((@"Going to open '%@'; it is NOT in the trash", path));
-				[filesFound addObject:alias];
-			}
-		}
-	}
-	// run through the possibilities
-	if ( openLastOpened 
-		&& ([lastOpenedPaths count] > 0) 
-		&& ([[[KTDocumentController sharedDocumentController] documents] count] == 0) )
-	{
-		// open whatever used to be open
-		if ( [filesFound count] > 0 )
-		{
-			BDAlias *alias;
-			for ( alias in filesFound )
-			{
-				NSString *path = [alias fullPath];
-				
-				// check to make sure path is valid
-				if ( ![[NSFileManager defaultManager] fileExistsAtPath:path] )
-				{
-					[filesNotFound addObject:path];
-					continue;
-				}				
-				
-				NSString *message = [NSString stringWithFormat:NSLocalizedString(@"Opening %@…", "Alert Message"), [fm displayNameAtPath:[path stringByDeletingPathExtension]]];
-				[progressPanel setMessageText:message];
-				[progressPanel setIcon:[NSImage imageNamed:@"document"]];
-				
-				NSURL *fileURL = [NSURL fileURLWithPath:path];
-				
-				NSError *error = nil;
-				if ([[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:fileURL display:YES error:&error])
-				{
-					atLeastOneDocumentOpened = YES;
-				}
-				else
-				{
-					error = [self makeErrorLookLikeErrorFromDoubleClickingDocument:error];
-					[errorsToPresent addObject:error];		// show the error later
-				}                  
-			}
-		}
-		
-		// Now show the errors we need to present
-		for (NSError *error in errorsToPresent)
-		{
-			if (atLeastOneDocumentOpened)
-			{
-				[[NSDocumentController sharedDocumentController] presentError:error];		// show error as a standalone alert since we won't be showing welcome
-			}
-			else
-			{
-				// Make sure window is showing
-				[self showWindow:self];
-				[[NSDocumentController sharedDocumentController] presentError:error modalForWindow:[self window] delegate:nil didPresentSelector:nil contextInfo:nil];
-			}
-		}
-		
-		// put up an alert showing any files not found (files in Trash are ignored)
-		if ( [filesNotFound count] > 0 )
-		{
-			NSString *missingFiles = [NSString string];
-			unsigned int i;
-			for ( i = 0; i < [filesNotFound count]; i++ )
-			{
-				NSString *toAdd = [[filesNotFound objectAtIndex:i] lastPathComponent];
-				toAdd = [fm displayNameAtPath:toAdd];
-				
-				missingFiles = [missingFiles stringByAppendingString:toAdd];
-				if ( i < ([filesNotFound count]-1) )
-				{
-					missingFiles = [missingFiles stringByAppendingString:@", "];
-				}
-				else if ( i == ([filesNotFound count]-1) && i > 0 )	// no period if only one item
-				{
-					missingFiles = [missingFiles stringByAppendingString:@"."];
-				}
-			}
-			
-			[progressPanel performClose:self];	// hide this FIRST
-
-			// Make sure window is showing
-			[self showWindow:self];
-
-			NSAlert *alert = [[NSAlert alloc] init];
-			[alert addButtonWithTitle:NSLocalizedString(@"OK", @"OK Button")];
-			[alert setMessageText:NSLocalizedString(@"Unable to locate previously opened files.", @"alert: Unable to locate previously opened files.")];
-			[alert setInformativeText:missingFiles];
-			[alert setAlertStyle:NSWarningAlertStyle];
-			
-			if (atLeastOneDocumentOpened)
-			{
-				[alert runModal];		// show error as a standalone alert since we won't be showing welcome
-			}
-			else
-			{
-				[alert beginSheetModalForWindow:[self window] 
-								  modalDelegate:nil 
-								 didEndSelector:nil
-									contextInfo:nil];
-			}
-			[alert release];	// will be dealloced when alert is dismissed
-		}
-	}
-	else
-	{
-		result = YES;		// we can show the welcome window; no recent docs opened.
-	}
-	return result;
+    NSArray *errorsToPresent = [[NSDocumentController sharedDocumentController] reopenPreviouslyOpenedDocuments];
+    
+    
+    // Now show the errors we need to present
+    [progressPanel performClose:self];	// hide this FIRST
+    
+    for (NSError *error in errorsToPresent)
+    {
+        if ([[[NSDocumentController sharedDocumentController] documents] count])
+        {
+            [[NSDocumentController sharedDocumentController] presentError:error];		// show error as a standalone alert since we won't be showing welcome
+        }
+        else
+        {
+            // Make sure window is showing
+            [self showWindow:self];
+            [self presentError:error modalForWindow:[self window] delegate:nil didPresentSelector:nil contextInfo:nil];
+        }
+    }
+    
+    return result;
 }
 
 - (void)showWindowAndBringToFront:(BOOL)forceBringToFront initial:(BOOL)firstTimeSoReopenSavedDocuments;

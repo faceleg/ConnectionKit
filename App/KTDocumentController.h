@@ -21,6 +21,9 @@
     SVDesignPickerController *_designChooser;
 }
 
+// Returns an array of *errors* for docs that failed to open
+- (NSArray *)reopenPreviouslyOpenedDocuments;
+
 - (void)showDocumentPlaceholderWindowInitial:(BOOL)firstTimeSoReopenSavedDocuments;
 
 @end
