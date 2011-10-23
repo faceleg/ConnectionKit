@@ -98,7 +98,7 @@
     if (element)
     {
         // Load descendants since they might share the same element
-        [[self childWebEditorItems] makeObjectsPerformSelector:@selector(HTMLElement)];
+        //[[self childWebEditorItems] makeObjectsPerformSelector:@selector(HTMLElement)];
         
         
         if (!_shouldPublishElementID)
