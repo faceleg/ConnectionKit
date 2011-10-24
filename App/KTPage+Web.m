@@ -484,7 +484,7 @@
     [context close];
     [pool1 release];
     
-	if (recursive)
+	if (recursive && [self isCollection])   // #133764 features a regular page with children, screwing up publish
     {
         for (SVSiteItem *anItem in [self sortedChildren])
         {
