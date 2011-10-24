@@ -11,6 +11,7 @@
 #import "SVHTMLTextBlock.h"
 #import "SVFieldEditorHTMLWriterDOMAdapator.h"
 #import "SVWebEditorHTMLContext.h"
+#import "SVWebEditorView.h"
 
 #import "DOMNode+Karelia.h"
 #import "NSString+Karelia.h"
