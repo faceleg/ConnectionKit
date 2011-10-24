@@ -1154,14 +1154,14 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 }
 
 
-- (BOOL) parserController:(IMBParserController*)inController didLoadParser:(IMBParser*)inParser forMediaType:(NSString*)inMediaType
+- (IMBParser *)parserController:(IMBParserController *)controller willLoadParser:(IMBParser *)parser;
 {
 	
-	if ([inParser isKindOfClass:[IMBFlickrParser class]])
+	if ([parser isKindOfClass:[IMBFlickrParser class]])
 	{
 		// if (IMBRunningOnSnowLeopardOrNewer())
 		{
-			IMBFlickrParser* flickrParser = (IMBFlickrParser*)inParser;
+			IMBFlickrParser* flickrParser = (IMBFlickrParser*)parser;
 			flickrParser.delegate = self;
 			
 			// For your actual app, you would put in the hard-wired strings here.
@@ -1175,7 +1175,10 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 //		}
 		
 	}		// end IMBFlickrParser code
-	return YES;
+    
+    
+    if (![parser canBeUsed]) parser = nil;
+	return parser;
 }
 
 - (BOOL) parserController:(IMBParserController*)inController shouldLoadParser:(NSString*)inParserClassName forMediaType:(NSString*)inMediaType;
