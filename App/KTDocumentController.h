@@ -23,6 +23,7 @@
 
 // Returns an array of *errors* for docs that failed to open
 - (NSArray *)reopenPreviouslyOpenedDocuments;
+- (NSError *)makeErrorLookLikeErrorFromDoubleClickingDocument:(NSError *)anError;
 
 - (void)showDocumentPlaceholderWindowInitial:(BOOL)firstTimeSoReopenSavedDocuments;
 

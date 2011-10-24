@@ -397,48 +397,6 @@
     }
 }
 
-- (NSError *)makeErrorLookLikeErrorFromDoubleClickingDocument:(NSError *)anError;
-{
-    OBPRECONDITION(anError);
-    
-	NSDictionary *userInfo = [anError userInfo];
-	NSString *path = [userInfo objectForKey:NSFilePathErrorKey];
-	if (nil == path)
-	{
-		NSURL *url = [userInfo objectForKey:NSURLErrorKey];
-		path = [url path];
-	}
-	NSString *prevTitle = [anError localizedDescription];
-	NSString *desc = nil;
-	if (path)
-	{
-		NSFileManager *fm = [NSFileManager defaultManager];
-		desc = [NSString stringWithFormat:NSLocalizedString(@"The document “%@” could not be opened. %@", @"brief description of error."), [fm displayNameAtPath:path], prevTitle];
-	}
-	else
-	{
-		desc = [NSString stringWithFormat:NSLocalizedString(@"The document could not be opened. %@", @"brief description of error."), prevTitle];
-	}
-	NSString *secondary = [anError localizedRecoverySuggestion]; 
-	if (!secondary)
-	{
-		secondary = [anError localizedFailureReason];
-	}
-	if (!secondary)	// Note:  above returns nil!
-	{
-		secondary = [[anError userInfo] objectForKey:@"reason"];
-		// I'm not sure why but emperically the "reason" key has been set.
-        
-	}
-    
-	NSError *result = [KSError errorWithDomain:[anError domain] code:[anError code]
-						  localizedDescription:desc
-                   localizedRecoverySuggestion:secondary		// we want to show the reason on the alert
-                               underlyingError:anError];
-	
-	return result;
-}
-
 - (NSArray *)reopenPreviouslyOpenedDocuments;
 {
 	// Figure out if we should create or open document(s)
@@ -542,6 +500,48 @@
     }
 	
     return result;
+}
+
+- (NSError *)makeErrorLookLikeErrorFromDoubleClickingDocument:(NSError *)anError;
+{
+    OBPRECONDITION(anError);
+    
+	NSDictionary *userInfo = [anError userInfo];
+	NSString *path = [userInfo objectForKey:NSFilePathErrorKey];
+	if (nil == path)
+	{
+		NSURL *url = [userInfo objectForKey:NSURLErrorKey];
+		path = [url path];
+	}
+	NSString *prevTitle = [anError localizedDescription];
+	NSString *desc = nil;
+	if (path)
+	{
+		NSFileManager *fm = [NSFileManager defaultManager];
+		desc = [NSString stringWithFormat:NSLocalizedString(@"The document “%@” could not be opened. %@", @"brief description of error."), [fm displayNameAtPath:path], prevTitle];
+	}
+	else
+	{
+		desc = [NSString stringWithFormat:NSLocalizedString(@"The document could not be opened. %@", @"brief description of error."), prevTitle];
+	}
+	NSString *secondary = [anError localizedRecoverySuggestion]; 
+	if (!secondary)
+	{
+		secondary = [anError localizedFailureReason];
+	}
+	if (!secondary)	// Note:  above returns nil!
+	{
+		secondary = [[anError userInfo] objectForKey:@"reason"];
+		// I'm not sure why but emperically the "reason" key has been set.
+        
+	}
+    
+	NSError *result = [KSError errorWithDomain:[anError domain] code:[anError code]
+						  localizedDescription:desc
+                   localizedRecoverySuggestion:secondary		// we want to show the reason on the alert
+                               underlyingError:anError];
+	
+	return result;
 }
 
 #pragma mark -

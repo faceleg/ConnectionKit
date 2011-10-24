@@ -387,7 +387,7 @@
 		{
 			if (error)
 			{
-				error = [self makeErrorLookLikeErrorFromDoubleClickingDocument:error];
+				error = [[NSDocumentController sharedDocumentController] makeErrorLookLikeErrorFromDoubleClickingDocument:error];
 			}
 			[[NSDocumentController sharedDocumentController] presentError:error
 														   modalForWindow:[self window]
