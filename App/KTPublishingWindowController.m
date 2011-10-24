@@ -173,12 +173,15 @@ static void *sEngineFinishedObservationContext = &sEngineFinishedObservationCont
 
 - (IBAction)firstButtonAction:(NSButton *)sender
 {
+    NSWindow *docWindow = _modalWindow; // -endSheet sets it to nil
+    [self endSheet];
+    
+    // Have to do this after -endSheet so that new docs can put up a save panel
     if ([[self publishingEngine] isFinished])
     {
-        [[[_modalWindow windowController] document] saveDocument:self];
+        [[[docWindow windowController] document] saveDocument:self];
     }
     
-    [self endSheet];
 }
 
 - (void)secondButtonAction:(NSButton *)sender
