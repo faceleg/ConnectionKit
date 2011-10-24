@@ -93,7 +93,7 @@
     }
 }*/
 
-- (void)setNode:(DOMNode *)element
+- (void)setNode:(DOMHTMLElement *)element
 {
     if (element)
     {
