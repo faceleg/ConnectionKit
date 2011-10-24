@@ -19,7 +19,7 @@
 "Mac App Store Keywords" =
 "site,web,page,construction,créer,bâtir,conception,outil,blogue,galerie,html,SEO,modèles,CSS";
 
-/* This is the multi-line description for the Mac App store. Try to keep special characters like stars, and paragraph breaks, matching. */
+/* This is the multi-line description for the Mac App store. Try to keep special characters like stars, and paragraph breaks, matching. Links to documentation should specify what language each is in. */
 "Mac App Store Description" =
 "Sandvox 2 donne la possibilité à quiconque, même une personne non experte, de créer en quelques minutes un site web d'apparence contemporaine avec des fonctionnalités modernes.
 
@@ -64,7 +64,7 @@ ASSISTANCE
 
 Nous sommes à votre disposition pour vous aider et aimerions beaucoup avoir vos réactions ! Si vous avez des commentaires ou des questions, vous pouvez nous joindre par courriel à support@karelia.com ou visiter notre forum communautaire à karelia.com/forum.
 
-Lisez notre FAQ à karelia.com/faq.
+Lisez notre FAQ à karelia.com/faq. (en anglais)
 
-Familier d'iWeb ? Voyez notre guide de transition iWeb Transition Guide à karelia.com/iweb.
+Familier d'iWeb ? Voyez notre guide de transition (en anglais) iWeb Transition Guide à karelia.com/iweb. (en anglais)
 ";
