@@ -822,19 +822,14 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 
 - (BOOL)applicationOpenUntitledFile:(NSApplication *)theApplication
 {
+	[[NSDocumentController sharedDocumentController] showDocumentPlaceholderWindowInitial:NO];
+	
 	return YES; // we always return YES to purposefully thwart the NSDocument framework
 }
 
 - (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)theApplication
 {
-    if ( !_applicationIsLaunching )
-    {
-        return [[NSUserDefaults standardUserDefaults] boolForKey:@"OpenUntitledFileWhenIconClicked"];
-    }
-    else
-    {
-        return NO;
-    }
+	return YES;
 }
 
 - (void)checkQuartzExtreme
@@ -1022,24 +1017,21 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
             factory = [SVGraphicFactory textBoxFactory];
             item = [factory makeMenuItemWithDescription:NO];
             [item setImage:nil];
-            [insertMenu insertItem:item atIndex:insertIndex];
-
-			BOOL firstRun = [defaults boolForKey:@"FirstRun"];
-			
-			// If there's no docs open, want to see the placeholder window
-			if ([[[NSDocumentController sharedDocumentController] documents] count] == 0)
-			{
-	#if 0
-				NSLog(@"BETA: For now, always creating a new document, to make debugging easier");
-				[[NSDocumentController sharedDocumentController] newDocument:nil];
-	#else
-				if (!firstRun)
-				{
-					[[NSDocumentController sharedDocumentController] showDocumentPlaceholderWindowInitial:!firstRun];	// launching, so try to reopen... unless it's first run.
-				}
-	#endif
-			}
-			
+            [insertMenu insertItem:item atIndex:index];
+            
+            
+            
+            
+            
+            
+			[SVGraphicFactory insertItemsWithGraphicFactories:[SVGraphicFactory moreGraphicFactories]
+                                                       inMenu:oMoreGraphicsMenu
+                                                      atIndex:0
+											  withDescription:NO];
+            [SVGraphicFactory insertItemsWithGraphicFactories:[SVGraphicFactory indexFactories]
+                                                 inMenu:oIndexesMenu
+                                                      atIndex:0
+											  withDescription:NO];
 			
 			// QE check AFTER the welcome message
 			[self performSelector:@selector(checkQuartzExtreme) withObject:nil afterDelay:0.0];
