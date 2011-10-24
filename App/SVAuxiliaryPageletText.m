@@ -8,6 +8,7 @@
 
 #import "SVAuxiliaryPageletText.h"
 
+#import "SVAuxiliaryPageletTextDOMController.h"
 #import "SVGraphic.h"
 #import "SVHTMLTextBlock.h"
 
@@ -61,5 +62,19 @@
 
 - (BOOL)isExplicitlySized; { return NO; }
 - (BOOL)isExplicitlySized:(SVHTMLContext *)context; { return NO; }
+
+#pragma mark DOM
+
+- (SVTextDOMController *)newTextDOMControllerWithIdName:(NSString *)elementID ancestorNode:(DOMNode *)node
+{
+    SVTextDOMController *result = [[SVAuxiliaryPageletTextDOMController alloc] initWithIdName:elementID
+                                                                                 ancestorNode:node
+                                                                                  textStorage:self];
+    
+    [result setSelectable:YES];
+    [result setRichText:YES];
+    
+    return result;
+}
 
 @end
