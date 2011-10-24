@@ -156,8 +156,8 @@
 - (DOMHTMLDocument *)HTMLDocument;
 {
     DOMHTMLDocument *result = [super HTMLDocument];
-    if (!result) result = [[[self parentWebEditorItem] HTMLElement] ownerDocument];
-    if (!result) result = [[self webEditor] HTMLDocument];
+    if (!result) result = (DOMHTMLDocument *)[[[self parentWebEditorItem] node] ownerDocument];
+    if (!result) result = (DOMHTMLDocument *)[[self webEditor] HTMLDocument];
     return result;
 }
 
