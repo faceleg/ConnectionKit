@@ -14,13 +14,10 @@
 @interface SVGraphicContainerDOMController : SVDOMController
 {
   @private
-    DOMHTMLElement  *_bodyElement;
-        
     SVOffscreenWebViewController    *_offscreenWebViewController;
     SVWebEditorHTMLContext          *_offscreenContext;
 }
 
-@property(nonatomic, retain) DOMHTMLElement *bodyHTMLElement;
 - (DOMElement *)graphicDOMElement;
 
 

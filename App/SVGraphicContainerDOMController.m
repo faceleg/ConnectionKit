@@ -22,9 +22,6 @@
 
 - (void)dealloc;
 {
-    [self setBodyHTMLElement:nil];
-    OBPOSTCONDITION(!_bodyElement);
-    
     [_offscreenWebViewController setDelegate:nil];
     [_offscreenWebViewController release];  // dealloc-ing mid-update
     [_offscreenContext release];
@@ -40,32 +37,10 @@
 
 #pragma mark DOM
 
-@synthesize bodyHTMLElement = _bodyElement;
-
 - (DOMElement *)graphicDOMElement;
 {
     id result = [[[self HTMLElement] getElementsByClassName:@"graphic"] item:0];
     return result;
-}
-
-- (void)loadHTMLElementFromDocument:(DOMDocument *)document;
-{
-    [super loadHTMLElementFromDocument:document];
-    
-    // Locate body element too
-    SVGraphic *graphic = [[self representedObject] graphic];
-    if ([self isNodeLoaded])
-    {
-        if ([graphic isPagelet])
-        {
-            DOMNodeList *elements = [[self HTMLElement] getElementsByClassName:@"pagelet-body"];
-            [self setBodyHTMLElement:(DOMHTMLElement *)[elements item:0]];
-        }
-        else
-        {
-            if ([self isNodeLoaded]) [self setBodyHTMLElement:[self HTMLElement]];
-        }
-    }
 }
 
 #pragma mark Updating
