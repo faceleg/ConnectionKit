@@ -465,6 +465,16 @@
             [self bind:@"textBaseWritingDirection" toObject:object withKeyPath:@"textBaseWritingDirection" options:nil];
         }
     }
+    else if ([self textBlock])
+    {
+        if (![self infoForBinding:NSValueBinding])
+        {
+            [self bind:NSValueBinding
+              toObject:[[self textBlock] HTMLSourceObject]
+           withKeyPath:[[self textBlock] HTMLSourceKeyPath]
+               options:nil];
+        }
+    }        
 }
 
 - (void)stopObservingDependencies;
