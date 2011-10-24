@@ -58,7 +58,7 @@
 
 #pragma mark DOM
 
-- (void)setNode:(DOMNode *)node;
+- (void)setNode:(DOMElement *)node;
 {
     [super setNode:node];
     

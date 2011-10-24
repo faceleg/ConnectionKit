@@ -46,7 +46,6 @@
 {
     [super initWithOutputWriter:stream];
     
-    [self reset];
     _media = [[NSMutableSet alloc] init];
     _mediaByData = [[NSMutableDictionary alloc] init];
     _resourceURLStrings = [[NSMutableSet alloc] init];
@@ -55,12 +54,6 @@
 }
 
 #pragma mark Status
-
-- (void)reset;
-{
-    [_media removeAllObjects];
-    [_mediaByData removeAllObjects];
-}
 
 - (void)close;
 {

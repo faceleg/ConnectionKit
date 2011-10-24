@@ -286,17 +286,17 @@ static void *sPlugInMinWidthObservationContext = &sPlugInMinWidthObservationCont
 
 - (void)writeHTML:(SVHTMLContext *)context
 {
-    [context incrementHeaderLevel];
+    [context incrementHeadingLevel];
     @try
     {
-        NSUInteger openElements = [context openElementsCount];
-            
         NSString *identifier = [self plugInIdentifier];
         if (![self shouldWriteHTMLInline])
         {
             [context startElement:@"div"];
             [context writeComment:[NSString stringWithFormat:@" %@ ", identifier]];
         }
+        
+        NSUInteger openElements = [context openElementsCount];
         
         
         SVPlugIn *plugIn = [self plugIn];
@@ -348,7 +348,7 @@ static void *sPlugInMinWidthObservationContext = &sPlugInMinWidthObservationCont
     }
     @finally
     {
-        [context decrementHeaderLevel];
+        [context decrementHeadingLevel];
     }
 }
 

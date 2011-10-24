@@ -142,8 +142,8 @@
 
 @interface WEKWebEditorItem (SVDOMController)
 
-#pragma mark DOM
-- (void)loadHTMLElementFromDocument:(DOMDocument *)document;    // does nothing
+#pragma mark Tree
+- (NSArray *)ancestorItems; // sorted with nearest ancestor first
 
 
 #pragma mark Updating

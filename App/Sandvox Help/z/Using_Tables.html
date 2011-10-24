@@ -8,7 +8,7 @@
     <link href="../main.css" rel="stylesheet" type="text/css" media="all" />
     <link href="../print.css" rel="stylesheet" type="text/css" media="print" />
 
-    <title>Using Tables Or Bullet Points</title>
+    <title>Using Tables</title>
 </head>
 
 <body>
@@ -23,28 +23,12 @@
     </div>
 
     <div id="mainbox">
-        <h1 class="firstHeading">Using Tables Or Bullet Points</h1>
+        <h1 class="firstHeading">Using Tables</h1>
 
-        <p>In Sandvox you cannot directly add tables or bullet points to a <a href="Page.html" title="Page">page</a>. However, here is a handy workaround:</p>
-
-        <div class="instructions">
-            <p><b>To insert a list:</b></p>
-
-            <ol>
-                <li>Open a rich text editor such as TextEdit</li>
-
-                <li>Create a list</li>
-
-                <li>Select the the list you have just created, and copy it to the clipboard</li>
-
-                <li>Switch to Sandvox and paste the in the list</li>
-            </ol>
-        </div>
-
-        <p>Alternately, you can use an HTML object.</p>
+        <p>In Sandvox you cannot directly add tables to a <a href="Page.html" title="Page">page</a>. However, here is a handy workaround:</p>
 
         <div class="instructions">
-            <p><b>To insert a table or bullet points using HTML:</b></p>
+            <p><b>To insert a table using HTML:</b></p>
 
             <ol>
                 <li>Add a raw HTML object from the Objects toolbar.</li>
@@ -52,10 +36,16 @@
                 <li>In the "Edit Raw HTML window enter the appropriate HTML code, for example:"</li>
             </ol>
             <pre>
-&lt;ul&gt;
-&lt;li&gt;Bullet 1&lt;/li&gt;
-&lt;li&gt;Bullet 2&lt;/li&gt;
-&lt;/ul&gt;
+&lt;table border="1" bordercolor="000000" style="background-color:FFFFFF" width="400" cellpadding="3" cellspacing="1"&gt;
+        &lt;tr&gt;
+                &lt;td&gt;Table Cell&lt;/td&gt;
+                &lt;td&gt;Table Cell&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+                &lt;td&gt;Table Cell&lt;/td&gt;
+                &lt;td&gt;Table Cell&lt;/td&gt;
+        &lt;/tr&gt;
+&lt;/table&gt;
 </pre>
         </div><a name="HTML_Table_Generator" id="HTML_Table_Generator"></a>
 
@@ -75,7 +65,7 @@
     </div>
 
     <div id='feedback'>
-        How can we improve this page? <a href="http://www.karelia.com/sandvox/help/feedback/?h=Sandvox&amp;p=Using_Tables_Or_Bullet_Points.html">Let us know.</a>
+        How can we improve this page? <a href="http://www.karelia.com/sandvox/help/feedback/?h=Sandvox&amp;p=Using_Tables.html">Let us know.</a>
     </div>
 </body>
 </html>

@@ -1040,6 +1040,7 @@
 		CE050182127B86440082BFA9 /* page_html.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE050181127B86440082BFA9 /* page_html.tiff */; };
 		CE050229127B8DD80082BFA9 /* KTElementPlugInWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E31C320D4B7E1600895DA1 /* KTElementPlugInWrapper.m */; };
 		CE05022A127B8DD90082BFA9 /* KTElementPlugInWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E31C310D4B7E1600895DA1 /* KTElementPlugInWrapper.h */; };
+		CE0FE05514521C8E0090E95E /* Sweep.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE0FE05414521C8E0090E95E /* Sweep.tiff */; };
 		CE13026B0BD009D000DC2439 /* SyntaxColorDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE13026A0BD009D000DC2439 /* SyntaxColorDefaults.plist */; };
 		CE13026D0BD009E700DC2439 /* HTMLSyntaxColoring.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE13026C0BD009E700DC2439 /* HTMLSyntaxColoring.plist */; };
 		CE13900009BAB73000661A1A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE138FFF09BAB73000661A1A /* SystemConfiguration.framework */; };
@@ -2864,6 +2865,7 @@
 		CE05013A127B7FE00082BFA9 /* page_contact_sb.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = page_contact_sb.tiff; sourceTree = "<group>"; };
 		CE05013C127B7FE60082BFA9 /* page_sitemap_sb.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = page_sitemap_sb.tiff; sourceTree = "<group>"; };
 		CE050181127B86440082BFA9 /* page_html.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = page_html.tiff; sourceTree = "<group>"; };
+		CE0FE05414521C8E0090E95E /* Sweep.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Sweep.tiff; sourceTree = "<group>"; };
 		CE13026A0BD009D000DC2439 /* SyntaxColorDefaults.plist */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 4; path = SyntaxColorDefaults.plist; sourceTree = "<group>"; };
 		CE13026C0BD009E700DC2439 /* HTMLSyntaxColoring.plist */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 4; path = HTMLSyntaxColoring.plist; sourceTree = "<group>"; };
 		CE138FFF09BAB73000661A1A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
@@ -4536,7 +4538,7 @@
 		3C0049521210CB87006BAD9C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3C0049561210CB87006BAD9C /* iFrame.svxElement */,
+				3C0049561210CB87006BAD9C /* IFrame.svxElement */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -5673,7 +5675,6 @@
 				CE1BE7D511D2AD1E00D875AE /* InspectorImagePosition */,
 				CE1BE7DC11D2AD1E00D875AE /* InspectorSegments */,
 				CE1BE7DD11D2AD1E00D875AE /* InspectorSorting */,
-				CE1BE7E311D2AD1E00D875AE /* Licensing */,
 				CE1BE7E511D2AD1E00D875AE /* Misc */,
 				CE390971127BA2D100C994C6 /* Objects */,
 				CE1BE7E811D2AD1E00D875AE /* PageComponents */,
@@ -5787,13 +5788,6 @@
 				CE1BE7E211D2AD1E00D875AE /* Z.png */,
 			);
 			path = InspectorSorting;
-			sourceTree = "<group>";
-		};
-		CE1BE7E311D2AD1E00D875AE /* Licensing */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Licensing;
 			sourceTree = "<group>";
 		};
 		CE1BE7E511D2AD1E00D875AE /* Misc */ = {
@@ -5967,6 +5961,7 @@
 				CE58138E11DEA45D008478AF /* NSStatusAvailable.tiff */,
 				CE58138F11DEA45D008478AF /* NSStatusPartiallyAvailable.tiff */,
 				CE58139011DEA45D008478AF /* NSStatusUnavailable.tiff */,
+				CE0FE05414521C8E0090E95E /* Sweep.tiff */,
 			);
 			path = HTMLEditor;
 			sourceTree = "<group>";
@@ -6911,10 +6906,10 @@
 			remoteRef = 27E8773D140C173E0027A738 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		3C0049561210CB87006BAD9C /* iFrame.svxElement */ = {
+		3C0049561210CB87006BAD9C /* IFrame.svxElement */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = iFrame.svxElement;
+			path = IFrame.svxElement;
 			remoteRef = 3C0049551210CB87006BAD9C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -7346,6 +7341,7 @@
 				CE0142CB13E9D9D300BBA6F1 /* indent_right.tiff in Resources */,
 				27DD4043142C916E00686D96 /* Login.xib in Resources */,
 				CE241C52144CBC260025C8D6 /* Marketing.strings in Resources */,
+				CE0FE05514521C8E0090E95E /* Sweep.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

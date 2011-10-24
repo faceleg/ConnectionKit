@@ -391,7 +391,7 @@ initial syntax coloring.
 	{
         if ([[self HTMLSourceObject] shouldValidateAsFragment])
         {
-            html = [SVHTMLValidator HTMLStringWithFragment:html docType:KSHTMLWriterDocTypeHTML_5];
+            html = [SVHTMLValidator HTMLStringWithFragment:html docType:KSHTMLWriterDocTypeHTML_5 includeComments:NO];
         }
         
         NSError *error = nil;
@@ -439,6 +439,82 @@ initial syntax coloring.
     return [NSSet setWithObjects:@"validationState", @"contentType", @"shouldPreviewWhenEditing", nil];
 }
 
+- (IBAction) tidyHTML:(id)sender;
+{
+	NSTextStorage*  textStore = [textView textStorage];
+	NSString *originalHTML = [textStore string];
+	NSString *html = originalHTML;
+    if ([[self HTMLSourceObject] shouldValidateAsFragment])
+    {
+		// Use HTML4 - otherwise we get meta charset problems
+        html = [SVRemoteHTMLValidator HTMLStringWithFragment:html docType:KSHTMLWriterDocTypeXHTML_1_0_Transitional includeComments:NO];
+    }
+
+	NSXMLDocument *xmlDoc = nil;
+	NSError *theError = nil;
+	@try
+	{
+		xmlDoc = [[[NSXMLDocument alloc] initWithXMLString:html options:NSXMLDocumentTidyHTML error:&theError] autorelease];
+		[xmlDoc setDocumentContentKind:NSXMLDocumentXHTMLKind];
+	}
+	@catch ( NSException * e )
+	{
+		NSLog(@"NSXMLDocument exception: %@", e);
+	}
+	if (nil == xmlDoc && nil != theError)
+	{
+		NSLog(@"CANNOT create NSXMLDocument to tidy: %@", theError);
+	}
+	
+	if (xmlDoc)
+	{
+		NSArray *theNodes = [xmlDoc nodesForXPath:@"/html/body" error:&theError];
+		NSXMLElement *theBody = [theNodes lastObject];	// the body that we we will be truncating
+		
+		NSString *result = [theBody XMLStringWithOptions:NSXMLDocumentTidyXML | NSXMLNodePrettyPrint];  // NSXMLDocumentTidyHTML ??????
+		// DON'T use NSXMLNodePreserveAll -- it converted " to ' and ' to &apos;  !!!
+		
+		NSRange rangeOfBodyStart = [result rangeOfString:@"<body>" options:0];
+		NSRange rangeOfBodyEnd   = [result rangeOfString:@"\n    </body>" options:NSBackwardsSearch];
+		if (NSNotFound == rangeOfBodyStart.location || NSNotFound == rangeOfBodyEnd.location)
+		{
+			// Try without whitespace as a fallback
+			rangeOfBodyEnd   = [result rangeOfString:@"</body>" options:NSBackwardsSearch];
+		}
+		if (NSNotFound != rangeOfBodyStart.location && NSNotFound != rangeOfBodyEnd.location)
+		{
+			int sPos = NSMaxRange(rangeOfBodyStart);
+			int len  = rangeOfBodyEnd.location - sPos;
+			result = [result substringWithRange:NSMakeRange(sPos,len)];
+			
+			// Get rid of extra initial indentation
+			result = [result stringByReplacingOccurrencesOfString:@"\n        " withString:@"\n"];
+			// Get rid of newlines at end
+			result = [result stringByTrimmingWhitespace];
+		}
+		
+		NSRange charRange = NSMakeRange(0, [[textView textStorage] length]);
+		if ([textView shouldChangeTextInRange:charRange replacementString:result])
+		{
+            [textStore replaceCharactersInRange:charRange withString:result];
+            [textView setSelectedRange:NSMakeRange(0, [[textView textStorage] length])];
+            [textView didChangeText];
+        }
+		//
+//		// http://www.cocoadev.com/index.pl?NSTextViewUndoSubclass
+//		
+//		NSUndoManager *undoManager = [textView undoManager];		
+//		[[undoManager prepareWithInvocationTarget:textStore] replaceCharactersInRange:NSMakeRange(0, [[textView
+//															textStorage] length]) withString:originalHTML];
+//		[textView setString:result];
+	}
+	else
+	{
+		NSLog(@"Couldn't create XML Doc for tidying: %@", theError);
+		NSBeep();
+	}
+}
+
 - (IBAction) validate:(id)sender;
 {
 	NSMutableAttributedString*  textStore = [textView textStorage];
@@ -447,7 +523,7 @@ initial syntax coloring.
 	NSString *html = fragment;
     if ([[self HTMLSourceObject] shouldValidateAsFragment])
     {
-        html = [SVRemoteHTMLValidator HTMLStringWithFragment:fragment docType:KSHTMLWriterDocTypeHTML_5];
+        html = [SVRemoteHTMLValidator HTMLStringWithFragment:fragment docType:KSHTMLWriterDocTypeHTML_5 includeComments:YES];
     }
 	
 	NSString *docTypeName = [SVHTMLContext nameOfDocType:KSHTMLWriterDocTypeHTML_5 localize:NO];

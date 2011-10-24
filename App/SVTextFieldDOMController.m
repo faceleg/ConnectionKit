@@ -11,6 +11,7 @@
 #import "SVHTMLTextBlock.h"
 #import "SVFieldEditorHTMLWriterDOMAdapator.h"
 #import "SVWebEditorHTMLContext.h"
+#import "SVWebEditorView.h"
 
 #import "DOMNode+Karelia.h"
 #import "NSString+Karelia.h"
@@ -464,6 +465,16 @@
             [self bind:@"textBaseWritingDirection" toObject:object withKeyPath:@"textBaseWritingDirection" options:nil];
         }
     }
+    else if ([self textBlock])
+    {
+        if (![self infoForBinding:NSValueBinding])
+        {
+            [self bind:NSValueBinding
+              toObject:[[self textBlock] HTMLSourceObject]
+           withKeyPath:[[self textBlock] HTMLSourceKeyPath]
+               options:nil];
+        }
+    }        
 }
 
 - (void)stopObservingDependencies;

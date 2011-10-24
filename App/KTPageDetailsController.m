@@ -1488,13 +1488,13 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	self.activeTextField = nil;
 
 	// Somewhat hackish.  If the user left the window title field and it was empty, null it out to return it to its default.
-	if (field == oWindowTitleField)
-	{
-		if ([@"" isEqualToString:[field stringValue]])
-		{
-			[oPagesTreeController setValue:nil forKeyPath:@"selection.comboTitleText"];
-		}
-	}
+	if (field == oWindowTitleField &&
+        [oWindowTitleField isEnabled] &&
+        [oWindowTitleField isEditable] &&
+        [@"" isEqualToString:[field stringValue]])
+    {
+        [oPagesTreeController setValue:nil forKeyPath:@"selection.comboTitleText"];
+    }
 
 	if (self.attachedWindow)
 	{

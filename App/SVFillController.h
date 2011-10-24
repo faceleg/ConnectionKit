@@ -16,7 +16,7 @@
 
 @interface SVFillController : NSObject
 {
-    IBOutlet NSViewController   *oInspectorViewController;  // expected to return KTDocument from -representedObject
+    IBOutlet id oInspectorViewController;  // expected to return KTDocument from -representedObject and implement -inspectedObjectsController
     IBOutlet NSPopUpButton      *oPopUpButton;
     
 @private

@@ -345,6 +345,8 @@
 
 - (void)synchronizeOpenDocumentsUserDefault
 {
+    if ([NSDocumentController respondsToSelector:@selector(restoreWindowWithIdentifier:state:completionHandler:)]) return;
+    
     NSMutableArray *aliases = [NSMutableArray array];
     NSEnumerator *enumerator = [[[NSDocumentController sharedDocumentController] documents] objectEnumerator];
     KTDocument *document;
@@ -403,6 +405,153 @@
             [self showDocumentPlaceholderWindowInitial:NO];
         }
     }
+}
+
+- (NSArray *)reopenPreviouslyOpenedDocuments;
+{
+	// Figure out if we should create or open document(s)
+	if ([NSDocumentController respondsToSelector:@selector(restoreWindowWithIdentifier:state:completionHandler:)])
+    {
+        return nil;
+    }
+    
+    
+	BOOL openLastOpened = ([[NSUserDefaults standardUserDefaults] boolForKey:@"AutoOpenLastOpenedOnLaunch"] &&
+						   !(GetCurrentEventKeyModifiers() & optionKey));   // #39352
+    if (!openLastOpened) return nil;
+    
+	
+	NSArray *lastOpenedPaths = [[NSUserDefaults standardUserDefaults] arrayForKey:kSVOpenDocumentsKey];
+    if (![lastOpenedPaths count]) return nil;
+    
+	
+    NSArray *result = nil;
+    NSMutableArray *filesFound = [NSMutableArray array];
+	NSMutableArray *filesNotFound = [NSMutableArray array];
+	
+	// figure out what documents, if any, we can and can't find
+	for (id aliasData in lastOpenedPaths )
+    {
+        BDAlias *alias = [BDAlias aliasWithData:aliasData];
+        NSString *path = [alias fullPath];
+        if (nil == path)
+        {
+            NSString *lastKnownPath = [alias lastKnownPath];
+            [filesNotFound addObject:lastKnownPath];
+            LOG((@"Can't find '%@'", [lastKnownPath stringByAbbreviatingWithTildeInPath]));
+        }
+        
+        // is it in the Trash? ([KSWORKSPACE userTrashDirectory])
+        else if ( NSNotFound != [path rangeOfString:@".Trash"].location )
+        {
+            // path contains localized .Trash, let's skip it
+            LOG((@"Not opening '%@'; it is in the trash", [path stringByAbbreviatingWithTildeInPath]));
+        }
+        else
+        {
+            LOG((@"Going to open '%@'; it is NOT in the trash", path));
+            [filesFound addObject:alias];
+        }
+    }
+	
+    
+    // open whatever used to be open
+	for (BDAlias *alias in filesFound)
+    {
+        NSString *path = [alias fullPath];
+        
+        // check to make sure path is valid
+        if ( ![[NSFileManager defaultManager] fileExistsAtPath:path] )
+        {
+            [filesNotFound addObject:path];
+            continue;
+        }				
+        
+        
+        NSURL *fileURL = [NSURL fileURLWithPath:path];
+        
+        NSError *error = nil;
+        if (![self openDocumentWithContentsOfURL:fileURL display:YES error:&error])
+        {
+            error = [self makeErrorLookLikeErrorFromDoubleClickingDocument:error];
+            result = (result ? [result arrayByAddingObject:error] : [NSArray arrayWithObject:error]);
+        }
+    }
+    
+    
+    // Report error for files not found
+    if ( [filesNotFound count] > 0 )
+    {
+        NSString *missingFiles = [NSString string];
+        unsigned int i;
+        for ( i = 0; i < [filesNotFound count]; i++ )
+        {
+            NSString *toAdd = [[filesNotFound objectAtIndex:i] lastPathComponent];
+            toAdd = [[NSFileManager defaultManager] displayNameAtPath:toAdd];
+            
+            missingFiles = [missingFiles stringByAppendingString:toAdd];
+            if ( i < ([filesNotFound count]-1) )
+            {
+                missingFiles = [missingFiles stringByAppendingString:@", "];
+            }
+            else if ( i == ([filesNotFound count]-1) && i > 0 )	// no period if only one item
+            {
+                missingFiles = [missingFiles stringByAppendingString:@"."];
+            }
+        }
+        
+        NSError *error = [KSError errorWithDomain:NSCocoaErrorDomain
+                                             code:NSFileNoSuchFileError
+                             localizedDescription:NSLocalizedString(@"Unable to locate previously opened files.", @"alert: Unable to locate previously opened files.")
+                      localizedRecoverySuggestion:missingFiles
+                                  underlyingError:nil];
+        
+        result = (result ? [result arrayByAddingObject:error] : [NSArray arrayWithObject:error]);
+    }
+	
+    return result;
+}
+
+- (NSError *)makeErrorLookLikeErrorFromDoubleClickingDocument:(NSError *)anError;
+{
+    OBPRECONDITION(anError);
+    
+	NSDictionary *userInfo = [anError userInfo];
+	NSString *path = [userInfo objectForKey:NSFilePathErrorKey];
+	if (nil == path)
+	{
+		NSURL *url = [userInfo objectForKey:NSURLErrorKey];
+		path = [url path];
+	}
+	NSString *prevTitle = [anError localizedDescription];
+	NSString *desc = nil;
+	if (path)
+	{
+		NSFileManager *fm = [NSFileManager defaultManager];
+		desc = [NSString stringWithFormat:NSLocalizedString(@"The document “%@” could not be opened. %@", @"brief description of error."), [fm displayNameAtPath:path], prevTitle];
+	}
+	else
+	{
+		desc = [NSString stringWithFormat:NSLocalizedString(@"The document could not be opened. %@", @"brief description of error."), prevTitle];
+	}
+	NSString *secondary = [anError localizedRecoverySuggestion]; 
+	if (!secondary)
+	{
+		secondary = [anError localizedFailureReason];
+	}
+	if (!secondary)	// Note:  above returns nil!
+	{
+		secondary = [[anError userInfo] objectForKey:@"reason"];
+		// I'm not sure why but emperically the "reason" key has been set.
+        
+	}
+    
+	NSError *result = [KSError errorWithDomain:[anError domain] code:[anError code]
+						  localizedDescription:desc
+                   localizedRecoverySuggestion:secondary		// we want to show the reason on the alert
+                               underlyingError:anError];
+	
+	return result;
 }
 
 #pragma mark -

@@ -93,6 +93,15 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	return self;
 }
 
+- (void)close;
+{
+    [super close];
+    
+    // NSTreeController's craziness knoweth no bounds. If you remove its content. It'll start observing the context for changes, not what we want! So remvoe the context from its grasp now
+    [[self pagesController] setManagedObjectContext:nil];
+    [[self pagesController] unbind:NSContentSetBinding];
+}
+
 - (void)dealloc
 {
 	[_designIdentityWindow release];

@@ -93,12 +93,12 @@
     }
 }*/
 
-- (void)setNode:(DOMNode *)element
+- (void)setNode:(DOMHTMLElement *)element
 {
     if (element)
     {
         // Load descendants since they might share the same element
-        [[self childWebEditorItems] makeObjectsPerformSelector:@selector(HTMLElement)];
+        //[[self childWebEditorItems] makeObjectsPerformSelector:@selector(HTMLElement)];
         
         
         if (!_shouldPublishElementID)
@@ -156,8 +156,8 @@
 - (DOMHTMLDocument *)HTMLDocument;
 {
     DOMHTMLDocument *result = [super HTMLDocument];
-    if (!result) result = [[[self parentWebEditorItem] HTMLElement] ownerDocument];
-    if (!result) result = [[self webEditor] HTMLDocument];
+    if (!result) result = (DOMHTMLDocument *)[[[self parentWebEditorItem] node] ownerDocument];
+    if (!result) result = (DOMHTMLDocument *)[[self webEditor] HTMLDocument];
     return result;
 }
 
@@ -879,6 +879,22 @@
 
 
 @implementation WEKWebEditorItem (SVDOMController)
+
+#pragma mark Tree
+
+- (NSArray *)ancestorItems; // sorted with nearest ancestor first
+{
+    NSMutableArray *result = [NSMutableArray array];
+    WEKWebEditorItem *anItem = [self parentWebEditorItem];
+    
+    while (anItem)
+    {
+        [result addObject:anItem];
+        anItem = [anItem parentWebEditorItem];
+    }
+    
+    return result;
+}
 
 #pragma mark Updating
 

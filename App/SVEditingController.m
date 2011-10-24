@@ -106,6 +106,13 @@
 {
     if ([super createLinkWithValue:href]) return YES;
     
+    if (!href)
+    {
+        [self unlink:self];   // somehow nil gets in. #151949
+        return YES;
+    }
+    
+    
     // Create our own link so it has correct text content. #104879
     SVLink *link = [SVLink linkWithURLString:href openInNewWindow:NO];
     DOMDocument *document = [self selectedDOMDocument];

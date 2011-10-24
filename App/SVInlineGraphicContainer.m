@@ -33,28 +33,33 @@
 
 - (BOOL)HTMLContext:(SVHTMLContext *)context writeGraphic:(id <SVGraphic>)graphic;
 {
-    // Graphic body
-    OBASSERT(![_graphic isPagelet]);
-    [context beginGraphicContainer:graphic];
+    [context setCurrentHeaderLevel:2];  // HACK to force it for updates. #151617
+    {{
+        // Graphic body
+        OBASSERT(![_graphic isPagelet]);
+        [context beginGraphicContainer:graphic];
+        {{
+            if ([graphic isExplicitlySized:context])
+            {
+                [context startElement:@"div"]; // <div class="graphic">
+            }
+            else
+            {
+                [context startResizableElement:@"div"
+                                        object:graphic
+                                       options:SVResizingDisableVertically
+                                     sizeDelta:NSZeroSize];
+            }
+            
+            {
+                [context pushClassName:@"figure-content"];  // identifies for #84956
+                [graphic writeHTML:context];
+            }
+            [context endElement];
+        }}
+        [context endGraphicContainer];
+    }}
     
-    if ([graphic isExplicitlySized:context])
-    {
-        [context startElement:@"div"]; // <div class="graphic">
-    }
-    else
-    {
-        [context startResizableElement:@"div"
-                                object:graphic
-                               options:SVResizingDisableVertically
-                             sizeDelta:NSZeroSize];
-    }
-    
-    {
-        [context pushClassName:@"figure-content"];  // identifies for #84956
-        [graphic writeHTML:context];
-    }
-    [context endElement];
-    [context endGraphicContainer];
     
     return YES;
 }
