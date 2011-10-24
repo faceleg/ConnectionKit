@@ -1017,21 +1017,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
             factory = [SVGraphicFactory textBoxFactory];
             item = [factory makeMenuItemWithDescription:NO];
             [item setImage:nil];
-            [insertMenu insertItem:item atIndex:index];
-            
-            
-            
-            
-            
-            
-			[SVGraphicFactory insertItemsWithGraphicFactories:[SVGraphicFactory moreGraphicFactories]
-                                                       inMenu:oMoreGraphicsMenu
-                                                      atIndex:0
-											  withDescription:NO];
-            [SVGraphicFactory insertItemsWithGraphicFactories:[SVGraphicFactory indexFactories]
-                                                 inMenu:oIndexesMenu
-                                                      atIndex:0
-											  withDescription:NO];
+            [insertMenu insertItem:item atIndex:insertIndex];
 			
 			// QE check AFTER the welcome message
 			[self performSelector:@selector(checkQuartzExtreme) withObject:nil afterDelay:0.0];
