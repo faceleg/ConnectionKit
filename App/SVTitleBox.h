@@ -21,6 +21,9 @@
 @property(nonatomic, readonly) NSTextAlignment alignment;
 + (NSString *)alignmentKeyPath;
 
+@property(nonatomic, readonly) NSWritingDirection textBaseWritingDirection;
++ (NSString *)textBaseWritingDirectionKeyPath;
+
 - (NSString *)graphicalTextCode:(SVHTMLContext *)context;
 
 @end

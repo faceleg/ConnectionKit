@@ -75,7 +75,6 @@ typedef enum {
 - (BOOL)isDraftOrHasDraftAncestor;
 - (void)setPageOrParentDraft:(BOOL)inDraft;
 - (BOOL)excludedFromSiteMap;
-- (BOOL) isPagePublishableInDemo;
 @property(nonatomic, copy) NSNumber *includeInIndex;
 
 

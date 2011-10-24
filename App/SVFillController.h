@@ -16,8 +16,8 @@
 
 @interface SVFillController : NSObject
 {
-    IBOutlet KSInspectorViewController  *oInspectorViewController;
-    IBOutlet NSPopUpButton              *oPopUpButton;
+    IBOutlet id oInspectorViewController;  // expected to return KTDocument from -representedObject and implement -inspectedObjectsController
+    IBOutlet NSPopUpButton      *oPopUpButton;
     
 @private
     NSNumber    *_bannerType;

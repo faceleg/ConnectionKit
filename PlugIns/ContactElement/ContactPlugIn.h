@@ -45,7 +45,6 @@
   @private
 	NSArray *_fields;
 	ContactElementField *_emailField;
-	BOOL	myIsArchivingFields;
     
     NSString    *_address;
     BOOL        _copyToSender;

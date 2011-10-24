@@ -18,7 +18,7 @@
 #import "SVLogoImage.h"
 #import "KTMaster.h"
 #import "KTPage.h"
-#import "SVGraphicDOMController.h"
+#import "SVGraphicContainerDOMController.h"
 #import "SVGraphicFactory.h"
 #import "KTImageScalingURLProtocol.h"
 #import "SVLinkManager.h"
@@ -36,6 +36,7 @@
 #import "SVWebContentObjectsController.h"
 #import "SVWebEditorHTMLContext.h"
 #import "SVWebEditorTextRange.h"
+#import "SVWebEditorView.h"
 
 #import "NSArray+Karelia.h"
 #import "NSObject+Karelia.h"
@@ -135,7 +136,6 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     [self setWebEditor:nil];   // needed to tear down data source
     [self setDelegate:nil];
     
-    [_firstResponderItem release];
     [_context release];
     [_pageController release];
     [_graphicsController release];
@@ -148,7 +148,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 
 - (void)loadView
 {
-    WEKWebEditorView *editor = [[WEKWebEditorView alloc] init];
+    WEKWebEditorView *editor = [[SVWebEditorView alloc] init];
     
     [self setView:editor];
     [self setWebEditor:editor];
@@ -269,7 +269,8 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     
     
     // Construct HTML Context
-	SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] init];
+    KSStringWriter *writer = [[KSStringWriter alloc] init];
+	SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithOutputWriter:writer];
     
     [context setLiveDataFeeds:[[NSUserDefaults standardUserDefaults] boolForKey:kSVLiveDataFeedsKey]];
     [context setSidebarPageletsController:[_graphicsController sidebarPageletsController]];
@@ -278,11 +279,10 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     // Go for it. You write that HTML girl!
 	if (page)
     {
-        //[context setBaseURL:[page URL]];
+        [context setBaseURL:[page URL]];
         [context writeDocumentWithPage:page];
     }
-    [context flush];
-        
+    
     
     //  Start loading. Some parts of WebKit need to be attached to a window to work properly, so we need to provide one while it's loading in the
     //  background. It will be removed again after has finished since the webview will be properly part of the view hierarchy.
@@ -302,12 +302,51 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     {
         pageURL = nil;
     }
-    
+	
+	static int sWebKitVersion = 0;
+	
+	if (0 == sWebKitVersion)	// only need to set this once per run
+	{
+		// Also, make the base URL be nil if we are running a version of WebKit lower than the one in Safari 5.0.6/5.1,
+		// when the security checks for mixing file and http URLs went away.
+		NSBundle *webkitBundle = [NSBundle bundleForClass:[WebView class]];
+		NSString *webkitVersionString = [[webkitBundle infoDictionary] objectForKey:@"CFBundleVersion"];
+		int versionAndOS = [webkitVersionString intValue];
+		sWebKitVersion = versionAndOS % 1000;	// Strip thousands place: http://lists.apple.com/archives/webkitsdk-dev/2008/Nov/msg00005.html
+	}
+	
+	// http://en.wikipedia.org/wiki/Safari_version_history
+	// 534 and up is Safari 5.0.6/5.1; below is 5.0.x (e.g. 5.0.5 = 533.21.1)
+	if (sWebKitVersion <  534)
+	{
+		pageURL = nil;
+	}
     
     // Load the HTML into the webview
-    NSString *pageHTML = [[context outputStringWriter] string];
     if (pageURL) [WebView registerURLSchemeAsLocal:[pageURL scheme]];
-    [webEditor loadHTMLString:pageHTML baseURL:pageURL];
+    
+    [writer flush]; // bit of a HACK as it assumes context uses only writer for buffering
+    [webEditor loadHTMLString:[writer string] baseURL:pageURL];
+    [writer release];
+    
+    
+    // Context holds the controllers. We need to send them over to the Web Editor.
+    // Doing so will populate .graphicsController, so need to clear out its content & remember the selection first
+    
+    NSArray *selection = [[self graphicsController] selectedObjects];
+    [[self graphicsController] setContent:nil];
+    
+    
+    // Populate web editor items
+    SVContentDOMController *contentController = [[SVContentDOMController alloc]
+                                                 initWithWebEditorHTMLContext:[self HTMLContext]
+                                                 node:nil];
+    
+    [self setContentDOMController:contentController];
+    [webEditor setContentItem:contentController];
+    [contentController release];
+    
+    [[self graphicsController] setSelectedObjects:selection];    // restore selection
     
     
     // Tidy up. Web Editor HTML Contexts create a retain cycle until -close is called. Yes, I should fix this at some point, but it's part of the design for now. We call -close once the webview has loaded, but sometimes that point is never reached! As far as I can tell it's not a problem to close the context after starting a load. Researched into this prompted by #
@@ -332,17 +371,9 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     OBASSERT(domDoc);
     
     
-    // Context holds the controllers. We need to send them over to the Web Editor.
-    // Doing so will populate .graphicsController, so need to clear out its content & remember the selection first
-    
-    NSArray *selection = [[self graphicsController] selectedObjects];
-    [[self graphicsController] setContent:nil];
-    
+    // Store loaded page
     SVWebEditorHTMLContext *context = [self HTMLContext];
     [_loadedPage release]; _loadedPage = [[context page] retain];
-    [webEditor setContentItem:[self contentDOMController]];
-    
-    [[self graphicsController] setSelectedObjects:selection];    // restore selection
     
     
     // Restore scroll point
@@ -363,7 +394,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
         if ([[[self view] window] makeFirstResponder:[self webEditor]])
         {
             SVRichTextDOMController *articleController = (id)[self articleDOMController];
-            DOMDocument *document = [[articleController HTMLElement] ownerDocument];
+            DOMDocument *document = [[articleController node] ownerDocument];
             
             DOMRange *range = [document createRange];
             [range setStart:[articleController textHTMLElement] offset:0];
@@ -551,8 +582,6 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     return [self primitiveSelectedObjectsController];
 }
 
-@synthesize firstResponderItem = _firstResponderItem;
-
 @synthesize contentDOMController = _contentItem;
 - (void)setContentDOMController:(SVContentDOMController *)controller;
 {
@@ -570,7 +599,6 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     if (context != [self HTMLContext])
     {
         [_context release]; _context = [context retain];
-        [self setContentDOMController:[context rootDOMController]];
     }
 }
 
@@ -583,11 +611,14 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
     
     
     //  Populate controller with content. For now, this is simply all the represented objects of all the DOM controllers
-    id anObject = [item representedObject];
-    if (anObject && //  second bit of this if statement: images are owned by 2 DOM controllers, DON'T insert twice!
-        ![[_graphicsController arrangedObjects] containsObjectIdenticalTo:anObject])
+    if ([item isSelectable])
     {
-        [[self graphicsController] addObject:anObject];
+        id anObject = [item representedObject];
+        if (anObject && //  second bit of this if statement: images are owned by 2 DOM controllers, DON'T insert twice!
+            ![[[self graphicsController] arrangedObjects] containsObjectIdenticalTo:anObject])
+        {
+            [[self graphicsController] addObject:anObject];
+        }
     }
     
     
@@ -633,7 +664,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
         id newItem = [[self webEditor] selectableItemForRepresentedObject:anObject];
         if (!newItem) newItem =  [[[self webEditor] contentItem] hitTestRepresentedObject:anObject];
         
-        if ([[newItem HTMLElement] ks_isDescendantOfDOMNode:[[newItem HTMLElement] ownerDocument]])
+        if ([[newItem node] ks_isDescendantOfDOMNode:[[newItem node] ownerDocument]])
         {
             [newSelection addObject:newItem];
             
@@ -718,7 +749,15 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 
 - (IBAction)insertPagelet:(id)sender;
 {
-    if (![[[self webEditor] firstResponderItem] tryToPerform:_cmd with:sender])
+    BOOL doYourself = (_forwardedAction == _cmd);
+    if (!doYourself)
+    {
+        _forwardedAction = _cmd;
+        doYourself = ![[[self webEditor] firstResponderItem] tryToPerform:_cmd with:sender];
+        _forwardedAction = NULL;
+    }
+    
+    if (doYourself)
     {
         WEKWebEditorItem *articleController = [self articleDOMController];
         if (![articleController tryToPerform:_cmd with:sender])
@@ -823,8 +862,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 - (void)doPlacementCommandBySelector:(SEL)action;
 {
     // Whenever there's some kind of text selection, the responsible controller must take it. If there's no controller, cannot perform
-    NSResponder *controller = [self firstResponderItem];
-    if (!controller) controller = [[[self webEditor] editingItems] lastObject]; // #120987
+    NSResponder *controller = [[self webEditor] firstResponderItem];
     
     if (controller)
     {
@@ -868,7 +906,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 
 - (void)moveToBlockLevel:(id)sender;
 {
-    [[self firstResponderItem] tryToPerform:_cmd with:sender];
+    [[[self webEditor] firstResponderItem] tryToPerform:_cmd with:sender];
 }
 
 #pragma mark Action Forwarding
@@ -901,7 +939,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 
 - (void)cleanHTML:(NSMenuItem *)sender;
 {
-    [[self firstResponderItem] doCommandBySelector:_cmd];
+    [[[self webEditor] firstResponderItem] doCommandBySelector:_cmd];
 }
 
 #pragma mark Undo
@@ -973,10 +1011,9 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 	
 	if (action == @selector(editRawHTMLInSelectedBlock:) || action == @selector(cleanHTML:))
     {
-        id target = [[[self webEditor] firstResponderItem] ks_targetForAction:action];
-        if (!target) target = [[[self webEditor] selectedItem] ks_targetForAction:action];  // HACK
+        NSResponder *target = [[[self webEditor] firstResponderItem] ks_targetForAction:action];
         
-        if (target)
+        if (target && [[self view] ks_followsResponder:target])
         {
             result = YES;
             if ([target respondsToSelector:_cmd]) result = [target validateMenuItem:menuItem];
@@ -1068,7 +1105,7 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 - (BOOL)webEditor:(WEKWebEditorView *)sender removeItems:(NSArray *)items;
 {
     // Maybe the first responder wants to handle it (i.e. if they're in an article)
-    if ([[self firstResponderItem] tryToPerform:@selector(deleteObjects:) with:self])
+    if ([[[self webEditor] firstResponderItem] tryToPerform:@selector(deleteObjects:) with:self])
     {
         // Match selection of controller and web editor. Yes, bit of a hacky technique. #101631
         [self willUpdate];
@@ -1122,6 +1159,8 @@ static NSString *sSelectedLinkObservationContext = @"SVWebEditorSelectedLinkObse
 
 #pragma mark SVWebEditorViewDelegate
 
+- (void)webEditorViewDidFinishDocumentLoad:(WEKWebEditorView *)frame; { }
+
 - (void)webEditorViewDidFirstLayout:(WEKWebEditorView *)sender;
 {
     OBPRECONDITION(sender == [self webEditor]);
@@ -1162,7 +1201,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
                 case 1:
                 {
                     WEKWebEditorItem *item = [proposedSelectedItems objectAtIndex:0];
-                    if (![proposedRange ks_selectsNode:[item HTMLElement]]) proposedSelectedItems = nil;
+                    if (![proposedRange ks_selectsNode:[item node]]) proposedSelectedItems = nil;
                     break;
                 }
                     
@@ -1193,32 +1232,17 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     OBPRECONDITION(webEditor == [self webEditor]);
     
     
+    // If the selection was forced to change so that we never receieved a -…should… message, our graphic controller's selection may now be out of sync with the views. In rare circumstances, this could cause the link manager to try to access an object that has been deleted
+    // Fortunately the fix is simply to sync the two up again now
+    // But don't do that mid-update as the selection is likely in flux
+    if (![self isUpdating])
+    {
+        [[self graphicsController] setSelectedObjects:[[webEditor selectedItems] valueForKey:@"representedObject"]];
+    }
+    
+    
     // This used to be done in -…shouldChange… but that often caused WebView to overrite the result moments later
     [self synchronizeLinkManagerWithSelection:[webEditor selectedDOMRange]];
-    
-    
-    // Set our first responder item to match
-    DOMRange *selection = [webEditor selectedDOMRange];
-    id controller = (selection ? [self textAreaForDOMRange:selection] : nil);
-    
-    if (!controller)
-    {
-        NSSet *selectionSet = [[NSSet alloc] initWithArray:[webEditor selectedItems]];
-        NSSet *containerControllers = [selectionSet valueForKey:@"textDOMController"];
-        
-        if ([containerControllers count] == 0)  // fallback to sidebar DOM controller
-        {
-            containerControllers = [selectionSet valueForKey:@"sidebarDOMController"];
-        }
-        
-        if ([containerControllers count] == 1)
-        {
-            controller = [containerControllers anyObject];
-        }
-        
-        [selectionSet release];
-    }
-    [self setFirstResponderItem:controller];
 }
 
 - (SVLink *)webEditor:(WEKWebEditorView *)sender willSelectLink:(SVLink *)link;
@@ -1316,17 +1340,19 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     // Don't load remote stuff unless requested
     if (![[NSUserDefaults standardUserDefaults] boolForKey:kSVLiveDataFeedsKey])
     {
-        NSString *scheme = [[request URL] scheme];
-        BOOL local = ([scheme isEqualToString:NSURLFileScheme] ||
-                      [scheme isEqualToString:@"about"] ||
-                      [scheme isEqualToString:KTImageScalingURLProtocolScheme] ||
-                      [scheme isEqualToString:@"x-image-replacement"] ||
-                      [scheme isEqualToString:@"x-imstatusimage"]);
-        if (!local)
+        if (![[self HTMLContext] containsResourceAtURL:[request URL]])
         {
-            NSMutableURLRequest *result = [[request mutableCopy] autorelease];
-            [result setCachePolicy:NSURLRequestReturnCacheDataDontLoad];
-            request = result;
+            NSString *scheme = [[request URL] scheme];
+            BOOL local = ([scheme isEqualToString:NSURLFileScheme] ||
+                          [scheme isEqualToString:@"about"] ||
+                          [scheme isEqualToString:KTImageScalingURLProtocolScheme] ||
+                          [scheme isEqualToString:@"x-image-replacement"]);
+            if (!local)
+            {
+                NSMutableURLRequest *result = [[request mutableCopy] autorelease];
+                [result setCachePolicy:NSURLRequestReturnCacheDataDontLoad];
+                request = result;
+            }
         }
     }
     
@@ -1444,11 +1470,11 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     }
     else if (action == @selector(moveUp:))
     {
-        [[self firstResponderItem] doCommandBySelector:@selector(moveObjectUp:)];
+        [[sender firstResponderItem] doCommandBySelector:@selector(moveObjectUp:)];
     }
     else if (action == @selector(moveDown:))
     {
-        [[self firstResponderItem] doCommandBySelector:@selector(moveObjectDown:)];
+        [[sender firstResponderItem] doCommandBySelector:@selector(moveObjectDown:)];
     }
     else if (action == @selector(reload:))
     {
@@ -1514,7 +1540,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
         
         // Fallback to article. #82408
         WEKWebEditorItem *articleController = [self articleDOMController];
-        result = [articleController hitTestDOMNode:[articleController HTMLElement]
+        result = [articleController hitTestDOMNode:[articleController node]
                                 draggingPasteboard:[dragInfo draggingPasteboard]];
         
         if (result == [self webView])
@@ -1641,7 +1667,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     
     // Node might be in a different frame. #112424
     DOMNode *nodeToTest = node;
-    DOMHTMLElement *myElement = [self HTMLElement];
+    DOMNode *myElement = [self node];
     if (myElement)
     {
         while ([nodeToTest ownerDocument] != [myElement ownerDocument])
@@ -1651,7 +1677,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     }
     
     
-    if (!myElement || [nodeToTest ks_isDescendantOfElement:myElement])
+    if (!myElement || [nodeToTest ks_isDescendantOfNode:myElement])
     {
         for (WEKWebEditorItem *anItem in [self childWebEditorItems])
         {

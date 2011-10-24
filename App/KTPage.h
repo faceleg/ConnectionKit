@@ -219,7 +219,7 @@ typedef enum { kTruncateNone, kTruncateCharacters, kTruncateWords, kTruncateSent
 - (NSString *)markupStringForEditing;   // for viewing source for debugging purposes.
 + (NSString *)pageTemplate;
 
-@property(nonatomic, assign) NSString *comboTitleText;
+@property(nonatomic, copy) NSString *comboTitleText;
 
 - (void)write:(SVHTMLContext *)context codeInjectionSection:(NSString *)aKey masterFirst:(BOOL)aMasterFirst;
 

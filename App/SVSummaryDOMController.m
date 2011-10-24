@@ -73,4 +73,16 @@
     [self setNeedsUpdate];
 }
 
+- (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node;
+{
+    // Stop anything making it through to sub-controllers, since they're supposed to be non-selectable, except for when a custom summary
+    WEKWebEditorItem *result = [super hitTestDOMNode:node];
+    if (result && ![[self itemToSummarize] customSummaryHTML])
+    {
+        result = self;
+    }
+    
+    return result;
+}
+
 @end

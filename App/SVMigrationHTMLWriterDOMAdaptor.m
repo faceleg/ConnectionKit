@@ -10,6 +10,7 @@
 
 #import "SVArticleDOMController.h"
 #import "SVGraphicFactory.h"
+#import "SVGraphicContainer.h"
 #import "SVRawHTMLGraphic.h"
 #import "SVTextAttachment.h"
 #import "SVWebEditorHTMLContext.h"
@@ -124,14 +125,17 @@
     }
     [attachment setCausesWrap:NSBOOL(causesWrap)];
     
-    SVRichText *container = [[self textDOMController] representedObject];
-    if ([container attachmentsMustBeWrittenInline]) [attachment setWrap:[NSNumber numberWithInt:SVGraphicWrapFloat_1_0]];
+    SVRichText *text = [[self textDOMController] representedObject];
+    if ([text attachmentsMustBeWrittenInline]) [attachment setWrap:[NSNumber numberWithInt:SVGraphicWrapFloat_1_0]];
     
     
     // Create controller for graphic and hook up to imported node
-    SVDOMController *controller = [graphic newDOMController];
+    SVInlineGraphicContainer *container = [[SVInlineGraphicContainer alloc] initWithGraphic:graphic];
+    SVDOMController *controller = [container newDOMControllerWithElementIdName:nil ancestorNode:nil];
+    [container release];
+    
+    [controller setNode:element];
     [controller awakeFromHTMLContext:[[self textDOMController] HTMLContext]];
-    [controller setHTMLElement:(DOMHTMLElement *)element];
     
     [[self textDOMController] addChildWebEditorItem:controller];
     OBASSERT([[self textDOMController] hitTestDOMNode:element] == controller);
@@ -139,7 +143,7 @@
     
     
     // Generate new DOM node to match what model would normally generate
-    DOMNode *result = [[controller HTMLElement] nextSibling];    // get in before update, in case it's synchronous!
+    DOMNode *result = [[controller node] nextSibling];    // get in before update, in case it's synchronous!
     [controller setNeedsUpdate];
     [controller updateIfNeeded];
     

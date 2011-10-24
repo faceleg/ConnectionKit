@@ -14,6 +14,7 @@
 #import "SVMedia.h"
 #import "SVMediaRequest.h"
 #import "KTPage+Paths.h"
+#import "SVPagesTreeController.h"
 #import "SVPublisher.h"
 #import "KTPublishingEngine.h"
 #import "KTSite.h"
@@ -23,8 +24,11 @@
 #import "NSString+Karelia.h"
 
 #import "KSOutputStreamWriter.h"
+#import "KSStringWriter.h"
 #import "KSURLUtilities.h"
 #import "KSPathUtilities.h"
+
+#import "Registration.h"
 
 
 @implementation SVPublishingHTMLContext
@@ -35,7 +39,8 @@
                publisher:(id <SVPublisher>)publisher;
 {    
     // If there's no destination, don't bother storing the HTML!
-    self = (path ? [self init] : [self initWithOutputStringWriter:nil]);
+    if (path) _stringWriter = [[KSStringWriter alloc] init];
+    self = [self initWithOutputWriter:_stringWriter];
     
     _path = [path copy];
     _publisher = [publisher retain];
@@ -45,11 +50,14 @@
 
 - (void)close;
 {
+    // Tidy up
+    [super close];
+    
     // Publish HTML if complete
     if (![self didAddMediaWithoutPath] ||
         [(KTPublishingEngine *)_publisher status] >= KTPublishingEngineStatusParsing)
     {
-        NSString *html = [[self outputStringWriter] string];
+        NSString *html = [_stringWriter string];
         if (html)
         {
             NSStringEncoding encoding = [self encoding];
@@ -82,9 +90,7 @@
     }
     
     
-    // Tidy up
-    [super close];
-    
+    [_stringWriter release]; _stringWriter = nil;
     //[_publishingEngine release]; _publishingEngine = nil;     Messes up media gathering
     [_contentHashDataOutput release]; _contentHashDataOutput = nil;
     [_contentHashStream release]; _contentHashStream = nil;
@@ -186,6 +192,36 @@
     return result;
 }
 
+- (NSURL *)URLForImageRepresentationOfPage:(SVSiteItem *)page width:(NSUInteger)width height:(NSUInteger)height options:(SVPageImageRepresentationOptions)options;
+{
+    if (!gRegistrationString || gLicenseIsBlacklisted)
+    {
+        // Can publish up to N pages
+        SVPagesTreeController *controller = [[SVPagesTreeController alloc] initWithContent:[page rootPage]];
+        [controller setChildrenKeyPath:@"childItems"];
+        //[controller setLeafKeyPath:@"isLeaf"];
+        
+        NSIndexPath *nthPagePath = [controller indexPathOfObjectAtIndex:(kMaxNumberOfFreePublishedPages-1)];
+        
+        if (nthPagePath)
+        {
+            NSIndexPath *path = [controller indexPathOfObject:page];
+            [controller release];
+            
+            if ([path isGreaterThan:nthPagePath]) return nil;
+        }
+        else
+        {
+            [controller release];
+        }
+    }
+    
+    return [super URLForImageRepresentationOfPage:page
+                                            width:width
+                                           height:height
+                                          options:options];
+}
+
 - (void)addJavascriptResourceWithTemplateAtURL:(NSURL *)templateURL
                                         object:(id)object;
 {
@@ -258,19 +294,14 @@
     // Run event loop to avoid stalling the GUI too long
     if (!_disableRunningEventLoop)
     {
-        NSProcessInfo *processInfo = [NSProcessInfo processInfo];
+        NSTimeInterval timestamp = 
+#if defined MAC_OS_X_VERSION_10_6 && MAC_OS_X_VERSION_MAX_ALLOWED > MAC_OS_X_VERSION_10_6
+        [[NSProcessInfo processInfo] respondsToSelector:@selector(systemUptime)] ?
+        [[NSProcessInfo processInfo] systemUptime] :
+#endif
+        [[NSDate date] timeIntervalSince1970];
         
-        NSTimeInterval timestamp = 0;
-		
-		if ([processInfo respondsToSelector:@selector(systemUptime)])
-		{
-			timestamp = (NSTimeInterval) [processInfo systemUptime];	// NOT IN THE 10.5 RUNTIME
-		}
-		else
-		{
-			timestamp = [[NSDate date] timeIntervalSince1970];
-		}
-            
+        
         if (timestamp > _lastEventLoopTimestamp + 0.010)
         {
             NSEvent *event = [NSApp nextEventMatchingMask:NSAnyEventMask untilDate:[NSDate distantPast] inMode:NSDefaultRunLoopMode dequeue:YES];

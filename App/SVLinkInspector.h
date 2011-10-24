@@ -14,13 +14,14 @@
 #import <WebKit/WebKit.h>
 
 
-@class KSEmailAddressComboBox;
+@class KSEmailAddressComboBox, SVLinkInspectorView;
 
 
 @interface SVLinkInspector : KSInspectorViewController <KTLinkSourceViewDelegate>
 {
-    IBOutlet NSPopUpButton      *oLinkTypePopUpButton;
-    IBOutlet NSTabView          *oTabView;
+    IBOutlet SVLinkInspectorView    *oLinkInspectorView;
+    IBOutlet NSPopUpButton          *oLinkTypePopUpButton;
+    IBOutlet NSTabView              *oTabView;
     
     IBOutlet KTLinkSourceView       *oLinkSourceView;
     IBOutlet NSTextField            *oLinkField;

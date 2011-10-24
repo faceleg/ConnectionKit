@@ -200,6 +200,7 @@
 	[self setCustomPathExtension:extension];
 }
 
+- (NSString *)fileNameExtension; { return [self pathExtension]; }
 
 - (NSString *)indexAndPathExtension
 {

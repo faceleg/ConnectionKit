@@ -22,7 +22,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 
 
 @protocol WEKWebEditorDataSource, WEKWebEditorDelegate;
-@class WEKWebEditorItem, SVWebEditorTextRange, SVLink;
+@class WEKWebEditorItem, SVWebEditorTextRange, SVEditingController, SVLink;
 @class WEKWebView, WEKRootItem;
 
 
@@ -30,10 +30,11 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 {
   @private
     // Content
-    WEKWebView          *_webView;
-    WEKRootItem         *_rootItem;
-    WEKWebEditorItem    *_contentItem;  // weak ref
-    BOOL        _isStartingLoad;
+    WEKWebView                      *_webView;
+    SVEditingController    *_editingController;
+    WEKRootItem                     *_rootItem;
+    WEKWebEditorItem                *_contentItem;  // weak ref
+    BOOL                            _isStartingLoad;
     
     // Selection
     WEKWebEditorItem <SVWebEditorText>  *_focusedText;
@@ -216,6 +217,10 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 @interface WEKWebEditorView (Dragging)
 
 #pragma mark Dragging Source
+
+// Just like NSTextView except has no idea how to start a drag, so returns NO by default
+- (BOOL)dragSelectionWithEvent:(NSEvent *)event offset:(NSSize)mouseOffset slideBack:(BOOL)slideBack;
+
 - (NSArray *)draggedItems;
 - (void)removeDraggedItems; // removes from DOM and item tree, then calls -forgetDraggedItems. You are responsible for calling -didChangeText after
 - (void)forgetDraggedItems; // call if you want to take over handling of drag source
@@ -297,6 +302,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
 #pragma mark Loading
 
 - (void)webEditorViewDidFirstLayout:(WEKWebEditorView *)sender;
+- (void)webEditorViewDidFinishDocumentLoad:(WEKWebEditorView *)frame;
 - (void)webEditorViewDidFinishLoading:(WEKWebEditorView *)sender;
 
 // Much like -webView:didReceiveTitle:forFrame:
@@ -339,6 +345,22 @@ extern NSString *SVWebEditorViewDidChangeSelectionNotification;
                    event:(NSEvent *)event
               pasteboard:(NSPasteboard *)pasteboard 
                   source:(id)source;
+@end
+
+
+#pragma mark -
+
+
+@interface SVValidatedUserInterfaceItem : NSObject <NSValidatedUserInterfaceItem>
+{
+@private
+    SEL         _action;
+    NSInteger   _tag;
+}
+
+@property(nonatomic) SEL action;
+@property(nonatomic) NSInteger tag;
+
 @end
 
 

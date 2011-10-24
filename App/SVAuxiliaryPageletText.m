@@ -8,6 +8,7 @@
 
 #import "SVAuxiliaryPageletText.h"
 
+#import "SVAuxiliaryPageletTextDOMController.h"
 #import "SVGraphic.h"
 #import "SVHTMLTextBlock.h"
 
@@ -28,7 +29,7 @@
 
 #pragma mark HTML
 
-- (void)writeBody:(SVHTMLContext *)context;
+- (void)writeHTML:(SVHTMLContext *)context;
 {
     SVHTMLTextBlock *textBlock = [[SVHTMLTextBlock alloc] init];
     [textBlock setHTMLSourceObject:[self pagelet]];
@@ -49,15 +50,11 @@
 #pragma mark Metrics
 
 @dynamic width;
-- (NSNumber *)contentWidth;
-{
-    return [self width];
-}
-- (void)setContentWidth:(NSNumber *)width;
-{
-    [self setWidth:width];
-}
+- (NSNumber *)contentWidth; { return [self width]; }
+- (void)setContentWidth:(NSNumber *)width; { [self setWidth:width]; }
++ (NSSet *)keyPathsForValuesAffectingContentWidth; { return [NSSet setWithObject:@"width"]; }
 
+- (NSNumber *)height; { return nil; }
 - (NSNumber *)contentHeight; { return NSNotApplicableMarker; }
 - (void)setContentHeight:(NSNumber *)height; { }
 
@@ -65,5 +62,19 @@
 
 - (BOOL)isExplicitlySized; { return NO; }
 - (BOOL)isExplicitlySized:(SVHTMLContext *)context; { return NO; }
+
+#pragma mark DOM
+
+- (SVTextDOMController *)newTextDOMControllerWithIdName:(NSString *)elementID ancestorNode:(DOMNode *)node
+{
+    SVTextDOMController *result = [[SVAuxiliaryPageletTextDOMController alloc] initWithIdName:elementID
+                                                                                 ancestorNode:node
+                                                                                  textStorage:self];
+    
+    [result setSelectable:YES];
+    [result setRichText:YES];
+    
+    return result;
+}
 
 @end

@@ -26,11 +26,11 @@ typedef enum {
 
 }
 
-// Call +HTMLStringWithFragment:docType: first if you only have a fragment of HTML
+// Call +HTMLStringWithFragment:docType:includeComments: first if you only have a fragment of HTML
 + (ValidationState)validateHTMLString:(NSString *)html docType:(NSString *)docType error:(NSError **)outError;
 
 // Support
-+ (NSString *)HTMLStringWithFragment:(NSString *)fragment docType:(NSString *)docType;
++ (NSString *)HTMLStringWithFragment:(NSString *)fragment docType:(NSString *)docType includeComments:(BOOL)comments;
 
 @end
 

@@ -13,7 +13,7 @@
 
 #import "NSURL+AmazonPagelet.h"
 
-#import <AmazonSupport/AmazonSupport.h>
+#import "AmazonSupport.h"
 #import "KSPlaceholderTableView.h"
 
 

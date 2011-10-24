@@ -37,14 +37,14 @@
 
 #pragma mark HTML
 
-- (void)writeBody:(SVHTMLContext *)context;
+- (void)writeHTML:(SVHTMLContext *)context;
 {
     [context pushClassName:@"HTMLElement"];
     [context addCSSString:@".HTMLElement { overflow:hidden; }"];
     
     if ([self shouldWriteHTMLInline])
     {
-        [context pushClassName:@"graphic-container"];
+        //[context pushClassName:@"graphic-container"];
         [context startElement:@"span"];
     }
     else
@@ -85,7 +85,8 @@
                 {
                     // Is the preview going to be understandable by WebKit? Judge this by making sure there's no problem with close tags
                     NSString *html = [SVHTMLValidator HTMLStringWithFragment:(fragment ? fragment : @"")
-                                                                     docType:KSHTMLWriterDocTypeHTML_5];
+                                                                     docType:KSHTMLWriterDocTypeHTML_5
+															 includeComments:NO];
                     
                     NSError *error = nil;
                     ValidationState validation = [SVHTMLValidator validateHTMLString:html docType:KSHTMLWriterDocTypeHTML_5 error:&error];

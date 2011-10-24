@@ -12,28 +12,6 @@
 #import "NSString+Karelia.h"
 
 
-@implementation StrikeThroughOn
-
-- (NSDictionary *)convertAttributes:(NSDictionary *)attributes
-{
-	NSMutableDictionary *newDict = [NSMutableDictionary dictionaryWithDictionary:attributes];
-	[newDict setObject:[NSNumber numberWithInt:1] forKey:NSStrikethroughStyleAttributeName];
-	return newDict;
-}
-
-@end
-
-@implementation StrikeThroughOff
-
-- (NSDictionary *)convertAttributes:(NSDictionary *)attributes
-{
-	NSMutableDictionary *newDict = [NSMutableDictionary dictionaryWithDictionary:attributes];
-	[newDict removeObjectForKey:NSStrikethroughStyleAttributeName];
-	return newDict;
-}
-
-@end
-
 @implementation TypewriterOn
 
 - (NSDictionary *)convertAttributes:(NSDictionary *)attributes

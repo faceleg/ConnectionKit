@@ -11,7 +11,7 @@
 #import "SVIndexPlugIn.h"
 
 
-@interface SVIndexDOMController : SVGraphicBodyDOMController
+@interface SVIndexDOMController : SVGraphicDOMController
 
 
 @end

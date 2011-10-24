@@ -8,7 +8,7 @@
 
 #import "AmazonItem+APExtensions.h"
 
-#import <AmazonSupport/AmazonSupport.h>
+#import "AmazonSupport.h"
 
 
 @implementation AmazonItem (APExtensions)

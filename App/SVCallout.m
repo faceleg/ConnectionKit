@@ -8,28 +8,44 @@
 
 #import "SVCallout.h"
 
+#import "SVCalloutDOMController.h"
 #import "SVGraphic.h"
 #import "SVWebEditorHTMLContext.h"
 
 
 @implementation SVCallout
 
-- (void)write:(SVHTMLContext *)context pagelets:(NSArray *)pagelets;
+#pragma mark Lifecycle
+
+- (void)dealloc;
 {
+    [_pagelets release];
+    [super dealloc];
+}
+
+@synthesize pagelets = _pagelets;
+
+#pragma mark Writing
+
+- (void)writeHTML:(SVHTMLContext *)context;
+{
+    // register before callout begins
+    for (SVGraphic *aGraphic in [self pagelets])
+    {
+        [context addDependencyForKeyPath:@"textAttachment.placement" ofObject:aGraphic];
+    }
+    
+    
     [context beginGraphicContainer:self];
     
     // Write the opening tags
-    [context startElement:@"div"
-                   idName:[[context currentDOMController] elementIdName]
-                className:@"callout-container"];
-    
+    [context startElement:@"div" className:@"callout-container"];
     [context startElement:@"div" className:@"callout"];
-    
     [context startElement:@"div" className:@"callout-content"];
     
     
     
-    [context writeGraphics:pagelets];    
+    [context writeGraphics:[self pagelets]];    
     
     
     
@@ -41,9 +57,19 @@
     [context endGraphicContainer];
 }
 
-- (void)write:(SVHTMLContext *)context graphic:(id <SVGraphic>)graphic;
+- (BOOL)HTMLContext:(SVHTMLContext *)context writeGraphic:(SVGraphic *)graphic;
 {
     [SVGraphic write:context pagelet:graphic];
+    return YES;
+}
+
+- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID ancestorNode:(DOMNode *)node;
+{
+    SVDOMController *result = [[SVCalloutDOMController alloc] initWithIdName:elementID
+                                                                ancestorNode:node];
+    
+    [result setRepresentedObject:self];
+    return result;
 }
 
 @end

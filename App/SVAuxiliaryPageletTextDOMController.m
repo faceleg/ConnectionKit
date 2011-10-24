@@ -66,30 +66,4 @@
     }
 }
 
-#pragma mark Selection
-
-// TODO: This logic is the same as text field
-- (BOOL)isSelectable;
-{
-    return ([self representedObject] && [self enclosingGraphicDOMController]);
-}
-
-@end
-
-
-@implementation SVAuxiliaryPageletText (SVAuxiliaryPageletTextDOMController)
-
-- (SVDOMController *)newDOMController;
-{
-    return [[SVGraphicDOMController alloc] initWithRepresentedObject:self];
-}
-
-- (SVTextDOMController *)newTextDOMController;
-{
-    SVTextDOMController *result = [[SVAuxiliaryPageletTextDOMController alloc] initWithRepresentedObject:self];
-    [result setRichText:YES];
-    
-    return result;
-}
-
 @end

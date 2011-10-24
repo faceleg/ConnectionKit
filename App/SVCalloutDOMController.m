@@ -8,7 +8,13 @@
 
 #import "SVCalloutDOMController.h"
 
+#import "KTDesign.h"
+#import "SVHTMLContext.h"
+#import "KTImageScalingSettings.h"
+#import "KTMaster.h"
+#import "KTPage.h"
 #import "SVRichTextDOMController.h"
+#import "SVWebEditorView.h"
 
 #import "DOMNode+Karelia.h"
 
@@ -46,19 +52,14 @@
 
 @synthesize calloutContentElement = _calloutContent;
 
-- (void)loadHTMLElementFromDocument:(DOMDocument *)document;
+- (void)loadNode;
 {
-    [super loadHTMLElementFromDocument:document];
-    
-    if ([self isHTMLElementCreated])
+    if ([self elementIdName])
     {
-        DOMNodeList *nodes = [[self HTMLElement] getElementsByClassName:@"callout-content"];
-        [self setCalloutContentElement:(DOMElement *)[nodes item:0]];
+        return [super loadNode];
     }
-}
-
-- (void)createHTMLElement;
-{
+    
+    
     DOMHTMLDocument *document = [self HTMLDocument];
     
     // This logic is very similar to SVHTMLContext. Should be a way to bring them together
@@ -75,8 +76,16 @@
     [callout appendChild:calloutContent];
     
     
-    [self setHTMLElement:(DOMHTMLElement *)calloutContainer];
+    [self setNode:calloutContainer];
     [self setCalloutContentElement:calloutContent];
+}
+
+- (void)nodeDidLoad
+{
+    [super nodeDidLoad];
+    
+    DOMNodeList *nodes = [[self HTMLElement] getElementsByClassName:@"callout-content"];
+    [self setCalloutContentElement:(DOMElement *)[nodes item:0]];
 }
 
 #pragma mark Attributed HTML
@@ -127,7 +136,41 @@
     return result;
 }
 
+#pragma mark Resizing
+
+- (CGFloat)maxWidthForChild:(WEKWebEditorItem *)aChild;
+{
+    // Base limit on design rather than the DOM
+    KTDesign *design = [[(KTPage *)[[self HTMLContext] page] master] design];
+    KTImageScalingSettings *settings = [design imageScalingSettingsForUse:@"KTPageletMedia"];
+    CGFloat result = [settings size].width;
+    return result;
+}
+
 #pragma mark Moving
+
+- (void)splitOutItemIntoSeparateCallout:(WEKWebEditorItem *)item insertBeforeRefChild:(DOMNode *)refChild;
+{
+    // Create a placeholder for the new callout first
+    SVCallout *callout = [[SVCallout alloc] init];
+    [callout setPagelets:[NSArray arrayWithObject:[item graphic]]];
+    
+    DOMElement *myElement = [self HTMLElement];
+    SVDOMController *controller = [callout newDOMControllerWithElementIdName:nil ancestorNode:[myElement ownerDocument]];
+    [controller setHTMLContext:[self HTMLContext]];
+    [controller loadPlaceholderDOMElement];
+    [callout release];
+    
+    [[self parentWebEditorItem] addChildWebEditorItem:controller];
+    [[myElement parentNode] insertBefore:[controller HTMLElement] refChild:refChild];
+    
+    
+    // Get the new callout controller to generate its HTML, recycling the existing item
+    [controller addChildWebEditorItem:item];
+    [controller setNeedsUpdate];
+    [controller updateIfNeeded];
+    [controller release];
+}
 
 /*  Normally it's enough to move ourself up or down instead of the item. But if we contain multiple graphics, have to get more cunning
  */
@@ -160,20 +203,10 @@
     
     
     // Guess not; split the callout in two
-    DOMElement *myElement = [self HTMLElement];
-    SVCalloutDOMController *calloutController = [[[self class] alloc] initWithHTMLDocument:
-                                                 (id)[myElement ownerDocument]];
+    [self splitOutItemIntoSeparateCallout:item insertBeforeRefChild:[self HTMLElement]];
     
-    [calloutController createHTMLElement];  // hopefully -HTMLElement will call this internally one day
-    DOMElement *calloutElement = [calloutController HTMLElement];
-    [[myElement parentNode] insertBefore:calloutElement refChild:myElement];
-    [[self parentWebEditorItem] addChildWebEditorItem:calloutController];
-    
-    [[calloutController calloutContentElement] appendChild:[item HTMLElement]];
-    [calloutController addChildWebEditorItem:item];
-    
-    [calloutController moveItemUp:item];
-    [calloutController release];
+    // Finally it's time to really move the item down
+    [[item parentWebEditorItem] moveItemUp:item];
 }
 
 - (void)moveItemDown:(WEKWebEditorItem *)item;
@@ -205,20 +238,10 @@
     
     
     // Guess not; split the callout in two
-    DOMElement *myElement = [self HTMLElement];
-    SVCalloutDOMController *calloutController = [[[self class] alloc] initWithHTMLDocument:
-                                                 (id)[myElement ownerDocument]];
+    [self splitOutItemIntoSeparateCallout:item insertBeforeRefChild:[[self HTMLElement] nextSibling]];
     
-    [calloutController createHTMLElement];  // hopefully -HTMLElement will call this internally one day
-    DOMElement *calloutElement = [calloutController HTMLElement];
-    [[myElement parentNode] insertBefore:calloutElement refChild:[myElement nextSibling]];
-    [[self parentWebEditorItem] addChildWebEditorItem:calloutController];
-    
-    [[calloutController calloutContentElement] appendChild:[item HTMLElement]];
-    [calloutController addChildWebEditorItem:item];
-    
-    [calloutController moveItemDown:item];
-    [calloutController release];
+    // Finally it's time to really move the item down
+    [[item parentWebEditorItem] moveItemDown:item];
 }
 
 #pragma mark Other

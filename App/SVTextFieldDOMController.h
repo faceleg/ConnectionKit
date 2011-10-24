@@ -19,9 +19,10 @@
     NSString    *_placeholder;
     
     // Bindings
-    NSString        *_uneditedValue;
-    BOOL            _isCommittingEditing;
-    NSTextAlignment _alignment;
+    NSString            *_uneditedValue;
+    BOOL                _isCommittingEditing;
+    NSTextAlignment     _alignment;
+    NSWritingDirection  _textBaseWritingDirection;
 }
 
 #pragma mark Properties
@@ -30,7 +31,9 @@
 @property(nonatomic, copy) NSString *HTMLString;
 @property(nonatomic, copy) NSString *string;
 
-@property(nonatomic) NSTextAlignment alignment; // bindable
+// These two are bindable
+@property(nonatomic) NSTextAlignment alignment;
+@property(nonatomic) NSWritingDirection textBaseWritingDirection;
 
 @property(nonatomic, copy) NSString *placeholderHTMLString;
 

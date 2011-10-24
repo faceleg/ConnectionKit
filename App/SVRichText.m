@@ -11,6 +11,7 @@
 #import "SVHTMLTemplateParser.h"
 #import "SVMediaGraphic.h"
 #import "KTPage.h"
+#import "SVGraphicContainer.h"
 #import "SVRichTextDOMController.h"
 #import "SVTextAttachment.h"
 
@@ -277,8 +278,6 @@
 
 - (void)writeText:(SVHTMLContext *)context range:(NSRange)searchRange;
 {
-    [context beginGraphicContainer:self];
-    
     NSAttributedString *html = [[self attributedHTMLString] attributedSubstringFromRange:searchRange];
     
     
@@ -287,73 +286,69 @@
     
     //[context addDependencyOnObject:self keyPath:@"string"];
     // Don't register this dependency as SVRichTextDOMController will handle its own dependencies
-    
-    [context endGraphicContainer];
 }
 
 - (void)writeText; { [self writeText:[[SVHTMLTemplateParser currentTemplateParser] HTMLContext]]; }
 
-- (void)write:(SVHTMLContext *)context graphic:(NSObject <SVGraphic> *)graphic;
+- (BOOL)HTMLContext:(SVHTMLContext *)context writeGraphic:(NSObject <SVGraphic> *)graphic;
 {
     if ([graphic shouldWriteHTMLInline])
     {
-        return [context writeGraphic:graphic];
+        return NO;
     }
     
     
-    // Indexes want <H3>s
-    NSUInteger level = [context currentHeaderLevel];
-    [context setCurrentHeaderLevel:2];
+    SVInlineGraphicContainer *container = [[SVInlineGraphicContainer alloc] initWithGraphic:graphic]; // yes, fake it!
+    [context beginGraphicContainer:container];
+    [container release];
+    
     @try
     {
-        // Register dependencies that come into play regardless of the route writing takes
-        [context addDependencyOnObject:graphic keyPath:@"showsCaption"];
-        
-        // <div class="graphic-container center">
-        [(SVGraphic *)graphic buildClassName:context includeWrap:YES];
-        [context startElement:@"div"];
-        
-        
-        // <div class="graphic"> or <img class="graphic">
-        [context pushClassName:@"graphic"];
-        if (![graphic captionGraphic] && [graphic isKindOfClass:[SVMediaGraphic class]]) // special case for media
+        // Indexes want <H3>s
+        NSUInteger level = [context currentHeaderLevel];
+        [context setCurrentHeaderLevel:2];
+        @try
         {
-            [graphic writeBody:context];
-            [context endElement];
-            return;
-        }
-        
-        NSString *className = [(SVGraphic *)graphic inlineGraphicClassName];
-        if (className) [context pushClassName:className];
-        
-        if (![graphic isExplicitlySized:context])
-        {
-            NSNumber *width = [graphic containerWidth];
-            if (width)
+            // Register dependencies that come into play regardless of the route writing takes
+            [context addDependencyOnObject:graphic keyPath:@"showsCaption"];
+            
+            // <div class="graphic-container center">
+            [(SVGraphic *)graphic buildClassName:context includeWrap:YES];
+            [context startElement:@"div"];
+            
+            
+            // <div class="graphic"> or <img class="graphic">
+            [context pushClassName:@"graphic"];
+            
+            NSString *className = [(SVGraphic *)graphic inlineGraphicClassName];
+            if (className) [context pushClassName:className];
+            
+            
+            [context writeGraphic:graphic];
+            
+            
+            // Caption if requested
+            id <SVGraphic> caption = [graphic captionGraphic];
+            if (caption) // was registered as dependency at start of if block
             {
-                NSString *style = [NSString stringWithFormat:@"width:%upx", [width unsignedIntValue]];
-                [context pushAttribute:@"style" value:style];
+                [context writeGraphic:caption];
             }
+            
+            
+            // Finish up
+            [context endElement];
         }
-        
-        [context writeGraphic:graphic];
-        
-        
-        // Caption if requested
-        id <SVGraphic> caption = [graphic captionGraphic];
-        if (caption) // was registered as dependency at start of if block
+        @finally
         {
-            [context writeGraphic:caption];
+            [context setCurrentHeaderLevel:level];
         }
-        
-        
-        // Finish up
-        [context endElement];
     }
     @finally
     {
-        [context setCurrentHeaderLevel:level];
+        [context endGraphicContainer];
     }
+    
+    return YES;
 }
 
 #pragma mark Validation
@@ -423,6 +418,13 @@
             [self addAttachmentsObject:attachment];
         }
     }
+}
+
+- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID ancestorNode:(DOMNode *)node;
+{
+    SVDOMController *result = [[SVDOMController alloc] initWithIdName:elementID ancestorNode:node];
+    [result setRepresentedObject:self];
+    return result;
 }
 
 @end

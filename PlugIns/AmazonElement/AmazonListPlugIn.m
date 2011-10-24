@@ -12,7 +12,7 @@
 #import "AmazonListInspector.h"
 #import "NSURL+AmazonPagelet.h"
 
-#import <AmazonSupport/AmazonSupport.h>
+#import "AmazonSupport.h"
 #import "KSIsEqualValueTransformer.h"
 
 
@@ -92,6 +92,15 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 	[AmazonOperation setHash:@"zxPWQOd2RAGbj2z4eQurrD1061DHuXZlgy8/ZpyC"];
 
 	//[AmazonOperation setAssociateID:@"karelsofwa-20"];
+    
+    // register defaults
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *amazonDefaults = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    [AmazonECSOperation associateKeyDefaults], @"AmazonAssociateIDs",
+                                    [NSNumber numberWithBool:NO], @"DebugAmazonListService",
+                                    nil];
+    [defaults registerDefaults:amazonDefaults];
+    [defaults synchronize];
 }
 
 - (id)init;

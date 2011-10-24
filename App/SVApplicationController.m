@@ -72,7 +72,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "SVPageTemplate.h"
 #import "KSURLUtilities.h"
 
-#import <AmazonSupport/AmazonSupport.h>
 #import <Connection/Connection.h>
 #import <ExceptionHandling/NSExceptionHandler.h>
 #import <iMedia/iMedia.h>
@@ -130,7 +129,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 @interface SVApplicationController ()
 
 - (BOOL) appIsExpired;
-- (void)showDebugTableForObject:(id)inObject titled:(NSString *)inTitle;	// a table or array
 
 #if !defined(VARIANT_RELEASE) && defined(EXPIRY_TIMESTAMP)
 - (void)warnExpiring:(id)bogus;
@@ -146,6 +144,10 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 
 @implementation SVApplicationController
 
+#ifndef MAC_APP_STORE
+// Override outlet-based version in KSAppDelegate
+@synthesize sparkleUpdater = _sparkleUpdater;
+#endif
 
 - (NSDate *)referenceTimestamp
 {
@@ -278,12 +280,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
     NSMutableDictionary *defaultsBase = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 		
 								 // General defaults ... app behavior. NOTE: THESE ARE CAPITALIZED
-#ifdef DEBUG
-		[NSNumber numberWithBool:YES],			@"IncludeDebugMenu",
-#else
-		[NSNumber numberWithBool:NO],			@"IncludeDebugMenu",
-#endif
-										 
 // For now, we want 
 		@"all",									@"metaRobots",
 #ifdef APPLE_DESIGN_AWARDS_KEY
@@ -457,13 +453,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		[NSNumber numberWithBool:NO], @"deletePagesWhenPublishing",
 		
 		@"NSHost", @"hostResolver",
-		
-		
-		// Amazon
-		[AmazonECSOperation associateKeyDefaults], @"AmazonAssociateIDs",
-		[NSNumber numberWithBool:NO], @"DebugAmazonListService",
-		
-		
 		
 		
 		/// Whether or not to include original images (instead of images as found on the pages) in image RSS feeds.
@@ -833,19 +822,14 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 
 - (BOOL)applicationOpenUntitledFile:(NSApplication *)theApplication
 {
+	[[NSDocumentController sharedDocumentController] showDocumentPlaceholderWindowInitial:NO];
+	
 	return YES; // we always return YES to purposefully thwart the NSDocument framework
 }
 
 - (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)theApplication
 {
-    if ( !_applicationIsLaunching )
-    {
-        return [[NSUserDefaults standardUserDefaults] boolForKey:@"OpenUntitledFileWhenIconClicked"];
-    }
-    else
-    {
-        return NO;
-    }
+	return YES;
 }
 
 - (void)checkQuartzExtreme
@@ -952,12 +936,44 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 			[_progressPanel setInformativeText:nil];
 			[_progressPanel makeKeyAndOrderFront:self];*/
 			
-            
+ 			// Insert Sparkle & Store code for non-MAS versions
+#ifndef MAC_APP_STORE
+			self.sparkleUpdater = [[[SUUpdater alloc] init] autorelease];
+			[self.sparkleUpdater setDelegate:self];
+			NSMenu *appMenu = [oAboutSandvoxMenuItem menu];
+			NSUInteger aboutIndex = [appMenu indexOfItem:oAboutSandvoxMenuItem];
+			NSMenuItem *sparkleItem = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Check for Updates…", "menu item")
+																  action:@selector(checkForUpdates:)
+														   keyEquivalent:@""] autorelease];
+			[sparkleItem setTarget:self];
+			[appMenu insertItem:sparkleItem atIndex:aboutIndex+1];
+			
+			NSUInteger prefIndex = [appMenu indexOfItem:oPreferencesMenuItem];
+			NSMenuItem *buyItem = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Buy/Register Sandvox…", "menu item")
+															  action:@selector(showRegistrationWindow:)
+													   keyEquivalent:@""] autorelease];
+			[buyItem setTarget:self];
+			[appMenu insertItem:buyItem atIndex:prefIndex+1];
+			[appMenu insertItem:[NSMenuItem separatorItem] atIndex:prefIndex+1];	// insert separator before
+#endif
+			
+			// Remove Full Screen Menu if not running Lion.
+			if (
+				YES || // Until we have merged full screen into master, ALWAYS remove this menu item.
+				![NSWindow instancesRespondToSelector:@selector(convertRectToScreen:)] )	// just a way of knowing it's not Lion
+			{
+				NSMenu *viewMenu = [oToggleFullScreenMenuItem menu];
+				NSUInteger fullScreenIndex = [viewMenu indexOfItem:oToggleFullScreenMenuItem];
+				[viewMenu removeItemAtIndex:fullScreenIndex+1];		// separator after
+				[viewMenu removeItemAtIndex:fullScreenIndex];
+			}
+				
+				
             // Populate the Insert menu
             NSMenuItem *item = nil;
             SVGraphicFactory *factory = nil;
             NSMenu *insertMenu = [oInsertRawHTMLMenuItem menu];
-            NSUInteger index = [insertMenu indexOfItem:oInsertRawHTMLMenuItem];
+            NSUInteger insertIndex = [insertMenu indexOfItem:oInsertRawHTMLMenuItem];
             
             // Raw HTML
             SVGraphicFactory *rawHTMLFactory = [SVGraphicFactory rawHTMLFactory];
@@ -970,7 +986,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 												  withDescription:NO];
             [[[item submenu] itemArray] makeObjectsPerformSelector:@selector(setImage:)
                                                         withObject:nil];
-            [insertMenu insertItem:item atIndex:(index+1)];
+            [insertMenu insertItem:item atIndex:(insertIndex+1)];
             
             // Indexes
             item = [SVGraphicFactory menuItemWithGraphicFactories:[SVGraphicFactory indexFactories]
@@ -978,13 +994,13 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 												  withDescription:NO];
             [[[item submenu] itemArray] makeObjectsPerformSelector:@selector(setImage:)
                                                         withObject:nil];
-            [insertMenu insertItem:item atIndex:index]; 
-            
+            [insertMenu insertItem:item atIndex:insertIndex];
+			            
             // Media Placeholder
             factory = [SVGraphicFactory mediaPlaceholderFactory];
             item = [factory makeMenuItemWithDescription:NO];
             [item setImage:nil];
-            [insertMenu insertItem:item atIndex:index];
+            [insertMenu insertItem:item atIndex:insertIndex];
             
             
 			// Presets. First needs shortcut
@@ -1001,39 +1017,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
             factory = [SVGraphicFactory textBoxFactory];
             item = [factory makeMenuItemWithDescription:NO];
             [item setImage:nil];
-            [insertMenu insertItem:item atIndex:index];
-            
-            
-            
-            
-            
-            
-			[SVGraphicFactory insertItemsWithGraphicFactories:[SVGraphicFactory moreGraphicFactories]
-                                                       inMenu:oMoreGraphicsMenu
-                                                      atIndex:0
-											  withDescription:NO];
-            [SVGraphicFactory insertItemsWithGraphicFactories:[SVGraphicFactory indexFactories]
-                                                 inMenu:oIndexesMenu
-                                                      atIndex:0
-											  withDescription:NO];
-				
-            
-			BOOL firstRun = [defaults boolForKey:@"FirstRun"];
-			
-			// If there's no docs open, want to see the placeholder window
-			if ([[[NSDocumentController sharedDocumentController] documents] count] == 0)
-			{
-	#if 0
-				NSLog(@"BETA: For now, always creating a new document, to make debugging easier");
-				[[NSDocumentController sharedDocumentController] newDocument:nil];
-	#else
-				if (!firstRun)
-				{
-					[[NSDocumentController sharedDocumentController] showDocumentPlaceholderWindowInitial:!firstRun];	// launching, so try to reopen... unless it's first run.
-				}
-	#endif
-			}
-			
+            [insertMenu insertItem:item atIndex:insertIndex];
 			
 			// QE check AFTER the welcome message
 			[self performSelector:@selector(checkQuartzExtreme) withObject:nil afterDelay:0.0];
@@ -1089,6 +1073,11 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	}
 	
 	[JSTalk listen];
+    
+    
+    // Preload iPhoto parser for later access to keywords. #16297
+    [[IMBLibraryController sharedLibraryControllerWithMediaType:kIMBMediaTypeImage] reload];
+    
 	
 #ifndef VARIANT_RELEASE
 	NSLog(@"BETA: Host order = %ld which means %@",
@@ -1143,14 +1132,14 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 }
 
 
-- (BOOL) parserController:(IMBParserController*)inController didLoadParser:(IMBParser*)inParser forMediaType:(NSString*)inMediaType
+- (IMBParser *)parserController:(IMBParserController *)controller willLoadParser:(IMBParser *)parser;
 {
 	
-	if ([inParser isKindOfClass:[IMBFlickrParser class]])
+	if ([parser isKindOfClass:[IMBFlickrParser class]])
 	{
 		// if (IMBRunningOnSnowLeopardOrNewer())
 		{
-			IMBFlickrParser* flickrParser = (IMBFlickrParser*)inParser;
+			IMBFlickrParser* flickrParser = (IMBFlickrParser*)parser;
 			flickrParser.delegate = self;
 			
 			// For your actual app, you would put in the hard-wired strings here.
@@ -1164,7 +1153,10 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 //		}
 		
 	}		// end IMBFlickrParser code
-	return YES;
+    
+    
+    if (![parser canBeUsed]) parser = nil;
+	return parser;
 }
 
 - (BOOL) parserController:(IMBParserController*)inController shouldLoadParser:(NSString*)inParserClassName forMediaType:(NSString*)inMediaType;
@@ -1186,6 +1178,12 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 
 - (void)applicationWillFinishLaunching:(NSNotification *)notification
 {
+	// Create a KTDocumentController instance that will become the "sharedInstance".  Do this early.
+	KTDocumentController *docController = [[KTDocumentController alloc] init];
+    OBASSERT([KTDocumentController sharedDocumentController] == docController); // #151021
+    [docController release];    // docController should be retained as is now the shared controller
+    
+    
 	[super applicationWillFinishLaunching:notification];
 
 	/*
@@ -1215,17 +1213,16 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 
 	OBASSERT([NSApp isKindOfClass:[KTApplication class]]);	// make sure we instantiated the right kind of NSApplication subclass
 	
-	// Create a KTDocumentController instance that will become the "sharedInstance".  Do this early.
-	[[[KTDocumentController alloc] init] release];
-    
-    
 	// Autosave frequency
     NSTimeInterval interval = [[[NSUserDefaults standardUserDefaults] valueForKey:@"AutosaveFrequency"] doubleValue];
     if (interval < 5)       interval = 60.0;        // if the number is wildly out of range, go back to our default of 60
     if (interval > 5 * 60)  interval = 60.0;
 
-    KTDocumentController *sharedDocumentController = [KTDocumentController sharedDocumentController];
-    [sharedDocumentController setAutosavingDelay:interval];
+    [docController setAutosavingDelay:interval];
+    
+    
+    // Prepare iMedia
+    [[IMBParserController sharedParserController] setDelegate:self];
 	
 			 
 	// Try to check immediately so we have right info for initialization
@@ -1470,56 +1467,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 
 
 
-- (void)showDebugTableForObject:(id)inObject titled:(NSString *)inTitle	// a table or array
-{
-	OBPRECONDITION(inObject);
-	OBPRECONDITION([inTitle length]);
-	[NSBundle loadNibNamed:@"DebugTable" owner:self];
-	NSTableView *debugTable = oDebugTable;
-	oDebugTable = nil;	// clear out, not using any more.
 
-	[debugTable setDataSource: inObject];
-	[debugTable setDelegate: inObject];
-
-	[[debugTable window] setTitle:inTitle];
-
-	// cascade the window.
-	_cascadePoint = [[debugTable window] cascadeTopLeftFromPoint:_cascadePoint];
-
-	[[debugTable window] orderFront:nil];
-}
-
-- (IBAction)reloadDebugTable:(id)sender;
-{
-	// HACK below!
-	NSTableView *table = [[[[[[sender superview] superview] subviews] objectAtIndex:0] subviews] objectAtIndex:0];
-	if ([table respondsToSelector:@selector(reloadData)])
-	{
-		[table reloadData];
-	}
-	else
-	{
-		NSBeep();
-		NSLog(@"reloadDebugTable can't reload data");
-	}
-}
-
-- (IBAction)showAvailableDesigns:(id)sender;
-{
-	[self showDebugTableForObject:[KSPlugInWrapper pluginsByIdentifierWithFileExtension:kKTDesignExtension]
-                           titled:@"Designs"];
-}
-
-
-- (IBAction)showAvailableComponents:(id)sender
-{
-	[self showDebugTableForObject:[KSPlugInWrapper pluginsByIdentifierWithFileExtension:kKTElementExtension]
-                           titled:@"Available Components: Element Bundles"];
-	[self showDebugTableForObject:[KSPlugInWrapper pluginsByIdentifierWithFileExtension:kKTIndexExtension]
-							titled:@"Available Components: Index Bundles"];
-	[self showDebugTableForObject:[KSPlugInWrapper pluginsByIdentifierWithFileExtension:kKTDesignExtension]
-                           titled:@"Available Components: Design Bundles"];
-}
 
 #pragma mark -
 #pragma mark Support

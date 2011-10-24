@@ -86,14 +86,15 @@
 - (BOOL) validatePage:(KTPage *)page
 	   windowForSheet:(NSWindow *)aWindow;
 {
-    SVValidationHTMLContext *context = [[SVValidationHTMLContext alloc] init];
+    NSMutableString *pageSource = [[NSMutableString alloc] init];
+    SVValidationHTMLContext *context = [[SVValidationHTMLContext alloc] initWithOutputWriter:pageSource];
+    
 	[context writeDocumentWithPage:page];
     
 	NSUInteger disabledPreviewObjectsCount = context.disabledPreviewObjectsCount;	// this will help us warn about items we are not validating
     
 	NSString *docTypeName = [SVHTMLContext nameOfDocType:KSHTMLWriterDocTypeHTML_5 localize:NO];
     
-    NSString *pageSource = [[context outputStringWriter] string];
     [context release];
 	
     NSString *charset = [[page master] valueForKey:@"charset"];
@@ -104,6 +105,8 @@
 							   charset:charset
 						 docTypeString:docTypeName
 						windowForSheet:aWindow];
+    
+    [pageSource release];
 	return result;
 }
 

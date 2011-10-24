@@ -136,10 +136,10 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
     {
         result = [self bundleIconForItem:item];
         
-        // As a final resort, we fallback to the broken icon
+        // As a final resort, we fallback to the regular icon
         if (!result)
         {
-            result = [NSImage brokenImage];
+            result = [NSImage imageNamed:@"newPage.tiff"];
         }
         
         result = [[result copy] autorelease];

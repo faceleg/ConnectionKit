@@ -14,16 +14,14 @@
 #import "NSString+Karelia.h"
 #import "KSURLFormatter.h"
 
-#import <WebKit/WebKit.h>
-#import "DOMNodeList+KTExtensions.h"
-#import "WebView+Karelia.h"
+#import "WebEditingKit.h"
 #import "NSScanner+Karelia.h"
 
 #import "Debug.h"
 
 
 @interface DOMNode (KTExtensionsPrivate)
-- (DOMNode *)unlink;
+- (DOMNode *)ks_replaceWithChildNodes;
 - (NSString *)textContent;
 @end
 
@@ -133,70 +131,6 @@
 	}
 	
 	return NO;
-}
-
-#pragma mark -
-#pragma mark Index Paths
-
-/*	Traces through the index path to find the node it corresponds to. Returns nil if nothing is found.
- *	Used mainly for resetting the selection after replacing a truncated summary.
- */
-- (DOMNode *)descendantNodeAtIndexPath:(NSIndexPath *)indexPath
-{
-	DOMNode *result = self; // empty paths should return self
-	
-	DOMNode *aParentNode = self;
-	unsigned position;
-	for (position=0; position<[indexPath length]; position++)
-	{
-		unsigned anIndex = [indexPath indexAtPosition:position];
-		
-		DOMNodeList *childNodes = [aParentNode childNodes];
-		if ([childNodes length] <= anIndex) {		// Bail if there aren't enough children
-			break;	
-		}
-		
-		if (position == [indexPath length] - 1)		// Are we at the end of the path?
-		{
-			result = [childNodes item:anIndex];
-			break;
-		}
-		else
-		{
-			aParentNode = [childNodes item:anIndex];
-		}
-	}
-	
-	return result;
-}
-
-/*	Simply returns an index path describing how to get to this object from the specified node
- *	purely using indexes. Returns nil if the receiver is not a child of the node.
- *	Used mainly for truncated summaries where we need to relocate an equivalent node after it has been replaced.
- */
-- (NSIndexPath *)indexPathFromNode:(DOMNode *)node;
-{
-	NSIndexPath *result = nil;
-	
-    if (node == self) return [NSIndexPath indexPathWithIndexes:NULL length:0];
-    
-	DOMNode *parent = [self parentNode];
-	if (parent)
-	{
-		unsigned index = [[parent childNodes] indexOfItemIdenticalTo:self];
-		OBASSERT(index != NSNotFound);
-		
-		if (parent == node)
-		{
-			result = [NSIndexPath indexPathWithIndex:index];
-		}
-		else
-		{
-			result = [[parent indexPathFromNode:node] indexPathByAddingIndex:index];
-		}
-	}
-	
-	return result;
 }
 
 #pragma mark child elements
@@ -373,7 +307,7 @@
 	}
 	DOMElement *theElement;
 	for (theElement in nodesToUnlink) {
-		(void)[theElement unlink];
+		(void)[theElement ks_replaceWithChildNodes];
 	}
 }
 
@@ -614,7 +548,7 @@
 		// Check for paragraph within paragraph
 		if (1 == [childNodes length] && [[[childNodes item:0] nodeName] isEqualToString:@"P"] )
 		{
-			[[childNodes item:0] unlink];
+			[[childNodes item:0] ks_replaceWithChildNodes];
 			// continue on....
 		}
 		

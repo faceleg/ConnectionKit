@@ -17,13 +17,14 @@
 #import "SVParagraphedHTMLWriterDOMAdaptor.h"
 
 
-@class SVHTMLTextBlock, SVGraphicDOMController;
+@class SVHTMLTextBlock, SVGraphicContainerDOMController;
 
 
 @interface SVTextDOMController : SVDOMController <SVWebEditorText, SVGraphicContainerDOMController, DOMEventListener, KSXMLWriterDOMAdaptorDelegate>
 {
   @private
     DOMHTMLElement  *_textElement;
+    BOOL            _awaitingTextReadyToEdit;
     
     SVHTMLTextBlock *_textBlock;
     

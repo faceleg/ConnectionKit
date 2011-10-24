@@ -12,7 +12,7 @@
 
 
 #import "SVContentObject.h"
-#import "SVGraphicContainer.h"
+#import "SVComponent.h"
 
 #import "Sandvox.h"
 
@@ -51,7 +51,7 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 #pragma mark -
 
 
-@protocol SVGraphic <SVGraphicContainer>
+@protocol SVGraphic <SVComponent>
 
 @property(nonatomic, copy) NSNumber *width;
 @property(nonatomic, copy) NSNumber *contentWidth;  // what appears in the Inspector
@@ -63,7 +63,7 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 
 
 #pragma mark HTML
-- (void)writeBody:(SVHTMLContext *)context;  // Subclasses MUST override
+- (void)writeHTML:(SVHTMLContext *)context;  // Subclasses MUST override
 - (BOOL)shouldWriteHTMLInline;
 - (BOOL)displayInline;
 - (BOOL)isPagelet;      // whether to generate <div class="pagelet"> etc. HTML. KVO-compliant
@@ -108,7 +108,7 @@ extern NSString *kSVGraphicPboardType;
 - (BOOL)isCallout;  // whether to generate enclosing <div class="callout"> etc.
 - (NSString *)calloutWrapClassName; // nil if not a callout
 
-+ (void)write:(SVHTMLContext *)context pagelet:(id <SVGraphic>)graphic;
++ (void)write:(SVHTMLContext *)context pagelet:(SVGraphic *)graphic;
 
 
 #pragma mark Title
@@ -190,7 +190,7 @@ extern NSString *kSVGraphicPboardType;
 
 #pragma mark HTML
 
-- (void)writeBody:(SVHTMLContext *)context;  // Subclasses MUST override
+- (void)writeHTML:(SVHTMLContext *)context;  // Subclasses MUST override
 
 - (void)buildClassName:(SVHTMLContext *)context includeWrap:(BOOL)includeWrap;
 - (void)buildWrapClassName:(SVHTMLContext *)context;

@@ -93,6 +93,15 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	return self;
 }
 
+- (void)close;
+{
+    [super close];
+    
+    // NSTreeController's craziness knoweth no bounds. If you remove its content. It'll start observing the context for changes, not what we want! So remvoe the context from its grasp now
+    [[self pagesController] setManagedObjectContext:nil];
+    [[self pagesController] unbind:NSContentSetBinding];
+}
+
 - (void)dealloc
 {
 	[_designIdentityWindow release];
@@ -648,6 +657,42 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     [[self siteOutlineViewController] toggleIsCollection:sender];
 }
 
+#pragma mark Develop Menu
+
+- (NSObject *)webInspector
+{
+    NSViewController *controller = [[self webContentAreaController] selectedViewControllerWhenReady];
+    if ([controller respondsToSelector:@selector(webView)])
+    {
+        WebView *webView = [controller performSelector:@selector(webView)];
+        if ([webView respondsToSelector:@selector(inspector)])
+        {
+            NSObject *result = [webView performSelector:@selector(inspector)];
+            return result;
+        }
+    }
+    
+    return nil;
+}
+
+- (IBAction)showWebInspector:(id)sender;
+{
+    NSObject *inspector = [self webInspector];
+    if ([inspector respondsToSelector:@selector(show:)])
+    {
+        [inspector performSelector:@selector(show:) withObject:sender];
+    }
+}
+
+- (IBAction)showErrorConsole:(id)sender;
+{
+    NSObject *inspector = [self webInspector];
+    if ([inspector respondsToSelector:@selector(showConsole:)])
+    {
+        [inspector performSelector:@selector(showConsole:) withObject:sender];
+    }
+}
+
 #pragma mark Action Validation
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
@@ -782,21 +827,10 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		// Enable if published, and this is only one item selected
 		result = (published && !NSIsControllerMarker(published));
 
-		// Check if page *can* be published
-		BOOL canBePublished = (nil != gRegistrationString);
-		if (!canBePublished)
-		{
-			NSNumber *isPublishableNumber = [content valueForKeyPath:@"selection.isPagePublishableInDemo"];
-			if (!NSIsControllerMarker(isPublishableNumber))
-			{
-				canBePublished = [isPublishableNumber boolValue];
-			}
-		}
 		NSArray *selectedItems = [[[self siteOutlineViewController] content] selectedObjects];
 
 		NSString *title = NSLocalizedString(@"Visit Published Page", @"Menu item");
 		if ((nil == published) && (1==[selectedItems count])) title = NSLocalizedString(@"Visit Published Page (Not Yet Published)", @"Menu item");
-		if (!canBePublished) title = NSLocalizedString(@"License Required to Publish Page", @"Menu item");
 		[menuItem setTitle:title];
 	}
 

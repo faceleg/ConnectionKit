@@ -49,7 +49,8 @@
 - (void)writeGraphicController:(SVDOMController *)controller
 {
     // Write the graphic
-    SVGraphic *graphic = [controller representedObject];
+    SVGraphic *graphic = [controller graphic];
+    if (!graphic) return;   // #146221
     
     NSAttributedString *attributedString =
     [[NSAttributedString alloc] initWithString:[NSString stringWithUnichar:NSAttachmentCharacter]

@@ -15,6 +15,9 @@
     SVWebEditorViewController   *_viewController; // weak ref
 }
 
+// Creates a full tree of controllers from the context contents
+- (id)initWithWebEditorHTMLContext:(SVWebEditorHTMLContext *)context node:(DOMNode *)node;
+
 @property(nonatomic, assign) SVWebEditorViewController *webEditorViewController;
 
 @end

@@ -11,6 +11,7 @@
 #import "SVGraphicFactory.h"
 #import "SVRichText.h"
 #import "SVHTMLTemplateParser.h"
+#import "SVHTMLTextBlock.h"
 #import "SVInspectorViewController.h"
 #import "SVTemplate.h"
 
@@ -79,9 +80,11 @@
     }
 }
 
+- (NSUInteger)minWidth; { return 16; }
+
 #pragma mark HTML
 
-- (void)writeBody:(SVHTMLContext *)context;
+- (void)writeHTML:(SVHTMLContext *)context;
 {
     // Make sure we have a body! #124620
     if (![self body])
@@ -138,3 +141,19 @@
 }
 
 @end
+
+
+#pragma mark -
+
+
+@implementation SVTextBoxBody
+
+- (SVTextDOMController *)newTextDOMControllerWithIdName:(NSString *)elementID ancestorNode:(DOMNode *)node
+{
+    SVTextDOMController *result = [super newTextDOMControllerWithIdName:elementID ancestorNode:node];
+    [result setRepresentedObject:[self valueForKey:@"pagelet"]];
+    return result;
+}
+
+@end
+

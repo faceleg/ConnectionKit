@@ -11,7 +11,6 @@
 #import "SVApplicationController.h"
 #import "SVHTMLContext.h"
 #import "SVLink.h"
-#import "SVMediaDOMController.h"
 #import "SVMediaGraphicInspector.h"
 #import "SVMediaRecord.h"
 #import "SVSiteItem.h"
@@ -349,7 +348,7 @@
     
     if ([[self container] shouldWriteHTMLInline]) [[self container] buildClassName:context includeWrap:NO];
 
-    [context buildAttributesForResizableElement:@"img" object:self DOMControllerClass:[SVMediaDOMController class]  sizeDelta:NSZeroSize options:0];
+    [context buildAttributesForResizableElement:@"img" object:self DOMControllerClass:nil  sizeDelta:NSZeroSize options:0];
     
     
     // Tooltip for placeholders

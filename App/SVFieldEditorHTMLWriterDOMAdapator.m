@@ -24,7 +24,6 @@
 - (DOMNode *)handleInvalidDOMElement:(DOMElement *)element;
 
 - (DOMElement *)replaceDOMElement:(DOMElement *)element withElementWithTagName:(NSString *)tagName;
-- (void)moveDOMElementToAfterParent:(DOMElement *)element;
 
 - (DOMNode *)replaceDOMElementWithChildNodes:(DOMElement *)element;
 - (void)replaceDOMElement:(DOMElement *)element withElement:(DOMElement *)newElement;
@@ -120,6 +119,21 @@
 - (DOMElement *)openDOMElementConflictingWithDOMElement:(DOMElement *)element
                                                 tagName:(NSString *)tagName;
 {
+    // Nested lists are fine though
+    if ([tagName isEqualToString:@"OL"] ||
+        [tagName isEqualToString:@"UL"])
+    {
+        return nil;
+    }
+    
+    // And nested list items are only a problem if direct
+    if ([tagName isEqualToString:@"LI"])
+    {
+        DOMElement *parent = (DOMElement *)[element parentNode];
+        return ([[parent tagName] isEqualToString:@"LI"] ? parent : nil);
+    }
+    
+    
     NSArray *openElements = [[self XMLWriter] openElements];
     
     for (NSString *anElement in [openElements reverseObjectEnumerator])
@@ -155,6 +169,26 @@
         {
             return [self handleInvalidDOMElement:element];
         }
+        
+        
+        // Generally, can't allow nested elements.
+        // e.g. <span><span>foo</span> bar</span>   is wrong and should be simplified.
+        // An exception is if outer element has font: property, and inner element overrides that using longhand. e.g. font-family
+        // Under those circumstances, WebKit doesn't give us enough API to make the merge, so keep both elements.
+        // Test this quite early before any attributes get pushed, avoiding an attribute getting repeated as in #146554
+        // #100362
+        DOMElement *existingElement = [self openDOMElementConflictingWithDOMElement:element
+                                                                            tagName:tagName];
+        
+        if (existingElement)
+        {
+            return [self handleInvalidDOMElement:element];
+        }
+        
+        
+        // Build attributes earlier than superclass would so they get validated. Don't worry, won't get added twice as we check for that in -startElement:withDOMElement:
+        [self buildAttributesForDOMElement:element element:[tagName lowercaseString]];
+        
         
         // Remove attribute-less spans since they're basically worthless
         if ([tagName isEqualToString:@"SPAN"] && [[element attributes] length] == 0)
@@ -194,44 +228,12 @@
         }
         
         
-        
-        // Generally, can't allow nested elements.
-        // e.g. <span><span>foo</span> bar</span>   is wrong and should be simplified.
-        // The exception is if outer element has font: property, and inner element overrides that using longhand. e.g. font-family
-        // Under those circumstances, WebKit doesn't give us enough API to make the merge, so keep both elements.
-        // #100362
-        DOMElement *existingElement = [self openDOMElementConflictingWithDOMElement:element
-                                                                            tagName:tagName];
-        if (existingElement)
-        {
-            // Is it really a conflict?
-            if ([element tryToPopulateStyleWithValuesInheritedFromElement:existingElement])
-            {
-                // Shuffle up following nodes
-                DOMNode *parent = [element parentNode];
-                [parent flattenNodesAfterChild:element];
-                
-                
-                // Try to flatten the conflict
-                // It make take several moves up the tree till we find the conflicting element
-                while (parent != existingElement)
-                {
-                    // Move element across to a clone of its parent
-                    DOMNode *clone = [parent cloneNode:NO];
-                    [[parent parentNode] insertBefore:clone refChild:[parent nextSibling]];
-                    [clone appendChild:element];
-                    parent = [parent parentNode];
-                }
-                
-                
-                // Pretend we wrote the element and are now finished. Recursion will take us back to the element in its new location to write it for real
-                [self moveDOMElementToAfterParent:element];
-                result = nil;
-            }
-        }
+        // The logic for handling this moved up to near the start, so shouldn't hit this point any more
+        OBASSERTSTRING(![self openDOMElementConflictingWithDOMElement:element tagName:tagName],
+                       @"Conflicting elements should already have been taken care of");
     }
-        
-        
+    
+    
     return result;
 }
 
@@ -248,41 +250,10 @@
     }
     
     
-    // Write attributes
-    if ([element hasAttributes]) // -[DOMElement attributes] is slow as it has to allocate an object. #78691
+    // If attributes haven't already been built, now is the time to do so
+    if (![[self XMLWriter] hasCurrentAttributes])
     {
-        DOMNamedNodeMap *attributes = [element attributes];
-        NSUInteger index;
-        for (index = 0; index < [attributes length]; index++)
-        {
-            // Check each attribute should be written
-            DOMAttr *anAttribute = (DOMAttr *)[attributes item:index];
-            NSString *attributeName = [anAttribute name];
-            NSString *attributeValue = [anAttribute value];
-            
-            attributeValue = [self validateAttribute:attributeName value:attributeValue ofElement:elementName];
-            if (attributeValue)
-            {
-                // Validate individual styling
-                if ([attributeName isEqualToString:@"style"])
-                {
-                    DOMCSSStyleDeclaration *style = [element style];
-                    [self removeUnsupportedCustomStyling:style fromElement:elementName];
-                    
-                    // Have to write it specially as changes don't show up in [anAttribute value] sadly
-                    [[self XMLWriter] pushAttribute:@"style" value:[style cssText]];
-                }
-                else
-                {
-                    [[self XMLWriter] pushAttribute:attributeName value:attributeValue];
-                }
-            }
-            else
-            {
-                [attributes removeNamedItem:attributeName];
-                index--;
-            }
-        }
+        [self buildAttributesForDOMElement:element element:elementName];
     }
     
     
@@ -339,69 +310,56 @@
     return result;
 }
 
-- (DOMNode *)willWriteDOMText:(DOMText *)textNode;
+#pragma mark Cleanup
+
+- (DOMNode *)moveDOMElement:(DOMElement *)element toStopConflictWithAncestor:(DOMElement *)existingElement
 {
-    DOMNode *result = [super willWriteDOMText:textNode];
-    if (result != textNode) return result;
+    // Is it really a conflict?
+    DOMNode *result = element;
     
-    
-    static NSCharacterSet *sWhitespace; // full whitespace/newline set minus &nbsp;
-    if (!sWhitespace)
+    if ([element tryToPopulateStyleWithValuesInheritedFromElement:existingElement])
     {
-        sWhitespace = [[[NSCharacterSet fullWhitespaceAndNewlineCharacterSet] setByRemovingCharactersInString:@" "] copy];
-    }
-    
-    // The starting text of an element wants *leading* whitespace processed
-    if ([textNode previousSibling]) return textNode;
-    
-    NSString *text = [textNode data];
-    NSRange whitespaceRange = [text rangeOfCharacterFromSet:sWhitespace options:NSAnchoredSearch];
-    
-    if (whitespaceRange.location == 0)
-    {
-        // Inline elements want whitespace *condensed*. Otherwise, strip it
-        NSRange range;
-        if ([[self XMLWriter] canWriteElementInline:[[self XMLWriter] topElement]])
+        // Shuffle up following nodes
+        DOMNode *parent = [element parentNode];
+        
+        if ([[existingElement tagName] isEqualToString:@"LI"])
         {
-            NSRange range = NSMakeRange(whitespaceRange.length, [text length] - whitespaceRange.length);
-            whitespaceRange = [text rangeOfCharacterFromSet:sWhitespace options:NSAnchoredSearch range:range];
+            DOMNode *next = [element nextSibling];
+            if (next) [self moveDOMNodeToAfterParent:next includeFollowingSiblings:YES];
         }
         else
         {
-            range = NSMakeRange(0, [text length]);
+            [parent flattenNodesAfterChild:element];
         }
         
-        if (whitespaceRange.location == range.location)
+        
+        // Try to flatten the conflict
+        // It make take several moves up the tree till we find the conflicting element
+        while (parent != existingElement)
         {
-            // If there's lots of leading whitespace, this is going to create lots of temp strings, but that's quite an edge case so I'm not worrying for now
-            do
-            {
-                text = [text substringFromIndex:(whitespaceRange.location + whitespaceRange.length)];
-                whitespaceRange = [text rangeOfCharacterFromSet:sWhitespace options:NSAnchoredSearch];
-            }
-            while (whitespaceRange.location == 0);
+            // Move element across to a clone of its parent
+            WebView *webView = [[[element ownerDocument] webFrame] webView];
+            DOMRange *selection = [webView selectedDOMRange];
+            NSSelectionAffinity affinity = [webView selectionAffinity];
             
-            if ([text length])
-            {
-                // Update DOM with the condensed/trimmed text
-                if (range.location > 0) text = [@" " stringByAppendingString:text];
-                [textNode setData:text];
-            }
-            else
-            {
-                // Element was all whitespace so chuck it
-                result = [textNode nextSibling];
-                [[textNode parentNode] removeChild:textNode];
-            }
+            DOMNode *clone = [parent cloneNode:NO];
+            [[parent parentNode] insertBefore:clone refChild:[parent nextSibling]];
+            [clone appendChild:element];
+            
+            [webView setSelectedDOMRange:selection affinity:affinity];
+            
+            element = (DOMElement *)clone;
+            parent = [element parentNode];
         }
         
-        // Could make sure the leading whitespace is a space character here I guess
+        
+        // Pretend we wrote the element and are now finished. Recursion will take us back to the element in its new location to write it for real
+        [self moveDOMNodeToAfterParent:element includeFollowingSiblings:NO];
+        result = nil;
     }
     
     return result;
 }
-
-#pragma mark Cleanup
 
 - (DOMNode *)handleInvalidDOMElement:(DOMElement *)element;
 {
@@ -438,23 +396,41 @@
         
         [self replaceDOMElement:element withElement:(DOMElement *)result];
     }
+    
+    // Convert <STRIKE> to <S>
+    else if ([tagName isEqualToString:@"STRIKE"])
+    {
+        result = [self replaceDOMElement:element withElementWithTagName:@"S"];
+    }
     else
     {
-        // Everything else gets removed, or replaced with a <span> with appropriate styling
-        if ([[element style] length] > 0)
+        // Generally, can't allow nested elements.
+        // e.g. <span><span>foo</span> bar</span>   is wrong and should be simplified.
+        // An exception is if outer element has font: property, and inner element overrides that using longhand. e.g. font-family
+        // Under those circumstances, WebKit doesn't give us enough API to make the merge, so keep both elements.
+        // #100362
+        DOMElement *existingElement = [self openDOMElementConflictingWithDOMElement:element
+                                                                            tagName:tagName];
+        
+        if (existingElement)
         {
-            DOMElement *replacement = [self replaceDOMElement:element withElementWithTagName:@"SPAN"];
-            [replacement tryToPopulateStyleWithValuesInheritedFromElement:element];
-            
-            result = replacement;
+            result = [self moveDOMElement:element toStopConflictWithAncestor:existingElement];
         }
         else
         {
-            result = [self replaceDOMElementWithChildNodes:element];
+            // Everything else gets removed, or replaced with a <span> with appropriate styling
+            if ([[element style] length] > 0)
+            {
+                DOMElement *replacement = [self replaceDOMElement:element withElementWithTagName:@"SPAN"];
+                [replacement tryToPopulateStyleWithValuesInheritedFromElement:element];
+                
+                result = replacement;
+            }
+            else
+            {
+                result = [self replaceDOMElementWithChildNodes:element];
+            }
         }
-        
-        
-        
     }
     
     return [result nodeByStrippingNonParagraphNodes:self];
@@ -493,31 +469,46 @@
     [webView setSelectedDOMRange:selection affinity:[webView selectionAffinity]];
 }
 
-- (void)moveDOMElementToAfterParent:(DOMElement *)element;
+- (void)moveDOMNodeToAfterParent:(DOMNode *)node includeFollowingSiblings:(BOOL)moveSiblings;
 {
-    OBPRECONDITION(element);
+    OBPRECONDITION(node);
     /*  Support method that makes the move, and maintains selection when possible
      */
     
     
     // Get hold of selection to see if it will be affected
-    WebView *webView = [[[element ownerDocument] webFrame] webView];
+    WebView *webView = [[[node ownerDocument] webFrame] webView];
     DOMRange *selection = [webView selectedDOMRange];
     NSSelectionAffinity affinity = [webView selectionAffinity];
     
-    NSIndexPath *startPath = [selection ks_startIndexPathFromNode:element];
-    NSIndexPath *endPath = [selection ks_endIndexPathFromNode:element];
+    NSIndexPath *startPath = [selection ks_startIndexPathFromNode:node];
+    NSIndexPath *endPath = [selection ks_endIndexPathFromNode:node];
+    
     
     // Make the move
-    DOMNode *parent = [element parentNode];
-    [[parent parentNode] insertBefore:element refChild:[parent nextSibling]];
+    DOMNode *parent = [node parentNode];
+    if (moveSiblings)
+    {
+        NSArray *nodes = [parent childDOMNodesAfterChild:[node previousSibling]];
+        [[parent parentNode] insertDOMNodes:nodes beforeChild:[parent nextSibling]];
+    }
+    else
+    {
+        [[parent parentNode] insertBefore:node refChild:[parent nextSibling]];
+    }
+    
     
     // Repair the selection as needed
-    if (startPath) [selection ks_setStartWithIndexPath:startPath fromNode:element];
-    if (endPath) [selection ks_setEndWithIndexPath:endPath fromNode:element];
+    if (startPath) [selection ks_setStartWithIndexPath:startPath fromNode:node];
+    if (endPath) [selection ks_setEndWithIndexPath:endPath fromNode:node];
     
     if (startPath || endPath)
     {
+        [webView setSelectedDOMRange:selection affinity:affinity];
+    }
+    else if (selection && ![webView selectedDOMRange])
+    {
+        // In rare circumstances, WebView loses track of the selection, but DOMRange doesn't. #140927
         [webView setSelectedDOMRange:selection affinity:affinity];
     }
 }
@@ -526,12 +517,16 @@
 {
     //  Called when the element hasn't fitted the whitelist. Unlinks it, and returns the correct node to write
     // Figure out the preferred next node
-    DOMNode *result = [element firstChild];
-    if (!result) result = [element nextSibling];
     
-    // Remove non-whitelisted element
-    [element unlink];
+    // Remove non-whitelisted element, but keep children
+    DOMNode *firstChild = [element firstChild];
+    if (firstChild)
+    {
+        [self moveDOMNodeToAfterParent:firstChild includeFollowingSiblings:YES];
+    }
     
+    DOMNode *result = [element nextSibling];
+    [[element parentNode] removeChild:element];
     
     return result;
 }
@@ -562,13 +557,100 @@
     [spanStyle setProperty:@"color" value:[fontElement color] priority:@""];
 }
 
-#pragma mark High-level Writing
+#pragma mark Character Data
 
 // Comments have no place in text fields!
 - (DOMNode *)writeComment:(NSString *)comment withDOMComment:(DOMComment *)commentNode;
 {
     DOMNode *result = [commentNode nextSibling];
     [[commentNode parentNode] removeChild:commentNode];
+    return result;
+}
+
+- (DOMNode *)willWriteDOMText:(DOMText *)textNode;
+{
+    DOMNode *result = [super willWriteDOMText:textNode];
+    if (result != textNode) return result;
+    
+    
+    static NSCharacterSet *sWhitespace; // full whitespace/newline set minus &nbsp;
+    if (!sWhitespace)
+    {
+        sWhitespace = [[[NSCharacterSet fullWhitespaceAndNewlineCharacterSet] setByRemovingCharactersInString:@" "] copy];
+    }
+    
+    // The starting text of an element wants *leading* whitespace processed
+    if ([textNode previousSibling]) return textNode;
+    
+    NSString *text = [textNode data];
+    NSRange whitespaceRange = [text rangeOfCharacterFromSet:sWhitespace options:NSAnchoredSearch];
+    
+    if (whitespaceRange.location == 0)
+    {
+        // Inline elements want whitespace *condensed*. Otherwise, strip it
+        NSRange range;
+        if ([[self XMLWriter] canWriteElementInline:[[self XMLWriter] topElement]])
+        {
+            NSRange range = NSMakeRange(whitespaceRange.length, [text length] - whitespaceRange.length);
+            whitespaceRange = [text rangeOfCharacterFromSet:sWhitespace options:NSAnchoredSearch range:range];
+        }
+        else
+        {
+            range = NSMakeRange(0, [text length]);
+        }
+        
+        if (whitespaceRange.location == range.location)
+        {
+            // There's going to be changes; want to maintain selection
+            DOMDocument *doc = [textNode ownerDocument];
+            WebView *webView = [[doc webFrame] webView];
+            DOMRange *selection = [webView selectedDOMRange];
+            NSSelectionAffinity affinity = [webView selectionAffinity];
+            
+            NSIndexPath *startPath = [selection ks_startIndexPathFromNode:textNode];
+            NSIndexPath *endPath = [selection ks_endIndexPathFromNode:textNode];
+            
+            
+            // If there's lots of leading whitespace, this is going to create lots of temp strings, but that's quite an edge case so I'm not worrying for now
+            do
+            {
+                NSUInteger index = (whitespaceRange.location + whitespaceRange.length);
+                text = [text substringFromIndex:index];
+                
+                startPath = [startPath indexPathByAddingToLastIndex:-index];
+                endPath = [endPath indexPathByAddingToLastIndex:-index];
+                
+                whitespaceRange = [text rangeOfCharacterFromSet:sWhitespace options:NSAnchoredSearch];
+            }
+            while (whitespaceRange.location == 0);
+            
+            if ([text length])
+            {
+                // Update DOM with the condensed/trimmed text, maintaining selection
+                if (range.location > 0)
+                {
+                    text = [@" " stringByAppendingString:text];
+                    startPath = [startPath indexPathByAddingToLastIndex:1];
+                    endPath = [endPath indexPathByAddingToLastIndex:1];
+                }
+                
+                [textNode setData:text];
+                
+                if (startPath) [selection ks_setStartWithIndexPath:startPath fromNode:textNode];
+                if (endPath) [selection ks_setEndWithIndexPath:endPath fromNode:textNode];
+                if (startPath || endPath) [webView setSelectedDOMRange:selection affinity:affinity];
+            }
+            else
+            {
+                // Element was all whitespace so chuck it
+                result = [textNode nextSibling];
+                [[textNode parentNode] removeChild:textNode];
+            }
+        }
+        
+        // Could make sure the leading whitespace is a space character here I guess
+    }
+    
     return result;
 }
 
@@ -616,17 +698,16 @@
 
 - (BOOL)validateElement:(NSString *)tagName;
 {
-    BOOL result = [[self class] validateElement:tagName];
+    if (![[self class] validateElement:tagName]) return NO;
     
-    if (![self allowsLinks] && [tagName isEqualToString:@"A"]) result = NO;
+    if (![self allowsLinks] && [tagName isEqualToString:@"A"]) return NO;
     
-    // List items are permitted inside of a list. We don't actually allow lists, but this is handy for subclasses that do implement lists
-    if (!result && [tagName isEqualToString:@"LI"])
+    if ([tagName isEqualToString:@"LI"] && ![(KSHTMLWriter *)[self XMLWriter] topElementIsList])
     {
-        if ([(KSHTMLWriter *)[self XMLWriter] topElementIsList]) result = YES;
+        return NO;
     }
     
-    return result;
+    return [[self XMLWriter] validateElement:[tagName lowercaseString]];
 }
 
 + (BOOL)validateElement:(NSString *)tagName;    // can this sort of element ever be valid?
@@ -639,7 +720,9 @@
                    [tagName isEqualToString:@"SUP"] ||
                    [tagName isEqualToString:@"SUB"] ||
                    [tagName isEqualToString:@"A"] ||
-                   [tagName isEqualToString:@"U"]);
+                   [tagName isEqualToString:@"U"] ||
+                   [tagName isEqualToString:@"DEL"] ||
+                   [tagName isEqualToString:@"S"]);
     
     return result;
 }
@@ -652,12 +735,15 @@
     return result;
 }
 
-#pragma mark Attribute Whitelist
+#pragma mark Attributes
 
 - (NSString *)validateAttribute:(NSString *)attributeName
-                          value:(NSString *)attributeValue
+                          value:(NSString *)value
                       ofElement:(NSString *)elementName;
 {
+    NSString *result = [[self XMLWriter] validateAttribute:attributeName value:value ofElement:elementName];
+    if (!result) return result;
+    
     if ([elementName isEqualToString:@"a"])
     {
         if ([attributeName isEqualToString:@"href"] ||
@@ -670,7 +756,7 @@
             [attributeName isEqualToString:@"rel"] ||
             [attributeName isEqualToString:@"rev"])
         {
-            return attributeValue;
+            return value;
         }
     }
     // <FONT> tags are no longer allowed, but leave this in in case we turn support back on again
@@ -680,35 +766,82 @@
             [attributeName isEqualToString:@"size"] ||
             [attributeName isEqualToString:@"color"])
         {
-            return attributeValue;
+            return value;
         }
     }
     
     // Allow style and class on any element…
-    NSString *result = nil;
+    result = nil;
     
     if ([attributeName isEqualToString:@"class"])
     {
-        result = attributeValue;
+        // Dissallow "in" class
+        NSMutableArray *components = [[value componentsSeparatedByWhitespace] mutableCopy];
+        [components removeObject:@"in"];
+        [components removeObject:@"Apple-style-span"];
+        
+        result = [components componentsJoinedByString:@" "];
+        [components release];
+        
+        // Strip empty style attributes
+        if ([result length] == 0) result = nil;
     }
     // …except <BR> which is only allowed class
 	// Used to allow class. #94455
     else if ([attributeName isEqualToString:@"style"] && ![elementName isEqualToString:@"br"])
     {
-        result = attributeValue;
+        // Strip empty style attributes
+        if ([value length]) result = value;
     }
-    
-    
-    // Dissallow "in" class
-    if ([attributeName isEqualToString:@"class"])
+    else if ([attributeName isEqualToString:@"value"] && [elementName isEqualToString:@"li"])
     {
-        NSMutableArray *components = [[attributeValue componentsSeparatedByWhitespace] mutableCopy];
-        [components removeObject:@"in"];
-        result = [components componentsJoinedByString:@" "];
-        [components release];
+        result = value;
     }
+    
+    
+    
     
     return result;
+}
+
+- (void)buildAttributesForDOMElement:(DOMElement *)element element:(NSString *)elementName
+{
+    // Write attributes
+    if ([element hasAttributes]) // -[DOMElement attributes] is slow as it has to allocate an object. #78691
+    {
+        DOMNamedNodeMap *attributes = [element attributes];
+        NSUInteger index;
+        for (index = 0; index < [attributes length]; index++)
+        {
+            // Check each attribute should be written
+            DOMAttr *anAttribute = (DOMAttr *)[attributes item:index];
+            NSString *attributeName = [anAttribute name];
+            NSString *attributeValue = [anAttribute value];
+            
+			attributeValue = [self validateAttribute:attributeName value:attributeValue ofElement:elementName];
+            if (attributeValue)
+            {
+                // Validate individual styling
+                if ([attributeName isEqualToString:@"style"])
+                {
+                    DOMCSSStyleDeclaration *style = [element style];
+                    [self removeUnsupportedCustomStyling:style fromElement:elementName];
+                    
+                    // Have to write it specially as changes don't show up in [anAttribute value] sadly
+                    [[self XMLWriter] pushAttribute:@"style" value:[style cssText]];
+                }
+                else
+                {
+                    [[self XMLWriter] pushAttribute:attributeName value:attributeValue];
+                }
+            }
+            else
+            {
+                [attributes removeNamedItem:attributeName];
+                index--;
+            }
+        }
+    }
 }
 
 #pragma mark Styling Whitelist
@@ -720,7 +853,9 @@
                    [propertyName isEqualToString:@"color"] ||
                    [propertyName isEqualToString:@"background-color"] ||
                    [propertyName isEqualToString:@"text-decoration"] ||
-                   [propertyName isEqualToString:@"text-shadow"]);
+                   [propertyName isEqualToString:@"text-shadow"] ||
+                   [propertyName isEqualToString:@"direction"] ||
+                   [propertyName isEqualToString:@"unicode-bidi"]);
     
     return result;
 }
@@ -759,6 +894,10 @@
 {
     // It doesn't make sense to flatten the *entire* contents of a node, so should always have a child to start from
     OBPRECONDITION(aChild);
+    
+    
+    // No need if there are no nodes to flatten
+    if (![aChild nextSibling]) return;
     
     
     // Make a copy of ourself to flatten into

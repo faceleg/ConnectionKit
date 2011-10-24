@@ -9,7 +9,7 @@
 #import "SVTextDOMController.h"
 
 #import "SVHTMLTextBlock.h"
-#import "SVMediaDOMController.h"
+#import "SVPlugInDOMController.h"
 #import "SVTitleBox.h"
 #import "WebEditingKit.h"
 #import "SVWebEditorViewController.h"
@@ -59,14 +59,107 @@
     [super dealloc];
 }
 
-#pragma mark DOM Node
+#pragma mark Node
+
+- (BOOL)canLoadNode;
+{
+    return NO;
+}
+
+#pragma mark Text Element
+
+- (BOOL)tryNode;
+{
+    if (![self isNodeLoaded])
+    {
+        // Try to load the node without calling -node, since that might throw if loading fails
+        [self loadNode];
+        if (![self isNodeLoaded]) return NO;
+        [self nodeDidLoad];
+    }
+    
+    return YES;
+}
+
+- (BOOL)isTextReadyToEdit;
+{
+    // It's theoretically possible to catch the DOM midway through loading a script that's embedded in the text. Enabling editing at that point could cause the loss of text content beyond the script, so want to report that as not ready.
+    // Easiest way to detect that for now: If there is a script still running, there'll be no nodes created yet to follow it.
+    if (![self tryNode]) return NO;
+    
+    DOMNode *aNode = [self textHTMLElement];
+    while (aNode)
+    {
+        if ([aNode nextSibling]) return YES;
+        aNode = [aNode parentNode];
+    }
+    
+    return NO;
+}
+
+- (void)updateContentEditableAttributeWhenReady
+{
+    // Only want a safety delay if turning on editing, and not ready yet!
+    if ((![self isEditable] && [self tryNode]) || [self isTextReadyToEdit])
+    {
+        if (_awaitingTextReadyToEdit)
+        {
+            _awaitingTextReadyToEdit = NO;
+            [[self ancestorNode] removeEventListener:@"DOMNodeInserted" listener:[self eventsListener] useCapture:NO];
+        }
+        
+        
+        // Annoyingly, calling -setContentEditable:nil or similar does not remove the attribute
+        DOMHTMLElement *element = [self textHTMLElement];
+        if ([self isEditable])
+        {
+            [element setContentEditable:@"true"];
+        }
+        else
+        {
+            [element removeAttribute:@"contenteditable"];
+        }
+        
+        return;
+    }
+    
+    
+    // Otherwise, wait until ready
+    if (!_awaitingTextReadyToEdit)
+    {
+        _awaitingTextReadyToEdit = YES;
+        [[self ancestorNode] addEventListener:@"DOMNodeInserted" listener:[self eventsListener] useCapture:NO];
+    }
+}
+
+- (void)handleEvent:(DOMEvent *)evt;
+{
+    if (_awaitingTextReadyToEdit && [self isTextReadyToEdit])
+    {
+        [self updateContentEditableAttributeWhenReady];
+    }
+}
+
+- (void)setAncestorNode:(DOMNode *)node;
+{
+    if (_awaitingTextReadyToEdit)
+    {
+        [[self ancestorNode] removeEventListener:@"DOMNodeInserted" listener:[self eventsListener] useCapture:NO];
+    }
+    
+    [super setAncestorNode:node];
+    
+    if (_awaitingTextReadyToEdit)
+    {
+        [[self ancestorNode] addEventListener:@"DOMNodeInserted" listener:[self eventsListener] useCapture:NO];
+    }
+}
 
 - (DOMHTMLElement *)textHTMLElement
 {
-    [self HTMLElement]; // make sure it's loaded
+    [self node]; // make sure it's loaded
     return _textElement;
 }
-
 - (void)setTextHTMLElement:(DOMHTMLElement *)element;
 {
     // If there's an old element stop it being editable 
@@ -78,8 +171,11 @@
     [_textElement release]; _textElement = element;
     
     
-    // Think this preps the new element's properties, but not 100% sure - Mike
-    if (element) [self setEditable:[self isEditable]];
+    // Turn the element editable when ready
+    if (element)
+    {
+        [self updateContentEditableAttributeWhenReady];
+    }
 }
 
 - (BOOL)isTextHTMLElementLoaded; { return _textElement != nil; }
@@ -113,12 +209,12 @@
         result = [self orphanedWebEditorItemForImageDOMElement:(DOMHTMLImageElement *)node];
         if (result)
         {
-            [result setHTMLElement:(DOMHTMLElement *)node]; // already checked the class
+            [result setNode:node];
         }
         else
         {
-            result = [[SVMediaDOMController alloc] init];
-            [result setHTMLElement:(DOMHTMLElement *)node];
+            result = [[SVPlugInDOMController alloc] init];
+            [result setNode:node];
             
             [self addChildWebEditorItem:result];
             
@@ -135,24 +231,10 @@
 {
     return _editable;
 }
-
 - (void)setEditable:(BOOL)flag
 {
     _editable = flag;
-    
-    // Annoyingly, calling -setContentEditable:nil or similar does not remove the attribute
-    DOMHTMLElement *element = [self textHTMLElement];
-    if (element)
-    {
-        if (flag)
-        {
-            [element setContentEditable:@"true"];
-        }
-        else
-        {
-            [element removeAttribute:@"contenteditable"];
-        }
-    }
+    [self updateContentEditableAttributeWhenReady];
 }
 
 // Note that it's only a property for controlling editing by the user, it does not affect the existing HTML or stop programmatic editing of the HTML.
@@ -183,12 +265,6 @@
     }
     
     return result;
-}
-
-- (void)delete;
-{
-    SVTitleBox *text = [self representedObject];
-    [text setHidden:NSBOOL(YES)];
 }
 
 - (KSSelectionBorder *)newSelectionBorder;
@@ -398,7 +474,7 @@
         [[[self HTMLElement] documentView] insertLineBreak:self];
 		result = YES;
 	}
-    else
+    else if (selector != @selector(delete:) && selector != @selector(deleteForward:))
     {
         // Generally don't want to pass up the responder chain. #94455
         result = [self respondsToSelector:selector];
@@ -453,11 +529,6 @@
                    ![types containsObject:@"com.karelia.html+graphics"]);
     
     return result;
-}
-
-- (void)handleEvent:(DOMEvent *)evt;
-{
-    
 }
 
 #pragma mark Undo

@@ -85,6 +85,7 @@ typedef enum {
 - (IBAction) windowHelp:(id)sender;
 - (IBAction) applyChanges:(id)sender;
 - (IBAction) validate:(id)sender;
+- (IBAction) tidyHTML:(id)sender;
 - (IBAction)  contentTypePopupChanged:(id)sender;
 
 - (BOOL) canValidate;	// for bindings

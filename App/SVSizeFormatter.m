@@ -29,3 +29,23 @@
 }
 
 @end
+
+
+#pragma mark -
+
+
+@implementation SVIndentLevelFormatter
+
+- (BOOL)isPartialStringValid:(NSString **)partialStringPtr proposedSelectedRange:(NSRangePointer)proposedSelRangePtr originalString:(NSString *)origString originalSelectedRange:(NSRange)origSelRange errorDescription:(NSString **)error
+{
+    if (![self numberFromString:*partialStringPtr])
+    {
+        *partialStringPtr = @"";
+        *proposedSelRangePtr = NSMakeRange(0, 0);
+        return NO;
+    }
+    
+    return YES;
+}
+
+@end

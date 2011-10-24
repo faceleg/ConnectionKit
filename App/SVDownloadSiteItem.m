@@ -142,10 +142,14 @@
     }
     else
     {
-        [publishingEngine publishContentsOfURL:[media mediaURL]
-                                        toPath:uploadPath
-                              cachedSHA1Digest:nil
-                                        object:self];
+        NSURL *URL = [media mediaURL];
+        if (URL)
+        {
+            [publishingEngine publishContentsOfURL:URL
+                                            toPath:uploadPath
+                                  cachedSHA1Digest:nil
+                                            object:self];
+        }
     }
 }
 

@@ -120,7 +120,6 @@
 	self.loop = NO;
 	
 	NSString *type = [self typeToPublish];
-	BOOL microsoftTag = [type conformsToUTI:@"public.avi"] || [type conformsToUTI:@"com.microsoft.windows-media-wmv"];
 	
 	// quicktime fallback, but not for mp4.  We may want to be more selective of mpeg-4 types though.
 	// Also show quicktime when there is no media at all
@@ -129,7 +128,7 @@
 	&& ![type conformsToUTI:@"com.apple.protected-mpeg-4-video"]
 	&& ![type conformsToUTI:@"public.3gpp"];
 	
-	if (microsoftTag || quicktimeTag)
+	if (quicktimeTag)
 	{
 		self.posterFrameType = kPosterFrameTypeNone;
 
@@ -519,32 +518,6 @@
 	return elementID;
 }
 
-- (NSString *)startMicrosoftObject:(SVHTMLContext *)context
-					movieSourceURL:(NSURL *)movieSourceURL;
-{
-	// I don't think there is any way to use the poster frame for a click to play
-	NSString *movieSourcePath = movieSourceURL ? [context relativeStringFromURL:movieSourceURL] : @"";
-	
-	NSUInteger barHeight = self.controller ? 46 : 0;		// Windows media controller is 46 pixels (on windows; adjusted on macs)
-
-	[context pushAttribute:@"classid" value:@"CLSID:6BF52A52-394A-11D3-B153-00C04F79FAA6"];
-	[context buildAttributesForResizableElement:@"object" object:self DOMControllerClass:nil sizeDelta:NSMakeSize(0,barHeight) options:0];
-
-	// ID on <object> apparently required for IE8
-	NSString *elementID = [context pushPreferredIdName:@"wmplayer"];
-    [context startElement:@"object"];
-	
-	[context writeParamElementWithName:@"url" value:movieSourcePath];
-	[context writeParamElementWithName:@"autostart" value:self.autoplay ? @"true" : @"false"];
-	[context writeParamElementWithName:@"showcontrols" value:self.controller ? @"true" : @"false"];
-	[context writeParamElementWithName:@"playcount" value:self.loop ? @"9999" : @"1"];
-//	[context writeParamElementWithName:@"type" value:@"application/x-oleobject"];	... TOOK OUT, BREAKS DISPLAY ON MAC
-	[context writeParamElementWithName:@"uiMode" value:@"mini"];
-	[context writeParamElementWithName:@"pluginspage" value:@"http://microsoft.com/windows/mediaplayer/en/download/"];
-
-	return elementID;
-}
-
 - (NSString *)startVideo:(SVHTMLContext *)context
 		  movieSourceURL:(NSURL *)movieSourceURL
 		 posterSourceURL:(NSURL *)posterSourceURL;
@@ -841,7 +814,8 @@
 	    movieSourceURL = [context addMedia:media];
 	}
 
-	// POSSIBLE OTHER TAGS TO CONSIDER:  public.3gpp2 public.mpeg com.microsoft.windows-media-wm
+	// POSSIBLE OTHER TAGS TO CONSIDER:  public.3gpp2 public.mpeg
+	// I have REMOVED microsoft tags ... to annoying to try and support.
 	// Determine tag(s) to use
 	// video || flash (not mutually exclusive) are mutually exclusive with microsoft, quicktime
 	NSString *type = self.codecType;
@@ -864,9 +838,7 @@
 		&& ![defaults boolForKey:@"videoFlashRemoteOverride"]);	// hidden pref to allow for remote URL
 		
 	if (flashDisallowedTag) flashTag = NO;
-	
-	BOOL microsoftTag = [type conformsToUTI:@"public.avi"] || [type conformsToUTI:@"com.microsoft.windows-media-wmv"];
-	
+		
 	// quicktime fallback, but not for mp4.  We may want to be more selective of mpeg-4 types though.
 	// Also show quicktime when there is no media at all
 	BOOL quicktimeTag = ([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie] || [type conformsToUTI:(NSString *)kUTTypeMPEG])
@@ -881,7 +853,6 @@
 		&& [self enablePoster]
 		&& !(quicktimeTag && self.externalSourceURL)		// don't do this if this is quicktime, with an external URL
 															// since click on poster image doesn't take you to movie!
-		&& !microsoftTag									// Also ignore poster frame for microsoft
 		&& (self.posterFrameType > kPosterFrameTypeNone) )	// and of course don't do poster if we don't want it
 	{
 		// Convert to JPEG if the poster image needs scaling or converting.  
@@ -910,10 +881,6 @@
         }
         
 		[self startQuickTimeObjects:context movieSourceURL:movieSourceURL posterSourceURL:posterSourceURL];
-	}
-	else if (microsoftTag)
-	{
-		[self startMicrosoftObject:context movieSourceURL:movieSourceURL];	// poster not used
 	}
 	else if (videoTag || flashTag)
 	{
@@ -960,7 +927,7 @@
 		[context endElement];
 	}
 	
-	if (flashTag || quicktimeTag || microsoftTag)
+	if (flashTag || quicktimeTag)
 	{
 		OBASSERT([@"object" isEqualToString:[context topElement]]);
 		[context endElement];	//  </object>
@@ -993,12 +960,11 @@
     return [NSSet setWithObjects:@"preload", @"codecType", @"externalSourceURL", nil];
 }
 
-- (BOOL) enablePoster	// poster is not enabled in certain situations: Remote URL QuickTime, Microsoft tags.
+- (BOOL) enablePoster	// poster is not enabled in certain situations: Remote URL QuickTime tags.
 {
 	NSString *type = self.codecType;
 	BOOL disable = (nil == type)
 	|| (kPreloadAuto == self.preload)		// when preloading, you CAN'T do poster, apparently.
-	|| [type conformsToUTI:@"public.avi"] || [type conformsToUTI:@"com.microsoft.windows-media-wmv"]
 	|| ( (([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie] || [type conformsToUTI:(NSString *)kUTTypeMPEG])
 		  && ![type conformsToUTI:@"public.mpeg-4"]
 		  && ![type conformsToUTI:@"com.apple.protected-mpeg-4-video"]
@@ -1043,10 +1009,6 @@
 		{
 			result = [NSImage imageFromOSType:kAlertStopIcon];	// Not locally hosted media, and no override -- thus can't view.
 		}
-	}
-	else if ([type conformsToUTI:@"public.avi"] || [type conformsToUTI:@"com.microsoft.windows-media-wmv"])
-	{
-		result = [NSImage imageNamed:@"caution"];			// like 10.6 NSCaution but better for small sizes
 	}
 	else if ([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie] || [type conformsToUTI:(NSString *)kUTTypeMPEG])
 	{
@@ -1097,10 +1059,6 @@
 			result = NSLocalizedString(@"Unable to embed remotely-hosted Flash-based video.", @"status of movie chosen for video. Should fit in 3 lines in inspector.");	// Not locally hosted media, and no override -- thus can't view.
 		}
 
-	}
-	else if ([type conformsToUTI:@"public.avi"] || [type conformsToUTI:@"com.microsoft.windows-media-wmv"])
-	{
-		result = NSLocalizedString(@"Video will not play on Macs unless \\U201CFlip4Mac\\U201D is installed", @"status of movie chosen for video. Should fit in 3 lines in inspector.");
 	}
 	else if ([type conformsToUTI:(NSString *)kUTTypeQuickTimeMovie] || [type conformsToUTI:(NSString *)kUTTypeMPEG])
 	{
@@ -1155,16 +1113,6 @@
 // http://mindymcadams.com/photos/flowers/slideshow.swf
 
 // Flash ref: http://www.macromedia.com/cfusion/knowledgebase/index.cfm?id=tn_12701
-
-
-// WMV ref pages: http://msdn2.microsoft.com/en-us/library/ms867217.aspx
-// http://msdn2.microsoft.com/en-us/library/ms983653.aspx
-// http://www.mediacollege.com/video/format/windows-media/streaming/embed.html
-// http://www.mioplanet.com/rsc/embed_mediaplayer.htm
-// http://www.w3schools.com/media/media_playerref.asp
-
-
-
 
 /*	This accessor provides a means for temporarily storing the movie while information about it is asyncronously loaded
  */

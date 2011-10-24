@@ -7,7 +7,7 @@
 //
 
 #import "WEKWebView.h"
-#import "WebEditingKit.h"
+#import "WEKWebEditorView.h"
 
 #import "SVLinkManager.h"
 
@@ -48,76 +48,6 @@
     {
         [super reload:sender];
     }
-}
-
-- (void)createLink:(SVLinkManager *)sender;
-{
-    // Ask for permisson, both for the action, and then the edit
-    
-    NSObject *delegate = [self editingDelegate];
-    if ([delegate respondsToSelector:@selector(webView:shouldPerformAction:fromSender:)])
-    {
-        if (![delegate webView:self shouldPerformAction:_cmd fromSender:sender]) return;
-    }
-    
-    DOMRange *selection = [self selectedDOMRange];
-    if (selection)
-    {
-        if ([[self webEditor] shouldChangeTextInDOMRange:selection])
-        {
-            SVLink *link = [sender selectedLink];
-            [self createLink:link userInterface:NO];
-        }
-    }
-}
-
-- (void)makeSelectedLinksOpenInNewWindow
-{
-    // Need to ask permission before doing so. If not, after the change, web editor may well not know what changed
-    DOMRange *selection = [self selectedDOMRange];
-    if (selection && [[self webEditor] shouldChangeTextInDOMRange:selection])
-    {
-        [super makeSelectedLinksOpenInNewWindow];
-    }
-}
-
-#pragma mark Formatting
-
-- (IBAction)clearStyles:(id)sender
-{
-    // Check delegate does not wish to intercept instead
-    if ([[self editingDelegate] webView:self doCommandBySelector:_cmd]) return;
-    
-    
-    DOMDocument *document = [[self selectedFrame] DOMDocument];
-    if ([document execCommand:@"removeFormat" userInterface:NO value:nil])
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification
-                                                            object:self];
-    }
-    else
-    {
-        NSBeep();
-    }
-}
-
-- (BOOL)validateMenuItem:(NSMenuItem *)menuItem;
-{
-    if ([menuItem action] == @selector(clearStyles:))
-    {
-        DOMDocument *document = [[self selectedFrame] DOMDocument];
-        BOOL result = [document queryCommandEnabled:@"removeFormat"];
-        return result;
-    }
-    else
-    {
-        if ([[self superclass] instancesRespondToSelector:_cmd])
-        {
-            return [super validateMenuItem:menuItem];
-        }
-    }
-    
-    return YES;
 }
 
 #pragma mark Dragging Destination

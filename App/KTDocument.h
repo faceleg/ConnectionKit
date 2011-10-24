@@ -28,7 +28,7 @@ extern NSString *kKTDocumentWillCloseNotification;
 extern NSString *kKTDocumentWillSaveNotification;
 
 
-@class KTSite;
+@class KTSite, SVMediaRecord;
 @class KTDocWindowController, SVDocumentSavePanelAccessoryViewController;
 @class KTElementPlugInWrapper;
 @protocol SVDocumentFileWrapper;
@@ -103,6 +103,10 @@ extern NSString *kKTDocumentWillSaveNotification;
 - (BOOL)isFilenameAvailable:(NSString *)filename checkPackageContents:(BOOL)includeFiles;
 - (NSString *)keyForDocumentFileWrapper:(id <SVDocumentFileWrapper>)wrapper;
 
+- (NSURL *)URLForMediaRecord:(SVMediaRecord *)media
+                    filename:(NSString *)path
+       inDocumentWithFileURL:(NSURL *)docURL;
+
 - (NSString *)addDocumentFileWrapper:(id <SVDocumentFileWrapper>)wrapper; // returns the filename reserved
 - (void)setDocumentFileWrapper:(id <SVDocumentFileWrapper>)wrapper forKey:(NSString *)key;
 - (void)unreserveFilename:(NSString *)filename;
@@ -163,6 +167,7 @@ extern NSString *kKTDocumentWillSaveNotification;
 - (BOOL)isSaving;
 
 - (IBAction)reduceFileSize:(id)sender;
+- (IBAction)copyFilesIntoDocument:(id)sender;
 
 @end
 

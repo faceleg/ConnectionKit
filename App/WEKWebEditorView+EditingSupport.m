@@ -16,22 +16,6 @@
 #import "DOMNode+Karelia.h"
 
 
-@interface SVValidatedUserInterfaceItem : NSObject <NSValidatedUserInterfaceItem>
-{
-  @private
-    SEL         _action;
-    NSInteger   _tag;
-}
-
-@property(nonatomic) SEL action;
-@property(nonatomic) NSInteger tag;
-
-@end
-
-
-#pragma mark -
-
-
 // Super-simple class that watches a WebView waiting for an edit
 @interface SVWebViewChangeWatcher : NSObject
 {
@@ -119,6 +103,9 @@
 
 - (void)delete:(id)sender forwardingSelector:(SEL)action;
 {
+    if (_forwardedWebViewCommand) return;   // already in progress. #150432
+    
+    
     // First let the webview have a crack at the delete. Best way I can think to see if it does is to watch out for the change notification
     SVWebViewChangeWatcher *watcher = [[SVWebViewChangeWatcher alloc]
                                            initWithWebView:[self webView]];
@@ -134,7 +121,17 @@
     [watcher release];
     
     
-    // WebView didn't handle the delete so go ahead and give to the datasource
+    // WebView didn't handle the delete so go ahead and do it with the controllers
+    _forwardedWebViewCommand = action;
+    {{
+        [[self firstResponderItem] doCommandBySelector:action];
+    }}
+    _forwardedWebViewCommand = NULL;
+    
+    return;
+    
+    
+    //give to the datasource
     NSArray *selection = [self selectedItems];
     if (![selection count])
     {
@@ -161,6 +158,28 @@
 - (void)deleteBackward:(id)sender;
 {
     [self delete:sender forwardingSelector:_cmd];
+}
+
+#pragma mark Alignment
+
+- (void)alignLeft:(id)sender;
+{
+    [[self firstResponderItem] doCommandBySelector:_cmd];
+}
+
+- (void)alignCenter:(id)sender;
+{
+    [[self firstResponderItem] doCommandBySelector:_cmd];
+}
+
+- (void)alignRight:(id)sender;
+{
+    [[self firstResponderItem] doCommandBySelector:_cmd];
+}
+
+- (void)alignJustified:(id)sender;
+{
+    [[self firstResponderItem] doCommandBySelector:_cmd];
 }
 
 #pragma mark Links
@@ -277,7 +296,7 @@
 {
     OBPRECONDITION(item);
     
-    DOMHTMLElement *selectedElement = [item HTMLElement];
+    DOMElement *selectedElement = [item HTMLElement];
     NSRect selectionRect = [selectedElement boundingBox];
     [[selectedElement documentView] scrollRectToVisible:selectionRect];
 }

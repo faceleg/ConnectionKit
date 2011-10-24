@@ -9,7 +9,7 @@
 
 
 #import <Cocoa/Cocoa.h>
-#import <AmazonSupport/AmazonSupport.h>
+#import "AmazonSupport.h"
 
 
 @interface NSURL (AmazonPagelet)

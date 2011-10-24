@@ -235,30 +235,33 @@ toSidebarOfDescendantsOfPageIfApplicable:(KTPage *)page;
     }
 }
 
-- (void)willRemoveObject:(id)object
+- (void)didRemoveObject:(id)object;
 {
-    [super willRemoveObject:object];
-    
-    
-    OBPRECONDITION([object isKindOfClass:[SVGraphic class]]);
-    SVGraphic *pagelet = object;
+    [super didRemoveObject:object];
     
     
     // Recurse down the page tree removing the pagelet from their sidebars.
-    [self removePagelet:pagelet fromSidebarOfPage:(KTPage *)[self page]];
+    for (id anItem in [[self page] childItems])
+    {
+        if ([anItem isKindOfClass:[KTPage class]])
+        {
+            [self removePagelet:object fromSidebarOfPage:anItem];
+        }
+    }
+    
     
     // Delete the pagelet if it no longer appears on any pages
-    if ([[pagelet sidebars] count] == 0 && ![pagelet textAttachment])
+    if ([[object sidebars] count] == 0 && ![object textAttachment])
     {
         // Should this turn off archives? #65207
-        if ([pagelet isKindOfClass:[SVPlugInGraphic class]] &&
+        if ([object isKindOfClass:[SVPlugInGraphic class]] &&
             [[object plugInIdentifier] isEqualToString:@"sandvox.CollectionArchiveElement"])
         {
             [self willDeleteCollectionArchive:object];
         }
         
         
-        [[self managedObjectContext] deleteObject:pagelet];
+        [[self managedObjectContext] deleteObject:object];
     }
 }
 

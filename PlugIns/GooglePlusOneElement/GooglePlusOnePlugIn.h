@@ -40,6 +40,8 @@
 // http://code.google.com/apis/+1button/#target-url
 // http://www.google.com/intl/en/webmasters/+1/button/index.html
 
+// http://code.google.com/apis/+1button/
+
 
 @interface GooglePlusOnePlugIn : SVPlugIn 
 {

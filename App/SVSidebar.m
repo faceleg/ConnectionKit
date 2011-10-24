@@ -11,7 +11,7 @@
 #import "SVGraphic.h"
 #import "SVHTMLTemplateParser.h"
 #import "KTPage.h"
-#import "SVSidebarPageletsController.h"
+#import "SVSidebarDOMController.h"
 #import "SVTemplate.h"
 #import "SVWebEditorHTMLContext.h"
 
@@ -82,17 +82,17 @@
     [self writePageletsHTML:[[SVHTMLTemplateParser currentTemplateParser] HTMLContext]];
 }
 
-- (void)write:(SVHTMLContext *)context graphic:(id <SVGraphic>)graphic;
+- (BOOL)HTMLContext:(SVHTMLContext *)context writeGraphic:(SVGraphic *)graphic;
 {
-    //_writingPagelet = YES;
-    @try
-    {
-        [SVGraphic write:context pagelet:graphic];
-    }
-    @finally
-    {
-        //_writingPagelet = NO;
-    }
+    [SVGraphic write:context pagelet:graphic];
+    return YES;
+}
+
+- (SVDOMController *)newDOMControllerWithElementIdName:(NSString *)elementID ancestorNode:(DOMNode *)node;
+{
+    SVDOMController *result = [[SVSidebarDOMController alloc] initWithIdName:elementID ancestorNode:node];
+    [result setRepresentedObject:self];
+    return result;
 }
 
 @end
